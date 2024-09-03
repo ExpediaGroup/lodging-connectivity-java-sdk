@@ -1,0 +1,47 @@
+mutation CreateSingleDiscountPromotion($promotion: SingleDiscountPromotionCreateInput!, $propertyId: String!, $propertyIdSource: IdSource!) {
+    createSingleDiscountPromotion(promotion: $promotion, propertyId: $propertyId, propertyIdSource: $propertyIdSource) {
+        category
+        id
+        isContractedPromotion
+        name
+        sellStatus
+        status
+        ... on DiscountPromotion {
+            id
+            name
+            category
+            status
+            code
+            restrictions {
+                isMemberOnly
+                isMobileUserOnly
+                minLengthOfStay
+                maxLengthOfStay
+                minAdvanceBookingDays
+                maxAdvanceBookingDays
+                bookingLocalDateTimeFrom
+                bookingLocalDateTimeTo
+                travelDateFrom
+                travelDateTo
+                sameDayBookingStartTime
+            }
+            eligibleRatePlans {
+                id
+            }
+            blackoutDates {
+                travelDateFrom
+                travelDateTo
+            }
+            discount {
+                ... on SingleDiscount {
+                    type
+                    unit
+                    value
+                    memberOnlyAdditionalValue
+                }
+            }
+            sellStatus
+            isContractedPromotion
+        }
+    }
+}

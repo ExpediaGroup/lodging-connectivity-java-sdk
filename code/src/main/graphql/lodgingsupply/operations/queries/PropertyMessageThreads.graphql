@@ -1,0 +1,41 @@
+query PropertyMessageThreads(
+    $propertyId: String!,
+    $filters: PropertyMessageThreadsFiltersInput!,
+    $orderBy: PropertyMessageThreadsOrderByInput
+    $limit: Int,
+    $cursor: String,
+) {
+    property(id: $propertyId) {
+        messageThreads(filters: $filters, limit: $limit, cursor: $cursor, orderBy: $orderBy) {
+            cursor
+            totalCount
+            elements {
+                id
+                creationDateTimeUtc
+                primaryTraveler {
+                    firstName
+                    lastName
+                }
+                reservationSummary {
+                    adultCount
+                    alternativeIds {
+                        supplierId
+                    }
+                    checkInDate
+                    checkOutDate
+                    childCount
+                    id
+                    petCount
+                }
+                bookingInquiry {
+                    adultCount
+                    checkInDate
+                    checkOutDate
+                    childCount
+                    hasPets
+                    id
+                }
+            }
+        }
+    }
+}

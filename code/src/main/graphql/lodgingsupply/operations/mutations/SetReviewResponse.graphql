@@ -1,0 +1,10 @@
+mutation SetReviewResponse($body: InputLocalizedString!, $propertyId: ID!, $propertyIdSource: IdSource!, $reviewId: ID!) {
+    setReviewResponse(body: $body, propertyId: $propertyId, propertyIdSource: $propertyIdSource, reviewId: $reviewId) {
+        body {
+            locale
+            value
+        }
+        createdDateTime
+        status
+    }
+}

@@ -1,0 +1,23 @@
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+}
+rootProject.name = "lodging-connectivity-java-sdk"
+
+include(":examples", ":code")
+
+def allModules = [':examples', ":code"]
+
+// Get the module to exclude from project properties or environment variables
+def excludeModule = gradle.startParameter.projectProperties['excludeModule'] ?: System.getenv('EXCLUDE_MODULE')
+
+// Include all modules initially
+allModules.each { include it }
+
+// Conditionally exclude the specified module
+if (excludeModule) {
+    rootProject.name = 'lodging-connectivity-java-sdk'
+    include(allModules.findAll { it != ":${excludeModule}" })
+} else {
+    include(allModules)
+}
+

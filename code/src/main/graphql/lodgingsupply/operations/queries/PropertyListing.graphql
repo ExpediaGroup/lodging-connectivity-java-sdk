@@ -1,0 +1,8 @@
+query PropertyListings($propertyId: String!, $domains: [String!]!) {
+    property(id: $propertyId) {
+        listings(domains: $domains) {
+            locale
+            url
+        }
+    }
+}

@@ -1,0 +1,2086 @@
+"""
+Entity that collects payment.
+"""
+enum BusinessModel {
+  """
+  Expedia collects payment.
+  """
+  EXPEDIA_COLLECT
+
+  """
+  Property collects payment.
+  """
+  HOTEL_COLLECT
+}
+
+enum CancellationPenaltyRuleType {
+  PERCENTAGE
+
+  FLAT_AMOUNT
+
+  NUMBER_OF_NIGHTS
+}
+
+type CancellationPolicyCancellationWindow {
+  temporalUnit: CancellationWindowTemporalUnit!
+
+  cutoff: Int!
+}
+
+"""
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+"""
+scalar Int
+
+"""
+Time frame to which the cancellation policy is applied.
+"""
+enum CancellationWindowTemporalUnit {
+  HOUR
+
+  DAY
+
+  WEEK
+}
+
+input CancelReservationInput {
+  """
+  the ID of the property where a cancellation has been requested
+  """
+  propertyId: ID!
+
+  """
+  Identifier associated with the reservation to be cancelled.
+  """
+  reservationId: ID!
+
+  """
+  Reason for cancelling the reservation. Values: GUEST_REQUESTED_CANCEL
+  """
+  reason: ReservationPreStayCancellationReason!
+}
+
+"""
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+"""
+scalar ID
+
+"""
+Response for cancel pre-stay reservation
+"""
+type CancelReservationPayload {
+  """
+  Identifier associated with the reservation cancelled
+  """
+  reservation: Reservation
+}
+
+input CancelReservationReconciliationInput {
+  """
+  the ID of the property where the cancellation has been requested
+  """
+  propertyId: ID!
+
+  """
+  Identifier associated with the reservation to be cancelled.
+  """
+  reservationId: ID!
+
+  """
+  Reason for cancelling the reservation. Values: GUEST_REQUESTED_CANCEL, NO_SHOW
+  """
+  reason: ReservationCancellationReason!
+
+  """
+  Currency in which the amount is shown.
+  """
+  currencyCode: String
+
+  """
+  Amount of money to charge for cancelling this reservation.
+  """
+  penaltyAmount: Float
+}
+
+"""
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+"""
+scalar String
+
+"""
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+"""
+scalar Float
+
+type CancelReservationReconciliationPayload {
+  """
+  Identifier associated with the reservation cancelled
+  """
+  reservation: Reservation
+}
+
+input ChangeReservationReconciliationInput {
+  """
+  The ID of the property where the change has been requested.
+  """
+  propertyId: ID!
+
+  """
+  Identifier associated with the reservation to be changed.
+  """
+  reservationId: ID!
+
+  """
+  Updated supplier amount of the reservation.
+  """
+  supplierAmount: SupplierAmountInput
+
+  """
+  The reconciled check-in date.
+  """
+  checkInDate: LocalDate!
+
+  """
+  The reconciled check-out date.
+  """
+  checkOutDate: LocalDate!
+
+  """
+  The reason for modifying the reservation.
+  """
+  reason: ReservationChangeReason
+}
+
+type ChangeReservationReconciliationPayload {
+  """
+  Identifier associated with the reservation changed
+  """
+  reservation: Reservation
+}
+
+"""
+facilitates filtering reservations by when their arrival date occurs
+"""
+input CheckInDateFilter {
+  """
+  the date defining the start of the arrival date window (format: YYYY-MM-DD)
+  """
+  from: LocalDate!
+
+  """
+  the date defining the end of the arrival date window (format: YYYY-MM-DD)
+  Note: if to date is not specified, all reservations with arrival date after the from date will be included in the response
+  """
+  to: LocalDate
+}
+
+"""
+facilitates filtering reservations by when their departure date occurs
+"""
+input CheckOutDateFilter {
+  """
+  the date defining the start of the departure date window (format: YYYY-MM-DD)
+  """
+  from: LocalDate!
+
+  """
+  the date defining the end of the departure date window (format: YYYY-MM-DD)
+  """
+  to: LocalDate!
+}
+
+input ConfirmReservationNotificationInput {
+  """
+  Partner supplied Unique mutation identifier
+  """
+  clientMutationId: String
+
+  """
+  Property ID with which this reservation is associated
+  """
+  propertyId: ID!
+
+  """
+  Reservation identifier
+  """
+  reservationId: ID!
+
+  """
+  Webhook supplied reservation confirmation token
+  """
+  confirmationToken: String!
+
+  """
+  Reservation action type (BOOKED, CANCELLED, MODIFIED)
+  """
+  actionType: String!
+
+  """
+  Partner supplied reservation confirmation code
+  """
+  confirmationCode: String!
+}
+
+type ConfirmReservationNotificationPayload {
+  """
+  Partner supplied Unique mutation identifier
+  """
+  clientMutationId: String
+
+  """
+  Reference to reservation that was confirmed
+  """
+  reservation: Reservation
+}
+
+input CreateNotificationCallbackConfigInput {
+  """
+  Callback url of callback configuration
+  """
+  callbackUrl: Url!
+
+  """
+  api key of callback configuration
+  """
+  apiKey: String!
+
+  """
+  Request timeout in seconds of callback configuration
+  """
+  requestTimeoutSeconds: Int
+}
+
+type CreateNotificationCallbackConfigPayload {
+  """
+  Information about the created Callback configuration
+  """
+  callbackConfig: NotificationCallbackConfig!
+
+  """
+  Callback Configuration secret string
+  """
+  secret: String!
+}
+
+scalar CurrencyCode
+
+scalar Decimal
+
+input DeleteNotificationCallbackConfigInput {
+  """
+  Id of callback configuration to be deleted
+  """
+  callbackConfigId: ID!
+}
+
+type DeleteNotificationCallbackConfigPayload {
+  """
+  Id of callback configuration deleted
+  """
+  callbackConfigId: ID!
+}
+
+scalar EmailAddress
+
+type ExpediaSupplierAmount implements SupplierAmount {
+  """
+  Rate type: NET for Expedia Collect or SELL for Hotel Collect.
+  """
+  rateType: RateType!
+
+  """
+  Currency in which the amount is shown.
+  """
+  currencyCode: String!
+
+  """
+  Total rates for the reservation.
+  """
+  total: SupplierTotal!
+
+  """
+  Daily rates for the reservation.
+  """
+  rates: [SupplierRate!]!
+}
+
+type Guest {
+  firstName: String!
+
+  lastName: String!
+
+  """
+  Guest loyalty tier. Values include MEMBER, VIP, PREMIUMVIP and null.
+  """
+  loyaltyTier: String
+
+  """
+  The phone numbers of the guest
+  """
+  phoneNumbers: [GuestContactPhoneNumber!]
+
+  """
+  Email address
+  """
+  emailAddress: EmailAddress
+
+  """
+  identifies the frequent customer reward program and (optionally) indicates points awarded for stay activity
+  """
+  supplierLoyaltyPlanInfo: SupplierLoyaltyPlanInfo
+
+  """
+  Purpose of the reservation
+  """
+  travelPurpose: TravelPurpose
+}
+
+"""
+guest age categories
+"""
+enum GuestAgeCategory {
+  ADULT
+
+  CHILD
+}
+
+"""
+Contact of the guest who made the reservation
+"""
+type GuestContact {
+  """
+  The phone numbers of the guest
+  """
+  phoneNumbers: [GuestContactPhoneNumber!]
+}
+
+"""
+Phone Number
+"""
+type GuestContactPhoneNumber {
+  """
+  Country code (format: 44)
+  """
+  countryCode: String!
+
+  """
+  Area Code (format: 074)
+  """
+  areaCode: String!
+
+  """
+  Phone number (format: 3737059)
+  """
+  number: String!
+}
+
+"""
+Number and ages of guests.
+"""
+type GuestCount {
+  """
+  Number of guests in the reservation.
+  """
+  count: Int
+
+  """
+  Guest age categories.
+  """
+  ageCategory: GuestAgeCategory
+}
+
+type IdNode {
+  id: ID
+
+  idSource: IdSource!
+}
+
+input IdNodeInput {
+  id: ID!
+
+  idSource: ReservationIdSource!
+}
+
+"""
+describes the source of a given property ID
+"""
+enum IdSource {
+  """
+  the source of the ID is the Expedia platform
+  """
+  EXPEDIA
+
+  """
+  the source of the ID is the Supplier's platform
+  """
+  SUPPLIER
+
+  """
+  the source of the ID is VRBOs Legacy system
+  """
+  VRBO
+}
+
+type Installment {
+  dueDate: LocalDate!
+
+  amount: Money!
+
+  """
+  VRBO reservation specific installment distribution details
+  """
+  distributions: [InstallmentDistribution!]!
+}
+
+"""
+VRBO reservation specific distribution
+"""
+type InstallmentDistribution {
+  """
+  type of installment distribution item (PARTNER_PAYMENT, COMMISSION, TRAVELER_SERVICE_FEE, etc)
+  """
+  type: String!
+
+  """
+  amount value for installment distribution item
+  """
+  amount: Money!
+}
+
+"""
+Collection of inreconcilable scenarios
+"""
+type InvalidScenario {
+  """
+  Scenario name string
+  """
+  scenario: String!
+
+  """
+  Scenario reason in detail
+  """
+  reason: String!
+}
+
+"""
+Inventory Type
+"""
+enum InventoryType {
+  """
+  VRBO only suppored Inventory Type
+  """
+  PLATFORM
+
+  """
+  VRBO only suppored Inventory Type
+  """
+  IPM
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+facilitates filtering reservations by when their last updated date time occurs
+"""
+input LastUpdatedDateTimeFilter {
+  """
+  the date defining the start of the last updated date window (format: YYYY-MM-DDTHH:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+  """
+  from: ZoneDateTime!
+
+  """
+  the date defining the end of the last updated date window (format: YYYY-MM-DDTHH:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+  """
+  to: ZoneDateTime!
+}
+
+"""
+A type representing a date with no timezone in YYYY-MM-DD. ex: 2007-12-03
+"""
+scalar LocalDate
+
+scalar LocalDateTime
+
+"""
+Represents a monetary amount value along with its currency.
+"""
+type Money {
+  """
+  The code of the currency of the amount.
+  """
+  currencyCode: CurrencyCode!
+
+  """
+  The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
+  """
+  amount: Decimal!
+}
+
+"""
+Represents a monetary amount value along with its currency.
+"""
+input MoneyInput {
+  """
+  The code of the currency of the amount.
+  """
+  currencyCode: CurrencyCode!
+
+  """
+  The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
+  """
+  amount: Decimal!
+}
+
+type Mutation {
+  """
+  Subscribe to notification event type for a given notification subscription profile.
+  """
+  subscribeNotificationEventType(input: SubscribeNotificationEventTypeInput!): SubscribeNotificationEventTypePayload
+
+  """
+  Unsubscribe from notification event type for a given notification subscription profile.
+  """
+  unsubscribeNotificationEventType(input: UnsubscribeNotificationEventTypeInput!): UnsubscribeNotificationEventTypePayload
+
+  """
+  Update notification callback configuration for a subscribed notification event type
+  """
+  updateNotificationEventTypeSubscription(input: UpdateNotificationEventTypeSubscriptionInput!): UpdateNotificationEventTypeSubscriptionPayload
+
+  """
+  Send test notification using a given eventType and Payload
+  """
+  sendTestNotification(input: SendTestNotificationInput!): SendTestNotificationPayload
+
+  """
+  Create callback configuration for notification profile.
+  """
+  createNotificationCallbackConfig(input: CreateNotificationCallbackConfigInput!): CreateNotificationCallbackConfigPayload
+
+  """
+  Update notification callback configuration profile attributes (callbackUrl, apiKey, requestTimeout) based on callbackConfigId.
+  """
+  updateNotificationCallbackConfig(input: UpdateNotificationCallbackConfigInput!): UpdateNotificationCallbackConfigPayload
+
+  """
+  Refresh secret for callback configuration based on callbackConfigId.
+  """
+  refreshNotificationCallbackConfigSecret(input: RefreshNotificationCallbackConfigSecretInput!): RefreshNotificationCallbackConfigSecretPayload
+
+  """
+  Delete callback configuration from notification profile.
+  """
+  deleteNotificationCallbackConfig(input: DeleteNotificationCallbackConfigInput!): DeleteNotificationCallbackConfigPayload
+
+  """
+  Mutation to cancel a pre-stay reservation
+  """
+  cancelReservation(input: CancelReservationInput!): CancelReservationPayload!
+
+  """
+  Cancel reservation reconciliation
+  """
+  cancelReservationReconciliation(input: CancelReservationReconciliationInput!): CancelReservationReconciliationPayload!
+
+  """
+  Update reservation reconciliation
+  """
+  changeReservationReconciliation(input: ChangeReservationReconciliationInput!): ChangeReservationReconciliationPayload!
+
+  """
+  Update reservation with good will refund
+  """
+  refundReservation(input: RefundReservationInput!): RefundReservationPayload!
+
+  """
+  Confirm Reservation sent via Webhook
+  """
+  confirmReservationNotification(input: ConfirmReservationNotificationInput!): ConfirmReservationNotificationPayload!
+}
+
+type NotificationCallbackConfig {
+  """
+  Id of the callback configuration object
+  """
+  id: ID!
+
+  """
+  Callback url where the notification will be delivered
+  """
+  callbackUrl: Url!
+
+  """
+  Secret expiration date time
+  """
+  secretExpirationDateTime: LocalDateTime!
+
+  """
+  Request timeout when sending a notification on the callback url
+  """
+  requestTimeoutSeconds: Int!
+}
+
+type NotificationEventType {
+  """
+  Event type name
+  """
+  name: String!
+
+  """
+  Description of the event type
+  """
+  description: String!
+}
+
+type NotificationEventTypeSubscription {
+  """
+  Name of the event type
+  """
+  eventType: String!
+
+  """
+  Callback configuration information for the event type subscription
+  """
+  callbackConfig: NotificationCallbackConfig!
+}
+
+type NotificationProfile {
+  """
+  Retrieve callback configurations of notification profile
+  """
+  callbackConfigs: [NotificationCallbackConfig!]!
+
+  """
+  Retrieve subscriptions of notification profile
+  """
+  subscriptions: [NotificationSubscription!]!
+}
+
+type NotificationSubscription {
+  """
+  Product name for the subscription
+  """
+  product: String!
+
+  """
+  List of event type subscriptions
+  """
+  eventTypeSubscriptions: [NotificationEventTypeSubscription!]!
+}
+
+"""
+provides information about the current page of results for a given ReservationsConnection
+"""
+type PageInfo {
+  """
+  indicates if there are additional pages to retrieve
+  """
+  hasNextPage: Boolean!
+
+  """
+  the value of the cursor of the last reservation in the current page
+  """
+  endCursor: String
+}
+
+"""
+The `Boolean` scalar type represents `true` or `false`.
+"""
+scalar Boolean
+
+"""
+Payment Details
+"""
+type Payment {
+  instrument: PaymentInstrument
+
+  """
+  Text that is displayed to travelers if a payment type is associated with the reservation.
+  """
+  instructions: String!
+
+  """
+  Reservation payment status associated with the reservation.
+  """
+  status: ReservationPaymentStatus
+
+  """
+  Schedule and details of the Payment
+  """
+  installments: [Installment!]!
+}
+
+"""
+Payment Instrument Details
+"""
+type PaymentInstrument {
+  """
+  Type for Payment Instrument
+  """
+  type: PaymentInstrumentType!
+
+  """
+  Payment Token and its expiration date time
+  """
+  token: PaymentToken!
+}
+
+"""
+Type for Payment Reservation
+"""
+enum PaymentInstrumentType {
+  GUEST_CREDIT_CARD
+
+  EXPEDIA_VIRTUAL_CARD
+
+  BANK_TRANSFER
+
+  CASH
+
+  NONE
+}
+
+type PaymentToken {
+  """
+  Value of the token
+  """
+  value: String
+
+  """
+  Expiration of the token
+  """
+  expirationDateTime: String
+}
+
+type Property {
+  """
+  the ID of the property whose reservations you want to retrieve
+  """
+  id: ID!
+
+  """
+  retrieve reservation data by property ID
+  """
+  reservations("limit results to reservations whose departure date falls within the window defined by CheckOutDateFilter" checkOutDate: CheckOutDateFilter, "facilitates filtering reservations" filter: ReservationFilterInput, "controls the number of results returned on each query request" pageSize: Int!, "retrieve reservations after this cursor value" after: String): ReservationsConnection!
+
+  """
+  Name/headline of the property for the default locale.
+  """
+  name: String!
+}
+
+type Query {
+  """
+  Retrieves configurations on notification platform
+  """
+  notificationProfile: NotificationProfile
+
+  """
+  Retrieves available event types to subscribe to
+  """
+  notificationEventTypes: [NotificationEventType!]
+
+  property(id: String!, "Defaults to EXPEDIA." idSource: IdSource): Property
+}
+
+"""
+Time frame to which the rate is applied.
+"""
+enum RateTimeUnit {
+  PER_DAY
+
+  PER_WEEK
+
+  PER_STAY
+}
+
+enum RateType {
+  """
+  net amount: gross amount - commission
+  """
+  NET
+
+  """
+  gross amount
+  """
+  SELL
+}
+
+"""
+Type of fee in reconciliation.
+"""
+enum ReconciliationFeeType {
+  RECONCILED_AMOUNT
+}
+
+"""
+Reconciliation eligibility collection
+"""
+type ReconEligibility {
+  """
+  Reconcilable scenarios
+  """
+  validScenarios: [String!]
+
+  """
+  irreconcilable scenarios collection
+  """
+  invalidScenarios: [InvalidScenario!]
+}
+
+input RefreshNotificationCallbackConfigSecretInput {
+  """
+  Id of callback configuration to update
+  """
+  callbackConfigId: ID!
+}
+
+type RefreshNotificationCallbackConfigSecretPayload {
+  """
+  Id of callback configuration whose secret is updated
+  """
+  callbackConfigId: ID!
+
+  """
+  Callback Configuration secret string
+  """
+  secret: String!
+
+  """
+  Secret expiration date time
+  """
+  secretExpirationDateTime: LocalDateTime!
+}
+
+input RefundReservationInput {
+  """
+  The ID of the property where the change has been requested.
+  """
+  propertyId: ID!
+
+  """
+  Identifier associated with the reservation to be changed.
+  """
+  reservationId: ID!
+
+  """
+  Reason for cancelling the reservation
+  """
+  reason: ReservationRefundReason!
+
+  """
+  Amount & currencyCode
+  """
+  refund: MoneyInput!
+}
+
+type RefundReservationPayload {
+  """
+  Identifier associated with the reservation changed
+  """
+  reservation: Reservation
+}
+
+"""
+Remittance Type
+"""
+enum RemittanceType {
+  NET
+
+  GROSS
+}
+
+"""
+Reservation details.
+"""
+type Reservation {
+  """
+  Expedia id of the reservation
+  """
+  id: ID
+
+  """
+  last updated Date Time
+  """
+  lastUpdatedDateTime: String!
+
+  """
+  ID associated with the unit/room and source of the ID.
+  """
+  unitIds: [IdNode!]!
+
+  """
+  ID of the rate/rate plan and the source of the ID.
+  """
+  rateIds: [IdNode!]!
+
+  """
+  Source of the reservation.
+  """
+  source: String!
+
+  """
+  Bed type of the reservation.
+  """
+  bedTypes: String
+
+  """
+  Whether smoking is allowed for the reservation.
+  """
+  smokingType: String!
+
+  """
+  Entity that collects payment for the reservation.
+  """
+  businessModel: BusinessModel!
+
+  """
+  Guest loyalty tier. Values include MEMBER, VIP, PREMIUMVIP and null.
+  """
+  loyaltyTier: String @deprecated(reason: "Use primaryGuest field")
+
+  """
+  Count for all adult guests associated with the reservation.
+  """
+  adultCount: Int!
+
+  """
+  Count for all children associated with the reservation.
+  """
+  childCount: Int!
+
+  """
+  Count for all children associated with the reservation.
+  """
+  childAges: [Int]
+
+  """
+  Total number of guests associated with the reservation.
+  """
+  totalGuestCount: Int!
+
+  """
+  VRBO only, Count for all pets associated with the reservation.
+  """
+  petCount: Int
+
+  """
+  Accessibility requests made by the guest for the reservation.
+  """
+  accessibilityText: [String!]
+
+  """
+  Text that is displayed to travelers if there is a multi-room booking associated with the reservation.
+  """
+  multiRoomText: String
+
+  """
+  Text that is displayed to travelers if there is a special request associated with the reservation.
+  """
+  specialRequest: String
+
+  """
+  Text that is displayed to travelers if a payment type is associated with the reservation.
+  """
+  paymentInstructions: String!
+
+  """
+  Text that is displayed to travelers if a payment type is associated with the reservation.
+  """
+  payment: Payment!
+
+  """
+  Current status of the reservation.
+  """
+  status: ReservationStatus!
+
+  """
+  Current sub status of the reservation, it is applicable for vrbo reservations only.
+  """
+  subStatus: String
+
+  """
+  Eligibility of reconciling current reservation
+  """
+  reconciliationEligibility: ReconEligibility
+
+  """
+  Value added Promotions
+  """
+  valueAddedPromotions: [ReservationValueAddedPromotion!]!
+
+  """
+  the amounts for Core-OTA reservation
+  """
+  amounts: ReservationAmounts
+
+  """
+  the amounts for VRBO reservation
+  """
+  vrboAmounts: VrboReservationAmounts
+
+  """
+  The contact of the guest who made the reservation
+  """
+  guestContact: GuestContact @deprecated(reason: "Use primaryGuest field")
+
+  """
+  Is the reservation reconciled
+  """
+  isReconciled: Boolean
+
+  """
+  The reconciliation type of the reservation
+  """
+  reconciliationType: String
+
+  """
+  Travel Industry Designator Service is a unique code that allows a bookings to be recognized by industry suppliers
+  """
+  tidsCode: Int
+
+  """
+  an array of IDs associated with the reservation
+  """
+  reservationIds: [IdNode!]!
+
+  """
+  the reservation's arrival date (format: YYYY-MM-DD)
+  """
+  checkInDate: LocalDate!
+
+  """
+  the reservation's departure date (format: YYYY-MM-DD)
+  """
+  checkOutDate: LocalDate!
+
+  """
+  a timestamp for when the reservation was created (format: YYYY-MM-DDThh:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+  """
+  creationDateTime: String!
+
+  """
+  the Guest who made the booking
+  """
+  primaryGuest: Guest!
+
+  """
+  the supplier amount for the reservation
+  """
+  supplierAmount: SupplierAmount
+
+  """
+  the ID of the message thread associated with the reservation
+  """
+  messageThreadId: ID
+
+  """
+  Operating Model of the Supplier for this Reservation
+  """
+  supplierOperatingModel: SupplierOperatingModel
+
+  """
+  Inventory type used for this Reservation
+  """
+  inventoryType: InventoryType
+
+  """
+  Remittance Type of the Reservation
+  """
+  remittanceType: RemittanceType
+
+  """
+  Policy applied for cancelling the reservation
+  """
+  cancellationPolicy: ReservationCancellationPolicy
+}
+
+"""
+Amounts for Core-OTA reservation
+"""
+type ReservationAmounts {
+  """
+  Summary list of the reservation amounts
+  """
+  summary: [ReservationPerStayAmount!]!
+
+  """
+  Detailed (per-day) list of the reservation amounts
+  """
+  nightlyPayments: ReservationNightlyPayments!
+}
+
+"""
+ Only one of the fields percentage, flatAmount, and numberOfNights may be defined and correlate to the CancellationPenaltyRuleType field 
+"""
+type ReservationCancellationPenaltyRule {
+  type: CancellationPenaltyRuleType!
+
+  """
+   Represented as a fraction of 1. Example: 15% should be represented as 0.15 
+  """
+  percentage: Float
+
+  """
+   cancellation penalty amount for the reservation paid by the customer, minus the Expedia commission 
+  """
+  costFlatAmount: Money
+
+  """
+   total cancellation penalty amount for the reservation paid by the customer, including the Expedia commission 
+  """
+  priceFlatAmount: Money
+
+  numberOfNights: Int
+}
+
+type ReservationCancellationPolicy {
+  tiers: [ReservationCancellationPolicyTier!]
+}
+
+type ReservationCancellationPolicyTier {
+  cancellationWindow: CancellationPolicyCancellationWindow!
+
+  penaltyRule: ReservationCancellationPenaltyRule!
+}
+
+enum ReservationCancellationReason {
+  GUEST_REQUESTED_CANCEL
+
+  NO_SHOW
+
+  EXTENUATING_CIRCUMSTANCE
+
+  NATURAL_DISASTER
+}
+
+"""
+Reason for updating post stay the reservation.
+"""
+enum ReservationChangeReason {
+  GUEST_REQUESTED_CHANGE
+
+  EXTENUATING_CIRCUMSTANCE
+
+  NATURAL_DISASTER
+
+  QUALITY_ISSUE
+}
+
+"""
+Reservation amount that applies to the a specific stay date
+"""
+type ReservationDailyAmount {
+  """
+  Amount type (BASE, DISTOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...)
+  """
+  type: String!
+
+  """
+  Description associated to the amount
+  """
+  description: String
+
+  """
+  Amount date
+  """
+  date: LocalDate!
+
+  """
+  Amount value
+  """
+  amount: Money!
+
+  """
+  Percentage of amount (when applicable)
+  """
+  percent: Float
+}
+
+type ReservationEdge {
+  """
+  the cursor value for this edge
+  """
+  cursor: String!
+
+  """
+  node points to the actual Reservation data
+  """
+  node: Reservation!
+}
+
+"""
+facilitates filtering reservations
+"""
+input ReservationFilterInput {
+  """
+  limit results to reservations with arrival date within the window defined by CheckInDateFilter
+  """
+  checkInDate: CheckInDateFilter
+
+  """
+  limit results to reservations with departure date within the window defined by CheckOutDateFilter
+  """
+  checkOutDate: CheckOutDateFilter
+
+  """
+  list results with provided reservation ids
+  """
+  reservationIds: [IdNodeInput!]
+
+  """
+  limit results to reservations with status defined by ReservationStatus's 
+  """
+  status: [ReservationStatus]
+
+  """
+  limit results to reservations with sub status of a reservation
+  """
+  subStatus: String
+
+  """
+  limit results to reservations with updated date time from the date defined by LastUpdatedDateTimeFilter
+  """
+  lastUpdatedDateTime: LastUpdatedDateTimeFilter
+}
+
+"""
+Source of a given reservation ID.
+"""
+enum ReservationIdSource {
+  EXPEDIA
+
+  VRBO
+
+  SUPPLIER
+}
+
+"""
+Detailed (per-day) list of the reservation amounts
+"""
+type ReservationNightlyPayments {
+  """
+  Reservation amounts for a specific stay date
+  """
+  dailyAmounts: [ReservationDailyAmount!]!
+
+  """
+  Reservation amounts that apply to the whole stay
+  """
+  perStayAmounts: [ReservationPerStayAmount!]!
+
+  """
+  Cancellation amounts for the reservation
+  """
+  cancellationAmounts: [ReservationPerStayAmount!]!
+}
+
+"""
+Reservation Payment Satus
+"""
+enum ReservationPaymentStatus {
+  UNPAID
+
+  PARTIAL_PAID
+
+  OVERPAID
+
+  PAID
+
+  EXTERNAL_SOR
+}
+
+"""
+Reservation amount that applies to the whole stay
+"""
+type ReservationPerStayAmount {
+  """
+  Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...)
+  """
+  type: String!
+
+  """
+  Description associated to the amount
+  """
+  description: String
+
+  """
+  Amount value
+  """
+  amount: Money!
+
+  """
+  Percentage of amount (when applicable)
+  """
+  percent: Float
+}
+
+"""
+Reason for cancelling pre stay reservation.
+"""
+enum ReservationPreStayCancellationReason {
+  GUEST_REQUESTED_CANCEL
+
+  INVALID_PAYMENT_METHOD
+}
+
+"""
+Valid reasons for a good will refund.
+"""
+enum ReservationRefundReason {
+  GUEST_SATISFACTION_REFUND
+
+  ACCESSIBILITY_ISSUE
+
+  AMENITY_ISSUE
+
+  ROOM_TYPE_ISSUE
+
+  SPECIAL_REQUEST_NOT_MET
+
+  SERVICE_ISSUE
+
+  LOYALTY_PERK_NOT_FULFILLED
+}
+
+"""
+represents a logical connection to reservations data
+"""
+type ReservationsConnection {
+  """
+  the total number of reservations
+  """
+  totalCount: Int
+
+  """
+  information about the current page of results
+  """
+  pageInfo: PageInfo
+
+  """
+  the edges in the connection to traverse, each contain a cursor and node
+  """
+  edges: [ReservationEdge]!
+}
+
+"""
+Status of the reservation.
+"""
+enum ReservationStatus {
+  BOOKED
+
+  CANCELLED
+
+  COMPLETE
+
+  CONFIRMED
+
+  CREATED
+
+  DECLINED
+
+  IN_PROGRESS
+
+  INVALID
+
+  RESERVED
+
+  """
+  Added because defined in LSGC
+  """
+  BUILDING
+
+  UNCONFIRMED
+
+  STAY_IN_PROGRESS
+
+  CANCELLED_BY_HOMEAWAY
+
+  CANCELLED_BY_OWNER
+
+  CANCELLED_BY_TRAVELER
+
+  CANCELLED_BY_SYSTEM
+
+  DECLINED_BY_OWNER
+
+  DECLINED_BY_SYSTEM
+
+  DECLINED_BY_TRAVELER_PAY_FAILURE
+
+  UNCONFIRMED_BY_OWNER
+
+  UNCONFIRMED_BY_TRAVELER
+
+  RAVELER_CANCEL_PENDING_BOOKING
+}
+
+type ReservationValueAddedPromotion {
+  """
+  id of the promotion
+  """
+  id: String!
+
+  """
+  describes the promotion
+  """
+  description: String!
+}
+
+input SendTestNotificationInput {
+  """
+  Event type name for testing notifications
+  """
+  eventType: String!
+
+  """
+   Payload for testing notifications
+  """
+  payload: JSON!
+}
+
+type SendTestNotificationPayload {
+  """
+  Outcome of the test payload sent
+  """
+  outcome: TestNotificationOutcome!
+
+  """
+  The HTTP status code returned by the endpoint to which the notification was delivered to.
+  """
+  httpStatusCode: Int
+
+  """
+  In the case of a failed test, this contains human readable description of any errors encountered when attempting to deliver the notification.
+  """
+  error: TestNotificationError
+}
+
+input SubscribeNotificationEventTypeInput {
+  """
+  Event type name to subscribe
+  """
+  eventType: String!
+
+  """
+  Id of callback configuration to associate the subscription
+  """
+  callbackConfigId: ID!
+}
+
+type SubscribeNotificationEventTypePayload {
+  """
+  Name of the event type
+  """
+  eventType: String!
+
+  """
+  Callback configuration information for the event type subscription
+  """
+  callbackConfig: NotificationCallbackConfig!
+}
+
+interface SupplierAmount {
+  """
+  the rate type: NET for Expedia Collect and SELL for Hotel Collect
+  """
+  rateType: RateType!
+
+  """
+  the currency in which the amount is shown
+  """
+  currencyCode: String!
+}
+
+type SupplierAmountCompensation {
+  """
+  Compensation base percentage, expressed as a fraction of 1 (so, for example, 0.25)
+  """
+  basePercent: Float
+
+  """
+  Accelerator percentage, expressed as a fraction of 1 (so, for example, 0.25)
+  """
+  acceleratorPercent: Float
+}
+
+"""
+Updated supplier amount of the reservation
+"""
+input SupplierAmountInput {
+  """
+  map to currency in domain
+  """
+  currencyCode: String!
+
+  """
+  the updated daily rates
+  """
+  rates: [SupplierRateInput!]!
+}
+
+"""
+Type of fee charged by the supplier.
+"""
+enum SupplierFeeType {
+  BASE_RATE
+
+  EXTRA_GUEST_FEES
+
+  SERVICE_FEES
+
+  RECONCILED_AMOUNT
+}
+
+type SupplierLoyaltyPlanInfo {
+  """
+  identifies the customer reward program
+  """
+  planCode: String
+
+  """
+  membership number of the customer
+  """
+  membershipNumber: Int
+}
+
+"""
+Operation Model of the Supplier
+"""
+enum SupplierOperatingModel {
+  MERCHANT
+
+  AGENCY
+}
+
+type SupplierRate {
+  """
+  Date when the rate becomes effective (format: YYYY-MM-DD).
+  """
+  fromDate: LocalDate!
+
+  """
+  Date when the rate expires (format: YYYY-MM-DD).
+  """
+  toDate: LocalDate!
+
+  """
+  Time unit of the rate.
+  """
+  rateTimeUnit: RateTimeUnit!
+
+  """
+  Itemized list of fees.
+  """
+  rateItems: [SupplierRateItem!]!
+
+  """
+  Compensation information associated to the reservation for this date range
+  """
+  compensation: SupplierAmountCompensation!
+}
+
+"""
+Updated rate for an existing stay date/Rate for an extended stay date
+"""
+input SupplierRateInput {
+  """
+  inclusive. Map to reconciliationAmount.stayDate in domain
+  """
+  fromDate: LocalDate!
+
+  """
+  exclusive. Since we only support PER_DAY, toDate should always be fromDate + 1
+  """
+  toDate: LocalDate!
+
+  """
+  only PER_DAY is currently supported
+  """
+  rateTimeUnit: RateTimeUnit!
+
+  """
+  the updated fee
+  """
+  rateItems: [SupplierRateItemInput!]!
+}
+
+type SupplierRateItem {
+  """
+  Type of fee for this itemized rate.
+  """
+  feeType: SupplierFeeType!
+
+  """
+  Amount of the fee.
+  """
+  amount: Float!
+}
+
+"""
+Updated fee
+"""
+input SupplierRateItemInput {
+  """
+  map to reconciliationAmount.type in domain. Map to RECONCILED_AMOUNT in domain.
+  """
+  feeType: ReconciliationFeeType!
+
+  """
+  map to reconciliationAmount.amount in domain
+  """
+  amount: Float!
+}
+
+type SupplierTotal {
+  """
+  Total amount of the fee before tax is applied.
+  """
+  amountBeforeTax: Float!
+
+  """
+  Total amount of the fee after tax is applied.
+  """
+  amountAfterTax: Float!
+
+  """
+  Compensation information associated to the reservation
+  """
+  compensation: SupplierAmountCompensation!
+}
+
+type TestNotificationError {
+  """
+  Code that reflects the specific error encountered during the test
+  """
+  code: String!
+
+  """
+  Human readable message describing the error encountered
+  """
+  message: String!
+}
+
+enum TestNotificationOutcome {
+  SUCCESS
+
+  FAILURE
+}
+
+"""
+Travel Purpose type, used to identify business bookings.
+"""
+enum TravelPurpose {
+  NONE
+
+  KNOWN_BUSINESS_VISIT
+
+  SUSPECTED_BUSINESS_VISIT
+
+  KNOWN_PERSONAL_VISIT
+
+  SUSPECTED_PERSONAL_VISIT
+}
+
+input UnsubscribeNotificationEventTypeInput {
+  """
+  Event type name to unsubscribe from
+  """
+  eventType: String!
+}
+
+type UnsubscribeNotificationEventTypePayload {
+  """
+  Name of the event type unsubscribed
+  """
+  eventType: String!
+}
+
+input UpdateNotificationCallbackConfigInput {
+  """
+  Id of callback configuration to update
+  """
+  callbackConfigId: ID!
+
+  """
+  Updated callback url of callback configuration
+  """
+  callbackUrl: Url
+
+  """
+  Updated api key of callback configuration
+  """
+  apiKey: String
+
+  """
+  Updated request timeout in seconds of callback configuration
+  """
+  requestTimeoutSeconds: Int
+}
+
+type UpdateNotificationCallbackConfigPayload {
+  """
+  Information about the updated Callback configuration
+  """
+  callbackConfig: NotificationCallbackConfig!
+}
+
+input UpdateNotificationEventTypeSubscriptionInput {
+  """
+  Event type name
+  """
+  eventType: String!
+
+  """
+  Id of callback configuration to associate the subscription
+  """
+  callbackConfigId: ID!
+}
+
+type UpdateNotificationEventTypeSubscriptionPayload {
+  """
+  Name of the event type
+  """
+  eventType: String!
+
+  """
+  Callback configuration information for the event type subscription
+  """
+  callbackConfig: NotificationCallbackConfig!
+}
+
+scalar Url
+
+"""
+VRBO reservation amount details
+"""
+type VrboReservationAmount {
+  """
+  amount value for reservation
+  """
+  amount: Money!
+
+  """
+  product code for reservation amount
+  """
+  productCode: String
+
+  """
+  Amount type (RENT, PARTNER_FEE, TRAVELER_SERVICE_FEE, PROPERTY_DAMAGE_PROTECTION, VRBO_REMITTED_LODGING_TAX, ...)
+  """
+  type: String!
+}
+
+"""
+Amounts for VRBO reservation
+"""
+type VrboReservationAmounts {
+  """
+  Summary list of the reservation amounts
+  """
+  summary: [VrboReservationAmount!]!
+}
+
+"""
+A type representing a date time with a timezone in format YYYY-MM-DDTHH:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+"""
+scalar ZoneDateTime
+
+"""
+A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.
+"""
+type __Schema {
+  description: String
+
+  """
+  A list of all types supported by this server.
+  """
+  types: [__Type!]!
+
+  """
+  The type that query operations will be rooted at.
+  """
+  queryType: __Type!
+
+  """
+  If this server supports mutation, the type that mutation operations will be rooted at.
+  """
+  mutationType: __Type
+
+  """
+  If this server support subscription, the type that subscription operations will be rooted at.
+  """
+  subscriptionType: __Type
+
+  """
+  A list of all directives supported by this server.
+  """
+  directives: [__Directive!]!
+}
+
+"""
+The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+
+Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+"""
+type __Type {
+  kind: __TypeKind!
+
+  name: String
+
+  description: String
+
+  specifiedByURL: String
+
+  fields(includeDeprecated: Boolean = false): [__Field!]
+
+  interfaces: [__Type!]
+
+  possibleTypes: [__Type!]
+
+  enumValues(includeDeprecated: Boolean = false): [__EnumValue!]
+
+  inputFields(includeDeprecated: Boolean = false): [__InputValue!]
+
+  ofType: __Type
+}
+
+"""
+An enum describing what kind of type a given `__Type` is.
+"""
+enum __TypeKind {
+  """
+  Indicates this type is a scalar.
+  """
+  SCALAR
+
+  """
+  Indicates this type is an object. `fields` and `interfaces` are valid fields.
+  """
+  OBJECT
+
+  """
+  Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields.
+  """
+  INTERFACE
+
+  """
+  Indicates this type is a union. `possibleTypes` is a valid field.
+  """
+  UNION
+
+  """
+  Indicates this type is an enum. `enumValues` is a valid field.
+  """
+  ENUM
+
+  """
+  Indicates this type is an input object. `inputFields` is a valid field.
+  """
+  INPUT_OBJECT
+
+  """
+  Indicates this type is a list. `ofType` is a valid field.
+  """
+  LIST
+
+  """
+  Indicates this type is a non-null. `ofType` is a valid field.
+  """
+  NON_NULL
+}
+
+"""
+Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.
+"""
+type __Field {
+  name: String!
+
+  description: String
+
+  args(includeDeprecated: Boolean = false): [__InputValue!]!
+
+  type: __Type!
+
+  isDeprecated: Boolean!
+
+  deprecationReason: String
+}
+
+"""
+Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.
+"""
+type __InputValue {
+  name: String!
+
+  description: String
+
+  type: __Type!
+
+  """
+  A GraphQL-formatted string representing the default value for this input value.
+  """
+  defaultValue: String
+
+  isDeprecated: Boolean!
+
+  deprecationReason: String
+}
+
+"""
+One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.
+"""
+type __EnumValue {
+  name: String!
+
+  description: String
+
+  isDeprecated: Boolean!
+
+  deprecationReason: String
+}
+
+"""
+A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.
+
+In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.
+"""
+type __Directive {
+  name: String!
+
+  description: String
+
+  isRepeatable: Boolean!
+
+  locations: [__DirectiveLocation!]!
+
+  args(includeDeprecated: Boolean = false): [__InputValue!]!
+}
+
+"""
+A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.
+"""
+enum __DirectiveLocation {
+  """
+  Location adjacent to a query operation.
+  """
+  QUERY
+
+  """
+  Location adjacent to a mutation operation.
+  """
+  MUTATION
+
+  """
+  Location adjacent to a subscription operation.
+  """
+  SUBSCRIPTION
+
+  """
+  Location adjacent to a field.
+  """
+  FIELD
+
+  """
+  Location adjacent to a fragment definition.
+  """
+  FRAGMENT_DEFINITION
+
+  """
+  Location adjacent to a fragment spread.
+  """
+  FRAGMENT_SPREAD
+
+  """
+  Location adjacent to an inline fragment.
+  """
+  INLINE_FRAGMENT
+
+  """
+  Location adjacent to a variable definition.
+  """
+  VARIABLE_DEFINITION
+
+  """
+  Location adjacent to a schema definition.
+  """
+  SCHEMA
+
+  """
+  Location adjacent to a scalar definition.
+  """
+  SCALAR
+
+  """
+  Location adjacent to an object type definition.
+  """
+  OBJECT
+
+  """
+  Location adjacent to a field definition.
+  """
+  FIELD_DEFINITION
+
+  """
+  Location adjacent to an argument definition.
+  """
+  ARGUMENT_DEFINITION
+
+  """
+  Location adjacent to an interface definition.
+  """
+  INTERFACE
+
+  """
+  Location adjacent to a union definition.
+  """
+  UNION
+
+  """
+  Location adjacent to an enum definition.
+  """
+  ENUM
+
+  """
+  Location adjacent to an enum value definition.
+  """
+  ENUM_VALUE
+
+  """
+  Location adjacent to an input object type definition.
+  """
+  INPUT_OBJECT
+
+  """
+  Location adjacent to an input object field definition.
+  """
+  INPUT_FIELD_DEFINITION
+}
+
+"""
+Directs the executor to include this field or fragment only when the `if` argument is true.
+"""
+directive @include ("Included when true." if: Boolean!) on FIELD|FRAGMENT_SPREAD|INLINE_FRAGMENT
+
+"""
+Directs the executor to skip this field or fragment when the `if` argument is true.
+"""
+directive @skip ("Skipped when true." if: Boolean!) on FIELD|FRAGMENT_SPREAD|INLINE_FRAGMENT
+
+"""
+Marks an element of a GraphQL schema as no longer supported.
+"""
+directive @deprecated ("Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax, as specified by [CommonMark](https:\/\/commonmark.org\/)." reason: String = "No longer supported") on FIELD_DEFINITION|ARGUMENT_DEFINITION|INPUT_FIELD_DEFINITION|ENUM_VALUE
+
+"""
+Exposes a URL that specifies the behavior of this scalar.
+"""
+directive @specifiedBy ("The URL that specifies the behavior of this scalar." url: String!) on SCALAR
+
+schema {
+  query: Query
+  mutation: Mutation
+}

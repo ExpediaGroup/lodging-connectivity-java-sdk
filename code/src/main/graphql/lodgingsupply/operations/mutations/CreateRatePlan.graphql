@@ -1,0 +1,18 @@
+mutation CreateRatePlan($input: CreateRatePlanInput!) {
+    createRatePlan(input: $input) {
+        clientMutationId
+        ratePlan {
+            id
+            propertyId
+            name
+            creationDateTime
+            type
+            unitId
+            valueAdds
+            taxInclusive
+            status
+            lastUpdateDateTime
+            baseRateGuestCount
+        }
+    }
+}

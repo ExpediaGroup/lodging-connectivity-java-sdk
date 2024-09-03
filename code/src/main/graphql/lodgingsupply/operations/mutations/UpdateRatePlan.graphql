@@ -1,0 +1,8 @@
+mutation UpdateRatePlan($input: UpdateRatePlanInput!) {
+    updateRatePlan(input: $input) {
+        clientMutationId
+        ratePlan {
+            id
+        }
+    }
+}

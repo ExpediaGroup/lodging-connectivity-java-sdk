@@ -1,0 +1,80 @@
+query RatePlan($propertyId: ID!, $ratePlanId: ID!) {
+    ratePlan(propertyId: $propertyId, ratePlanId: $ratePlanId) {
+        id
+        lastUpdateDateTime
+        name
+        paymentScheduleApplicable
+        pricingModel
+        propertyId
+        status
+        taxInclusive
+        type
+        unitId
+        valueAdds
+        baseRateGuestCount
+        creationDateTime
+        distributionRules {
+            merchantOfRecord
+            ratePlanCode
+        }
+        feeSet {
+            id
+            name
+            businessModel
+            fees {
+                name
+                scope
+                taxable
+                type
+                variesByLengthOfStay
+                ageCategory
+                charges {
+                    duration
+                    flatAmount {
+                        amount
+                        currencyCode
+                    }
+                    percentage
+                    type
+                }
+                restrictions {
+                    dateRange {
+                        from
+                        to
+                    }
+                    extraGuestRange {
+                        max
+                        min
+                    }
+                    rangeOfNight {
+                        max
+                        min
+                    }
+                }
+            }
+        }
+        restrictions {
+            advanceBookingDays {
+                max
+                min
+            }
+            lengthOfStay {
+                max
+                min
+            }
+            mobileOnly
+            reservationDates {
+                from
+                to
+            }
+            travelDates {
+                from
+                to
+            }
+        }
+        cancellationPolicyConfig {
+            id
+            name
+        }
+    }
+}

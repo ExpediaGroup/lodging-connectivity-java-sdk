@@ -1,0 +1,7 @@
+mutation ChangeReservationReconciliation($input: ChangeReservationReconciliationInput!) {
+    changeReservationReconciliation(input: $input) {
+        reservation {
+            id
+        }
+    }
+}

@@ -1,0 +1,58 @@
+---
+name: GHAS-CodeQL-Scan
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '12 3 * * 4'
+  push:
+    branches:
+      - main
+jobs:
+  analyze:
+    name: Analyze
+    runs-on:
+      - eg-securityscan
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - java
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Java
+        if: matrix.language == 'java'
+        uses: actions/setup-java@v3
+        with:
+          overwrite-settings: false
+          # Unable to automatically detect Java version. Defaulted to Java 11.
+          # 📝️️ Please update java-version as appropriate.
+          java-version: '11'
+          distribution: adopt
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+      - name: Autobuild
+        # Autobuild attempts to build compiled languages (C/C++, C#, or Java)
+        # 📝️ If the Autobuild step fails, remove the step entirely, uncomment
+        # the 'Custom Build' step below, and modify to build your code.
+        if: |
+          matrix.language == 'c' ||
+          matrix.language == 'cpp' ||
+          matrix.language == 'csharp' ||
+          matrix.language == 'go' ||
+          matrix.language == 'java'
+        uses: github/codeql-action/autobuild@v2
+      # - name: Custom Build
+      # ℹ️ The step name 'Custom Build' is required in order to prevent the
+      # Autobuild step from being re-added during future workflow updates.
+      #   run: |
+      #     make bootstrap
+      #     make release
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2

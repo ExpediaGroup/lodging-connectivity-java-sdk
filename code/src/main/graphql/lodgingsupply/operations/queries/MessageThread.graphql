@@ -1,0 +1,58 @@
+query MessageThread(
+    $messageThreadId: ID!,
+    $messagesLimit: Int,
+    $messagesCursor: String,
+    $orderMessagesBy: MessageThreadMessagesOrderByInput
+) {
+    messageThread(id: $messageThreadId) {
+        id
+        creationDateTimeUtc
+        bookingInquiry {
+            adultCount
+            checkInDate
+            checkOutDate
+            childCount
+            hasPets
+            id
+        }
+        property {
+            id
+        }
+        primaryTraveler {
+            firstName
+            lastName
+        }
+        reservationSummary {
+            adultCount
+            alternativeIds {
+                supplierId
+            }
+            checkInDate
+            checkOutDate
+            childCount
+            id
+            petCount
+        }
+        messages(limit: $messagesLimit, cursor: $messagesCursor, orderBy: $orderMessagesBy) {
+            cursor
+            totalCount
+            elements {
+                id
+                type
+                creationDateTimeUtc
+                fromRole
+                reviewStatus
+                attachments {
+                    id
+                    name
+                    uploadDateTimeUtc
+                    url
+                }
+                body {
+                    value
+                }
+
+            }
+        }
+    }
+}

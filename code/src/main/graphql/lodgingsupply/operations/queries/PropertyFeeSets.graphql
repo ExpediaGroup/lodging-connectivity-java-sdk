@@ -1,0 +1,43 @@
+query PropertyFeeSets($propertyId: String!, $filters: PropertyFeeSetsFiltersInput!,) {
+    property(id: $propertyId) {
+        feeSets(filters: $filters) {
+            elements {
+                businessModel
+                fees {
+                    ageCategory
+                    charges {
+                        duration
+                        flatAmount {
+                            amount
+                            currencyCode
+                        }
+                        percentage
+                        type
+                    }
+                    name
+                    restrictions {
+                        dateRange {
+                            from
+                            to
+                        }
+                        extraGuestRange {
+                            max
+                            min
+                        }
+                        rangeOfNight {
+                            max
+                            min
+                        }
+                    }
+                    scope
+                    taxable
+                    type
+                    variesByLengthOfStay
+                }
+                id
+                name
+            }
+            totalCount
+        }
+    }
+}

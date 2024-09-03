@@ -1,0 +1,17 @@
+query PropertyAggregatedReviews($propertyId: String!, $filters: AggregatedReviewsFiltersInput!) {
+    property(id: $propertyId) {
+        aggregatedReviews(filters: $filters) {
+            brandsWithScores {
+                brandName
+                categoriesWithScore {
+                    category
+                    value {
+                        reviewsCount
+                        score
+                    }
+                }
+                totalReviewsCount
+            }
+        }
+    }
+}

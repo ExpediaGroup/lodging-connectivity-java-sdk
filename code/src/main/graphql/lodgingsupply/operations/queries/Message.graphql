@@ -1,0 +1,48 @@
+query Message($messageId: ID!) {
+    message(id: $messageId) {
+        id
+        creationDateTimeUtc
+        fromRole
+        reviewStatus
+        type
+        attachments {
+            id
+            name
+            uploadDateTimeUtc
+            url
+        }
+        body {
+            value
+        }
+        messageThread {
+            id
+            creationDateTimeUtc
+            bookingInquiry {
+                id
+                adultCount
+                checkInDate
+                checkOutDate
+                childCount
+                hasPets
+            }
+            primaryTraveler {
+                firstName
+                lastName
+            }
+            property {
+                id
+            }
+            reservationSummary {
+                id
+                checkInDate
+                checkOutDate
+                adultCount
+                childCount
+                petCount
+                alternativeIds {
+                    supplierId
+                }
+            }
+        }
+    }
+}

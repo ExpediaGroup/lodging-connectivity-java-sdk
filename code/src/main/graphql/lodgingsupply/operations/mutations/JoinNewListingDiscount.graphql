@@ -1,0 +1,3 @@
+mutation JoinNewListingDiscount($joinNewListingDiscountId: String!, $idSource: IdSource!) {
+    joinNewListingDiscount(id: $joinNewListingDiscountId, idSource: $idSource)
+}

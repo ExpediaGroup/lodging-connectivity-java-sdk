@@ -1,0 +1,47 @@
+mutation UpdateSingleDiscountPromotion($promotion: SingleDiscountPromotionUpdateInput!, $propertyId: String!, $propertyIdSource: IdSource!) {
+    updateSingleDiscountPromotion(promotion: $promotion, propertyId: $propertyId, propertyIdSource: $propertyIdSource) {
+        category
+        id
+        isContractedPromotion
+        name
+        sellStatus
+        status
+        ... on DiscountPromotion {
+            id
+            name
+            category
+            status
+            code
+            restrictions {
+                isMemberOnly
+                isMobileUserOnly
+                minLengthOfStay
+                maxLengthOfStay
+                minAdvanceBookingDays
+                maxAdvanceBookingDays
+                bookingLocalDateTimeFrom
+                bookingLocalDateTimeTo
+                travelDateFrom
+                travelDateTo
+                sameDayBookingStartTime
+            }
+            blackoutDates {
+                travelDateFrom
+                travelDateTo
+            }
+            discount {
+                ... on SingleDiscount {
+                    type
+                    unit
+                    value
+                    memberOnlyAdditionalValue
+                }
+            }
+            sellStatus
+            isContractedPromotion
+            eligibleRatePlans {
+                id
+            }
+        }
+    }
+}

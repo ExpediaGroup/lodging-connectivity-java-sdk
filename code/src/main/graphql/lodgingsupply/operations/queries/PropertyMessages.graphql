@@ -1,0 +1,51 @@
+query PropertyMessages($filters: PropertyMessagesFiltersInput!, $propertyId: String!, $cursor: String, $limit: Int) {
+    property(id: $propertyId) {
+        messages(filters: $filters, cursor: $cursor, limit: $limit) {
+            cursor
+            totalCount
+            elements {
+                attachments {
+                    id
+                    name
+                    uploadDateTimeUtc
+                    url
+                }
+                body {
+                    value
+                }
+                creationDateTimeUtc
+                fromRole
+                id
+                reviewStatus
+                type
+                messageThread {
+                    bookingInquiry {
+                        adultCount
+                        checkInDate
+                        checkOutDate
+                        childCount
+                        hasPets
+                        id
+                    }
+                    creationDateTimeUtc
+                    id
+                    primaryTraveler {
+                        firstName
+                        lastName
+                    }
+                    reservationSummary {
+                        adultCount
+                        alternativeIds {
+                            supplierId
+                        }
+                        checkInDate
+                        checkOutDate
+                        childCount
+                        id
+                        petCount
+                    }
+                }
+            }
+        }
+    }
+}

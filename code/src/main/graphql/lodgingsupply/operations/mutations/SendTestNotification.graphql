@@ -1,0 +1,10 @@
+mutation SendTestNotification($input: SendTestNotificationInput!) {
+    sendTestNotification(input: $input) {
+        error {
+            code
+            message
+        }
+        httpStatusCode
+        outcome
+    }
+}

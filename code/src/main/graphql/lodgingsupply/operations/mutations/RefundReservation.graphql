@@ -1,0 +1,7 @@
+mutation RefundReservation($input: RefundReservationInput!) {
+    refundReservation(input: $input) {
+        reservation {
+            id
+        }
+    }
+}

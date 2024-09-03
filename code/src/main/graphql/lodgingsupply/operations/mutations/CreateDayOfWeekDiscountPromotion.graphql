@@ -1,0 +1,54 @@
+mutation CreateDayOfWeekDiscountPromotion($propertyId: String!, $propertyIdSource: IdSource!, $promotion: DayOfWeekDiscountPromotionCreateInput!) {
+    createDayOfWeekDiscountPromotion(promotion: $promotion, propertyId: $propertyId, propertyIdSource: $propertyIdSource) {
+        category
+        id
+        isContractedPromotion
+        name
+        sellStatus
+        status
+        ... on DiscountPromotion {
+            id
+            name
+            category
+            status
+            code
+            restrictions {
+                isMemberOnly
+                isMobileUserOnly
+                minLengthOfStay
+                maxLengthOfStay
+                minAdvanceBookingDays
+                maxAdvanceBookingDays
+                bookingLocalDateTimeFrom
+                bookingLocalDateTimeTo
+                travelDateFrom
+                travelDateTo
+                sameDayBookingStartTime
+            }
+            eligibleRatePlans {
+                id
+            }
+            blackoutDates {
+                travelDateFrom
+                travelDateTo
+            }
+            discount {
+                type
+                unit
+                ... on DayOfWeekDiscount {
+                    type
+                    unit
+                    monday
+                    tuesday
+                    wednesday
+                    thursday
+                    friday
+                    saturday
+                    sunday
+                }
+            }
+            sellStatus
+            isContractedPromotion
+        }
+    }
+}

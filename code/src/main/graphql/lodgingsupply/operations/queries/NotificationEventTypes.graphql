@@ -1,0 +1,6 @@
+query NotificationEventTypes {
+    notificationEventTypes {
+        description
+        name
+    }
+}

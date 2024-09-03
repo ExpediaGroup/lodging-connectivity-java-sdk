@@ -1,0 +1,69 @@
+query PropertyReviews(
+    $propertyId: String!,
+    $orderBy: ReviewsOrderBy,
+    $filter: ReviewFilter,
+    $pageSize: Int!,
+    $after: String
+) {
+    property(id: $propertyId) {
+        reviews(pageSize: $pageSize, orderBy: $orderBy, filter: $filter, after: $after) {
+            cursor
+            reviews {
+                body {
+                    locale
+                    value
+                }
+                brandNameV2
+                createdDateTime
+                id
+                isEligibleForResponse
+                lastUpdatedDateTime
+                media {
+                    caption {
+                        locale
+                        value
+                    }
+                    highResolutionUrl
+                    thumbnailUrl
+                }
+                propertyId {
+                    id
+                    idSource
+                }
+                reservation {
+                    checkInDate
+                    checkOutDate
+                    primaryGuest {
+                        firstName
+                        lastName
+                    }
+                    reservationIds {
+                        id
+                        idSource
+                    }
+                    status
+                }
+                response {
+                    body {
+                        locale
+                        value
+                    }
+                    createdDateTime
+                    lastUpdatedDateTime
+                    status
+                }
+                source
+                starRatings {
+                    category
+                    value
+                }
+                status
+                title {
+                    locale
+                    value
+                }
+            }
+            totalCount
+        }
+    }
+}

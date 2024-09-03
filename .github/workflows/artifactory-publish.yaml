@@ -1,0 +1,59 @@
+name: Publish Library to Artifactory
+
+on:
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        description: "The version to release"
+        required: true
+      isSnapshot:
+        description: "Whether the version to release is a -SNAPSHOT version"
+        required: true
+        type: choice
+        options:
+          - 'Yes'
+          - 'No'
+        default: 'Yes'
+
+jobs:
+  build:
+    runs-on: eg-default
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 11
+          distribution: 'adopt'
+
+      - name: Prepare Environment and Version
+        id: prepare
+        run: |
+          git config user.name s-github-actions
+          git config user.email s-github-actions@expediagroup.com
+          datetime=$(date +%Y%m%d%H%M%S)
+          version=${{ github.event.inputs.newVersion }}
+          if [ "${{ github.event.inputs.isSnapshot }}" != "No" ]; then
+            version="$version-SNAPSHOT"
+          fi
+          echo "datetime=$datetime" >> $GITHUB_OUTPUT
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "branch_name=release/$version/$datetime" >> $GITHUB_OUTPUT
+
+      - name: Prepare Release
+        id: prepare_release
+        run: |
+          git checkout -b ${{ steps.prepare.outputs.branch_name }}
+          chmod a+x ./gradlew && ./gradlew --no-daemon versionsSet -Pversion=${{ steps.prepare.outputs.version }}
+          git add gradle.properties gradlew
+          git commit -m "chore: prepare release ${{ steps.prepare.outputs.version }} at ${{ steps.prepare.outputs.datetime }}"
+          git push --set-upstream origin ${{ steps.prepare.outputs.branch_name }}
+
+      - name: Build and Publish
+        env:
+          ARTYLAB_USER: ${{ secrets.CICD_ARTYLAB_PUBLISH_USER }}
+          ARTYLAB_PASSWORD: ${{ secrets.CICD_ARTYLAB_PUBLISH_TOKEN }}
+        run: |
+          echo "Publishing the following version:"
+          echo ${{ steps.prepare.outputs.version }}
+          EXCLUDE_MODULE=examples ./gradlew --no-daemon clean jar build publish -Pversion=${{ steps.prepare.outputs.version }}

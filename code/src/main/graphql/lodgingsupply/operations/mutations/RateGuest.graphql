@@ -1,0 +1,9 @@
+mutation RateGuest($input: RateGuestInput!, $propertyId: ID!, $propertyIdSource: IdSource!) {
+    rateGuest(input: $input, propertyId: $propertyId, propertyIdSource: $propertyIdSource) {
+        recommendGuest
+        starRatings {
+            category
+            value
+        }
+    }
+}

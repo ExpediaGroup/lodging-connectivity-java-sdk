@@ -1,0 +1,6 @@
+mutation ArchivePropertyIds($input: ArchivePropertyIdsInput!) {
+    archivePropertyIds(input: $input) {
+        advertiserId
+        propertyIdsToArchive
+    }
+}

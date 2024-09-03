@@ -1,0 +1,5 @@
+query GetPropertyName($id: String!) {
+    property(id: $id, idSource: EXPEDIA) {
+        name
+    }
+}

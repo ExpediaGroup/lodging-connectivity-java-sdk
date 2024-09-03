@@ -1,0 +1,10 @@
+mutation SandboxChangeReservationStayDates($input: ChangeReservationStayDatesInput!) {
+    changeReservationStayDates(input: $input) {
+        clientMutationId
+        reservation {
+            id
+            checkInDate
+            checkOutDate
+        }
+    }
+}

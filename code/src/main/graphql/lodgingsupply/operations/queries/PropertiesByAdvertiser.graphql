@@ -1,0 +1,10 @@
+query PropertiesByAdvertiser($id: ID!, $idSource: IdSource!, $pageSize: Int, $cursor: String) {
+    propertiesByAdvertiser(id: $id, idSource: $idSource, pageSize: $pageSize, cursor: $cursor) {
+        cursor
+        totalCount
+        elements {
+            id
+            name
+        }
+    }
+}

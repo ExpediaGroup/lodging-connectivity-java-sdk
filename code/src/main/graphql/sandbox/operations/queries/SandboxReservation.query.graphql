@@ -1,0 +1,5 @@
+query SandboxReservation($id: ID!) {
+    reservation(id: $id) {
+        ...SandboxReservationFragment
+    }
+}

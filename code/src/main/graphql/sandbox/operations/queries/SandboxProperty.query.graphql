@@ -1,0 +1,13 @@
+query SandboxProperty($id: ID!, $reservationsCursor: String, $reservationsLimit: Int, $skipReservations: Boolean! = false) {
+    property(id: $id) {
+        id
+        name
+        reservations(cursor: $reservationsCursor, limit: $reservationsLimit) @skip(if: $skipReservations) {
+            cursor
+            totalCount
+            elements {
+                ...SandboxReservationFragment
+            }
+        }
+    }
+}

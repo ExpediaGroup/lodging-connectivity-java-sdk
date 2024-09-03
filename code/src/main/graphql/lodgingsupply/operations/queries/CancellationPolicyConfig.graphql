@@ -1,0 +1,47 @@
+query CancellationPolicyConfig($id: ID!) {
+    cancellationPolicyConfig(id: $id) {
+        id
+        name
+        additionalCancellationFee {
+            amount
+            currencyCode
+        }
+        defaultPolicies {
+            type
+            tiers {
+                cancellationWindow {
+                    cutoff
+                    temporalUnit
+                }
+                penaltyRules {
+                    applicability
+                    flatAmount {
+                        amount
+                        currencyCode
+                    }
+                    numberOfNights
+                    percentage
+                    type
+                }
+            }
+        }
+        overridePolicies {
+            cancellationPolicy {
+                type
+                tiers {
+                    cancellationWindow {
+                        cutoff
+                        temporalUnit
+                    }
+                }
+            }
+            dateRanges {
+                from
+                to
+            }
+        }
+        property {
+            id
+        }
+    }
+}

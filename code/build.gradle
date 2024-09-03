@@ -1,0 +1,258 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
+buildscript {
+    ext {
+        artyUser = findProperty('ARTIFACTORY_USER')
+        artyPass = findProperty('ARTIFACTORY_PASS')
+        mavenRepo = 'https://artylab.expedia.biz/expediagroup-maven-release-local/'
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url mavenRepo
+            credentials {
+                username = artyUser
+                password = artyPass
+            }
+        }
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+    id 'org.jetbrains.dokka' version '1.9.20'
+    id 'com.apollographql.apollo3' version '3.8.4'
+    id 'maven-publish'
+    id 'com.jfrog.artifactory' version '5.1.14'
+}
+
+repositories {
+    maven {
+        url 'https://artylab.expedia.biz/public-maven-virtual'
+        credentials {
+            username = findProperty('ARTIFACTORY_USER')
+            password = findProperty('ARTIFACTORY_PASS')
+        }
+    }
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
+
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.4")
+    implementation("com.apollographql.apollo3:apollo-adapters:3.8.4")
+    implementation("org.slf4j:slf4j-simple:2.0.13")
+    implementation("io.ktor:ktor-client-core:2.3.10")
+    implementation("io.ktor:ktor-client-auth-jvm:2.3.10")
+    implementation("io.ktor:ktor-http:2.3.10")
+    implementation("io.ktor:ktor-client-okhttp:2.3.10")
+    implementation("io.ktor:ktor-client-content-negotiation-jvm:2.3.10")
+    implementation("io.ktor:ktor-serialization-jackson-jvm:2.3.10")
+    implementation("io.ktor:ktor-client-logging-jvm:2.3.10")
+    implementation("io.ktor:ktor-client-encoding:2.3.10")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.1")
+    implementation("org.jetbrains.kotlinx:atomicfu-jvm:0.24.0")
+    implementation("javax.validation:validation-api:2.0.1.Final")
+    implementation("org.hibernate.validator:hibernate-validator:6.2.5.Final")
+    implementation("jakarta.validation:jakarta.validation-api:2.0.2")
+
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.register('installLocal') {
+    doLast {
+        def jarFile = tasks.jar.archiveFile.get().asFile
+        def localRepoDir = layout.buildDirectory.dir('repo')
+        copy {
+            from jarFile
+            into localRepoDir
+        }
+        exec {
+            commandLine 'mvn', 'install:install-file',
+                    '-Dfile=' + jarFile,
+                    '-DgroupId=' + project.property('groupId'),
+                    '-DartifactId=' + project.name,
+                    '-Dversion=' + project.property('version'),
+                    '-Dpackaging=jar'
+        }
+    }
+}
+
+installLocal.dependsOn('jar')
+
+java {
+    withSourcesJar()
+//    withJavadocJar()
+}
+
+artifacts {
+    archives sourcesJar
+//    archives javadocJar
+}
+
+artifactory {
+    contextUrl = 'https://artylab.expedia.biz'
+    publish {
+        repository {
+            username = findProperty('ARTIFACTORY_USER') ?: artyUser
+            password = findProperty('ARTIFACTORY_PASS') ?: artyPass
+        }
+        defaults {
+            publications('mavenJava')
+            publishBuildInfo = true
+            publishArtifacts = true
+            publishPom = true
+            publishIvy = false
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username = findProperty('ARTIFACTORY_USER') ?: artyUser
+                password = findProperty('ARTIFACTORY_PASS') ?: artyPass
+            }
+
+            if (project.version.endsWith('-SNAPSHOT')) {
+                url 'https://artylab.expedia.biz/expediagroup-maven-snapshot-local/'
+            } else {
+                url 'https://artylab.expedia.biz/expediagroup-maven-release-local/'
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId project.name
+            groupId project.property('groupId')
+            version project.property('version')
+            description project.property('description')
+        }
+    }
+}
+
+tasks.register('versionsSet') {
+    doLast {
+        def pattern = ~/(\R|^)(version\s*=\s*)([-.A-Z0-9]+)(\R|$)/
+        String gradleProperties = file('gradle.properties').text
+        String currentVersion = (gradleProperties =~ pattern)[0][3]
+        println("Current version: $currentVersion")
+        println("Project version: ${project.version}")
+        if (project.version != currentVersion) {
+            file('gradle.properties').text = gradleProperties.replaceFirst(pattern, "\$1\$2${project.version}\$4")
+        }
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.name == System.getenv('EXCLUDE_MODULE')) {
+            // Disable all tasks for this module
+            tasks.configureEach { task ->
+                task.enabled = false
+            }
+        }
+    }
+}
+
+tasks.withType(DokkaTask.class) {
+
+    moduleName.set("Lodging Connectivity Java SDK")
+
+    String versioningConfiguration = """
+    {
+      "version": "${project.version}",
+      "olderVersionsDir": "${project.properties["dokka-old-versions-dir"]}",
+      "renderVersionsNavigationOnAllPages": true
+    }
+    """
+
+    String dokkaBaseConfiguration = """
+    {
+        "customAssets": ["${file("assets/logo-icon.svg")}"],
+        "customStyleSheets": ["${file("assets/custom-styles.css")}"]
+    }
+    """
+
+    pluginsMapConfiguration.set(
+            // fully qualified plugin name to json configuration
+            [
+                    "org.jetbrains.dokka.base.DokkaBase"             : dokkaBaseConfiguration,
+                    "org.jetbrains.dokka.versioning.VersioningPlugin": versioningConfiguration
+            ]
+    )
+
+    dokkaSourceSets {
+        configureEach {
+            sourceRoots.setFrom(
+                    file("src/main/kotlin/com/expediagroup/sdk/lodgingconnectivity"),
+                    file("src/main/java/generated")
+            )
+
+            // Suppress documentation for specific patterns using a consolidated regex
+            perPackageOption {
+                matchingRegex.set('.*com.expediagroup.sdk.lodgingconnectivity.graphql.(supply|payment|sandbox).(adapter|selections|fragment).*')
+                suppress.set(true)
+            }
+
+            perPackageOption {
+                matchingRegex.set('.*com.expediagroup.sdk.lodgingconnectivity.graphql.(supply|payment|sandbox).type.adapter.*')
+                suppress.set(true)
+            }
+        }
+    }
+}
+
+apollo {
+    service("lodgingsupply") {
+        generateKotlinModels.set(false)
+
+        srcDir("src/main/graphql/lodgingsupply")
+
+        outputDir.set(file("src/main/java/generated/lodgingsupply"))
+        packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.supply")
+
+        // Custom Scalars Mappings
+        mapScalar("CurrencyCode", "java.lang.String")
+        mapScalar("EmailAddress", "java.lang.String")
+        mapScalar("JSON", "java.lang.String")
+        mapScalar("Url", "java.net.URL", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE")
+        mapScalar("ZoneDateTime", "java.time.ZonedDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.ZoneDateTimeAdapter.INSTANCE")
+        mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.apollo3.adapter.JavaLocalDateTimeAdapter.INSTANCE")
+        mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.apollo3.adapter.JavaLocalDateAdapter.INSTANCE")
+    }
+    service("payment") {
+        generateKotlinModels.set(false)
+
+        srcDir("src/main/graphql/payment")
+
+        outputDir.set(file("src/main/java/generated/payment"))
+        packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.payment")
+
+        // Custom Scalars Mappings
+        mapScalar("CountryCode", "java.lang.String")
+        mapScalar("DateTime", "java.time.OffsetDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE")
+    }
+    service("sandbox") {
+        generateKotlinModels.set(false)
+
+        srcDir("src/main/graphql/sandbox")
+
+        outputDir.set(file("src/main/java/generated/sandbox"))
+        packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox")
+
+        // Custom Scalars Mappings
+        mapScalar("Date", "java.time.LocalDate", "com.apollographql.apollo3.adapter.JavaLocalDateAdapter.INSTANCE")
+    }
+}

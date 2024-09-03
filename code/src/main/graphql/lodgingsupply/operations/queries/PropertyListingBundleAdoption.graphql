@@ -1,0 +1,6 @@
+query PropertyListingBundleAdoption {
+    getPropertyListingBundleAdoption {
+        adoptionList
+        adoptionType
+    }
+}

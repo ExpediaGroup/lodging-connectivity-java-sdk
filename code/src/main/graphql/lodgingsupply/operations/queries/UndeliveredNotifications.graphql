@@ -1,0 +1,18 @@
+query UndeliveredNotifications($filters: UndeliveredNotificationsFiltersInput!, $cursor: String, $limit: Int) {
+    undeliveredNotifications(filters: $filters, cursor: $cursor, limit: $limit) {
+        cursor
+        totalCount
+        elements {
+            error {
+                code
+                message
+            }
+            notification {
+                creationDateTime
+                eventType
+                notificationId
+                payload
+            }
+        }
+    }
+}

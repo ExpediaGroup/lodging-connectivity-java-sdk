@@ -1,0 +1,5 @@
+mutation SandboxDeleteProperty($input: DeletePropertyInput!) {
+    deleteProperty(input: $input) {
+        clientMutationId
+    }
+}

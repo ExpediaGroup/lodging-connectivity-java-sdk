@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'com.apollographql.apollo3' version '3.8.4'
+}
+
+group = "com.expediagroup"
+version = "0.0.1-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://artylab.expedia.biz/public-maven-virtual'
+        credentials {
+            username = findProperty('artifactory_user')
+            password = findProperty('artifactory_password')
+        }
+    }
+}
+
+dependencies {
+    implementation(project(":code"))
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.4")
+}
+
+apollo {
+    service('lodgingsupplyexample') {
+        packageName.set("com.expediagroup")
+    }
+}
+
