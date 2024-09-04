@@ -16,13 +16,12 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
-import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Mutation
 import com.apollographql.apollo3.api.Query
 import com.apollographql.apollo3.api.Subscription
 
 interface GraphQLExecutor {
-    fun <T : Query.Data> execute(query: Query<T>): ApolloResponse<T>
-    fun <T : Mutation.Data> execute(mutation: Mutation<T>): ApolloResponse<T>
-    fun <T : Subscription.Data> execute(subscription: Subscription<T>): ApolloResponse<T>
+    fun <T : Query.Data> execute(query: Query<T>): T
+    fun <T : Mutation.Data> execute(mutation: Mutation<T>): T
+    fun <T : Subscription.Data> execute(subscription: Subscription<T>): T
 }
