@@ -191,6 +191,18 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyListingBundleAdoption</summary>
+
+<br />
+
+**Summary:** Get Property Listing Bundle Adoption
+
+**Operation Class Name:** `PropertyListingBundleAdoptionQuery`
+
+**Operation Inputs:** None
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
