@@ -398,8 +398,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>CancellationPolicyConfig</summary>
-</details>
-
 <br />
 
 **Summary:** Retrieves individual cancellation policy config by ID
@@ -415,6 +413,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <br />
 
 **[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
 <hr />
 
 <details>
