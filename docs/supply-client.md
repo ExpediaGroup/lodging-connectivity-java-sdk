@@ -43,22 +43,20 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>Property</summary>
 
-> [!TIP]
-> **Summary:** Retrieves the basic data of a property
-> **Operation Class Name:** `PropertyQuery`
->
-> **Operation Inputs:**
->
->| Name | Type      | Description                        | Required |
->|------|-----------|------------------------------------|----------|
->| `Id` | `String!` | The ID of the property to retrieve | Yes      |
->
-> **Usage Example:** [here]()
->
-> **Query Definition:** [here]()
->
-> **Reference:** [here]()
+**Summary:** Retrieves the basic data of a property
+**Operation Class Name:** `PropertyQuery`
 
+**Operation Inputs:**
+
+| Name | Type      | Description                        | Required |
+|------|-----------|------------------------------------|----------|
+| `Id` | `String!` | The ID of the property to retrieve | Yes      |
+
+**Usage Example:** [here]()
+
+**Query Definition:** [here]()
+
+**Reference:** [here]()
 </details>
 
 <br />
