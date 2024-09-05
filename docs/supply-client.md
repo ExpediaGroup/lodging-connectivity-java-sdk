@@ -375,6 +375,23 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertiesByAdvertiser</summary>
+<br />
+
+**Summary:** Retrieve a list of Properties associated for a given Advertiser
+
+**Operation Class Name:** `PropertiesByAdvertiserQuery`
+
+**Operation Inputs:**
+
+| Name       | Type        | Description                                 | Required |
+|------------|-------------|---------------------------------------------|----------|
+| `id`       | `String!`   | Advertiser ID                               | Yes      |
+| `idSource` | `IdSource!` | Describes the source of a given property ID | Yes      |
+| `pageSize` | `Int`       | Properties per page                         | No       |
+| `cursor`   | `String`    | Pagination cursor                           | No       |
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
