@@ -169,6 +169,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>PropertyListing</summary>
 
+<br />
+
 **Summary:** Listings of the property on the requested domains, supported domains: [expedia.com, vrbo.com]
 
 **Operation Class Name:** `PropertyListingQuery`
