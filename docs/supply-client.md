@@ -421,7 +421,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>DistrictByCoordinates</summary>
 <br />
 
-**Summary:**  Retrieves District information by latitude/longitude coordinates and optionally locale.
+**Summary:** Retrieves District information by latitude/longitude coordinates and optionally locale.
 
 **Operation Class Name:** `DistrictByCoordinatesQuery`
 
@@ -442,6 +442,21 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>Message</summary>
+<br />
+
+**Summary:** Retrieves a single message using its unique identifier.
+
+**Operation Class Name:** `MessageQuery`
+
+**Operation Inputs:**
+
+| Name        | Type  | Description        | Required |
+|-------------|-------|--------------------|----------|
+| `messageId` | `ID!` | Message identifier | Yes      |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
