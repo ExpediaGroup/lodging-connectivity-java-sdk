@@ -144,6 +144,24 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyFeeSets</summary>
+
+<br /> 
+
+**Summary:** Retrieves property fee sets
+
+**Operation Class Name:** `PropertyFeeSetsQuery`
+
+**Operation Inputs:**
+
+| Name         | Type                          | Description               | Required |
+|--------------|-------------------------------|---------------------------|----------|
+| `propertyId` | `String!`                     | The ID of the property    | Yes      |
+| `filters`    | `PropertyFeeSetsFiltersInput` | Filter Fee Sets Responses | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+
 </details>
 
 <hr />
