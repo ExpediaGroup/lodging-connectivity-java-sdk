@@ -55,11 +55,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 |------|-----------|------------------------------------|----------|
 | `Id` | `String!` | The ID of the property to retrieve | Yes      |
 
-**Usage Example:** [here]()
+<br />
 
-**Query Definition:** [here]()
-
-**Reference:** [here]()
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <br />
@@ -87,7 +85,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]() | [Query Definition]() | [Reference]()**
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 
 </details>
 
