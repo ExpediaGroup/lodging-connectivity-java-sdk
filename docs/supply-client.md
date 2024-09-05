@@ -96,6 +96,22 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyAmenities</summary>
+
+**Summary:** Retrieves property's amenities
+
+**Operation Class Name:** `PropertyAmenitiesQuery`
+
+**Operation Inputs:**
+
+| Name         | Type                    | Description            | Required |
+|--------------|-------------------------|------------------------|----------|
+| `propertyId` | `String!`               | The ID of the property | Yes      |
+| `$filters`   | `AmenitiesFiltersInput` | Amenities Filter       | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+
 </details>
 
 <hr />
