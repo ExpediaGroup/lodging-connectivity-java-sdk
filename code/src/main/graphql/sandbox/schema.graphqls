@@ -1,0 +1,647 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String = "No longer supported"
+) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+) on SCALAR
+
+"Response payload for the cancelReservation mutation."
+type CancelReservationPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+    "The reservation that was cancelled."
+    reservation: Reservation!
+}
+
+"REsponse payload for the changeReservationStayDates mutation."
+type ChangeReservationStayDatesPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+    "The reservation that was updated."
+    reservation: Reservation!
+}
+
+"Response payload to the createProperty mutation."
+type CreatePropertyPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+    "The created property."
+    property: Property!
+}
+
+"Response payload to the createReservation mutation."
+type CreateReservationPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+    "The reservation that was created."
+    reservation: Reservation!
+}
+
+"Response payload to the deleteProperty mutation."
+type DeletePropertyPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+}
+
+"Response payload to the deletePropertyReservations mutation."
+type DeletePropertyReservationsPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+}
+
+"Response payload to the deleteReservation mutation."
+type DeleteReservationPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+}
+
+"Guest who made the reservation."
+type Guest {
+    "Email address of the guest."
+    emailAddress: String!
+    "First (given) name of the guest."
+    firstName: String!
+    "Last name (surname) of the guest."
+    lastName: String!
+    "Guest loyalty tier. Values include MEMBER, VIP, PREMIUMVIP, and NONE."
+    loyaltyTier: String!
+    "Phone numbers associated with the guest."
+    phoneNumbers: [GuestContactPhoneNumber!]!
+    "Details about the frequent traveler reward program."
+    supplierLoyaltyPlanInfo: SupplierLoyaltyPlanInfo
+}
+
+"Guest phone number."
+type GuestContactPhoneNumber {
+    "Area code (three digits)."
+    areaCode: String!
+    "Country code (two digits)."
+    countryCode: String!
+    "Phone number (seven digits, no hyphen)."
+    number: String!
+}
+
+"Known IDs in the source system."
+type IdNode {
+    "The ID in the source system."
+    id: String!
+    "The source of the ID."
+    idSource: IdSource!
+}
+
+"Represents a monetary amount value along with its currency."
+type Money {
+    "The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied."
+    amount: String!
+    "The code of the currency of the amount."
+    currencyCode: String!
+}
+
+type Mutation {
+    """
+    Cancels an existing reservation.
+
+    The mutation accepts the reservation ID to cancel as input.
+    An optional parameter is provided to send a notification upon the cancellation of the reservation.
+    The mutation returns the updated reservation details.
+    """
+    cancelReservation(input: CancelReservationInput!): CancelReservationPayload!
+    """
+    Changes the stay dates of an existing reservation.
+
+    The mutation accepts the reservation ID, new check-in date, and new check-out date as parameters.
+    The check-out date must be after the check-in date.
+    An optional parameter is provided to send a notification upon the change of the reservation dates.
+    The mutation returns the updated reservation details.
+    """
+    changeReservationStayDates(input: ChangeReservationStayDatesInput!): ChangeReservationStayDatesPayload!
+    """
+    Creates a property in the sandbox environment.
+
+    The mutation accepts an optional name for the property. Unspecified
+    fields will default to logical test data.
+    """
+    createProperty(input: CreatePropertyInput!): CreatePropertyPayload!
+    """
+    Creates a reservation in the sandbox environment.
+    The mutation accepts various parameters such as property ID, check-in and
+    check-out dates, adult and child counts, business model, remittance type,
+    and more. Except for the property ID, all other parameters are optional.
+    If not specified, these parameters will default to logical test data.
+
+    The mutation also supports sending a notification upon the creation of a
+    reservation via the sendNotification field.
+    """
+    createReservation(input: CreateReservationInput!): CreateReservationPayload!
+    "Deletes a property in the sandbox environment."
+    deleteProperty(input: DeletePropertyInput!): DeletePropertyPayload!
+    """
+    Deletes all reservations for a specified sandbox property.
+
+    The mutation accepts the property ID on which to delete all reservations as input.
+
+    This operation is irreversible and will permanently delete the property reservations.
+    """
+    deletePropertyReservations(input: DeletePropertyReservationsInput!): DeletePropertyReservationsPayload!
+    """
+    Deletes a sandbox reservation.
+
+    The mutation accepts the reservation ID to delete as input.
+
+    This operation is irreversible and will permanently delete the reservation.
+    """
+    deleteReservation(input: DeleteReservationInput!): DeleteReservationPayload!
+    """
+    Updates a property in the sandbox environment.
+
+    The mutation accepts an optional name for the property. Unspecified
+    fields will not be updated.
+    """
+    updateProperty(input: UpdatePropertyInput!): UpdatePropertyPayload!
+    """
+    Updates a reservation in the sandbox environment.
+
+    The mutation accepts the reservation ID, new check-in date, new check-out date,
+    new status, new special request text, new adult count, and new child count as parameters.
+    The check-out date must be after the check-in date.
+    An optional parameter is provided to send a notification upon the change of the reservation dates.
+    The mutation returns the updated reservation details.
+    """
+    updateReservation(input: UpdateReservationInput!): UpdateReservationPayload!
+}
+
+"Payment details."
+type Payment {
+    "Card number. Sandbox value is always be \"4111111111111111\"."
+    cardNumber: String!
+    "Name of the issuer associated with the card. Sandbox value is \"VISA\" for HOTEL_COLLECT reservations and \"MasterCard\" for EXPEDIA_COLLECT reservations."
+    issuerName: String!
+    "Type of payment instrument. Sandbox value is \"GUEST_CREDIT_CARD\" for HOTEL_COLLECT reservations and \"EXPEDIA_VIRTUAL_CARD\" for EXPEDIA_COLLECT reservations."
+    paymentInstrumentType: String!
+    "Randomly generated 3-digits verification number associated with the card."
+    verificationNumber: String!
+}
+
+"Response object for property query."
+type PropertiesResponse {
+    "Cursor for pagination."
+    cursor: String
+    "List of properties."
+    elements: [Property!]!
+    "Total count of properties."
+    totalCount: Int!
+}
+
+"A property in the sandbox."
+type Property {
+    "The ID of the property."
+    id: ID!
+    "The name of the property."
+    name: String!
+    """
+    Reservation details for this sandbox property.
+
+    This query uses pagination to manage the amount of data returned in each request. By default, it returns 25 results at a time.
+
+    To control the number of results returned, you can use the limit input field. If you want to fetch more or less than 25 results,
+    you can set the limit to the desired number.
+
+    To fetch all results, you need to use the cursor input field. For the first request, you can leave the cursor as null.
+    For subsequent requests, set the cursor to the value from the previous response. This will return the next set of results
+    starting from the reservation after the cursor.
+    """
+    reservations(cursor: String, limit: Int): ReservationsResponse!
+}
+
+type Query {
+    """
+    Retrieves information about all sandbox properties connected partner has access to.
+
+    This query uses pagination to manage the amount of data returned in each request. By default, it returns 25 results at a time.
+
+    To control the number of results returned, you can use the limit input field. If you want to fetch more or less than 25 results,
+    you can set the limit to the desired number.
+
+    To fetch all results, you need to use the cursor input field. For the first request, you can leave the cursor as null.
+    For subsequent requests, set the cursor to the value from the previous response. This will return the next set of results
+    starting from the property after the cursor.
+    """
+    properties(cursor: String, limit: Int): PropertiesResponse!
+    "Retrieves information about a single sandbox property using its unique identifier."
+    property(id: ID!): Property!
+    "Retrieve information about a single sandbox reservation by its unique identifier."
+    reservation(id: ID!): Reservation!
+}
+
+"Reservation details."
+type Reservation {
+    "Accessibility requests made by the guest for the reservation."
+    accessibilityText: [String!]!
+    "Count for all adult guests associated with the reservation."
+    adultCount: Int!
+    "Amounts associated with the reservation."
+    amounts: ReservationAmounts
+    "Bed type of the reservation."
+    bedTypes: String
+    "Source of the reservation booking."
+    bookingSource: BookingSource!
+    "Entity that collects payment for the reservation."
+    businessModel: BusinessModel!
+    "Check-in date (format: YYYY-MM-DD) of the reservation."
+    checkInDate: Date!
+    "Check-out date (format: YYYY-MM-DD) of the reservation."
+    checkOutDate: Date!
+    "Ages of children associated with the reservation."
+    childAges: [Int!]
+    "Count for all child guests associated with the reservation."
+    childCount: Int!
+    "Date/time when the reservation was created (format: yyyy-MM-dd'T'HH:mm:ss.SSSX, will always be in UTC timezone)."
+    creationDateTime: String!
+    "Unique identifier for the reservation."
+    id: ID!
+    "Whether the reservation has been reconciled or not."
+    isReconciled: Boolean!
+    "Date/time when the reservation was last updated (format: yyyy-MM-dd'T'HH:mm:ss.SSSX, will always be in UTC timezone)."
+    lastUpdatedDateTime: String!
+    "Text that is displayed to guests if there is a multi-room booking associated with the reservation."
+    multiRoomText: String
+    "Payment details associated with the reservation."
+    payment: Payment!
+    "Count of pets associated with the reservation."
+    petCount: Int
+    "Guest who made the reservation."
+    primaryGuest: Guest!
+    "Unique identifier for the property."
+    propertyId: ID!
+    "Unique identifiers for the rates associated with the reservation."
+    rateIds: [IdNode!]
+    "Type of reconciliation that has been performed on the reservation, if any."
+    reconciliationType: ReconciliationType
+    "Unique identifiers for the reservation, each corresponding to a different source associated with the reservation."
+    reservationIds: [IdNode!]!
+    "Whether smoking is allowed for the reservation."
+    smokingType: String!
+    "ext that is displayed to guests if there is a special request associated with the reservation."
+    specialRequest: String
+    "Current status of the reservation."
+    status: ReservationStatus!
+    "Current substatus of the reservation. Applicable for Vrbo reservations only."
+    subStatus: String
+    "Travel Industry Designator Service (TIDS) code that allows a reservation to be recognized by industry suppliers."
+    tidsCode: Int
+    "Total number of guests associated with the reservation."
+    totalGuestCount: Int!
+    """
+    Known IDs for the unit/room in the source system(s). IDs that are returned depend on where the property was onboarded:
+    - If the property was onboarded onto Vrbo, three IDs are returned: the partnerâ€™s (external ID), Vrboâ€™s (Vrbo internal ID), and Expedia's (EID).
+    - If the property was onboarded onto Expedia, only the Expedia ID is included in the response.
+    """
+    unitIds: [IdNode!]
+    "Value add promotion(s) used to book the reservation."
+    valueAddedPromotions: [ReservationValueAddedPromotion!]
+}
+
+"Amounts associated with the reservation."
+type ReservationAmounts {
+    "Detailed list of payments associated with the reservation."
+    nightlyPayments: ReservationNightlyPayments
+}
+
+"Reservation amount that applies to a specific stay date."
+type ReservationDailyAmount {
+    "Amount value."
+    amount: Money!
+    "Amount date, in the \"yyyy-MM-dd\" format (e.g. 2023-01-30)."
+    date: Date!
+    "Description associated to the amount."
+    description: String!
+    "Percentage of amount (when applicable), expressed as a fraction of 1 (e.g., 0.12 for 12%)."
+    percent: Float
+    "Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...)."
+    type: String!
+}
+
+"Nightly payments associated with the reservation."
+type ReservationNightlyPayments {
+    "Cancellation amounts for the reservation."
+    cancellationAmounts: [ReservationPerStayAmount!]!
+    "Reservation amounts for a specific stay date."
+    dailyAmounts: [ReservationDailyAmount!]!
+    "Reservation amounts that apply to the whole stay."
+    perStayAmounts: [ReservationPerStayAmount!]!
+}
+
+"Reservation amount that applies to the whole stay."
+type ReservationPerStayAmount {
+    "Amount value."
+    amount: Money!
+    "Description associated to the amount."
+    description: String!
+    "Percentage of amount (when applicable), expressed as a fraction of 1 (e.g., 0.12 for 12%)."
+    percent: Float
+    "Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...)."
+    type: String!
+}
+
+"Value add promotion(s) used to book the reservation."
+type ReservationValueAddedPromotion {
+    "Description of the value add promotion."
+    description: String!
+    "ID of the value added promotion."
+    id: String!
+}
+
+"Response object for reservations query."
+type ReservationsResponse {
+    "Cursor for pagination."
+    cursor: String
+    "List of reservations."
+    elements: [Reservation!]!
+    "Total count of reservations."
+    totalCount: Int!
+}
+
+"Details about the frequent traveler reward program."
+type SupplierLoyaltyPlanInfo {
+    "Traveler's membership number."
+    membershipNumber: Int!
+    "Reward program code."
+    planCode: String!
+}
+
+"Response payload to the updateProperty mutation."
+type UpdatePropertyPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+    "The updated property."
+    property: Property!
+}
+
+"Response payload for the updateReservation mutation."
+type UpdateReservationPayload {
+    "Client mutation ID. Optional value in the input that is echoed back in the response."
+    clientMutationId: String
+    "The reservation that was updated."
+    reservation: Reservation!
+}
+
+"Source of the reservation booking."
+enum BookingSource {
+    "Reservation was booked through one of Expedia brands."
+    EXPEDIA
+    "Reservation was booked through Vrbo."
+    VRBO
+}
+
+"Entity that collects payment for the reservation."
+enum BusinessModel {
+    "Expedia collects payment for the reservation."
+    EXPEDIA_COLLECT
+    "Property collects payment for the reservation."
+    HOTEL_COLLECT
+}
+
+"Entity that collects payment."
+enum BusinessModelInput {
+    "Expedia collects payment."
+    EXPEDIA_COLLECT
+    "Property collects payment."
+    HOTEL_COLLECT
+}
+
+"Source of a given ID."
+enum IdSource {
+    "Expedia is the source of the ID."
+    EXPEDIA
+    "Connectivity provider or lodging partner is the source of the ID. This value is not supported for use in promotions."
+    SUPPLIER
+    "Unsupported."
+    VRBO
+}
+
+"Type of reconciliation that has been performed on the reservation."
+enum ReconciliationType {
+    "Reservation was cancelled."
+    CANCEL
+    "Reservation was modified."
+    MODIFY
+    "Reservation was marked as a no-show."
+    NO_SHOW
+    "Reservation was refunded."
+    REFUND
+}
+
+"Reconciliation type for the reservation."
+enum ReconciliationTypeInput {
+    "The reservation was reconciled as cancelled."
+    CANCEL
+    "The reservation was reconciled as modified."
+    MODIFY
+    "The reservation was reconciled as no-show."
+    NO_SHOW
+}
+
+"Remittance type of the reservation."
+enum RemittanceTypeInput {
+    "Gross remittance type."
+    GROSS
+    "Net remittance type."
+    NET
+}
+
+"Current status of the reservation."
+enum ReservationStatus {
+    "Reservation is booked."
+    BOOKED
+    "Reservation is cancelled."
+    CANCELLED
+}
+
+"Status of the reservation."
+enum ReservationStatusInput {
+    "The reservation is booked."
+    BOOKED
+    "The reservation is cancelled."
+    CANCELLED
+}
+
+"An RFC-3339 compliant Full Date Scalar"
+scalar Date
+
+"Input to cancel a reservation."
+input CancelReservationInput {
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "ID of the reservation to cancel."
+    id: ID!
+    "Whether to send a notification upon the cancellation of the reservation."
+    sendNotification: Boolean
+}
+
+"Input to change the stay dates of a reservation."
+input ChangeReservationStayDatesInput {
+    "New check-in date of the reservation."
+    checkInDate: Date!
+    "New check-out date of the reservation."
+    checkOutDate: Date!
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "ID of the reservation to change."
+    id: ID!
+    "Whether to send a notification upon the change of the reservation dates."
+    sendNotification: Boolean
+}
+
+"Input object for creating a property."
+input CreatePropertyInput {
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "Optional name for the property."
+    name: String
+}
+
+"Input to create a reservation"
+input CreateReservationInput {
+    "Accessibility requests made by the guest for the reservation. Defaults to a single accessibility text with value \"In-room accessibility (in select rooms)\"."
+    accessibilityText: [String!]
+    "Adult count. Defaults to 2."
+    adultCount: Int
+    "Bed types of the reservation. Defaults to \"2 Queen Beds\"."
+    bedTypes: String
+    "Entity that collects payment for the reservation. Defaults to EXPEDIA_COLLECT."
+    businessModel: BusinessModelInput
+    "Check-in date (format: YYYY-MM-DD) of the reservation. Defaults to a date in a near future."
+    checkInDate: Date
+    "Check-out date (format: YYYY-MM-DD) of the reservation. Defaults to a random date in the month after the check-in date."
+    checkOutDate: Date
+    "Ages of children associated with the reservation. If not specified, defaults to a list of 1 or 2 random child ages."
+    childAges: [Int!]
+    "Child count. If not specified, defaults to the number of child ages provided (or its default)."
+    childCount: Int
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "Text that is displayed to guests if there are multiple rooms associated with the reservation."
+    multiRoomText: String
+    "Guest who made the reservation. Guest personal information cannot be set and is automatically generated."
+    primaryGuest: GuestInput
+    "Property id on which to associate the reservation."
+    propertyId: ID!
+    "Reconciliation type of the reservation, either MODIFY, CANCEL, NO_SHOW, or null. Defaults to non-reconciled (null)."
+    reconciliationType: ReconciliationTypeInput
+    "Remittance type of the reservation. Defaults to NET."
+    remittanceType: RemittanceTypeInput
+    "Whether to send a notification upon the creation of the reservation. Defaults to false."
+    sendNotification: Boolean
+    "Whether smoking is allowed for the reservation. Defaults to \"NONSMOKING\"."
+    smokingType: String
+    "Text that is displayed to guests if there is a special request associated with the reservation. Defaults to \"Expedia test reservation. This is a free-text comment from the traveler.\"."
+    specialRequest: String
+    "Current status of the reservation. Defaults to BOOKED."
+    status: ReservationStatusInput
+    "Value add promotion(s) used to book the reservation. Defaults to a single \"Free full breakfast for 2 per day\" value added promotion."
+    valueAddedPromotions: [ReservationValueAddedPromotionInput!]
+}
+
+"Input object for deleting a property."
+input DeletePropertyInput {
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "The ID of the property to delete."
+    id: ID!
+}
+
+"Input to delete all reservations for a specified property."
+input DeletePropertyReservationsInput {
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "ID of the property for which to delete all reservations."
+    propertyId: ID!
+}
+
+"Input to delete a reservation."
+input DeleteReservationInput {
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "ID of the reservation to delete."
+    id: ID!
+}
+
+"Guest who made the reservation. Guest personal information cannot be set and is automatically generated."
+input GuestInput {
+    "Loyalty tier of the guest. Defaults to \"MEMBER\"."
+    loyaltyTier: String
+    "Details about the frequent traveler reward program. Defaults to null."
+    supplierLoyaltyPlanInfo: SupplierLoyaltyPlanInfoInput
+}
+
+"Value added promotion(s) used to book the reservation."
+input ReservationValueAddedPromotionInput {
+    "Description of the promotion."
+    description: String!
+    "ID of the promotion."
+    id: String!
+}
+
+"Details about the frequent traveler reward program."
+input SupplierLoyaltyPlanInfoInput {
+    "Traveler's membership number."
+    membershipNumber: Int!
+    "Reward program code."
+    planCode: String!
+}
+
+"Input object for updating a property."
+input UpdatePropertyInput {
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "The ID of the property to update."
+    id: ID!
+    "The new name for the property."
+    name: String
+}
+
+"Input to update a reservation"
+input UpdateReservationInput {
+    "New adult count of the reservation."
+    adultCount: Int
+    "New check-in date of the reservation."
+    checkInDate: Date
+    "New check-out date of the reservation."
+    checkOutDate: Date
+    "Ages of children as per new child counts. If not specified, defaults to a list of random child ages."
+    childAges: [Int!]
+    "New child count of the reservation."
+    childCount: Int
+    "Client mutation ID. Optional value that is echoed back in the response."
+    clientMutationId: String
+    "ID of the reservation to update."
+    id: ID!
+    "Whether to send a notification upon the change of the reservation dates."
+    sendNotification: Boolean
+    "New special request text of the reservation."
+    specialRequestText: String
+    "New status of the reservation."
+    status: ReservationStatusInput
+}

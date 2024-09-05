@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group = "com.expediagroup"
+version = "0.0.1-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":code"))
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.4")
+}
+

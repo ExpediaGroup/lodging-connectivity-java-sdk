@@ -1,0 +1,60 @@
+query DistrictByCoordinates($latitude: Float!, $longitude: Float!, $locale: String) {
+    districtByCoordinates(latitude: $latitude, longitude: $longitude, locale: $locale) {
+        id
+        description
+        localizedName
+        nativeLocale
+        referenceUrls
+        registrationRequired
+        legalPropertyTypes {
+            subtype
+            type
+        }
+        requirements {
+            regulatoryCategory
+            regulatoryCategoryLabel
+            isVacationRental
+            minStayNights
+            additionalDataRequirements {
+                group
+                groupLocalized
+                isOptional
+                key
+                keyLocalized
+                subtype
+                subtypeLocalized
+                type
+                typeLocalized
+            }
+            exemptions {
+                category
+                description
+            }
+            maxNightCap {
+                annualLimit
+                isEnforced
+            }
+            qualifiedPropertyTypes {
+                subtype
+                type
+            }
+            registrationNumberRequirements {
+                url
+                allowPendingRegistrations
+                format
+                isExpirationDateRequired
+                isOptional
+                localName
+                numberType
+                numberTypeLabel
+                purpose
+                regex
+                thirdPartyValidation {
+                    attributes
+                    required
+                }
+            }
+
+        }
+    }
+}

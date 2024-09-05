@@ -1,0 +1,29 @@
+query PropertyMedia($propertyId: String!, $filters: ImagesFiltersInput) {
+    property(id: $propertyId) {
+        media {
+            images(filters: $filters) {
+                elements {
+                    active
+                    captions {
+                        locale
+                        value
+                    }
+                    featured
+                    fileName
+                    id
+                    order
+                    originalUrl
+                    publishedUrl
+                    rotation
+                    source
+                    status {
+                        reason
+                        type
+                    }
+                    updatedDate
+                }
+                totalCount
+            }
+        }
+    }
+}

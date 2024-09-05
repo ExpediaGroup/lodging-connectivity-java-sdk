@@ -1,0 +1,62 @@
+query Property($id: String!) {
+    property(id: $id, idSource: EXPEDIA) {
+        id
+        name
+        names {
+            locale
+            value
+        }
+        defaultLocale
+        contacts {
+            emailAddresses
+            name
+            type
+            phoneNumbers {
+                areaCode
+                countryCode
+                extension
+                number
+                phoneNumberType
+            }
+        }
+        ids {
+            id
+            idSource
+        }
+        type {
+           code
+        }
+        address {
+            addressLines
+            administrativeArea
+            countryCode
+            locality
+            postalCode
+        }
+        location {
+            hideExactLocation
+            coordinates {
+                latitude
+                longitude
+            }
+        }
+        taxRecords {
+            attributes {
+                name
+                validationResult {
+                    messages
+                    valid
+                }
+                value {
+                    type
+                    value
+                }
+            }
+            categoryCode
+            validationResult {
+                complianceStatusCode
+                messages
+            }
+        }
+    }
+}

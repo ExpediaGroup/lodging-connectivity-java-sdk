@@ -1,0 +1,61 @@
+query PropertyDistrict($propertyId: String!, $locale: String) {
+    property(id: $propertyId) {
+        district(locale: $locale) {
+            description
+            id
+            legalPropertyTypes {
+                subtype
+                type
+            }
+            localizedName
+            nativeLocale
+            referenceUrls
+            registrationRequired
+            requirements {
+                additionalDataRequirements {
+                    group
+                    groupLocalized
+                    isOptional
+                    key
+                    keyLocalized
+                    subtype
+                    subtypeLocalized
+                    type
+                    typeLocalized
+                }
+                exemptions {
+                    category
+                    description
+                }
+                isVacationRental
+                maxNightCap {
+                    annualLimit
+                    isEnforced
+                }
+                minStayNights
+                qualifiedPropertyTypes {
+                    subtype
+                    type
+                }
+                registrationNumberRequirements {
+                    allowPendingRegistrations
+                    format
+                    isExpirationDateRequired
+                    isOptional
+                    localName
+                    numberType
+                    numberTypeLabel
+                    purpose
+                    regex
+                    thirdPartyValidation {
+                        attributes
+                        required
+                    }
+                    url
+                }
+                regulatoryCategory
+                regulatoryCategoryLabel
+            }
+        }
+    }
+}

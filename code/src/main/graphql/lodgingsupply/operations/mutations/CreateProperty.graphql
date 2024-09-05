@@ -1,0 +1,9 @@
+mutation CreateProperty($input: CreatePropertyInput!) {
+    createProperty(input: $input) {
+        clientMutationId
+        property {
+            id
+            name
+        }
+    }
+}

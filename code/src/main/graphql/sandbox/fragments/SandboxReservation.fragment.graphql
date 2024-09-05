@@ -1,0 +1,94 @@
+fragment SandboxReservationFragment on Reservation {
+    accessibilityText
+    adultCount
+    amounts {
+        nightlyPayments {
+            cancellationAmounts {
+                amount {
+                    amount
+                    currencyCode
+                }
+                description
+                percent
+                type
+            }
+            dailyAmounts {
+                amount {
+                    amount
+                    currencyCode
+                }
+                date
+                description
+                percent
+                type
+            }
+            perStayAmounts {
+                amount {
+                    amount
+                    currencyCode
+                }
+                description
+                percent
+                type
+            }
+        }
+    }
+    bedTypes
+    bookingSource
+    businessModel
+    checkInDate
+    checkOutDate
+    childAges
+    childCount
+    creationDateTime
+    id
+    isReconciled
+    lastUpdatedDateTime
+    multiRoomText
+    payment {
+        cardNumber
+        issuerName
+        paymentInstrumentType
+        verificationNumber
+    }
+    petCount
+    primaryGuest {
+        emailAddress
+        firstName
+        lastName
+        loyaltyTier
+        phoneNumbers {
+            areaCode
+            countryCode
+            number
+        }
+        supplierLoyaltyPlanInfo {
+            membershipNumber
+            planCode
+        }
+    }
+    propertyId
+    rateIds {
+        id
+        idSource
+    }
+    reconciliationType
+    reservationIds {
+        id
+        idSource
+    }
+    smokingType
+    specialRequest
+    status
+    subStatus
+    tidsCode
+    totalGuestCount
+    unitIds {
+        id
+        idSource
+    }
+    valueAddedPromotions {
+        description
+        id
+    }
+}

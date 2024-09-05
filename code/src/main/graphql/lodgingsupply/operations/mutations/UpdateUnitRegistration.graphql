@@ -1,0 +1,13 @@
+mutation UpdateUnitRegistration($propertyIdSource: IdSource!, $registration: UpdateUnitRegistrationInput!, $forceSave: Boolean, $propertyId: String!) {
+    updateUnitRegistration(propertyIdSource: $propertyIdSource, registration: $registration, forceSave: $forceSave, propertyId: $propertyId) {
+        district
+        complete
+        details {
+            unitId
+        }
+        applicableRegulations {
+            key
+            value
+        }
+    }
+}

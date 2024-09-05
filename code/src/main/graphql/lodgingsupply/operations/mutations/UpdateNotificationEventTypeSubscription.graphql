@@ -1,0 +1,12 @@
+mutation UpdateNotificationEventTypeSubscription($input: UpdateNotificationEventTypeSubscriptionInput!) {
+    updateNotificationEventTypeSubscription(input: $input) {
+        callbackConfig {
+            callbackUrl
+            contactEmail
+            id
+            requestTimeoutSeconds
+            secretExpirationDateTime
+        }
+        eventType
+    }
+}

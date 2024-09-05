@@ -1,0 +1,6 @@
+mutation SetMessageThreadSpamStatus($input: SetMessageThreadSpamStatusInput!) {
+    setMessageThreadSpamStatus(input: $input) {
+        clientMutationId
+        id
+    }
+}

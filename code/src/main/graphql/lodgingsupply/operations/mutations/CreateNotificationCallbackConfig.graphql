@@ -1,0 +1,12 @@
+mutation CreateNotificationCallbackConfig($input: CreateNotificationCallbackConfigInput!) {
+    createNotificationCallbackConfig(input: $input) {
+        callbackConfig {
+            callbackUrl
+            contactEmail
+            id
+            requestTimeoutSeconds
+            secretExpirationDateTime
+        }
+        secret
+    }
+}

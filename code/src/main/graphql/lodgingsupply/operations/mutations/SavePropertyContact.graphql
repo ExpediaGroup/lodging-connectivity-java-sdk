@@ -1,0 +1,14 @@
+mutation SavePropertyContact($contact: SavePropertyContactInput!, $propertyId: ID!) {
+    savePropertyContact(contact: $contact, propertyId: $propertyId) {
+        emailAddresses
+        name
+        phoneNumbers {
+            areaCode
+            countryCode
+            extension
+            number
+            phoneNumberType
+        }
+        type
+    }
+}

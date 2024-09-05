@@ -1,0 +1,85 @@
+query PropertyPromotions(
+    $propertyId: String!,
+    $filter: FiltersInput
+    $pageSize: Int!,
+    $after: String,
+) {
+    property(id: $propertyId) {
+        promotions(pageSize: $pageSize, after: $after, filter: $filter) {
+            totalCount
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+            edges {
+                cursor
+                node {
+                    category
+                    id
+                    isContractedPromotion
+                    name
+                    sellStatus
+                    status
+                    ... on DiscountPromotion {
+                        blackoutDates {
+                            travelDateFrom
+                            travelDateTo
+                        }
+                        category
+                        code
+                        discount {
+                            type
+                            unit
+                            ... on DayOfWeekDiscount {
+                                type
+                                unit
+                                monday
+                                tuesday
+                                wednesday
+                                thursday
+                                friday
+                                saturday
+                                sunday
+                            }
+                            ... on MultiNightDiscount {
+                                type
+                                unit
+                                value
+                                memberOnlyAdditionalValue
+                                applicableNight
+                                isRecurring
+                            }
+                            ... on SingleDiscount {
+                                type
+                                unit
+                                value
+                                memberOnlyAdditionalValue
+                            }
+                        }
+                        eligibleRatePlans {
+                            id
+                        }
+                        id
+                        isContractedPromotion
+                        name
+                        restrictions {
+                            bookingLocalDateTimeFrom
+                            bookingLocalDateTimeTo
+                            sameDayBookingStartTime
+                            travelDateFrom
+                            isMemberOnly
+                            isMobileUserOnly
+                            maxAdvanceBookingDays
+                            maxLengthOfStay
+                            minAdvanceBookingDays
+                            minLengthOfStay
+                            travelDateTo
+                        }
+                        sellStatus
+                        status
+                    }
+                }
+            }
+        }
+    }
+}

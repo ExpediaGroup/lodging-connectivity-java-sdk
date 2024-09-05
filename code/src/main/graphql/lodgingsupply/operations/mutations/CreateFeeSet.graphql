@@ -1,0 +1,41 @@
+mutation CreateFeeSet($input: CreateFeeSetInput!) {
+    createFeeSet(input: $input) {
+        clientMutationId
+        feeSet {
+            id
+            fees {
+                ageCategory
+                charges {
+                    duration
+                    flatAmount {
+                        amount
+                        currencyCode
+                    }
+                    percentage
+                    type
+                }
+                name
+                restrictions {
+                    dateRange {
+                        from
+                        to
+                    }
+                    extraGuestRange {
+                        max
+                        min
+                    }
+                    rangeOfNight {
+                        max
+                        min
+                    }
+                }
+                scope
+                taxable
+                type
+                variesByLengthOfStay
+            }
+            name
+            businessModel
+        }
+    }
+}

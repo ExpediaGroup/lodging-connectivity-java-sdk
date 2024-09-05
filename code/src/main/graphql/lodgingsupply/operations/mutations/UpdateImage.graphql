@@ -1,0 +1,28 @@
+mutation UpdateImage($input: UpdateImageInput!) {
+    updateImage(input: $input) {
+        clientMutationId
+        image {
+            active
+            captions {
+                locale
+                value
+            }
+            featured
+            fileName
+            id
+            order
+            originalUrl
+            property {
+                id
+            }
+            publishedUrl
+            rotation
+            source
+            status {
+                reason
+                type
+            }
+            updatedDate
+        }
+    }
+}

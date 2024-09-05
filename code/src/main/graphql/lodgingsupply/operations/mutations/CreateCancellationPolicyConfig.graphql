@@ -1,0 +1,12 @@
+mutation CreateCancellationPolicyConfig($input: CreateCancellationPolicyConfigInput!) {
+    createCancellationPolicyConfig(input: $input) {
+        cancellationPolicyConfig {
+            id
+            name
+            property {
+                id
+            }
+        }
+        clientMutationId
+    }
+}

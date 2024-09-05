@@ -1,0 +1,23 @@
+mutation SetPropertyTaxRecord($input: SetPropertyTaxRecordInput!) {
+    setPropertyTaxRecord(input: $input) {
+        clientMutationId
+        taxRecords {
+            attributes {
+                name
+                validationResult {
+                    messages
+                    valid
+                }
+                value {
+                    type
+                    value
+                }
+            }
+            categoryCode
+            validationResult {
+                complianceStatusCode
+                messages
+            }
+        }
+    }
+}

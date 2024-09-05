@@ -1,0 +1,11 @@
+mutation UpdateNotificationCallbackConfig($input: UpdateNotificationCallbackConfigInput!) {
+    updateNotificationCallbackConfig(input: $input) {
+        callbackConfig {
+            id
+            contactEmail
+            callbackUrl
+            requestTimeoutSeconds
+            secretExpirationDateTime
+        }
+    }
+}

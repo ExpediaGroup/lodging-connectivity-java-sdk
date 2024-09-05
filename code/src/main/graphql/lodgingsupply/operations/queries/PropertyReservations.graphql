@@ -1,0 +1,288 @@
+query PropertyReservations(
+    $propertyId: String!,
+    $checkOutDate: CheckOutDateFilter,
+    $filter: ReservationFilterInput,
+    $pageSize: Int!,
+    $after: String,
+    $includePaymentInstrumentToken: Boolean! =  false,
+    $includeSupplierAmount: Boolean! = false,
+    $skipSummaryView: Boolean! = false
+) {
+    property(id: $propertyId) {
+        reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $after) {
+            totalCount
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+            edges {
+                cursor
+                node {
+                    id
+                    alternativeIds {
+                        supplierId
+                    }
+                    accessibilityText
+                    adultCount
+                    amounts @skip(if: $skipSummaryView) {
+                        nightlyPayments {
+                            cancellationAmounts {
+                                amount {
+                                    amount
+                                    currencyCode
+                                }
+                                description
+                                percent
+                                type
+                            }
+                            dailyAmounts {
+                                amount {
+                                    amount
+                                    currencyCode
+                                }
+                                date
+                                description
+                                percent
+                                type
+                            }
+                            perStayAmounts {
+                                amount {
+                                    amount
+                                    currencyCode
+                                }
+                                description
+                                percent
+                                type
+                            }
+                        }
+                        summary {
+                            amount {
+                                amount
+                                currencyCode
+                            }
+                            description
+                            percent
+                            type
+                        }
+                    }
+                    audit {
+                        creationDateTimeUtc
+                        lastUpdateDateTimeUtc
+                    }
+                    bedTypes
+                    businessModel
+                    cancellation {
+                        pendingCancellation
+                        vrboPrimaryReason
+                    }
+                    cancellationPolicy {
+                        effectivePolicy {
+                            endDateTimeUtc
+                            policyType
+                            startDateTimeUtc
+                        }
+                        tiers {
+                            cancellationWindow {
+                                cutoff
+                                temporalUnit
+                            }
+                            penaltyRule {
+                                costFlatAmount {
+                                    amount
+                                    currencyCode
+                                }
+                                numberOfNights
+                                percentage
+                                priceAmount {
+                                    amount
+                                    currencyCode
+                                }
+                                type
+                            }
+                        }
+                    }
+                    checkInDate
+                    checkOutDate
+                    childAges
+                    childCount
+                    creationDateTime
+                    distribution {
+                        distributionChannel
+                        reservationSource
+                    }
+                    guests {
+                        adultCount
+                        childCount
+                        pets {
+                            travelingWithPets
+                        }
+                        primaryGuest {
+                            firstName
+                            lastName
+                            emailAddress
+                            fullPhoneNumber
+                        }
+                    }
+                    inventoryType
+                    isReconciled
+                    lastUpdatedDateTime
+                    merchantOfRecord
+                    messageThreadId
+                    multiRoomText
+                    payment {
+                        installments {
+                            amount {
+                                amount
+                                currencyCode
+                            }
+                            distributions {
+                                amount {
+                                    currencyCode
+                                    amount
+                                }
+                                type
+                            }
+                            dueDate
+                            installmentId
+                            paymentStatus
+                        }
+                        instructions
+                        instrument {
+                            token @include(if: $includePaymentInstrumentToken) {
+                                expirationDateTime
+                                value
+                            }
+                            type
+                        }
+                        status
+                    }
+                    paymentInstructions
+                    petCount
+                    policies {
+                        cancellationPolicy {
+                            effectivePolicy {
+                                endDateTimeUtc
+                                policyType
+                                startDateTimeUtc
+                            }
+                            tiers {
+                                cancellationWindow {
+                                    cutoff
+                                    temporalUnit
+                                }
+                                penaltyRule {
+                                    costFlatAmount {
+                                        amount
+                                        currencyCode
+                                    }
+                                    numberOfNights
+                                    percentage
+                                    priceAmount {
+                                        amount
+                                        currencyCode
+                                    }
+                                    type
+                                }
+                            }
+                        }
+                    }
+                    primaryGuest {
+                        emailAddress
+                        firstName
+                        lastName
+                        loyaltyTier
+                        phoneNumbers {
+                            areaCode
+                            countryCode
+                            number
+                        }
+                        supplierLoyaltyPlanInfo {
+                            membershipNumber
+                            planCode
+                        }
+                        travelPurpose
+                    }
+                    rateIds {
+                        id
+                        idSource
+                    }
+                    reconciliationEligibility {
+                        invalidScenarios {
+                            reason
+                            scenario
+                        }
+                        validScenarios
+                    }
+                    reconciliationType
+                    remittanceType
+                    reservationIds {
+                        id
+                        idSource
+                    }
+                    smokingType
+                    source
+                    specialRequest
+                    status
+                    statuses {
+                        status
+                    }
+                    stayDates {
+                        checkInDate
+                        checkOutDate
+                    }
+                    subStatus
+                    supplierAmount @include(if: $includeSupplierAmount) {
+                        currencyCode
+                        rateType
+                        ... on ExpediaSupplierAmount {
+                            currencyCode
+                            rateType
+                            rates {
+                                compensation {
+                                    acceleratorPercent
+                                    basePercent
+                                }
+                                fromDate
+                                rateItems {
+                                    amount
+                                    feeType
+                                }
+                                rateTimeUnit
+                                toDate
+                            }
+                            total {
+                                amountAfterTax
+                                amountBeforeTax
+                                compensation {
+                                    acceleratorPercent
+                                    basePercent
+                                }
+                            }
+                        }
+                    }
+                    supplierOperatingModel
+                    tidsCode
+                    totalGuestCount
+                    unitIds {
+                        id
+                        idSource
+                    }
+                    valueAddedPromotions {
+                        description
+                        id
+                    }
+                    vrboAmounts @skip(if: $skipSummaryView) {
+                        summary {
+                            amount {
+                                amount
+                                currencyCode
+                            }
+                            productCode
+                            type
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

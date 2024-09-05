@@ -1,0 +1,5 @@
+mutation DeleteNotificationCallbackConfig($input: DeleteNotificationCallbackConfigInput!) {
+    deleteNotificationCallbackConfig(input: $input) {
+        callbackConfigId
+    }
+}

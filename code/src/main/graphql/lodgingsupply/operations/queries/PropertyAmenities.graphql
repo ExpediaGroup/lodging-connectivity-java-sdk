@@ -1,0 +1,28 @@
+query PropertyAmenities($propertyId: String!, $filters: AmenitiesFiltersInput) {
+    property(id: $propertyId) {
+        amenities(filters: $filters) {
+            key
+            value {
+                available
+                fields {
+                    key
+                    type
+                    value {
+                        feeValue {
+                            type
+                        }
+                        measurementValue {
+                            unitOfMeasure
+                            value
+                        }
+                        textValue {
+                            locale
+                            value
+                        }
+                        value
+                    }
+                }
+            }
+        }
+    }
+}

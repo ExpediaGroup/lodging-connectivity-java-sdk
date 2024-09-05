@@ -1,0 +1,8 @@
+mutation UpdateUnit($input: UpdatePropertyUnitInput!) {
+    updateUnit(input: $input) {
+        clientMutationId
+        unit {
+            id
+        }
+    }
+}
