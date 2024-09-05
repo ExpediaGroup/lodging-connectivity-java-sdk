@@ -66,6 +66,30 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyReservations</summary>
+
+<br /> 
+
+**Summary:** Retrieves paginated reservations on a property
+
+**Operation Class Name:** `PropertyReservationsQuery`
+
+**Operation Inputs:**
+
+| Name                            | Type                     | Description                                                           | Required            |
+|---------------------------------|--------------------------|-----------------------------------------------------------------------|---------------------|
+| `propertyId`                    | `String!`                | The ID of the property to retrieve                                    | Yes                 |
+| `pageSize`                      | `Int!`                   | Reservations per page                                                 | Yes                 |
+| `after`                         | `String`                 | Retrieve reservations after this cursor value                         | No                  |
+| `filter`                        | `ReservationFilterInput` | Filters reservation results                                           | No                  |
+| `checkOutDate`                  | `CheckOutDateFilter`     | Filter based on the checkout date                                     | No                  |
+| `includePaymentInstrumentToken` | `Boolean`                | Whether to include the payment-instrument data in the response or not | No (default: false) |
+| `includeSupplierAmount`         | `Boolean`                | Whether to include the supplier-amount data in the response or not    | No (default: false) |
+
+**Usage Example:** [here]()
+
+**Query Definition:** [here]()
+
+**Reference:** [here]()
 </details>
 
 <br />
