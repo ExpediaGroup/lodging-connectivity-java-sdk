@@ -43,6 +43,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>Property</summary>
 
+<br /> 
+
 **Summary:** Retrieves the basic data of a property
 **Operation Class Name:** `PropertyQuery`
 
