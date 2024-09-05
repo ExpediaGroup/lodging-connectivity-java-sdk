@@ -41,5 +41,7 @@ data class RuntimeConfigurationProvider(
     override val connectionTimeout: Long? = null,
     override val socketTimeout: Long? = null,
     override val maskedLoggingHeaders: Set<String>? = null,
-    override val maskedLoggingBodyFields: Set<String>? = null
+    override val maskedLoggingBodyFields: Set<String>? = null,
+    override val maxConnTotal: Int? = null,
+    override val maxConnPerRoute: Int? = null
 ) : ConfigurationProvider

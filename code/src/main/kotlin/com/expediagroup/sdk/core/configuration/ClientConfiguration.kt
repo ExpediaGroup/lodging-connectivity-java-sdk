@@ -27,6 +27,8 @@ interface ClientConfiguration {
     val socketTimeout: Long?
     val maskedLoggingHeaders: Set<String>?
     val maskedLoggingBodyFields: Set<String>?
+    val maxConnTotal: Int?
+    val maxConnPerRoute: Int?
 
     /** Build a [RuntimeConfigurationProvider] from a [ClientConfiguration]. */
     fun toProvider(): RuntimeConfigurationProvider =
@@ -38,6 +40,8 @@ interface ClientConfiguration {
             connectionTimeout = connectionTimeout,
             socketTimeout = socketTimeout,
             maskedLoggingHeaders = maskedLoggingHeaders,
-            maskedLoggingBodyFields = maskedLoggingBodyFields
+            maskedLoggingBodyFields = maskedLoggingBodyFields,
+            maxConnTotal = maxConnTotal,
+            maxConnPerRoute = maxConnPerRoute
         )
 }
