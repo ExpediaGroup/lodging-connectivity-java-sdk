@@ -232,6 +232,24 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyMessages</summary>
+<br />
+
+**Summary:** Get Property's messages
+
+**Operation Class Name:** `PropertyMessagesQuery`
+
+**Operation Inputs:**
+
+| Name         | Type                           | Description                   | Required |
+|--------------|--------------------------------|-------------------------------|----------|
+| `propertyId` | `String!`                      | The ID of the property        | Yes      |
+| `filters`    | `PropertyMessagesFiltersInput` | Filter the requested messages | Yes      |
+| `limit`      | `Int`                          | Messages limit per page       | No       |
+| `cursor`     | `String`                       | Pagination cursor             | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
