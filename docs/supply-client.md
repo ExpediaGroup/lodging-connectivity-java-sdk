@@ -282,6 +282,24 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyPromotions</summary>
+<br />
+
+**Summary:** Retrieves property's promotions
+
+**Operation Class Name:** `PropertyPromotionsQuery`
+
+**Operation Inputs:**
+
+| Name         | Type           | Description                     | Required |
+|--------------|----------------|---------------------------------|----------|
+| `propertyId` | `String!`      | The ID of the property          | Yes      |
+| `filters`    | `FiltersInput` | Filter the requested promotions | No       |
+| `pageSize`   | `Int!`         | Promotions per page             | Yes      |
+| `after`      | `String`       | Pagination cursor               | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
