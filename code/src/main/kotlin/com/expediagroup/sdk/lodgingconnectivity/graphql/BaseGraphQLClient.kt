@@ -18,7 +18,6 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.annotations.ApolloExperimental
-import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Mutation
 import com.apollographql.apollo3.api.Query
 import com.apollographql.apollo3.api.Subscription
@@ -58,21 +57,33 @@ class BaseGraphQLClient(config: ExpediaGroupClientConfiguration, private val nam
             )
     }
 
-    override fun <T : Query.Data> execute(query: Query<T>): ApolloResponse<T> {
+    override fun <T : Query.Data> execute(query: Query<T>): T {
         return runBlocking {
-            return@runBlocking apolloClient.query(query).execute()
+            apolloClient.query(query).execute().apply {
+                if (hasErrors()) {
+                    throw ExpediaGroupServiceException(errors.toString())
+                }
+            }.dataAssertNoErrors
         }
     }
 
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): ApolloResponse<T> {
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T {
         return runBlocking {
-            return@runBlocking apolloClient.mutation(mutation).execute()
+            apolloClient.mutation(mutation).execute().apply {
+                if (hasErrors()) {
+                    throw ExpediaGroupServiceException(errors.toString())
+                }
+            }.dataAssertNoErrors
         }
     }
 
-    override fun <T : Subscription.Data> execute(subscription: Subscription<T>): ApolloResponse<T> {
+    override fun <T : Subscription.Data> execute(subscription: Subscription<T>): T {
         return runBlocking {
-            return@runBlocking apolloClient.subscription(subscription).execute()
+            apolloClient.subscription(subscription).execute().apply {
+                if (hasErrors()) {
+                    throw ExpediaGroupServiceException(errors.toString())
+                }
+            }.dataAssertNoErrors
         }
     }
 
