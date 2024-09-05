@@ -328,6 +328,25 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyReviews</summary>
+<br />
+
+**Summary:** Retrieves Property's reviews
+
+**Operation Class Name:** `PropertyReviewsQuery`
+
+**Operation Inputs:**
+
+| Name         | Type             | Description                               | Required |
+|--------------|------------------|-------------------------------------------|----------|
+| `propertyId` | `String!`        | The ID of the property                    | Yes      |
+| `orderBy`    | `ReviewsOrderBy` | Orders reviews threads by specified field | No       |
+| `filter`     | `ReviewFilter`   | Filter the requested reviews              | No       |
+| `pageSize`   | `Int!`           | Reviews per page                          | Yes      |
+| `after`      | `String`         | Pagination cursor                         | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
