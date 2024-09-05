@@ -97,6 +97,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>PropertyAmenities</summary>
 
+<br /> 
+
 **Summary:** Retrieves property's amenities
 
 **Operation Class Name:** `PropertyAmenitiesQuery`
