@@ -42,7 +42,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 ### SupplyClient - Queries
 <details>
    <summary>Property</summary>
-</details>
 
 **Summary:** Retrieves the basic data of a property.
 
@@ -59,6 +58,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 **Query Definition:** [here]()
 
 **Reference:** [here]()
+</details>
 
 <br />
 
