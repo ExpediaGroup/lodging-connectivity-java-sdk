@@ -256,6 +256,26 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyMessageThreads</summary>
+
+<br />
+
+**Summary:** Retrieves multiple message threads for a property
+
+**Operation Class Name:** `PropertyMessageThreadsQuery`
+
+**Operation Inputs:**
+
+| Name         | Type                                 | Description                                | Required |
+|--------------|--------------------------------------|--------------------------------------------|----------|
+| `propertyId` | `String!`                            | The ID of the property                     | Yes      |
+| `filters`    | `PropertyMessageThreadsFiltersInput` | Filter the requested message threads       | Yes      |
+| `orderBy`    | `PropertyMessageThreadsOrderByInput` | Orders messages threads by specified field | No       |
+| `limit`      | `Int`                                | Message Threads limit per page             | No       |
+| `cursor`     | `String`                             | Pagination cursor                          | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
