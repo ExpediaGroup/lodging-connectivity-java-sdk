@@ -44,10 +44,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <hr />
 
 <details>
-   <summary>
-
-`Property`
-</summary>
+   <summary>Property</summary>
 
 <br /> 
 
