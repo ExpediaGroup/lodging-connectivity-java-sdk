@@ -419,6 +419,23 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>DistrictByCoordinates</summary>
+<br />
+
+**Summary:**  Retrieves District information by latitude/longitude coordinates and optionally locale.
+
+**Operation Class Name:** `DistrictByCoordinatesQuery`
+
+**Operation Inputs:**
+
+| Name        | Type     | Description | Required |
+|-------------|----------|-------------|----------|
+| `latitude`  | `Float!` | _           | Yes      |
+| `longitude` | `Float!` | _           | Yes      |
+| `locale`    | `String` | _           | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
