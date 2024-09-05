@@ -353,6 +353,22 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>PropertyAggregatedReviews</summary>
+<br />
+
+**Summary:** Retrieves Property's reviews
+
+**Operation Class Name:** `PropertyAggregatedReviewsQuery`
+
+**Operation Inputs:**
+
+| Name         | Type                            | Description                              | Required |
+|--------------|---------------------------------|------------------------------------------|----------|
+| `propertyId` | `String!`                       | The ID of the property                   | Yes      |
+| `filters`    | `AggregatedReviewsFiltersInput` | Filters the requested aggregated reviews | Yes      |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
