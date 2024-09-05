@@ -16,7 +16,6 @@
 package com.expediagroup.sdk.core.configuration
 
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider
 import com.expediagroup.sdk.core.configuration.provider.RuntimeConfigurationProvider
 
 /**
@@ -45,81 +44,4 @@ data class ExpediaGroupClientConfiguration(
 ) : ClientConfiguration {
     /** Build a [RuntimeConfigurationProvider] from an [ExpediaGroupClientConfiguration]. */
     override fun toProvider(): RuntimeConfigurationProvider = super.toProvider().copy(authEndpoint = authEndpoint)
-
-    class Builder {
-        private var key: String? = null
-        private var secret: String? = null
-        private var endpoint: String? = null
-        private var requestTimeout: Long? = null
-        private var connectionTimeout: Long? = null
-        private var socketTimeout: Long? = null
-        private var maskedLoggingHeaders: Set<String>? = null
-        private var maskedLoggingBodyFields: Set<String>? = null
-        private var authEndpoint: String? = null
-
-        fun key(key: String) = apply { this.key = key }
-        fun secret(secret: String) = apply { this.secret = secret }
-        fun endpoint(endpoint: String) = apply { this.endpoint = endpoint }
-        fun requestTimeout(requestTimeout: Long) = apply { this.requestTimeout = requestTimeout }
-        fun connectionTimeout(connectionTimeout: Long) = apply { this.connectionTimeout = connectionTimeout }
-        fun socketTimeout(socketTimeout: Long) = apply { this.socketTimeout = socketTimeout }
-        fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>) =
-            apply { this.maskedLoggingHeaders = maskedLoggingHeaders }
-
-        fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>) =
-            apply { this.maskedLoggingBodyFields = maskedLoggingBodyFields }
-
-        fun authEndpoint(authEndpoint: String) = apply { this.authEndpoint = authEndpoint }
-
-        private fun fallback() {
-            val provider = ExpediaGroupConfigurationProvider
-
-            if (endpoint == null) {
-                endpoint = provider.endpoint
-            }
-
-            if (requestTimeout == null) {
-                requestTimeout = provider.requestTimeout
-            }
-
-            if (connectionTimeout == null) {
-                connectionTimeout = provider.connectionTimeout
-            }
-
-            if (socketTimeout == null) {
-                socketTimeout = provider.socketTimeout
-            }
-
-            if (maskedLoggingHeaders == null) {
-                maskedLoggingHeaders = provider.maskedLoggingHeaders
-            }
-
-            if (maskedLoggingBodyFields == null) {
-                maskedLoggingBodyFields = provider.maskedLoggingBodyFields
-            }
-        }
-
-        fun build(): ExpediaGroupClientConfiguration {
-            fallback()
-
-            return ExpediaGroupClientConfiguration(
-                key,
-                secret,
-                endpoint,
-                requestTimeout,
-                connectionTimeout,
-                socketTimeout,
-                maskedLoggingHeaders,
-                maskedLoggingBodyFields,
-                authEndpoint
-            )
-        }
-    }
-
-
-    companion object {
-        /** Create a new [ClientConfiguration] builder. */
-        @JvmStatic
-        fun builder(): Builder = Builder()
-    }
 }

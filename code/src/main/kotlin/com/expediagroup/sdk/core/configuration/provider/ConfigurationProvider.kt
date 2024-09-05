@@ -55,4 +55,63 @@ interface ConfigurationProvider {
     /** The body fields to be masked in logging.*/
     val maskedLoggingBodyFields: Set<String>?
         get() = setOf()
+
+    val maxConnTotal: Int?
+
+    val maxConnPerRoute: Int?
+
+    fun withDefaultsConfigurationProvider(provider: ConfigurationProvider): ConfigurationProvider =
+        this.toMutable().apply {
+            if (endpoint.isNullOrBlank()) {
+                endpoint = provider.endpoint
+            }
+
+            if (authEndpoint.isNullOrBlank()) {
+                authEndpoint = provider.authEndpoint
+            }
+
+            if (requestTimeout == null) {
+                requestTimeout = provider.requestTimeout
+            }
+
+            if (connectionTimeout == null) {
+                connectionTimeout = provider.connectionTimeout
+            }
+
+            if (socketTimeout == null) {
+                socketTimeout = provider.socketTimeout
+            }
+
+            if (maskedLoggingHeaders.isNullOrEmpty()) {
+                maskedLoggingHeaders = provider.maskedLoggingHeaders
+            }
+
+            if (maskedLoggingBodyFields.isNullOrEmpty()) {
+                maskedLoggingBodyFields = provider.maskedLoggingBodyFields
+            }
+
+            if (maxConnTotal == null) {
+                maxConnTotal = provider.maxConnTotal
+            }
+
+            if (maxConnPerRoute == null) {
+                maxConnPerRoute = provider.maxConnPerRoute
+            }
+        }
+
+    fun toMutable(self: ConfigurationProvider = this): MutableConfigurationProvider =
+        object : MutableConfigurationProvider {
+            override var name: String = self.name
+            override var key: String? = self.key
+            override var secret: String? = self.secret
+            override var endpoint: String? = self.endpoint
+            override var authEndpoint: String? = self.authEndpoint
+            override var requestTimeout: Long? = self.requestTimeout
+            override var connectionTimeout: Long? = self.connectionTimeout
+            override var socketTimeout: Long? = self.socketTimeout
+            override var maskedLoggingHeaders: Set<String>? = self.maskedLoggingHeaders
+            override var maskedLoggingBodyFields: Set<String>? = self.maskedLoggingBodyFields
+            override var maxConnTotal: Int? = self.maxConnTotal
+            override var maxConnPerRoute: Int? = self.maxConnPerRoute
+        }
 }

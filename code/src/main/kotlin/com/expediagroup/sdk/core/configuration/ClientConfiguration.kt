@@ -15,6 +15,7 @@
  */
 package com.expediagroup.sdk.core.configuration
 
+import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider
 import com.expediagroup.sdk.core.configuration.provider.RuntimeConfigurationProvider
 
 interface ClientConfiguration {

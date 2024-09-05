@@ -40,4 +40,6 @@ internal object ExpediaGroupConfigurationProvider : ConfigurationProvider {
     override val requestTimeout: Long = Constant.INFINITE_TIMEOUT
     override val connectionTimeout: Long = Constant.TEN_SECONDS_IN_MILLIS
     override val socketTimeout: Long = Constant.FIFTEEN_SECONDS_IN_MILLIS
+    override val maxConnTotal: Int = 250
+    override val maxConnPerRoute: Int = 25
 }
