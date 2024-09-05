@@ -85,11 +85,10 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 | `includePaymentInstrumentToken` | `Boolean`                | Whether to include the payment-instrument data in the response or not | No (default: false) |
 | `includeSupplierAmount`         | `Boolean`                | Whether to include the supplier-amount data in the response or not    | No (default: false) |
 
-**Usage Example:** [here]()
+<br />
 
-**Query Definition:** [here]()
+**[Usage Example]() | [Query Definition]() | [Reference]()**
 
-**Reference:** [here]()
 </details>
 
 <br />
