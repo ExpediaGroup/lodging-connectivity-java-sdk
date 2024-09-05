@@ -60,7 +60,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 **[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyReservations</summary>
@@ -89,127 +89,127 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyAmenities</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyDistrict</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyFeeSets</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyListing</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyListingBundleAdoption</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyMedia</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyMessages</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyMessageThreads</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyPromotions</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyRegistration</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyReviews</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertyAggregatedReviews</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>PropertiesByAdvertiser</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CancellationPolicyConfig</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>DistrictByCoordinates</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>Message</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>MessageThread</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>NotificationEventTypes</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>NotificationProfile</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>RatePlan</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UndeliveredNotifications</summary>
