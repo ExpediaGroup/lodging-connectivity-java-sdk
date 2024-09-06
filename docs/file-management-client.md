@@ -1,5 +1,5 @@
 # File Management Client
-`FileManagementClient` client is linked with a **_REST API_** that is part of the messaging product. It allows uploading and downloading file attachments used for messaging capabilities.
+`FileManagementClient` client is linked to a **REST API** that is part of the messaging product. It allows uploading and downloading file attachments used for messaging capabilities.
 
 ### API Endpoint
 This client is connected with https://api.expediagroup.com/supply-lodging/v1/files endpoint by default.
