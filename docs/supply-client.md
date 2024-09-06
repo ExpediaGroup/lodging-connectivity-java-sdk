@@ -572,281 +572,987 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <hr />
 
 <details>
-   <summary>AddMessage</summary>
-</details>
-
-<hr />
-
-<details>
    <summary>ArchivePropertyIds</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `ArchivePropertyIdsMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `ArchivePropertyIdsInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
-<hr />
-
-<details>
-   <summary>CancelReservation</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CancelReservationReconciliation</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CancelVrboReservation</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>ChangeReservationReconciliation</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>ConfirmReservationNotification</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateCancellationPolicyConfig</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateDayOfWeekDiscountPromotion</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateFeeSet</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateMultiNightDiscountPromotion</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateNotificationCallbackConfig</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateProperty</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreatePropertyImage</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateRatePlan</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateSingleDiscountPromotion</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>CreateUnitSpaces</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>DeleteImage</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>DeleteNotificationCallbackConfig</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>DeleteUnitSpace</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>DisableProperty</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>EnableProperty</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>JoinNewListingDiscount</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>RateGuest</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>RefreshNotificationCallbackConfigSecret</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>RefundReservation</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>ReplaceFeeSet</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>SavePropertyContact</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>SendMessage</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>SendTestNotification</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>SetMessageThreadSpamStatus</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>SetPropertyTaxRecord</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>SetReviewResponse</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>SubscribeNotificationEventType</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UnsubscribeNotificationEventType</summary>
-</details>
-
-<hr />
-
-<details>
+<hr /><details>
    <summary>UpdateDayOfWeekDiscountPromotion</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateDayOfWeekDiscountPromotionMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `promotion` | `DayOfWeekDiscountPromotionUpdateInput!` | Description | Yes |
+| `propertyId` | `String!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
-<hr />
+<hr /><details>
+   <summary>SetReviewResponse</summary>
 
-<details>
-   <summary>UpdateImage</summary>
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `SetReviewResponseMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `body` | `InputLocalizedString!` | Description | Yes |
+| `propertyId` | `ID!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+| `reviewId` | `ID!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
-<hr />
-
-<details>
-   <summary>UpdateMultiNightDiscountPromotion</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UpdateNotificationCallbackConfig</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UpdateNotificationEventTypeSubscription</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UpdateProperty</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UpdateRatePlan</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UpdateSingleDiscountPromotion</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UpdateUnit</summary>
-</details>
-
-<hr />
-
-<details>
-   <summary>UpdateUnitRegistration</summary>
-</details>
-
-<hr />
-
-<details>
+<hr /><details>
    <summary>UpdateUnitSpaces</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateUnitSpacesMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `UpdateUnitSpacesInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateRatePlan</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateRatePlanMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CreateRatePlanInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>SetPropertyTaxRecord</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `SetPropertyTaxRecordMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `SetPropertyTaxRecordInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>AddMessage</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `AddMessageMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `messageThreadId` | `ID!` | Description | Yes |
+| `message` | `AddMessageThreadMessageInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateMultiNightDiscountPromotion</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateMultiNightDiscountPromotionMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `promotion` | `MultiNightDiscountPromotionUpdateInput!` | Description | Yes |
+| `propertyId` | `String!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>EnableProperty</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `EnablePropertyMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `EnablePropertyInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>DeleteUnitSpace</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `DeleteUnitSpaceMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `DeleteUnitSpaceInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateUnit</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateUnitMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `UpdatePropertyUnitInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>DeleteImage</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `DeleteImageMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `DeleteImageInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateCancellationPolicyConfig</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateCancellationPolicyConfigMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CreateCancellationPolicyConfigInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateNotificationEventTypeSubscription</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateNotificationEventTypeSubscriptionMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `UpdateNotificationEventTypeSubscriptionInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>ReplaceFeeSet</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `ReplaceFeeSetMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `ReplaceFeeSetInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CancelReservation</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CancelReservationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CancelReservationInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>SavePropertyContact</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `SavePropertyContactMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `contact` | `SavePropertyContactInput!` | Description | Yes |
+| `propertyId` | `ID!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>SendTestNotification</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `SendTestNotificationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `SendTestNotificationInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>DeleteNotificationCallbackConfig</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `DeleteNotificationCallbackConfigMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `DeleteNotificationCallbackConfigInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateRatePlan</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateRatePlanMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `UpdateRatePlanInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateNotificationCallbackConfig</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateNotificationCallbackConfigMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CreateNotificationCallbackConfigInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>WithdrawNewListingDiscount</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `WithdrawNewListingDiscountMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `withdrawNewListingDiscountId` | `String!` | Description | Yes |
+| `idSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>ConfirmReservationNotification</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `ConfirmReservationNotificationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `ConfirmReservationNotificationInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>RefreshNotificationCallbackConfigSecret</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `RefreshNotificationCallbackConfigSecretMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `RefreshNotificationCallbackConfigSecretInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>JoinNewListingDiscount</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `JoinNewListingDiscountMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `joinNewListingDiscountId` | `String!` | Description | Yes |
+| `idSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>SetMessageThreadSpamStatus</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `SetMessageThreadSpamStatusMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `SetMessageThreadSpamStatusInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreatePropertyImage</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreatePropertyImageMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CreatePropertyImageInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>RateGuest</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `RateGuestMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `RateGuestInput!` | Description | Yes |
+| `propertyId` | `ID!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UnsubscribeNotificationEventType</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UnsubscribeNotificationEventTypeMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `UnsubscribeNotificationEventTypeInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateUnitRegistration</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateUnitRegistrationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+| `registration` | `UpdateUnitRegistrationInput!` | Description | Yes |
+| `forceSave` | `Boolean` | Description | No |
+| `propertyId` | `String!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>DisableProperty</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `DisablePropertyMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `DisablePropertyInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateMultiNightDiscountPromotion</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateMultiNightDiscountPromotionMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `promotion` | `MultiNightDiscountPromotionCreateInput!` | Description | Yes |
+| `propertyId` | `String!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CancelVrboReservation</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CancelVrboReservationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CancelVrboReservationInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateUnitSpaces</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateUnitSpacesMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CreateUnitSpacesInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateNotificationCallbackConfig</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateNotificationCallbackConfigMutation`
+
+**Operation Inputs:**
+
+| Name    | Type                                     | Description | Required |
+|---------|------------------------------------------|-------------|----------|
+| `input` | `UpdateNotificationCallbackConfigInput!` | Description | Yes      |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateFeeSet</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateFeeSetMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CreateFeeSetInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateProperty</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreatePropertyMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CreatePropertyInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>SubscribeNotificationEventType</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `SubscribeNotificationEventTypeMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `SubscribeNotificationEventTypeInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateDayOfWeekDiscountPromotion</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateDayOfWeekDiscountPromotionMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `propertyId` | `String!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+| `promotion` | `DayOfWeekDiscountPromotionCreateInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CreateSingleDiscountPromotion</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CreateSingleDiscountPromotionMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `promotion` | `SingleDiscountPromotionCreateInput!` | Description | Yes |
+| `propertyId` | `String!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>CancelReservationReconciliation</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `CancelReservationReconciliationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `CancelReservationReconciliationInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>SendMessage</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `SendMessageMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `SendMessageInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateProperty</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdatePropertyMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `UpdatePropertyInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>ChangeReservationReconciliation</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `ChangeReservationReconciliationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `ChangeReservationReconciliationInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>ReplaceCancellationPolicyConfig</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `ReplaceCancellationPolicyConfigMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `ReplaceCancellationPolicyConfigInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>RefundReservation</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `RefundReservationMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `RefundReservationInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateSingleDiscountPromotion</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateSingleDiscountPromotionMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `promotion` | `SingleDiscountPromotionUpdateInput!` | Description | Yes |
+| `propertyId` | `String!` | Description | Yes |
+| `propertyIdSource` | `IdSource!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+</details>
+
+<hr /><details>
+   <summary>UpdateImage</summary>
+
+<br />
+
+**Summary:**
+
+**Operation Class Name:** `UpdateImageMutation`
+
+**Operation Inputs:**
+
+| Name              | Type                           | Description                                         | Required |
+|-------------------|--------------------------------|-----------------------------------------------------|----------|
+| `input` | `UpdateImageInput!` | Description | Yes |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
-
-<details>
-   <summary>WithdrawNewListingDiscount</summary>
-</details>
