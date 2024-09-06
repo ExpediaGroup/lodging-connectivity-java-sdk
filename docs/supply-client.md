@@ -569,281 +569,283 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 ### SupplyClient - Mutations
 
+<hr />
+
 <details>
    <summary>AddMessage</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>ArchivePropertyIds</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CancelReservation</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CancelReservationReconciliation</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CancelVrboReservation</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>ChangeReservationReconciliation</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>ConfirmReservationNotification</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateCancellationPolicyConfig</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateDayOfWeekDiscountPromotion</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateFeeSet</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateMultiNightDiscountPromotion</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateNotificationCallbackConfig</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateProperty</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreatePropertyImage</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateRatePlan</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateSingleDiscountPromotion</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>CreateUnitSpaces</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>DeleteImage</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>DeleteNotificationCallbackConfig</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>DeleteUnitSpace</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>DisableProperty</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>EnableProperty</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>JoinNewListingDiscount</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>RateGuest</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>RefreshNotificationCallbackConfigSecret</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>RefundReservation</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>ReplaceFeeSet</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>SavePropertyContact</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>SendMessage</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>SendTestNotification</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>SetMessageThreadSpamStatus</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>SetPropertyTaxRecord</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>SetReviewResponse</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>SubscribeNotificationEventType</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UnsubscribeNotificationEventType</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateDayOfWeekDiscountPromotion</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateImage</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateMultiNightDiscountPromotion</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateNotificationCallbackConfig</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateNotificationEventTypeSubscription</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateProperty</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateRatePlan</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateSingleDiscountPromotion</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateUnit</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateUnitRegistration</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>UpdateUnitSpaces</summary>
 </details>
 
-<br />
+<hr />
 
 <details>
    <summary>WithdrawNewListingDiscount</summary>
