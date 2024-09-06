@@ -19,7 +19,6 @@ FileManagementClient fileManagementClient = new FileManagementClient(config);
 
 ## Available Operations
 
-<hr />
 <details>
    <summary>download</summary>
 <br />
@@ -53,5 +52,3 @@ var response = client.upload(file, "messageThreadId", "5b3423da-af09-485a-9490-9
 System.out.println(response);
 ```
 </details>
-
-<hr />
