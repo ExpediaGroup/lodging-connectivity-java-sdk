@@ -44,7 +44,7 @@ At the moment, there is only one query called `PaymentInstrument` you can execut
 
 <br />
 
-**Summary: Retrieve Payment instrument from external payment instrument token**
+**Summary:** Retrieve Payment instrument from external payment instrument token
 
 **Operation Class Name:** `PaymentInstrumentQuery`
 
