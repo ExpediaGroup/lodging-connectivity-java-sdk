@@ -37,7 +37,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-### SupplyClient - Queries
+### SandboxClient - Queries
 
 <hr />
 
@@ -46,17 +46,17 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Retrieves a paginated results of properties in the sandbox environment
 
-**Operation Class Name:** `SandboxPropertiesMutation`
+**Operation Class Name:** `SandboxPropertiesQuery`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `cursor` | `String` | Description | No |
-| `limit` | `Int` | Description | No |
-| `skipReservations` | `Boolean! = false` | Description | Yes |
+| Name               | Type               | Description                                    | Required            |
+|--------------------|--------------------|------------------------------------------------|---------------------|
+| `cursor`           | `String`           | Pagination cursor                              | No                  |
+| `limit`            | `Int`              | Properties to retrieve per page                | No                  |
+| `skipReservations` | `Boolean! = false` | Skips retrieving the reservation on a property | No (defaults false) |
 
 <br />
 
@@ -68,18 +68,18 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Retrieves a single property from the sandbox environment.
 
-**Operation Class Name:** `SandboxPropertyMutation`
+**Operation Class Name:** `SandboxPropertyQuery`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `id` | `ID!` | Description | Yes |
-| `reservationsCursor` | `String` | Description | No |
-| `reservationsLimit` | `Int` | Description | No |
-| `skipReservations` | `Boolean! = false` | Description | Yes |
+| Name                 | Type               | Description                                    | Required            |
+|----------------------|--------------------|------------------------------------------------|---------------------|
+| `id`                 | `ID!`              | Property ID                                    | Yes                 |
+| `reservationsCursor` | `String`           | Pagination cursor for property's reservations  | No                  |
+| `reservationsLimit`  | `Int`              | Reservations limit per page                    | No                  |
+| `skipReservations`   | `Boolean! = false` | Skips retrieving the reservation on a property | No (defaults false) |
 
 <br />
 
@@ -91,15 +91,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Retrieves a single reservation
 
-**Operation Class Name:** `SandboxReservationMutation`
+**Operation Class Name:** `SandboxReservationQuery`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `id` | `ID!` | Description | Yes |
+| Name | Type  | Description    | Required |
+|------|-------|----------------|----------|
+| `id` | `ID!` | Reservation ID | Yes      |
 
 <br />
 
@@ -110,7 +110,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br /><br />
 
-### SupplyClient - Mutations
+### SandboxClient - Mutations
 
 <hr />
 
@@ -119,15 +119,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Cancels a reservation
 
 **Operation Class Name:** `SandboxCancelReservationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CancelReservationInput!` | Description | Yes |
+| Name    | Type                      | Description                                       | Required |
+|---------|---------------------------|---------------------------------------------------|----------|
+| `input` | `CancelReservationInput!` | Needed input to identify the canceled reservation | Yes      |
 
 <br />
 
@@ -139,15 +139,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Updates the stay dates of a reservation.
 
 **Operation Class Name:** `SandboxChangeReservationStayDatesMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `ChangeReservationStayDatesInput!` | Description | Yes |
+| Name    | Type                               | Description                                                        | Required |
+|---------|------------------------------------|--------------------------------------------------------------------|----------|
+| `input` | `ChangeReservationStayDatesInput!` | Needed input to identify the reservation and update the stay dates | Yes      |
 
 <br />
 
@@ -159,15 +159,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Creates a new property in the sandbox environment.
 
 **Operation Class Name:** `SandboxCreatePropertyMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreatePropertyInput!` | Description | Yes |
+| Name    | Type                   | Description                             | Required |
+|---------|------------------------|-----------------------------------------|----------|
+| `input` | `CreatePropertyInput!` | Needed input to create sandbox property | Yes      |
 
 <br />
 
@@ -179,15 +179,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Creates a new reservation on a sandbox property
 
 **Operation Class Name:** `SandboxCreateReservationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreateReservationInput!` | Description | Yes |
+| Name    | Type                      | Description                                                | Required |
+|---------|---------------------------|------------------------------------------------------------|----------|
+| `input` | `CreateReservationInput!` | Needed input to create a reservation on a sandbox property | Yes      |
 
 <br />
 
@@ -199,15 +199,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Deletes sandbox property
 
 **Operation Class Name:** `SandboxDeletePropertyMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `DeletePropertyInput!` | Description | Yes |
+| Name    | Type                   | Description                           | Required |
+|---------|------------------------|---------------------------------------|----------|
+| `input` | `DeletePropertyInput!` | Needed input to identify the property | Yes      |
 
 <br />
 
@@ -219,15 +219,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Deletes all sandbox property's reservations
 
 **Operation Class Name:** `SandboxDeletePropertyReservationsMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `DeletePropertyReservationsInput!` | Description | Yes |
+| Name    | Type                               | Required |
+|---------|------------------------------------|----------|
+| `input` | `DeletePropertyReservationsInput!` | Yes      |
 
 <br />
 
@@ -239,15 +239,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Deletes a single reservation on a sandbox property
 
 **Operation Class Name:** `SandboxDeleteReservationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `DeleteReservationInput!` | Description | Yes |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `DeleteReservationInput!` | Yes      |
 
 <br />
 
@@ -259,15 +259,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Updates sandbox property data.
 
 **Operation Class Name:** `SandboxUpdatePropertyMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdatePropertyInput!` | Description | Yes |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `UpdatePropertyInput!` | Yes      |
 
 <br />
 
@@ -279,15 +279,15 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br />
 
-**Summary:**
+**Summary:** Updates single reservation on a sandbox property.
 
 **Operation Class Name:** `SandboxUpdateReservationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdateReservationInput!` | Description | Yes |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `UpdateReservationInput!` | Yes      |
 
 <br />
 
