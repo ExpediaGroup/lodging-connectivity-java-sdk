@@ -567,7 +567,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 ### SupplyClient - Mutations
 
-<hr />
 <details>
    <summary>AddMessage</summary>
 </details>
