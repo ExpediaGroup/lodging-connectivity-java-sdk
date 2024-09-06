@@ -39,6 +39,8 @@ catch(ExpediaGroupServiceException e) {
 ## Available Operations
 The SDK offers a set of queries & mutations you can execute using the `SupplyClient`. Below is a list of the available operations.
 
+<br /><br />
+
 ### SupplyClient - Queries
 
 <hr />
