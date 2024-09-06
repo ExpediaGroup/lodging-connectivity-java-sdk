@@ -9,5 +9,5 @@ There are two categories of an `ExpediaGroupException`:
 Since exceptions are unchecked, the caller decides which exceptions to handle. In principle, an `ExpediaGroupClientException` is assumed to be not retryable, and they should be typically fixed during development. An `ExpediaGroupServiceException`, on the other hand, might be recoverable, such as errors resulting from a service being temporarily unavailable. Error handling should therefore focus on the latter.
 
 ## GraphQL Errors Handling
-Conventionally, GraphQL APIs always returns `200` HTTP status and relies on `GraphQLErros` object to hold occurred errors. However, The SDK handles these `GraphQLErrors` by throwing a new `ExpediaGroupServiceException` if the response has any errors.
+Conventionally, GraphQL APIs always return `200` HTTP status and rely on `GraphQLErros` response object to hold the occurred errors. However, The SDK handles these `GraphQLErrors` by throwing a new `ExpediaGroupServiceException` if the response has any errors. So, users are expected to properly catch and handle these errors.
 
