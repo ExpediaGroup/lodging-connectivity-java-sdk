@@ -504,6 +504,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>NotificationProfile</summary>
+<br />
+
+**Summary:** Retrieves configurations on notification platform
+
+**Operation Class Name:** `NotificationProfileQuery`
+
+**Operation Inputs:** None
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
