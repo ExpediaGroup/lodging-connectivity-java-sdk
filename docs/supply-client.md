@@ -521,16 +521,53 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>RatePlan</summary>
+<br />
+
+**Summary:** Retrieves rate plan by property id and rate plan ID
+
+**Operation Class Name:** `RatePlanQuery`
+
+**Operation Inputs:**
+
+| Name         | Type  | Description          | Required |
+|--------------|-------|----------------------|----------|
+| `propertyId` | `ID!` | Property identifier  | Yes      |
+| `ratePlanId` | `Id`  | Rate plan identifier | Yes      |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
 
 <details>
    <summary>UndeliveredNotifications</summary>
+<br />
+
+**Summary:** Retrieves failed notifications
+
+**Operation Class Name:** `UndeliveredNotificationsQuery`
+
+**Operation Inputs:**
+
+| Name      | Type                                    | Description                         | Required |
+|-----------|-----------------------------------------|-------------------------------------|----------|
+| `filters` | `UndeliveredNotificationsFiltersInput!` | Filters the requested notifications | Yes      |
+| `cursor`  | `String`                                | Pagination cursor                   | No       |
+| `limit`   | `Int`                                   | notifications limit per page        | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
+<hr />
+<br /><br />
 
 ### SupplyClient - Mutations
+
+<hr />
 <details>
    <summary>AddMessage</summary>
 </details>
