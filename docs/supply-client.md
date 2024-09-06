@@ -465,7 +465,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>MessageThread</summary>
 <br />
 
-**Summary:** Retrieves a single message using its unique identifier.
+**Summary:** Retrieves a single message thread using its unique identifier.
 
 **Operation Class Name:** `MessageThreadQuery`
 
@@ -487,6 +487,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>NotificationEventTypes</summary>
+<br />
+
+**Summary:** Retrieves available event types to subscribe to
+
+**Operation Class Name:** `NotificationEventTypesQuery`
+
+**Operation Inputs:** None
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
