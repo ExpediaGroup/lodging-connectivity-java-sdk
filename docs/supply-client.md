@@ -576,16 +576,16 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Adds a message to a message thread.
 
 **Operation Class Name:** `AddMessageMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `messageThreadId` | `ID!` | Description | Yes |
-| `message` | `AddMessageThreadMessageInput!` | Description | Yes |
+| Name              | Type                            | Required |
+|-------------------|---------------------------------|----------|
+| `messageThreadId` | `ID!`                           | Yes      |
+| `message`         | `AddMessageThreadMessageInput!` | Yes      |
 
 <br />
 
@@ -597,15 +597,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Accepts a list of Property IDs that should be archived during the Property ID mapping process.
 
 **Operation Class Name:** `ArchivePropertyIdsMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `ArchivePropertyIdsInput!` | Description | Yes |
+| Name    | Type                       | Required |
+|---------|----------------------------|----------|
+| `input` | `ArchivePropertyIdsInput!` | Yes      |
 
 <br />
 
@@ -617,15 +617,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Mutation to cancel a pre-stay reservation
 
 **Operation Class Name:** `CancelReservationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CancelReservationInput!` | Description | Yes |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `CancelReservationInput!` | Yes      |
 
 <br />
 
@@ -637,15 +637,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Cancel reservation reconciliation.
 
 **Operation Class Name:** `CancelReservationReconciliationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CancelReservationReconciliationInput!` | Description | Yes |
+| Name    | Type                                    | Required |
+|---------|-----------------------------------------|----------|
+| `input` | `CancelReservationReconciliationInput!` | Yes      |
 
 <br />
 
@@ -657,15 +657,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Mutation for suppliers to cancel a VRBO reservation - pre & post arrival
 
 **Operation Class Name:** `CancelVrboReservationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CancelVrboReservationInput!` | Description | Yes |
+| Name    | Type                          | Required |
+|---------|-------------------------------|----------|
+| `input` | `CancelVrboReservationInput!` | Yes      |
 
 <br />
 
@@ -677,15 +677,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update reservation reconciliation.
 
 **Operation Class Name:** `ChangeReservationReconciliationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `ChangeReservationReconciliationInput!` | Description | Yes |
+| Name    | Type                                    | Required |
+|---------|-----------------------------------------|----------|
+| `input` | `ChangeReservationReconciliationInput!` | Yes      |
 
 <br />
 
@@ -697,15 +697,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Confirm Reservation sent via Webhook
 
 **Operation Class Name:** `ConfirmReservationNotificationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `ConfirmReservationNotificationInput!` | Description | Yes |
+| Name    | Type                                   | Required |
+|---------|----------------------------------------|----------|
+| `input` | `ConfirmReservationNotificationInput!` | Yes      |
 
 <br />
 
@@ -717,15 +717,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Creates cancellation policy config
 
 **Operation Class Name:** `CreateCancellationPolicyConfigMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreateCancellationPolicyConfigInput!` | Description | Yes |
+| Name    | Type                                   | Required |
+|---------|----------------------------------------|----------|
+| `input` | `CreateCancellationPolicyConfigInput!` | Yes      |
 
 <br />
 
@@ -737,17 +737,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Creates day of week discount promotion.
 
 **Operation Class Name:** `CreateDayOfWeekDiscountPromotionMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `propertyId` | `String!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
-| `promotion` | `DayOfWeekDiscountPromotionCreateInput!` | Description | Yes |
+| Name               | Type                                     | Required |
+|--------------------|------------------------------------------|----------|
+| `propertyId`       | `String!`                                | Yes      |
+| `propertyIdSource` | `IdSource!`                              | Yes      |
+| `promotion`        | `DayOfWeekDiscountPromotionCreateInput!` | Yes      |
 
 <br />
 
@@ -759,15 +759,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Creates fee set
 
 **Operation Class Name:** `CreateFeeSetMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreateFeeSetInput!` | Description | Yes |
+| Name    | Type                 | Description | Required |
+|---------|----------------------|-------------|----------|
+| `input` | `CreateFeeSetInput!` | Description | Yes      |
 
 <br />
 
@@ -779,17 +779,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Create multi night discount promotion.
 
 **Operation Class Name:** `CreateMultiNightDiscountPromotionMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `promotion` | `MultiNightDiscountPromotionCreateInput!` | Description | Yes |
-| `propertyId` | `String!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
+| Name               | Type                                      | Required |
+|--------------------|-------------------------------------------|----------|
+| `promotion`        | `MultiNightDiscountPromotionCreateInput!` | Yes      |
+| `propertyId`       | `String!`                                 | Yes      |
+| `propertyIdSource` | `IdSource!`                               | Yes      |
 
 <br />
 
@@ -801,15 +801,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Create callback configuration for notification profile
 
 **Operation Class Name:** `CreateNotificationCallbackConfigMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreateNotificationCallbackConfigInput!` | Description | Yes |
+| Name    | Type                                     | Required |
+|---------|------------------------------------------|----------|
+| `input` | `CreateNotificationCallbackConfigInput!` | Yes      |
 
 <br />
 
@@ -821,15 +821,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Creates a new property
 
 **Operation Class Name:** `CreatePropertyMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreatePropertyInput!` | Description | Yes |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `CreatePropertyInput!` | Yes      |
 
 <br />
 
@@ -841,15 +841,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Adds a new image for a property
 
 **Operation Class Name:** `CreatePropertyImageMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreatePropertyImageInput!` | Description | Yes |
+| Name    | Type                        | Required |
+|---------|-----------------------------|----------|
+| `input` | `CreatePropertyImageInput!` | Yes      |
 
 <br />
 
@@ -861,15 +861,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Create rate plan
 
 **Operation Class Name:** `CreateRatePlanMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreateRatePlanInput!` | Description | Yes |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `CreateRatePlanInput!` | Yes      |
 
 <br />
 
@@ -881,17 +881,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Create single discount promotion.
 
 **Operation Class Name:** `CreateSingleDiscountPromotionMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `promotion` | `SingleDiscountPromotionCreateInput!` | Description | Yes |
-| `propertyId` | `String!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
+| Name               | Type                                  | Required |
+|--------------------|---------------------------------------|----------|
+| `promotion`        | `SingleDiscountPromotionCreateInput!` | Yes      |
+| `propertyId`       | `String!`                             | Yes      |
+| `propertyIdSource` | `IdSource!`                           | Yes      |
 
 <br />
 
@@ -903,15 +903,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Creates unit spaces
 
 **Operation Class Name:** `CreateUnitSpacesMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `CreateUnitSpacesInput!` | Description | Yes |
+| Name    | Type                     | Required |
+|---------|--------------------------|----------|
+| `input` | `CreateUnitSpacesInput!` | Yes      |
 
 <br />
 
@@ -923,15 +923,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Deletes Image by ID
 
 **Operation Class Name:** `DeleteImageMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `DeleteImageInput!` | Description | Yes |
+| Name    | Type                | Required |
+|---------|---------------------|----------|
+| `input` | `DeleteImageInput!` | Yes      |
 
 <br />
 
@@ -943,15 +943,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Delete callback configuration from notification profile.
 
 **Operation Class Name:** `DeleteNotificationCallbackConfigMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `DeleteNotificationCallbackConfigInput!` | Description | Yes |
+| Name    | Type                                     | Required |
+|---------|------------------------------------------|----------|
+| `input` | `DeleteNotificationCallbackConfigInput!` | Yes      |
 
 <br />
 
@@ -963,15 +963,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Deletes unit space
 
 **Operation Class Name:** `DeleteUnitSpaceMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `DeleteUnitSpaceInput!` | Description | Yes |
+| Name    | Type                    | Required |
+|---------|-------------------------|----------|
+| `input` | `DeleteUnitSpaceInput!` | Yes      |
 
 <br />
 
@@ -983,15 +983,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Disables a property.
 
 **Operation Class Name:** `DisablePropertyMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `DisablePropertyInput!` | Description | Yes |
+| Name    | Type                    | Required |
+|---------|-------------------------|----------|
+| `input` | `DisablePropertyInput!` | Yes      |
 
 <br />
 
@@ -1003,15 +1003,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Enables a property
 
 **Operation Class Name:** `EnablePropertyMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `EnablePropertyInput!` | Description | Yes |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `EnablePropertyInput!` | Yes      |
 
 <br />
 
@@ -1023,16 +1023,16 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Add new listing discount.
 
 **Operation Class Name:** `JoinNewListingDiscountMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `joinNewListingDiscountId` | `String!` | Description | Yes |
-| `idSource` | `IdSource!` | Description | Yes |
+| Name                       | Type        | Required |
+|----------------------------|-------------|----------|
+| `joinNewListingDiscountId` | `String!`   | Yes      |
+| `idSource`                 | `IdSource!` | Yes      |
 
 <br />
 
@@ -1044,17 +1044,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Rate Guest
 
 **Operation Class Name:** `RateGuestMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `RateGuestInput!` | Description | Yes |
-| `propertyId` | `ID!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
+| Name               | Type              | Required |
+|--------------------|-------------------|----------|
+| `input`            | `RateGuestInput!` | Yes      |
+| `propertyId`       | `ID!`             | Yes      |
+| `propertyIdSource` | `IdSource!`       | Yes      |
 
 <br />
 
@@ -1066,15 +1066,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Refresh secret for callback configuration based on callbackConfigId.
 
 **Operation Class Name:** `RefreshNotificationCallbackConfigSecretMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `RefreshNotificationCallbackConfigSecretInput!` | Description | Yes |
+| Name    | Type                                            | Required |
+|---------|-------------------------------------------------|----------|
+| `input` | `RefreshNotificationCallbackConfigSecretInput!` | Yes      |
 
 <br />
 
@@ -1086,15 +1086,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update reservation with good will refund.
 
 **Operation Class Name:** `RefundReservationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `RefundReservationInput!` | Description | Yes |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `RefundReservationInput!` | Yes      |
 
 <br />
 
@@ -1106,15 +1106,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Replace cancellation policy config
 
 **Operation Class Name:** `ReplaceCancellationPolicyConfigMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `ReplaceCancellationPolicyConfigInput!` | Description | Yes |
+| Name    | Type                                    | Required |
+|---------|-----------------------------------------|----------|
+| `input` | `ReplaceCancellationPolicyConfigInput!` | Yes      |
 
 <br />
 
@@ -1126,15 +1126,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Replace Fee Set 
 
 **Operation Class Name:** `ReplaceFeeSetMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `ReplaceFeeSetInput!` | Description | Yes |
+| Name    | Type                  | Required |
+|---------|-----------------------|----------|
+| `input` | `ReplaceFeeSetInput!` | Yes      |
 
 <br />
 
@@ -1146,16 +1146,16 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Save property contact
 
 **Operation Class Name:** `SavePropertyContactMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `contact` | `SavePropertyContactInput!` | Description | Yes |
-| `propertyId` | `ID!` | Description | Yes |
+| Name         | Type                        | Required |
+|--------------|-----------------------------|----------|
+| `contact`    | `SavePropertyContactInput!` | Yes      |
+| `propertyId` | `ID!`                       | Yes      |
 
 <br />
 
@@ -1167,15 +1167,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Send a new message to a message thread
 
 **Operation Class Name:** `SendMessageMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `SendMessageInput!` | Description | Yes |
+| Name    | Type                | Required |
+|---------|---------------------|----------|
+| `input` | `SendMessageInput!` | Yes      |
 
 <br />
 
@@ -1187,15 +1187,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Send test notification using a given eventType and Payload
 
 **Operation Class Name:** `SendTestNotificationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `SendTestNotificationInput!` | Description | Yes |
+| Name    | Type                         | Required |
+|---------|------------------------------|----------|
+| `input` | `SendTestNotificationInput!` | Yes      |
 
 <br />
 
@@ -1207,15 +1207,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Set spam status for a message thread
 
 **Operation Class Name:** `SetMessageThreadSpamStatusMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `SetMessageThreadSpamStatusInput!` | Description | Yes |
+| Name    | Type                               | Required |
+|---------|------------------------------------|----------|
+| `input` | `SetMessageThreadSpamStatusInput!` | Yes      |
 
 <br />
 
@@ -1227,15 +1227,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Mutation for setting the tax record for a property
 
 **Operation Class Name:** `SetPropertyTaxRecordMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `SetPropertyTaxRecordInput!` | Description | Yes |
+| Name    | Type                         | Required |
+|---------|------------------------------|----------|
+| `input` | `SetPropertyTaxRecordInput!` | Yes      |
 
 <br />
 
@@ -1247,18 +1247,18 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Set review response.
 
 **Operation Class Name:** `SetReviewResponseMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `body` | `InputLocalizedString!` | Description | Yes |
-| `propertyId` | `ID!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
-| `reviewId` | `ID!` | Description | Yes |
+| Name               | Type                    | Required |
+|--------------------|-------------------------|----------|
+| `body`             | `InputLocalizedString!` | Yes      |
+| `propertyId`       | `ID!`                   | Yes      |
+| `propertyIdSource` | `IdSource!`             | Yes      |
+| `reviewId`         | `ID!`                   | Yes      |
 
 <br />
 
@@ -1270,15 +1270,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Subscribe to notification event type for a given notification subscription profile.
 
 **Operation Class Name:** `SubscribeNotificationEventTypeMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `SubscribeNotificationEventTypeInput!` | Description | Yes |
+| Name    | Type                                   | Required |
+|---------|----------------------------------------|----------|
+| `input` | `SubscribeNotificationEventTypeInput!` | Yes      |
 
 <br />
 
@@ -1290,15 +1290,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Unsubscribe from notification event type for a given notification subscription profile.
 
 **Operation Class Name:** `UnsubscribeNotificationEventTypeMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UnsubscribeNotificationEventTypeInput!` | Description | Yes |
+| Name    | Type                                     | Required |
+|---------|------------------------------------------|----------|
+| `input` | `UnsubscribeNotificationEventTypeInput!` | Yes      |
 
 <br />
 
@@ -1310,17 +1310,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update day of week discount promotion
 
 **Operation Class Name:** `UpdateDayOfWeekDiscountPromotionMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `promotion` | `DayOfWeekDiscountPromotionUpdateInput!` | Description | Yes |
-| `propertyId` | `String!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
+| Name               | Type                                     | Required |
+|--------------------|------------------------------------------|----------|
+| `promotion`        | `DayOfWeekDiscountPromotionUpdateInput!` | Yes      |
+| `propertyId`       | `String!`                                | Yes      |
+| `propertyIdSource` | `IdSource!`                              | Yes      |
 
 <br />
 
@@ -1332,15 +1332,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Updates an image
 
 **Operation Class Name:** `UpdateImageMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdateImageInput!` | Description | Yes |
+| Name    | Type                | Required |
+|---------|---------------------|----------|
+| `input` | `UpdateImageInput!` | Yes      |
 
 <br />
 
@@ -1352,17 +1352,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update multi night discount promotion
 
 **Operation Class Name:** `UpdateMultiNightDiscountPromotionMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `promotion` | `MultiNightDiscountPromotionUpdateInput!` | Description | Yes |
-| `propertyId` | `String!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
+| Name               | Type                                      | Required |
+|--------------------|-------------------------------------------|----------|
+| `promotion`        | `MultiNightDiscountPromotionUpdateInput!` | Yes      |
+| `propertyId`       | `String!`                                 | Yes      |
+| `propertyIdSource` | `IdSource!`                               | Yes      |
 
 <br />
 
@@ -1374,15 +1374,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update notification callback configuration profile attributes (callbackUrl, apiKey, requestTimeout) based on callbackConfigId.
 
 **Operation Class Name:** `UpdateNotificationCallbackConfigMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdateNotificationCallbackConfigInput!` | Description | Yes |
+| Name    | Type                                     | Required |
+|---------|------------------------------------------|----------|
+| `input` | `UpdateNotificationCallbackConfigInput!` | Yes      |
 
 <br />
 
@@ -1394,15 +1394,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update notification callback configuration for a subscribed notification event type
 
 **Operation Class Name:** `UpdateNotificationEventTypeSubscriptionMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdateNotificationEventTypeSubscriptionInput!` | Description | Yes |
+| Name    | Type                                            | Required |
+|---------|-------------------------------------------------|----------|
+| `input` | `UpdateNotificationEventTypeSubscriptionInput!` | Yes      |
 
 <br />
 
@@ -1414,15 +1414,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Updates a property
 
 **Operation Class Name:** `UpdatePropertyMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdatePropertyInput!` | Description | Yes |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `UpdatePropertyInput!` | Yes      |
 
 <br />
 
@@ -1434,15 +1434,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Updates rate plan
 
 **Operation Class Name:** `UpdateRatePlanMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdateRatePlanInput!` | Description | Yes |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `UpdateRatePlanInput!` | Yes      |
 
 <br />
 
@@ -1454,17 +1454,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update single discount promotion.
 
 **Operation Class Name:** `UpdateSingleDiscountPromotionMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `promotion` | `SingleDiscountPromotionUpdateInput!` | Description | Yes |
-| `propertyId` | `String!` | Description | Yes |
-| `propertyIdSource` | `IdSource!` | Description | Yes |
+| Name               | Type                                  | Required |
+|--------------------|---------------------------------------|----------|
+| `promotion`        | `SingleDiscountPromotionUpdateInput!` | Yes      |
+| `propertyId`       | `String!`                             | Yes      |
+| `propertyIdSource` | `IdSource!`                           | Yes      |
 
 <br />
 
@@ -1476,15 +1476,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Updates a unit
 
 **Operation Class Name:** `UpdateUnitMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdatePropertyUnitInput!` | Description | Yes |
+| Name    | Type                       | Required |
+|---------|----------------------------|----------|
+| `input` | `UpdatePropertyUnitInput!` | Yes      |
 
 <br />
 
@@ -1496,18 +1496,18 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Update unit registration of property using property associated attributes id/idSource
 
 **Operation Class Name:** `UpdateUnitRegistrationMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `propertyIdSource` | `IdSource!` | Description | Yes |
-| `registration` | `UpdateUnitRegistrationInput!` | Description | Yes |
-| `forceSave` | `Boolean` | Description | No |
-| `propertyId` | `String!` | Description | Yes |
+| Name               | Type                           | Required |
+|--------------------|--------------------------------|----------|
+| `propertyIdSource` | `IdSource!`                    | Yes      |
+| `registration`     | `UpdateUnitRegistrationInput!` | Yes      |
+| `forceSave`        | `Boolean`                      | No       |
+| `propertyId`       | `String!`                      | Yes      |
 
 <br />
 
@@ -1519,15 +1519,15 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Updates unit spaces
 
 **Operation Class Name:** `UpdateUnitSpacesMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `input` | `UpdateUnitSpacesInput!` | Description | Yes |
+| Name    | Type                     | Required |
+|---------|--------------------------|----------|
+| `input` | `UpdateUnitSpacesInput!` | Yes      |
 
 <br />
 
@@ -1539,16 +1539,16 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:**
+**Summary:** Remove new listing discount
 
 **Operation Class Name:** `WithdrawNewListingDiscountMutation`
 
 **Operation Inputs:**
 
-| Name              | Type                           | Description                                         | Required |
-|-------------------|--------------------------------|-----------------------------------------------------|----------|
-| `withdrawNewListingDiscountId` | `String!` | Description | Yes |
-| `idSource` | `IdSource!` | Description | Yes |
+| Name                           | Type        | Required |
+|--------------------------------|-------------|----------|
+| `withdrawNewListingDiscountId` | `String!`   | Yes      |
+| `idSource`                     | `IdSource!` | Yes      |
 
 <br />
 
