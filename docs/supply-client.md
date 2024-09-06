@@ -463,6 +463,24 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <details>
    <summary>MessageThread</summary>
+<br />
+
+**Summary:** Retrieves a single message using its unique identifier.
+
+**Operation Class Name:** `MessageThreadQuery`
+
+**Operation Inputs:**
+
+| Name              | Type                                | Description                               | Required |
+|-------------------|-------------------------------------|-------------------------------------------|----------|
+| `messageThreadId` | `ID!`                               | Message identifier                        | Yes      |
+| `messagesLimit`   | `Int`                               | messages per page                         | No       |
+| `messagesCursor`  | `String`                            | Pagination Cursor                         | No       |
+| `orderMessagesBy` | `MessageThreadMessagesOrderByInput` | Orders message threads by specified field | No       |
+
+<br />
+
+**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
 </details>
 
 <hr />
