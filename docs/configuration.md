@@ -1,6 +1,6 @@
 # SDK Configuration
 
-The `ExpediaGroupClientConfiguration` object is used to configure the different clients provided from the SDK to interact with various endpoints and services. This section provides a detailed breakdown of how to configure these SDK clients and customize various settings.
+The `ExpediaGroupClientConfiguration` object is used to configure the different clients provided by the SDK to interact with various endpoints and services. This section provides a detailed breakdown of how to configure these SDK clients and customize various settings.
 
 ## Basic Configuration
 
