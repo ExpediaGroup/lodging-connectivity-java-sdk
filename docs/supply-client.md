@@ -483,8 +483,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>RatePlan</summary>
 <br />
 
-**Summary:** Retrieves rate plan by property id and rate plan ID
-
 **Operation Class Name:** `RatePlanQuery`
 
 **Operation Inputs:**
