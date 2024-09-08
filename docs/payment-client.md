@@ -56,7 +56,11 @@ At the moment, there is only one query called `PaymentInstrument` you can execut
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**Resources**
+- ⚠️ Documentation is unavailable at the moment
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/payment/operations/mutations/PaymentInstrument.query.graphql)
+- [Reference]()
+
 </details>
 
 <hr />
