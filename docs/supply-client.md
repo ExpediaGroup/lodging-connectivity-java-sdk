@@ -37,7 +37,7 @@ catch(ExpediaGroupServiceException e) {
 ```
 
 ## Available Operations
-The SDK offers a set of queries & mutations you can execute using the `SupplyClient`. Below is a list of the available operations.
+The SDK offers a set of queries & mutations you can execute using the `SupplyClient`. Below is an overview list of the available operations.
 
 <br />
 
@@ -50,19 +50,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br /> 
 
-**Summary:** Retrieves the basic data of a property
-
 **Operation Class Name:** `PropertyQuery`
 
 **Operation Inputs:**
 
-| Name | Type      | Description                        | Required |
-|------|-----------|------------------------------------|----------|
-| `Id` | `String!` | The ID of the property to retrieve | Yes      |
+| Name | Type      | Required |
+|------|-----------|----------|
+| `Id` | `String!` | Yes      |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/property_status/reference/property_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/Property.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -70,27 +68,25 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>PropertyReservations</summary>
 
-<br /> 
-
-**Summary:** Retrieves paginated reservations on a property
+<br />
 
 **Operation Class Name:** `PropertyReservationsQuery`
 
-**Operation Inputs:**
+**Operation Inputs:**   
 
-| Name                            | Type                     | Description                                                           | Required            |
-|---------------------------------|--------------------------|-----------------------------------------------------------------------|---------------------|
-| `propertyId`                    | `String!`                | The ID of the property to retrieve                                    | Yes                 |
-| `pageSize`                      | `Int!`                   | Reservations per page                                                 | Yes                 |
-| `after`                         | `String`                 | Retrieve reservations after this cursor value                         | No                  |
-| `filter`                        | `ReservationFilterInput` | Filters reservation results                                           | No                  |
-| `checkOutDate`                  | `CheckOutDateFilter`     | Filter based on the checkout date                                     | No                  |
-| `includePaymentInstrumentToken` | `Boolean`                | Whether to include the payment-instrument data in the response or not | No (default: false) |
-| `includeSupplierAmount`         | `Boolean`                | Whether to include the supplier-amount data in the response or not    | No (default: false) |
+| Name                            | Type                     | Required            |
+|---------------------------------|--------------------------|---------------------|
+| `propertyId`                    | `String!`                | Yes                 |
+| `pageSize`                      | `Int!`                   | Yes                 |
+| `after`                         | `String`                 | No                  |
+| `filter`                        | `ReservationFilterInput` | No                  |
+| `checkOutDate`                  | `CheckOutDateFilter`     | No                  |
+| `includePaymentInstrumentToken` | `Boolean`                | No (default: false) |
+| `includeSupplierAmount`         | `Boolean`                | No (default: false) |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/reservations_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReservations.graphql)  |  [Reference]()**
 
 </details>
 
@@ -99,22 +95,23 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>PropertyAmenities</summary>
 
-<br /> 
-
-**Summary:** Retrieves property's amenities
+<br />
 
 **Operation Class Name:** `PropertyAmenitiesQuery`
 
 **Operation Inputs:**
 
-| Name         | Type                    | Description            | Required |
-|--------------|-------------------------|------------------------|----------|
-| `propertyId` | `String!`               | The ID of the property | Yes      |
-| `filters`    | `AmenitiesFiltersInput` | Amenities Filter       | No       |
+| Name         | Type                    | Required |
+|--------------|-------------------------|----------|
+| `propertyId` | `String!`               | Yes      |
+| `filters`    | `AmenitiesFiltersInput` | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+> [!CAUTION]
+> Documentation for this query is not available yet.
+
+**[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyAmenities.graphql)  |  [Reference]()**
 
 </details>
 
