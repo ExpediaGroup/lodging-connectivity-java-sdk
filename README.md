@@ -36,10 +36,10 @@ dependencies {
 ## Quick Start
 Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains four different clients, each linked to a separate endpoint
 
-1. **Supply Client**
-2. **Payment Client**
-3. **Sandbox  Client**
-4. **File Management Client**
+1. Supply Client
+2. Payment Client
+3. Sandbox  Client
+4. File Management Client
 
 ### Typical Usage Flow
 Follow these three simple steps to start using any client in the SDK:
@@ -73,3 +73,8 @@ The list below lists detailed documentation files for some components of the SDK
 5. [Configuration](docs/configuration.md)
 6. [Logging](docs/logging.md)
 7. [Exception Handling](docs/exception-handling.md)
+
+## Related Resources
+- [EG Connectivity Hub](https://developers.expediagroup.com/supply/lodging)
+- [GraphQL Operations Definitions](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations)
+- [EG Lodging Connectivity Node.JS SDK](https://github.com/ExpediaGroup/lodging-connectivity-nodejs-sdk)
