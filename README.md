@@ -76,5 +76,5 @@ The list below lists detailed documentation files for some components of the SDK
 
 ## Related Resources
 - [EG Connectivity Hub](https://developers.expediagroup.com/supply/lodging)
-- [GraphQL Operations Definitions](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations)
+- [EG Lodging Connectivity SDK GraphQL Operations Definitions](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations)
 - [EG Lodging Connectivity Node.JS SDK](https://github.com/ExpediaGroup/lodging-connectivity-nodejs-sdk)
