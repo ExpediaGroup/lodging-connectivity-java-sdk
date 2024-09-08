@@ -224,12 +224,12 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type                           | Description                   | Required |
-|--------------|--------------------------------|-------------------------------|----------|
-| `propertyId` | `String!`                      | The ID of the property        | Yes      |
-| `filters`    | `PropertyMessagesFiltersInput` | Filter the requested messages | Yes      |
-| `limit`      | `Int`                          | Messages limit per page       | No       |
-| `cursor`     | `String`                       | Pagination cursor             | No       |
+| Name         | Type                           | Required |
+|--------------|--------------------------------|----------|
+| `propertyId` | `String!`                      | Yes      |
+| `filters`    | `PropertyMessagesFiltersInput` | Yes      |
+| `limit`      | `Int`                          | No       |
+| `cursor`     | `String`                       | No       |
 
 <br />
 
@@ -489,10 +489,10 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type  | Description          | Required |
-|--------------|-------|----------------------|----------|
-| `propertyId` | `ID!` | Property identifier  | Yes      |
-| `ratePlanId` | `Id`  | Rate plan identifier | Yes      |
+| Name         | Type  | Required |
+|--------------|-------|----------|
+| `propertyId` | `ID!` | Yes      |
+| `ratePlanId` | `Id`  | Yes      |
 
 <br />
 
@@ -509,11 +509,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name      | Type                                    | Description                         | Required |
-|-----------|-----------------------------------------|-------------------------------------|----------|
-| `filters` | `UndeliveredNotificationsFiltersInput!` | Filters the requested notifications | Yes      |
-| `cursor`  | `String`                                | Pagination cursor                   | No       |
-| `limit`   | `Int`                                   | notifications limit per page        | No       |
+| Name      | Type                                    | Required |
+|-----------|-----------------------------------------|----------|
+| `filters` | `UndeliveredNotificationsFiltersInput!` | Yes      |
+| `cursor`  | `String`                                | No       |
+| `limit`   | `Int`                                   | No       |
 
 <br />
 
