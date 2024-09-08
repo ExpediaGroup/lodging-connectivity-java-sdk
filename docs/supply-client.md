@@ -108,7 +108,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-⚠️Documentation is unavailable at the moment | **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyAmenities.graphql)  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment | **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyAmenities.graphql)  |  [Reference]()**
 
 </details>
 
@@ -117,22 +117,20 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>PropertyDistrict</summary>
 
-<br /> 
-
-**Summary:** Retrieves district regulatory information
+<br />
 
 **Operation Class Name:** `PropertyDistrictQuery`
 
 **Operation Inputs:**
 
-| Name         | Type      | Description            | Required |
-|--------------|-----------|------------------------|----------|
-| `propertyId` | `String!` | The ID of the property | Yes      |
-| `locale`     | `String`  | Response locale        | No       |
+| Name         | Type      | Required |
+|--------------|-----------|----------|
+| `propertyId` | `String!` | Yes      |
+| `locale`     | `String`  | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/compliance/reference/district_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyDistrict.graphql)  |  [Reference]()**
 
 </details>
 
@@ -141,22 +139,20 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>PropertyFeeSets</summary>
 
-<br /> 
-
-**Summary:** Retrieves property fee sets
+<br />
 
 **Operation Class Name:** `PropertyFeeSetsQuery`
 
 **Operation Inputs:**
 
-| Name         | Type                          | Description               | Required |
-|--------------|-------------------------------|---------------------------|----------|
-| `propertyId` | `String!`                     | The ID of the property    | Yes      |
-| `filters`    | `PropertyFeeSetsFiltersInput` | Filter Fee Sets Responses | No       |
+| Name         | Type                          | Required |
+|--------------|-------------------------------|----------|
+| `propertyId` | `String!`                     | Yes      |
+| `filters`    | `PropertyFeeSetsFiltersInput` | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment | **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyDistrict.graphql)  |  [Reference]()**
 
 </details>
 
@@ -167,20 +163,18 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:** Listings of the property on the requested domains, supported domains: [expedia.com, vrbo.com]
-
 **Operation Class Name:** `PropertyListingQuery`
 
 **Operation Inputs:**
 
-| Name         | Type         | Description                                | Required |
-|--------------|--------------|--------------------------------------------|----------|
-| `propertyId` | `String!`    | The ID of the property                     | Yes      |
-| `domains`    | `[String!]!` | supported domains: [expedia.com, vrbo.com] | Yes      |
+| Name         | Type         | Required |
+|--------------|--------------|----------|
+| `propertyId` | `String!`    | Yes      |
+| `domains`    | `[String!]!` | Yes      |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/property_status/getting_started/intro/#retrieving-location-and-listing-urls)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyListing.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -190,15 +184,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:** Get Property Listing Bundle Adoption
-
 **Operation Class Name:** `PropertyListingBundleAdoptionQuery`
 
 **Operation Inputs:** None
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment | **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyListingBundleAdoption.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -208,20 +200,18 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:** Get Property's media (images)
-
 **Operation Class Name:** `PropertyMediaQuery`
 
 **Operation Inputs:**
 
-| Name         | Type                 | Description                | Required |
-|--------------|----------------------|----------------------------|----------|
-| `propertyId` | `String!`            | The ID of the property     | Yes      |
-| `filters`    | `ImagesFiltersInput` | Filter the requested media | No       |
+| Name         | Type                 | Required |
+|--------------|----------------------|----------|
+| `propertyId` | `String!`            | Yes      |
+| `filters`    | `ImagesFiltersInput` | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyMedia.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -229,8 +219,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>PropertyMessages</summary>
 <br />
-
-**Summary:** Get Property's messages
 
 **Operation Class Name:** `PropertyMessagesQuery`
 
@@ -245,7 +233,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/messaging/reference/messages_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyMessages.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -255,23 +243,21 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:** Retrieves multiple message threads for a property
-
 **Operation Class Name:** `PropertyMessageThreadsQuery`
 
 **Operation Inputs:**
 
-| Name         | Type                                 | Description                                | Required |
-|--------------|--------------------------------------|--------------------------------------------|----------|
-| `propertyId` | `String!`                            | The ID of the property                     | Yes      |
-| `filters`    | `PropertyMessageThreadsFiltersInput` | Filter the requested message threads       | Yes      |
-| `orderBy`    | `PropertyMessageThreadsOrderByInput` | Orders messages threads by specified field | No       |
-| `limit`      | `Int`                                | Message Threads limit per page             | No       |
-| `cursor`     | `String`                             | Pagination cursor                          | No       |
+| Name         | Type                                 | Required |
+|--------------|--------------------------------------|----------|
+| `propertyId` | `String!`                            | Yes      |
+| `filters`    | `PropertyMessageThreadsFiltersInput` | Yes      |
+| `orderBy`    | `PropertyMessageThreadsOrderByInput` | No       |
+| `limit`      | `Int`                                | No       |
+| `cursor`     | `String`                             | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/messaging/reference/messagethreads_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyMessageThreads.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -280,22 +266,20 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>PropertyPromotions</summary>
 <br />
 
-**Summary:** Retrieves property's promotions
-
 **Operation Class Name:** `PropertyPromotionsQuery`
 
 **Operation Inputs:**
 
-| Name         | Type           | Description                     | Required |
-|--------------|----------------|---------------------------------|----------|
-| `propertyId` | `String!`      | The ID of the property          | Yes      |
-| `filters`    | `FiltersInput` | Filter the requested promotions | No       |
-| `pageSize`   | `Int!`         | Promotions per page             | Yes      |
-| `after`      | `String`       | Pagination cursor               | No       |
+| Name         | Type           | Required |
+|--------------|----------------|----------|
+| `propertyId` | `String!`      | Yes      |
+| `filters`    | `FiltersInput` | No       |
+| `pageSize`   | `Int!`         | Yes      |
+| `after`      | `String`       | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/promotions_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyPromotions.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -304,20 +288,18 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>PropertyRegistration</summary>
 <br />
 
-**Summary:** Retrieves a collection of Unit configurations for a Property
-
 **Operation Class Name:** `PropertyRegistrationQuery`
 
 **Operation Inputs:**
 
-| Name         | Type       | Description                                 | Required |
-|--------------|------------|---------------------------------------------|----------|
-| `propertyId` | `String!`  | The ID of the property                      | Yes      |
-| `idSource`   | `IdSource` | Describes the source of a given property ID | No       |
+| Name         | Type       | Required |
+|--------------|------------|----------|
+| `propertyId` | `String!`  | Yes      |
+| `idSource`   | `IdSource` | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/compliance/reference/registration_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyRegistration.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -326,23 +308,21 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>PropertyReviews</summary>
 <br />
 
-**Summary:** Retrieves Property's reviews
-
 **Operation Class Name:** `PropertyReviewsQuery`
 
 **Operation Inputs:**
 
-| Name         | Type             | Description                               | Required |
-|--------------|------------------|-------------------------------------------|----------|
-| `propertyId` | `String!`        | The ID of the property                    | Yes      |
-| `orderBy`    | `ReviewsOrderBy` | Orders reviews threads by specified field | No       |
-| `filter`     | `ReviewFilter`   | Filter the requested reviews              | No       |
-| `pageSize`   | `Int!`           | Reviews per page                          | Yes      |
-| `after`      | `String`         | Pagination cursor                         | No       |
+| Name         | Type             | Required |
+|--------------|------------------|----------|
+| `propertyId` | `String!`        | Yes      |
+| `orderBy`    | `ReviewsOrderBy` | No       |
+| `filter`     | `ReviewFilter`   | No       |
+| `pageSize`   | `Int!`           | Yes      |
+| `after`      | `String`         | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/reviews/reference/reviews_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReviews.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -351,20 +331,18 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>PropertyAggregatedReviews</summary>
 <br />
 
-**Summary:** Retrieves Property's reviews
-
 **Operation Class Name:** `PropertyAggregatedReviewsQuery`
 
 **Operation Inputs:**
 
-| Name         | Type                            | Description                              | Required |
-|--------------|---------------------------------|------------------------------------------|----------|
-| `propertyId` | `String!`                       | The ID of the property                   | Yes      |
-| `filters`    | `AggregatedReviewsFiltersInput` | Filters the requested aggregated reviews | Yes      |
+| Name         | Type                            | Required |
+|--------------|---------------------------------|----------|
+| `propertyId` | `String!`                       | Yes      |
+| `filters`    | `AggregatedReviewsFiltersInput` | Yes      |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/reviews/reference/aggregatedReviews_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyAggregatedReviews.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -373,21 +351,19 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>PropertiesByAdvertiser</summary>
 <br />
 
-**Summary:** Retrieve a list of Properties associated for a given Advertiser
-
 **Operation Class Name:** `PropertiesByAdvertiserQuery`
 
 **Operation Inputs:**
 
-| Name       | Type        | Description                                 | Required |
-|------------|-------------|---------------------------------------------|----------|
-| `id`       | `String!`   | Advertiser ID                               | Yes      |
-| `idSource` | `IdSource!` | Describes the source of a given property ID | Yes      |
-| `pageSize` | `Int`       | Properties per page                         | No       |
-| `cursor`   | `String`    | Pagination cursor                           | No       |
+| Name       | Type        | Required |
+|------------|-------------|----------|
+| `id`       | `String!`   | Yes      |
+| `idSource` | `IdSource!` | Yes      |
+| `pageSize` | `Int`       | No       |
+| `cursor`   | `String`    | No       |
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertiesByAdvertiser.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -396,19 +372,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>CancellationPolicyConfig</summary>
 <br />
 
-**Summary:** Retrieves individual cancellation policy config by ID
-
 **Operation Class Name:** `CancellationPolicyConfigQuery`
 
 **Operation Inputs:**
 
-| Name       | Type  | Description            | Required |
-|------------|-------|------------------------|----------|
-| `id`       | `ID!` | Cancellation Policy ID | Yes      |
+| Name       | Type  | Required |
+|------------|-------|----------|
+| `id`       | `ID!` | Yes      |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/CancellationPolicyConfig.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -417,21 +391,19 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>DistrictByCoordinates</summary>
 <br />
 
-**Summary:** Retrieves District information by latitude/longitude coordinates and optionally locale.
-
 **Operation Class Name:** `DistrictByCoordinatesQuery`
 
 **Operation Inputs:**
 
-| Name        | Type     | Description | Required |
-|-------------|----------|-------------|----------|
-| `latitude`  | `Float!` | _           | Yes      |
-| `longitude` | `Float!` | _           | Yes      |
-| `locale`    | `String` | _           | No       |
+| Name        | Type     | Required |
+|-------------|----------|----------|
+| `latitude`  | `Float!` | Yes      |
+| `longitude` | `Float!` | Yes      |
+| `locale`    | `String` | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/compliance/reference/districtByCoordinates_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/DistrictByCoordinates.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -440,19 +412,17 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>Message</summary>
 <br />
 
-**Summary:** Retrieves a single message using its unique identifier.
-
 **Operation Class Name:** `MessageQuery`
 
 **Operation Inputs:**
 
-| Name        | Type  | Description        | Required |
-|-------------|-------|--------------------|----------|
-| `messageId` | `ID!` | Message identifier | Yes      |
+| Name        | Type  | Required |
+|-------------|-------|----------|
+| `messageId` | `ID!` | Yes      |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/messaging/reference/message_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/Message.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -461,22 +431,20 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>MessageThread</summary>
 <br />
 
-**Summary:** Retrieves a single message thread using its unique identifier.
-
 **Operation Class Name:** `MessageThreadQuery`
 
 **Operation Inputs:**
 
-| Name              | Type                                | Description                               | Required |
-|-------------------|-------------------------------------|-------------------------------------------|----------|
-| `messageThreadId` | `ID!`                               | Message identifier                        | Yes      |
-| `messagesLimit`   | `Int`                               | messages per page                         | No       |
-| `messagesCursor`  | `String`                            | Pagination Cursor                         | No       |
-| `orderMessagesBy` | `MessageThreadMessagesOrderByInput` | Orders message threads by specified field | No       |
+| Name              | Type                                | Required |
+|-------------------|-------------------------------------|----------|
+| `messageThreadId` | `ID!`                               | Yes      |
+| `messagesLimit`   | `Int`                               | No       |
+| `messagesCursor`  | `String`                            | No       |
+| `orderMessagesBy` | `MessageThreadMessagesOrderByInput` | No       |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/messaging/reference/messagethread_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/MessageThread.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -485,15 +453,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>NotificationEventTypes</summary>
 <br />
 
-**Summary:** Retrieves available event types to subscribe to
-
 **Operation Class Name:** `NotificationEventTypesQuery`
 
 **Operation Inputs:** None
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/notificationeventtypes_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/NotificationEventTypes.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -502,15 +468,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
    <summary>NotificationProfile</summary>
 <br />
 
-**Summary:** Retrieves configurations on notification platform
-
 **Operation Class Name:** `NotificationProfileQuery`
 
 **Operation Inputs:** None
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/notificationprofile_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/NotificationProfile.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -532,7 +496,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/RatePlan.graphql)  |  [Reference]()**
 </details>
 
 <hr />
@@ -540,8 +504,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <details>
    <summary>UndeliveredNotifications</summary>
 <br />
-
-**Summary:** Retrieves failed notifications
 
 **Operation Class Name:** `UndeliveredNotificationsQuery`
 
@@ -555,7 +517,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/undeliverednotifications_query/)  |  [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/UndeliveredNotifications.graphql)  |  [Reference]()**
 </details>
 
 <hr />
