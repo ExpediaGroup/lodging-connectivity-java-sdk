@@ -530,8 +530,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:** Adds a message to a message thread.
-
 **Operation Class Name:** `AddMessageMutation`
 
 **Operation Inputs:**
@@ -543,15 +541,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment | **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/AddMessage.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>ArchivePropertyIds</summary>
 
 <br />
-
-**Summary:** Accepts a list of Property IDs that should be archived during the Property ID mapping process.
 
 **Operation Class Name:** `ArchivePropertyIdsMutation`
 
@@ -563,15 +559,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/ArchivePropertyIds.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CancelReservation</summary>
 
 <br />
-
-**Summary:** Mutation to cancel a pre-stay reservation
 
 **Operation Class Name:** `CancelReservationMutation`
 
@@ -583,15 +577,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/cancelReservation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CancelReservation.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CancelReservationReconciliation</summary>
 
 <br />
-
-**Summary:** Cancel reservation reconciliation.
 
 **Operation Class Name:** `CancelReservationReconciliationMutation`
 
@@ -603,15 +595,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/cancelReservationReconciliation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CancelReservationReconciliation.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CancelVrboReservation</summary>
 
 <br />
-
-**Summary:** Mutation for suppliers to cancel a VRBO reservation - pre & post arrival
 
 **Operation Class Name:** `CancelVrboReservationMutation`
 
@@ -623,15 +613,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CancelVrboReservation.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>ChangeReservationReconciliation</summary>
 
 <br />
-
-**Summary:** Update reservation reconciliation.
 
 **Operation Class Name:** `ChangeReservationReconciliationMutation`
 
@@ -643,15 +631,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/changeReservationReconciliation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/ChangeReservationReconciliation.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>ConfirmReservationNotification</summary>
 
 <br />
-
-**Summary:** Confirm Reservation sent via Webhook
 
 **Operation Class Name:** `ConfirmReservationNotificationMutation`
 
@@ -663,15 +649,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/ConfirmReservationNotification.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateCancellationPolicyConfig</summary>
 
 <br />
-
-**Summary:** Creates cancellation policy config
 
 **Operation Class Name:** `CreateCancellationPolicyConfigMutation`
 
@@ -683,15 +667,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateCancellationPolicyConfig.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateDayOfWeekDiscountPromotion</summary>
 
 <br />
-
-**Summary:** Creates day of week discount promotion.
 
 **Operation Class Name:** `CreateDayOfWeekDiscountPromotionMutation`
 
@@ -705,7 +687,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/createdayofweekdiscountpromotion/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateDayOfWeekDiscountPromotion.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
@@ -713,27 +695,23 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Summary:** Creates fee set
-
 **Operation Class Name:** `CreateFeeSetMutation`
 
 **Operation Inputs:**
 
-| Name    | Type                 | Description | Required |
-|---------|----------------------|-------------|----------|
-| `input` | `CreateFeeSetInput!` | Description | Yes      |
+| Name    | Type                 | Required |
+|---------|----------------------|----------|
+| `input` | `CreateFeeSetInput!` | Yes      |
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment | **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateFeeSet.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateMultiNightDiscountPromotion</summary>
 
 <br />
-
-**Summary:** Create multi night discount promotion.
 
 **Operation Class Name:** `CreateMultiNightDiscountPromotionMutation`
 
@@ -747,15 +725,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/createmultinightdiscountpromotion/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateMultiNightDiscountPromotion.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateNotificationCallbackConfig</summary>
 
 <br />
-
-**Summary:** Create callback configuration for notification profile
 
 **Operation Class Name:** `CreateNotificationCallbackConfigMutation`
 
@@ -767,15 +743,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/createnotificationcallbackconfig_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateNotificationCallbackConfig.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateProperty</summary>
 
 <br />
-
-**Summary:** Creates a new property
 
 **Operation Class Name:** `CreatePropertyMutation`
 
@@ -787,15 +761,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateProperty.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreatePropertyImage</summary>
 
 <br />
-
-**Summary:** Adds a new image for a property
 
 **Operation Class Name:** `CreatePropertyImageMutation`
 
@@ -807,15 +779,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreatePropertyImage.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateRatePlan</summary>
 
 <br />
-
-**Summary:** Create rate plan
 
 **Operation Class Name:** `CreateRatePlanMutation`
 
@@ -827,15 +797,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateRatePlan.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateSingleDiscountPromotion</summary>
 
 <br />
-
-**Summary:** Create single discount promotion.
 
 **Operation Class Name:** `CreateSingleDiscountPromotionMutation`
 
@@ -849,15 +817,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/createsinglediscountpromotion/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateSingleDiscountPromotion.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>CreateUnitSpaces</summary>
 
 <br />
-
-**Summary:** Creates unit spaces
 
 **Operation Class Name:** `CreateUnitSpacesMutation`
 
@@ -869,15 +835,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CreateUnitSpaces.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>DeleteImage</summary>
 
 <br />
-
-**Summary:** Deletes Image by ID
 
 **Operation Class Name:** `DeleteImageMutation`
 
@@ -889,15 +853,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/DeleteImage.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>DeleteNotificationCallbackConfig</summary>
 
 <br />
-
-**Summary:** Delete callback configuration from notification profile.
 
 **Operation Class Name:** `DeleteNotificationCallbackConfigMutation`
 
@@ -909,15 +871,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/deletenotificationcallbackconfig_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/DeleteNotificationCallbackConfig.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>DeleteUnitSpace</summary>
 
 <br />
-
-**Summary:** Deletes unit space
 
 **Operation Class Name:** `DeleteUnitSpaceMutation`
 
@@ -929,15 +889,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/DeleteUnitSpace.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>DisableProperty</summary>
 
 <br />
-
-**Summary:** Disables a property.
 
 **Operation Class Name:** `DisablePropertyMutation`
 
@@ -949,15 +907,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  | **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/DisableProperty.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>EnableProperty</summary>
 
 <br />
-
-**Summary:** Enables a property
 
 **Operation Class Name:** `EnablePropertyMutation`
 
@@ -969,15 +925,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/EnableProperty.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>JoinNewListingDiscount</summary>
 
 <br />
-
-**Summary:** Add new listing discount.
 
 **Operation Class Name:** `JoinNewListingDiscountMutation`
 
@@ -990,15 +944,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/JoinNewListingDiscount.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>RateGuest</summary>
 
 <br />
-
-**Summary:** Rate Guest
 
 **Operation Class Name:** `RateGuestMutation`
 
@@ -1012,15 +964,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/RateGuest.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>RefreshNotificationCallbackConfigSecret</summary>
 
 <br />
-
-**Summary:** Refresh secret for callback configuration based on callbackConfigId.
 
 **Operation Class Name:** `RefreshNotificationCallbackConfigSecretMutation`
 
@@ -1032,15 +982,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/refreshnotificationcallbackconfigsecret_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/RefreshNotificationCallbackConfigSecret.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>RefundReservation</summary>
 
 <br />
-
-**Summary:** Update reservation with good will refund.
 
 **Operation Class Name:** `RefundReservationMutation`
 
@@ -1052,15 +1000,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/RefundReservation.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>ReplaceCancellationPolicyConfig</summary>
 
 <br />
-
-**Summary:** Replace cancellation policy config
 
 **Operation Class Name:** `ReplaceCancellationPolicyConfigMutation`
 
@@ -1072,15 +1018,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/ReplaceCancellationPolicyConfig.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>ReplaceFeeSet</summary>
 
 <br />
-
-**Summary:** Replace Fee Set 
 
 **Operation Class Name:** `ReplaceFeeSetMutation`
 
@@ -1092,15 +1036,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/ReplaceFeeSet.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>SavePropertyContact</summary>
 
 <br />
-
-**Summary:** Save property contact
 
 **Operation Class Name:** `SavePropertyContactMutation`
 
@@ -1113,15 +1055,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SavePropertyContact.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>SendMessage</summary>
 
 <br />
-
-**Summary:** Send a new message to a message thread
 
 **Operation Class Name:** `SendMessageMutation`
 
@@ -1133,15 +1073,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/messaging/reference/sendmessage_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SendMessage.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>SendTestNotification</summary>
 
 <br />
-
-**Summary:** Send test notification using a given eventType and Payload
 
 **Operation Class Name:** `SendTestNotificationMutation`
 
@@ -1153,15 +1091,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/sendtestnotification_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SendTestNotification.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>SetMessageThreadSpamStatus</summary>
 
 <br />
-
-**Summary:** Set spam status for a message thread
 
 **Operation Class Name:** `SetMessageThreadSpamStatusMutation`
 
@@ -1173,15 +1109,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SetMessageThreadSpamStatus.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>SetPropertyTaxRecord</summary>
 
 <br />
-
-**Summary:** Mutation for setting the tax record for a property
 
 **Operation Class Name:** `SetPropertyTaxRecordMutation`
 
@@ -1193,15 +1127,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SetPropertyTaxRecord.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>SetReviewResponse</summary>
 
 <br />
-
-**Summary:** Set review response.
 
 **Operation Class Name:** `SetReviewResponseMutation`
 
@@ -1216,15 +1148,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/reviews/reference/setReviewResponse_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SetReviewResponse.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>SubscribeNotificationEventType</summary>
 
 <br />
-
-**Summary:** Subscribe to notification event type for a given notification subscription profile.
 
 **Operation Class Name:** `SubscribeNotificationEventTypeMutation`
 
@@ -1236,15 +1166,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/subscribenotificationeventtype_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SubscribeNotificationEventType.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UnsubscribeNotificationEventType</summary>
 
 <br />
-
-**Summary:** Unsubscribe from notification event type for a given notification subscription profile.
 
 **Operation Class Name:** `UnsubscribeNotificationEventTypeMutation`
 
@@ -1256,15 +1184,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/unsubscribenotificationeventtype_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UnsubscribeNotificationEventType.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateDayOfWeekDiscountPromotion</summary>
 
 <br />
-
-**Summary:** Update day of week discount promotion
 
 **Operation Class Name:** `UpdateDayOfWeekDiscountPromotionMutation`
 
@@ -1278,15 +1204,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/updatedayofweekdiscountpromotion/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateDayOfWeekDiscountPromotion.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateImage</summary>
 
 <br />
-
-**Summary:** Updates an image
 
 **Operation Class Name:** `UpdateImageMutation`
 
@@ -1298,15 +1222,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateImage.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateMultiNightDiscountPromotion</summary>
 
 <br />
-
-**Summary:** Update multi night discount promotion
 
 **Operation Class Name:** `UpdateMultiNightDiscountPromotionMutation`
 
@@ -1320,15 +1242,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/updatemultinightdiscountpromotion/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateMultiNightDiscountPromotion.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateNotificationCallbackConfig</summary>
 
 <br />
-
-**Summary:** Update notification callback configuration profile attributes (callbackUrl, apiKey, requestTimeout) based on callbackConfigId.
 
 **Operation Class Name:** `UpdateNotificationCallbackConfigMutation`
 
@@ -1340,15 +1260,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/updatenotificationcallbackconfig_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateNotificationCallbackConfig.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateNotificationEventTypeSubscription</summary>
 
 <br />
-
-**Summary:** Update notification callback configuration for a subscribed notification event type
 
 **Operation Class Name:** `UpdateNotificationEventTypeSubscriptionMutation`
 
@@ -1360,15 +1278,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/updatenotificationeventtypesubscription_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateNotificationEventTypeSubscription.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateProperty</summary>
 
 <br />
-
-**Summary:** Updates a property
 
 **Operation Class Name:** `UpdatePropertyMutation`
 
@@ -1380,15 +1296,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateProperty.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateRatePlan</summary>
 
 <br />
-
-**Summary:** Updates rate plan
 
 **Operation Class Name:** `UpdateRatePlanMutation`
 
@@ -1400,15 +1314,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateRatePlan.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateSingleDiscountPromotion</summary>
 
 <br />
-
-**Summary:** Update single discount promotion.
 
 **Operation Class Name:** `UpdateSingleDiscountPromotionMutation`
 
@@ -1422,15 +1334,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/updatesinglediscountpromotion/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateSingleDiscountPromotion.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateUnit</summary>
 
 <br />
-
-**Summary:** Updates a unit
 
 **Operation Class Name:** `UpdateUnitMutation`
 
@@ -1442,15 +1352,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateUnit.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateUnitRegistration</summary>
 
 <br />
-
-**Summary:** Update unit registration of property using property associated attributes id/idSource
 
 **Operation Class Name:** `UpdateUnitRegistrationMutation`
 
@@ -1465,15 +1373,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+**[Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/compliance/reference/updateUnitRegistration_mutation/)  |  [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateUnitRegistration.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>UpdateUnitSpaces</summary>
 
 <br />
-
-**Summary:** Updates unit spaces
 
 **Operation Class Name:** `UpdateUnitSpacesMutation`
 
@@ -1485,15 +1391,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/UpdateUnitSpaces.graphql)  |  [Reference]()**
 </details>
 
 <hr /><details>
    <summary>WithdrawNewListingDiscount</summary>
 
 <br />
-
-**Summary:** Remove new listing discount
 
 **Operation Class Name:** `WithdrawNewListingDiscountMutation`
 
@@ -1506,7 +1410,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**[Usage Example]()  |  [Query Definition]()  |  [Reference]()**
+⚠️ Documentation is unavailable at the moment  |  **[Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/WithdrawNewListingDiscount.graphql)  |  [Reference]()**
 </details>
 
 <hr />
