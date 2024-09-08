@@ -108,7 +108,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**⚠️ Documentation is unavailable at the moment | [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyAmenities.graphql)  |  [Reference]()**
+⚠️Documentation is unavailable at the moment | **[Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyAmenities.graphql)  |  [Reference]()**
 
 </details>
 
