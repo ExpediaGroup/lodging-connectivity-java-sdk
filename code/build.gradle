@@ -1,7 +1,25 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+buildscript {
+    ext {
+        artyUser = findProperty('ARTIFACTORY_USER')
+        artyPass = findProperty('ARTIFACTORY_PASS')
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            credentials {
+                username = artyUser
+                password = artyPass
+            }
+        }
+    }
+}
+
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo3' version '3.8.4'
 }
@@ -49,6 +67,31 @@ subprojects {
             tasks.configureEach { task ->
                 task.enabled = false
             }
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId project.name
+            groupId project.property('groupId')
+            version project.property('version')
+            description project.property('description')
+        }
+    }
+}
+
+tasks.register('versionsSet') {
+    doLast {
+        def pattern = ~/(\R|^)(version\s*=\s*)([-.A-Z0-9]+)(\R|$)/
+        String gradleProperties = file('gradle.properties').text
+        String currentVersion = (gradleProperties =~ pattern)[0][3]
+        println("Current version: $currentVersion")
+        println("Project version: ${project.version}")
+        if (project.version != currentVersion) {
+            file('gradle.properties').text = gradleProperties.replaceFirst(pattern, "\$1\$2${project.version}\$4")
         }
     }
 }
