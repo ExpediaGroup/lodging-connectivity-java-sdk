@@ -38,9 +38,7 @@ jobs:
         id: prepare_release
         run: |
           cd code
-          git checkout -b ${{ steps.prepare.outputs.branch_name }}
           chmod a+x ../gradlew && ../gradlew --no-daemon versionsSet -Pversion=${{ inputs.version }}
-          git add gradle.properties ../gradlew
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v7
