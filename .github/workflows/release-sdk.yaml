@@ -7,7 +7,7 @@ on:
         description: |
           The version to release.
           Add -SNAPSHOT to release a snapshot version.
-        required: true
+        default: '0.0.1-SNAPSHOT'
 
 jobs:
   release-sdk:
