@@ -1,4 +1,4 @@
-name: Release an SDK to Maven Central
+name: Release SDK to Maven Central
 
 on:
   workflow_dispatch:
