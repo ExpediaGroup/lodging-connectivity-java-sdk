@@ -28,34 +28,20 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceExce
 import io.ktor.client.statement.*
 import kotlinx.coroutines.runBlocking
 
+class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : GraphQLExecutor {
 
-class BaseGraphQLClient(config: ExpediaGroupClientConfiguration, private val namespace: String) :
-    ExpediaGroupClient(namespace = namespace, clientConfiguration = config),
-    GraphQLExecutor {
+    private val expediaGroupClient =
+        object : ExpediaGroupClient(clientConfiguration = config, namespace = "lodging-connectivity-sdk") {
+            override suspend fun throwServiceException(response: HttpResponse, operationId: String) {
+                throw ExpediaGroupServiceException("Service error occurred for operation $operationId.\nResponse: $response")
+            }
+        }
 
     @OptIn(ApolloExperimental::class)
     private val apolloClient: ApolloClient = ApolloClient.Builder()
         .serverUrl(config.endpoint!!)
-        .httpEngine(KtorHttpEngine(httpClient))
+        .httpEngine(KtorHttpEngine(expediaGroupClient.httpClient))
         .build()
-
-    class Builder : ExpediaGroupClient.Builder<Builder>() {
-        override fun build(): BaseGraphQLClient =
-            BaseGraphQLClient(
-                ExpediaGroupClientConfiguration(
-                    key,
-                    secret,
-                    endpoint,
-                    requestTimeout,
-                    connectionTimeout,
-                    socketTimeout,
-                    maskedLoggingHeaders,
-                    maskedLoggingBodyFields,
-                    authEndpoint,
-                ),
-                namespace = "lodging-supply"
-            )
-    }
 
     override fun <T : Query.Data> execute(query: Query<T>): T {
         return runBlocking {
@@ -85,12 +71,5 @@ class BaseGraphQLClient(config: ExpediaGroupClientConfiguration, private val nam
                 }
             }.dataAssertNoErrors
         }
-    }
-
-    override suspend fun throwServiceException(
-        response: HttpResponse,
-        operationId: String,
-    ) {
-        throw ExpediaGroupServiceException("Service error occurred for operation $operationId.\nResponse: $response")
     }
 }
