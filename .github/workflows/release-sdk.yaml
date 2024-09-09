@@ -52,7 +52,7 @@ jobs:
           add-paths: |
             code/*
       
-      - name: Build and Publish
+      - name: Publish
         env:
           ARTYLAB_USER: ${{ secrets.SONATYPE_USERNAME }}
           ARTYLAB_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
@@ -62,4 +62,4 @@ jobs:
         run: |
           echo "Publishing version ${{ inputs.version }}"
           cd code
-          ../gradlew --no-daemon clean jar build publish -Pversion=${{ inputs.version }}
+           ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository publishPlugins -Pversion=${{ inputs.version }}
