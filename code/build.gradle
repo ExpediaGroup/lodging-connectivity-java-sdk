@@ -7,7 +7,12 @@ buildscript {
     }
 
     repositories {
-        mavenCentral()
+        mavenCentral { 
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
     }
 }
 
@@ -19,8 +24,12 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
-    mavenLocal()
+    mavenCentral { 
+        credentials {
+            username = System.getenv("SONATYPE_USERNAME")
+            password = System.getenv("SONATYPE_PASSWORD")
+        }
+    }
 }
 
 dependencies {
@@ -67,7 +76,12 @@ subprojects {
 
 publishing {
     repositories {
-        mavenCentral()
+        mavenCentral { 
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
     }
 
     publications {
