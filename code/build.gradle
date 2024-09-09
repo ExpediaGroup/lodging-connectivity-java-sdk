@@ -9,12 +9,6 @@ buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
-        maven {
-            credentials {
-                username = artyUser
-                password = artyPass
-            }
-        }
     }
 }
 
