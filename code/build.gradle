@@ -1,27 +1,12 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
-buildscript {
-    ext {
-        artyUser = findProperty('ARTIFACTORY_USER')
-        artyPass = findProperty('ARTIFACTORY_PASS')
-    }
-
-    repositories {
-        mavenCentral {
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
-                password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
-            }
-        }
-    }
-}
-
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.9.22'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo3' version '3.8.4'
-    id 'maven-publish' 
-    id "io.github.gradle-nexus.publish-plugin" version "2.0.0"
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
 }
 
 repositories {
@@ -52,7 +37,6 @@ dependencies {
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.hibernate.validator:hibernate-validator:6.2.5.Final")
     implementation("jakarta.validation:jakarta.validation-api:2.0.2")
-
 }
 
 kotlin {
@@ -76,15 +60,6 @@ subprojects {
 }
 
 publishing {
-    repositories {
-        mavenCentral {
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-    }
-
     publications {
         mavenJava(MavenPublication) {
             from components.java
@@ -92,8 +67,50 @@ publishing {
             groupId project.property('groupId')
             version project.property('version')
             description project.property('description')
+
+            pom {
+                name = project.property('artifactName')
+                description = project.property('description')
+                url = 'https://github.com/ExpediaGroup/lodging-connectivity-java-sdk'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                        comments = 'A business-friendly OSS license'
+                    }
+                }
+
+                developers {
+                    developer {
+                        name = 'Expedia Group Committers'
+                        organization = 'Expedia Group'
+                        organizationUrl = 'https://www.expediagroup.com/'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/ExpediaGroup/lodging-connectivity-java-sdk.git'
+                    developerConnection = 'scm:git:ssh://github.com/ExpediaGroup/lodging-connectivity-java-sdk.git'
+                    url = 'https://github.com/ExpediaGroup/lodging-connectivity-java-sdk'
+                }
+            }
         }
     }
+
+    repositories {
+        maven {
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
 
 tasks.register('versionsSet') {
