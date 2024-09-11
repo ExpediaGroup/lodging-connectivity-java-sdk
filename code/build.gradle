@@ -102,8 +102,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
+                username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
+                password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_USER')
             }
         }
     }
