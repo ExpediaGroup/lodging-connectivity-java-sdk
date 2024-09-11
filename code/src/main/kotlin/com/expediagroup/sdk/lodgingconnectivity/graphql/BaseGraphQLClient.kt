@@ -25,7 +25,7 @@ import com.expediagroup.sdk.core.client.ExpediaGroupClient
 import com.expediagroup.sdk.core.client.KtorHttpEngine
 import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import io.ktor.client.statement.*
+import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.runBlocking
 
 class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : GraphQLExecutor {

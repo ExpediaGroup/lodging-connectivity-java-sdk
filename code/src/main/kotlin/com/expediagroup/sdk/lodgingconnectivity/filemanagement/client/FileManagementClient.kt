@@ -26,13 +26,20 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.exception.*
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.ktor.client.plugins.*
-import io.ktor.client.request.*
-import io.ktor.client.request.forms.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.util.*
-import io.ktor.utils.io.jvm.javaio.*
+import io.ktor.client.plugins.onUpload
+import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.forms.formData
+import io.ktor.client.request.prepareRequest
+import io.ktor.client.request.request
+import io.ktor.client.request.url
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import io.ktor.util.InternalAPI
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
@@ -42,10 +49,12 @@ import java.io.File
  *
  */
 class FileManagementClient(config: ClientConfiguration) :
-    ExpediaGroupClient("filemanagement", config.toExpediaGroupClientConfiguration(
-       endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
-        authEndpointProvider = EndpointProvider::getAuthEndpoint
-    )) {
+    ExpediaGroupClient(
+        "filemanagement", config.toExpediaGroupClientConfiguration(
+            endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint
+        )
+    ) {
     companion object {
         @JvmStatic
         private val log = ExpediaGroupLoggerFactory.getLogger(this::class.java)
