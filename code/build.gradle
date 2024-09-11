@@ -101,6 +101,8 @@ publishing {
 
     repositories {
         maven {
+            name = "SonatypeReleases"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
                 password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_USER')
@@ -110,9 +112,8 @@ publishing {
 }
 
 signing {
-    sign publishing.publications.mavenJava
+    sign publishing.publications
 }
-
 tasks.register('versionsSet') {
     doLast {
         def pattern = ~/(\R|^)(version\s*=\s*)([-.A-Z0-9]+)(\R|$)/
@@ -124,6 +125,10 @@ tasks.register('versionsSet') {
             file('gradle.properties').text = gradleProperties.replaceFirst(pattern, "\$1\$2${project.version}\$4")
         }
     }
+}
+
+tasks.register('publish') {
+    dependsOn 'publishToSonatypeReleasesRepository'
 }
 
 tasks.withType(DokkaTask.class) {
