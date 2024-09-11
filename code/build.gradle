@@ -127,10 +127,6 @@ tasks.register('versionsSet') {
     }
 }
 
-tasks.register('publish') {
-    dependsOn 'publishToSonatypeReleasesRepository'
-}
-
 tasks.withType(DokkaTask.class) {
 
     moduleName.set("Lodging Connectivity Java SDK")
