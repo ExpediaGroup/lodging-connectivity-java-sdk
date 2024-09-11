@@ -114,6 +114,7 @@ publishing {
 signing {
     sign publishing.publications
 }
+
 tasks.register('versionsSet') {
     doLast {
         def pattern = ~/(\R|^)(version\s*=\s*)([-.A-Z0-9]+)(\R|$)/
