@@ -46,13 +46,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PropertyReservationsQuery implements Query<PropertyReservationsQuery.Data> {
-  public static final String OPERATION_ID = "6bab5bc781ee8d60d7e2c6371ad572d5cc923154086ef7dacb2aa639c709a0d1";
+  public static final String OPERATION_ID = "f13e6bf41405b9e8bc0c1bae5cb1cfe7993c08d250ba7562c5b66eca1201cdd1";
 
   /**
    * The minimized GraphQL document being sent to the server to save a few bytes.
    * The un-minimized version is:
    *
-   * query PropertyReservations($propertyId: String!, $checkOutDate: CheckOutDateFilter, $filter: ReservationFilterInput, $pageSize: Int!, $after: String, $includePaymentInstrumentToken: Boolean! = false , $includeSupplierAmount: Boolean! = false , $skipSummaryView: Boolean! = false ) {
+   * query PropertyReservations($propertyId: String!, $checkOutDate: CheckOutDateFilter, $filter: ReservationFilterInput, $pageSize: Int!, $after: String, $includePaymentInstrumentToken: Boolean! = false , $includeSupplierAmount: Boolean! = false ) {
    *   property(id: $propertyId) {
    *     reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $after) {
    *       totalCount
@@ -69,7 +69,7 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
    *           }
    *           accessibilityText
    *           adultCount
-   *           amounts @skip(if: $skipSummaryView) {
+   *           amounts {
    *             nightlyPayments {
    *               cancellationAmounts {
    *                 amount {
@@ -317,7 +317,7 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
    *             description
    *             id
    *           }
-   *           vrboAmounts @skip(if: $skipSummaryView) {
+   *           vrboAmounts {
    *             summary {
    *               amount {
    *                 amount
@@ -333,7 +333,7 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
    *   }
    * }
    */
-  public static final String OPERATION_DOCUMENT = "query PropertyReservations($propertyId: String!, $checkOutDate: CheckOutDateFilter, $filter: ReservationFilterInput, $pageSize: Int!, $after: String, $includePaymentInstrumentToken: Boolean! = false , $includeSupplierAmount: Boolean! = false , $skipSummaryView: Boolean! = false ) { property(id: $propertyId) { reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $after) { totalCount pageInfo { endCursor hasNextPage } edges { cursor node { id alternativeIds { supplierId } accessibilityText adultCount amounts @skip(if: $skipSummaryView) { nightlyPayments { cancellationAmounts { amount { amount currencyCode } description percent type } dailyAmounts { amount { amount currencyCode } date description percent type } perStayAmounts { amount { amount currencyCode } description percent type } } summary { amount { amount currencyCode } description percent type } } audit { creationDateTimeUtc lastUpdateDateTimeUtc } bedTypes businessModel cancellation { pendingCancellation vrboPrimaryReason } cancellationPolicy { effectivePolicy { endDateTimeUtc policyType startDateTimeUtc } tiers { cancellationWindow { cutoff temporalUnit } penaltyRule { costFlatAmount { amount currencyCode } numberOfNights percentage priceAmount { amount currencyCode } type } } } checkInDate checkOutDate childAges childCount creationDateTime distribution { distributionChannel reservationSource } guests { adultCount childCount pets { travelingWithPets } primaryGuest { firstName lastName emailAddress fullPhoneNumber } } inventoryType isReconciled lastUpdatedDateTime merchantOfRecord messageThreadId multiRoomText payment { installments { amount { amount currencyCode } distributions { amount { currencyCode amount } type } dueDate installmentId paymentStatus } instructions instrument { token @include(if: $includePaymentInstrumentToken) { expirationDateTime value } type } status } paymentInstructions petCount policies { cancellationPolicy { effectivePolicy { endDateTimeUtc policyType startDateTimeUtc } tiers { cancellationWindow { cutoff temporalUnit } penaltyRule { costFlatAmount { amount currencyCode } numberOfNights percentage priceAmount { amount currencyCode } type } } } } primaryGuest { emailAddress firstName lastName loyaltyTier phoneNumbers { areaCode countryCode number } supplierLoyaltyPlanInfo { membershipNumber planCode } travelPurpose } rateIds { id idSource } reconciliationEligibility { invalidScenarios { reason scenario } validScenarios } reconciliationType remittanceType reservationIds { id idSource } smokingType source specialRequest status statuses { status } stayDates { checkInDate checkOutDate } subStatus supplierAmount @include(if: $includeSupplierAmount) { __typename currencyCode rateType ... on ExpediaSupplierAmount { currencyCode rateType rates { compensation { acceleratorPercent basePercent } fromDate rateItems { amount feeType } rateTimeUnit toDate } total { amountAfterTax amountBeforeTax compensation { acceleratorPercent basePercent } } } } supplierOperatingModel tidsCode totalGuestCount unitIds { id idSource } valueAddedPromotions { description id } vrboAmounts @skip(if: $skipSummaryView) { summary { amount { amount currencyCode } productCode type } } } } } } }";
+  public static final String OPERATION_DOCUMENT = "query PropertyReservations($propertyId: String!, $checkOutDate: CheckOutDateFilter, $filter: ReservationFilterInput, $pageSize: Int!, $after: String, $includePaymentInstrumentToken: Boolean! = false , $includeSupplierAmount: Boolean! = false ) { property(id: $propertyId) { reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $after) { totalCount pageInfo { endCursor hasNextPage } edges { cursor node { id alternativeIds { supplierId } accessibilityText adultCount amounts { nightlyPayments { cancellationAmounts { amount { amount currencyCode } description percent type } dailyAmounts { amount { amount currencyCode } date description percent type } perStayAmounts { amount { amount currencyCode } description percent type } } summary { amount { amount currencyCode } description percent type } } audit { creationDateTimeUtc lastUpdateDateTimeUtc } bedTypes businessModel cancellation { pendingCancellation vrboPrimaryReason } cancellationPolicy { effectivePolicy { endDateTimeUtc policyType startDateTimeUtc } tiers { cancellationWindow { cutoff temporalUnit } penaltyRule { costFlatAmount { amount currencyCode } numberOfNights percentage priceAmount { amount currencyCode } type } } } checkInDate checkOutDate childAges childCount creationDateTime distribution { distributionChannel reservationSource } guests { adultCount childCount pets { travelingWithPets } primaryGuest { firstName lastName emailAddress fullPhoneNumber } } inventoryType isReconciled lastUpdatedDateTime merchantOfRecord messageThreadId multiRoomText payment { installments { amount { amount currencyCode } distributions { amount { currencyCode amount } type } dueDate installmentId paymentStatus } instructions instrument { token @include(if: $includePaymentInstrumentToken) { expirationDateTime value } type } status } paymentInstructions petCount policies { cancellationPolicy { effectivePolicy { endDateTimeUtc policyType startDateTimeUtc } tiers { cancellationWindow { cutoff temporalUnit } penaltyRule { costFlatAmount { amount currencyCode } numberOfNights percentage priceAmount { amount currencyCode } type } } } } primaryGuest { emailAddress firstName lastName loyaltyTier phoneNumbers { areaCode countryCode number } supplierLoyaltyPlanInfo { membershipNumber planCode } travelPurpose } rateIds { id idSource } reconciliationEligibility { invalidScenarios { reason scenario } validScenarios } reconciliationType remittanceType reservationIds { id idSource } smokingType source specialRequest status statuses { status } stayDates { checkInDate checkOutDate } subStatus supplierAmount @include(if: $includeSupplierAmount) { __typename currencyCode rateType ... on ExpediaSupplierAmount { currencyCode rateType rates { compensation { acceleratorPercent basePercent } fromDate rateItems { amount feeType } rateTimeUnit toDate } total { amountAfterTax amountBeforeTax compensation { acceleratorPercent basePercent } } } } supplierOperatingModel tidsCode totalGuestCount unitIds { id idSource } valueAddedPromotions { description id } vrboAmounts { summary { amount { amount currencyCode } productCode type } } } } } } }";
 
   public static final String OPERATION_NAME = "PropertyReservations";
 
@@ -351,8 +351,6 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
 
   public final Optional<Boolean> includeSupplierAmount;
 
-  public final Optional<Boolean> skipSummaryView;
-
   private transient volatile int $hashCode;
 
   private transient volatile boolean $hashCodeMemoized;
@@ -361,8 +359,7 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
 
   public PropertyReservationsQuery(String propertyId, Optional<CheckOutDateFilter> checkOutDate,
       Optional<ReservationFilterInput> filter, Integer pageSize, Optional<String> after,
-      Optional<Boolean> includePaymentInstrumentToken, Optional<Boolean> includeSupplierAmount,
-      Optional<Boolean> skipSummaryView) {
+      Optional<Boolean> includePaymentInstrumentToken, Optional<Boolean> includeSupplierAmount) {
     this.propertyId = propertyId;
     this.checkOutDate = checkOutDate;
     this.filter = filter;
@@ -370,7 +367,6 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
     this.after = after;
     this.includePaymentInstrumentToken = includePaymentInstrumentToken;
     this.includeSupplierAmount = includeSupplierAmount;
-    this.skipSummaryView = skipSummaryView;
   }
 
   @Override
@@ -386,8 +382,7 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
        &&((this.pageSize == null) ? (that.pageSize == null) : this.pageSize.equals(that.pageSize))
        &&((this.after == null) ? (that.after == null) : this.after.equals(that.after))
        &&((this.includePaymentInstrumentToken == null) ? (that.includePaymentInstrumentToken == null) : this.includePaymentInstrumentToken.equals(that.includePaymentInstrumentToken))
-       &&((this.includeSupplierAmount == null) ? (that.includeSupplierAmount == null) : this.includeSupplierAmount.equals(that.includeSupplierAmount))
-       &&((this.skipSummaryView == null) ? (that.skipSummaryView == null) : this.skipSummaryView.equals(that.skipSummaryView));
+       &&((this.includeSupplierAmount == null) ? (that.includeSupplierAmount == null) : this.includeSupplierAmount.equals(that.includeSupplierAmount));
     }
     return false;
   }
@@ -410,8 +405,6 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
       __h ^= (includePaymentInstrumentToken == null) ? 0 : includePaymentInstrumentToken.hashCode();
       __h *= 1000003;
       __h ^= (includeSupplierAmount == null) ? 0 : includeSupplierAmount.hashCode();
-      __h *= 1000003;
-      __h ^= (skipSummaryView == null) ? 0 : skipSummaryView.hashCode();
       $hashCode = __h;
       $hashCodeMemoized = true;
     }
@@ -428,8 +421,7 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
         + "pageSize=" + pageSize + ", "
         + "after=" + after + ", "
         + "includePaymentInstrumentToken=" + includePaymentInstrumentToken + ", "
-        + "includeSupplierAmount=" + includeSupplierAmount + ", "
-        + "skipSummaryView=" + skipSummaryView
+        + "includeSupplierAmount=" + includeSupplierAmount
         + "}";
     }
     return $toString;
@@ -490,8 +482,6 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
 
     private Optional<Boolean> includeSupplierAmount = Optional.absent();
 
-    private Optional<Boolean> skipSummaryView = Optional.absent();
-
     Builder() {
     }
 
@@ -530,13 +520,8 @@ public class PropertyReservationsQuery implements Query<PropertyReservationsQuer
       return this;
     }
 
-    public Builder skipSummaryView(Boolean skipSummaryView) {
-      this.skipSummaryView = Optional.present(skipSummaryView);
-      return this;
-    }
-
     public PropertyReservationsQuery build() {
-      return new PropertyReservationsQuery(propertyId, checkOutDate, filter, pageSize, after, includePaymentInstrumentToken, includeSupplierAmount, skipSummaryView);
+      return new PropertyReservationsQuery(propertyId, checkOutDate, filter, pageSize, after, includePaymentInstrumentToken, includeSupplierAmount);
     }
   }
 

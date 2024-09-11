@@ -14,7 +14,7 @@ import com.apollographql.apollo3.api.ObjectAdapter;
 import com.apollographql.apollo3.api.Optional;
 import com.apollographql.apollo3.api.json.JsonReader;
 import com.apollographql.apollo3.api.json.JsonWriter;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsQuery;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsSummaryQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CheckOutDateFilter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationFilterInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.CheckOutDateFilter_InputAdapter;
@@ -23,18 +23,18 @@ import java.io.IOException;
 import java.lang.IllegalStateException;
 import java.lang.Override;
 
-public enum PropertyReservationsQuery_VariablesAdapter implements Adapter<PropertyReservationsQuery> {
+public enum PropertyReservationsSummaryQuery_VariablesAdapter implements Adapter<PropertyReservationsSummaryQuery> {
   INSTANCE;
 
   @Override
-  public PropertyReservationsQuery fromJson(JsonReader reader,
+  public PropertyReservationsSummaryQuery fromJson(JsonReader reader,
       CustomScalarAdapters customScalarAdapters) throws IOException {
     throw new IllegalStateException("Input type used in output position");
   }
 
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
-      PropertyReservationsQuery value) throws IOException {
+      PropertyReservationsSummaryQuery value) throws IOException {
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
     if (value.checkOutDate instanceof Optional.Present) {
@@ -50,22 +50,6 @@ public enum PropertyReservationsQuery_VariablesAdapter implements Adapter<Proper
     if (value.after instanceof Optional.Present) {
       writer.name("after");
       new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.after);
-    }
-    if (value.includePaymentInstrumentToken instanceof Optional.Present) {
-      writer.name("includePaymentInstrumentToken");
-      new ApolloOptionalAdapter<>(Adapters.BooleanAdapter).toJson(writer, customScalarAdapters, value.includePaymentInstrumentToken);
-    }
-    else if (customScalarAdapters.getAdapterContext().getSerializeVariablesWithDefaultBooleanValues()) {
-      writer.name("includePaymentInstrumentToken");
-      Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, false);
-    }
-    if (value.includeSupplierAmount instanceof Optional.Present) {
-      writer.name("includeSupplierAmount");
-      new ApolloOptionalAdapter<>(Adapters.BooleanAdapter).toJson(writer, customScalarAdapters, value.includeSupplierAmount);
-    }
-    else if (customScalarAdapters.getAdapterContext().getSerializeVariablesWithDefaultBooleanValues()) {
-      writer.name("includeSupplierAmount");
-      Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, false);
     }
   }
 }
