@@ -22,8 +22,7 @@ import com.expediagroup.sdk.core.model.Response
 import com.expediagroup.sdk.core.model.exception.handle
 import com.expediagroup.sdk.core.plugin.logging.ExpediaGroupLoggerFactory
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
-import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointsProvider
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.exception.*
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -44,8 +43,8 @@ import java.io.File
  */
 class FileManagementClient(config: ClientConfiguration) :
     ExpediaGroupClient("filemanagement", config.toExpediaGroupClientConfiguration(
-       endpointProvider = EndpointsProvider::getFileManagementClientEndpoint,
-        authEndpointProvider = EndpointsProvider::getAuthEndpoint
+       endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
+        authEndpointProvider = EndpointProvider::getAuthEndpoint
     )) {
     companion object {
         @JvmStatic

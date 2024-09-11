@@ -29,7 +29,7 @@ enum class AuthEndpoint(val url: String) {
     SANDBOX_TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token/")
 }
 
-object EndpointsProvider {
+object EndpointProvider {
     fun getSupplyClientEndpoint(environment: ClientEnvironment): String {
         return try {
             SupplyClientEndpoint.valueOf(environment.name).url
