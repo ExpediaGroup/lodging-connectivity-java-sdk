@@ -44,8 +44,8 @@ import java.io.File
  */
 class FileManagementClient(config: ClientConfiguration) :
     ExpediaGroupClient("filemanagement", config.toExpediaGroupClientConfiguration(
-        endpoint = EndpointsProvider.getFileManagementClientEndpoint(config.environment ?: ClientEnvironment.PROD),
-        authEndpoint = EndpointsProvider.getAuthEndpoint(config.environment ?: ClientEnvironment.PROD),
+       endpointProvider = EndpointsProvider::getFileManagementClientEndpoint,
+        authEndpointProvider = EndpointsProvider::getAuthEndpoint
     )) {
     companion object {
         @JvmStatic
