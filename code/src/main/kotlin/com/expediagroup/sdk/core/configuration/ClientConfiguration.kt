@@ -15,13 +15,13 @@
  */
 package com.expediagroup.sdk.core.configuration
 
-import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider
 import com.expediagroup.sdk.core.configuration.provider.RuntimeConfigurationProvider
 
 interface ClientConfiguration {
     val key: String?
     val secret: String?
     val endpoint: String?
+    val authEndpoint: String?
     val requestTimeout: Long?
     val connectionTimeout: Long?
     val socketTimeout: Long?
@@ -30,12 +30,18 @@ interface ClientConfiguration {
     val maxConnTotal: Int?
     val maxConnPerRoute: Int?
 
+    companion object {
+        @JvmStatic
+        fun builder(): Builder = Builder()
+    }
+
     /** Build a [RuntimeConfigurationProvider] from a [ClientConfiguration]. */
     fun toProvider(): RuntimeConfigurationProvider =
         RuntimeConfigurationProvider(
             key = key,
             secret = secret,
             endpoint = endpoint,
+            authEndpoint = authEndpoint,
             requestTimeout = requestTimeout,
             connectionTimeout = connectionTimeout,
             socketTimeout = socketTimeout,
@@ -44,4 +50,46 @@ interface ClientConfiguration {
             maxConnTotal = maxConnTotal,
             maxConnPerRoute = maxConnPerRoute
         )
+
+    open class Builder {
+        private var key: String? = null
+        private var secret: String? = null
+        private var endpoint: String? = null
+        private var authEndpoint: String? = null
+        private var requestTimeout: Long? = null
+        private var connectionTimeout: Long? = null
+        private var socketTimeout: Long? = null
+        private var maskedLoggingHeaders: Set<String>? = null
+        private var maskedLoggingBodyFields: Set<String>? = null
+        private var maxConnTotal: Int? = null
+        private var maxConnPerRoute: Int? = null
+
+        open fun key(key: String) = apply { this.key = key }
+        open fun secret(secret: String) = apply { this.secret = secret }
+        open fun endpoint(endpoint: String) = apply { this.endpoint = endpoint }
+        open fun authEndpoint(authEndpoint: String) = apply { this.authEndpoint = authEndpoint }
+        open fun requestTimeout(requestTimeout: Long) = apply { this.requestTimeout = requestTimeout }
+        open fun connectionTimeout(connectionTimeout: Long) = apply { this.connectionTimeout = connectionTimeout }
+        open fun socketTimeout(socketTimeout: Long) = apply { this.socketTimeout = socketTimeout }
+        open fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>) = apply { this.maskedLoggingHeaders = maskedLoggingHeaders }
+        open fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>) = apply { this.maskedLoggingBodyFields = maskedLoggingBodyFields }
+        open fun maxConnTotal(maxConnTotal: Int) = apply { this.maxConnTotal = maxConnTotal }
+        open fun maxConnPerRoute(maxConnPerRoute: Int) = apply { this.maxConnPerRoute = maxConnPerRoute }
+
+        open fun build(): ClientConfiguration {
+            return object : ClientConfiguration {
+                override val key: String? = this@Builder.key
+                override val secret: String? = this@Builder.secret
+                override val endpoint: String? = this@Builder.endpoint
+                override val authEndpoint: String? = this@Builder.authEndpoint
+                override val requestTimeout: Long? = this@Builder.requestTimeout
+                override val connectionTimeout: Long? = this@Builder.connectionTimeout
+                override val socketTimeout: Long? = this@Builder.socketTimeout
+                override val maskedLoggingHeaders: Set<String>? = this@Builder.maskedLoggingHeaders
+                override val maskedLoggingBodyFields: Set<String>? = this@Builder.maskedLoggingBodyFields
+                override val maxConnTotal: Int? = this@Builder.maxConnTotal
+                override val maxConnPerRoute: Int? = this@Builder.maxConnPerRoute
+            }
+        }
+    }
 }

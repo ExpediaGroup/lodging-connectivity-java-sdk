@@ -3,18 +3,19 @@ package com.expediagroup.sdk.core.gapiclient
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest
 import com.google.api.client.googleapis.services.CommonGoogleClientRequestInitializer
 
-class DefaultGoogleClientRequestInitializer(
+class DefaultGClientRequestInitializer(
     builder: Builder
 ): CommonGoogleClientRequestInitializer(builder) {
     companion object {
-        fun getDefaultInstance(): DefaultGoogleClientRequestInitializer {
+        @JvmStatic
+        fun getDefaultInstance(): DefaultGClientRequestInitializer {
             val builder = Builder()
-            return DefaultGoogleClientRequestInitializer(builder)
+            return DefaultGClientRequestInitializer(builder)
         }
 
         class Builder: CommonGoogleClientRequestInitializer.Builder() {
-            override fun build(): DefaultGoogleClientRequestInitializer {
-                return DefaultGoogleClientRequestInitializer(this)
+            override fun build(): DefaultGClientRequestInitializer {
+                return DefaultGClientRequestInitializer(this)
             }
         }
     }

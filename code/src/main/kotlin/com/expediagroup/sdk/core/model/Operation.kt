@@ -13,17 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.sdk.core.constant
+package com.expediagroup.sdk.core.model
 
-import io.ktor.client.plugins.HttpTimeout
+import com.expediagroup.sdk.core.gapiclient.model.Request
+import com.google.api.client.http.EmptyContent
+import com.google.api.client.http.HttpContent
 
-internal object Constant {
-    const val EMPTY_STRING = ""
-    const val TEN_SECONDS_IN_MILLIS = 10_0000L
-    const val FIFTEEN_SECONDS_IN_MILLIS = 150_000L
-    const val INFINITE_TIMEOUT = HttpTimeout.INFINITE_TIMEOUT_MS
+abstract class Operation<T>(
+    val url: String,
+    val method: String,
+    val operationId: String,
+    val requestBody: T?,
+    val params: OperationParams?,
+    val isUpload: Boolean = false,
+) {
+    var transactionId: TransactionId = TransactionId()
+        private set
 
-    private const val SUCCESSFUL_STATUS_CODES_RANGE_START = 200
-    private const val SUCCESSFUL_STATUS_CODES_RANGE_END = 299
-    val SUCCESSFUL_STATUS_CODES_RANGE: IntRange = SUCCESSFUL_STATUS_CODES_RANGE_START..SUCCESSFUL_STATUS_CODES_RANGE_END
+    open fun getHttpContent(): HttpContent = EmptyContent()
 }

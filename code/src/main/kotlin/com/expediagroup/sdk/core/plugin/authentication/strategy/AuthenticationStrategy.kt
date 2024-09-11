@@ -15,37 +15,27 @@
  */
 package com.expediagroup.sdk.core.plugin.authentication.strategy
 
-import com.expediagroup.sdk.core.client.Client
-import com.expediagroup.sdk.core.plugin.authentication.AuthenticationConfiguration
-import com.expediagroup.sdk.core.plugin.authentication.strategy.AuthenticationStrategy.AuthenticationType.BEARER
-import com.expediagroup.sdk.core.plugin.authentication.strategy.AuthenticationStrategy.AuthenticationType.SIGNATURE
-import io.ktor.client.plugins.auth.Auth
-import io.ktor.client.request.HttpRequestBuilder
+import com.expediagroup.sdk.core.apache5.util.getSingletonApache5HttpTransport
+import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
+import com.google.api.client.http.HttpTransport
+import com.google.auth.oauth2.AccessToken
+import com.google.auth.oauth2.OAuth2CredentialsWithRefresh.OAuth2RefreshHandler
 
-internal interface AuthenticationStrategy {
-    fun loadAuth(auth: Auth) {}
-
-    fun isTokenAboutToExpire(): Boolean
-
-    fun renewToken()
-
-    fun isIdentityRequest(request: HttpRequestBuilder): Boolean
-
-    fun getAuthorizationHeader(): String
+internal interface AuthenticationStrategy: OAuth2RefreshHandler {
+    override fun refreshAccessToken(): AccessToken
 
     companion object {
         fun from(
-            configs: AuthenticationConfiguration,
-            client: Client
+            provider: ConfigurationProvider,
+            transport: HttpTransport = getSingletonApache5HttpTransport(provider)
         ): AuthenticationStrategy =
-            when (configs.authType) {
-                BEARER -> ExpediaGroupAuthenticationStrategy(client, configs)
-                SIGNATURE -> RapidAuthenticationStrategy(configs)
-            }
+            ExpediaGroupAuthenticationStrategy(
+                provider = provider,
+                transport = transport
+            )
     }
 
     enum class AuthenticationType {
         BEARER,
-        SIGNATURE
     }
 }

@@ -16,8 +16,9 @@
 package com.expediagroup.sdk.core.constant
 
 internal object Authentication {
-    const val AUTHORIZATION_REQUEST_LOCK_DELAY = 20L
-    const val BEARER_EXPIRY_DATE_MARGIN: Long = 10 // In seconds
+    const val BEARER_EXPIRY_MARGIN_IN_SECONDS: Long = 10 // In seconds
+
+    const val SIGNATURE_TOKEN_LIFETIME_IN_SECONDS: Long = 60 * 4 // In seconds
 
     const val EAN = "EAN"
 

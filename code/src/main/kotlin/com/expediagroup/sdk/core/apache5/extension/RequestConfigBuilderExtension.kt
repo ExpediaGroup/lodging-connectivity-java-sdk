@@ -9,5 +9,4 @@ fun RequestConfig.Builder.applyClientConfiguration(provider: ConfigurationProvid
     // TODO: Consider using PoolingAsyncClientConnectionManager
     this.apply {
         setConnectionRequestTimeout(Timeout.ofMilliseconds(provider.requestTimeout!!))
-        HttpAsyncClientBuilder.create()
     }

@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.sdk.core.constant
+package com.expediagroup.sdk.core.model
 
-import io.ktor.client.plugins.HttpTimeout
+import java.util.UUID
 
-internal object Constant {
-    const val EMPTY_STRING = ""
-    const val TEN_SECONDS_IN_MILLIS = 10_0000L
-    const val FIFTEEN_SECONDS_IN_MILLIS = 150_000L
-    const val INFINITE_TIMEOUT = HttpTimeout.INFINITE_TIMEOUT_MS
+class TransactionId {
+    private var transactionId: UUID = UUID.randomUUID()
 
-    private const val SUCCESSFUL_STATUS_CODES_RANGE_START = 200
-    private const val SUCCESSFUL_STATUS_CODES_RANGE_END = 299
-    val SUCCESSFUL_STATUS_CODES_RANGE: IntRange = SUCCESSFUL_STATUS_CODES_RANGE_START..SUCCESSFUL_STATUS_CODES_RANGE_END
+    fun peek(): UUID {
+        return transactionId
+    }
+
+    fun dequeue(): UUID {
+        return transactionId.also { transactionId = UUID.randomUUID() }
+    }
 }

@@ -3,16 +3,31 @@ package com.expediagroup.sdk.core.apache5.util
 import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
 import com.google.api.client.http.apache.v5.Apache5HttpTransport
 import org.apache.hc.client5.http.classic.HttpClient
+import org.apache.hc.core5.http.EntityDetails
+import org.apache.hc.core5.http.HttpRequest
+import org.apache.hc.core5.http.HttpRequestInterceptor
+import org.apache.hc.core5.http.protocol.HttpContext
 
+
+class DebugInterceptor: HttpRequestInterceptor {
+    // TODO: Implement logging
+    override fun process(request: HttpRequest?, entitiy: EntityDetails?, content: HttpContext?) {
+        println("---")
+        request?.headers?.forEach {
+            println("${it.name}: ${it.value}")
+        }
+    }
+}
 
 fun createHttpClient(configurationProvider: ConfigurationProvider) = Apache5HttpTransport.newDefaultHttpClientBuilder()
     .apply {
         setConnectionManager(createPoolingHttpClientConnectionManager(configurationProvider))
         setDefaultRequestConfig(createRequestConfig(configurationProvider))
+        addRequestInterceptorLast(DebugInterceptor())
+
     }.build()
 
-
-fun createSingletonHttpClient(configurationProvider: ConfigurationProvider) =
+fun getSingletonHttpClient(configurationProvider: ConfigurationProvider) =
     CreateSingletonHttpClientLambda.execute(configurationProvider)
 
 

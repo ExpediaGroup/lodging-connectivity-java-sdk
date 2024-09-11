@@ -60,6 +60,7 @@ interface ConfigurationProvider {
 
     val maxConnPerRoute: Int?
 
+
     fun withDefaultsConfigurationProvider(provider: ConfigurationProvider): ConfigurationProvider =
         this.toMutable().apply {
             if (endpoint.isNullOrBlank()) {
@@ -99,8 +100,9 @@ interface ConfigurationProvider {
             }
         }
 
-    fun toMutable(self: ConfigurationProvider = this): MutableConfigurationProvider =
-        object : MutableConfigurationProvider {
+    fun toMutable(): MutableConfigurationProvider {
+        val self: ConfigurationProvider = this
+        return object : MutableConfigurationProvider {
             override var name: String = self.name
             override var key: String? = self.key
             override var secret: String? = self.secret
@@ -114,4 +116,5 @@ interface ConfigurationProvider {
             override var maxConnTotal: Int? = self.maxConnTotal
             override var maxConnPerRoute: Int? = self.maxConnPerRoute
         }
+    }
 }
