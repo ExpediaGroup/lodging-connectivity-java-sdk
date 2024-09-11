@@ -6,9 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.selections;
 
 import com.apollographql.apollo3.api.CompiledArgument;
-import com.apollographql.apollo3.api.CompiledCondition;
 import com.apollographql.apollo3.api.CompiledField;
-import com.apollographql.apollo3.api.CompiledFragment;
 import com.apollographql.apollo3.api.CompiledListType;
 import com.apollographql.apollo3.api.CompiledNotNullType;
 import com.apollographql.apollo3.api.CompiledSelection;
@@ -32,40 +30,26 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Guest;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.GuestContactPhoneNumber;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.IdNode;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.IdSource;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Installment;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.InstallmentDistribution;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.InstallmentPaymentStatus;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.InvalidScenario;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.InventoryType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.LocalDate;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.MerchantOfRecord;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Money;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PageInfo;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Payment;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PaymentInstrument;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PaymentInstrumentType;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PaymentToken;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Property;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RateTimeUnit;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RateType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReconEligibility;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RemittanceType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Reservation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationAlternativeIds;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationAmounts;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationAudit;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationCancellation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationCancellationPenaltyRule;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationCancellationPolicy;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationCancellationPolicyTier;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationDailyAmount;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationDistribution;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationEdge;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationGuest;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationGuests;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationNightlyPayments;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationPaymentStatus;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationPerStayAmount;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationPets;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationPolicies;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationStatus;
@@ -73,22 +57,14 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationS
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationStayDates;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationValueAddedPromotion;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationsConnection;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierAmount;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierAmountCompensation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierFeeType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierLoyaltyPlanInfo;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierOperatingModel;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierRate;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierRateItem;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SupplierTotal;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.TravelPurpose;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.VrboCancellationReason;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.VrboReservationAmount;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.VrboReservationAmounts;
 import java.util.Arrays;
 import java.util.List;
 
-public class PropertyReservationsQuerySelections {
+public class PropertyReservationsSummaryQuerySelections {
   private static List<CompiledSelection> __pageInfo = Arrays.asList(
     new CompiledField.Builder("endCursor", GraphQLString.type).build(),
     new CompiledField.Builder("hasNextPage", new CompiledNotNullType(GraphQLBoolean.type)).build()
@@ -96,66 +72,6 @@ public class PropertyReservationsQuerySelections {
 
   private static List<CompiledSelection> __alternativeIds = Arrays.asList(
     new CompiledField.Builder("supplierId", new CompiledNotNullType(GraphQLID.type)).build()
-  );
-
-  private static List<CompiledSelection> __amount = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Decimal.type)).build(),
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(CurrencyCode.type)).build()
-  );
-
-  private static List<CompiledSelection> __cancellationAmounts = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Money.type)).selections(__amount).build(),
-    new CompiledField.Builder("description", GraphQLString.type).build(),
-    new CompiledField.Builder("percent", GraphQLFloat.type).build(),
-    new CompiledField.Builder("type", new CompiledNotNullType(GraphQLString.type)).build()
-  );
-
-  private static List<CompiledSelection> __amount2 = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Decimal.type)).build(),
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(CurrencyCode.type)).build()
-  );
-
-  private static List<CompiledSelection> __dailyAmounts = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Money.type)).selections(__amount2).build(),
-    new CompiledField.Builder("date", new CompiledNotNullType(LocalDate.type)).build(),
-    new CompiledField.Builder("description", GraphQLString.type).build(),
-    new CompiledField.Builder("percent", GraphQLFloat.type).build(),
-    new CompiledField.Builder("type", new CompiledNotNullType(GraphQLString.type)).build()
-  );
-
-  private static List<CompiledSelection> __amount4 = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Decimal.type)).build(),
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(CurrencyCode.type)).build()
-  );
-
-  private static List<CompiledSelection> __perStayAmounts = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Money.type)).selections(__amount4).build(),
-    new CompiledField.Builder("description", GraphQLString.type).build(),
-    new CompiledField.Builder("percent", GraphQLFloat.type).build(),
-    new CompiledField.Builder("type", new CompiledNotNullType(GraphQLString.type)).build()
-  );
-
-  private static List<CompiledSelection> __nightlyPayments = Arrays.asList(
-    new CompiledField.Builder("cancellationAmounts", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(ReservationPerStayAmount.type)))).selections(__cancellationAmounts).build(),
-    new CompiledField.Builder("dailyAmounts", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(ReservationDailyAmount.type)))).selections(__dailyAmounts).build(),
-    new CompiledField.Builder("perStayAmounts", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(ReservationPerStayAmount.type)))).selections(__perStayAmounts).build()
-  );
-
-  private static List<CompiledSelection> __amount6 = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Decimal.type)).build(),
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(CurrencyCode.type)).build()
-  );
-
-  private static List<CompiledSelection> __summary = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Money.type)).selections(__amount6).build(),
-    new CompiledField.Builder("description", GraphQLString.type).build(),
-    new CompiledField.Builder("percent", GraphQLFloat.type).build(),
-    new CompiledField.Builder("type", new CompiledNotNullType(GraphQLString.type)).build()
-  );
-
-  private static List<CompiledSelection> __amounts = Arrays.asList(
-    new CompiledField.Builder("nightlyPayments", new CompiledNotNullType(ReservationNightlyPayments.type)).selections(__nightlyPayments).build(),
-    new CompiledField.Builder("summary", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(ReservationPerStayAmount.type)))).selections(__summary).build()
   );
 
   private static List<CompiledSelection> __audit = Arrays.asList(
@@ -228,46 +144,6 @@ public class PropertyReservationsQuerySelections {
     new CompiledField.Builder("childCount", new CompiledNotNullType(GraphQLInt.type)).build(),
     new CompiledField.Builder("pets", ReservationPets.type).selections(__pets).build(),
     new CompiledField.Builder("primaryGuest", new CompiledNotNullType(ReservationGuest.type)).selections(__primaryGuest).build()
-  );
-
-  private static List<CompiledSelection> __amount10 = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Decimal.type)).build(),
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(CurrencyCode.type)).build()
-  );
-
-  private static List<CompiledSelection> __amount12 = Arrays.asList(
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(CurrencyCode.type)).build(),
-    new CompiledField.Builder("amount", new CompiledNotNullType(Decimal.type)).build()
-  );
-
-  private static List<CompiledSelection> __distributions = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Money.type)).selections(__amount12).build(),
-    new CompiledField.Builder("type", new CompiledNotNullType(GraphQLString.type)).build()
-  );
-
-  private static List<CompiledSelection> __installments = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Money.type)).selections(__amount10).build(),
-    new CompiledField.Builder("distributions", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(InstallmentDistribution.type)))).selections(__distributions).build(),
-    new CompiledField.Builder("dueDate", new CompiledNotNullType(LocalDate.type)).build(),
-    new CompiledField.Builder("installmentId", GraphQLString.type).build(),
-    new CompiledField.Builder("paymentStatus", InstallmentPaymentStatus.type).build()
-  );
-
-  private static List<CompiledSelection> __token = Arrays.asList(
-    new CompiledField.Builder("expirationDateTime", GraphQLString.type).build(),
-    new CompiledField.Builder("value", GraphQLString.type).build()
-  );
-
-  private static List<CompiledSelection> __instrument = Arrays.asList(
-    new CompiledField.Builder("token", new CompiledNotNullType(PaymentToken.type)).condition(Arrays.asList(new CompiledCondition("includePaymentInstrumentToken", false))).selections(__token).build(),
-    new CompiledField.Builder("type", new CompiledNotNullType(PaymentInstrumentType.type)).build()
-  );
-
-  private static List<CompiledSelection> __payment = Arrays.asList(
-    new CompiledField.Builder("installments", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(Installment.type)))).selections(__installments).build(),
-    new CompiledField.Builder("instructions", new CompiledNotNullType(GraphQLString.type)).build(),
-    new CompiledField.Builder("instrument", PaymentInstrument.type).selections(__instrument).build(),
-    new CompiledField.Builder("status", ReservationPaymentStatus.type).build()
   );
 
   private static List<CompiledSelection> __effectivePolicy1 = Arrays.asList(
@@ -363,49 +239,6 @@ public class PropertyReservationsQuerySelections {
     new CompiledField.Builder("checkOutDate", new CompiledNotNullType(LocalDate.type)).build()
   );
 
-  private static List<CompiledSelection> __compensation = Arrays.asList(
-    new CompiledField.Builder("acceleratorPercent", GraphQLFloat.type).build(),
-    new CompiledField.Builder("basePercent", GraphQLFloat.type).build()
-  );
-
-  private static List<CompiledSelection> __rateItems = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(GraphQLFloat.type)).build(),
-    new CompiledField.Builder("feeType", new CompiledNotNullType(SupplierFeeType.type)).build()
-  );
-
-  private static List<CompiledSelection> __rates = Arrays.asList(
-    new CompiledField.Builder("compensation", new CompiledNotNullType(SupplierAmountCompensation.type)).selections(__compensation).build(),
-    new CompiledField.Builder("fromDate", new CompiledNotNullType(LocalDate.type)).build(),
-    new CompiledField.Builder("rateItems", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(SupplierRateItem.type)))).selections(__rateItems).build(),
-    new CompiledField.Builder("rateTimeUnit", new CompiledNotNullType(RateTimeUnit.type)).build(),
-    new CompiledField.Builder("toDate", new CompiledNotNullType(LocalDate.type)).build()
-  );
-
-  private static List<CompiledSelection> __compensation1 = Arrays.asList(
-    new CompiledField.Builder("acceleratorPercent", GraphQLFloat.type).build(),
-    new CompiledField.Builder("basePercent", GraphQLFloat.type).build()
-  );
-
-  private static List<CompiledSelection> __total = Arrays.asList(
-    new CompiledField.Builder("amountAfterTax", new CompiledNotNullType(GraphQLFloat.type)).build(),
-    new CompiledField.Builder("amountBeforeTax", new CompiledNotNullType(GraphQLFloat.type)).build(),
-    new CompiledField.Builder("compensation", new CompiledNotNullType(SupplierAmountCompensation.type)).selections(__compensation1).build()
-  );
-
-  private static List<CompiledSelection> __onExpediaSupplierAmount = Arrays.asList(
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(GraphQLString.type)).build(),
-    new CompiledField.Builder("rateType", new CompiledNotNullType(RateType.type)).build(),
-    new CompiledField.Builder("rates", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(SupplierRate.type)))).selections(__rates).build(),
-    new CompiledField.Builder("total", new CompiledNotNullType(SupplierTotal.type)).selections(__total).build()
-  );
-
-  private static List<CompiledSelection> __supplierAmount = Arrays.asList(
-    new CompiledField.Builder("__typename", new CompiledNotNullType(GraphQLString.type)).build(),
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(GraphQLString.type)).build(),
-    new CompiledField.Builder("rateType", new CompiledNotNullType(RateType.type)).build(),
-    new CompiledFragment.Builder("ExpediaSupplierAmount", Arrays.asList("ExpediaSupplierAmount")).selections(__onExpediaSupplierAmount).build()
-  );
-
   private static List<CompiledSelection> __unitIds = Arrays.asList(
     new CompiledField.Builder("id", GraphQLID.type).build(),
     new CompiledField.Builder("idSource", new CompiledNotNullType(IdSource.type)).build()
@@ -416,27 +249,11 @@ public class PropertyReservationsQuerySelections {
     new CompiledField.Builder("id", new CompiledNotNullType(GraphQLString.type)).build()
   );
 
-  private static List<CompiledSelection> __amount17 = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Decimal.type)).build(),
-    new CompiledField.Builder("currencyCode", new CompiledNotNullType(CurrencyCode.type)).build()
-  );
-
-  private static List<CompiledSelection> __summary1 = Arrays.asList(
-    new CompiledField.Builder("amount", new CompiledNotNullType(Money.type)).selections(__amount17).build(),
-    new CompiledField.Builder("productCode", GraphQLString.type).build(),
-    new CompiledField.Builder("type", new CompiledNotNullType(GraphQLString.type)).build()
-  );
-
-  private static List<CompiledSelection> __vrboAmounts = Arrays.asList(
-    new CompiledField.Builder("summary", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(VrboReservationAmount.type)))).selections(__summary1).build()
-  );
-
   private static List<CompiledSelection> __node = Arrays.asList(
     new CompiledField.Builder("id", new CompiledNotNullType(GraphQLID.type)).build(),
     new CompiledField.Builder("alternativeIds", new CompiledNotNullType(ReservationAlternativeIds.type)).selections(__alternativeIds).build(),
     new CompiledField.Builder("accessibilityText", new CompiledListType(new CompiledNotNullType(GraphQLString.type))).build(),
     new CompiledField.Builder("adultCount", new CompiledNotNullType(GraphQLInt.type)).build(),
-    new CompiledField.Builder("amounts", ReservationAmounts.type).selections(__amounts).build(),
     new CompiledField.Builder("audit", new CompiledNotNullType(ReservationAudit.type)).selections(__audit).build(),
     new CompiledField.Builder("bedTypes", GraphQLString.type).build(),
     new CompiledField.Builder("businessModel", new CompiledNotNullType(BusinessModel.type)).build(),
@@ -455,7 +272,6 @@ public class PropertyReservationsQuerySelections {
     new CompiledField.Builder("merchantOfRecord", new CompiledNotNullType(MerchantOfRecord.type)).build(),
     new CompiledField.Builder("messageThreadId", GraphQLID.type).build(),
     new CompiledField.Builder("multiRoomText", GraphQLString.type).build(),
-    new CompiledField.Builder("payment", new CompiledNotNullType(Payment.type)).selections(__payment).build(),
     new CompiledField.Builder("paymentInstructions", new CompiledNotNullType(GraphQLString.type)).build(),
     new CompiledField.Builder("petCount", GraphQLInt.type).build(),
     new CompiledField.Builder("policies", new CompiledNotNullType(ReservationPolicies.type)).selections(__policies).build(),
@@ -472,13 +288,11 @@ public class PropertyReservationsQuerySelections {
     new CompiledField.Builder("statuses", new CompiledNotNullType(ReservationStatuses.type)).selections(__statuses).build(),
     new CompiledField.Builder("stayDates", new CompiledNotNullType(ReservationStayDates.type)).selections(__stayDates).build(),
     new CompiledField.Builder("subStatus", GraphQLString.type).build(),
-    new CompiledField.Builder("supplierAmount", SupplierAmount.type).condition(Arrays.asList(new CompiledCondition("includeSupplierAmount", false))).selections(__supplierAmount).build(),
     new CompiledField.Builder("supplierOperatingModel", SupplierOperatingModel.type).build(),
     new CompiledField.Builder("tidsCode", GraphQLInt.type).build(),
     new CompiledField.Builder("totalGuestCount", new CompiledNotNullType(GraphQLInt.type)).build(),
     new CompiledField.Builder("unitIds", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(IdNode.type)))).selections(__unitIds).build(),
-    new CompiledField.Builder("valueAddedPromotions", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(ReservationValueAddedPromotion.type)))).selections(__valueAddedPromotions).build(),
-    new CompiledField.Builder("vrboAmounts", VrboReservationAmounts.type).selections(__vrboAmounts).build()
+    new CompiledField.Builder("valueAddedPromotions", new CompiledNotNullType(new CompiledListType(new CompiledNotNullType(ReservationValueAddedPromotion.type)))).selections(__valueAddedPromotions).build()
   );
 
   private static List<CompiledSelection> __edges = Arrays.asList(
