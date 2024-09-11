@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity;
 
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
+import com.expediagroup.sdk.lodgingconnectivity.configuration.*;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.*;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.*;
 

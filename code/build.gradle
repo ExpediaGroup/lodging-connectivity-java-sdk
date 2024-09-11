@@ -19,7 +19,7 @@ buildscript {
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.0.20'
     id 'org.jetbrains.dokka' version '1.9.20'
-    id 'com.apollographql.apollo3' version '3.8.4'
+    id 'com.apollographql.apollo' version '4.0.0'
     id 'maven-publish'
 }
 
@@ -35,8 +35,10 @@ repositories {
 dependencies {
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
 
-    implementation("com.apollographql.apollo3:apollo-runtime:3.8.4")
-    implementation("com.apollographql.apollo3:apollo-adapters:3.8.4")
+    implementation("com.apollographql.apollo:apollo-runtime:4.0.0")
+    implementation("com.apollographql.adapters:apollo-adapters-core:0.0.4")
+//    implementation("com.apollographql.apollo3:apollo-adapters:3.8.4")
+    implementation("com.apollographql.ktor:apollo-engine-ktor:0.0.2")
     implementation("org.slf4j:slf4j-simple:2.0.13")
     implementation("io.ktor:ktor-client-core:2.3.10")
     implementation("io.ktor:ktor-client-auth-jvm:2.3.10")
@@ -171,8 +173,8 @@ apollo {
         mapScalar("JSON", "java.lang.String")
         mapScalar("Url", "java.net.URL", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE")
         mapScalar("ZoneDateTime", "java.time.ZonedDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.ZoneDateTimeAdapter.INSTANCE")
-        mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.apollo3.adapter.JavaLocalDateTimeAdapter.INSTANCE")
-        mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.apollo3.adapter.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE")
+        mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
     }
     service("payment") {
         generateKotlinModels.set(false)
@@ -195,6 +197,6 @@ apollo {
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox")
 
         // Custom Scalars Mappings
-        mapScalar("Date", "java.time.LocalDate", "com.apollographql.apollo3.adapter.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
     }
 }
