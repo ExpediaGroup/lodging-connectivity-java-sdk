@@ -18,10 +18,11 @@ package com.expediagroup.sdk.lodgingconnectivity.filemanagement.client
 
 
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.model.Response
 import com.expediagroup.sdk.core.model.exception.handle
 import com.expediagroup.sdk.core.plugin.logging.ExpediaGroupLoggerFactory
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.exception.*
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -39,17 +40,21 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.util.InternalAPI
 import io.ktor.utils.io.jvm.javaio.toInputStream
-import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
+import java.io.File
 
 /**
  *
  */
-class FileManagementClient(clientConfiguration: ExpediaGroupClientConfiguration) :
-    ExpediaGroupClient("filemanagement", clientConfiguration) {
-
+class FileManagementClient(config: ClientConfiguration) :
+    ExpediaGroupClient(
+        "filemanagement", config.toExpediaGroupClientConfiguration(
+            endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint
+        )
+    ) {
     companion object {
         @JvmStatic
         private val log = ExpediaGroupLoggerFactory.getLogger(this::class.java)
