@@ -7,10 +7,10 @@ buildscript {
     }
 
     repositories {
-        mavenCentral { 
+        mavenCentral {
             credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
+                username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
+                password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
             }
         }
     }
@@ -20,14 +20,14 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.0.20'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo3' version '3.8.4'
-    id 'maven-publish' 
+    id 'maven-publish'
 }
 
 repositories {
-    mavenCentral { 
+    mavenCentral {
         credentials {
-            username = System.getenv("SONATYPE_USERNAME")
-            password = System.getenv("SONATYPE_PASSWORD")
+            username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
+            password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
         }
     }
 }
@@ -76,7 +76,7 @@ subprojects {
 
 publishing {
     repositories {
-        mavenCentral { 
+        mavenCentral {
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
                 password = System.getenv("SONATYPE_PASSWORD")

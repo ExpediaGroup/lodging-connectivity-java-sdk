@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity;
 
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration;
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.*;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.*;
 
@@ -38,12 +38,10 @@ import java.util.List;
 public class LodgingSupplySandboxClientUsageExample {
 
     private static final SandboxClient client = new SandboxClient(
-            ExpediaGroupClientConfiguration
+            ClientConfiguration
                     .builder()
                     .key("KEY")
                     .secret("SECRET")
-                    .endpoint("https://test-api.sandbox.expediagroup.com")
-                    .authEndpoint("https://test-api.expediagroup.com/identity/oauth2/v3/token")
                     .build()
     );
 

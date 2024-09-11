@@ -16,15 +16,15 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply
 
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 
-class SupplyClient(config: ExpediaGroupClientConfiguration) :
-    GraphQLExecutor by BaseGraphQLClient
-        .Builder()
-        .key(config.key!!)
-        .secret(config.secret!!)
-        .endpoint("${config.endpoint!!}${if (config.endpoint.endsWith('/')) "" else "/"}supply/lodging/graphql")
-        .authEndpoint(config.authEndpoint!!)
-        .build()
+class SupplyClient(config: ClientConfiguration) :
+    GraphQLExecutor by BaseGraphQLClient(
+        config.toExpediaGroupClientConfiguration(
+            endpointProvider = EndpointProvider::getSupplyClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint
+        )
+    )
