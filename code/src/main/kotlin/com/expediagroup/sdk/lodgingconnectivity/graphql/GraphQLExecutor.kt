@@ -16,9 +16,9 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
-import com.apollographql.apollo.api.Mutation
-import com.apollographql.apollo.api.Query
-import com.apollographql.apollo.api.Subscription
+import com.apollographql.apollo3.api.Mutation
+import com.apollographql.apollo3.api.Query
+import com.apollographql.apollo3.api.Subscription
 
 interface GraphQLExecutor {
     fun <T : Query.Data> execute(query: Query<T>): T
