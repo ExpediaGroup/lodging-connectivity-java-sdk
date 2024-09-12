@@ -1,5 +1,16 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+buildscript {
+    repositories {
+        maven {
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
+                password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
+            }
+        }
+    }
+}
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.9.22'
     id 'org.jetbrains.dokka' version '1.9.20'
@@ -60,8 +71,7 @@ subprojects {
     afterEvaluate { project ->
         if (project.name == System.getenv('EXCLUDE_MODULE')) {
             // Disable all tasks for this module
-            tasks.configureEach { task ->
-                task.enabled = false
+            tasks.configureEach { task -> task.enabled = false
             }
         }
     }
@@ -174,18 +184,13 @@ tasks.withType(DokkaTask.class) {
 
     pluginsMapConfiguration.set(
             // fully qualified plugin name to json configuration
-            [
-                    "org.jetbrains.dokka.base.DokkaBase"             : dokkaBaseConfiguration,
-                    "org.jetbrains.dokka.versioning.VersioningPlugin": versioningConfiguration
-            ]
-    )
+            ["org.jetbrains.dokka.base.DokkaBase"             : dokkaBaseConfiguration,
+             "org.jetbrains.dokka.versioning.VersioningPlugin": versioningConfiguration])
 
     dokkaSourceSets {
         configureEach {
-            sourceRoots.setFrom(
-                    file("src/main/kotlin/com/expediagroup/sdk/lodgingconnectivity"),
-                    file("src/main/java/generated")
-            )
+            sourceRoots.setFrom(file("src/main/kotlin/com/expediagroup/sdk/lodgingconnectivity"),
+                    file("src/main/java/generated"))
 
             // Suppress documentation for specific patterns using a consolidated regex
             perPackageOption {
