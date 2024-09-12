@@ -132,14 +132,6 @@ publishing {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
                 password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
             }
-            configure {
-                // This is where you set timeouts
-                it.metadataSources {
-                    mavenPom()
-                    artifact()
-                }
-                it.clientTimeout = Duration.ofMinutes(10) // Or your desired timeout
-            }
         }
     }
 
