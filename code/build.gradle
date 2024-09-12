@@ -1,6 +1,8 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
+    id 'java'
+    id 'maven-publish'
     id 'org.jetbrains.kotlin.jvm' version '2.0.20'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo' version '4.0.0'
@@ -26,6 +28,18 @@ dependencies {
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.hibernate.validator:hibernate-validator:6.2.5.Final")
     implementation("jakarta.validation:jakarta.validation-api:2.0.2")
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId project.name
+            groupId project.property('groupId')
+            version project.property('version')
+            description project.property('description')
+        }
+    }
 }
 
 sourceSets {
