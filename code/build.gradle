@@ -72,6 +72,7 @@ publishing {
             groupId project.property('groupId')
             version project.property('version')
             description project.property('description')
+            artifact tasks.sourcesJar
 
             pom {
                 name = project.property('artifactName')
@@ -119,6 +120,21 @@ publishing {
 
 signing {
     sign publishing.publications
+
+    useGpgCmd()
+    def signingKeyId = System.getenv("gpg-signing-keyq")
+    def signingKey = System.getenv("gpg-private-key")
+    def signingPassword = System.getenv("gpg-passphrase")
+
+    signatory {
+        gnupg {
+            keyId = signingKeyId
+            if (signingKey != null) {
+                privateKey = signingKey
+            }
+            password = signingPassword
+        }
+    }
 }
 
 tasks.register('versionsSet') {
