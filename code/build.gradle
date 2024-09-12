@@ -138,6 +138,10 @@ signing {
     def signingKey = System.getenv("gpg-private-key")
     def signingPassword = System.getenv("gpg-passphrase")
 
+//     echo the key to the console for debugging purposes
+    println("signingKey: $signingKey")
+    println("signingPassword: $signingPassword")
+
     signatory {
         gnupg {
             if (signingKey != null) {
