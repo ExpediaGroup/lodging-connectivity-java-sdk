@@ -1,4 +1,4 @@
-import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.DokkaTask\
 
 buildscript {
     repositories {
@@ -19,6 +19,10 @@ plugins {
     id 'maven-publish'
     id 'signing'
 }
+
+group = "com.expediagroup"
+artifactId = "lodging-connectivity-sdk"
+version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral {
