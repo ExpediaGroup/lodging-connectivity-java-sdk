@@ -45,10 +45,6 @@ kotlin {
 
 java {
     withSourcesJar()
-//    withJavadocJar()
-}
-
-compileJava {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
@@ -121,20 +117,20 @@ publishing {
 signing {
     sign publishing.publications
 
-    useGpgCmd()
-    def signingKeyId = System.getenv("gpg-signing-keyq")
-    def signingKey = System.getenv("gpg-private-key")
-    def signingPassword = System.getenv("gpg-passphrase")
-
-    signatory {
-        gnupg {
-            keyId = signingKeyId
-            if (signingKey != null) {
-                privateKey = signingKey
-            }
-            password = signingPassword
-        }
-    }
+//    useGpgCmd()
+//    def signingKeyId = System.getenv("gpg-signing-keyq")
+//    def signingKey = System.getenv("gpg-private-key")
+//    def signingPassword = System.getenv("gpg-passphrase")
+//
+//    signatory {
+//        gnupg {
+//            keyId = signingKeyId
+//            if (signingKey != null) {
+//                privateKey = signingKey
+//            }
+//            password = signingPassword
+//        }
+//    }
 }
 
 tasks.register('versionsSet') {

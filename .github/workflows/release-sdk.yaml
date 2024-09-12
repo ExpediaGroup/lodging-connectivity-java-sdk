@@ -5,7 +5,7 @@ on:
     inputs:
       version:
         description: |
-          The version to release.
+          The version to release. 
           Add -SNAPSHOT to release a snapshot version.
         default: '0.0.1-SNAPSHOT'
 
@@ -24,8 +24,6 @@ jobs:
           server-username: SONATYPE_USERNAME
           server-password: SONATYPE_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: GPG_PASSPHRASE
-          settings-path: ${{ github.workspace }}
 
       - name: Prepare Environment and Version
         id: prepare
@@ -54,12 +52,10 @@ jobs:
       
       - name: Publish
         env:
-          ARTYLAB_USER: ${{ secrets.SONATYPE_USERNAME }}
-          ARTYLAB_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
+          OSSRH_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
-          echo "Publishing version ${{ inputs.version }}"
+          echo "Publishing version ${{ inputs.version }}" 
           cd code
-           ../gradlew clean build sign publish -Pversion=${{ inputs.version }}
+          ../gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Pversion=${{ inputs.version }}
