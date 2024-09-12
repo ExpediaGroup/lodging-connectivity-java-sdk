@@ -1,0 +1,62 @@
+import java.time.Duration
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
+    id 'io.github.gradle-nexus.publish-plugin' version "1.1.0"
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+allprojects {
+    buildscript {
+        repositories {
+            mavenCentral()
+            mavenLocal {
+                content {
+                    includeGroup("com.expediagroup")
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal {
+            content {
+                includeGroup("com.expediagroup")
+            }
+        }
+    }
+}
+
+subprojects {
+    if (project.name != "examples") {
+        nexusPublishing {
+            repositories {
+                sonatype {
+                    username.set(System.getenv("SONATYPE_USERNAME"))
+                    password.set(System.getenv("SONATYPE_PASSWORD"))
+                }
+            }
+
+            transitionCheckOptions {
+                maxRetries.set(60)
+                delayBetween.set(Duration.ofMillis(5000))
+            }
+        }
+    }
+
+    if (project.name == 'examples') {
+        tasks.withType(Jar).configureEach {
+            enabled = false
+        }
+    }
+}
+

@@ -1,35 +1,9 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
-buildscript {
-    ext {
-        artyUser = findProperty('ARTIFACTORY_USER')
-        artyPass = findProperty('ARTIFACTORY_PASS')
-    }
-
-    repositories {
-        mavenCentral {
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
-                password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
-            }
-        }
-    }
-}
-
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.0.20'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo' version '4.0.0'
-    id 'maven-publish'
-}
-
-repositories {
-    mavenCentral {
-        credentials {
-            username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
-            password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
-        }
-    }
 }
 
 dependencies {
@@ -52,67 +26,12 @@ dependencies {
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.hibernate.validator:hibernate-validator:6.2.5.Final")
     implementation("jakarta.validation:jakarta.validation-api:2.0.2")
-
-}
-
-kotlin {
-    jvmToolchain(11)
-}
-
-compileJava {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
 }
 
 sourceSets {
     main {
         java {
             srcDirs += 'build/generated/source/apollo'
-        }
-    }
-}
-
-subprojects {
-    afterEvaluate { project ->
-        if (project.name == System.getenv('EXCLUDE_MODULE')) {
-            // Disable all tasks for this module
-            tasks.configureEach { task ->
-                task.enabled = false
-            }
-        }
-    }
-}
-
-publishing {
-    repositories {
-        mavenCentral {
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-    }
-
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifactId project.name
-            groupId project.property('groupId')
-            version project.property('version')
-            description project.property('description')
-        }
-    }
-}
-
-tasks.register('versionsSet') {
-    doLast {
-        def pattern = ~/(\R|^)(version\s*=\s*)([-.A-Z0-9]+)(\R|$)/
-        String gradleProperties = file('gradle.properties').text
-        String currentVersion = (gradleProperties =~ pattern)[0][3]
-        println("Current version: $currentVersion")
-        println("Project version: ${project.version}")
-        if (project.version != currentVersion) {
-            file('gradle.properties').text = gradleProperties.replaceFirst(pattern, "\$1\$2${project.version}\$4")
         }
     }
 }
