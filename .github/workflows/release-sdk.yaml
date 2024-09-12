@@ -2,12 +2,12 @@ name: Release SDK to Maven Central
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: |
-          The version to release. 
-          Add -SNAPSHOT to release a snapshot version.
-        default: '0.0.1-SNAPSHOT'
+#    inputs:
+#      version:
+#        description: |
+#          The version to release.
+#          Add -SNAPSHOT to release a snapshot version.
+#        default: '0.0.1-SNAPSHOT'
 
 jobs:
   release-sdk:
@@ -53,8 +53,6 @@ jobs:
       - name: Publish
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
-          OSSRH_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
