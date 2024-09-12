@@ -39,27 +39,49 @@ allprojects {
 }
 
 subprojects {
-    if (project.name != "examples") {
-        nexusPublishing {
-            repositories {
-                sonatype {
-                    username.set(System.getenv("SONATYPE_USERNAME"))
-                    password.set(System.getenv("SONATYPE_PASSWORD"))
-                    nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
-                    snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    if (project.name != 'examples') {
+        version = findProperty("releaseVersion") ?: "1.0.0-SNAPSHOT"
+
+        apply plugin: 'java' // Or 'org.jetbrains.kotlin.jvm' for Kotlin
+        apply plugin: 'maven-publish'
+
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    from components.java
+                    artifactId project.name
+                    groupId project.property('groupId')
+                    version project.property('version')
+                    description project.property('description')
                 }
             }
 
-            transitionCheckOptions {
-                maxRetries.set(60)
-                delayBetween.set(Duration.ofMillis(5000))
+            repositories {
+                maven {
+                    if (version.endsWith("SNAPSHOT")) {
+                        name = "sonatypeSnapshots"
+                        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                    } else {
+                        name = "sonatypeReleases"
+                        url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                    }
+                    credentials {
+                        username = System.getenv("SONATYPE_USERNAME")
+                        password = System.getenv("SONATYPE_PASSWORD")
+                    }
+                }
             }
         }
     }
+}
 
-    if (project.name == 'examples') {
-        tasks.withType(Jar).configureEach {
-            enabled = false
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            username = System.getenv("SONATYPE_USERNAME")
+            password = System.getenv("SONATYPE_PASSWORD")
         }
     }
 }

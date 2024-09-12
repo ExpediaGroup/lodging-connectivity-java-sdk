@@ -30,17 +30,6 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api:2.0.2")
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifactId project.name
-            groupId project.property('groupId')
-            version project.property('version')
-            description project.property('description')
-        }
-    }
-}
 
 sourceSets {
     main {

@@ -8,9 +8,8 @@ on:
           The version to release.
           Add -SNAPSHOT to release a snapshot version.
         required: true
-
 jobs:
-  release-code:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +25,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build and publish to Sonatype
+      - name: Set release version if provided
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version }}
+        run: echo "releaseVersion=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+
+      - name: Build and Publish Artifacts
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
@@ -35,5 +38,8 @@ jobs:
           PLUGIN_PORTAL_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
           PLUGIN_PORTAL_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
         run: |
-          ./gradlew clean build
-          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            ./gradlew clean build publishToSonatype closeAndReleaseSonatypeStagingRepository
+          else
+            ./gradlew clean build publish
+          fi
