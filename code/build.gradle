@@ -131,28 +131,28 @@ publishing {
 
 }
 
-signing {
-    sign publishing.publications
-//
-//    useGpgCmd()
-//    def signingKeyId = System.getenv("gpg-signing-key")
-//    def signingKey = System.getenv("gpg-private-key")
-//    def signingPassword = System.getenv("gpg-passphrase")
-//
-//    println("Signing key: $signingKeyId")
-//    println("Signing key: $signingKey")
-//    println("Signing password: $signingPassword")
-//
-//    signatory {
-//        gnupg {
-//            keyId = signingKeyId
-//            if (signingKey != null) {
-//                privateKey = signingKey
-//            }
-//            password = signingPassword
-//        }
-//    }
-}
+//signing {
+//    sign publishing.publications
+////
+////    useGpgCmd()
+////    def signingKeyId = System.getenv("gpg-signing-key")
+////    def signingKey = System.getenv("gpg-private-key")
+////    def signingPassword = System.getenv("gpg-passphrase")
+////
+////    println("Signing key: $signingKeyId")
+////    println("Signing key: $signingKey")
+////    println("Signing password: $signingPassword")
+////
+////    signatory {
+////        gnupg {
+////            keyId = signingKeyId
+////            if (signingKey != null) {
+////                privateKey = signingKey
+////            }
+////            password = signingPassword
+////        }
+////    }
+//}
 
 tasks.register('versionsSet') {
     doLast {
