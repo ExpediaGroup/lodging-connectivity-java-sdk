@@ -57,7 +57,5 @@ jobs:
           OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           echo "Publishing version ${{ inputs.version }}" 
-          gradle tasks
-          echo "-------------------"
           cd code
-          gradle publish -Pversion=${{ inputs.version }} --warning-mode all
+          gradle publish -Pversion=${{ inputs.version }}
