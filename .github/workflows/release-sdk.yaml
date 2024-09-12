@@ -32,11 +32,11 @@ jobs:
           git config user.email s-github-actions@expediagroup.com
           echo "branch_name=release/${{ inputs.version }}" >> $GITHUB_OUTPUT
 
-      - name: Prepare Release
-        id: prepare_release
-        run: |
-          cd code
-          chmod a+x ../gradlew && ../gradlew --no-daemon versionsSet -Pversion=${{ inputs.version }}
+#      - name: Prepare Release
+#        id: prepare_release
+#        run: |
+#          cd code
+#          chmod a+x ../gradlew && ../gradlew --no-daemon versionsSet -Pversion=${{ inputs.version }}
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v7
@@ -57,7 +57,7 @@ jobs:
           OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           echo "Publishing version ${{ inputs.version }}" 
-          ./gradlew tasks
+          gradle tasks
           echo "-------------------"
           cd code
-          ../gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Pversion=${{ inputs.version }}
+          gradle publishToSonatype closeAndReleaseSonatypeStagingRepository -Pversion=${{ inputs.version }}
