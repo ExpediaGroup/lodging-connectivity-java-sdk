@@ -32,11 +32,11 @@ jobs:
           git config user.email s-github-actions@expediagroup.com
           echo "branch_name=release/${{ inputs.version }}" >> $GITHUB_OUTPUT
 
-#      - name: Prepare Release
-#        id: prepare_release
-#        run: |
-#          cd code
-#          chmod a+x ../gradlew && ../gradlew --no-daemon versionsSet -Pversion=${{ inputs.version }}
+      - name: Prepare Release
+        id: prepare_release
+        run: |
+          cd code
+          gradle --no-daemon versionsSet -Pversion=${{ inputs.version }}
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v7
