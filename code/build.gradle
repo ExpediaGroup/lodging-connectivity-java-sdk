@@ -124,6 +124,7 @@ publishing {
 
     repositories {
         mavenCentral {
+            clientTimeout = Duration.ofMinutes(10)
             url = uri("https://repo.maven.apache.org/maven2")
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
