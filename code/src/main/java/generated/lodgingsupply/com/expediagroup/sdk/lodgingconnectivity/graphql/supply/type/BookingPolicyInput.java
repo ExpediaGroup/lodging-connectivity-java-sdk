@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class BookingPolicyInput {
-  public final Optional<AcceptedPaymentFormsInput> acceptedPaymentForms;
+  public final Optional<Optional<AcceptedPaymentFormsInput>> acceptedPaymentForms;
 
-  public final Optional<String> bookingType;
+  public final Optional<Optional<String>> bookingType;
 
   private transient volatile int $hashCode;
 
@@ -21,8 +22,8 @@ public class BookingPolicyInput {
 
   private transient volatile String $toString;
 
-  public BookingPolicyInput(Optional<AcceptedPaymentFormsInput> acceptedPaymentForms,
-      Optional<String> bookingType) {
+  public BookingPolicyInput(Optional<Optional<AcceptedPaymentFormsInput>> acceptedPaymentForms,
+      Optional<Optional<String>> bookingType) {
     this.acceptedPaymentForms = acceptedPaymentForms;
     this.bookingType = bookingType;
   }
@@ -70,20 +71,21 @@ public class BookingPolicyInput {
   }
 
   public static final class Builder {
-    private Optional<AcceptedPaymentFormsInput> acceptedPaymentForms = Optional.absent();
+    private Optional<Optional<AcceptedPaymentFormsInput>> acceptedPaymentForms = Optional.empty();
 
-    private Optional<String> bookingType = Optional.absent();
+    private Optional<Optional<String>> bookingType = Optional.empty();
 
     Builder() {
     }
 
-    public Builder acceptedPaymentForms(AcceptedPaymentFormsInput acceptedPaymentForms) {
-      this.acceptedPaymentForms = Optional.present(acceptedPaymentForms);
+    public Builder acceptedPaymentForms(
+        @NotNull Optional<AcceptedPaymentFormsInput> acceptedPaymentForms) {
+      this.acceptedPaymentForms = Optional.of(acceptedPaymentForms);
       return this;
     }
 
-    public Builder bookingType(String bookingType) {
-      this.bookingType = Optional.present(bookingType);
+    public Builder bookingType(@NotNull Optional<String> bookingType) {
+      this.bookingType = Optional.of(bookingType);
       return this;
     }
 

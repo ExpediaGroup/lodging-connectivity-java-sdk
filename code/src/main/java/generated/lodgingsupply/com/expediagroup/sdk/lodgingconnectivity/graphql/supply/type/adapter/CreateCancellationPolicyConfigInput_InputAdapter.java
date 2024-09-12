@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancellationPolicyInput;
@@ -35,21 +32,21 @@ public enum CreateCancellationPolicyConfigInput_InputAdapter implements Adapter<
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       CreateCancellationPolicyConfigInput value) throws IOException {
-    if (value.additionalCancellationFee instanceof Optional.Present) {
+    if (value.additionalCancellationFee.isPresent()) {
       writer.name("additionalCancellationFee");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<MoneyInput>(MoneyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.additionalCancellationFee);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<MoneyInput>(MoneyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.additionalCancellationFee);
     }
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
     writer.name("defaultPolicies");
     new ListAdapter<>(new ObjectAdapter<CancellationPolicyInput>(CancellationPolicyInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.defaultPolicies);
     writer.name("name");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
-    if (value.overridePolicies instanceof Optional.Present) {
+    if (value.overridePolicies.isPresent()) {
       writer.name("overridePolicies");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyOverrideInput>(CancellationPolicyOverrideInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.overridePolicies);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyOverrideInput>(CancellationPolicyOverrideInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.overridePolicies);
     }
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);

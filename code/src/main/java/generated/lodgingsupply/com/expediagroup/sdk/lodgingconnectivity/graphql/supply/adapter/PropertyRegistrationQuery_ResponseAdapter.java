@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -19,6 +18,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.IdSource;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RegulatoryCategory;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RegulatoryStatus;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.IdSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RegulatoryCategory_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RegulatoryStatus_ResponseAdapter;
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyRegistrationQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyRegistrationQuery.Data> {
@@ -37,12 +39,12 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     @Override
     public PropertyRegistrationQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyRegistrationQuery.Property _property = null;
+      Optional<PropertyRegistrationQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -56,7 +58,7 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyRegistrationQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -70,14 +72,14 @@ public class PropertyRegistrationQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      List<PropertyRegistrationQuery.Unit> _units = null;
+      Optional<List<Optional<PropertyRegistrationQuery.Unit>>> _units = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _units = new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Unit>(Unit.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
+          case 2: _units = new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Unit>(Unit.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -102,7 +104,7 @@ public class PropertyRegistrationQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("units");
-      new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Unit>(Unit.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.units);
+      new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Unit>(Unit.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.units);
     }
   }
 
@@ -114,14 +116,14 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     @Override
     public PropertyRegistrationQuery.Unit fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<PropertyRegistrationQuery.Id> _ids = null;
-      PropertyRegistrationQuery.Registration _registration = null;
+      Optional<List<Optional<PropertyRegistrationQuery.Id>>> _ids = null;
+      Optional<PropertyRegistrationQuery.Registration> _registration = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _ids = new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Id>(Id.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
-          case 1: _registration = new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Registration>(Registration.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _ids = new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Id>(Id.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
+          case 1: _registration = new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Registration>(Registration.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -136,10 +138,10 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyRegistrationQuery.Unit value) throws IOException {
       writer.name("ids");
-      new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Id>(Id.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.ids);
+      new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Id>(Id.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.ids);
 
       writer.name("registration");
-      new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Registration>(Registration.INSTANCE, false)).toJson(writer, customScalarAdapters, value.registration);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Registration>(Registration.INSTANCE, false)).toJson(writer, customScalarAdapters, value.registration);
     }
   }
 
@@ -151,13 +153,13 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     @Override
     public PropertyRegistrationQuery.Id fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _id = null;
+      Optional<String> _id = null;
       IdSource _idSource = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _id = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _id = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _idSource = IdSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -175,7 +177,7 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyRegistrationQuery.Id value) throws IOException {
       writer.name("id");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.id);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("idSource");
       IdSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.idSource);
@@ -190,13 +192,13 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     @Override
     public PropertyRegistrationQuery.Registration fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _district = null;
+      Optional<String> _district = null;
       PropertyRegistrationQuery.Detail _detail = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _district = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _district = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _detail = new ObjectAdapter<PropertyRegistrationQuery.Detail>(Detail.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -214,7 +216,7 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyRegistrationQuery.Registration value) throws IOException {
       writer.name("district");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.district);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.district);
 
       writer.name("detail");
       new ObjectAdapter<PropertyRegistrationQuery.Detail>(Detail.INSTANCE, false).toJson(writer, customScalarAdapters, value.detail);
@@ -229,17 +231,17 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     @Override
     public PropertyRegistrationQuery.Detail fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyRegistrationQuery.Compliant _compliant = null;
+      Optional<PropertyRegistrationQuery.Compliant> _compliant = null;
       RegulatoryCategory _regulatoryCategory = null;
-      Integer _numberOfPhysicalRooms = null;
+      Optional<Integer> _numberOfPhysicalRooms = null;
       List<PropertyRegistrationQuery.RegistrationRecord> _registrationRecords = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _compliant = new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Compliant>(Compliant.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _compliant = new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Compliant>(Compliant.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 1: _regulatoryCategory = RegulatoryCategory_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 2: _numberOfPhysicalRooms = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _numberOfPhysicalRooms = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _registrationRecords = new ListAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.RegistrationRecord>(RegistrationRecord.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -260,13 +262,13 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyRegistrationQuery.Detail value) throws IOException {
       writer.name("compliant");
-      new NullableAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Compliant>(Compliant.INSTANCE, false)).toJson(writer, customScalarAdapters, value.compliant);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.Compliant>(Compliant.INSTANCE, false)).toJson(writer, customScalarAdapters, value.compliant);
 
       writer.name("regulatoryCategory");
       RegulatoryCategory_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.regulatoryCategory);
 
       writer.name("numberOfPhysicalRooms");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.numberOfPhysicalRooms);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.numberOfPhysicalRooms);
 
       writer.name("registrationRecords");
       new ListAdapter<>(new ObjectAdapter<PropertyRegistrationQuery.RegistrationRecord>(RegistrationRecord.INSTANCE, false)).toJson(writer, customScalarAdapters, value.registrationRecords);
@@ -322,15 +324,15 @@ public class PropertyRegistrationQuery_ResponseAdapter {
     public PropertyRegistrationQuery.RegistrationRecord fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _registrationNumber = null;
-      String _registrationNumberTypeLabel = null;
-      String _expiry = null;
+      Optional<String> _registrationNumberTypeLabel = null;
+      Optional<String> _expiry = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _registrationNumber = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _registrationNumberTypeLabel = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _expiry = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _registrationNumberTypeLabel = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _expiry = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -351,10 +353,10 @@ public class PropertyRegistrationQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.registrationNumber);
 
       writer.name("registrationNumberTypeLabel");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.registrationNumberTypeLabel);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.registrationNumberTypeLabel);
 
       writer.name("expiry");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.expiry);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.expiry);
     }
   }
 }

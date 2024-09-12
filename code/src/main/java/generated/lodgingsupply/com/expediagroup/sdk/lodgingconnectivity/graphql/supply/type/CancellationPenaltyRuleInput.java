@@ -5,11 +5,12 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Exactly one of the fields percentage, flatAmount, and numberOfNights must be defined, and it must correlate to the CancellationPenaltyRuleType field
@@ -17,11 +18,11 @@ import java.lang.String;
 public class CancellationPenaltyRuleInput {
   public final CancellationPenaltyRuleApplicability applicability;
 
-  public final Optional<MoneyInput> flatAmount;
+  public final Optional<Optional<MoneyInput>> flatAmount;
 
-  public final Optional<Integer> numberOfNights;
+  public final Optional<Optional<Integer>> numberOfNights;
 
-  public final Optional<Object> percentage;
+  public final Optional<Optional<String>> percentage;
 
   public final CancellationPenaltyRuleType type;
 
@@ -32,8 +33,8 @@ public class CancellationPenaltyRuleInput {
   private transient volatile String $toString;
 
   public CancellationPenaltyRuleInput(CancellationPenaltyRuleApplicability applicability,
-      Optional<MoneyInput> flatAmount, Optional<Integer> numberOfNights,
-      Optional<Object> percentage, CancellationPenaltyRuleType type) {
+      Optional<Optional<MoneyInput>> flatAmount, Optional<Optional<Integer>> numberOfNights,
+      Optional<Optional<String>> percentage, CancellationPenaltyRuleType type) {
     this.applicability = applicability;
     this.flatAmount = flatAmount;
     this.numberOfNights = numberOfNights;
@@ -98,11 +99,11 @@ public class CancellationPenaltyRuleInput {
   public static final class Builder {
     private CancellationPenaltyRuleApplicability applicability;
 
-    private Optional<MoneyInput> flatAmount = Optional.absent();
+    private Optional<Optional<MoneyInput>> flatAmount = Optional.empty();
 
-    private Optional<Integer> numberOfNights = Optional.absent();
+    private Optional<Optional<Integer>> numberOfNights = Optional.empty();
 
-    private Optional<Object> percentage = Optional.absent();
+    private Optional<Optional<String>> percentage = Optional.empty();
 
     private CancellationPenaltyRuleType type;
 
@@ -114,21 +115,21 @@ public class CancellationPenaltyRuleInput {
       return this;
     }
 
-    public Builder flatAmount(MoneyInput flatAmount) {
-      this.flatAmount = Optional.present(flatAmount);
+    public Builder flatAmount(@NotNull Optional<MoneyInput> flatAmount) {
+      this.flatAmount = Optional.of(flatAmount);
       return this;
     }
 
-    public Builder numberOfNights(Integer numberOfNights) {
-      this.numberOfNights = Optional.present(numberOfNights);
+    public Builder numberOfNights(@NotNull Optional<Integer> numberOfNights) {
+      this.numberOfNights = Optional.of(numberOfNights);
       return this;
     }
 
     /**
      * Represented as a fraction of 1. Example: 15% should be represented as 0.15 and 100% as 1.0
      */
-    public Builder percentage(Object percentage) {
-      this.percentage = Optional.present(percentage);
+    public Builder percentage(@NotNull Optional<String> percentage) {
+      this.percentage = Optional.of(percentage);
       return this;
     }
 

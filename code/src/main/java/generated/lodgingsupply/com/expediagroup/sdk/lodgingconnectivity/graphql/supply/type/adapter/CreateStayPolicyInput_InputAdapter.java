@@ -6,12 +6,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CreateCheckInPolicyInput;
@@ -43,31 +40,31 @@ public enum CreateStayPolicyInput_InputAdapter implements Adapter<CreateStayPoli
     new ObjectAdapter<CreateCheckInPolicyInput>(CreateCheckInPolicyInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.checkInPolicy);
     writer.name("checkOutPolicy");
     new ObjectAdapter<CreateCheckOutPolicyInput>(CreateCheckOutPolicyInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.checkOutPolicy);
-    if (value.childrenPolicy instanceof Optional.Present) {
+    if (value.childrenPolicy.isPresent()) {
       writer.name("childrenPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CreateChildrenPolicyInput>(CreateChildrenPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.childrenPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CreateChildrenPolicyInput>(CreateChildrenPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.childrenPolicy);
     }
-    if (value.customPolicies instanceof Optional.Present) {
+    if (value.customPolicies.isPresent()) {
       writer.name("customPolicies");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateCustomStayPolicyInput>(CreateCustomStayPolicyInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.customPolicies);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateCustomStayPolicyInput>(CreateCustomStayPolicyInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.customPolicies);
     }
-    if (value.eventsPolicy instanceof Optional.Present) {
+    if (value.eventsPolicy.isPresent()) {
       writer.name("eventsPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CreateEventsPolicyInput>(CreateEventsPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.eventsPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CreateEventsPolicyInput>(CreateEventsPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.eventsPolicy);
     }
     writer.name("maxOccupancyPolicy");
     new ObjectAdapter<CreateMaxOccupancyPolicyInput>(CreateMaxOccupancyPolicyInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.maxOccupancyPolicy);
-    if (value.petsPolicy instanceof Optional.Present) {
+    if (value.petsPolicy.isPresent()) {
       writer.name("petsPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CreatePetsPolicyInput>(CreatePetsPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.petsPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CreatePetsPolicyInput>(CreatePetsPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.petsPolicy);
     }
-    if (value.rentalAgreementUrl instanceof Optional.Present) {
+    if (value.rentalAgreementUrl.isPresent()) {
       writer.name("rentalAgreementUrl");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.rentalAgreementUrl);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.rentalAgreementUrl);
     }
-    if (value.smokingPolicy instanceof Optional.Present) {
+    if (value.smokingPolicy.isPresent()) {
       writer.name("smokingPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CreateSmokingPolicyInput>(CreateSmokingPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.smokingPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CreateSmokingPolicyInput>(CreateSmokingPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.smokingPolicy);
     }
   }
 }

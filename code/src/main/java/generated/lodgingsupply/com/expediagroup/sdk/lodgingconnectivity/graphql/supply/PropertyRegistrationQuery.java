@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyRegistrationQuery_ResponseAdapter;
@@ -24,6 +23,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuery.Data> {
   public static final String OPERATION_ID = "7ae05a94ebd1b36ae2d1e59c1b5f2af226545141f6345fcebb282bc3cd95ebfc";
@@ -161,7 +161,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
   public static final class Builder {
     private String propertyID;
 
-    private Optional<IdSource> idSource = Optional.absent();
+    private Optional<IdSource> idSource = Optional.empty();
 
     Builder() {
     }
@@ -172,7 +172,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
     }
 
     public Builder idSource(IdSource idSource) {
-      this.idSource = Optional.present(idSource);
+      this.idSource = Optional.of(idSource);
       return this;
     }
 
@@ -182,7 +182,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -190,7 +190,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -243,7 +243,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
     /**
      * A collection of Unit configurations for the Property
      */
-    public List<Unit> units;
+    public Optional<List<Optional<Unit>>> units;
 
     private transient volatile int $hashCode;
 
@@ -251,7 +251,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
 
     private transient volatile String $toString;
 
-    public Property(String id, String name, List<Unit> units) {
+    public Property(String id, String name, Optional<List<Optional<Unit>>> units) {
       this.id = id;
       this.name = name;
       this.units = units;
@@ -301,12 +301,12 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
   }
 
   public static class Unit {
-    public List<Id> ids;
+    public Optional<List<Optional<Id>>> ids;
 
     /**
      * Unit regulatory registration information.
      */
-    public Registration registration;
+    public Optional<Registration> registration;
 
     private transient volatile int $hashCode;
 
@@ -314,7 +314,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
 
     private transient volatile String $toString;
 
-    public Unit(List<Id> ids, Registration registration) {
+    public Unit(Optional<List<Optional<Id>>> ids, Optional<Registration> registration) {
       this.ids = ids;
       this.registration = registration;
     }
@@ -359,7 +359,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
   }
 
   public static class Id {
-    public String id;
+    public Optional<String> id;
 
     public IdSource idSource;
 
@@ -369,7 +369,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
 
     private transient volatile String $toString;
 
-    public Id(String id, IdSource idSource) {
+    public Id(Optional<String> id, IdSource idSource) {
       this.id = id;
       this.idSource = idSource;
     }
@@ -417,7 +417,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
     /**
      * Geographical jurisdiction identifier. For non-configured districts, this is null.
      */
-    public String district;
+    public Optional<String> district;
 
     /**
      * List of registration information for the specified unit of a multi-unit property.
@@ -430,7 +430,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
 
     private transient volatile String $toString;
 
-    public Registration(String district, Detail detail) {
+    public Registration(Optional<String> district, Detail detail) {
       this.district = district;
       this.detail = detail;
     }
@@ -478,7 +478,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
     /**
      * Describes whether the unit is compliant with the local jurisdiction's regulatory requirements.
      */
-    public Compliant compliant;
+    public Optional<Compliant> compliant;
 
     /**
      * Property classification category as maintained by the governing jurisdiction.
@@ -488,7 +488,7 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
     /**
      * Number of rooms in the bookable unit.
      */
-    public Integer numberOfPhysicalRooms;
+    public Optional<Integer> numberOfPhysicalRooms;
 
     /**
      * Registration records for the bookable unit filed with the governing jurisdiction.
@@ -501,8 +501,8 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
 
     private transient volatile String $toString;
 
-    public Detail(Compliant compliant, RegulatoryCategory regulatoryCategory,
-        Integer numberOfPhysicalRooms, List<RegistrationRecord> registrationRecords) {
+    public Detail(Optional<Compliant> compliant, RegulatoryCategory regulatoryCategory,
+        Optional<Integer> numberOfPhysicalRooms, List<RegistrationRecord> registrationRecords) {
       this.compliant = compliant;
       this.regulatoryCategory = regulatoryCategory;
       this.numberOfPhysicalRooms = numberOfPhysicalRooms;
@@ -626,12 +626,12 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
     /**
      * Localized registration number type.
      */
-    public String registrationNumberTypeLabel;
+    public Optional<String> registrationNumberTypeLabel;
 
     /**
      * Registration record expiration date in this format: yyyy-mm-dd.
      */
-    public String expiry;
+    public Optional<String> expiry;
 
     private transient volatile int $hashCode;
 
@@ -639,8 +639,8 @@ public class PropertyRegistrationQuery implements Query<PropertyRegistrationQuer
 
     private transient volatile String $toString;
 
-    public RegistrationRecord(String registrationNumber, String registrationNumberTypeLabel,
-        String expiry) {
+    public RegistrationRecord(String registrationNumber,
+        Optional<String> registrationNumberTypeLabel, Optional<String> expiry) {
       this.registrationNumber = registrationNumber;
       this.registrationNumberTypeLabel = registrationNumberTypeLabel;
       this.expiry = expiry;

@@ -5,21 +5,22 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateChildrenPolicyInput {
   public final Boolean allowed;
 
-  public final Optional<List<AgeRangeInput>> allowedAges;
+  public final Optional<Optional<List<AgeRangeInput>>> allowedAges;
 
-  public final Optional<List<LocalizedStringInput>> childrenAllowedNote;
+  public final Optional<Optional<List<LocalizedStringInput>>> childrenAllowedNote;
 
-  public final Optional<List<LocalizedStringInput>> childrenNotAllowedNote;
+  public final Optional<Optional<List<LocalizedStringInput>>> childrenNotAllowedNote;
 
   private transient volatile int $hashCode;
 
@@ -27,9 +28,10 @@ public class CreateChildrenPolicyInput {
 
   private transient volatile String $toString;
 
-  public CreateChildrenPolicyInput(Boolean allowed, Optional<List<AgeRangeInput>> allowedAges,
-      Optional<List<LocalizedStringInput>> childrenAllowedNote,
-      Optional<List<LocalizedStringInput>> childrenNotAllowedNote) {
+  public CreateChildrenPolicyInput(Boolean allowed,
+      Optional<Optional<List<AgeRangeInput>>> allowedAges,
+      Optional<Optional<List<LocalizedStringInput>>> childrenAllowedNote,
+      Optional<Optional<List<LocalizedStringInput>>> childrenNotAllowedNote) {
     this.allowed = allowed;
     this.allowedAges = allowedAges;
     this.childrenAllowedNote = childrenAllowedNote;
@@ -89,11 +91,11 @@ public class CreateChildrenPolicyInput {
   public static final class Builder {
     private Boolean allowed;
 
-    private Optional<List<AgeRangeInput>> allowedAges = Optional.absent();
+    private Optional<Optional<List<AgeRangeInput>>> allowedAges = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> childrenAllowedNote = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> childrenAllowedNote = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> childrenNotAllowedNote = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> childrenNotAllowedNote = Optional.empty();
 
     Builder() {
     }
@@ -103,18 +105,20 @@ public class CreateChildrenPolicyInput {
       return this;
     }
 
-    public Builder allowedAges(List<AgeRangeInput> allowedAges) {
-      this.allowedAges = Optional.present(allowedAges);
+    public Builder allowedAges(@NotNull Optional<List<AgeRangeInput>> allowedAges) {
+      this.allowedAges = Optional.of(allowedAges);
       return this;
     }
 
-    public Builder childrenAllowedNote(List<LocalizedStringInput> childrenAllowedNote) {
-      this.childrenAllowedNote = Optional.present(childrenAllowedNote);
+    public Builder childrenAllowedNote(
+        @NotNull Optional<List<LocalizedStringInput>> childrenAllowedNote) {
+      this.childrenAllowedNote = Optional.of(childrenAllowedNote);
       return this;
     }
 
-    public Builder childrenNotAllowedNote(List<LocalizedStringInput> childrenNotAllowedNote) {
-      this.childrenNotAllowedNote = Optional.present(childrenNotAllowedNote);
+    public Builder childrenNotAllowedNote(
+        @NotNull Optional<List<LocalizedStringInput>> childrenNotAllowedNote) {
+      this.childrenNotAllowedNote = Optional.of(childrenNotAllowedNote);
       return this;
     }
 

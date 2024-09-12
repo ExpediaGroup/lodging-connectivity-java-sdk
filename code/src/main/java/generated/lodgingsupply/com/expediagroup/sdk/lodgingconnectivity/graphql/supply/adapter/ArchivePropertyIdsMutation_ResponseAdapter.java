@@ -10,16 +10,17 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ArchivePropertyIdsMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ArchivePropertyIdsMutation_ResponseAdapter {
   public enum Data implements Adapter<ArchivePropertyIdsMutation.Data> {
@@ -30,12 +31,12 @@ public class ArchivePropertyIdsMutation_ResponseAdapter {
     @Override
     public ArchivePropertyIdsMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      ArchivePropertyIdsMutation.ArchivePropertyIds _archivePropertyIds = null;
+      Optional<ArchivePropertyIdsMutation.ArchivePropertyIds> _archivePropertyIds = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _archivePropertyIds = new NullableAdapter<>(new ObjectAdapter<ArchivePropertyIdsMutation.ArchivePropertyIds>(ArchivePropertyIds.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _archivePropertyIds = new OptionalAdapter<>(new ObjectAdapter<ArchivePropertyIdsMutation.ArchivePropertyIds>(ArchivePropertyIds.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -49,7 +50,7 @@ public class ArchivePropertyIdsMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         ArchivePropertyIdsMutation.Data value) throws IOException {
       writer.name("archivePropertyIds");
-      new NullableAdapter<>(new ObjectAdapter<ArchivePropertyIdsMutation.ArchivePropertyIds>(ArchivePropertyIds.INSTANCE, false)).toJson(writer, customScalarAdapters, value.archivePropertyIds);
+      new OptionalAdapter<>(new ObjectAdapter<ArchivePropertyIdsMutation.ArchivePropertyIds>(ArchivePropertyIds.INSTANCE, false)).toJson(writer, customScalarAdapters, value.archivePropertyIds);
     }
   }
 

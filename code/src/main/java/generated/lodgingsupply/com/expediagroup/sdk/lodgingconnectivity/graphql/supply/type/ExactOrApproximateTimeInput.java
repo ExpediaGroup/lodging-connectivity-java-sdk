@@ -5,15 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalTime;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ExactOrApproximateTimeInput {
-  public final Optional<String> approximateTime;
+  public final Optional<Optional<String>> approximateTime;
 
-  public final Optional<Object> exactTime;
+  public final Optional<Optional<LocalTime>> exactTime;
 
   private transient volatile int $hashCode;
 
@@ -21,7 +23,8 @@ public class ExactOrApproximateTimeInput {
 
   private transient volatile String $toString;
 
-  public ExactOrApproximateTimeInput(Optional<String> approximateTime, Optional<Object> exactTime) {
+  public ExactOrApproximateTimeInput(Optional<Optional<String>> approximateTime,
+      Optional<Optional<LocalTime>> exactTime) {
     this.approximateTime = approximateTime;
     this.exactTime = exactTime;
   }
@@ -69,20 +72,20 @@ public class ExactOrApproximateTimeInput {
   }
 
   public static final class Builder {
-    private Optional<String> approximateTime = Optional.absent();
+    private Optional<Optional<String>> approximateTime = Optional.empty();
 
-    private Optional<Object> exactTime = Optional.absent();
+    private Optional<Optional<LocalTime>> exactTime = Optional.empty();
 
     Builder() {
     }
 
-    public Builder approximateTime(String approximateTime) {
-      this.approximateTime = Optional.present(approximateTime);
+    public Builder approximateTime(@NotNull Optional<String> approximateTime) {
+      this.approximateTime = Optional.of(approximateTime);
       return this;
     }
 
-    public Builder exactTime(Object exactTime) {
-      this.exactTime = Optional.present(exactTime);
+    public Builder exactTime(@NotNull Optional<LocalTime> exactTime) {
+      this.exactTime = Optional.of(exactTime);
       return this;
     }
 

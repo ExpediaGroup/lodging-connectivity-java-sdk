@@ -7,11 +7,8 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.OneOfStringFilterInput;
@@ -31,9 +28,9 @@ public enum OneOfStringFilterInput_InputAdapter implements Adapter<OneOfStringFi
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       OneOfStringFilterInput value) throws IOException {
-    if (value.operator instanceof Optional.Present) {
+    if (value.operator.isPresent()) {
       writer.name("operator");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(OneOfOperator_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.operator);
+      new OptionalAdapter<>(new OptionalAdapter<>(OneOfOperator_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.operator);
     }
     writer.name("values");
     new ListAdapter<>(Adapters.StringAdapter).toJson(writer, customScalarAdapters, value.values);

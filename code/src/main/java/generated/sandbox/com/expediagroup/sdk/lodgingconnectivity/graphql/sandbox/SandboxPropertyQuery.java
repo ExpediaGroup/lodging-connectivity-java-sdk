@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.adapter.SandboxPropertyQuery_ResponseAdapter;
@@ -23,6 +22,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxPropertyQuery implements Query<SandboxPropertyQuery.Data> {
   public static final String OPERATION_ID = "2072a8df534fac14cc7ca68db047eb6516266ad0e36ca333c438817698c29233";
@@ -256,11 +256,11 @@ public class SandboxPropertyQuery implements Query<SandboxPropertyQuery.Data> {
   public static final class Builder {
     private String id;
 
-    private Optional<String> reservationsCursor = Optional.absent();
+    private Optional<String> reservationsCursor = Optional.empty();
 
-    private Optional<Integer> reservationsLimit = Optional.absent();
+    private Optional<Integer> reservationsLimit = Optional.empty();
 
-    private Optional<Boolean> skipReservations = Optional.absent();
+    private Optional<Boolean> skipReservations = Optional.empty();
 
     Builder() {
     }
@@ -271,17 +271,17 @@ public class SandboxPropertyQuery implements Query<SandboxPropertyQuery.Data> {
     }
 
     public Builder reservationsCursor(String reservationsCursor) {
-      this.reservationsCursor = Optional.present(reservationsCursor);
+      this.reservationsCursor = Optional.of(reservationsCursor);
       return this;
     }
 
     public Builder reservationsLimit(Integer reservationsLimit) {
-      this.reservationsLimit = Optional.present(reservationsLimit);
+      this.reservationsLimit = Optional.of(reservationsLimit);
       return this;
     }
 
     public Builder skipReservations(Boolean skipReservations) {
-      this.skipReservations = Optional.present(skipReservations);
+      this.skipReservations = Optional.of(skipReservations);
       return this;
     }
 
@@ -364,7 +364,7 @@ public class SandboxPropertyQuery implements Query<SandboxPropertyQuery.Data> {
      * For subsequent requests, set the cursor to the value from the previous response. This will return the next set of results
      * starting from the reservation after the cursor.
      */
-    public Reservations reservations;
+    public Optional<Reservations> reservations;
 
     private transient volatile int $hashCode;
 
@@ -372,7 +372,7 @@ public class SandboxPropertyQuery implements Query<SandboxPropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Property(String id, String name, Reservations reservations) {
+    public Property(String id, String name, Optional<Reservations> reservations) {
       this.id = id;
       this.name = name;
       this.reservations = reservations;
@@ -425,7 +425,7 @@ public class SandboxPropertyQuery implements Query<SandboxPropertyQuery.Data> {
     /**
      * Cursor for pagination.
      */
-    public String cursor;
+    public Optional<String> cursor;
 
     /**
      * Total count of reservations.
@@ -443,7 +443,7 @@ public class SandboxPropertyQuery implements Query<SandboxPropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Reservations(String cursor, Integer totalCount, List<Element> elements) {
+    public Reservations(Optional<String> cursor, Integer totalCount, List<Element> elements) {
       this.cursor = cursor;
       this.totalCount = totalCount;
       this.elements = elements;

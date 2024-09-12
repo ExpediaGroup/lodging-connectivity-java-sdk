@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input to delete all reservations for a specified property.
  */
 public class DeletePropertyReservationsInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String propertyId;
 
@@ -24,7 +25,8 @@ public class DeletePropertyReservationsInput {
 
   private transient volatile String $toString;
 
-  public DeletePropertyReservationsInput(Optional<String> clientMutationId, String propertyId) {
+  public DeletePropertyReservationsInput(Optional<Optional<String>> clientMutationId,
+      String propertyId) {
     this.clientMutationId = clientMutationId;
     this.propertyId = propertyId;
   }
@@ -72,7 +74,7 @@ public class DeletePropertyReservationsInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String propertyId;
 
@@ -82,8 +84,8 @@ public class DeletePropertyReservationsInput {
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 

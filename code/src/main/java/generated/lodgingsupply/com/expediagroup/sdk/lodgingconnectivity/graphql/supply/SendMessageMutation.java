@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class SendMessageMutation implements Mutation<SendMessageMutation.Data> {
   public static final String OPERATION_ID = "9267adbed3e3eb3eebb9313bd6cfb15c89b3e650356bce8e80a9cb0d0f171a87";
@@ -144,7 +145,7 @@ public class SendMessageMutation implements Mutation<SendMessageMutation.Data> {
     /**
      *  Send a new message to a message thread
      */
-    public SendMessage sendMessage;
+    public Optional<SendMessage> sendMessage;
 
     private transient volatile int $hashCode;
 
@@ -152,7 +153,7 @@ public class SendMessageMutation implements Mutation<SendMessageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public Data(SendMessage sendMessage) {
+    public Data(Optional<SendMessage> sendMessage) {
       this.sendMessage = sendMessage;
     }
 
@@ -195,7 +196,7 @@ public class SendMessageMutation implements Mutation<SendMessageMutation.Data> {
     /**
      *  UUID that uniquely identifies client's request 
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     /**
      *  ID of the sent message 
@@ -208,7 +209,7 @@ public class SendMessageMutation implements Mutation<SendMessageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public SendMessage(String clientMutationId, String messageId) {
+    public SendMessage(Optional<String> clientMutationId, String messageId) {
       this.clientMutationId = clientMutationId;
       this.messageId = messageId;
     }

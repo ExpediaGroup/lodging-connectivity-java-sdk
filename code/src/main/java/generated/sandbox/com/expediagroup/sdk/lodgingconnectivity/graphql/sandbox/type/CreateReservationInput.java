@@ -5,7 +5,6 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
@@ -13,48 +12,50 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input to create a reservation
  */
 public class CreateReservationInput {
-  public final Optional<List<String>> accessibilityText;
+  public final Optional<Optional<List<String>>> accessibilityText;
 
-  public final Optional<Integer> adultCount;
+  public final Optional<Optional<Integer>> adultCount;
 
-  public final Optional<String> bedTypes;
+  public final Optional<Optional<String>> bedTypes;
 
-  public final Optional<BusinessModelInput> businessModel;
+  public final Optional<Optional<BusinessModelInput>> businessModel;
 
-  public final Optional<LocalDate> checkInDate;
+  public final Optional<Optional<LocalDate>> checkInDate;
 
-  public final Optional<LocalDate> checkOutDate;
+  public final Optional<Optional<LocalDate>> checkOutDate;
 
-  public final Optional<List<Integer>> childAges;
+  public final Optional<Optional<List<Integer>>> childAges;
 
-  public final Optional<Integer> childCount;
+  public final Optional<Optional<Integer>> childCount;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
-  public final Optional<String> multiRoomText;
+  public final Optional<Optional<String>> multiRoomText;
 
-  public final Optional<GuestInput> primaryGuest;
+  public final Optional<Optional<GuestInput>> primaryGuest;
 
   public final String propertyId;
 
-  public final Optional<ReconciliationTypeInput> reconciliationType;
+  public final Optional<Optional<ReconciliationTypeInput>> reconciliationType;
 
-  public final Optional<RemittanceTypeInput> remittanceType;
+  public final Optional<Optional<RemittanceTypeInput>> remittanceType;
 
-  public final Optional<Boolean> sendNotification;
+  public final Optional<Optional<Boolean>> sendNotification;
 
-  public final Optional<String> smokingType;
+  public final Optional<Optional<String>> smokingType;
 
-  public final Optional<String> specialRequest;
+  public final Optional<Optional<String>> specialRequest;
 
-  public final Optional<ReservationStatusInput> status;
+  public final Optional<Optional<ReservationStatusInput>> status;
 
-  public final Optional<List<ReservationValueAddedPromotionInput>> valueAddedPromotions;
+  public final Optional<Optional<List<ReservationValueAddedPromotionInput>>> valueAddedPromotions;
 
   private transient volatile int $hashCode;
 
@@ -62,17 +63,18 @@ public class CreateReservationInput {
 
   private transient volatile String $toString;
 
-  public CreateReservationInput(Optional<List<String>> accessibilityText,
-      Optional<Integer> adultCount, Optional<String> bedTypes,
-      Optional<BusinessModelInput> businessModel, Optional<LocalDate> checkInDate,
-      Optional<LocalDate> checkOutDate, Optional<List<Integer>> childAges,
-      Optional<Integer> childCount, Optional<String> clientMutationId,
-      Optional<String> multiRoomText, Optional<GuestInput> primaryGuest, String propertyId,
-      Optional<ReconciliationTypeInput> reconciliationType,
-      Optional<RemittanceTypeInput> remittanceType, Optional<Boolean> sendNotification,
-      Optional<String> smokingType, Optional<String> specialRequest,
-      Optional<ReservationStatusInput> status,
-      Optional<List<ReservationValueAddedPromotionInput>> valueAddedPromotions) {
+  public CreateReservationInput(Optional<Optional<List<String>>> accessibilityText,
+      Optional<Optional<Integer>> adultCount, Optional<Optional<String>> bedTypes,
+      Optional<Optional<BusinessModelInput>> businessModel,
+      Optional<Optional<LocalDate>> checkInDate, Optional<Optional<LocalDate>> checkOutDate,
+      Optional<Optional<List<Integer>>> childAges, Optional<Optional<Integer>> childCount,
+      Optional<Optional<String>> clientMutationId, Optional<Optional<String>> multiRoomText,
+      Optional<Optional<GuestInput>> primaryGuest, String propertyId,
+      Optional<Optional<ReconciliationTypeInput>> reconciliationType,
+      Optional<Optional<RemittanceTypeInput>> remittanceType,
+      Optional<Optional<Boolean>> sendNotification, Optional<Optional<String>> smokingType,
+      Optional<Optional<String>> specialRequest, Optional<Optional<ReservationStatusInput>> status,
+      Optional<Optional<List<ReservationValueAddedPromotionInput>>> valueAddedPromotions) {
     this.accessibilityText = accessibilityText;
     this.adultCount = adultCount;
     this.bedTypes = bedTypes;
@@ -205,43 +207,43 @@ public class CreateReservationInput {
   }
 
   public static final class Builder {
-    private Optional<List<String>> accessibilityText = Optional.absent();
+    private Optional<Optional<List<String>>> accessibilityText = Optional.empty();
 
-    private Optional<Integer> adultCount = Optional.absent();
+    private Optional<Optional<Integer>> adultCount = Optional.empty();
 
-    private Optional<String> bedTypes = Optional.absent();
+    private Optional<Optional<String>> bedTypes = Optional.empty();
 
-    private Optional<BusinessModelInput> businessModel = Optional.absent();
+    private Optional<Optional<BusinessModelInput>> businessModel = Optional.empty();
 
-    private Optional<LocalDate> checkInDate = Optional.absent();
+    private Optional<Optional<LocalDate>> checkInDate = Optional.empty();
 
-    private Optional<LocalDate> checkOutDate = Optional.absent();
+    private Optional<Optional<LocalDate>> checkOutDate = Optional.empty();
 
-    private Optional<List<Integer>> childAges = Optional.absent();
+    private Optional<Optional<List<Integer>>> childAges = Optional.empty();
 
-    private Optional<Integer> childCount = Optional.absent();
+    private Optional<Optional<Integer>> childCount = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
-    private Optional<String> multiRoomText = Optional.absent();
+    private Optional<Optional<String>> multiRoomText = Optional.empty();
 
-    private Optional<GuestInput> primaryGuest = Optional.absent();
+    private Optional<Optional<GuestInput>> primaryGuest = Optional.empty();
 
     private String propertyId;
 
-    private Optional<ReconciliationTypeInput> reconciliationType = Optional.absent();
+    private Optional<Optional<ReconciliationTypeInput>> reconciliationType = Optional.empty();
 
-    private Optional<RemittanceTypeInput> remittanceType = Optional.absent();
+    private Optional<Optional<RemittanceTypeInput>> remittanceType = Optional.empty();
 
-    private Optional<Boolean> sendNotification = Optional.absent();
+    private Optional<Optional<Boolean>> sendNotification = Optional.empty();
 
-    private Optional<String> smokingType = Optional.absent();
+    private Optional<Optional<String>> smokingType = Optional.empty();
 
-    private Optional<String> specialRequest = Optional.absent();
+    private Optional<Optional<String>> specialRequest = Optional.empty();
 
-    private Optional<ReservationStatusInput> status = Optional.absent();
+    private Optional<Optional<ReservationStatusInput>> status = Optional.empty();
 
-    private Optional<List<ReservationValueAddedPromotionInput>> valueAddedPromotions = Optional.absent();
+    private Optional<Optional<List<ReservationValueAddedPromotionInput>>> valueAddedPromotions = Optional.empty();
 
     Builder() {
     }
@@ -249,88 +251,88 @@ public class CreateReservationInput {
     /**
      * Accessibility requests made by the guest for the reservation. Defaults to a single accessibility text with value "In-room accessibility (in select rooms)".
      */
-    public Builder accessibilityText(List<String> accessibilityText) {
-      this.accessibilityText = Optional.present(accessibilityText);
+    public Builder accessibilityText(@NotNull Optional<List<String>> accessibilityText) {
+      this.accessibilityText = Optional.of(accessibilityText);
       return this;
     }
 
     /**
      * Adult count. Defaults to 2.
      */
-    public Builder adultCount(Integer adultCount) {
-      this.adultCount = Optional.present(adultCount);
+    public Builder adultCount(@NotNull Optional<Integer> adultCount) {
+      this.adultCount = Optional.of(adultCount);
       return this;
     }
 
     /**
      * Bed types of the reservation. Defaults to "2 Queen Beds".
      */
-    public Builder bedTypes(String bedTypes) {
-      this.bedTypes = Optional.present(bedTypes);
+    public Builder bedTypes(@NotNull Optional<String> bedTypes) {
+      this.bedTypes = Optional.of(bedTypes);
       return this;
     }
 
     /**
      * Entity that collects payment for the reservation. Defaults to EXPEDIA_COLLECT.
      */
-    public Builder businessModel(BusinessModelInput businessModel) {
-      this.businessModel = Optional.present(businessModel);
+    public Builder businessModel(@NotNull Optional<BusinessModelInput> businessModel) {
+      this.businessModel = Optional.of(businessModel);
       return this;
     }
 
     /**
      * Check-in date (format: YYYY-MM-DD) of the reservation. Defaults to a date in a near future.
      */
-    public Builder checkInDate(LocalDate checkInDate) {
-      this.checkInDate = Optional.present(checkInDate);
+    public Builder checkInDate(@NotNull Optional<LocalDate> checkInDate) {
+      this.checkInDate = Optional.of(checkInDate);
       return this;
     }
 
     /**
      * Check-out date (format: YYYY-MM-DD) of the reservation. Defaults to a random date in the month after the check-in date.
      */
-    public Builder checkOutDate(LocalDate checkOutDate) {
-      this.checkOutDate = Optional.present(checkOutDate);
+    public Builder checkOutDate(@NotNull Optional<LocalDate> checkOutDate) {
+      this.checkOutDate = Optional.of(checkOutDate);
       return this;
     }
 
     /**
      * Ages of children associated with the reservation. If not specified, defaults to a list of 1 or 2 random child ages.
      */
-    public Builder childAges(List<Integer> childAges) {
-      this.childAges = Optional.present(childAges);
+    public Builder childAges(@NotNull Optional<List<Integer>> childAges) {
+      this.childAges = Optional.of(childAges);
       return this;
     }
 
     /**
      * Child count. If not specified, defaults to the number of child ages provided (or its default).
      */
-    public Builder childCount(Integer childCount) {
-      this.childCount = Optional.present(childCount);
+    public Builder childCount(@NotNull Optional<Integer> childCount) {
+      this.childCount = Optional.of(childCount);
       return this;
     }
 
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
     /**
      * Text that is displayed to guests if there are multiple rooms associated with the reservation.
      */
-    public Builder multiRoomText(String multiRoomText) {
-      this.multiRoomText = Optional.present(multiRoomText);
+    public Builder multiRoomText(@NotNull Optional<String> multiRoomText) {
+      this.multiRoomText = Optional.of(multiRoomText);
       return this;
     }
 
     /**
      * Guest who made the reservation. Guest personal information cannot be set and is automatically generated.
      */
-    public Builder primaryGuest(GuestInput primaryGuest) {
-      this.primaryGuest = Optional.present(primaryGuest);
+    public Builder primaryGuest(@NotNull Optional<GuestInput> primaryGuest) {
+      this.primaryGuest = Optional.of(primaryGuest);
       return this;
     }
 
@@ -345,48 +347,49 @@ public class CreateReservationInput {
     /**
      * Reconciliation type of the reservation, either MODIFY, CANCEL, NO_SHOW, or null. Defaults to non-reconciled (null).
      */
-    public Builder reconciliationType(ReconciliationTypeInput reconciliationType) {
-      this.reconciliationType = Optional.present(reconciliationType);
+    public Builder reconciliationType(
+        @NotNull Optional<ReconciliationTypeInput> reconciliationType) {
+      this.reconciliationType = Optional.of(reconciliationType);
       return this;
     }
 
     /**
      * Remittance type of the reservation. Defaults to NET.
      */
-    public Builder remittanceType(RemittanceTypeInput remittanceType) {
-      this.remittanceType = Optional.present(remittanceType);
+    public Builder remittanceType(@NotNull Optional<RemittanceTypeInput> remittanceType) {
+      this.remittanceType = Optional.of(remittanceType);
       return this;
     }
 
     /**
      * Whether to send a notification upon the creation of the reservation. Defaults to false.
      */
-    public Builder sendNotification(Boolean sendNotification) {
-      this.sendNotification = Optional.present(sendNotification);
+    public Builder sendNotification(@NotNull Optional<Boolean> sendNotification) {
+      this.sendNotification = Optional.of(sendNotification);
       return this;
     }
 
     /**
      * Whether smoking is allowed for the reservation. Defaults to "NONSMOKING".
      */
-    public Builder smokingType(String smokingType) {
-      this.smokingType = Optional.present(smokingType);
+    public Builder smokingType(@NotNull Optional<String> smokingType) {
+      this.smokingType = Optional.of(smokingType);
       return this;
     }
 
     /**
      * Text that is displayed to guests if there is a special request associated with the reservation. Defaults to "Expedia test reservation. This is a free-text comment from the traveler.".
      */
-    public Builder specialRequest(String specialRequest) {
-      this.specialRequest = Optional.present(specialRequest);
+    public Builder specialRequest(@NotNull Optional<String> specialRequest) {
+      this.specialRequest = Optional.of(specialRequest);
       return this;
     }
 
     /**
      * Current status of the reservation. Defaults to BOOKED.
      */
-    public Builder status(ReservationStatusInput status) {
-      this.status = Optional.present(status);
+    public Builder status(@NotNull Optional<ReservationStatusInput> status) {
+      this.status = Optional.of(status);
       return this;
     }
 
@@ -394,8 +397,8 @@ public class CreateReservationInput {
      * Value add promotion(s) used to book the reservation. Defaults to a single "Free full breakfast for 2 per day" value added promotion.
      */
     public Builder valueAddedPromotions(
-        List<ReservationValueAddedPromotionInput> valueAddedPromotions) {
-      this.valueAddedPromotions = Optional.present(valueAddedPromotions);
+        @NotNull Optional<List<ReservationValueAddedPromotionInput>> valueAddedPromotions) {
+      this.valueAddedPromotions = Optional.of(valueAddedPromotions);
       return this;
     }
 

@@ -7,10 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.EmailAddress;
@@ -34,21 +31,21 @@ public enum UpdateNotificationCallbackConfigInput_InputAdapter implements Adapte
       UpdateNotificationCallbackConfigInput value) throws IOException {
     writer.name("callbackConfigId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.callbackConfigId);
-    if (value.callbackUrl instanceof Optional.Present) {
+    if (value.callbackUrl.isPresent()) {
       writer.name("callbackUrl");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.callbackUrl);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.callbackUrl);
     }
-    if (value.apiKey instanceof Optional.Present) {
+    if (value.apiKey.isPresent()) {
       writer.name("apiKey");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.apiKey);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.apiKey);
     }
-    if (value.requestTimeoutSeconds instanceof Optional.Present) {
+    if (value.requestTimeoutSeconds.isPresent()) {
       writer.name("requestTimeoutSeconds");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.requestTimeoutSeconds);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.requestTimeoutSeconds);
     }
-    if (value.contactEmail instanceof Optional.Present) {
+    if (value.contactEmail.isPresent()) {
       writer.name("contactEmail");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type)))).toJson(writer, customScalarAdapters, value.contactEmail);
+      new OptionalAdapter<>(new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type)))).toJson(writer, customScalarAdapters, value.contactEmail);
     }
   }
 }

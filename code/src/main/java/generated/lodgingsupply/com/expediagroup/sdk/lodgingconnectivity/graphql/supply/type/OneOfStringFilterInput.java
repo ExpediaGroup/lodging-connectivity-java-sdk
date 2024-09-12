@@ -5,14 +5,15 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class OneOfStringFilterInput {
-  public final Optional<OneOfOperator> operator;
+  public final Optional<Optional<OneOfOperator>> operator;
 
   public final List<String> values;
 
@@ -22,7 +23,7 @@ public class OneOfStringFilterInput {
 
   private transient volatile String $toString;
 
-  public OneOfStringFilterInput(Optional<OneOfOperator> operator, List<String> values) {
+  public OneOfStringFilterInput(Optional<Optional<OneOfOperator>> operator, List<String> values) {
     this.operator = operator;
     this.values = values;
   }
@@ -70,15 +71,15 @@ public class OneOfStringFilterInput {
   }
 
   public static final class Builder {
-    private Optional<OneOfOperator> operator = Optional.absent();
+    private Optional<Optional<OneOfOperator>> operator = Optional.empty();
 
     private List<String> values;
 
     Builder() {
     }
 
-    public Builder operator(OneOfOperator operator) {
-      this.operator = Optional.present(operator);
+    public Builder operator(@NotNull Optional<OneOfOperator> operator) {
+      this.operator = Optional.of(operator);
       return this;
     }
 

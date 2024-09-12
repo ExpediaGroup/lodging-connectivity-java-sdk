@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AmenityInput;
@@ -34,17 +31,17 @@ public enum UpdatePropertyUnitInput_InputAdapter implements Adapter<UpdateProper
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdatePropertyUnitInput value) throws IOException {
-    if (value.amenities instanceof Optional.Present) {
+    if (value.amenities.isPresent()) {
       writer.name("amenities");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<AmenityInput>(AmenityInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.amenities);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<AmenityInput>(AmenityInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.amenities);
     }
-    if (value.area instanceof Optional.Present) {
+    if (value.area.isPresent()) {
       writer.name("area");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<UpdateAreaInput>(UpdateAreaInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.area);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<UpdateAreaInput>(UpdateAreaInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.area);
     }
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);

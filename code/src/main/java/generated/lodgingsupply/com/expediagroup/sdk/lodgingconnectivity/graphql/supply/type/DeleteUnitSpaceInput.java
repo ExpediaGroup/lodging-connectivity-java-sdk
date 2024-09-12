@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class DeleteUnitSpaceInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String propertyId;
 
@@ -25,8 +26,8 @@ public class DeleteUnitSpaceInput {
 
   private transient volatile String $toString;
 
-  public DeleteUnitSpaceInput(Optional<String> clientMutationId, String propertyId, String spaceId,
-      String unitId) {
+  public DeleteUnitSpaceInput(Optional<Optional<String>> clientMutationId, String propertyId,
+      String spaceId, String unitId) {
     this.clientMutationId = clientMutationId;
     this.propertyId = propertyId;
     this.spaceId = spaceId;
@@ -84,7 +85,7 @@ public class DeleteUnitSpaceInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String propertyId;
 
@@ -95,8 +96,8 @@ public class DeleteUnitSpaceInput {
     Builder() {
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 

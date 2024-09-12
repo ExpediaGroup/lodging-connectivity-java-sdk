@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class CancelVrboReservationMutation implements Mutation<CancelVrboReservationMutation.Data> {
   public static final String OPERATION_ID = "a4924d2a859d05c5bb1d9bb14dc778894b833afaad0523f7419166a6490d6813";
@@ -197,12 +198,12 @@ public class CancelVrboReservationMutation implements Mutation<CancelVrboReserva
     /**
      * Partner supplied unique mutation identifier
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     /**
      * Reference to reservation that was cancelled
      */
-    public Reservation reservation;
+    public Optional<Reservation> reservation;
 
     private transient volatile int $hashCode;
 
@@ -210,7 +211,8 @@ public class CancelVrboReservationMutation implements Mutation<CancelVrboReserva
 
     private transient volatile String $toString;
 
-    public CancelVrboReservation(String clientMutationId, Reservation reservation) {
+    public CancelVrboReservation(Optional<String> clientMutationId,
+        Optional<Reservation> reservation) {
       this.clientMutationId = clientMutationId;
       this.reservation = reservation;
     }

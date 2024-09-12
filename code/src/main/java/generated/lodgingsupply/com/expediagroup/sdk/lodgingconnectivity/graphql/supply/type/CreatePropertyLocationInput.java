@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreatePropertyLocationInput {
   public final CoordinatesInput coordinates;
 
-  public final Optional<Boolean> hideExactLocation;
+  public final Optional<Optional<Boolean>> hideExactLocation;
 
   private transient volatile int $hashCode;
 
@@ -23,7 +24,7 @@ public class CreatePropertyLocationInput {
   private transient volatile String $toString;
 
   public CreatePropertyLocationInput(CoordinatesInput coordinates,
-      Optional<Boolean> hideExactLocation) {
+      Optional<Optional<Boolean>> hideExactLocation) {
     this.coordinates = coordinates;
     this.hideExactLocation = hideExactLocation;
   }
@@ -73,7 +74,7 @@ public class CreatePropertyLocationInput {
   public static final class Builder {
     private CoordinatesInput coordinates;
 
-    private Optional<Boolean> hideExactLocation = Optional.absent();
+    private Optional<Optional<Boolean>> hideExactLocation = Optional.empty();
 
     Builder() {
     }
@@ -83,8 +84,8 @@ public class CreatePropertyLocationInput {
       return this;
     }
 
-    public Builder hideExactLocation(Boolean hideExactLocation) {
-      this.hideExactLocation = Optional.present(hideExactLocation);
+    public Builder hideExactLocation(@NotNull Optional<Boolean> hideExactLocation) {
+      this.hideExactLocation = Optional.of(hideExactLocation);
       return this;
     }
 

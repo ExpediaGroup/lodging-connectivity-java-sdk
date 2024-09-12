@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class SandboxUpdatePropertyMutation implements Mutation<SandboxUpdatePropertyMutation.Data> {
   public static final String OPERATION_ID = "7f663a16647e284dac65ac3d7673802650b2cdd19c6e5fefc65d3f4bc597d5fe";
@@ -201,7 +202,7 @@ public class SandboxUpdatePropertyMutation implements Mutation<SandboxUpdateProp
     /**
      * Client mutation ID. Optional value in the input that is echoed back in the response.
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     /**
      * The updated property.
@@ -214,7 +215,7 @@ public class SandboxUpdatePropertyMutation implements Mutation<SandboxUpdateProp
 
     private transient volatile String $toString;
 
-    public UpdateProperty(String clientMutationId, Property property) {
+    public UpdateProperty(Optional<String> clientMutationId, Property property) {
       this.clientMutationId = clientMutationId;
       this.property = property;
     }

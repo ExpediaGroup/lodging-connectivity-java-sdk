@@ -21,6 +21,7 @@ import java.lang.String;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class NotificationProfileQuery implements Query<NotificationProfileQuery.Data> {
   public static final String OPERATION_ID = "6a8d9143cf2de99bd7e95fcdf67c38650925fb92e21b12e370eacb023b32a226";
@@ -151,7 +152,7 @@ public class NotificationProfileQuery implements Query<NotificationProfileQuery.
     /**
      * Retrieves configurations on notification platform
      */
-    public NotificationProfile notificationProfile;
+    public Optional<NotificationProfile> notificationProfile;
 
     private transient volatile int $hashCode;
 
@@ -159,7 +160,7 @@ public class NotificationProfileQuery implements Query<NotificationProfileQuery.
 
     private transient volatile String $toString;
 
-    public Data(NotificationProfile notificationProfile) {
+    public Data(Optional<NotificationProfile> notificationProfile) {
       this.notificationProfile = notificationProfile;
     }
 
@@ -269,7 +270,7 @@ public class NotificationProfileQuery implements Query<NotificationProfileQuery.
     /**
      * Email address for correspondence
      */
-    public String contactEmail;
+    public Optional<String> contactEmail;
 
     /**
      * Id of the callback configuration object
@@ -292,7 +293,7 @@ public class NotificationProfileQuery implements Query<NotificationProfileQuery.
 
     private transient volatile String $toString;
 
-    public CallbackConfig(URL callbackUrl, String contactEmail, String id,
+    public CallbackConfig(URL callbackUrl, Optional<String> contactEmail, String id,
         Integer requestTimeoutSeconds, LocalDateTime secretExpirationDateTime) {
       this.callbackUrl = callbackUrl;
       this.contactEmail = contactEmail;
@@ -483,7 +484,7 @@ public class NotificationProfileQuery implements Query<NotificationProfileQuery.
     /**
      * Email address for correspondence
      */
-    public String contactEmail;
+    public Optional<String> contactEmail;
 
     /**
      * Id of the callback configuration object
@@ -506,7 +507,7 @@ public class NotificationProfileQuery implements Query<NotificationProfileQuery.
 
     private transient volatile String $toString;
 
-    public CallbackConfig1(URL callbackUrl, String contactEmail, String id,
+    public CallbackConfig1(URL callbackUrl, Optional<String> contactEmail, String id,
         Integer requestTimeoutSeconds, LocalDateTime secretExpirationDateTime) {
       this.callbackUrl = callbackUrl;
       this.contactEmail = contactEmail;

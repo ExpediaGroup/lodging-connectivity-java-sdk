@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AcknowledgementRecordInput;
@@ -36,37 +33,37 @@ public enum RegistrationDetailInput_InputAdapter implements Adapter<Registration
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       RegistrationDetailInput value) throws IOException {
-    if (value.acknowledgementRecords instanceof Optional.Present) {
+    if (value.acknowledgementRecords.isPresent()) {
       writer.name("acknowledgementRecords");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<AcknowledgementRecordInput>(AcknowledgementRecordInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.acknowledgementRecords);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<AcknowledgementRecordInput>(AcknowledgementRecordInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.acknowledgementRecords);
     }
-    if (value.applicableRegulations instanceof Optional.Present) {
+    if (value.applicableRegulations.isPresent()) {
       writer.name("applicableRegulations");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<ApplicableRegulationsInput>(ApplicableRegulationsInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.applicableRegulations);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<ApplicableRegulationsInput>(ApplicableRegulationsInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.applicableRegulations);
     }
-    if (value.attachmentUrls instanceof Optional.Present) {
+    if (value.attachmentUrls.isPresent()) {
       writer.name("attachmentUrls");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<AttachmentUrlInput>(AttachmentUrlInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.attachmentUrls);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<AttachmentUrlInput>(AttachmentUrlInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.attachmentUrls);
     }
-    if (value.displayRegistrationNumber instanceof Optional.Present) {
+    if (value.displayRegistrationNumber.isPresent()) {
       writer.name("displayRegistrationNumber");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.displayRegistrationNumber);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.displayRegistrationNumber);
     }
-    if (value.exemptionCategories instanceof Optional.Present) {
+    if (value.exemptionCategories.isPresent()) {
       writer.name("exemptionCategories");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(ExemptionCategory_ResponseAdapter.INSTANCE))).toJson(writer, customScalarAdapters, value.exemptionCategories);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(ExemptionCategory_ResponseAdapter.INSTANCE))).toJson(writer, customScalarAdapters, value.exemptionCategories);
     }
-    if (value.numberOfPhysicalRooms instanceof Optional.Present) {
+    if (value.numberOfPhysicalRooms.isPresent()) {
       writer.name("numberOfPhysicalRooms");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.numberOfPhysicalRooms);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.numberOfPhysicalRooms);
     }
     writer.name("registrationRecords");
     new ListAdapter<>(new ObjectAdapter<RegistrationRecordInput>(RegistrationRecordInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.registrationRecords);
     writer.name("regulatoryCategory");
     RegulatoryCategory_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.regulatoryCategory);
-    if (value.regulatorySubType instanceof Optional.Present) {
+    if (value.regulatorySubType.isPresent()) {
       writer.name("regulatorySubType");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.regulatorySubType);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.regulatorySubType);
     }
     writer.name("regulatoryType");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.regulatoryType);

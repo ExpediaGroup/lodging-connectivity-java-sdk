@@ -6,15 +6,14 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyMessageThreadsQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyMessageThreadsFiltersInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyMessageThreadsOrderByInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PropertyMessageThreadsFiltersInput_InputAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PropertyMessageThreadsOrderByInput_InputAdapter;
 import java.io.IOException;
@@ -28,17 +27,11 @@ public enum PropertyMessageThreadsQuery_VariablesAdapter {
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
     writer.name("filters");
     new ObjectAdapter<PropertyMessageThreadsFiltersInput>(PropertyMessageThreadsFiltersInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.filters);
-    if (value.orderBy instanceof Optional.Present) {
-      writer.name("orderBy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyMessageThreadsOrderByInput>(PropertyMessageThreadsOrderByInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.orderBy);
-    }
-    if (value.limit instanceof Optional.Present) {
-      writer.name("limit");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.limit);
-    }
-    if (value.cursor instanceof Optional.Present) {
-      writer.name("cursor");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.cursor);
-    }
+    writer.name("orderBy");
+    new OptionalAdapter<>(new ObjectAdapter<PropertyMessageThreadsOrderByInput>(PropertyMessageThreadsOrderByInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.orderBy);
+    writer.name("limit");
+    OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.limit);
+    writer.name("cursor");
+    OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
   }
 }

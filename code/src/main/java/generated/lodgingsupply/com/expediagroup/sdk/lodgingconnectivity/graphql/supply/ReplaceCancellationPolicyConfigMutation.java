@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class ReplaceCancellationPolicyConfigMutation implements Mutation<ReplaceCancellationPolicyConfigMutation.Data> {
   public static final String OPERATION_ID = "5acd5b6450a03fde0ecdce13f3d612b6d6586fab16eb5a3d7701fc0575f4e343";
@@ -147,7 +148,7 @@ public class ReplaceCancellationPolicyConfigMutation implements Mutation<Replace
   }
 
   public static class Data implements Mutation.Data {
-    public ReplaceCancellationPolicyConfig replaceCancellationPolicyConfig;
+    public Optional<ReplaceCancellationPolicyConfig> replaceCancellationPolicyConfig;
 
     private transient volatile int $hashCode;
 
@@ -155,7 +156,7 @@ public class ReplaceCancellationPolicyConfigMutation implements Mutation<Replace
 
     private transient volatile String $toString;
 
-    public Data(ReplaceCancellationPolicyConfig replaceCancellationPolicyConfig) {
+    public Data(Optional<ReplaceCancellationPolicyConfig> replaceCancellationPolicyConfig) {
       this.replaceCancellationPolicyConfig = replaceCancellationPolicyConfig;
     }
 
@@ -195,9 +196,9 @@ public class ReplaceCancellationPolicyConfigMutation implements Mutation<Replace
   }
 
   public static class ReplaceCancellationPolicyConfig {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
-    public CancellationPolicyConfig cancellationPolicyConfig;
+    public Optional<CancellationPolicyConfig> cancellationPolicyConfig;
 
     private transient volatile int $hashCode;
 
@@ -205,8 +206,8 @@ public class ReplaceCancellationPolicyConfigMutation implements Mutation<Replace
 
     private transient volatile String $toString;
 
-    public ReplaceCancellationPolicyConfig(String clientMutationId,
-        CancellationPolicyConfig cancellationPolicyConfig) {
+    public ReplaceCancellationPolicyConfig(Optional<String> clientMutationId,
+        Optional<CancellationPolicyConfig> cancellationPolicyConfig) {
       this.clientMutationId = clientMutationId;
       this.cancellationPolicyConfig = cancellationPolicyConfig;
     }
@@ -255,7 +256,7 @@ public class ReplaceCancellationPolicyConfigMutation implements Mutation<Replace
 
     public String name;
 
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -263,7 +264,7 @@ public class ReplaceCancellationPolicyConfigMutation implements Mutation<Replace
 
     private transient volatile String $toString;
 
-    public CancellationPolicyConfig(String id, String name, Property property) {
+    public CancellationPolicyConfig(String id, String name, Optional<Property> property) {
       this.id = id;
       this.name = name;
       this.property = property;

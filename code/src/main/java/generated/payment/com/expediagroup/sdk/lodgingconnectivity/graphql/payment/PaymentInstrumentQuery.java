@@ -23,6 +23,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data> {
   public static final String OPERATION_ID = "ed89679b729fab5bdc3ece4748c249a823ece9c2c8a3aa462df32735015ccd09";
@@ -178,7 +179,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * Retrieve Payment instrument from external payment instrument token
      */
-    public PaymentInstrument paymentInstrument;
+    public Optional<PaymentInstrument> paymentInstrument;
 
     private transient volatile int $hashCode;
 
@@ -186,7 +187,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
 
     private transient volatile String $toString;
 
-    public Data(PaymentInstrument paymentInstrument) {
+    public Data(Optional<PaymentInstrument> paymentInstrument) {
       this.paymentInstrument = paymentInstrument;
     }
 
@@ -231,7 +232,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * Synthetic field for inline fragment on BankIssuedCard
      */
-    public OnBankIssuedCard onBankIssuedCard;
+    public Optional<OnBankIssuedCard> onBankIssuedCard;
 
     private transient volatile int $hashCode;
 
@@ -239,7 +240,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
 
     private transient volatile String $toString;
 
-    public PaymentInstrument(String __typename, OnBankIssuedCard onBankIssuedCard) {
+    public PaymentInstrument(String __typename, Optional<OnBankIssuedCard> onBankIssuedCard) {
       this.__typename = __typename;
       this.onBankIssuedCard = onBankIssuedCard;
     }
@@ -287,7 +288,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * DateTime when the EVC card is active.
      */
-    public OffsetDateTime activationDate;
+    public Optional<OffsetDateTime> activationDate;
 
     /**
      * Customer information.
@@ -297,7 +298,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * Expedia virtual card activity.
      */
-    public ExpediaVirtualCardActivity expediaVirtualCardActivity;
+    public Optional<ExpediaVirtualCardActivity> expediaVirtualCardActivity;
 
     /**
      * Card expiration date.
@@ -322,7 +323,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * CVV/CSV code.
      */
-    public String verificationNumber;
+    public Optional<String> verificationNumber;
 
     private transient volatile int $hashCode;
 
@@ -330,9 +331,9 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
 
     private transient volatile String $toString;
 
-    public OnBankIssuedCard(OffsetDateTime activationDate, Customer customer,
-        ExpediaVirtualCardActivity expediaVirtualCardActivity, String expirationDate,
-        String issuerName, String number, PaymentType type, String verificationNumber) {
+    public OnBankIssuedCard(Optional<OffsetDateTime> activationDate, Customer customer,
+        Optional<ExpediaVirtualCardActivity> expediaVirtualCardActivity, String expirationDate,
+        String issuerName, String number, PaymentType type, Optional<String> verificationNumber) {
       this.activationDate = activationDate;
       this.customer = customer;
       this.expediaVirtualCardActivity = expediaVirtualCardActivity;
@@ -410,7 +411,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * Address of the customer.
      */
-    public Address address;
+    public Optional<Address> address;
 
     /**
      * Full name of the customer
@@ -423,7 +424,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
 
     private transient volatile String $toString;
 
-    public Customer(Address address, String fullName) {
+    public Customer(Optional<Address> address, String fullName) {
       this.address = address;
       this.fullName = fullName;
     }
@@ -476,12 +477,12 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * The name of the state, province, or region.
      */
-    public String administrativeArea;
+    public Optional<String> administrativeArea;
 
     /**
      * The short code for the administrative area.
      */
-    public String administrativeAreaCode;
+    public Optional<String> administrativeAreaCode;
 
     /**
      * The country code.
@@ -501,7 +502,7 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
     /**
      * The name of the neighborhood, borough, or district.
      */
-    public String subLocality;
+    public Optional<String> subLocality;
 
     private transient volatile int $hashCode;
 
@@ -509,9 +510,9 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
 
     private transient volatile String $toString;
 
-    public Address(List<String> addressLines, String administrativeArea,
-        String administrativeAreaCode, String countryCode, String locality, String postalCode,
-        String subLocality) {
+    public Address(List<String> addressLines, Optional<String> administrativeArea,
+        Optional<String> administrativeAreaCode, String countryCode, String locality,
+        String postalCode, Optional<String> subLocality) {
       this.addressLines = addressLines;
       this.administrativeArea = administrativeArea;
       this.administrativeAreaCode = administrativeAreaCode;
@@ -581,11 +582,11 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
   }
 
   public static class ExpediaVirtualCardActivity {
-    public AvailableBalance availableBalance;
+    public Optional<AvailableBalance> availableBalance;
 
-    public ExpediaVirtualCardChargeStatus chargeStatus;
+    public Optional<ExpediaVirtualCardChargeStatus> chargeStatus;
 
-    public ChargedAmount chargedAmount;
+    public Optional<ChargedAmount> chargedAmount;
 
     private transient volatile int $hashCode;
 
@@ -593,8 +594,9 @@ public class PaymentInstrumentQuery implements Query<PaymentInstrumentQuery.Data
 
     private transient volatile String $toString;
 
-    public ExpediaVirtualCardActivity(AvailableBalance availableBalance,
-        ExpediaVirtualCardChargeStatus chargeStatus, ChargedAmount chargedAmount) {
+    public ExpediaVirtualCardActivity(Optional<AvailableBalance> availableBalance,
+        Optional<ExpediaVirtualCardChargeStatus> chargeStatus,
+        Optional<ChargedAmount> chargedAmount) {
       this.availableBalance = availableBalance;
       this.chargeStatus = chargeStatus;
       this.chargedAmount = chargedAmount;

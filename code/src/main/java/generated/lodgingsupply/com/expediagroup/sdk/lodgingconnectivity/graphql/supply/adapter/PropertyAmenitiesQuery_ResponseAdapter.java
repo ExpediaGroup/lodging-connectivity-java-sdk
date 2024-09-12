@@ -10,13 +10,14 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyAmenitiesQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AmenityFieldFeeType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.AmenityFieldFeeType_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Object;
@@ -24,6 +25,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyAmenitiesQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyAmenitiesQuery.Data> {
@@ -34,12 +36,12 @@ public class PropertyAmenitiesQuery_ResponseAdapter {
     @Override
     public PropertyAmenitiesQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyAmenitiesQuery.Property _property = null;
+      Optional<PropertyAmenitiesQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -53,7 +55,7 @@ public class PropertyAmenitiesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyAmenitiesQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -65,12 +67,12 @@ public class PropertyAmenitiesQuery_ResponseAdapter {
     @Override
     public PropertyAmenitiesQuery.Property fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<PropertyAmenitiesQuery.Amenity> _amenities = null;
+      Optional<List<PropertyAmenitiesQuery.Amenity>> _amenities = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amenities = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Amenity>(Amenity.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 0: _amenities = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Amenity>(Amenity.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -84,7 +86,7 @@ public class PropertyAmenitiesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyAmenitiesQuery.Property value) throws IOException {
       writer.name("amenities");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Amenity>(Amenity.INSTANCE, false))).toJson(writer, customScalarAdapters, value.amenities);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.Amenity>(Amenity.INSTANCE, false))).toJson(writer, customScalarAdapters, value.amenities);
     }
   }
 
@@ -223,18 +225,18 @@ public class PropertyAmenitiesQuery_ResponseAdapter {
     @Override
     public PropertyAmenitiesQuery.Value1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyAmenitiesQuery.FeeValue _feeValue = null;
-      PropertyAmenitiesQuery.MeasurementValue _measurementValue = null;
-      List<PropertyAmenitiesQuery.TextValue> _textValue = null;
-      String _value = null;
+      Optional<PropertyAmenitiesQuery.FeeValue> _feeValue = null;
+      Optional<PropertyAmenitiesQuery.MeasurementValue> _measurementValue = null;
+      Optional<List<PropertyAmenitiesQuery.TextValue>> _textValue = null;
+      Optional<String> _value = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _feeValue = new NullableAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.FeeValue>(FeeValue.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _measurementValue = new NullableAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.MeasurementValue>(MeasurementValue.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _textValue = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.TextValue>(TextValue.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 3: _value = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _feeValue = new OptionalAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.FeeValue>(FeeValue.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _measurementValue = new OptionalAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.MeasurementValue>(MeasurementValue.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _textValue = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.TextValue>(TextValue.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 3: _value = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -251,16 +253,16 @@ public class PropertyAmenitiesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyAmenitiesQuery.Value1 value) throws IOException {
       writer.name("feeValue");
-      new NullableAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.FeeValue>(FeeValue.INSTANCE, false)).toJson(writer, customScalarAdapters, value.feeValue);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.FeeValue>(FeeValue.INSTANCE, false)).toJson(writer, customScalarAdapters, value.feeValue);
 
       writer.name("measurementValue");
-      new NullableAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.MeasurementValue>(MeasurementValue.INSTANCE, false)).toJson(writer, customScalarAdapters, value.measurementValue);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.MeasurementValue>(MeasurementValue.INSTANCE, false)).toJson(writer, customScalarAdapters, value.measurementValue);
 
       writer.name("textValue");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.TextValue>(TextValue.INSTANCE, false))).toJson(writer, customScalarAdapters, value.textValue);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyAmenitiesQuery.TextValue>(TextValue.INSTANCE, false))).toJson(writer, customScalarAdapters, value.textValue);
 
       writer.name("value");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.value);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.value);
     }
   }
 

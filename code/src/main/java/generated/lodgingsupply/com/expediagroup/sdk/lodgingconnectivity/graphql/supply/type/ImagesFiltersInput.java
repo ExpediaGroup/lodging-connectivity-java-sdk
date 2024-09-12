@@ -5,20 +5,21 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ImagesFiltersInput {
-  public final Optional<Boolean> active;
+  public final Optional<Optional<Boolean>> active;
 
-  public final Optional<Boolean> featured;
+  public final Optional<Optional<Boolean>> featured;
 
-  public final Optional<OneOfImageSourceFilterInput> sources;
+  public final Optional<Optional<OneOfImageSourceFilterInput>> sources;
 
-  public final Optional<OneOfMediaStatusFilterInput> statuses;
+  public final Optional<Optional<OneOfMediaStatusFilterInput>> statuses;
 
   private transient volatile int $hashCode;
 
@@ -26,9 +27,9 @@ public class ImagesFiltersInput {
 
   private transient volatile String $toString;
 
-  public ImagesFiltersInput(Optional<Boolean> active, Optional<Boolean> featured,
-      Optional<OneOfImageSourceFilterInput> sources,
-      Optional<OneOfMediaStatusFilterInput> statuses) {
+  public ImagesFiltersInput(Optional<Optional<Boolean>> active,
+      Optional<Optional<Boolean>> featured, Optional<Optional<OneOfImageSourceFilterInput>> sources,
+      Optional<Optional<OneOfMediaStatusFilterInput>> statuses) {
     this.active = active;
     this.featured = featured;
     this.sources = sources;
@@ -86,34 +87,34 @@ public class ImagesFiltersInput {
   }
 
   public static final class Builder {
-    private Optional<Boolean> active = Optional.absent();
+    private Optional<Optional<Boolean>> active = Optional.empty();
 
-    private Optional<Boolean> featured = Optional.absent();
+    private Optional<Optional<Boolean>> featured = Optional.empty();
 
-    private Optional<OneOfImageSourceFilterInput> sources = Optional.absent();
+    private Optional<Optional<OneOfImageSourceFilterInput>> sources = Optional.empty();
 
-    private Optional<OneOfMediaStatusFilterInput> statuses = Optional.absent();
+    private Optional<Optional<OneOfMediaStatusFilterInput>> statuses = Optional.empty();
 
     Builder() {
     }
 
-    public Builder active(Boolean active) {
-      this.active = Optional.present(active);
+    public Builder active(@NotNull Optional<Boolean> active) {
+      this.active = Optional.of(active);
       return this;
     }
 
-    public Builder featured(Boolean featured) {
-      this.featured = Optional.present(featured);
+    public Builder featured(@NotNull Optional<Boolean> featured) {
+      this.featured = Optional.of(featured);
       return this;
     }
 
-    public Builder sources(OneOfImageSourceFilterInput sources) {
-      this.sources = Optional.present(sources);
+    public Builder sources(@NotNull Optional<OneOfImageSourceFilterInput> sources) {
+      this.sources = Optional.of(sources);
       return this;
     }
 
-    public Builder statuses(OneOfMediaStatusFilterInput statuses) {
-      this.statuses = Optional.present(statuses);
+    public Builder statuses(@NotNull Optional<OneOfMediaStatusFilterInput> statuses) {
+      this.statuses = Optional.of(statuses);
       return this;
     }
 

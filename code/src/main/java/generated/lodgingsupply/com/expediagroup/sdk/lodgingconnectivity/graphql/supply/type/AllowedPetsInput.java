@@ -5,19 +5,20 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class AllowedPetsInput {
-  public final Optional<Integer> maxAllowed;
+  public final Optional<Optional<Integer>> maxAllowed;
 
-  public final Optional<WeightInput> maxWeight;
+  public final Optional<Optional<WeightInput>> maxWeight;
 
-  public final Optional<List<String>> types;
+  public final Optional<Optional<List<String>>> types;
 
   private transient volatile int $hashCode;
 
@@ -25,8 +26,8 @@ public class AllowedPetsInput {
 
   private transient volatile String $toString;
 
-  public AllowedPetsInput(Optional<Integer> maxAllowed, Optional<WeightInput> maxWeight,
-      Optional<List<String>> types) {
+  public AllowedPetsInput(Optional<Optional<Integer>> maxAllowed,
+      Optional<Optional<WeightInput>> maxWeight, Optional<Optional<List<String>>> types) {
     this.maxAllowed = maxAllowed;
     this.maxWeight = maxWeight;
     this.types = types;
@@ -79,27 +80,27 @@ public class AllowedPetsInput {
   }
 
   public static final class Builder {
-    private Optional<Integer> maxAllowed = Optional.absent();
+    private Optional<Optional<Integer>> maxAllowed = Optional.empty();
 
-    private Optional<WeightInput> maxWeight = Optional.absent();
+    private Optional<Optional<WeightInput>> maxWeight = Optional.empty();
 
-    private Optional<List<String>> types = Optional.absent();
+    private Optional<Optional<List<String>>> types = Optional.empty();
 
     Builder() {
     }
 
-    public Builder maxAllowed(Integer maxAllowed) {
-      this.maxAllowed = Optional.present(maxAllowed);
+    public Builder maxAllowed(@NotNull Optional<Integer> maxAllowed) {
+      this.maxAllowed = Optional.of(maxAllowed);
       return this;
     }
 
-    public Builder maxWeight(WeightInput maxWeight) {
-      this.maxWeight = Optional.present(maxWeight);
+    public Builder maxWeight(@NotNull Optional<WeightInput> maxWeight) {
+      this.maxWeight = Optional.of(maxWeight);
       return this;
     }
 
-    public Builder types(List<String> types) {
-      this.types = Optional.present(types);
+    public Builder types(@NotNull Optional<List<String>> types) {
+      this.types = Optional.of(types);
       return this;
     }
 

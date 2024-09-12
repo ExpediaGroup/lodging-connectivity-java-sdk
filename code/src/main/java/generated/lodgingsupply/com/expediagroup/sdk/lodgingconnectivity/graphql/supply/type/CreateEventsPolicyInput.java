@@ -5,19 +5,20 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateEventsPolicyInput {
   public final Boolean allowed;
 
-  public final Optional<AllowedEventsInput> allowedEvents;
+  public final Optional<Optional<AllowedEventsInput>> allowedEvents;
 
-  public final Optional<List<LocalizedStringInput>> note;
+  public final Optional<Optional<List<LocalizedStringInput>>> note;
 
   private transient volatile int $hashCode;
 
@@ -25,8 +26,9 @@ public class CreateEventsPolicyInput {
 
   private transient volatile String $toString;
 
-  public CreateEventsPolicyInput(Boolean allowed, Optional<AllowedEventsInput> allowedEvents,
-      Optional<List<LocalizedStringInput>> note) {
+  public CreateEventsPolicyInput(Boolean allowed,
+      Optional<Optional<AllowedEventsInput>> allowedEvents,
+      Optional<Optional<List<LocalizedStringInput>>> note) {
     this.allowed = allowed;
     this.allowedEvents = allowedEvents;
     this.note = note;
@@ -81,9 +83,9 @@ public class CreateEventsPolicyInput {
   public static final class Builder {
     private Boolean allowed;
 
-    private Optional<AllowedEventsInput> allowedEvents = Optional.absent();
+    private Optional<Optional<AllowedEventsInput>> allowedEvents = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> note = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> note = Optional.empty();
 
     Builder() {
     }
@@ -93,13 +95,13 @@ public class CreateEventsPolicyInput {
       return this;
     }
 
-    public Builder allowedEvents(AllowedEventsInput allowedEvents) {
-      this.allowedEvents = Optional.present(allowedEvents);
+    public Builder allowedEvents(@NotNull Optional<AllowedEventsInput> allowedEvents) {
+      this.allowedEvents = Optional.of(allowedEvents);
       return this;
     }
 
-    public Builder note(List<LocalizedStringInput> note) {
-      this.note = Optional.present(note);
+    public Builder note(@NotNull Optional<List<LocalizedStringInput>> note) {
+      this.note = Optional.of(note);
       return this;
     }
 

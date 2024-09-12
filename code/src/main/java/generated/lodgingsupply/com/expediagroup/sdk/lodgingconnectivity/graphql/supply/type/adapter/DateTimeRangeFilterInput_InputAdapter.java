@@ -6,11 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DateTimeRangeFilterInput;
@@ -31,12 +27,12 @@ public enum DateTimeRangeFilterInput_InputAdapter implements Adapter<DateTimeRan
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       DateTimeRangeFilterInput value) throws IOException {
     writer.name("from");
-    Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+    com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
     writer.name("to");
-    Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.to);
-    if (value.operator instanceof Optional.Present) {
+    com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.to);
+    if (value.operator.isPresent()) {
       writer.name("operator");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(RangeOperator_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.operator);
+      new OptionalAdapter<>(new OptionalAdapter<>(RangeOperator_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.operator);
     }
   }
 }

@@ -5,28 +5,29 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class DayOfWeekDiscountUpdateInput {
-  public final Optional<DiscountUnit> unit;
+  public final Optional<Optional<DiscountUnit>> unit;
 
-  public final Optional<Double> monday;
+  public final Optional<Optional<Double>> monday;
 
-  public final Optional<Double> tuesday;
+  public final Optional<Optional<Double>> tuesday;
 
-  public final Optional<Double> wednesday;
+  public final Optional<Optional<Double>> wednesday;
 
-  public final Optional<Double> thursday;
+  public final Optional<Optional<Double>> thursday;
 
-  public final Optional<Double> friday;
+  public final Optional<Optional<Double>> friday;
 
-  public final Optional<Double> saturday;
+  public final Optional<Optional<Double>> saturday;
 
-  public final Optional<Double> sunday;
+  public final Optional<Optional<Double>> sunday;
 
   private transient volatile int $hashCode;
 
@@ -34,9 +35,11 @@ public class DayOfWeekDiscountUpdateInput {
 
   private transient volatile String $toString;
 
-  public DayOfWeekDiscountUpdateInput(Optional<DiscountUnit> unit, Optional<Double> monday,
-      Optional<Double> tuesday, Optional<Double> wednesday, Optional<Double> thursday,
-      Optional<Double> friday, Optional<Double> saturday, Optional<Double> sunday) {
+  public DayOfWeekDiscountUpdateInput(Optional<Optional<DiscountUnit>> unit,
+      Optional<Optional<Double>> monday, Optional<Optional<Double>> tuesday,
+      Optional<Optional<Double>> wednesday, Optional<Optional<Double>> thursday,
+      Optional<Optional<Double>> friday, Optional<Optional<Double>> saturday,
+      Optional<Optional<Double>> sunday) {
     this.unit = unit;
     this.monday = monday;
     this.tuesday = tuesday;
@@ -114,21 +117,21 @@ public class DayOfWeekDiscountUpdateInput {
   }
 
   public static final class Builder {
-    private Optional<DiscountUnit> unit = Optional.absent();
+    private Optional<Optional<DiscountUnit>> unit = Optional.empty();
 
-    private Optional<Double> monday = Optional.absent();
+    private Optional<Optional<Double>> monday = Optional.empty();
 
-    private Optional<Double> tuesday = Optional.absent();
+    private Optional<Optional<Double>> tuesday = Optional.empty();
 
-    private Optional<Double> wednesday = Optional.absent();
+    private Optional<Optional<Double>> wednesday = Optional.empty();
 
-    private Optional<Double> thursday = Optional.absent();
+    private Optional<Optional<Double>> thursday = Optional.empty();
 
-    private Optional<Double> friday = Optional.absent();
+    private Optional<Optional<Double>> friday = Optional.empty();
 
-    private Optional<Double> saturday = Optional.absent();
+    private Optional<Optional<Double>> saturday = Optional.empty();
 
-    private Optional<Double> sunday = Optional.absent();
+    private Optional<Optional<Double>> sunday = Optional.empty();
 
     Builder() {
     }
@@ -136,43 +139,43 @@ public class DayOfWeekDiscountUpdateInput {
     /**
      * Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
      */
-    public Builder unit(DiscountUnit unit) {
-      this.unit = Optional.present(unit);
+    public Builder unit(@NotNull Optional<DiscountUnit> unit) {
+      this.unit = Optional.of(unit);
       return this;
     }
 
-    public Builder monday(Double monday) {
-      this.monday = Optional.present(monday);
+    public Builder monday(@NotNull Optional<Double> monday) {
+      this.monday = Optional.of(monday);
       return this;
     }
 
-    public Builder tuesday(Double tuesday) {
-      this.tuesday = Optional.present(tuesday);
+    public Builder tuesday(@NotNull Optional<Double> tuesday) {
+      this.tuesday = Optional.of(tuesday);
       return this;
     }
 
-    public Builder wednesday(Double wednesday) {
-      this.wednesday = Optional.present(wednesday);
+    public Builder wednesday(@NotNull Optional<Double> wednesday) {
+      this.wednesday = Optional.of(wednesday);
       return this;
     }
 
-    public Builder thursday(Double thursday) {
-      this.thursday = Optional.present(thursday);
+    public Builder thursday(@NotNull Optional<Double> thursday) {
+      this.thursday = Optional.of(thursday);
       return this;
     }
 
-    public Builder friday(Double friday) {
-      this.friday = Optional.present(friday);
+    public Builder friday(@NotNull Optional<Double> friday) {
+      this.friday = Optional.of(friday);
       return this;
     }
 
-    public Builder saturday(Double saturday) {
-      this.saturday = Optional.present(saturday);
+    public Builder saturday(@NotNull Optional<Double> saturday) {
+      this.saturday = Optional.of(saturday);
       return this;
     }
 
-    public Builder sunday(Double sunday) {
-      this.sunday = Optional.present(sunday);
+    public Builder sunday(@NotNull Optional<Double> sunday) {
+      this.sunday = Optional.of(sunday);
       return this;
     }
 

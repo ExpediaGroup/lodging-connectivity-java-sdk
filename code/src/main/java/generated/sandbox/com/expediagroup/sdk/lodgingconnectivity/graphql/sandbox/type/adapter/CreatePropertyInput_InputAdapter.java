@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput;
@@ -29,13 +26,13 @@ public enum CreatePropertyInput_InputAdapter implements Adapter<CreatePropertyIn
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       CreatePropertyInput value) throws IOException {
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
-    if (value.name instanceof Optional.Present) {
+    if (value.name.isPresent()) {
       writer.name("name");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.name);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.name);
     }
   }
 }

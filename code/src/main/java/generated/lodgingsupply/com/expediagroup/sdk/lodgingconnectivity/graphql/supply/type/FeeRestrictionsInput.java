@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class FeeRestrictionsInput {
-  public final Optional<FeeDateRangeInput> dateRange;
+  public final Optional<Optional<FeeDateRangeInput>> dateRange;
 
-  public final Optional<IntRangeInput> extraGuestRange;
+  public final Optional<Optional<IntRangeInput>> extraGuestRange;
 
-  public final Optional<IntRangeInput> rangeOfNight;
+  public final Optional<Optional<IntRangeInput>> rangeOfNight;
 
   private transient volatile int $hashCode;
 
@@ -23,8 +24,9 @@ public class FeeRestrictionsInput {
 
   private transient volatile String $toString;
 
-  public FeeRestrictionsInput(Optional<FeeDateRangeInput> dateRange,
-      Optional<IntRangeInput> extraGuestRange, Optional<IntRangeInput> rangeOfNight) {
+  public FeeRestrictionsInput(Optional<Optional<FeeDateRangeInput>> dateRange,
+      Optional<Optional<IntRangeInput>> extraGuestRange,
+      Optional<Optional<IntRangeInput>> rangeOfNight) {
     this.dateRange = dateRange;
     this.extraGuestRange = extraGuestRange;
     this.rangeOfNight = rangeOfNight;
@@ -77,27 +79,27 @@ public class FeeRestrictionsInput {
   }
 
   public static final class Builder {
-    private Optional<FeeDateRangeInput> dateRange = Optional.absent();
+    private Optional<Optional<FeeDateRangeInput>> dateRange = Optional.empty();
 
-    private Optional<IntRangeInput> extraGuestRange = Optional.absent();
+    private Optional<Optional<IntRangeInput>> extraGuestRange = Optional.empty();
 
-    private Optional<IntRangeInput> rangeOfNight = Optional.absent();
+    private Optional<Optional<IntRangeInput>> rangeOfNight = Optional.empty();
 
     Builder() {
     }
 
-    public Builder dateRange(FeeDateRangeInput dateRange) {
-      this.dateRange = Optional.present(dateRange);
+    public Builder dateRange(@NotNull Optional<FeeDateRangeInput> dateRange) {
+      this.dateRange = Optional.of(dateRange);
       return this;
     }
 
-    public Builder extraGuestRange(IntRangeInput extraGuestRange) {
-      this.extraGuestRange = Optional.present(extraGuestRange);
+    public Builder extraGuestRange(@NotNull Optional<IntRangeInput> extraGuestRange) {
+      this.extraGuestRange = Optional.of(extraGuestRange);
       return this;
     }
 
-    public Builder rangeOfNight(IntRangeInput rangeOfNight) {
-      this.rangeOfNight = Optional.present(rangeOfNight);
+    public Builder rangeOfNight(@NotNull Optional<IntRangeInput> rangeOfNight) {
+      this.rangeOfNight = Optional.of(rangeOfNight);
       return this;
     }
 

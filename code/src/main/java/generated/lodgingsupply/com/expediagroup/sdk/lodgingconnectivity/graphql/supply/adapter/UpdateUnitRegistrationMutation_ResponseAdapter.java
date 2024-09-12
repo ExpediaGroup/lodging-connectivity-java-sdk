@@ -10,19 +10,21 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.UpdateUnitRegistrationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ApplicableRegulationsKey;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ApplicableRegulationsKey_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateUnitRegistrationMutation_ResponseAdapter {
   public enum Data implements Adapter<UpdateUnitRegistrationMutation.Data> {
@@ -66,18 +68,18 @@ public class UpdateUnitRegistrationMutation_ResponseAdapter {
     @Override
     public UpdateUnitRegistrationMutation.UpdateUnitRegistration fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _district = null;
+      Optional<String> _district = null;
       Boolean _complete = null;
       List<UpdateUnitRegistrationMutation.Detail> _details = null;
-      List<UpdateUnitRegistrationMutation.ApplicableRegulation> _applicableRegulations = null;
+      Optional<List<UpdateUnitRegistrationMutation.ApplicableRegulation>> _applicableRegulations = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _district = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _district = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _complete = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _details = new ListAdapter<>(new ObjectAdapter<UpdateUnitRegistrationMutation.Detail>(Detail.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 3: _applicableRegulations = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateUnitRegistrationMutation.ApplicableRegulation>(ApplicableRegulation.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 3: _applicableRegulations = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateUnitRegistrationMutation.ApplicableRegulation>(ApplicableRegulation.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -97,7 +99,7 @@ public class UpdateUnitRegistrationMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdateUnitRegistrationMutation.UpdateUnitRegistration value) throws IOException {
       writer.name("district");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.district);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.district);
 
       writer.name("complete");
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.complete);
@@ -106,7 +108,7 @@ public class UpdateUnitRegistrationMutation_ResponseAdapter {
       new ListAdapter<>(new ObjectAdapter<UpdateUnitRegistrationMutation.Detail>(Detail.INSTANCE, false)).toJson(writer, customScalarAdapters, value.details);
 
       writer.name("applicableRegulations");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateUnitRegistrationMutation.ApplicableRegulation>(ApplicableRegulation.INSTANCE, false))).toJson(writer, customScalarAdapters, value.applicableRegulations);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateUnitRegistrationMutation.ApplicableRegulation>(ApplicableRegulation.INSTANCE, false))).toJson(writer, customScalarAdapters, value.applicableRegulations);
     }
   }
 
@@ -151,14 +153,14 @@ public class UpdateUnitRegistrationMutation_ResponseAdapter {
     @Override
     public UpdateUnitRegistrationMutation.ApplicableRegulation fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      ApplicableRegulationsKey _key = null;
-      String _value = null;
+      Optional<ApplicableRegulationsKey> _key = null;
+      Optional<String> _value = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _key = new NullableAdapter<>(ApplicableRegulationsKey_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 1: _value = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _key = new OptionalAdapter<>(ApplicableRegulationsKey_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 1: _value = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -173,10 +175,10 @@ public class UpdateUnitRegistrationMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdateUnitRegistrationMutation.ApplicableRegulation value) throws IOException {
       writer.name("key");
-      new NullableAdapter<>(ApplicableRegulationsKey_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.key);
+      new OptionalAdapter<>(ApplicableRegulationsKey_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.key);
 
       writer.name("value");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.value);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.value);
     }
   }
 }

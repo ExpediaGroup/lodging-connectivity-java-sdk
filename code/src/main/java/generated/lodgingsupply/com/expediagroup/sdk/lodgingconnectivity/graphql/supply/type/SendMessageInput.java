@@ -5,20 +5,21 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class SendMessageInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String messageThreadId;
 
-  public final Optional<String> body;
+  public final Optional<Optional<String>> body;
 
-  public final Optional<List<String>> attachmentIds;
+  public final Optional<Optional<List<String>>> attachmentIds;
 
   private transient volatile int $hashCode;
 
@@ -26,8 +27,8 @@ public class SendMessageInput {
 
   private transient volatile String $toString;
 
-  public SendMessageInput(Optional<String> clientMutationId, String messageThreadId,
-      Optional<String> body, Optional<List<String>> attachmentIds) {
+  public SendMessageInput(Optional<Optional<String>> clientMutationId, String messageThreadId,
+      Optional<Optional<String>> body, Optional<Optional<List<String>>> attachmentIds) {
     this.clientMutationId = clientMutationId;
     this.messageThreadId = messageThreadId;
     this.body = body;
@@ -85,13 +86,13 @@ public class SendMessageInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String messageThreadId;
 
-    private Optional<String> body = Optional.absent();
+    private Optional<Optional<String>> body = Optional.empty();
 
-    private Optional<List<String>> attachmentIds = Optional.absent();
+    private Optional<Optional<List<String>>> attachmentIds = Optional.empty();
 
     Builder() {
     }
@@ -99,8 +100,8 @@ public class SendMessageInput {
     /**
      *  UUID that uniquely identifies client's request 
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -109,13 +110,13 @@ public class SendMessageInput {
       return this;
     }
 
-    public Builder body(String body) {
-      this.body = Optional.present(body);
+    public Builder body(@NotNull Optional<String> body) {
+      this.body = Optional.of(body);
       return this;
     }
 
-    public Builder attachmentIds(List<String> attachmentIds) {
-      this.attachmentIds = Optional.present(attachmentIds);
+    public Builder attachmentIds(@NotNull Optional<List<String>> attachmentIds) {
+      this.attachmentIds = Optional.of(attachmentIds);
       return this;
     }
 

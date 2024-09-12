@@ -6,12 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.GuestInput;
@@ -32,13 +28,13 @@ public enum GuestInput_InputAdapter implements Adapter<GuestInput> {
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters, GuestInput value)
       throws IOException {
-    if (value.loyaltyTier instanceof Optional.Present) {
+    if (value.loyaltyTier.isPresent()) {
       writer.name("loyaltyTier");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.loyaltyTier);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.loyaltyTier);
     }
-    if (value.supplierLoyaltyPlanInfo instanceof Optional.Present) {
+    if (value.supplierLoyaltyPlanInfo.isPresent()) {
       writer.name("supplierLoyaltyPlanInfo");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<SupplierLoyaltyPlanInfoInput>(SupplierLoyaltyPlanInfoInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.supplierLoyaltyPlanInfo);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<SupplierLoyaltyPlanInfoInput>(SupplierLoyaltyPlanInfoInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.supplierLoyaltyPlanInfo);
     }
   }
 }

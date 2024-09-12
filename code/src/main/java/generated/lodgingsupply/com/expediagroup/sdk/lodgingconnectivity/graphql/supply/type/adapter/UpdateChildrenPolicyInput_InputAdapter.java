@@ -6,13 +6,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AgeRangeInput;
@@ -34,21 +30,21 @@ public enum UpdateChildrenPolicyInput_InputAdapter implements Adapter<UpdateChil
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateChildrenPolicyInput value) throws IOException {
-    if (value.allowed instanceof Optional.Present) {
+    if (value.allowed.isPresent()) {
       writer.name("allowed");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.allowed);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.allowed);
     }
-    if (value.allowedAges instanceof Optional.Present) {
+    if (value.allowedAges.isPresent()) {
       writer.name("allowedAges");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<AgeRangeInput>(AgeRangeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.allowedAges);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<AgeRangeInput>(AgeRangeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.allowedAges);
     }
-    if (value.childrenAllowedNote instanceof Optional.Present) {
+    if (value.childrenAllowedNote.isPresent()) {
       writer.name("childrenAllowedNote");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.childrenAllowedNote);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.childrenAllowedNote);
     }
-    if (value.childrenNotAllowedNote instanceof Optional.Present) {
+    if (value.childrenNotAllowedNote.isPresent()) {
       writer.name("childrenNotAllowedNote");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.childrenNotAllowedNote);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.childrenNotAllowedNote);
     }
   }
 }

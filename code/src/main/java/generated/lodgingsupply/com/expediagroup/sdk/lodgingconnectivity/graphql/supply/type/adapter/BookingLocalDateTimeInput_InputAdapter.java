@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.BookingLocalDateTimeInput;
@@ -29,13 +26,13 @@ public enum BookingLocalDateTimeInput_InputAdapter implements Adapter<BookingLoc
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       BookingLocalDateTimeInput value) throws IOException {
-    if (value.from instanceof Optional.Present) {
+    if (value.from.isPresent()) {
       writer.name("from");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.from);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.from);
     }
-    if (value.to instanceof Optional.Present) {
+    if (value.to.isPresent()) {
       writer.name("to");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.to);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.to);
     }
   }
 }

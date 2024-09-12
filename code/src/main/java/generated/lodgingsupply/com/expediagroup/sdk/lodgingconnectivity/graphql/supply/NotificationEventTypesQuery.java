@@ -18,6 +18,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class NotificationEventTypesQuery implements Query<NotificationEventTypesQuery.Data> {
   public static final String OPERATION_ID = "b70cbe8a88c8e186f06fea1086437b5d6cd42f6a3f7d9bed81011cba43db0585";
@@ -130,7 +131,7 @@ public class NotificationEventTypesQuery implements Query<NotificationEventTypes
     /**
      * Retrieves available event types to subscribe to
      */
-    public List<NotificationEventType> notificationEventTypes;
+    public Optional<List<NotificationEventType>> notificationEventTypes;
 
     private transient volatile int $hashCode;
 
@@ -138,7 +139,7 @@ public class NotificationEventTypesQuery implements Query<NotificationEventTypes
 
     private transient volatile String $toString;
 
-    public Data(List<NotificationEventType> notificationEventTypes) {
+    public Data(Optional<List<NotificationEventType>> notificationEventTypes) {
       this.notificationEventTypes = notificationEventTypes;
     }
 

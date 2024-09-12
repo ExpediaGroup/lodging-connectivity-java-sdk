@@ -10,17 +10,19 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.RateGuestMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class RateGuestMutation_ResponseAdapter {
   public enum Data implements Adapter<RateGuestMutation.Data> {
@@ -31,12 +33,12 @@ public class RateGuestMutation_ResponseAdapter {
     @Override
     public RateGuestMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      RateGuestMutation.RateGuest _rateGuest = null;
+      Optional<RateGuestMutation.RateGuest> _rateGuest = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _rateGuest = new NullableAdapter<>(new ObjectAdapter<RateGuestMutation.RateGuest>(RateGuest.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _rateGuest = new OptionalAdapter<>(new ObjectAdapter<RateGuestMutation.RateGuest>(RateGuest.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -50,7 +52,7 @@ public class RateGuestMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RateGuestMutation.Data value) throws IOException {
       writer.name("rateGuest");
-      new NullableAdapter<>(new ObjectAdapter<RateGuestMutation.RateGuest>(RateGuest.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rateGuest);
+      new OptionalAdapter<>(new ObjectAdapter<RateGuestMutation.RateGuest>(RateGuest.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rateGuest);
     }
   }
 
@@ -62,14 +64,14 @@ public class RateGuestMutation_ResponseAdapter {
     @Override
     public RateGuestMutation.RateGuest fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Boolean _recommendGuest = null;
-      List<RateGuestMutation.StarRating> _starRatings = null;
+      Optional<Boolean> _recommendGuest = null;
+      List<Optional<RateGuestMutation.StarRating>> _starRatings = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _recommendGuest = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _starRatings = new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<RateGuestMutation.StarRating>(StarRating.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 0: _recommendGuest = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _starRatings = new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<RateGuestMutation.StarRating>(StarRating.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -86,10 +88,10 @@ public class RateGuestMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RateGuestMutation.RateGuest value) throws IOException {
       writer.name("recommendGuest");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.recommendGuest);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.recommendGuest);
 
       writer.name("starRatings");
-      new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<RateGuestMutation.StarRating>(StarRating.INSTANCE, false))).toJson(writer, customScalarAdapters, value.starRatings);
+      new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<RateGuestMutation.StarRating>(StarRating.INSTANCE, false))).toJson(writer, customScalarAdapters, value.starRatings);
     }
   }
 

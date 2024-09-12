@@ -14,7 +14,6 @@ import com.apollographql.apollo.api.BooleanExpression;
 import com.apollographql.apollo.api.BooleanExpressions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -23,6 +22,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.BusinessMode
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancellationPenaltyRuleType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancellationWindowTemporalUnit;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CurrencyCode;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Decimal;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DistributionChannel;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.EmailAddress;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.IdSource;
@@ -47,6 +47,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.IdSo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.InstallmentPaymentStatus_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.InventoryType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.MerchantOfRecord_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PaymentInstrumentType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RateTimeUnit_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RateType_ResponseAdapter;
@@ -61,12 +63,13 @@ import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyReservationsQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyReservationsQuery.Data> {
@@ -77,12 +80,12 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyReservationsQuery.Property _property = null;
+      Optional<PropertyReservationsQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -96,7 +99,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -141,16 +144,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Reservations fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Integer _totalCount = null;
-      PropertyReservationsQuery.PageInfo _pageInfo = null;
-      List<PropertyReservationsQuery.Edge> _edges = null;
+      Optional<Integer> _totalCount = null;
+      Optional<PropertyReservationsQuery.PageInfo> _pageInfo = null;
+      List<Optional<PropertyReservationsQuery.Edge>> _edges = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _totalCount = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _pageInfo = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PageInfo>(PageInfo.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _edges = new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Edge>(Edge.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 0: _totalCount = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _pageInfo = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PageInfo>(PageInfo.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _edges = new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Edge>(Edge.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -168,13 +171,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Reservations value) throws IOException {
       writer.name("totalCount");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.totalCount);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.totalCount);
 
       writer.name("pageInfo");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PageInfo>(PageInfo.INSTANCE, false)).toJson(writer, customScalarAdapters, value.pageInfo);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PageInfo>(PageInfo.INSTANCE, false)).toJson(writer, customScalarAdapters, value.pageInfo);
 
       writer.name("edges");
-      new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Edge>(Edge.INSTANCE, false))).toJson(writer, customScalarAdapters, value.edges);
+      new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Edge>(Edge.INSTANCE, false))).toJson(writer, customScalarAdapters, value.edges);
     }
   }
 
@@ -186,13 +189,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.PageInfo fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _endCursor = null;
+      Optional<String> _endCursor = null;
       Boolean _hasNextPage = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _endCursor = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _endCursor = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _hasNextPage = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -210,7 +213,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.PageInfo value) throws IOException {
       writer.name("endCursor");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.endCursor);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.endCursor);
 
       writer.name("hasNextPage");
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.hasNextPage);
@@ -267,102 +270,102 @@ public class PropertyReservationsQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       PropertyReservationsQuery.AlternativeIds _alternativeIds = null;
-      List<String> _accessibilityText = null;
+      Optional<List<String>> _accessibilityText = null;
       Integer _adultCount = null;
-      PropertyReservationsQuery.Amounts _amounts = null;
+      Optional<PropertyReservationsQuery.Amounts> _amounts = null;
       PropertyReservationsQuery.Audit _audit = null;
-      String _bedTypes = null;
+      Optional<String> _bedTypes = null;
       BusinessModel _businessModel = null;
-      PropertyReservationsQuery.Cancellation _cancellation = null;
-      PropertyReservationsQuery.CancellationPolicy _cancellationPolicy = null;
+      Optional<PropertyReservationsQuery.Cancellation> _cancellation = null;
+      Optional<PropertyReservationsQuery.CancellationPolicy> _cancellationPolicy = null;
       LocalDate _checkInDate = null;
       LocalDate _checkOutDate = null;
-      List<Integer> _childAges = null;
+      Optional<List<Optional<Integer>>> _childAges = null;
       Integer _childCount = null;
       String _creationDateTime = null;
       PropertyReservationsQuery.Distribution _distribution = null;
       PropertyReservationsQuery.Guests _guests = null;
-      InventoryType _inventoryType = null;
-      Boolean _isReconciled = null;
+      Optional<InventoryType> _inventoryType = null;
+      Optional<Boolean> _isReconciled = null;
       String _lastUpdatedDateTime = null;
       MerchantOfRecord _merchantOfRecord = null;
-      String _messageThreadId = null;
-      String _multiRoomText = null;
+      Optional<String> _messageThreadId = null;
+      Optional<String> _multiRoomText = null;
       PropertyReservationsQuery.Payment _payment = null;
       String _paymentInstructions = null;
-      Integer _petCount = null;
+      Optional<Integer> _petCount = null;
       PropertyReservationsQuery.Policies _policies = null;
       PropertyReservationsQuery.PrimaryGuest1 _primaryGuest = null;
       List<PropertyReservationsQuery.RateId> _rateIds = null;
-      PropertyReservationsQuery.ReconciliationEligibility _reconciliationEligibility = null;
-      String _reconciliationType = null;
-      RemittanceType _remittanceType = null;
+      Optional<PropertyReservationsQuery.ReconciliationEligibility> _reconciliationEligibility = null;
+      Optional<String> _reconciliationType = null;
+      Optional<RemittanceType> _remittanceType = null;
       List<PropertyReservationsQuery.ReservationId> _reservationIds = null;
       String _smokingType = null;
       String _source = null;
-      String _specialRequest = null;
+      Optional<String> _specialRequest = null;
       ReservationStatus _status = null;
       PropertyReservationsQuery.Statuses _statuses = null;
       PropertyReservationsQuery.StayDates _stayDates = null;
-      String _subStatus = null;
-      PropertyReservationsQuery.SupplierAmount _supplierAmount = null;
-      SupplierOperatingModel _supplierOperatingModel = null;
-      Integer _tidsCode = null;
+      Optional<String> _subStatus = null;
+      Optional<PropertyReservationsQuery.SupplierAmount> _supplierAmount = null;
+      Optional<SupplierOperatingModel> _supplierOperatingModel = null;
+      Optional<Integer> _tidsCode = null;
       Integer _totalGuestCount = null;
       List<PropertyReservationsQuery.UnitId> _unitIds = null;
       List<PropertyReservationsQuery.ValueAddedPromotion> _valueAddedPromotions = null;
-      PropertyReservationsQuery.VrboAmounts _vrboAmounts = null;
+      Optional<PropertyReservationsQuery.VrboAmounts> _vrboAmounts = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _alternativeIds = new ObjectAdapter<PropertyReservationsQuery.AlternativeIds>(AlternativeIds.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 2: _accessibilityText = new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 2: _accessibilityText = new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
           case 3: _adultCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _amounts = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Amounts>(Amounts.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 4: _amounts = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Amounts>(Amounts.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 5: _audit = new ObjectAdapter<PropertyReservationsQuery.Audit>(Audit.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 6: _bedTypes = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 6: _bedTypes = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 7: _businessModel = BusinessModel_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 8: _cancellation = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Cancellation>(Cancellation.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 9: _cancellationPolicy = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CancellationPolicy>(CancellationPolicy.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 8: _cancellation = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Cancellation>(Cancellation.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 9: _cancellationPolicy = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CancellationPolicy>(CancellationPolicy.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 10: _checkInDate = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 11: _checkOutDate = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 12: _childAges = new NullableAdapter<>(new ListAdapter<>(Adapters.NullableIntAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 12: _childAges = new OptionalAdapter<>(new ListAdapter<>(OptionalAdapters.OptionalIntAdapter)).fromJson(reader, customScalarAdapters); break;
           case 13: _childCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 14: _creationDateTime = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 15: _distribution = new ObjectAdapter<PropertyReservationsQuery.Distribution>(Distribution.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 16: _guests = new ObjectAdapter<PropertyReservationsQuery.Guests>(Guests.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 17: _inventoryType = new NullableAdapter<>(InventoryType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 18: _isReconciled = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 17: _inventoryType = new OptionalAdapter<>(InventoryType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 18: _isReconciled = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 19: _lastUpdatedDateTime = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 20: _merchantOfRecord = MerchantOfRecord_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 21: _messageThreadId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 22: _multiRoomText = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 21: _messageThreadId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 22: _multiRoomText = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 23: _payment = new ObjectAdapter<PropertyReservationsQuery.Payment>(Payment.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 24: _paymentInstructions = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 25: _petCount = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 25: _petCount = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
           case 26: _policies = new ObjectAdapter<PropertyReservationsQuery.Policies>(Policies.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 27: _primaryGuest = new ObjectAdapter<PropertyReservationsQuery.PrimaryGuest1>(PrimaryGuest1.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 28: _rateIds = new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.RateId>(RateId.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 29: _reconciliationEligibility = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ReconciliationEligibility>(ReconciliationEligibility.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 30: _reconciliationType = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 31: _remittanceType = new NullableAdapter<>(RemittanceType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 29: _reconciliationEligibility = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ReconciliationEligibility>(ReconciliationEligibility.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 30: _reconciliationType = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 31: _remittanceType = new OptionalAdapter<>(RemittanceType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 32: _reservationIds = new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ReservationId>(ReservationId.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 33: _smokingType = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 34: _source = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 35: _specialRequest = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 35: _specialRequest = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 36: _status = ReservationStatus_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 37: _statuses = new ObjectAdapter<PropertyReservationsQuery.Statuses>(Statuses.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 38: _stayDates = new ObjectAdapter<PropertyReservationsQuery.StayDates>(StayDates.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 39: _subStatus = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 40: _supplierAmount = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierAmount>(SupplierAmount.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
-          case 41: _supplierOperatingModel = new NullableAdapter<>(SupplierOperatingModel_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 42: _tidsCode = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 39: _subStatus = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 40: _supplierAmount = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierAmount>(SupplierAmount.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
+          case 41: _supplierOperatingModel = new OptionalAdapter<>(SupplierOperatingModel_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 42: _tidsCode = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
           case 43: _totalGuestCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 44: _unitIds = new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.UnitId>(UnitId.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 45: _valueAddedPromotions = new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ValueAddedPromotion>(ValueAddedPromotion.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 46: _vrboAmounts = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.VrboAmounts>(VrboAmounts.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 46: _vrboAmounts = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.VrboAmounts>(VrboAmounts.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -456,28 +459,28 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ObjectAdapter<PropertyReservationsQuery.AlternativeIds>(AlternativeIds.INSTANCE, false).toJson(writer, customScalarAdapters, value.alternativeIds);
 
       writer.name("accessibilityText");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.accessibilityText);
+      new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.accessibilityText);
 
       writer.name("adultCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.adultCount);
 
       writer.name("amounts");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Amounts>(Amounts.INSTANCE, false)).toJson(writer, customScalarAdapters, value.amounts);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Amounts>(Amounts.INSTANCE, false)).toJson(writer, customScalarAdapters, value.amounts);
 
       writer.name("audit");
       new ObjectAdapter<PropertyReservationsQuery.Audit>(Audit.INSTANCE, false).toJson(writer, customScalarAdapters, value.audit);
 
       writer.name("bedTypes");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.bedTypes);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.bedTypes);
 
       writer.name("businessModel");
       BusinessModel_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.businessModel);
 
       writer.name("cancellation");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Cancellation>(Cancellation.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellation);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Cancellation>(Cancellation.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellation);
 
       writer.name("cancellationPolicy");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CancellationPolicy>(CancellationPolicy.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicy);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CancellationPolicy>(CancellationPolicy.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicy);
 
       writer.name("checkInDate");
       com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.checkInDate);
@@ -486,7 +489,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.checkOutDate);
 
       writer.name("childAges");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.NullableIntAdapter)).toJson(writer, customScalarAdapters, value.childAges);
+      new OptionalAdapter<>(new ListAdapter<>(OptionalAdapters.OptionalIntAdapter)).toJson(writer, customScalarAdapters, value.childAges);
 
       writer.name("childCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.childCount);
@@ -501,10 +504,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ObjectAdapter<PropertyReservationsQuery.Guests>(Guests.INSTANCE, false).toJson(writer, customScalarAdapters, value.guests);
 
       writer.name("inventoryType");
-      new NullableAdapter<>(InventoryType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.inventoryType);
+      new OptionalAdapter<>(InventoryType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.inventoryType);
 
       writer.name("isReconciled");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isReconciled);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isReconciled);
 
       writer.name("lastUpdatedDateTime");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.lastUpdatedDateTime);
@@ -513,10 +516,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       MerchantOfRecord_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.merchantOfRecord);
 
       writer.name("messageThreadId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.messageThreadId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.messageThreadId);
 
       writer.name("multiRoomText");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.multiRoomText);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.multiRoomText);
 
       writer.name("payment");
       new ObjectAdapter<PropertyReservationsQuery.Payment>(Payment.INSTANCE, false).toJson(writer, customScalarAdapters, value.payment);
@@ -525,7 +528,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.paymentInstructions);
 
       writer.name("petCount");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.petCount);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.petCount);
 
       writer.name("policies");
       new ObjectAdapter<PropertyReservationsQuery.Policies>(Policies.INSTANCE, false).toJson(writer, customScalarAdapters, value.policies);
@@ -537,13 +540,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.RateId>(RateId.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rateIds);
 
       writer.name("reconciliationEligibility");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ReconciliationEligibility>(ReconciliationEligibility.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reconciliationEligibility);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ReconciliationEligibility>(ReconciliationEligibility.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reconciliationEligibility);
 
       writer.name("reconciliationType");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.reconciliationType);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.reconciliationType);
 
       writer.name("remittanceType");
-      new NullableAdapter<>(RemittanceType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.remittanceType);
+      new OptionalAdapter<>(RemittanceType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.remittanceType);
 
       writer.name("reservationIds");
       new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ReservationId>(ReservationId.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationIds);
@@ -555,7 +558,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.source);
 
       writer.name("specialRequest");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.specialRequest);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.specialRequest);
 
       writer.name("status");
       ReservationStatus_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.status);
@@ -567,16 +570,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ObjectAdapter<PropertyReservationsQuery.StayDates>(StayDates.INSTANCE, false).toJson(writer, customScalarAdapters, value.stayDates);
 
       writer.name("subStatus");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.subStatus);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.subStatus);
 
       writer.name("supplierAmount");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierAmount>(SupplierAmount.INSTANCE, true)).toJson(writer, customScalarAdapters, value.supplierAmount);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierAmount>(SupplierAmount.INSTANCE, true)).toJson(writer, customScalarAdapters, value.supplierAmount);
 
       writer.name("supplierOperatingModel");
-      new NullableAdapter<>(SupplierOperatingModel_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.supplierOperatingModel);
+      new OptionalAdapter<>(SupplierOperatingModel_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.supplierOperatingModel);
 
       writer.name("tidsCode");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.tidsCode);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.tidsCode);
 
       writer.name("totalGuestCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalGuestCount);
@@ -588,7 +591,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.ValueAddedPromotion>(ValueAddedPromotion.INSTANCE, false)).toJson(writer, customScalarAdapters, value.valueAddedPromotions);
 
       writer.name("vrboAmounts");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.VrboAmounts>(VrboAmounts.INSTANCE, false)).toJson(writer, customScalarAdapters, value.vrboAmounts);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.VrboAmounts>(VrboAmounts.INSTANCE, false)).toJson(writer, customScalarAdapters, value.vrboAmounts);
     }
   }
 
@@ -721,16 +724,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public PropertyReservationsQuery.CancellationAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       PropertyReservationsQuery.Amount _amount = null;
-      String _description = null;
-      Double _percent = null;
+      Optional<String> _description = null;
+      Optional<Double> _percent = null;
       String _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _amount = new ObjectAdapter<PropertyReservationsQuery.Amount>(Amount.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 1: _description = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _percent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _description = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _percent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -754,10 +757,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ObjectAdapter<PropertyReservationsQuery.Amount>(Amount.INSTANCE, false).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("description");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.description);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("percent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -772,13 +775,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Amount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -797,7 +800,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Amount value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -814,8 +817,8 @@ public class PropertyReservationsQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       PropertyReservationsQuery.Amount1 _amount = null;
       LocalDate _date = null;
-      String _description = null;
-      Double _percent = null;
+      Optional<String> _description = null;
+      Optional<Double> _percent = null;
       String _type = null;
 
       loop:
@@ -823,8 +826,8 @@ public class PropertyReservationsQuery_ResponseAdapter {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _amount = new ObjectAdapter<PropertyReservationsQuery.Amount1>(Amount1.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 1: _date = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 2: _description = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _percent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _description = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _percent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -853,10 +856,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.date);
 
       writer.name("description");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.description);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("percent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -871,13 +874,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Amount1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -896,7 +899,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Amount1 value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -912,16 +915,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public PropertyReservationsQuery.PerStayAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       PropertyReservationsQuery.Amount2 _amount = null;
-      String _description = null;
-      Double _percent = null;
+      Optional<String> _description = null;
+      Optional<Double> _percent = null;
       String _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _amount = new ObjectAdapter<PropertyReservationsQuery.Amount2>(Amount2.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 1: _description = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _percent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _description = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _percent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -945,10 +948,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ObjectAdapter<PropertyReservationsQuery.Amount2>(Amount2.INSTANCE, false).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("description");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.description);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("percent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -963,13 +966,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Amount2 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -988,7 +991,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Amount2 value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -1004,16 +1007,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public PropertyReservationsQuery.Summary fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       PropertyReservationsQuery.Amount3 _amount = null;
-      String _description = null;
-      Double _percent = null;
+      Optional<String> _description = null;
+      Optional<Double> _percent = null;
       String _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _amount = new ObjectAdapter<PropertyReservationsQuery.Amount3>(Amount3.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 1: _description = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _percent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _description = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _percent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1037,10 +1040,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ObjectAdapter<PropertyReservationsQuery.Amount3>(Amount3.INSTANCE, false).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("description");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.description);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("percent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -1055,13 +1058,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Amount3 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1080,7 +1083,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Amount3 value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -1136,13 +1139,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public PropertyReservationsQuery.Cancellation fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       Boolean _pendingCancellation = null;
-      VrboCancellationReason _vrboPrimaryReason = null;
+      Optional<VrboCancellationReason> _vrboPrimaryReason = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _pendingCancellation = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _vrboPrimaryReason = new NullableAdapter<>(VrboCancellationReason_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 1: _vrboPrimaryReason = new OptionalAdapter<>(VrboCancellationReason_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1162,7 +1165,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.pendingCancellation);
 
       writer.name("vrboPrimaryReason");
-      new NullableAdapter<>(VrboCancellationReason_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.vrboPrimaryReason);
+      new OptionalAdapter<>(VrboCancellationReason_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.vrboPrimaryReason);
     }
   }
 
@@ -1174,14 +1177,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.CancellationPolicy fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyReservationsQuery.EffectivePolicy _effectivePolicy = null;
-      List<PropertyReservationsQuery.Tier> _tiers = null;
+      Optional<PropertyReservationsQuery.EffectivePolicy> _effectivePolicy = null;
+      Optional<List<PropertyReservationsQuery.Tier>> _tiers = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _effectivePolicy = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy>(EffectivePolicy.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _tiers = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier>(Tier.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 0: _effectivePolicy = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy>(EffectivePolicy.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _tiers = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier>(Tier.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1196,10 +1199,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.CancellationPolicy value) throws IOException {
       writer.name("effectivePolicy");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy>(EffectivePolicy.INSTANCE, false)).toJson(writer, customScalarAdapters, value.effectivePolicy);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy>(EffectivePolicy.INSTANCE, false)).toJson(writer, customScalarAdapters, value.effectivePolicy);
 
       writer.name("tiers");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier>(Tier.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier>(Tier.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
     }
   }
 
@@ -1211,16 +1214,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.EffectivePolicy fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _endDateTimeUtc = null;
+      OffsetDateTime _endDateTimeUtc = null;
       String _policyType = null;
-      Object _startDateTimeUtc = null;
+      OffsetDateTime _startDateTimeUtc = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _endDateTimeUtc = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _endDateTimeUtc = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 1: _policyType = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _startDateTimeUtc = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _startDateTimeUtc = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1240,13 +1243,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.EffectivePolicy value) throws IOException {
       writer.name("endDateTimeUtc");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.endDateTimeUtc);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.endDateTimeUtc);
 
       writer.name("policyType");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.policyType);
 
       writer.name("startDateTimeUtc");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.startDateTimeUtc);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.startDateTimeUtc);
     }
   }
 
@@ -1338,19 +1341,19 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.PenaltyRule fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyReservationsQuery.CostFlatAmount _costFlatAmount = null;
-      Integer _numberOfNights = null;
-      Double _percentage = null;
-      PropertyReservationsQuery.PriceAmount _priceAmount = null;
+      Optional<PropertyReservationsQuery.CostFlatAmount> _costFlatAmount = null;
+      Optional<Integer> _numberOfNights = null;
+      Optional<Double> _percentage = null;
+      Optional<PropertyReservationsQuery.PriceAmount> _priceAmount = null;
       CancellationPenaltyRuleType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _costFlatAmount = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount>(CostFlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _numberOfNights = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _percentage = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _priceAmount = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount>(PriceAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _costFlatAmount = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount>(CostFlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _numberOfNights = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _percentage = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _priceAmount = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount>(PriceAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 4: _type = CancellationPenaltyRuleType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1371,16 +1374,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.PenaltyRule value) throws IOException {
       writer.name("costFlatAmount");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount>(CostFlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.costFlatAmount);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount>(CostFlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.costFlatAmount);
 
       writer.name("numberOfNights");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.numberOfNights);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.numberOfNights);
 
       writer.name("percentage");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percentage);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percentage);
 
       writer.name("priceAmount");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount>(PriceAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.priceAmount);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount>(PriceAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.priceAmount);
 
       writer.name("type");
       CancellationPenaltyRuleType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -1395,13 +1398,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.CostFlatAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1420,7 +1423,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.CostFlatAmount value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -1435,13 +1438,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.PriceAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1460,7 +1463,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.PriceAmount value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -1476,13 +1479,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public PropertyReservationsQuery.Distribution fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       DistributionChannel _distributionChannel = null;
-      String _reservationSource = null;
+      Optional<String> _reservationSource = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _distributionChannel = DistributionChannel_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _reservationSource = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _reservationSource = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1502,7 +1505,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       DistributionChannel_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.distributionChannel);
 
       writer.name("reservationSource");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.reservationSource);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.reservationSource);
     }
   }
 
@@ -1516,7 +1519,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       Integer _adultCount = null;
       Integer _childCount = null;
-      PropertyReservationsQuery.Pets _pets = null;
+      Optional<PropertyReservationsQuery.Pets> _pets = null;
       PropertyReservationsQuery.PrimaryGuest _primaryGuest = null;
 
       loop:
@@ -1524,7 +1527,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _adultCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _childCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _pets = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Pets>(Pets.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _pets = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Pets>(Pets.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 3: _primaryGuest = new ObjectAdapter<PropertyReservationsQuery.PrimaryGuest>(PrimaryGuest.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1552,7 +1555,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.childCount);
 
       writer.name("pets");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Pets>(Pets.INSTANCE, false)).toJson(writer, customScalarAdapters, value.pets);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Pets>(Pets.INSTANCE, false)).toJson(writer, customScalarAdapters, value.pets);
 
       writer.name("primaryGuest");
       new ObjectAdapter<PropertyReservationsQuery.PrimaryGuest>(PrimaryGuest.INSTANCE, false).toJson(writer, customScalarAdapters, value.primaryGuest);
@@ -1600,18 +1603,18 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.PrimaryGuest fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _firstName = null;
-      String _lastName = null;
+      Optional<String> _firstName = null;
+      Optional<String> _lastName = null;
       String _emailAddress = null;
-      String _fullPhoneNumber = null;
+      Optional<String> _fullPhoneNumber = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _firstName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _lastName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _firstName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _lastName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _emailAddress = (customScalarAdapters.<String>responseAdapterFor(EmailAddress.type)).fromJson(reader, customScalarAdapters); break;
-          case 3: _fullPhoneNumber = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _fullPhoneNumber = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1630,16 +1633,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.PrimaryGuest value) throws IOException {
       writer.name("firstName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.firstName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.firstName);
 
       writer.name("lastName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.lastName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.lastName);
 
       writer.name("emailAddress");
       (customScalarAdapters.<String>responseAdapterFor(EmailAddress.type)).toJson(writer, customScalarAdapters, value.emailAddress);
 
       writer.name("fullPhoneNumber");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.fullPhoneNumber);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.fullPhoneNumber);
     }
   }
 
@@ -1653,16 +1656,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       List<PropertyReservationsQuery.Installment> _installments = null;
       String _instructions = null;
-      PropertyReservationsQuery.Instrument _instrument = null;
-      ReservationPaymentStatus _status = null;
+      Optional<PropertyReservationsQuery.Instrument> _instrument = null;
+      Optional<ReservationPaymentStatus> _status = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _installments = new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Installment>(Installment.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 1: _instructions = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _instrument = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Instrument>(Instrument.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 3: _status = new NullableAdapter<>(ReservationPaymentStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 2: _instrument = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Instrument>(Instrument.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 3: _status = new OptionalAdapter<>(ReservationPaymentStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1688,10 +1691,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.instructions);
 
       writer.name("instrument");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Instrument>(Instrument.INSTANCE, false)).toJson(writer, customScalarAdapters, value.instrument);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Instrument>(Instrument.INSTANCE, false)).toJson(writer, customScalarAdapters, value.instrument);
 
       writer.name("status");
-      new NullableAdapter<>(ReservationPaymentStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.status);
+      new OptionalAdapter<>(ReservationPaymentStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.status);
     }
   }
 
@@ -1706,8 +1709,8 @@ public class PropertyReservationsQuery_ResponseAdapter {
       PropertyReservationsQuery.Amount4 _amount = null;
       List<PropertyReservationsQuery.Distribution1> _distributions = null;
       LocalDate _dueDate = null;
-      String _installmentId = null;
-      InstallmentPaymentStatus _paymentStatus = null;
+      Optional<String> _installmentId = null;
+      Optional<InstallmentPaymentStatus> _paymentStatus = null;
 
       loop:
       while(true) {
@@ -1715,8 +1718,8 @@ public class PropertyReservationsQuery_ResponseAdapter {
           case 0: _amount = new ObjectAdapter<PropertyReservationsQuery.Amount4>(Amount4.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 1: _distributions = new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Distribution1>(Distribution1.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 2: _dueDate = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 3: _installmentId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _paymentStatus = new NullableAdapter<>(InstallmentPaymentStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 3: _installmentId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 4: _paymentStatus = new OptionalAdapter<>(InstallmentPaymentStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1747,10 +1750,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.dueDate);
 
       writer.name("installmentId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.installmentId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.installmentId);
 
       writer.name("paymentStatus");
-      new NullableAdapter<>(InstallmentPaymentStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.paymentStatus);
+      new OptionalAdapter<>(InstallmentPaymentStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.paymentStatus);
     }
   }
 
@@ -1762,13 +1765,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Amount4 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1787,7 +1790,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Amount4 value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -1843,13 +1846,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public PropertyReservationsQuery.Amount5 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _currencyCode = null;
-      Object _amount = null;
+      String _amount = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
-          case 1: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1870,7 +1873,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
 
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
     }
   }
 
@@ -1882,13 +1885,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Instrument fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyReservationsQuery.Token _token = null;
+      Optional<PropertyReservationsQuery.Token> _token = null;
       PaymentInstrumentType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _token = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Token>(Token.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _token = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Token>(Token.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 1: _type = PaymentInstrumentType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -1906,7 +1909,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Instrument value) throws IOException {
       writer.name("token");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Token>(Token.INSTANCE, false)).toJson(writer, customScalarAdapters, value.token);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Token>(Token.INSTANCE, false)).toJson(writer, customScalarAdapters, value.token);
 
       writer.name("type");
       PaymentInstrumentType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -1921,14 +1924,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Token fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _expirationDateTime = null;
-      String _value = null;
+      Optional<String> _expirationDateTime = null;
+      Optional<String> _value = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _expirationDateTime = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _value = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _expirationDateTime = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _value = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -1943,10 +1946,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Token value) throws IOException {
       writer.name("expirationDateTime");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.expirationDateTime);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.expirationDateTime);
 
       writer.name("value");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.value);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.value);
     }
   }
 
@@ -1991,14 +1994,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.CancellationPolicy1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyReservationsQuery.EffectivePolicy1 _effectivePolicy = null;
-      List<PropertyReservationsQuery.Tier1> _tiers = null;
+      Optional<PropertyReservationsQuery.EffectivePolicy1> _effectivePolicy = null;
+      Optional<List<PropertyReservationsQuery.Tier1>> _tiers = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _effectivePolicy = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy1>(EffectivePolicy1.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _tiers = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier1>(Tier1.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 0: _effectivePolicy = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy1>(EffectivePolicy1.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _tiers = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier1>(Tier1.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -2013,10 +2016,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.CancellationPolicy1 value) throws IOException {
       writer.name("effectivePolicy");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy1>(EffectivePolicy1.INSTANCE, false)).toJson(writer, customScalarAdapters, value.effectivePolicy);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.EffectivePolicy1>(EffectivePolicy1.INSTANCE, false)).toJson(writer, customScalarAdapters, value.effectivePolicy);
 
       writer.name("tiers");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier1>(Tier1.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.Tier1>(Tier1.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
     }
   }
 
@@ -2028,16 +2031,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.EffectivePolicy1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _endDateTimeUtc = null;
+      OffsetDateTime _endDateTimeUtc = null;
       String _policyType = null;
-      Object _startDateTimeUtc = null;
+      OffsetDateTime _startDateTimeUtc = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _endDateTimeUtc = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _endDateTimeUtc = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 1: _policyType = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _startDateTimeUtc = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _startDateTimeUtc = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -2057,13 +2060,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.EffectivePolicy1 value) throws IOException {
       writer.name("endDateTimeUtc");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.endDateTimeUtc);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.endDateTimeUtc);
 
       writer.name("policyType");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.policyType);
 
       writer.name("startDateTimeUtc");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.startDateTimeUtc);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.startDateTimeUtc);
     }
   }
 
@@ -2155,19 +2158,19 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.PenaltyRule1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyReservationsQuery.CostFlatAmount1 _costFlatAmount = null;
-      Integer _numberOfNights = null;
-      Double _percentage = null;
-      PropertyReservationsQuery.PriceAmount1 _priceAmount = null;
+      Optional<PropertyReservationsQuery.CostFlatAmount1> _costFlatAmount = null;
+      Optional<Integer> _numberOfNights = null;
+      Optional<Double> _percentage = null;
+      Optional<PropertyReservationsQuery.PriceAmount1> _priceAmount = null;
       CancellationPenaltyRuleType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _costFlatAmount = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount1>(CostFlatAmount1.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _numberOfNights = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _percentage = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _priceAmount = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount1>(PriceAmount1.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _costFlatAmount = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount1>(CostFlatAmount1.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _numberOfNights = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _percentage = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _priceAmount = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount1>(PriceAmount1.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 4: _type = CancellationPenaltyRuleType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -2188,16 +2191,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.PenaltyRule1 value) throws IOException {
       writer.name("costFlatAmount");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount1>(CostFlatAmount1.INSTANCE, false)).toJson(writer, customScalarAdapters, value.costFlatAmount);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.CostFlatAmount1>(CostFlatAmount1.INSTANCE, false)).toJson(writer, customScalarAdapters, value.costFlatAmount);
 
       writer.name("numberOfNights");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.numberOfNights);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.numberOfNights);
 
       writer.name("percentage");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percentage);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percentage);
 
       writer.name("priceAmount");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount1>(PriceAmount1.INSTANCE, false)).toJson(writer, customScalarAdapters, value.priceAmount);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PriceAmount1>(PriceAmount1.INSTANCE, false)).toJson(writer, customScalarAdapters, value.priceAmount);
 
       writer.name("type");
       CancellationPenaltyRuleType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -2212,13 +2215,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.CostFlatAmount1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -2237,7 +2240,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.CostFlatAmount1 value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -2252,13 +2255,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.PriceAmount1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -2277,7 +2280,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.PriceAmount1 value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -2292,24 +2295,24 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.PrimaryGuest1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _emailAddress = null;
+      Optional<String> _emailAddress = null;
       String _firstName = null;
       String _lastName = null;
-      String _loyaltyTier = null;
-      List<PropertyReservationsQuery.PhoneNumber> _phoneNumbers = null;
-      PropertyReservationsQuery.SupplierLoyaltyPlanInfo _supplierLoyaltyPlanInfo = null;
-      TravelPurpose _travelPurpose = null;
+      Optional<String> _loyaltyTier = null;
+      Optional<List<PropertyReservationsQuery.PhoneNumber>> _phoneNumbers = null;
+      Optional<PropertyReservationsQuery.SupplierLoyaltyPlanInfo> _supplierLoyaltyPlanInfo = null;
+      Optional<TravelPurpose> _travelPurpose = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _emailAddress = new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
+          case 0: _emailAddress = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
           case 1: _firstName = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _lastName = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _loyaltyTier = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _phoneNumbers = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 5: _supplierLoyaltyPlanInfo = new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 6: _travelPurpose = new NullableAdapter<>(TravelPurpose_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 3: _loyaltyTier = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 4: _phoneNumbers = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 5: _supplierLoyaltyPlanInfo = new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 6: _travelPurpose = new OptionalAdapter<>(TravelPurpose_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -2332,7 +2335,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.PrimaryGuest1 value) throws IOException {
       writer.name("emailAddress");
-      new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.emailAddress);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.emailAddress);
 
       writer.name("firstName");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.firstName);
@@ -2341,16 +2344,16 @@ public class PropertyReservationsQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.lastName);
 
       writer.name("loyaltyTier");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.loyaltyTier);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.loyaltyTier);
 
       writer.name("phoneNumbers");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).toJson(writer, customScalarAdapters, value.phoneNumbers);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).toJson(writer, customScalarAdapters, value.phoneNumbers);
 
       writer.name("supplierLoyaltyPlanInfo");
-      new NullableAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).toJson(writer, customScalarAdapters, value.supplierLoyaltyPlanInfo);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyReservationsQuery.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).toJson(writer, customScalarAdapters, value.supplierLoyaltyPlanInfo);
 
       writer.name("travelPurpose");
-      new NullableAdapter<>(TravelPurpose_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.travelPurpose);
+      new OptionalAdapter<>(TravelPurpose_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.travelPurpose);
     }
   }
 
@@ -2409,14 +2412,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.SupplierLoyaltyPlanInfo fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Integer _membershipNumber = null;
-      String _planCode = null;
+      Optional<Integer> _membershipNumber = null;
+      Optional<String> _planCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _membershipNumber = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _planCode = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _membershipNumber = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _planCode = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -2431,10 +2434,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.SupplierLoyaltyPlanInfo value) throws IOException {
       writer.name("membershipNumber");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.membershipNumber);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.membershipNumber);
 
       writer.name("planCode");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.planCode);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.planCode);
     }
   }
 
@@ -2446,13 +2449,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.RateId fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _id = null;
+      Optional<String> _id = null;
       IdSource _idSource = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _id = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _id = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _idSource = IdSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -2470,7 +2473,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.RateId value) throws IOException {
       writer.name("id");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.id);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("idSource");
       IdSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.idSource);
@@ -2485,14 +2488,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.ReconciliationEligibility fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<PropertyReservationsQuery.InvalidScenario> _invalidScenarios = null;
-      List<String> _validScenarios = null;
+      Optional<List<PropertyReservationsQuery.InvalidScenario>> _invalidScenarios = null;
+      Optional<List<String>> _validScenarios = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _invalidScenarios = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.InvalidScenario>(InvalidScenario.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 1: _validScenarios = new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 0: _invalidScenarios = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.InvalidScenario>(InvalidScenario.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 1: _validScenarios = new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -2507,10 +2510,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.ReconciliationEligibility value) throws IOException {
       writer.name("invalidScenarios");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.InvalidScenario>(InvalidScenario.INSTANCE, false))).toJson(writer, customScalarAdapters, value.invalidScenarios);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyReservationsQuery.InvalidScenario>(InvalidScenario.INSTANCE, false))).toJson(writer, customScalarAdapters, value.invalidScenarios);
 
       writer.name("validScenarios");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.validScenarios);
+      new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.validScenarios);
     }
   }
 
@@ -2562,13 +2565,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.ReservationId fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _id = null;
+      Optional<String> _id = null;
       IdSource _idSource = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _id = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _id = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _idSource = IdSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -2586,7 +2589,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.ReservationId value) throws IOException {
       writer.name("id");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.id);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("idSource");
       IdSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.idSource);
@@ -2689,10 +2692,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
       }
 
       Assertions.checkFieldNotMissing(__typename, "__typename");
-      PropertyReservationsQuery.OnExpediaSupplierAmount _onExpediaSupplierAmount = null;
+      Optional<PropertyReservationsQuery.OnExpediaSupplierAmount> _onExpediaSupplierAmount = Optional.empty();
       if (BooleanExpressions.evaluate(new BooleanExpression.Element<BTerm>(new BPossibleTypes("ExpediaSupplierAmount")), customScalarAdapters.falseVariables, __typename, customScalarAdapters.deferredFragmentIdentifiers, null)) {
         reader.rewind();
-        _onExpediaSupplierAmount = com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyReservationsQuery_ResponseAdapter.OnExpediaSupplierAmount.INSTANCE.fromJson(reader, customScalarAdapters);
+        _onExpediaSupplierAmount = Optional.of(com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyReservationsQuery_ResponseAdapter.OnExpediaSupplierAmount.INSTANCE.fromJson(reader, customScalarAdapters));
       }
 
       Assertions.checkFieldNotMissing(_currencyCode, "currencyCode");
@@ -2718,8 +2721,8 @@ public class PropertyReservationsQuery_ResponseAdapter {
       writer.name("rateType");
       RateType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.rateType);
 
-      if (value.onExpediaSupplierAmount != null) {
-        com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyReservationsQuery_ResponseAdapter.OnExpediaSupplierAmount.INSTANCE.toJson(writer, customScalarAdapters, value.onExpediaSupplierAmount);
+      if (value.onExpediaSupplierAmount.isPresent()) {
+        com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyReservationsQuery_ResponseAdapter.OnExpediaSupplierAmount.INSTANCE.toJson(writer, customScalarAdapters, value.onExpediaSupplierAmount.get());
       }
     }
   }
@@ -2847,14 +2850,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Compensation fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Double _acceleratorPercent = null;
-      Double _basePercent = null;
+      Optional<Double> _acceleratorPercent = null;
+      Optional<Double> _basePercent = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _acceleratorPercent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _basePercent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _acceleratorPercent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _basePercent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -2869,10 +2872,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Compensation value) throws IOException {
       writer.name("acceleratorPercent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.acceleratorPercent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.acceleratorPercent);
 
       writer.name("basePercent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.basePercent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.basePercent);
     }
   }
 
@@ -2971,14 +2974,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Compensation1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Double _acceleratorPercent = null;
-      Double _basePercent = null;
+      Optional<Double> _acceleratorPercent = null;
+      Optional<Double> _basePercent = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _acceleratorPercent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _basePercent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _acceleratorPercent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _basePercent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -2993,10 +2996,10 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Compensation1 value) throws IOException {
       writer.name("acceleratorPercent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.acceleratorPercent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.acceleratorPercent);
 
       writer.name("basePercent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.basePercent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.basePercent);
     }
   }
 
@@ -3008,13 +3011,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.UnitId fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _id = null;
+      Optional<String> _id = null;
       IdSource _idSource = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _id = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _id = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _idSource = IdSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -3032,7 +3035,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.UnitId value) throws IOException {
       writer.name("id");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.id);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("idSource");
       IdSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.idSource);
@@ -3121,14 +3124,14 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public PropertyReservationsQuery.Summary1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       PropertyReservationsQuery.Amount6 _amount = null;
-      String _productCode = null;
+      Optional<String> _productCode = null;
       String _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _amount = new ObjectAdapter<PropertyReservationsQuery.Amount6>(Amount6.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 1: _productCode = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _productCode = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -3151,7 +3154,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
       new ObjectAdapter<PropertyReservationsQuery.Amount6>(Amount6.INSTANCE, false).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("productCode");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.productCode);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.productCode);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -3166,13 +3169,13 @@ public class PropertyReservationsQuery_ResponseAdapter {
     @Override
     public PropertyReservationsQuery.Amount6 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -3191,7 +3194,7 @@ public class PropertyReservationsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyReservationsQuery.Amount6 value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);

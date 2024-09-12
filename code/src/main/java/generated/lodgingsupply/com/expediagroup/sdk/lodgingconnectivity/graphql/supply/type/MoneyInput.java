@@ -13,7 +13,7 @@ import java.lang.String;
  * Represents a monetary amount value along with its currency.
  */
 public class MoneyInput {
-  public final Object amount;
+  public final String amount;
 
   public final String currencyCode;
 
@@ -23,7 +23,7 @@ public class MoneyInput {
 
   private transient volatile String $toString;
 
-  public MoneyInput(Object amount, String currencyCode) {
+  public MoneyInput(String amount, String currencyCode) {
     this.amount = amount;
     this.currencyCode = currencyCode;
   }
@@ -71,7 +71,7 @@ public class MoneyInput {
   }
 
   public static final class Builder {
-    private Object amount;
+    private String amount;
 
     private String currencyCode;
 
@@ -81,7 +81,7 @@ public class MoneyInput {
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Builder amount(Object amount) {
+    public Builder amount(String amount) {
       this.amount = amount;
       return this;
     }

@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class SetMessageThreadSpamStatusInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String id;
 
@@ -23,7 +24,7 @@ public class SetMessageThreadSpamStatusInput {
 
   private transient volatile String $toString;
 
-  public SetMessageThreadSpamStatusInput(Optional<String> clientMutationId, String id,
+  public SetMessageThreadSpamStatusInput(Optional<Optional<String>> clientMutationId, String id,
       MessageThreadSpamStatus status) {
     this.clientMutationId = clientMutationId;
     this.id = id;
@@ -77,7 +78,7 @@ public class SetMessageThreadSpamStatusInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String id;
 
@@ -89,8 +90,8 @@ public class SetMessageThreadSpamStatusInput {
     /**
      *  UUID that uniquely identifies client's request 
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 

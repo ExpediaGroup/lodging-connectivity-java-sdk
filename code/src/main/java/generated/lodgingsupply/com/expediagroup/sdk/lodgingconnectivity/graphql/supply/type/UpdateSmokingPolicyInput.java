@@ -5,21 +5,22 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateSmokingPolicyInput {
-  public final Optional<Boolean> allowed;
+  public final Optional<Optional<Boolean>> allowed;
 
-  public final Optional<UpdateSmokingLocationPolicyInput> indoorPolicy;
+  public final Optional<Optional<UpdateSmokingLocationPolicyInput>> indoorPolicy;
 
-  public final Optional<List<LocalizedStringInput>> note;
+  public final Optional<Optional<List<LocalizedStringInput>>> note;
 
-  public final Optional<UpdateSmokingLocationPolicyInput> outdoorPolicy;
+  public final Optional<Optional<UpdateSmokingLocationPolicyInput>> outdoorPolicy;
 
   private transient volatile int $hashCode;
 
@@ -27,10 +28,10 @@ public class UpdateSmokingPolicyInput {
 
   private transient volatile String $toString;
 
-  public UpdateSmokingPolicyInput(Optional<Boolean> allowed,
-      Optional<UpdateSmokingLocationPolicyInput> indoorPolicy,
-      Optional<List<LocalizedStringInput>> note,
-      Optional<UpdateSmokingLocationPolicyInput> outdoorPolicy) {
+  public UpdateSmokingPolicyInput(Optional<Optional<Boolean>> allowed,
+      Optional<Optional<UpdateSmokingLocationPolicyInput>> indoorPolicy,
+      Optional<Optional<List<LocalizedStringInput>>> note,
+      Optional<Optional<UpdateSmokingLocationPolicyInput>> outdoorPolicy) {
     this.allowed = allowed;
     this.indoorPolicy = indoorPolicy;
     this.note = note;
@@ -88,34 +89,35 @@ public class UpdateSmokingPolicyInput {
   }
 
   public static final class Builder {
-    private Optional<Boolean> allowed = Optional.absent();
+    private Optional<Optional<Boolean>> allowed = Optional.empty();
 
-    private Optional<UpdateSmokingLocationPolicyInput> indoorPolicy = Optional.absent();
+    private Optional<Optional<UpdateSmokingLocationPolicyInput>> indoorPolicy = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> note = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> note = Optional.empty();
 
-    private Optional<UpdateSmokingLocationPolicyInput> outdoorPolicy = Optional.absent();
+    private Optional<Optional<UpdateSmokingLocationPolicyInput>> outdoorPolicy = Optional.empty();
 
     Builder() {
     }
 
-    public Builder allowed(Boolean allowed) {
-      this.allowed = Optional.present(allowed);
+    public Builder allowed(@NotNull Optional<Boolean> allowed) {
+      this.allowed = Optional.of(allowed);
       return this;
     }
 
-    public Builder indoorPolicy(UpdateSmokingLocationPolicyInput indoorPolicy) {
-      this.indoorPolicy = Optional.present(indoorPolicy);
+    public Builder indoorPolicy(@NotNull Optional<UpdateSmokingLocationPolicyInput> indoorPolicy) {
+      this.indoorPolicy = Optional.of(indoorPolicy);
       return this;
     }
 
-    public Builder note(List<LocalizedStringInput> note) {
-      this.note = Optional.present(note);
+    public Builder note(@NotNull Optional<List<LocalizedStringInput>> note) {
+      this.note = Optional.of(note);
       return this;
     }
 
-    public Builder outdoorPolicy(UpdateSmokingLocationPolicyInput outdoorPolicy) {
-      this.outdoorPolicy = Optional.present(outdoorPolicy);
+    public Builder outdoorPolicy(
+        @NotNull Optional<UpdateSmokingLocationPolicyInput> outdoorPolicy) {
+      this.outdoorPolicy = Optional.of(outdoorPolicy);
       return this;
     }
 

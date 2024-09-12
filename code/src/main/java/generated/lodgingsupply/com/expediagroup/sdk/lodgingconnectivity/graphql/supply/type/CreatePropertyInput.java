@@ -5,38 +5,39 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreatePropertyInput {
   public final CreateAddressInput address;
 
-  public final Optional<List<AmenityInput>> amenities;
+  public final Optional<Optional<List<AmenityInput>>> amenities;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
-  public final Optional<SavePropertyContactInput> contact;
+  public final Optional<Optional<SavePropertyContactInput>> contact;
 
   public final CreatePropertyLocationInput location;
 
   public final String name;
 
-  public final Optional<List<LocalizedStringInput>> names;
+  public final Optional<Optional<List<LocalizedStringInput>>> names;
 
-  public final Optional<CreatePoliciesInput> policies;
+  public final Optional<Optional<CreatePoliciesInput>> policies;
 
-  public final Optional<String> referenceName;
+  public final Optional<Optional<String>> referenceName;
 
   public final String supplierPropertyId;
 
-  public final Optional<String> supplierUnitId;
+  public final Optional<Optional<String>> supplierUnitId;
 
-  public final Optional<List<TextInput>> text;
+  public final Optional<Optional<List<TextInput>>> text;
 
-  public final Optional<String> type;
+  public final Optional<Optional<String>> type;
 
   private transient volatile int $hashCode;
 
@@ -44,12 +45,13 @@ public class CreatePropertyInput {
 
   private transient volatile String $toString;
 
-  public CreatePropertyInput(CreateAddressInput address, Optional<List<AmenityInput>> amenities,
-      Optional<String> clientMutationId, Optional<SavePropertyContactInput> contact,
-      CreatePropertyLocationInput location, String name, Optional<List<LocalizedStringInput>> names,
-      Optional<CreatePoliciesInput> policies, Optional<String> referenceName,
-      String supplierPropertyId, Optional<String> supplierUnitId, Optional<List<TextInput>> text,
-      Optional<String> type) {
+  public CreatePropertyInput(CreateAddressInput address,
+      Optional<Optional<List<AmenityInput>>> amenities, Optional<Optional<String>> clientMutationId,
+      Optional<Optional<SavePropertyContactInput>> contact, CreatePropertyLocationInput location,
+      String name, Optional<Optional<List<LocalizedStringInput>>> names,
+      Optional<Optional<CreatePoliciesInput>> policies, Optional<Optional<String>> referenceName,
+      String supplierPropertyId, Optional<Optional<String>> supplierUnitId,
+      Optional<Optional<List<TextInput>>> text, Optional<Optional<String>> type) {
     this.address = address;
     this.amenities = amenities;
     this.clientMutationId = clientMutationId;
@@ -154,29 +156,29 @@ public class CreatePropertyInput {
   public static final class Builder {
     private CreateAddressInput address;
 
-    private Optional<List<AmenityInput>> amenities = Optional.absent();
+    private Optional<Optional<List<AmenityInput>>> amenities = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
-    private Optional<SavePropertyContactInput> contact = Optional.absent();
+    private Optional<Optional<SavePropertyContactInput>> contact = Optional.empty();
 
     private CreatePropertyLocationInput location;
 
     private String name;
 
-    private Optional<List<LocalizedStringInput>> names = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> names = Optional.empty();
 
-    private Optional<CreatePoliciesInput> policies = Optional.absent();
+    private Optional<Optional<CreatePoliciesInput>> policies = Optional.empty();
 
-    private Optional<String> referenceName = Optional.absent();
+    private Optional<Optional<String>> referenceName = Optional.empty();
 
     private String supplierPropertyId;
 
-    private Optional<String> supplierUnitId = Optional.absent();
+    private Optional<Optional<String>> supplierUnitId = Optional.empty();
 
-    private Optional<List<TextInput>> text = Optional.absent();
+    private Optional<Optional<List<TextInput>>> text = Optional.empty();
 
-    private Optional<String> type = Optional.absent();
+    private Optional<Optional<String>> type = Optional.empty();
 
     Builder() {
     }
@@ -186,18 +188,18 @@ public class CreatePropertyInput {
       return this;
     }
 
-    public Builder amenities(List<AmenityInput> amenities) {
-      this.amenities = Optional.present(amenities);
+    public Builder amenities(@NotNull Optional<List<AmenityInput>> amenities) {
+      this.amenities = Optional.of(amenities);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
-    public Builder contact(SavePropertyContactInput contact) {
-      this.contact = Optional.present(contact);
+    public Builder contact(@NotNull Optional<SavePropertyContactInput> contact) {
+      this.contact = Optional.of(contact);
       return this;
     }
 
@@ -211,18 +213,18 @@ public class CreatePropertyInput {
       return this;
     }
 
-    public Builder names(List<LocalizedStringInput> names) {
-      this.names = Optional.present(names);
+    public Builder names(@NotNull Optional<List<LocalizedStringInput>> names) {
+      this.names = Optional.of(names);
       return this;
     }
 
-    public Builder policies(CreatePoliciesInput policies) {
-      this.policies = Optional.present(policies);
+    public Builder policies(@NotNull Optional<CreatePoliciesInput> policies) {
+      this.policies = Optional.of(policies);
       return this;
     }
 
-    public Builder referenceName(String referenceName) {
-      this.referenceName = Optional.present(referenceName);
+    public Builder referenceName(@NotNull Optional<String> referenceName) {
+      this.referenceName = Optional.of(referenceName);
       return this;
     }
 
@@ -231,18 +233,18 @@ public class CreatePropertyInput {
       return this;
     }
 
-    public Builder supplierUnitId(String supplierUnitId) {
-      this.supplierUnitId = Optional.present(supplierUnitId);
+    public Builder supplierUnitId(@NotNull Optional<String> supplierUnitId) {
+      this.supplierUnitId = Optional.of(supplierUnitId);
       return this;
     }
 
-    public Builder text(List<TextInput> text) {
-      this.text = Optional.present(text);
+    public Builder text(@NotNull Optional<List<TextInput>> text) {
+      this.text = Optional.of(text);
       return this;
     }
 
-    public Builder type(String type) {
-      this.type = Optional.present(type);
+    public Builder type(@NotNull Optional<String> type) {
+      this.type = Optional.of(type);
       return this;
     }
 

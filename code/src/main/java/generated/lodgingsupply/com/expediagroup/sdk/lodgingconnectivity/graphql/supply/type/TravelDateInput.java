@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class TravelDateInput {
-  public final Optional<LocalDate> from;
+  public final Optional<Optional<LocalDate>> from;
 
-  public final Optional<LocalDate> to;
+  public final Optional<Optional<LocalDate>> to;
 
   private transient volatile int $hashCode;
 
@@ -22,7 +23,7 @@ public class TravelDateInput {
 
   private transient volatile String $toString;
 
-  public TravelDateInput(Optional<LocalDate> from, Optional<LocalDate> to) {
+  public TravelDateInput(Optional<Optional<LocalDate>> from, Optional<Optional<LocalDate>> to) {
     this.from = from;
     this.to = to;
   }
@@ -70,20 +71,20 @@ public class TravelDateInput {
   }
 
   public static final class Builder {
-    private Optional<LocalDate> from = Optional.absent();
+    private Optional<Optional<LocalDate>> from = Optional.empty();
 
-    private Optional<LocalDate> to = Optional.absent();
+    private Optional<Optional<LocalDate>> to = Optional.empty();
 
     Builder() {
     }
 
-    public Builder from(LocalDate from) {
-      this.from = Optional.present(from);
+    public Builder from(@NotNull Optional<LocalDate> from) {
+      this.from = Optional.of(from);
       return this;
     }
 
-    public Builder to(LocalDate to) {
-      this.to = Optional.present(to);
+    public Builder to(@NotNull Optional<LocalDate> to) {
+      this.to = Optional.of(to);
       return this;
     }
 

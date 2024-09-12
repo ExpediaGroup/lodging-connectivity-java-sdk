@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.adapter.SandboxPropertiesQuery_ResponseAdapter;
@@ -23,6 +22,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data> {
   public static final String OPERATION_ID = "4031dec8a8c839cfcd51be658deac084fbd5a65b86bae53543ca9629132fe46c";
@@ -251,27 +251,27 @@ public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data
   }
 
   public static final class Builder {
-    private Optional<String> cursor = Optional.absent();
+    private Optional<String> cursor = Optional.empty();
 
-    private Optional<Integer> limit = Optional.absent();
+    private Optional<Integer> limit = Optional.empty();
 
-    private Optional<Boolean> skipReservations = Optional.absent();
+    private Optional<Boolean> skipReservations = Optional.empty();
 
     Builder() {
     }
 
     public Builder cursor(String cursor) {
-      this.cursor = Optional.present(cursor);
+      this.cursor = Optional.of(cursor);
       return this;
     }
 
     public Builder limit(Integer limit) {
-      this.limit = Optional.present(limit);
+      this.limit = Optional.of(limit);
       return this;
     }
 
     public Builder skipReservations(Boolean skipReservations) {
-      this.skipReservations = Optional.present(skipReservations);
+      this.skipReservations = Optional.of(skipReservations);
       return this;
     }
 
@@ -344,7 +344,7 @@ public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data
     /**
      * Cursor for pagination.
      */
-    public String cursor;
+    public Optional<String> cursor;
 
     /**
      * Total count of properties.
@@ -362,7 +362,7 @@ public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data
 
     private transient volatile String $toString;
 
-    public Properties(String cursor, Integer totalCount, List<Element> elements) {
+    public Properties(Optional<String> cursor, Integer totalCount, List<Element> elements) {
       this.cursor = cursor;
       this.totalCount = totalCount;
       this.elements = elements;
@@ -434,7 +434,7 @@ public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data
      * For subsequent requests, set the cursor to the value from the previous response. This will return the next set of results
      * starting from the reservation after the cursor.
      */
-    public Reservations reservations;
+    public Optional<Reservations> reservations;
 
     private transient volatile int $hashCode;
 
@@ -442,7 +442,7 @@ public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data
 
     private transient volatile String $toString;
 
-    public Element(String id, String name, Reservations reservations) {
+    public Element(String id, String name, Optional<Reservations> reservations) {
       this.id = id;
       this.name = name;
       this.reservations = reservations;
@@ -500,7 +500,7 @@ public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data
     /**
      * Cursor for pagination.
      */
-    public String cursor;
+    public Optional<String> cursor;
 
     /**
      * List of reservations.
@@ -513,7 +513,7 @@ public class SandboxPropertiesQuery implements Query<SandboxPropertiesQuery.Data
 
     private transient volatile String $toString;
 
-    public Reservations(Integer totalCount, String cursor, List<Element1> elements) {
+    public Reservations(Integer totalCount, Optional<String> cursor, List<Element1> elements) {
       this.totalCount = totalCount;
       this.cursor = cursor;
       this.elements = elements;

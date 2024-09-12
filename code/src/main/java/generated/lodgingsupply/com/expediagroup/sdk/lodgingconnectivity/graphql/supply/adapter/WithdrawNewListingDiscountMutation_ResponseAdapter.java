@@ -6,17 +6,18 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.WithdrawNewListingDiscountMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class WithdrawNewListingDiscountMutation_ResponseAdapter {
   public enum Data implements Adapter<WithdrawNewListingDiscountMutation.Data> {
@@ -27,12 +28,12 @@ public class WithdrawNewListingDiscountMutation_ResponseAdapter {
     @Override
     public WithdrawNewListingDiscountMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Boolean _withdrawNewListingDiscount = null;
+      Optional<Boolean> _withdrawNewListingDiscount = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _withdrawNewListingDiscount = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _withdrawNewListingDiscount = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -46,7 +47,7 @@ public class WithdrawNewListingDiscountMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         WithdrawNewListingDiscountMutation.Data value) throws IOException {
       writer.name("withdrawNewListingDiscount");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.withdrawNewListingDiscount);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.withdrawNewListingDiscount);
     }
   }
 }

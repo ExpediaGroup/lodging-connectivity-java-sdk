@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdatePropertyLocationInput {
-  public final Optional<CoordinatesInput> coordinates;
+  public final Optional<Optional<CoordinatesInput>> coordinates;
 
-  public final Optional<Boolean> hideExactLocation;
+  public final Optional<Optional<Boolean>> hideExactLocation;
 
   private transient volatile int $hashCode;
 
@@ -22,8 +23,8 @@ public class UpdatePropertyLocationInput {
 
   private transient volatile String $toString;
 
-  public UpdatePropertyLocationInput(Optional<CoordinatesInput> coordinates,
-      Optional<Boolean> hideExactLocation) {
+  public UpdatePropertyLocationInput(Optional<Optional<CoordinatesInput>> coordinates,
+      Optional<Optional<Boolean>> hideExactLocation) {
     this.coordinates = coordinates;
     this.hideExactLocation = hideExactLocation;
   }
@@ -71,20 +72,20 @@ public class UpdatePropertyLocationInput {
   }
 
   public static final class Builder {
-    private Optional<CoordinatesInput> coordinates = Optional.absent();
+    private Optional<Optional<CoordinatesInput>> coordinates = Optional.empty();
 
-    private Optional<Boolean> hideExactLocation = Optional.absent();
+    private Optional<Optional<Boolean>> hideExactLocation = Optional.empty();
 
     Builder() {
     }
 
-    public Builder coordinates(CoordinatesInput coordinates) {
-      this.coordinates = Optional.present(coordinates);
+    public Builder coordinates(@NotNull Optional<CoordinatesInput> coordinates) {
+      this.coordinates = Optional.of(coordinates);
       return this;
     }
 
-    public Builder hideExactLocation(Boolean hideExactLocation) {
-      this.hideExactLocation = Optional.present(hideExactLocation);
+    public Builder hideExactLocation(@NotNull Optional<Boolean> hideExactLocation) {
+      this.hideExactLocation = Optional.of(hideExactLocation);
       return this;
     }
 

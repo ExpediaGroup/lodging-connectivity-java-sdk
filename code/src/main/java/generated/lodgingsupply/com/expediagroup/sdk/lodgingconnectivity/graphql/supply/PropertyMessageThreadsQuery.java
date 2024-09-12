@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyMessageThreadsQuery_ResponseAdapter;
@@ -24,7 +23,9 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreadsQuery.Data> {
   public static final String OPERATION_ID = "c3bcb06a82e21e23a101a2ad29d39c5d2be3869f2551d305a9ecf73801a6e63a";
@@ -194,11 +195,11 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
 
     private PropertyMessageThreadsFiltersInput filters;
 
-    private Optional<PropertyMessageThreadsOrderByInput> orderBy = Optional.absent();
+    private Optional<PropertyMessageThreadsOrderByInput> orderBy = Optional.empty();
 
-    private Optional<Integer> limit = Optional.absent();
+    private Optional<Integer> limit = Optional.empty();
 
-    private Optional<String> cursor = Optional.absent();
+    private Optional<String> cursor = Optional.empty();
 
     Builder() {
     }
@@ -214,17 +215,17 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
     }
 
     public Builder orderBy(PropertyMessageThreadsOrderByInput orderBy) {
-      this.orderBy = Optional.present(orderBy);
+      this.orderBy = Optional.of(orderBy);
       return this;
     }
 
     public Builder limit(Integer limit) {
-      this.limit = Optional.present(limit);
+      this.limit = Optional.of(limit);
       return this;
     }
 
     public Builder cursor(String cursor) {
-      this.cursor = Optional.present(cursor);
+      this.cursor = Optional.of(cursor);
       return this;
     }
 
@@ -234,7 +235,7 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -242,7 +243,7 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -336,7 +337,7 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
     /**
      *  Represents the next page cursor in the list, Empty if no more pages available
      */
-    public String cursor;
+    public Optional<String> cursor;
 
     /**
      *  Total number of message threads returned that meet the search criteria
@@ -354,7 +355,7 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
 
     private transient volatile String $toString;
 
-    public MessageThreads(String cursor, Integer totalCount, List<Element> elements) {
+    public MessageThreads(Optional<String> cursor, Integer totalCount, List<Element> elements) {
       this.cursor = cursor;
       this.totalCount = totalCount;
       this.elements = elements;
@@ -412,22 +413,22 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
     /**
      *  Message creation date time in ISO format and UTC timezone
      */
-    public Object creationDateTimeUtc;
+    public Optional<OffsetDateTime> creationDateTimeUtc;
 
     /**
      *  Primary Traveler 
      */
-    public PrimaryTraveler primaryTraveler;
+    public Optional<PrimaryTraveler> primaryTraveler;
 
     /**
      *  Reservation associated to MessageThread 
      */
-    public ReservationSummary reservationSummary;
+    public Optional<ReservationSummary> reservationSummary;
 
     /**
      *  Booking Inquiry associated to MessageThread 
      */
-    public BookingInquiry bookingInquiry;
+    public Optional<BookingInquiry> bookingInquiry;
 
     private transient volatile int $hashCode;
 
@@ -435,8 +436,9 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
 
     private transient volatile String $toString;
 
-    public Element(String id, Object creationDateTimeUtc, PrimaryTraveler primaryTraveler,
-        ReservationSummary reservationSummary, BookingInquiry bookingInquiry) {
+    public Element(String id, Optional<OffsetDateTime> creationDateTimeUtc,
+        Optional<PrimaryTraveler> primaryTraveler, Optional<ReservationSummary> reservationSummary,
+        Optional<BookingInquiry> bookingInquiry) {
       this.id = id;
       this.creationDateTimeUtc = creationDateTimeUtc;
       this.primaryTraveler = primaryTraveler;
@@ -496,9 +498,9 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
   }
 
   public static class PrimaryTraveler {
-    public String firstName;
+    public Optional<String> firstName;
 
-    public String lastName;
+    public Optional<String> lastName;
 
     private transient volatile int $hashCode;
 
@@ -506,7 +508,7 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
 
     private transient volatile String $toString;
 
-    public PrimaryTraveler(String firstName, String lastName) {
+    public PrimaryTraveler(Optional<String> firstName, Optional<String> lastName) {
       this.firstName = firstName;
       this.lastName = lastName;
     }
@@ -696,9 +698,9 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
   public static class BookingInquiry {
     public Integer adultCount;
 
-    public LocalDate checkInDate;
+    public Optional<LocalDate> checkInDate;
 
-    public LocalDate checkOutDate;
+    public Optional<LocalDate> checkOutDate;
 
     public Integer childCount;
 
@@ -712,8 +714,8 @@ public class PropertyMessageThreadsQuery implements Query<PropertyMessageThreads
 
     private transient volatile String $toString;
 
-    public BookingInquiry(Integer adultCount, LocalDate checkInDate, LocalDate checkOutDate,
-        Integer childCount, Boolean hasPets, String id) {
+    public BookingInquiry(Integer adultCount, Optional<LocalDate> checkInDate,
+        Optional<LocalDate> checkOutDate, Integer childCount, Boolean hasPets, String id) {
       this.adultCount = adultCount;
       this.checkInDate = checkInDate;
       this.checkOutDate = checkOutDate;

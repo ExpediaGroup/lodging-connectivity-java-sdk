@@ -161,6 +161,8 @@ tasks.withType(DokkaTask.class) {
 apollo {
     service("lodgingsupply") {
         generateKotlinModels.set(false)
+        nullableFieldStyle.set("javaOptional")
+        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/lodgingsupply")
 
@@ -171,13 +173,20 @@ apollo {
         mapScalar("CurrencyCode", "java.lang.String")
         mapScalar("EmailAddress", "java.lang.String")
         mapScalar("JSON", "java.lang.String")
+        mapScalar("Decimal", "java.lang.String")
         mapScalar("Url", "java.net.URL", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE")
         mapScalar("ZoneDateTime", "java.time.ZonedDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.ZoneDateTimeAdapter.INSTANCE")
         mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE")
         mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("DateTime", "java.time.OffsetDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE")
+        mapScalar("LocalTime", "java.time.LocalTime", "com.apollographql.adapter.core.JavaLocalTimeAdapter.INSTANCE")
+        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("CountryCode", "java.lang.String")
     }
     service("payment") {
         generateKotlinModels.set(false)
+        nullableFieldStyle.set("javaOptional")
+        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/payment")
 
@@ -190,6 +199,8 @@ apollo {
     }
     service("sandbox") {
         generateKotlinModels.set(false)
+        nullableFieldStyle.set("javaOptional")
+        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/sandbox")
 

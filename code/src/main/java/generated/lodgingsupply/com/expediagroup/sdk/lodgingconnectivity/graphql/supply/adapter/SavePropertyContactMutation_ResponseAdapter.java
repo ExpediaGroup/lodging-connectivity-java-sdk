@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -18,12 +17,15 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.SavePropertyConta
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ContactType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PhoneNumberType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ContactType_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PhoneNumberType_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SavePropertyContactMutation_ResponseAdapter {
   public enum Data implements Adapter<SavePropertyContactMutation.Data> {
@@ -34,12 +36,12 @@ public class SavePropertyContactMutation_ResponseAdapter {
     @Override
     public SavePropertyContactMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      SavePropertyContactMutation.SavePropertyContact _savePropertyContact = null;
+      Optional<SavePropertyContactMutation.SavePropertyContact> _savePropertyContact = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _savePropertyContact = new NullableAdapter<>(new ObjectAdapter<SavePropertyContactMutation.SavePropertyContact>(SavePropertyContact.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _savePropertyContact = new OptionalAdapter<>(new ObjectAdapter<SavePropertyContactMutation.SavePropertyContact>(SavePropertyContact.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -53,7 +55,7 @@ public class SavePropertyContactMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SavePropertyContactMutation.Data value) throws IOException {
       writer.name("savePropertyContact");
-      new NullableAdapter<>(new ObjectAdapter<SavePropertyContactMutation.SavePropertyContact>(SavePropertyContact.INSTANCE, false)).toJson(writer, customScalarAdapters, value.savePropertyContact);
+      new OptionalAdapter<>(new ObjectAdapter<SavePropertyContactMutation.SavePropertyContact>(SavePropertyContact.INSTANCE, false)).toJson(writer, customScalarAdapters, value.savePropertyContact);
     }
   }
 
@@ -65,17 +67,17 @@ public class SavePropertyContactMutation_ResponseAdapter {
     @Override
     public SavePropertyContactMutation.SavePropertyContact fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<String> _emailAddresses = null;
-      String _name = null;
-      List<SavePropertyContactMutation.PhoneNumber> _phoneNumbers = null;
+      Optional<List<String>> _emailAddresses = null;
+      Optional<String> _name = null;
+      Optional<List<SavePropertyContactMutation.PhoneNumber>> _phoneNumbers = null;
       ContactType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _emailAddresses = new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
-          case 1: _name = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _phoneNumbers = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<SavePropertyContactMutation.PhoneNumber>(PhoneNumber.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 0: _emailAddresses = new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 1: _name = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _phoneNumbers = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<SavePropertyContactMutation.PhoneNumber>(PhoneNumber.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           case 3: _type = ContactType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -95,13 +97,13 @@ public class SavePropertyContactMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SavePropertyContactMutation.SavePropertyContact value) throws IOException {
       writer.name("emailAddresses");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.emailAddresses);
+      new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.emailAddresses);
 
       writer.name("name");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.name);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("phoneNumbers");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<SavePropertyContactMutation.PhoneNumber>(PhoneNumber.INSTANCE, false))).toJson(writer, customScalarAdapters, value.phoneNumbers);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<SavePropertyContactMutation.PhoneNumber>(PhoneNumber.INSTANCE, false))).toJson(writer, customScalarAdapters, value.phoneNumbers);
 
       writer.name("type");
       ContactType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -116,18 +118,18 @@ public class SavePropertyContactMutation_ResponseAdapter {
     @Override
     public SavePropertyContactMutation.PhoneNumber fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _areaCode = null;
-      String _countryCode = null;
-      String _extension = null;
+      Optional<String> _areaCode = null;
+      Optional<String> _countryCode = null;
+      Optional<String> _extension = null;
       String _number = null;
       PhoneNumberType _phoneNumberType = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _areaCode = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _countryCode = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _extension = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _areaCode = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _countryCode = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _extension = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _number = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _phoneNumberType = PhoneNumberType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -150,13 +152,13 @@ public class SavePropertyContactMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SavePropertyContactMutation.PhoneNumber value) throws IOException {
       writer.name("areaCode");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.areaCode);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.areaCode);
 
       writer.name("countryCode");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.countryCode);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.countryCode);
 
       writer.name("extension");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.extension);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.extension);
 
       writer.name("number");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.number);

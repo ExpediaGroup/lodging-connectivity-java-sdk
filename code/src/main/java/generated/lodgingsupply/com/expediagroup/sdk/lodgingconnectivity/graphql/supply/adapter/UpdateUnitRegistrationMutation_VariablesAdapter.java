@@ -6,14 +6,13 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.UpdateUnitRegistrationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.UpdateUnitRegistrationInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.IdSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.UpdateUnitRegistrationInput_InputAdapter;
 import java.io.IOException;
 
@@ -26,10 +25,8 @@ public enum UpdateUnitRegistrationMutation_VariablesAdapter {
     IdSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.propertyIdSource);
     writer.name("registration");
     new ObjectAdapter<UpdateUnitRegistrationInput>(UpdateUnitRegistrationInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.registration);
-    if (value.forceSave instanceof Optional.Present) {
-      writer.name("forceSave");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.forceSave);
-    }
+    writer.name("forceSave");
+    OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.forceSave);
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
   }

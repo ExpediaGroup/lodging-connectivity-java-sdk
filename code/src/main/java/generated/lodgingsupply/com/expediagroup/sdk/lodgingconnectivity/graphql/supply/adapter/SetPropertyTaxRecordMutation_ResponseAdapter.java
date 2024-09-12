@@ -10,17 +10,19 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.SetPropertyTaxRecordMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SetPropertyTaxRecordMutation_ResponseAdapter {
   public enum Data implements Adapter<SetPropertyTaxRecordMutation.Data> {
@@ -31,12 +33,12 @@ public class SetPropertyTaxRecordMutation_ResponseAdapter {
     @Override
     public SetPropertyTaxRecordMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      SetPropertyTaxRecordMutation.SetPropertyTaxRecord _setPropertyTaxRecord = null;
+      Optional<SetPropertyTaxRecordMutation.SetPropertyTaxRecord> _setPropertyTaxRecord = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _setPropertyTaxRecord = new NullableAdapter<>(new ObjectAdapter<SetPropertyTaxRecordMutation.SetPropertyTaxRecord>(SetPropertyTaxRecord.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _setPropertyTaxRecord = new OptionalAdapter<>(new ObjectAdapter<SetPropertyTaxRecordMutation.SetPropertyTaxRecord>(SetPropertyTaxRecord.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -50,7 +52,7 @@ public class SetPropertyTaxRecordMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SetPropertyTaxRecordMutation.Data value) throws IOException {
       writer.name("setPropertyTaxRecord");
-      new NullableAdapter<>(new ObjectAdapter<SetPropertyTaxRecordMutation.SetPropertyTaxRecord>(SetPropertyTaxRecord.INSTANCE, false)).toJson(writer, customScalarAdapters, value.setPropertyTaxRecord);
+      new OptionalAdapter<>(new ObjectAdapter<SetPropertyTaxRecordMutation.SetPropertyTaxRecord>(SetPropertyTaxRecord.INSTANCE, false)).toJson(writer, customScalarAdapters, value.setPropertyTaxRecord);
     }
   }
 
@@ -62,13 +64,13 @@ public class SetPropertyTaxRecordMutation_ResponseAdapter {
     @Override
     public SetPropertyTaxRecordMutation.SetPropertyTaxRecord fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       List<SetPropertyTaxRecordMutation.TaxRecord> _taxRecords = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _taxRecords = new ListAdapter<>(new ObjectAdapter<SetPropertyTaxRecordMutation.TaxRecord>(TaxRecord.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -86,7 +88,7 @@ public class SetPropertyTaxRecordMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SetPropertyTaxRecordMutation.SetPropertyTaxRecord value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("taxRecords");
       new ListAdapter<>(new ObjectAdapter<SetPropertyTaxRecordMutation.TaxRecord>(TaxRecord.INSTANCE, false)).toJson(writer, customScalarAdapters, value.taxRecords);
@@ -236,13 +238,13 @@ public class SetPropertyTaxRecordMutation_ResponseAdapter {
     public SetPropertyTaxRecordMutation.Value fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _type = null;
-      String _value = null;
+      Optional<String> _value = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _value = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _value = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -262,7 +264,7 @@ public class SetPropertyTaxRecordMutation_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("value");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.value);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.value);
     }
   }
 

@@ -6,11 +6,10 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyDistrictQuery;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 
 public enum PropertyDistrictQuery_VariablesAdapter {
@@ -20,9 +19,7 @@ public enum PropertyDistrictQuery_VariablesAdapter {
       CustomScalarAdapters customScalarAdapters, boolean withDefaultValues) throws IOException {
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
-    if (value.locale instanceof Optional.Present) {
-      writer.name("locale");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.locale);
-    }
+    writer.name("locale");
+    OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.locale);
   }
 }

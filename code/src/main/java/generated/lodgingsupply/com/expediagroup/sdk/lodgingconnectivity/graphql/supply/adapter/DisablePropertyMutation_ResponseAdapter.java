@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.DisablePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class DisablePropertyMutation_ResponseAdapter {
   public enum Data implements Adapter<DisablePropertyMutation.Data> {
@@ -29,12 +31,12 @@ public class DisablePropertyMutation_ResponseAdapter {
     @Override
     public DisablePropertyMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      DisablePropertyMutation.DisableProperty _disableProperty = null;
+      Optional<DisablePropertyMutation.DisableProperty> _disableProperty = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _disableProperty = new NullableAdapter<>(new ObjectAdapter<DisablePropertyMutation.DisableProperty>(DisableProperty.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _disableProperty = new OptionalAdapter<>(new ObjectAdapter<DisablePropertyMutation.DisableProperty>(DisableProperty.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class DisablePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         DisablePropertyMutation.Data value) throws IOException {
       writer.name("disableProperty");
-      new NullableAdapter<>(new ObjectAdapter<DisablePropertyMutation.DisableProperty>(DisableProperty.INSTANCE, false)).toJson(writer, customScalarAdapters, value.disableProperty);
+      new OptionalAdapter<>(new ObjectAdapter<DisablePropertyMutation.DisableProperty>(DisableProperty.INSTANCE, false)).toJson(writer, customScalarAdapters, value.disableProperty);
     }
   }
 
@@ -60,13 +62,13 @@ public class DisablePropertyMutation_ResponseAdapter {
     @Override
     public DisablePropertyMutation.DisableProperty fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       String _id = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -84,7 +86,7 @@ public class DisablePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         DisablePropertyMutation.DisableProperty value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

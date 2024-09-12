@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class AcceptedPaymentFormsInput {
-  public final Optional<List<PaymentCardDescriptorInput>> paymentCardDescriptors;
+  public final Optional<Optional<List<PaymentCardDescriptorInput>>> paymentCardDescriptors;
 
-  public final Optional<List<PaymentInvoiceDescriptorInput>> paymentInvoiceDescriptors;
+  public final Optional<Optional<List<PaymentInvoiceDescriptorInput>>> paymentInvoiceDescriptors;
 
   private transient volatile int $hashCode;
 
@@ -23,8 +24,8 @@ public class AcceptedPaymentFormsInput {
   private transient volatile String $toString;
 
   public AcceptedPaymentFormsInput(
-      Optional<List<PaymentCardDescriptorInput>> paymentCardDescriptors,
-      Optional<List<PaymentInvoiceDescriptorInput>> paymentInvoiceDescriptors) {
+      Optional<Optional<List<PaymentCardDescriptorInput>>> paymentCardDescriptors,
+      Optional<Optional<List<PaymentInvoiceDescriptorInput>>> paymentInvoiceDescriptors) {
     this.paymentCardDescriptors = paymentCardDescriptors;
     this.paymentInvoiceDescriptors = paymentInvoiceDescriptors;
   }
@@ -72,21 +73,22 @@ public class AcceptedPaymentFormsInput {
   }
 
   public static final class Builder {
-    private Optional<List<PaymentCardDescriptorInput>> paymentCardDescriptors = Optional.absent();
+    private Optional<Optional<List<PaymentCardDescriptorInput>>> paymentCardDescriptors = Optional.empty();
 
-    private Optional<List<PaymentInvoiceDescriptorInput>> paymentInvoiceDescriptors = Optional.absent();
+    private Optional<Optional<List<PaymentInvoiceDescriptorInput>>> paymentInvoiceDescriptors = Optional.empty();
 
     Builder() {
     }
 
-    public Builder paymentCardDescriptors(List<PaymentCardDescriptorInput> paymentCardDescriptors) {
-      this.paymentCardDescriptors = Optional.present(paymentCardDescriptors);
+    public Builder paymentCardDescriptors(
+        @NotNull Optional<List<PaymentCardDescriptorInput>> paymentCardDescriptors) {
+      this.paymentCardDescriptors = Optional.of(paymentCardDescriptors);
       return this;
     }
 
     public Builder paymentInvoiceDescriptors(
-        List<PaymentInvoiceDescriptorInput> paymentInvoiceDescriptors) {
-      this.paymentInvoiceDescriptors = Optional.present(paymentInvoiceDescriptors);
+        @NotNull Optional<List<PaymentInvoiceDescriptorInput>> paymentInvoiceDescriptors) {
+      this.paymentInvoiceDescriptors = Optional.of(paymentInvoiceDescriptors);
       return this;
     }
 

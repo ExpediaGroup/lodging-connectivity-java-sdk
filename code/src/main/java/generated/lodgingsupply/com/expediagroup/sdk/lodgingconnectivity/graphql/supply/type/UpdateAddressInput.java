@@ -5,22 +5,23 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateAddressInput {
-  public final Optional<List<String>> addressLines;
+  public final Optional<Optional<List<String>>> addressLines;
 
-  public final Optional<String> administrativeArea;
+  public final Optional<Optional<String>> administrativeArea;
 
-  public final Optional<Object> countryCode;
+  public final Optional<Optional<String>> countryCode;
 
-  public final Optional<String> locality;
+  public final Optional<Optional<String>> locality;
 
-  public final Optional<String> postalCode;
+  public final Optional<Optional<String>> postalCode;
 
   private transient volatile int $hashCode;
 
@@ -28,9 +29,9 @@ public class UpdateAddressInput {
 
   private transient volatile String $toString;
 
-  public UpdateAddressInput(Optional<List<String>> addressLines,
-      Optional<String> administrativeArea, Optional<Object> countryCode, Optional<String> locality,
-      Optional<String> postalCode) {
+  public UpdateAddressInput(Optional<Optional<List<String>>> addressLines,
+      Optional<Optional<String>> administrativeArea, Optional<Optional<String>> countryCode,
+      Optional<Optional<String>> locality, Optional<Optional<String>> postalCode) {
     this.addressLines = addressLines;
     this.administrativeArea = administrativeArea;
     this.countryCode = countryCode;
@@ -93,41 +94,41 @@ public class UpdateAddressInput {
   }
 
   public static final class Builder {
-    private Optional<List<String>> addressLines = Optional.absent();
+    private Optional<Optional<List<String>>> addressLines = Optional.empty();
 
-    private Optional<String> administrativeArea = Optional.absent();
+    private Optional<Optional<String>> administrativeArea = Optional.empty();
 
-    private Optional<Object> countryCode = Optional.absent();
+    private Optional<Optional<String>> countryCode = Optional.empty();
 
-    private Optional<String> locality = Optional.absent();
+    private Optional<Optional<String>> locality = Optional.empty();
 
-    private Optional<String> postalCode = Optional.absent();
+    private Optional<Optional<String>> postalCode = Optional.empty();
 
     Builder() {
     }
 
-    public Builder addressLines(List<String> addressLines) {
-      this.addressLines = Optional.present(addressLines);
+    public Builder addressLines(@NotNull Optional<List<String>> addressLines) {
+      this.addressLines = Optional.of(addressLines);
       return this;
     }
 
-    public Builder administrativeArea(String administrativeArea) {
-      this.administrativeArea = Optional.present(administrativeArea);
+    public Builder administrativeArea(@NotNull Optional<String> administrativeArea) {
+      this.administrativeArea = Optional.of(administrativeArea);
       return this;
     }
 
-    public Builder countryCode(Object countryCode) {
-      this.countryCode = Optional.present(countryCode);
+    public Builder countryCode(@NotNull Optional<String> countryCode) {
+      this.countryCode = Optional.of(countryCode);
       return this;
     }
 
-    public Builder locality(String locality) {
-      this.locality = Optional.present(locality);
+    public Builder locality(@NotNull Optional<String> locality) {
+      this.locality = Optional.of(locality);
       return this;
     }
 
-    public Builder postalCode(String postalCode) {
-      this.postalCode = Optional.present(postalCode);
+    public Builder postalCode(@NotNull Optional<String> postalCode) {
+      this.postalCode = Optional.of(postalCode);
       return this;
     }
 

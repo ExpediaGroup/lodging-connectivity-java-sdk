@@ -9,16 +9,17 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.UnsubscribeNotificationEventTypeMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class UnsubscribeNotificationEventTypeMutation_ResponseAdapter {
   public enum Data implements Adapter<UnsubscribeNotificationEventTypeMutation.Data> {
@@ -29,12 +30,12 @@ public class UnsubscribeNotificationEventTypeMutation_ResponseAdapter {
     @Override
     public UnsubscribeNotificationEventTypeMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      UnsubscribeNotificationEventTypeMutation.UnsubscribeNotificationEventType _unsubscribeNotificationEventType = null;
+      Optional<UnsubscribeNotificationEventTypeMutation.UnsubscribeNotificationEventType> _unsubscribeNotificationEventType = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _unsubscribeNotificationEventType = new NullableAdapter<>(new ObjectAdapter<UnsubscribeNotificationEventTypeMutation.UnsubscribeNotificationEventType>(UnsubscribeNotificationEventType.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _unsubscribeNotificationEventType = new OptionalAdapter<>(new ObjectAdapter<UnsubscribeNotificationEventTypeMutation.UnsubscribeNotificationEventType>(UnsubscribeNotificationEventType.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +49,7 @@ public class UnsubscribeNotificationEventTypeMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UnsubscribeNotificationEventTypeMutation.Data value) throws IOException {
       writer.name("unsubscribeNotificationEventType");
-      new NullableAdapter<>(new ObjectAdapter<UnsubscribeNotificationEventTypeMutation.UnsubscribeNotificationEventType>(UnsubscribeNotificationEventType.INSTANCE, false)).toJson(writer, customScalarAdapters, value.unsubscribeNotificationEventType);
+      new OptionalAdapter<>(new ObjectAdapter<UnsubscribeNotificationEventTypeMutation.UnsubscribeNotificationEventType>(UnsubscribeNotificationEventType.INSTANCE, false)).toJson(writer, customScalarAdapters, value.unsubscribeNotificationEventType);
     }
   }
 

@@ -5,14 +5,15 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CancellationPolicyInput {
-  public final Optional<List<CancellationPolicyTierInput>> tiers;
+  public final Optional<Optional<List<CancellationPolicyTierInput>>> tiers;
 
   public final CancellationPolicyType type;
 
@@ -22,7 +23,7 @@ public class CancellationPolicyInput {
 
   private transient volatile String $toString;
 
-  public CancellationPolicyInput(Optional<List<CancellationPolicyTierInput>> tiers,
+  public CancellationPolicyInput(Optional<Optional<List<CancellationPolicyTierInput>>> tiers,
       CancellationPolicyType type) {
     this.tiers = tiers;
     this.type = type;
@@ -71,15 +72,15 @@ public class CancellationPolicyInput {
   }
 
   public static final class Builder {
-    private Optional<List<CancellationPolicyTierInput>> tiers = Optional.absent();
+    private Optional<Optional<List<CancellationPolicyTierInput>>> tiers = Optional.empty();
 
     private CancellationPolicyType type;
 
     Builder() {
     }
 
-    public Builder tiers(List<CancellationPolicyTierInput> tiers) {
-      this.tiers = Optional.present(tiers);
+    public Builder tiers(@NotNull Optional<List<CancellationPolicyTierInput>> tiers) {
+      this.tiers = Optional.of(tiers);
       return this;
     }
 

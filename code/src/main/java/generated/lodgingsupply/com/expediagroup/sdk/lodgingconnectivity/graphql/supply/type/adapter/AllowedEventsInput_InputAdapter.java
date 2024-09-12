@@ -7,11 +7,8 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AllowedEventsInput;
@@ -31,13 +28,13 @@ public enum AllowedEventsInput_InputAdapter implements Adapter<AllowedEventsInpu
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       AllowedEventsInput value) throws IOException {
-    if (value.maxAttendees instanceof Optional.Present) {
+    if (value.maxAttendees.isPresent()) {
       writer.name("maxAttendees");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.maxAttendees);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.maxAttendees);
     }
-    if (value.types instanceof Optional.Present) {
+    if (value.types.isPresent()) {
       writer.name("types");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.types);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.types);
     }
   }
 }

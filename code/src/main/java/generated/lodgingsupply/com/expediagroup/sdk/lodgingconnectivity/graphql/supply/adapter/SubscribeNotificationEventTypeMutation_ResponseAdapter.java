@@ -9,12 +9,12 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.SubscribeNotificationEventTypeMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.EmailAddress;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Override;
@@ -23,6 +23,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SubscribeNotificationEventTypeMutation_ResponseAdapter {
   public enum Data implements Adapter<SubscribeNotificationEventTypeMutation.Data> {
@@ -33,12 +34,12 @@ public class SubscribeNotificationEventTypeMutation_ResponseAdapter {
     @Override
     public SubscribeNotificationEventTypeMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      SubscribeNotificationEventTypeMutation.SubscribeNotificationEventType _subscribeNotificationEventType = null;
+      Optional<SubscribeNotificationEventTypeMutation.SubscribeNotificationEventType> _subscribeNotificationEventType = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _subscribeNotificationEventType = new NullableAdapter<>(new ObjectAdapter<SubscribeNotificationEventTypeMutation.SubscribeNotificationEventType>(SubscribeNotificationEventType.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _subscribeNotificationEventType = new OptionalAdapter<>(new ObjectAdapter<SubscribeNotificationEventTypeMutation.SubscribeNotificationEventType>(SubscribeNotificationEventType.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -52,7 +53,7 @@ public class SubscribeNotificationEventTypeMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SubscribeNotificationEventTypeMutation.Data value) throws IOException {
       writer.name("subscribeNotificationEventType");
-      new NullableAdapter<>(new ObjectAdapter<SubscribeNotificationEventTypeMutation.SubscribeNotificationEventType>(SubscribeNotificationEventType.INSTANCE, false)).toJson(writer, customScalarAdapters, value.subscribeNotificationEventType);
+      new OptionalAdapter<>(new ObjectAdapter<SubscribeNotificationEventTypeMutation.SubscribeNotificationEventType>(SubscribeNotificationEventType.INSTANCE, false)).toJson(writer, customScalarAdapters, value.subscribeNotificationEventType);
     }
   }
 
@@ -106,7 +107,7 @@ public class SubscribeNotificationEventTypeMutation_ResponseAdapter {
     public SubscribeNotificationEventTypeMutation.CallbackConfig fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       URL _callbackUrl = null;
-      String _contactEmail = null;
+      Optional<String> _contactEmail = null;
       String _id = null;
       Integer _requestTimeoutSeconds = null;
       LocalDateTime _secretExpirationDateTime = null;
@@ -115,7 +116,7 @@ public class SubscribeNotificationEventTypeMutation_ResponseAdapter {
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _callbackUrl = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _contactEmail = new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
+          case 1: _contactEmail = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
           case 2: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _requestTimeoutSeconds = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _secretExpirationDateTime = com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
@@ -144,7 +145,7 @@ public class SubscribeNotificationEventTypeMutation_ResponseAdapter {
       com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.callbackUrl);
 
       writer.name("contactEmail");
-      new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.contactEmail);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.contactEmail);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

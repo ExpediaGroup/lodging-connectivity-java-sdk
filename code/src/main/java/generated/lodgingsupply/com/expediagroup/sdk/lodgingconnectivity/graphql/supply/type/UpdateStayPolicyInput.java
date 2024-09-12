@@ -5,31 +5,32 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateStayPolicyInput {
-  public final Optional<UpdateCheckInPolicyInput> checkInPolicy;
+  public final Optional<Optional<UpdateCheckInPolicyInput>> checkInPolicy;
 
-  public final Optional<UpdateCheckOutPolicyInput> checkOutPolicy;
+  public final Optional<Optional<UpdateCheckOutPolicyInput>> checkOutPolicy;
 
-  public final Optional<UpdateChildrenPolicyInput> childrenPolicy;
+  public final Optional<Optional<UpdateChildrenPolicyInput>> childrenPolicy;
 
-  public final Optional<List<UpdateCustomStayPolicyInput>> customPolicies;
+  public final Optional<Optional<List<UpdateCustomStayPolicyInput>>> customPolicies;
 
-  public final Optional<UpdateEventsPolicyInput> eventsPolicy;
+  public final Optional<Optional<UpdateEventsPolicyInput>> eventsPolicy;
 
-  public final Optional<UpdateMaxOccupancyPolicyInput> maxOccupancyPolicy;
+  public final Optional<Optional<UpdateMaxOccupancyPolicyInput>> maxOccupancyPolicy;
 
-  public final Optional<UpdatePetsPolicyInput> petsPolicy;
+  public final Optional<Optional<UpdatePetsPolicyInput>> petsPolicy;
 
-  public final Optional<URL> rentalAgreementUrl;
+  public final Optional<Optional<URL>> rentalAgreementUrl;
 
-  public final Optional<UpdateSmokingPolicyInput> smokingPolicy;
+  public final Optional<Optional<UpdateSmokingPolicyInput>> smokingPolicy;
 
   private transient volatile int $hashCode;
 
@@ -37,14 +38,15 @@ public class UpdateStayPolicyInput {
 
   private transient volatile String $toString;
 
-  public UpdateStayPolicyInput(Optional<UpdateCheckInPolicyInput> checkInPolicy,
-      Optional<UpdateCheckOutPolicyInput> checkOutPolicy,
-      Optional<UpdateChildrenPolicyInput> childrenPolicy,
-      Optional<List<UpdateCustomStayPolicyInput>> customPolicies,
-      Optional<UpdateEventsPolicyInput> eventsPolicy,
-      Optional<UpdateMaxOccupancyPolicyInput> maxOccupancyPolicy,
-      Optional<UpdatePetsPolicyInput> petsPolicy, Optional<URL> rentalAgreementUrl,
-      Optional<UpdateSmokingPolicyInput> smokingPolicy) {
+  public UpdateStayPolicyInput(Optional<Optional<UpdateCheckInPolicyInput>> checkInPolicy,
+      Optional<Optional<UpdateCheckOutPolicyInput>> checkOutPolicy,
+      Optional<Optional<UpdateChildrenPolicyInput>> childrenPolicy,
+      Optional<Optional<List<UpdateCustomStayPolicyInput>>> customPolicies,
+      Optional<Optional<UpdateEventsPolicyInput>> eventsPolicy,
+      Optional<Optional<UpdateMaxOccupancyPolicyInput>> maxOccupancyPolicy,
+      Optional<Optional<UpdatePetsPolicyInput>> petsPolicy,
+      Optional<Optional<URL>> rentalAgreementUrl,
+      Optional<Optional<UpdateSmokingPolicyInput>> smokingPolicy) {
     this.checkInPolicy = checkInPolicy;
     this.checkOutPolicy = checkOutPolicy;
     this.childrenPolicy = childrenPolicy;
@@ -127,69 +129,71 @@ public class UpdateStayPolicyInput {
   }
 
   public static final class Builder {
-    private Optional<UpdateCheckInPolicyInput> checkInPolicy = Optional.absent();
+    private Optional<Optional<UpdateCheckInPolicyInput>> checkInPolicy = Optional.empty();
 
-    private Optional<UpdateCheckOutPolicyInput> checkOutPolicy = Optional.absent();
+    private Optional<Optional<UpdateCheckOutPolicyInput>> checkOutPolicy = Optional.empty();
 
-    private Optional<UpdateChildrenPolicyInput> childrenPolicy = Optional.absent();
+    private Optional<Optional<UpdateChildrenPolicyInput>> childrenPolicy = Optional.empty();
 
-    private Optional<List<UpdateCustomStayPolicyInput>> customPolicies = Optional.absent();
+    private Optional<Optional<List<UpdateCustomStayPolicyInput>>> customPolicies = Optional.empty();
 
-    private Optional<UpdateEventsPolicyInput> eventsPolicy = Optional.absent();
+    private Optional<Optional<UpdateEventsPolicyInput>> eventsPolicy = Optional.empty();
 
-    private Optional<UpdateMaxOccupancyPolicyInput> maxOccupancyPolicy = Optional.absent();
+    private Optional<Optional<UpdateMaxOccupancyPolicyInput>> maxOccupancyPolicy = Optional.empty();
 
-    private Optional<UpdatePetsPolicyInput> petsPolicy = Optional.absent();
+    private Optional<Optional<UpdatePetsPolicyInput>> petsPolicy = Optional.empty();
 
-    private Optional<URL> rentalAgreementUrl = Optional.absent();
+    private Optional<Optional<URL>> rentalAgreementUrl = Optional.empty();
 
-    private Optional<UpdateSmokingPolicyInput> smokingPolicy = Optional.absent();
+    private Optional<Optional<UpdateSmokingPolicyInput>> smokingPolicy = Optional.empty();
 
     Builder() {
     }
 
-    public Builder checkInPolicy(UpdateCheckInPolicyInput checkInPolicy) {
-      this.checkInPolicy = Optional.present(checkInPolicy);
+    public Builder checkInPolicy(@NotNull Optional<UpdateCheckInPolicyInput> checkInPolicy) {
+      this.checkInPolicy = Optional.of(checkInPolicy);
       return this;
     }
 
-    public Builder checkOutPolicy(UpdateCheckOutPolicyInput checkOutPolicy) {
-      this.checkOutPolicy = Optional.present(checkOutPolicy);
+    public Builder checkOutPolicy(@NotNull Optional<UpdateCheckOutPolicyInput> checkOutPolicy) {
+      this.checkOutPolicy = Optional.of(checkOutPolicy);
       return this;
     }
 
-    public Builder childrenPolicy(UpdateChildrenPolicyInput childrenPolicy) {
-      this.childrenPolicy = Optional.present(childrenPolicy);
+    public Builder childrenPolicy(@NotNull Optional<UpdateChildrenPolicyInput> childrenPolicy) {
+      this.childrenPolicy = Optional.of(childrenPolicy);
       return this;
     }
 
-    public Builder customPolicies(List<UpdateCustomStayPolicyInput> customPolicies) {
-      this.customPolicies = Optional.present(customPolicies);
+    public Builder customPolicies(
+        @NotNull Optional<List<UpdateCustomStayPolicyInput>> customPolicies) {
+      this.customPolicies = Optional.of(customPolicies);
       return this;
     }
 
-    public Builder eventsPolicy(UpdateEventsPolicyInput eventsPolicy) {
-      this.eventsPolicy = Optional.present(eventsPolicy);
+    public Builder eventsPolicy(@NotNull Optional<UpdateEventsPolicyInput> eventsPolicy) {
+      this.eventsPolicy = Optional.of(eventsPolicy);
       return this;
     }
 
-    public Builder maxOccupancyPolicy(UpdateMaxOccupancyPolicyInput maxOccupancyPolicy) {
-      this.maxOccupancyPolicy = Optional.present(maxOccupancyPolicy);
+    public Builder maxOccupancyPolicy(
+        @NotNull Optional<UpdateMaxOccupancyPolicyInput> maxOccupancyPolicy) {
+      this.maxOccupancyPolicy = Optional.of(maxOccupancyPolicy);
       return this;
     }
 
-    public Builder petsPolicy(UpdatePetsPolicyInput petsPolicy) {
-      this.petsPolicy = Optional.present(petsPolicy);
+    public Builder petsPolicy(@NotNull Optional<UpdatePetsPolicyInput> petsPolicy) {
+      this.petsPolicy = Optional.of(petsPolicy);
       return this;
     }
 
-    public Builder rentalAgreementUrl(URL rentalAgreementUrl) {
-      this.rentalAgreementUrl = Optional.present(rentalAgreementUrl);
+    public Builder rentalAgreementUrl(@NotNull Optional<URL> rentalAgreementUrl) {
+      this.rentalAgreementUrl = Optional.of(rentalAgreementUrl);
       return this;
     }
 
-    public Builder smokingPolicy(UpdateSmokingPolicyInput smokingPolicy) {
-      this.smokingPolicy = Optional.present(smokingPolicy);
+    public Builder smokingPolicy(@NotNull Optional<UpdateSmokingPolicyInput> smokingPolicy) {
+      this.smokingPolicy = Optional.of(smokingPolicy);
       return this;
     }
 

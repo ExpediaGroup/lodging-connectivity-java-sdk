@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AmenityInput;
@@ -34,23 +31,23 @@ public enum UpdateUnitSpacesBathroomInput_InputAdapter implements Adapter<Update
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateUnitSpacesBathroomInput value) throws IOException {
-    if (value.amenities instanceof Optional.Present) {
+    if (value.amenities.isPresent()) {
       writer.name("amenities");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<AmenityInput>(AmenityInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.amenities);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<AmenityInput>(AmenityInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.amenities);
     }
     writer.name("id");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
-    if (value.order instanceof Optional.Present) {
+    if (value.order.isPresent()) {
       writer.name("order");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.order);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.order);
     }
-    if (value.text instanceof Optional.Present) {
+    if (value.text.isPresent()) {
       writer.name("text");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<TextInput>(TextInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.text);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<TextInput>(TextInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.text);
     }
-    if (value.type instanceof Optional.Present) {
+    if (value.type.isPresent()) {
       writer.name("type");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.type);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.type);
     }
   }
 }

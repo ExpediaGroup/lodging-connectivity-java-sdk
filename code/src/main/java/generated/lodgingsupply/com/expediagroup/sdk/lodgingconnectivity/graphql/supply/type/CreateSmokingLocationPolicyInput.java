@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateSmokingLocationPolicyInput {
   public final Boolean allowed;
 
-  public final Optional<List<LocalizedStringInput>> allowedNote;
+  public final Optional<Optional<List<LocalizedStringInput>>> allowedNote;
 
   private transient volatile int $hashCode;
 
@@ -24,7 +25,7 @@ public class CreateSmokingLocationPolicyInput {
   private transient volatile String $toString;
 
   public CreateSmokingLocationPolicyInput(Boolean allowed,
-      Optional<List<LocalizedStringInput>> allowedNote) {
+      Optional<Optional<List<LocalizedStringInput>>> allowedNote) {
     this.allowed = allowed;
     this.allowedNote = allowedNote;
   }
@@ -74,7 +75,7 @@ public class CreateSmokingLocationPolicyInput {
   public static final class Builder {
     private Boolean allowed;
 
-    private Optional<List<LocalizedStringInput>> allowedNote = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> allowedNote = Optional.empty();
 
     Builder() {
     }
@@ -84,8 +85,8 @@ public class CreateSmokingLocationPolicyInput {
       return this;
     }
 
-    public Builder allowedNote(List<LocalizedStringInput> allowedNote) {
-      this.allowedNote = Optional.present(allowedNote);
+    public Builder allowedNote(@NotNull Optional<List<LocalizedStringInput>> allowedNote) {
+      this.allowedNote = Optional.of(allowedNote);
       return this;
     }
 

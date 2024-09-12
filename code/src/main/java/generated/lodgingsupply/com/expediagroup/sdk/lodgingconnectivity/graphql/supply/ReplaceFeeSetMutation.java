@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class ReplaceFeeSetMutation implements Mutation<ReplaceFeeSetMutation.Data> {
   public static final String OPERATION_ID = "b0e1bea0f3b00934d7f451b88c97d5b760abb87968b08db1744af5421077fdd4";
@@ -140,7 +141,7 @@ public class ReplaceFeeSetMutation implements Mutation<ReplaceFeeSetMutation.Dat
   }
 
   public static class Data implements Mutation.Data {
-    public ReplaceFeeSet replaceFeeSet;
+    public Optional<ReplaceFeeSet> replaceFeeSet;
 
     private transient volatile int $hashCode;
 
@@ -148,7 +149,7 @@ public class ReplaceFeeSetMutation implements Mutation<ReplaceFeeSetMutation.Dat
 
     private transient volatile String $toString;
 
-    public Data(ReplaceFeeSet replaceFeeSet) {
+    public Data(Optional<ReplaceFeeSet> replaceFeeSet) {
       this.replaceFeeSet = replaceFeeSet;
     }
 
@@ -188,7 +189,7 @@ public class ReplaceFeeSetMutation implements Mutation<ReplaceFeeSetMutation.Dat
   }
 
   public static class ReplaceFeeSet {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     private transient volatile int $hashCode;
 
@@ -196,7 +197,7 @@ public class ReplaceFeeSetMutation implements Mutation<ReplaceFeeSetMutation.Dat
 
     private transient volatile String $toString;
 
-    public ReplaceFeeSet(String clientMutationId) {
+    public ReplaceFeeSet(Optional<String> clientMutationId) {
       this.clientMutationId = clientMutationId;
     }
 

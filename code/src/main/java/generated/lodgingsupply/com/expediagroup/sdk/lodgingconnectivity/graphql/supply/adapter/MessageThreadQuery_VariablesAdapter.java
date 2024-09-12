@@ -6,15 +6,14 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.MessageThreadQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.MessageThreadMessagesOrderByInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.MessageThreadMessagesOrderByInput_InputAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 
 public enum MessageThreadQuery_VariablesAdapter {
@@ -24,17 +23,11 @@ public enum MessageThreadQuery_VariablesAdapter {
       CustomScalarAdapters customScalarAdapters, boolean withDefaultValues) throws IOException {
     writer.name("messageThreadId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.messageThreadId);
-    if (value.messagesLimit instanceof Optional.Present) {
-      writer.name("messagesLimit");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.messagesLimit);
-    }
-    if (value.messagesCursor instanceof Optional.Present) {
-      writer.name("messagesCursor");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.messagesCursor);
-    }
-    if (value.orderMessagesBy instanceof Optional.Present) {
-      writer.name("orderMessagesBy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<MessageThreadMessagesOrderByInput>(MessageThreadMessagesOrderByInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.orderMessagesBy);
-    }
+    writer.name("messagesLimit");
+    OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.messagesLimit);
+    writer.name("messagesCursor");
+    OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.messagesCursor);
+    writer.name("orderMessagesBy");
+    new OptionalAdapter<>(new ObjectAdapter<MessageThreadMessagesOrderByInput>(MessageThreadMessagesOrderByInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.orderMessagesBy);
   }
 }

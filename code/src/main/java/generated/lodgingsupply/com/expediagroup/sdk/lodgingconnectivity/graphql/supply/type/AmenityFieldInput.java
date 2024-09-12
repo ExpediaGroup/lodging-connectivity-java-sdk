@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class AmenityFieldInput {
   public final String key;
 
-  public final Optional<AmenityFieldValueInput> value;
+  public final Optional<Optional<AmenityFieldValueInput>> value;
 
   private transient volatile int $hashCode;
 
@@ -21,7 +22,7 @@ public class AmenityFieldInput {
 
   private transient volatile String $toString;
 
-  public AmenityFieldInput(String key, Optional<AmenityFieldValueInput> value) {
+  public AmenityFieldInput(String key, Optional<Optional<AmenityFieldValueInput>> value) {
     this.key = key;
     this.value = value;
   }
@@ -71,7 +72,7 @@ public class AmenityFieldInput {
   public static final class Builder {
     private String key;
 
-    private Optional<AmenityFieldValueInput> value = Optional.absent();
+    private Optional<Optional<AmenityFieldValueInput>> value = Optional.empty();
 
     Builder() {
     }
@@ -81,8 +82,8 @@ public class AmenityFieldInput {
       return this;
     }
 
-    public Builder value(AmenityFieldValueInput value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<AmenityFieldValueInput> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

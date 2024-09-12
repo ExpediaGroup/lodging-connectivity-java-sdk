@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class RefundReservationMutation implements Mutation<RefundReservationMutation.Data> {
   public static final String OPERATION_ID = "a6ca2f12361ffa0cbd70282e225bd061bfa04cc8286e9c3b034ca48bf519b99c";
@@ -196,7 +197,7 @@ public class RefundReservationMutation implements Mutation<RefundReservationMuta
     /**
      * Identifier associated with the reservation changed
      */
-    public Reservation reservation;
+    public Optional<Reservation> reservation;
 
     private transient volatile int $hashCode;
 
@@ -204,7 +205,7 @@ public class RefundReservationMutation implements Mutation<RefundReservationMuta
 
     private transient volatile String $toString;
 
-    public RefundReservation(Reservation reservation) {
+    public RefundReservation(Optional<Reservation> reservation) {
       this.reservation = reservation;
     }
 

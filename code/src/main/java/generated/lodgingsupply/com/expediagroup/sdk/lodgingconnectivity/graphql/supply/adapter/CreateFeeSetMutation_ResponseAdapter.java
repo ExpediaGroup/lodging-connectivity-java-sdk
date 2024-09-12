@@ -10,12 +10,12 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.CreateFeeSetMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CurrencyCode;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Decimal;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeAgeCategory;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeBusinessModel;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeChargeDuration;
@@ -24,14 +24,17 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeA
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeBusinessModel_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeChargeDuration_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeChargeType_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CreateFeeSetMutation_ResponseAdapter {
   public enum Data implements Adapter<CreateFeeSetMutation.Data> {
@@ -42,12 +45,12 @@ public class CreateFeeSetMutation_ResponseAdapter {
     @Override
     public CreateFeeSetMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      CreateFeeSetMutation.CreateFeeSet _createFeeSet = null;
+      Optional<CreateFeeSetMutation.CreateFeeSet> _createFeeSet = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _createFeeSet = new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.CreateFeeSet>(CreateFeeSet.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _createFeeSet = new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.CreateFeeSet>(CreateFeeSet.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -61,7 +64,7 @@ public class CreateFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateFeeSetMutation.Data value) throws IOException {
       writer.name("createFeeSet");
-      new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.CreateFeeSet>(CreateFeeSet.INSTANCE, false)).toJson(writer, customScalarAdapters, value.createFeeSet);
+      new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.CreateFeeSet>(CreateFeeSet.INSTANCE, false)).toJson(writer, customScalarAdapters, value.createFeeSet);
     }
   }
 
@@ -73,13 +76,13 @@ public class CreateFeeSetMutation_ResponseAdapter {
     @Override
     public CreateFeeSetMutation.CreateFeeSet fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       CreateFeeSetMutation.FeeSet _feeSet = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _feeSet = new ObjectAdapter<CreateFeeSetMutation.FeeSet>(FeeSet.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -97,7 +100,7 @@ public class CreateFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateFeeSetMutation.CreateFeeSet value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("feeSet");
       new ObjectAdapter<CreateFeeSetMutation.FeeSet>(FeeSet.INSTANCE, false).toJson(writer, customScalarAdapters, value.feeSet);
@@ -166,26 +169,26 @@ public class CreateFeeSetMutation_ResponseAdapter {
     @Override
     public CreateFeeSetMutation.Fee fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      FeeAgeCategory _ageCategory = null;
+      Optional<FeeAgeCategory> _ageCategory = null;
       List<CreateFeeSetMutation.Charge> _charges = null;
       String _name = null;
-      CreateFeeSetMutation.Restrictions _restrictions = null;
+      Optional<CreateFeeSetMutation.Restrictions> _restrictions = null;
       String _scope = null;
-      Boolean _taxable = null;
+      Optional<Boolean> _taxable = null;
       String _type = null;
-      Boolean _variesByLengthOfStay = null;
+      Optional<Boolean> _variesByLengthOfStay = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _ageCategory = new NullableAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 0: _ageCategory = new OptionalAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 1: _charges = new ListAdapter<>(new ObjectAdapter<CreateFeeSetMutation.Charge>(Charge.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 2: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _restrictions = new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 3: _restrictions = new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 4: _scope = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _taxable = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _taxable = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 6: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 7: _variesByLengthOfStay = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _variesByLengthOfStay = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -211,7 +214,7 @@ public class CreateFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateFeeSetMutation.Fee value) throws IOException {
       writer.name("ageCategory");
-      new NullableAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.ageCategory);
+      new OptionalAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.ageCategory);
 
       writer.name("charges");
       new ListAdapter<>(new ObjectAdapter<CreateFeeSetMutation.Charge>(Charge.INSTANCE, false)).toJson(writer, customScalarAdapters, value.charges);
@@ -220,19 +223,19 @@ public class CreateFeeSetMutation_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("restrictions");
-      new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
 
       writer.name("scope");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.scope);
 
       writer.name("taxable");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.taxable);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.taxable);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("variesByLengthOfStay");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
     }
   }
 
@@ -245,16 +248,16 @@ public class CreateFeeSetMutation_ResponseAdapter {
     public CreateFeeSetMutation.Charge fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       FeeChargeDuration _duration = null;
-      CreateFeeSetMutation.FlatAmount _flatAmount = null;
-      Object _percentage = null;
+      Optional<CreateFeeSetMutation.FlatAmount> _flatAmount = null;
+      Optional<String> _percentage = null;
       FeeChargeType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _duration = FeeChargeDuration_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _flatAmount = new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _percentage = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _flatAmount = new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _percentage = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).fromJson(reader, customScalarAdapters); break;
           case 3: _type = FeeChargeType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -278,10 +281,10 @@ public class CreateFeeSetMutation_ResponseAdapter {
       FeeChargeDuration_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.duration);
 
       writer.name("flatAmount");
-      new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
+      new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
 
       writer.name("percentage");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.percentage);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).toJson(writer, customScalarAdapters, value.percentage);
 
       writer.name("type");
       FeeChargeType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -296,13 +299,13 @@ public class CreateFeeSetMutation_ResponseAdapter {
     @Override
     public CreateFeeSetMutation.FlatAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -321,7 +324,7 @@ public class CreateFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateFeeSetMutation.FlatAmount value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -336,16 +339,16 @@ public class CreateFeeSetMutation_ResponseAdapter {
     @Override
     public CreateFeeSetMutation.Restrictions fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      CreateFeeSetMutation.DateRange _dateRange = null;
-      CreateFeeSetMutation.ExtraGuestRange _extraGuestRange = null;
-      CreateFeeSetMutation.RangeOfNight _rangeOfNight = null;
+      Optional<CreateFeeSetMutation.DateRange> _dateRange = null;
+      Optional<CreateFeeSetMutation.ExtraGuestRange> _extraGuestRange = null;
+      Optional<CreateFeeSetMutation.RangeOfNight> _rangeOfNight = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _dateRange = new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.DateRange>(DateRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _extraGuestRange = new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _rangeOfNight = new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.RangeOfNight>(RangeOfNight.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _dateRange = new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.DateRange>(DateRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _extraGuestRange = new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _rangeOfNight = new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.RangeOfNight>(RangeOfNight.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -361,13 +364,13 @@ public class CreateFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateFeeSetMutation.Restrictions value) throws IOException {
       writer.name("dateRange");
-      new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.DateRange>(DateRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.dateRange);
+      new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.DateRange>(DateRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.dateRange);
 
       writer.name("extraGuestRange");
-      new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.extraGuestRange);
+      new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.extraGuestRange);
 
       writer.name("rangeOfNight");
-      new NullableAdapter<>(new ObjectAdapter<CreateFeeSetMutation.RangeOfNight>(RangeOfNight.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rangeOfNight);
+      new OptionalAdapter<>(new ObjectAdapter<CreateFeeSetMutation.RangeOfNight>(RangeOfNight.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rangeOfNight);
     }
   }
 
@@ -379,14 +382,14 @@ public class CreateFeeSetMutation_ResponseAdapter {
     @Override
     public CreateFeeSetMutation.DateRange fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _from = null;
-      Object _to = null;
+      LocalDate _from = null;
+      Optional<LocalDate> _to = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _from = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _to = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _from = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
+          case 1: _to = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -403,10 +406,10 @@ public class CreateFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateFeeSetMutation.DateRange value) throws IOException {
       writer.name("from");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
 
       writer.name("to");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.to);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.to);
     }
   }
 

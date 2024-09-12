@@ -6,18 +6,19 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDeletePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxDeletePropertyMutation_ResponseAdapter {
   public enum Data implements Adapter<SandboxDeletePropertyMutation.Data> {
@@ -61,12 +62,12 @@ public class SandboxDeletePropertyMutation_ResponseAdapter {
     @Override
     public SandboxDeletePropertyMutation.DeleteProperty fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -80,7 +81,7 @@ public class SandboxDeletePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SandboxDeletePropertyMutation.DeleteProperty value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
     }
   }
 }

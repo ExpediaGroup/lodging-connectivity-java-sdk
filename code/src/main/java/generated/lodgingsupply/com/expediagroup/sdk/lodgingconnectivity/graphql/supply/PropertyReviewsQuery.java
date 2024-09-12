@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyReviewsQuery_ResponseAdapter;
@@ -27,6 +26,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
   public static final String OPERATION_ID = "4e10c6c073e4b81fba1eeefe1e8f3c6e1c71bfeebaf80323d335f80a763ac112";
@@ -221,13 +221,13 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
   public static final class Builder {
     private String propertyId;
 
-    private Optional<ReviewsOrderBy> orderBy = Optional.absent();
+    private Optional<ReviewsOrderBy> orderBy = Optional.empty();
 
-    private Optional<ReviewFilter> filter = Optional.absent();
+    private Optional<ReviewFilter> filter = Optional.empty();
 
     private Integer pageSize;
 
-    private Optional<String> after = Optional.absent();
+    private Optional<String> after = Optional.empty();
 
     Builder() {
     }
@@ -238,12 +238,12 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     }
 
     public Builder orderBy(ReviewsOrderBy orderBy) {
-      this.orderBy = Optional.present(orderBy);
+      this.orderBy = Optional.of(orderBy);
       return this;
     }
 
     public Builder filter(ReviewFilter filter) {
-      this.filter = Optional.present(filter);
+      this.filter = Optional.of(filter);
       return this;
     }
 
@@ -253,7 +253,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     }
 
     public Builder after(String after) {
-      this.after = Optional.present(after);
+      this.after = Optional.of(after);
       return this;
     }
 
@@ -263,7 +263,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -271,7 +271,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -362,9 +362,9 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     /**
      * Represents the next page cursor in the list, Empty if no more pages available
      */
-    public String cursor;
+    public Optional<String> cursor;
 
-    public List<Review> reviews;
+    public List<Optional<Review>> reviews;
 
     /**
      * Total number of reviews returned that meet the search criteria
@@ -377,7 +377,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Reviews(String cursor, List<Review> reviews, Integer totalCount) {
+    public Reviews(Optional<String> cursor, List<Optional<Review>> reviews, Integer totalCount) {
       this.cursor = cursor;
       this.reviews = reviews;
       this.totalCount = totalCount;
@@ -435,7 +435,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     /**
      * brandName to which review belongs
      */
-    public ReviewBrand brandNameV2;
+    public Optional<ReviewBrand> brandNameV2;
 
     /**
      * review create time in ISO format
@@ -450,7 +450,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     /**
      * flag to determine if partner would be able to respond to this review
      */
-    public Boolean isEligibleForResponse;
+    public Optional<Boolean> isEligibleForResponse;
 
     /**
      * review updated time in ISO format
@@ -460,32 +460,32 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     /**
      * review media content
      */
-    public Media media;
+    public Optional<Media> media;
 
     /**
      * the property Ids
      */
-    public List<PropertyId> propertyId;
+    public Optional<List<Optional<PropertyId>>> propertyId;
 
     /**
      * Reservation Details. The reservation details are from a cached source. This is not live reservation
      */
-    public Reservation reservation;
+    public Optional<Reservation> reservation;
 
     /**
      * The owner submitted review response
      */
-    public Response response;
+    public Optional<Response> response;
 
     /**
      * source of the review. PLATFORM or IMPORTED
      */
-    public String source;
+    public Optional<String> source;
 
     /**
      * categorized ratings
      */
-    public List<StarRating> starRatings;
+    public List<Optional<StarRating>> starRatings;
 
     /**
      * status of the review
@@ -495,7 +495,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     /**
      * title of the review
      */
-    public Title title;
+    public Optional<Title> title;
 
     private transient volatile int $hashCode;
 
@@ -503,10 +503,11 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Review(Body body, ReviewBrand brandNameV2, String createdDateTime, String id,
-        Boolean isEligibleForResponse, String lastUpdatedDateTime, Media media,
-        List<PropertyId> propertyId, Reservation reservation, Response response, String source,
-        List<StarRating> starRatings, String status, Title title) {
+    public Review(Body body, Optional<ReviewBrand> brandNameV2, String createdDateTime, String id,
+        Optional<Boolean> isEligibleForResponse, String lastUpdatedDateTime, Optional<Media> media,
+        Optional<List<Optional<PropertyId>>> propertyId, Optional<Reservation> reservation,
+        Optional<Response> response, Optional<String> source,
+        List<Optional<StarRating>> starRatings, String status, Optional<Title> title) {
       this.body = body;
       this.brandNameV2 = brandNameV2;
       this.createdDateTime = createdDateTime;
@@ -669,11 +670,11 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     /**
      * caption of image
      */
-    public Caption caption;
+    public Optional<Caption> caption;
 
-    public String highResolutionUrl;
+    public Optional<String> highResolutionUrl;
 
-    public String thumbnailUrl;
+    public Optional<String> thumbnailUrl;
 
     private transient volatile int $hashCode;
 
@@ -681,7 +682,8 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Media(Caption caption, String highResolutionUrl, String thumbnailUrl) {
+    public Media(Optional<Caption> caption, Optional<String> highResolutionUrl,
+        Optional<String> thumbnailUrl) {
       this.caption = caption;
       this.highResolutionUrl = highResolutionUrl;
       this.thumbnailUrl = thumbnailUrl;
@@ -786,7 +788,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
   }
 
   public static class PropertyId {
-    public String id;
+    public Optional<String> id;
 
     public IdSource idSource;
 
@@ -796,7 +798,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public PropertyId(String id, IdSource idSource) {
+    public PropertyId(Optional<String> id, IdSource idSource) {
       this.id = id;
       this.idSource = idSource;
     }
@@ -844,24 +846,24 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
     /**
      * checkIn date for the reservation
      */
-    public LocalDate checkInDate;
+    public Optional<LocalDate> checkInDate;
 
     /**
      * checkout date for the reservation
      */
-    public LocalDate checkOutDate;
+    public Optional<LocalDate> checkOutDate;
 
     /**
      * guest information
      */
-    public PrimaryGuest primaryGuest;
+    public Optional<PrimaryGuest> primaryGuest;
 
     public List<ReservationId> reservationIds;
 
     /**
      * status of the reservation
      */
-    public String status;
+    public Optional<String> status;
 
     private transient volatile int $hashCode;
 
@@ -869,8 +871,9 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Reservation(LocalDate checkInDate, LocalDate checkOutDate, PrimaryGuest primaryGuest,
-        List<ReservationId> reservationIds, String status) {
+    public Reservation(Optional<LocalDate> checkInDate, Optional<LocalDate> checkOutDate,
+        Optional<PrimaryGuest> primaryGuest, List<ReservationId> reservationIds,
+        Optional<String> status) {
       this.checkInDate = checkInDate;
       this.checkOutDate = checkOutDate;
       this.primaryGuest = primaryGuest;
@@ -991,7 +994,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
   }
 
   public static class ReservationId {
-    public String id;
+    public Optional<String> id;
 
     public IdSource idSource;
 
@@ -1001,7 +1004,7 @@ public class PropertyReviewsQuery implements Query<PropertyReviewsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public ReservationId(String id, IdSource idSource) {
+    public ReservationId(Optional<String> id, IdSource idSource) {
       this.id = id;
       this.idSource = idSource;
     }

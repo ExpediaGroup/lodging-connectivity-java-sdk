@@ -6,7 +6,6 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -28,8 +27,8 @@ public enum DateRangeInput_InputAdapter implements Adapter<DateRangeInput> {
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       DateRangeInput value) throws IOException {
     writer.name("from");
-    Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+    com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
     writer.name("to");
-    Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.to);
+    com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.to);
   }
 }

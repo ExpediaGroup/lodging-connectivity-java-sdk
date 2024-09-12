@@ -22,6 +22,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class UpdateNotificationCallbackConfigMutation implements Mutation<UpdateNotificationCallbackConfigMutation.Data> {
   public static final String OPERATION_ID = "bb039ada74284beb70b8c28ee2a23bf7a2ccebf0a902fdd71c5aced2acbe466f";
@@ -152,7 +153,7 @@ public class UpdateNotificationCallbackConfigMutation implements Mutation<Update
     /**
      * Update notification callback configuration profile attributes (callbackUrl, apiKey, requestTimeout) based on callbackConfigId.
      */
-    public UpdateNotificationCallbackConfig updateNotificationCallbackConfig;
+    public Optional<UpdateNotificationCallbackConfig> updateNotificationCallbackConfig;
 
     private transient volatile int $hashCode;
 
@@ -160,7 +161,7 @@ public class UpdateNotificationCallbackConfigMutation implements Mutation<Update
 
     private transient volatile String $toString;
 
-    public Data(UpdateNotificationCallbackConfig updateNotificationCallbackConfig) {
+    public Data(Optional<UpdateNotificationCallbackConfig> updateNotificationCallbackConfig) {
       this.updateNotificationCallbackConfig = updateNotificationCallbackConfig;
     }
 
@@ -259,7 +260,7 @@ public class UpdateNotificationCallbackConfigMutation implements Mutation<Update
     /**
      * Email address for correspondence
      */
-    public String contactEmail;
+    public Optional<String> contactEmail;
 
     /**
      * Callback url where the notification will be delivered
@@ -282,7 +283,7 @@ public class UpdateNotificationCallbackConfigMutation implements Mutation<Update
 
     private transient volatile String $toString;
 
-    public CallbackConfig(String id, String contactEmail, URL callbackUrl,
+    public CallbackConfig(String id, Optional<String> contactEmail, URL callbackUrl,
         Integer requestTimeoutSeconds, LocalDateTime secretExpirationDateTime) {
       this.id = id;
       this.contactEmail = contactEmail;

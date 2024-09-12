@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class EnablePropertyMutation implements Mutation<EnablePropertyMutation.Data> {
   public static final String OPERATION_ID = "5d2f15482afc90bb012faaa2f8e1669d683372add134e0ed60efefec66cbfa1a";
@@ -141,7 +142,7 @@ public class EnablePropertyMutation implements Mutation<EnablePropertyMutation.D
   }
 
   public static class Data implements Mutation.Data {
-    public EnableProperty enableProperty;
+    public Optional<EnableProperty> enableProperty;
 
     private transient volatile int $hashCode;
 
@@ -149,7 +150,7 @@ public class EnablePropertyMutation implements Mutation<EnablePropertyMutation.D
 
     private transient volatile String $toString;
 
-    public Data(EnableProperty enableProperty) {
+    public Data(Optional<EnableProperty> enableProperty) {
       this.enableProperty = enableProperty;
     }
 
@@ -189,7 +190,7 @@ public class EnablePropertyMutation implements Mutation<EnablePropertyMutation.D
   }
 
   public static class EnableProperty {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     public String id;
 
@@ -199,7 +200,7 @@ public class EnablePropertyMutation implements Mutation<EnablePropertyMutation.D
 
     private transient volatile String $toString;
 
-    public EnableProperty(String clientMutationId, String id) {
+    public EnableProperty(Optional<String> clientMutationId, String id) {
       this.clientMutationId = clientMutationId;
       this.id = id;
     }

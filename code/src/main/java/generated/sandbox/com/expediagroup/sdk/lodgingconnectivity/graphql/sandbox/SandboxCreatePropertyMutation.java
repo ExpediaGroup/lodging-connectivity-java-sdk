@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class SandboxCreatePropertyMutation implements Mutation<SandboxCreatePropertyMutation.Data> {
   public static final String OPERATION_ID = "66bb7982aa92161644cab3a5c5096b603f42730cb21a6a01837a6743f842b1cb";
@@ -201,7 +202,7 @@ public class SandboxCreatePropertyMutation implements Mutation<SandboxCreateProp
     /**
      * Client mutation ID. Optional value in the input that is echoed back in the response.
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     /**
      * The created property.
@@ -214,7 +215,7 @@ public class SandboxCreatePropertyMutation implements Mutation<SandboxCreateProp
 
     private transient volatile String $toString;
 
-    public CreateProperty(String clientMutationId, Property property) {
+    public CreateProperty(Optional<String> clientMutationId, Property property) {
       this.clientMutationId = clientMutationId;
       this.property = property;
     }

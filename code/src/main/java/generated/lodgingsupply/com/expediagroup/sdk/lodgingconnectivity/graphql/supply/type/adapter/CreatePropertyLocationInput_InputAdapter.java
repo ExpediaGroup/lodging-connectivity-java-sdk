@@ -6,11 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CoordinatesInput;
@@ -33,9 +30,9 @@ public enum CreatePropertyLocationInput_InputAdapter implements Adapter<CreatePr
       CreatePropertyLocationInput value) throws IOException {
     writer.name("coordinates");
     new ObjectAdapter<CoordinatesInput>(CoordinatesInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.coordinates);
-    if (value.hideExactLocation instanceof Optional.Present) {
+    if (value.hideExactLocation.isPresent()) {
       writer.name("hideExactLocation");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.hideExactLocation);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.hideExactLocation);
     }
   }
 }

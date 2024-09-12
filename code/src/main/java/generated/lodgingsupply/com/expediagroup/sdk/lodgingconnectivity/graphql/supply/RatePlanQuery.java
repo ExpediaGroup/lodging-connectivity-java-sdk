@@ -28,7 +28,10 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   public static final String OPERATION_ID = "3dbb3dc598a73fd08bcaa8e3f337085335fd90be6311f1f083f97d451ac19d0a";
@@ -239,7 +242,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   }
 
   public static class Data implements Query.Data {
-    public RatePlan ratePlan;
+    public Optional<RatePlan> ratePlan;
 
     private transient volatile int $hashCode;
 
@@ -247,7 +250,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Data(RatePlan ratePlan) {
+    public Data(Optional<RatePlan> ratePlan) {
       this.ratePlan = ratePlan;
     }
 
@@ -289,11 +292,11 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   public static class RatePlan {
     public String id;
 
-    public Object lastUpdateDateTime;
+    public OffsetDateTime lastUpdateDateTime;
 
     public String name;
 
-    public Boolean paymentScheduleApplicable;
+    public Optional<Boolean> paymentScheduleApplicable;
 
     public PricingModel pricingModel;
 
@@ -301,7 +304,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     public RatePlanStatus status;
 
-    public Boolean taxInclusive;
+    public Optional<Boolean> taxInclusive;
 
     public RatePlanType type;
 
@@ -309,17 +312,17 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     public List<String> valueAdds;
 
-    public Integer baseRateGuestCount;
+    public Optional<Integer> baseRateGuestCount;
 
-    public Object creationDateTime;
+    public OffsetDateTime creationDateTime;
 
     public List<DistributionRule> distributionRules;
 
-    public FeeSet feeSet;
+    public Optional<FeeSet> feeSet;
 
     public Restrictions1 restrictions;
 
-    public CancellationPolicyConfig cancellationPolicyConfig;
+    public Optional<CancellationPolicyConfig> cancellationPolicyConfig;
 
     private transient volatile int $hashCode;
 
@@ -327,12 +330,13 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public RatePlan(String id, Object lastUpdateDateTime, String name,
-        Boolean paymentScheduleApplicable, PricingModel pricingModel, String propertyId,
-        RatePlanStatus status, Boolean taxInclusive, RatePlanType type, String unitId,
-        List<String> valueAdds, Integer baseRateGuestCount, Object creationDateTime,
-        List<DistributionRule> distributionRules, FeeSet feeSet, Restrictions1 restrictions,
-        CancellationPolicyConfig cancellationPolicyConfig) {
+    public RatePlan(String id, OffsetDateTime lastUpdateDateTime, String name,
+        Optional<Boolean> paymentScheduleApplicable, PricingModel pricingModel, String propertyId,
+        RatePlanStatus status, Optional<Boolean> taxInclusive, RatePlanType type, String unitId,
+        List<String> valueAdds, Optional<Integer> baseRateGuestCount,
+        OffsetDateTime creationDateTime, List<DistributionRule> distributionRules,
+        Optional<FeeSet> feeSet, Restrictions1 restrictions,
+        Optional<CancellationPolicyConfig> cancellationPolicyConfig) {
       this.id = id;
       this.lastUpdateDateTime = lastUpdateDateTime;
       this.name = name;
@@ -580,17 +584,17 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     public String scope;
 
-    public Boolean taxable;
+    public Optional<Boolean> taxable;
 
     public String type;
 
-    public Boolean variesByLengthOfStay;
+    public Optional<Boolean> variesByLengthOfStay;
 
-    public FeeAgeCategory ageCategory;
+    public Optional<FeeAgeCategory> ageCategory;
 
     public List<Charge> charges;
 
-    public Restrictions restrictions;
+    public Optional<Restrictions> restrictions;
 
     private transient volatile int $hashCode;
 
@@ -598,9 +602,9 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Fee(String name, String scope, Boolean taxable, String type,
-        Boolean variesByLengthOfStay, FeeAgeCategory ageCategory, List<Charge> charges,
-        Restrictions restrictions) {
+    public Fee(String name, String scope, Optional<Boolean> taxable, String type,
+        Optional<Boolean> variesByLengthOfStay, Optional<FeeAgeCategory> ageCategory,
+        List<Charge> charges, Optional<Restrictions> restrictions) {
       this.name = name;
       this.scope = scope;
       this.taxable = taxable;
@@ -677,9 +681,9 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   public static class Charge {
     public FeeChargeDuration duration;
 
-    public FlatAmount flatAmount;
+    public Optional<FlatAmount> flatAmount;
 
-    public Object percentage;
+    public Optional<String> percentage;
 
     public FeeChargeType type;
 
@@ -689,8 +693,8 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Charge(FeeChargeDuration duration, FlatAmount flatAmount, Object percentage,
-        FeeChargeType type) {
+    public Charge(FeeChargeDuration duration, Optional<FlatAmount> flatAmount,
+        Optional<String> percentage, FeeChargeType type) {
       this.duration = duration;
       this.flatAmount = flatAmount;
       this.percentage = percentage;
@@ -748,7 +752,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -761,7 +765,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public FlatAmount(Object amount, String currencyCode) {
+    public FlatAmount(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -806,11 +810,11 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   }
 
   public static class Restrictions {
-    public DateRange dateRange;
+    public Optional<DateRange> dateRange;
 
-    public ExtraGuestRange extraGuestRange;
+    public Optional<ExtraGuestRange> extraGuestRange;
 
-    public RangeOfNight rangeOfNight;
+    public Optional<RangeOfNight> rangeOfNight;
 
     private transient volatile int $hashCode;
 
@@ -818,8 +822,8 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Restrictions(DateRange dateRange, ExtraGuestRange extraGuestRange,
-        RangeOfNight rangeOfNight) {
+    public Restrictions(Optional<DateRange> dateRange, Optional<ExtraGuestRange> extraGuestRange,
+        Optional<RangeOfNight> rangeOfNight) {
       this.dateRange = dateRange;
       this.extraGuestRange = extraGuestRange;
       this.rangeOfNight = rangeOfNight;
@@ -869,9 +873,9 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   }
 
   public static class DateRange {
-    public Object from;
+    public LocalDate from;
 
-    public Object to;
+    public Optional<LocalDate> to;
 
     private transient volatile int $hashCode;
 
@@ -879,7 +883,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public DateRange(Object from, Object to) {
+    public DateRange(LocalDate from, Optional<LocalDate> to) {
       this.from = from;
       this.to = to;
     }
@@ -1034,15 +1038,15 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   }
 
   public static class Restrictions1 {
-    public AdvanceBookingDays advanceBookingDays;
+    public Optional<AdvanceBookingDays> advanceBookingDays;
 
-    public LengthOfStay lengthOfStay;
+    public Optional<LengthOfStay> lengthOfStay;
 
-    public Boolean mobileOnly;
+    public Optional<Boolean> mobileOnly;
 
-    public ReservationDates reservationDates;
+    public Optional<ReservationDates> reservationDates;
 
-    public TravelDates travelDates;
+    public Optional<TravelDates> travelDates;
 
     private transient volatile int $hashCode;
 
@@ -1050,8 +1054,9 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Restrictions1(AdvanceBookingDays advanceBookingDays, LengthOfStay lengthOfStay,
-        Boolean mobileOnly, ReservationDates reservationDates, TravelDates travelDates) {
+    public Restrictions1(Optional<AdvanceBookingDays> advanceBookingDays,
+        Optional<LengthOfStay> lengthOfStay, Optional<Boolean> mobileOnly,
+        Optional<ReservationDates> reservationDates, Optional<TravelDates> travelDates) {
       this.advanceBookingDays = advanceBookingDays;
       this.lengthOfStay = lengthOfStay;
       this.mobileOnly = mobileOnly;
@@ -1221,9 +1226,9 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   }
 
   public static class ReservationDates {
-    public Object from;
+    public LocalDate from;
 
-    public Object to;
+    public LocalDate to;
 
     private transient volatile int $hashCode;
 
@@ -1231,7 +1236,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public ReservationDates(Object from, Object to) {
+    public ReservationDates(LocalDate from, LocalDate to) {
       this.from = from;
       this.to = to;
     }
@@ -1276,9 +1281,9 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
   }
 
   public static class TravelDates {
-    public Object from;
+    public LocalDate from;
 
-    public Object to;
+    public LocalDate to;
 
     private transient volatile int $hashCode;
 
@@ -1286,7 +1291,7 @@ public class RatePlanQuery implements Query<RatePlanQuery.Data> {
 
     private transient volatile String $toString;
 
-    public TravelDates(Object from, Object to) {
+    public TravelDates(LocalDate from, LocalDate to) {
       this.from = from;
       this.to = to;
     }

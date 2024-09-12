@@ -5,24 +5,25 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateUnitSpacesInput {
-  public final Optional<List<CreateUnitSpacesBathroomInput>> bathrooms;
+  public final Optional<Optional<List<CreateUnitSpacesBathroomInput>>> bathrooms;
 
-  public final Optional<List<CreateUnitSpacesBedroomInput>> bedrooms;
+  public final Optional<Optional<List<CreateUnitSpacesBedroomInput>>> bedrooms;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
-  public final Optional<List<CreateUnitSpacesDiningRoomInput>> diningRooms;
+  public final Optional<Optional<List<CreateUnitSpacesDiningRoomInput>>> diningRooms;
 
-  public final Optional<List<CreateUnitSpacesLivingRoomInput>> livingRooms;
+  public final Optional<Optional<List<CreateUnitSpacesLivingRoomInput>>> livingRooms;
 
-  public final Optional<List<CreateUnitSpacesOfficeInput>> offices;
+  public final Optional<Optional<List<CreateUnitSpacesOfficeInput>>> offices;
 
   public final String propertyId;
 
@@ -34,11 +35,13 @@ public class CreateUnitSpacesInput {
 
   private transient volatile String $toString;
 
-  public CreateUnitSpacesInput(Optional<List<CreateUnitSpacesBathroomInput>> bathrooms,
-      Optional<List<CreateUnitSpacesBedroomInput>> bedrooms, Optional<String> clientMutationId,
-      Optional<List<CreateUnitSpacesDiningRoomInput>> diningRooms,
-      Optional<List<CreateUnitSpacesLivingRoomInput>> livingRooms,
-      Optional<List<CreateUnitSpacesOfficeInput>> offices, String propertyId, String unitId) {
+  public CreateUnitSpacesInput(Optional<Optional<List<CreateUnitSpacesBathroomInput>>> bathrooms,
+      Optional<Optional<List<CreateUnitSpacesBedroomInput>>> bedrooms,
+      Optional<Optional<String>> clientMutationId,
+      Optional<Optional<List<CreateUnitSpacesDiningRoomInput>>> diningRooms,
+      Optional<Optional<List<CreateUnitSpacesLivingRoomInput>>> livingRooms,
+      Optional<Optional<List<CreateUnitSpacesOfficeInput>>> offices, String propertyId,
+      String unitId) {
     this.bathrooms = bathrooms;
     this.bedrooms = bedrooms;
     this.clientMutationId = clientMutationId;
@@ -116,17 +119,17 @@ public class CreateUnitSpacesInput {
   }
 
   public static final class Builder {
-    private Optional<List<CreateUnitSpacesBathroomInput>> bathrooms = Optional.absent();
+    private Optional<Optional<List<CreateUnitSpacesBathroomInput>>> bathrooms = Optional.empty();
 
-    private Optional<List<CreateUnitSpacesBedroomInput>> bedrooms = Optional.absent();
+    private Optional<Optional<List<CreateUnitSpacesBedroomInput>>> bedrooms = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
-    private Optional<List<CreateUnitSpacesDiningRoomInput>> diningRooms = Optional.absent();
+    private Optional<Optional<List<CreateUnitSpacesDiningRoomInput>>> diningRooms = Optional.empty();
 
-    private Optional<List<CreateUnitSpacesLivingRoomInput>> livingRooms = Optional.absent();
+    private Optional<Optional<List<CreateUnitSpacesLivingRoomInput>>> livingRooms = Optional.empty();
 
-    private Optional<List<CreateUnitSpacesOfficeInput>> offices = Optional.absent();
+    private Optional<Optional<List<CreateUnitSpacesOfficeInput>>> offices = Optional.empty();
 
     private String propertyId;
 
@@ -135,33 +138,35 @@ public class CreateUnitSpacesInput {
     Builder() {
     }
 
-    public Builder bathrooms(List<CreateUnitSpacesBathroomInput> bathrooms) {
-      this.bathrooms = Optional.present(bathrooms);
+    public Builder bathrooms(@NotNull Optional<List<CreateUnitSpacesBathroomInput>> bathrooms) {
+      this.bathrooms = Optional.of(bathrooms);
       return this;
     }
 
-    public Builder bedrooms(List<CreateUnitSpacesBedroomInput> bedrooms) {
-      this.bedrooms = Optional.present(bedrooms);
+    public Builder bedrooms(@NotNull Optional<List<CreateUnitSpacesBedroomInput>> bedrooms) {
+      this.bedrooms = Optional.of(bedrooms);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
-    public Builder diningRooms(List<CreateUnitSpacesDiningRoomInput> diningRooms) {
-      this.diningRooms = Optional.present(diningRooms);
+    public Builder diningRooms(
+        @NotNull Optional<List<CreateUnitSpacesDiningRoomInput>> diningRooms) {
+      this.diningRooms = Optional.of(diningRooms);
       return this;
     }
 
-    public Builder livingRooms(List<CreateUnitSpacesLivingRoomInput> livingRooms) {
-      this.livingRooms = Optional.present(livingRooms);
+    public Builder livingRooms(
+        @NotNull Optional<List<CreateUnitSpacesLivingRoomInput>> livingRooms) {
+      this.livingRooms = Optional.of(livingRooms);
       return this;
     }
 
-    public Builder offices(List<CreateUnitSpacesOfficeInput> offices) {
-      this.offices = Optional.present(offices);
+    public Builder offices(@NotNull Optional<List<CreateUnitSpacesOfficeInput>> offices) {
+      this.offices = Optional.of(offices);
       return this;
     }
 

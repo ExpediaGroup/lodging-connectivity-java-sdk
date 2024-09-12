@@ -20,6 +20,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class SandboxChangeReservationStayDatesMutation implements Mutation<SandboxChangeReservationStayDatesMutation.Data> {
   public static final String OPERATION_ID = "406fa26080210c4b65a75297adab3cc870b28b740c847a38290396c3eebf35a9";
@@ -205,7 +206,7 @@ public class SandboxChangeReservationStayDatesMutation implements Mutation<Sandb
     /**
      * Client mutation ID. Optional value in the input that is echoed back in the response.
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     /**
      * The reservation that was updated.
@@ -218,7 +219,7 @@ public class SandboxChangeReservationStayDatesMutation implements Mutation<Sandb
 
     private transient volatile String $toString;
 
-    public ChangeReservationStayDates(String clientMutationId, Reservation reservation) {
+    public ChangeReservationStayDates(Optional<String> clientMutationId, Reservation reservation) {
       this.clientMutationId = clientMutationId;
       this.reservation = reservation;
     }

@@ -5,36 +5,37 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateRatePlanInput {
-  public final Optional<Integer> baseRateGuestCount;
+  public final Optional<Optional<Integer>> baseRateGuestCount;
 
   public final String cancellationPolicyConfigId;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final List<RatePlanDistributionRuleInput> distributionRules;
 
-  public final Optional<String> feeSetId;
+  public final Optional<Optional<String>> feeSetId;
 
   public final String name;
 
-  public final Optional<Boolean> paymentScheduleApplicable;
+  public final Optional<Optional<Boolean>> paymentScheduleApplicable;
 
   public final PricingModel pricingModel;
 
   public final String propertyId;
 
-  public final Optional<CreateRatePlanRestrictionsInput> restrictions;
+  public final Optional<Optional<CreateRatePlanRestrictionsInput>> restrictions;
 
-  public final Optional<Boolean> taxInclusive;
+  public final Optional<Optional<Boolean>> taxInclusive;
 
   public final RatePlanType type;
 
@@ -48,12 +49,13 @@ public class CreateRatePlanInput {
 
   private transient volatile String $toString;
 
-  public CreateRatePlanInput(Optional<Integer> baseRateGuestCount,
-      String cancellationPolicyConfigId, Optional<String> clientMutationId,
-      List<RatePlanDistributionRuleInput> distributionRules, Optional<String> feeSetId, String name,
-      Optional<Boolean> paymentScheduleApplicable, PricingModel pricingModel, String propertyId,
-      Optional<CreateRatePlanRestrictionsInput> restrictions, Optional<Boolean> taxInclusive,
-      RatePlanType type, String unitId, List<String> valueAdds) {
+  public CreateRatePlanInput(Optional<Optional<Integer>> baseRateGuestCount,
+      String cancellationPolicyConfigId, Optional<Optional<String>> clientMutationId,
+      List<RatePlanDistributionRuleInput> distributionRules, Optional<Optional<String>> feeSetId,
+      String name, Optional<Optional<Boolean>> paymentScheduleApplicable, PricingModel pricingModel,
+      String propertyId, Optional<Optional<CreateRatePlanRestrictionsInput>> restrictions,
+      Optional<Optional<Boolean>> taxInclusive, RatePlanType type, String unitId,
+      List<String> valueAdds) {
     this.baseRateGuestCount = baseRateGuestCount;
     this.cancellationPolicyConfigId = cancellationPolicyConfigId;
     this.clientMutationId = clientMutationId;
@@ -161,27 +163,27 @@ public class CreateRatePlanInput {
   }
 
   public static final class Builder {
-    private Optional<Integer> baseRateGuestCount = Optional.absent();
+    private Optional<Optional<Integer>> baseRateGuestCount = Optional.empty();
 
     private String cancellationPolicyConfigId;
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private List<RatePlanDistributionRuleInput> distributionRules;
 
-    private Optional<String> feeSetId = Optional.absent();
+    private Optional<Optional<String>> feeSetId = Optional.empty();
 
     private String name;
 
-    private Optional<Boolean> paymentScheduleApplicable = Optional.absent();
+    private Optional<Optional<Boolean>> paymentScheduleApplicable = Optional.empty();
 
     private PricingModel pricingModel;
 
     private String propertyId;
 
-    private Optional<CreateRatePlanRestrictionsInput> restrictions = Optional.absent();
+    private Optional<Optional<CreateRatePlanRestrictionsInput>> restrictions = Optional.empty();
 
-    private Optional<Boolean> taxInclusive = Optional.absent();
+    private Optional<Optional<Boolean>> taxInclusive = Optional.empty();
 
     private RatePlanType type;
 
@@ -192,8 +194,8 @@ public class CreateRatePlanInput {
     Builder() {
     }
 
-    public Builder baseRateGuestCount(Integer baseRateGuestCount) {
-      this.baseRateGuestCount = Optional.present(baseRateGuestCount);
+    public Builder baseRateGuestCount(@NotNull Optional<Integer> baseRateGuestCount) {
+      this.baseRateGuestCount = Optional.of(baseRateGuestCount);
       return this;
     }
 
@@ -202,8 +204,8 @@ public class CreateRatePlanInput {
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -212,8 +214,8 @@ public class CreateRatePlanInput {
       return this;
     }
 
-    public Builder feeSetId(String feeSetId) {
-      this.feeSetId = Optional.present(feeSetId);
+    public Builder feeSetId(@NotNull Optional<String> feeSetId) {
+      this.feeSetId = Optional.of(feeSetId);
       return this;
     }
 
@@ -222,8 +224,8 @@ public class CreateRatePlanInput {
       return this;
     }
 
-    public Builder paymentScheduleApplicable(Boolean paymentScheduleApplicable) {
-      this.paymentScheduleApplicable = Optional.present(paymentScheduleApplicable);
+    public Builder paymentScheduleApplicable(@NotNull Optional<Boolean> paymentScheduleApplicable) {
+      this.paymentScheduleApplicable = Optional.of(paymentScheduleApplicable);
       return this;
     }
 
@@ -237,13 +239,13 @@ public class CreateRatePlanInput {
       return this;
     }
 
-    public Builder restrictions(CreateRatePlanRestrictionsInput restrictions) {
-      this.restrictions = Optional.present(restrictions);
+    public Builder restrictions(@NotNull Optional<CreateRatePlanRestrictionsInput> restrictions) {
+      this.restrictions = Optional.of(restrictions);
       return this;
     }
 
-    public Builder taxInclusive(Boolean taxInclusive) {
-      this.taxInclusive = Optional.present(taxInclusive);
+    public Builder taxInclusive(@NotNull Optional<Boolean> taxInclusive) {
+      this.taxInclusive = Optional.of(taxInclusive);
       return this;
     }
 

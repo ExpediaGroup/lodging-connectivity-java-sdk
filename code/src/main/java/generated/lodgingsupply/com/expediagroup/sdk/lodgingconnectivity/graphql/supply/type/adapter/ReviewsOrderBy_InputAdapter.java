@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReviewsOrderBy;
@@ -29,29 +26,29 @@ public enum ReviewsOrderBy_InputAdapter implements Adapter<ReviewsOrderBy> {
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       ReviewsOrderBy value) throws IOException {
-    if (value.createdDateTime instanceof Optional.Present) {
+    if (value.createdDateTime.isPresent()) {
       writer.name("createdDateTime");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.createdDateTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.createdDateTime);
     }
-    if (value.lastUpdatedDateTime instanceof Optional.Present) {
+    if (value.lastUpdatedDateTime.isPresent()) {
       writer.name("lastUpdatedDateTime");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.lastUpdatedDateTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.lastUpdatedDateTime);
     }
-    if (value.ownerResponseCreatedDateTime instanceof Optional.Present) {
+    if (value.ownerResponseCreatedDateTime.isPresent()) {
       writer.name("ownerResponseCreatedDateTime");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.ownerResponseCreatedDateTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.ownerResponseCreatedDateTime);
     }
-    if (value.ownerResponseLastUpdatedDateTime instanceof Optional.Present) {
+    if (value.ownerResponseLastUpdatedDateTime.isPresent()) {
       writer.name("ownerResponseLastUpdatedDateTime");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.ownerResponseLastUpdatedDateTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.ownerResponseLastUpdatedDateTime);
     }
-    if (value.reservationCheckInDate instanceof Optional.Present) {
+    if (value.reservationCheckInDate.isPresent()) {
       writer.name("reservationCheckInDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reservationCheckInDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reservationCheckInDate);
     }
-    if (value.reservationCheckOutDate instanceof Optional.Present) {
+    if (value.reservationCheckOutDate.isPresent()) {
       writer.name("reservationCheckOutDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reservationCheckOutDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reservationCheckOutDate);
     }
   }
 }

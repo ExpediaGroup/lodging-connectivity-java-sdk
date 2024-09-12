@@ -10,12 +10,12 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyFeeSetsQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CurrencyCode;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Decimal;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeAgeCategory;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeBusinessModel;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeChargeDuration;
@@ -24,14 +24,17 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeA
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeBusinessModel_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeChargeDuration_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeChargeType_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyFeeSetsQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyFeeSetsQuery.Data> {
@@ -42,12 +45,12 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     @Override
     public PropertyFeeSetsQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyFeeSetsQuery.Property _property = null;
+      Optional<PropertyFeeSetsQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -61,7 +64,7 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyFeeSetsQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -73,12 +76,12 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     @Override
     public PropertyFeeSetsQuery.Property fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyFeeSetsQuery.FeeSets _feeSets = null;
+      Optional<PropertyFeeSetsQuery.FeeSets> _feeSets = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _feeSets = new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FeeSets>(FeeSets.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _feeSets = new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FeeSets>(FeeSets.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -92,7 +95,7 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyFeeSetsQuery.Property value) throws IOException {
       writer.name("feeSets");
-      new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FeeSets>(FeeSets.INSTANCE, false)).toJson(writer, customScalarAdapters, value.feeSets);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FeeSets>(FeeSets.INSTANCE, false)).toJson(writer, customScalarAdapters, value.feeSets);
     }
   }
 
@@ -198,26 +201,26 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     @Override
     public PropertyFeeSetsQuery.Fee fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      FeeAgeCategory _ageCategory = null;
+      Optional<FeeAgeCategory> _ageCategory = null;
       List<PropertyFeeSetsQuery.Charge> _charges = null;
       String _name = null;
-      PropertyFeeSetsQuery.Restrictions _restrictions = null;
+      Optional<PropertyFeeSetsQuery.Restrictions> _restrictions = null;
       String _scope = null;
-      Boolean _taxable = null;
+      Optional<Boolean> _taxable = null;
       String _type = null;
-      Boolean _variesByLengthOfStay = null;
+      Optional<Boolean> _variesByLengthOfStay = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _ageCategory = new NullableAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 0: _ageCategory = new OptionalAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 1: _charges = new ListAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Charge>(Charge.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 2: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _restrictions = new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 3: _restrictions = new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 4: _scope = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _taxable = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _taxable = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 6: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 7: _variesByLengthOfStay = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _variesByLengthOfStay = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -243,7 +246,7 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyFeeSetsQuery.Fee value) throws IOException {
       writer.name("ageCategory");
-      new NullableAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.ageCategory);
+      new OptionalAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.ageCategory);
 
       writer.name("charges");
       new ListAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Charge>(Charge.INSTANCE, false)).toJson(writer, customScalarAdapters, value.charges);
@@ -252,19 +255,19 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("restrictions");
-      new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
 
       writer.name("scope");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.scope);
 
       writer.name("taxable");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.taxable);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.taxable);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("variesByLengthOfStay");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
     }
   }
 
@@ -277,16 +280,16 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     public PropertyFeeSetsQuery.Charge fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       FeeChargeDuration _duration = null;
-      PropertyFeeSetsQuery.FlatAmount _flatAmount = null;
-      Object _percentage = null;
+      Optional<PropertyFeeSetsQuery.FlatAmount> _flatAmount = null;
+      Optional<String> _percentage = null;
       FeeChargeType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _duration = FeeChargeDuration_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _flatAmount = new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _percentage = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _flatAmount = new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _percentage = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).fromJson(reader, customScalarAdapters); break;
           case 3: _type = FeeChargeType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -310,10 +313,10 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
       FeeChargeDuration_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.duration);
 
       writer.name("flatAmount");
-      new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
 
       writer.name("percentage");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.percentage);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).toJson(writer, customScalarAdapters, value.percentage);
 
       writer.name("type");
       FeeChargeType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -328,13 +331,13 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     @Override
     public PropertyFeeSetsQuery.FlatAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -353,7 +356,7 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyFeeSetsQuery.FlatAmount value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -368,16 +371,16 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     @Override
     public PropertyFeeSetsQuery.Restrictions fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyFeeSetsQuery.DateRange _dateRange = null;
-      PropertyFeeSetsQuery.ExtraGuestRange _extraGuestRange = null;
-      PropertyFeeSetsQuery.RangeOfNight _rangeOfNight = null;
+      Optional<PropertyFeeSetsQuery.DateRange> _dateRange = null;
+      Optional<PropertyFeeSetsQuery.ExtraGuestRange> _extraGuestRange = null;
+      Optional<PropertyFeeSetsQuery.RangeOfNight> _rangeOfNight = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _dateRange = new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.DateRange>(DateRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _extraGuestRange = new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _rangeOfNight = new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _dateRange = new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.DateRange>(DateRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _extraGuestRange = new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _rangeOfNight = new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -393,13 +396,13 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyFeeSetsQuery.Restrictions value) throws IOException {
       writer.name("dateRange");
-      new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.DateRange>(DateRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.dateRange);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.DateRange>(DateRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.dateRange);
 
       writer.name("extraGuestRange");
-      new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.extraGuestRange);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.extraGuestRange);
 
       writer.name("rangeOfNight");
-      new NullableAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rangeOfNight);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyFeeSetsQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rangeOfNight);
     }
   }
 
@@ -411,14 +414,14 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     @Override
     public PropertyFeeSetsQuery.DateRange fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _from = null;
-      Object _to = null;
+      LocalDate _from = null;
+      Optional<LocalDate> _to = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _from = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _to = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _from = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
+          case 1: _to = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -435,10 +438,10 @@ public class PropertyFeeSetsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyFeeSetsQuery.DateRange value) throws IOException {
       writer.name("from");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
 
       writer.name("to");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.to);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.to);
     }
   }
 

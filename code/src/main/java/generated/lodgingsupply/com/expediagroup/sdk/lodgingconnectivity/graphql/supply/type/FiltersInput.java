@@ -5,22 +5,23 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class FiltersInput {
-  public final Optional<PromotionStatus> status;
+  public final Optional<Optional<PromotionStatus>> status;
 
-  public final Optional<List<DiscountType>> discountTypes;
+  public final Optional<Optional<List<DiscountType>>> discountTypes;
 
-  public final Optional<String> id;
+  public final Optional<Optional<String>> id;
 
-  public final Optional<BookingLocalDateTimeInput> bookingLocalDateTime;
+  public final Optional<Optional<BookingLocalDateTimeInput>> bookingLocalDateTime;
 
-  public final Optional<TravelDateInput> travelDate;
+  public final Optional<Optional<TravelDateInput>> travelDate;
 
   private transient volatile int $hashCode;
 
@@ -28,9 +29,10 @@ public class FiltersInput {
 
   private transient volatile String $toString;
 
-  public FiltersInput(Optional<PromotionStatus> status, Optional<List<DiscountType>> discountTypes,
-      Optional<String> id, Optional<BookingLocalDateTimeInput> bookingLocalDateTime,
-      Optional<TravelDateInput> travelDate) {
+  public FiltersInput(Optional<Optional<PromotionStatus>> status,
+      Optional<Optional<List<DiscountType>>> discountTypes, Optional<Optional<String>> id,
+      Optional<Optional<BookingLocalDateTimeInput>> bookingLocalDateTime,
+      Optional<Optional<TravelDateInput>> travelDate) {
     this.status = status;
     this.discountTypes = discountTypes;
     this.id = id;
@@ -93,15 +95,15 @@ public class FiltersInput {
   }
 
   public static final class Builder {
-    private Optional<PromotionStatus> status = Optional.absent();
+    private Optional<Optional<PromotionStatus>> status = Optional.empty();
 
-    private Optional<List<DiscountType>> discountTypes = Optional.absent();
+    private Optional<Optional<List<DiscountType>>> discountTypes = Optional.empty();
 
-    private Optional<String> id = Optional.absent();
+    private Optional<Optional<String>> id = Optional.empty();
 
-    private Optional<BookingLocalDateTimeInput> bookingLocalDateTime = Optional.absent();
+    private Optional<Optional<BookingLocalDateTimeInput>> bookingLocalDateTime = Optional.empty();
 
-    private Optional<TravelDateInput> travelDate = Optional.absent();
+    private Optional<Optional<TravelDateInput>> travelDate = Optional.empty();
 
     Builder() {
     }
@@ -109,24 +111,24 @@ public class FiltersInput {
     /**
      * Status of the promotions.
      */
-    public Builder status(PromotionStatus status) {
-      this.status = Optional.present(status);
+    public Builder status(@NotNull Optional<PromotionStatus> status) {
+      this.status = Optional.of(status);
       return this;
     }
 
     /**
      * List of discount types.
      */
-    public Builder discountTypes(List<DiscountType> discountTypes) {
-      this.discountTypes = Optional.present(discountTypes);
+    public Builder discountTypes(@NotNull Optional<List<DiscountType>> discountTypes) {
+      this.discountTypes = Optional.of(discountTypes);
       return this;
     }
 
     /**
      * Id of the Promotion as stored in the Expedia platform.
      */
-    public Builder id(String id) {
-      this.id = Optional.present(id);
+    public Builder id(@NotNull Optional<String> id) {
+      this.id = Optional.of(id);
       return this;
     }
 
@@ -134,16 +136,17 @@ public class FiltersInput {
      * The Booking Window being queried for in Date Time format.
      * YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
      */
-    public Builder bookingLocalDateTime(BookingLocalDateTimeInput bookingLocalDateTime) {
-      this.bookingLocalDateTime = Optional.present(bookingLocalDateTime);
+    public Builder bookingLocalDateTime(
+        @NotNull Optional<BookingLocalDateTimeInput> bookingLocalDateTime) {
+      this.bookingLocalDateTime = Optional.of(bookingLocalDateTime);
       return this;
     }
 
     /**
      * The Travel date window being queried for in Date format YYYY-MM-DD
      */
-    public Builder travelDate(TravelDateInput travelDate) {
-      this.travelDate = Optional.present(travelDate);
+    public Builder travelDate(@NotNull Optional<TravelDateInput> travelDate) {
+      this.travelDate = Optional.of(travelDate);
       return this;
     }
 

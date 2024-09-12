@@ -5,23 +5,24 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * All fields are nullable, send only the one relevant field value for each amenity field key.
  */
 public class AmenityFieldValueInput {
-  public final Optional<AmenityFieldFeeValueInput> feeValue;
+  public final Optional<Optional<AmenityFieldFeeValueInput>> feeValue;
 
-  public final Optional<AmenityFieldMeasurementValueInput> measurementValue;
+  public final Optional<Optional<AmenityFieldMeasurementValueInput>> measurementValue;
 
-  public final Optional<List<LocalizedStringInput>> textValue;
+  public final Optional<Optional<List<LocalizedStringInput>>> textValue;
 
-  public final Optional<String> value;
+  public final Optional<Optional<String>> value;
 
   private transient volatile int $hashCode;
 
@@ -29,9 +30,9 @@ public class AmenityFieldValueInput {
 
   private transient volatile String $toString;
 
-  public AmenityFieldValueInput(Optional<AmenityFieldFeeValueInput> feeValue,
-      Optional<AmenityFieldMeasurementValueInput> measurementValue,
-      Optional<List<LocalizedStringInput>> textValue, Optional<String> value) {
+  public AmenityFieldValueInput(Optional<Optional<AmenityFieldFeeValueInput>> feeValue,
+      Optional<Optional<AmenityFieldMeasurementValueInput>> measurementValue,
+      Optional<Optional<List<LocalizedStringInput>>> textValue, Optional<Optional<String>> value) {
     this.feeValue = feeValue;
     this.measurementValue = measurementValue;
     this.textValue = textValue;
@@ -89,13 +90,13 @@ public class AmenityFieldValueInput {
   }
 
   public static final class Builder {
-    private Optional<AmenityFieldFeeValueInput> feeValue = Optional.absent();
+    private Optional<Optional<AmenityFieldFeeValueInput>> feeValue = Optional.empty();
 
-    private Optional<AmenityFieldMeasurementValueInput> measurementValue = Optional.absent();
+    private Optional<Optional<AmenityFieldMeasurementValueInput>> measurementValue = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> textValue = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> textValue = Optional.empty();
 
-    private Optional<String> value = Optional.absent();
+    private Optional<Optional<String>> value = Optional.empty();
 
     Builder() {
     }
@@ -103,32 +104,33 @@ public class AmenityFieldValueInput {
     /**
      * Used for field type: fee.
      */
-    public Builder feeValue(AmenityFieldFeeValueInput feeValue) {
-      this.feeValue = Optional.present(feeValue);
+    public Builder feeValue(@NotNull Optional<AmenityFieldFeeValueInput> feeValue) {
+      this.feeValue = Optional.of(feeValue);
       return this;
     }
 
     /**
      * Used for field type: measurement.
      */
-    public Builder measurementValue(AmenityFieldMeasurementValueInput measurementValue) {
-      this.measurementValue = Optional.present(measurementValue);
+    public Builder measurementValue(
+        @NotNull Optional<AmenityFieldMeasurementValueInput> measurementValue) {
+      this.measurementValue = Optional.of(measurementValue);
       return this;
     }
 
     /**
      * Used for field type: text.
      */
-    public Builder textValue(List<LocalizedStringInput> textValue) {
-      this.textValue = Optional.present(textValue);
+    public Builder textValue(@NotNull Optional<List<LocalizedStringInput>> textValue) {
+      this.textValue = Optional.of(textValue);
       return this;
     }
 
     /**
      * Used for field types: enum, string, trilean, int, and decimal.
      */
-    public Builder value(String value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<String> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

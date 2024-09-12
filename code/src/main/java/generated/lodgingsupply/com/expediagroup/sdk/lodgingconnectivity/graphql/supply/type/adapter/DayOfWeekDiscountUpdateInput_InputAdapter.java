@@ -6,11 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DayOfWeekDiscountUpdateInput;
@@ -30,37 +26,37 @@ public enum DayOfWeekDiscountUpdateInput_InputAdapter implements Adapter<DayOfWe
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       DayOfWeekDiscountUpdateInput value) throws IOException {
-    if (value.unit instanceof Optional.Present) {
+    if (value.unit.isPresent()) {
       writer.name("unit");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(DiscountUnit_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.unit);
+      new OptionalAdapter<>(new OptionalAdapter<>(DiscountUnit_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.unit);
     }
-    if (value.monday instanceof Optional.Present) {
+    if (value.monday.isPresent()) {
       writer.name("monday");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.monday);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.monday);
     }
-    if (value.tuesday instanceof Optional.Present) {
+    if (value.tuesday.isPresent()) {
       writer.name("tuesday");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.tuesday);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.tuesday);
     }
-    if (value.wednesday instanceof Optional.Present) {
+    if (value.wednesday.isPresent()) {
       writer.name("wednesday");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.wednesday);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.wednesday);
     }
-    if (value.thursday instanceof Optional.Present) {
+    if (value.thursday.isPresent()) {
       writer.name("thursday");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.thursday);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.thursday);
     }
-    if (value.friday instanceof Optional.Present) {
+    if (value.friday.isPresent()) {
       writer.name("friday");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.friday);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.friday);
     }
-    if (value.saturday instanceof Optional.Present) {
+    if (value.saturday.isPresent()) {
       writer.name("saturday");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.saturday);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.saturday);
     }
-    if (value.sunday instanceof Optional.Present) {
+    if (value.sunday.isPresent()) {
       writer.name("sunday");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.sunday);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.sunday);
     }
   }
 }

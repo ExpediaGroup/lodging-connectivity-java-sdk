@@ -6,12 +6,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancellationPolicyInput;
@@ -32,9 +29,9 @@ public enum CancellationPolicyInput_InputAdapter implements Adapter<Cancellation
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       CancellationPolicyInput value) throws IOException {
-    if (value.tiers instanceof Optional.Present) {
+    if (value.tiers.isPresent()) {
       writer.name("tiers");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyTierInput>(CancellationPolicyTierInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.tiers);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyTierInput>(CancellationPolicyTierInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.tiers);
     }
     writer.name("type");
     CancellationPolicyType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);

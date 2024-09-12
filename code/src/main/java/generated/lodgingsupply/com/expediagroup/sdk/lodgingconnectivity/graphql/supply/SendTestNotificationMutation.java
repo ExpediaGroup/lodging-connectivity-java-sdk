@@ -21,6 +21,7 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class SendTestNotificationMutation implements Mutation<SendTestNotificationMutation.Data> {
   public static final String OPERATION_ID = "5dc525622b1277a697da3295f460d0c32d16dd69d400f1c4c8612bd28b6e2e95";
@@ -150,7 +151,7 @@ public class SendTestNotificationMutation implements Mutation<SendTestNotificati
     /**
      * Send test notification using a given eventType and Payload
      */
-    public SendTestNotification sendTestNotification;
+    public Optional<SendTestNotification> sendTestNotification;
 
     private transient volatile int $hashCode;
 
@@ -158,7 +159,7 @@ public class SendTestNotificationMutation implements Mutation<SendTestNotificati
 
     private transient volatile String $toString;
 
-    public Data(SendTestNotification sendTestNotification) {
+    public Data(Optional<SendTestNotification> sendTestNotification) {
       this.sendTestNotification = sendTestNotification;
     }
 
@@ -201,12 +202,12 @@ public class SendTestNotificationMutation implements Mutation<SendTestNotificati
     /**
      * In the case of a failed test, this contains human readable description of any errors encountered when attempting to deliver the notification.
      */
-    public Error error;
+    public Optional<Error> error;
 
     /**
      * The HTTP status code returned by the endpoint to which the notification was delivered to.
      */
-    public Integer httpStatusCode;
+    public Optional<Integer> httpStatusCode;
 
     /**
      * Outcome of the test payload sent
@@ -219,7 +220,7 @@ public class SendTestNotificationMutation implements Mutation<SendTestNotificati
 
     private transient volatile String $toString;
 
-    public SendTestNotification(Error error, Integer httpStatusCode,
+    public SendTestNotification(Optional<Error> error, Optional<Integer> httpStatusCode,
         TestNotificationOutcome outcome) {
       this.error = error;
       this.httpStatusCode = httpStatusCode;

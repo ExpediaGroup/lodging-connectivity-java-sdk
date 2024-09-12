@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.UpdateUnitSpacesDiningRoomInput;
@@ -29,15 +27,15 @@ public enum UpdateUnitSpacesDiningRoomInput_InputAdapter implements Adapter<Upda
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateUnitSpacesDiningRoomInput value) throws IOException {
-    if (value.capacity instanceof Optional.Present) {
+    if (value.capacity.isPresent()) {
       writer.name("capacity");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.capacity);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.capacity);
     }
     writer.name("id");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
-    if (value.order instanceof Optional.Present) {
+    if (value.order.isPresent()) {
       writer.name("order");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.order);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.order);
     }
   }
 }

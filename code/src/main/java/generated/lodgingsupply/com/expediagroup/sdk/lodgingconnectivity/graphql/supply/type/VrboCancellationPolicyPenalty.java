@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class VrboCancellationPolicyPenalty {
   public final VrboCancellationPolicyPenaltyType type;
 
-  public final Optional<Double> percent;
+  public final Optional<Optional<Double>> percent;
 
   private transient volatile int $hashCode;
 
@@ -23,7 +24,7 @@ public class VrboCancellationPolicyPenalty {
   private transient volatile String $toString;
 
   public VrboCancellationPolicyPenalty(VrboCancellationPolicyPenaltyType type,
-      Optional<Double> percent) {
+      Optional<Optional<Double>> percent) {
     this.type = type;
     this.percent = percent;
   }
@@ -73,7 +74,7 @@ public class VrboCancellationPolicyPenalty {
   public static final class Builder {
     private VrboCancellationPolicyPenaltyType type;
 
-    private Optional<Double> percent = Optional.absent();
+    private Optional<Optional<Double>> percent = Optional.empty();
 
     Builder() {
     }
@@ -89,8 +90,8 @@ public class VrboCancellationPolicyPenalty {
     /**
      * The percentage of the penalty for the cancellation
      */
-    public Builder percent(Double percent) {
-      this.percent = Optional.present(percent);
+    public Builder percent(@NotNull Optional<Double> percent) {
+      this.percent = Optional.of(percent);
       return this;
     }
 

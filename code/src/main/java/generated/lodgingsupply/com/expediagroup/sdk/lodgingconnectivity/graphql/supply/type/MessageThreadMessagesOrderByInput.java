@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class MessageThreadMessagesOrderByInput {
-  public final Optional<MessageThreadMessagesSortField> field;
+  public final Optional<Optional<MessageThreadMessagesSortField>> field;
 
-  public final Optional<SortOrder> order;
+  public final Optional<Optional<SortOrder>> order;
 
   private transient volatile int $hashCode;
 
@@ -21,8 +22,8 @@ public class MessageThreadMessagesOrderByInput {
 
   private transient volatile String $toString;
 
-  public MessageThreadMessagesOrderByInput(Optional<MessageThreadMessagesSortField> field,
-      Optional<SortOrder> order) {
+  public MessageThreadMessagesOrderByInput(Optional<Optional<MessageThreadMessagesSortField>> field,
+      Optional<Optional<SortOrder>> order) {
     this.field = field;
     this.order = order;
   }
@@ -70,20 +71,20 @@ public class MessageThreadMessagesOrderByInput {
   }
 
   public static final class Builder {
-    private Optional<MessageThreadMessagesSortField> field = Optional.absent();
+    private Optional<Optional<MessageThreadMessagesSortField>> field = Optional.empty();
 
-    private Optional<SortOrder> order = Optional.absent();
+    private Optional<Optional<SortOrder>> order = Optional.empty();
 
     Builder() {
     }
 
-    public Builder field(MessageThreadMessagesSortField field) {
-      this.field = Optional.present(field);
+    public Builder field(@NotNull Optional<MessageThreadMessagesSortField> field) {
+      this.field = Optional.of(field);
       return this;
     }
 
-    public Builder order(SortOrder order) {
-      this.order = Optional.present(order);
+    public Builder order(@NotNull Optional<SortOrder> order) {
+      this.order = Optional.of(order);
       return this;
     }
 

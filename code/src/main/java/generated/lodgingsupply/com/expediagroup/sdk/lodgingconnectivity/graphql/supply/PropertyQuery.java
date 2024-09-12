@@ -24,6 +24,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyQuery implements Query<PropertyQuery.Data> {
   public static final String OPERATION_ID = "7f123a299d69249ed62914d68cafcee80ece97806286181104501f1a985aa68b";
@@ -202,7 +203,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -210,7 +211,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -263,14 +264,14 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
     /**
      * List of all the names for the property, which therefore also contains the above 'name' as well.
      */
-    public List<Name> names;
+    public Optional<List<Name>> names;
 
     /**
      * The default locale is used as a fallback when no other locale is specified.  IETF BCP 47 language tag, defaulting to en-US.
      */
     public Object defaultLocale;
 
-    public List<Contact> contacts;
+    public Optional<List<Contact>> contacts;
 
     /**
      * Known IDs for the property.
@@ -294,9 +295,9 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Property(String id, String name, List<Name> names, Object defaultLocale,
-        List<Contact> contacts, List<Id> ids, Type type, Address address, Location location,
-        List<TaxRecord> taxRecords) {
+    public Property(String id, String name, Optional<List<Name>> names, Object defaultLocale,
+        Optional<List<Contact>> contacts, List<Id> ids, Type type, Address address,
+        Location location, List<TaxRecord> taxRecords) {
       this.id = id;
       this.name = name;
       this.names = names;
@@ -436,13 +437,13 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
   }
 
   public static class Contact {
-    public List<String> emailAddresses;
+    public Optional<List<String>> emailAddresses;
 
-    public String name;
+    public Optional<String> name;
 
     public ContactType type;
 
-    public List<PhoneNumber> phoneNumbers;
+    public Optional<List<PhoneNumber>> phoneNumbers;
 
     private transient volatile int $hashCode;
 
@@ -450,8 +451,8 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Contact(List<String> emailAddresses, String name, ContactType type,
-        List<PhoneNumber> phoneNumbers) {
+    public Contact(Optional<List<String>> emailAddresses, Optional<String> name, ContactType type,
+        Optional<List<PhoneNumber>> phoneNumbers) {
       this.emailAddresses = emailAddresses;
       this.name = name;
       this.type = type;
@@ -506,11 +507,11 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
   }
 
   public static class PhoneNumber {
-    public String areaCode;
+    public Optional<String> areaCode;
 
-    public String countryCode;
+    public Optional<String> countryCode;
 
-    public String extension;
+    public Optional<String> extension;
 
     public String number;
 
@@ -522,8 +523,8 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public PhoneNumber(String areaCode, String countryCode, String extension, String number,
-        PhoneNumberType phoneNumberType) {
+    public PhoneNumber(Optional<String> areaCode, Optional<String> countryCode,
+        Optional<String> extension, String number, PhoneNumberType phoneNumberType) {
       this.areaCode = areaCode;
       this.countryCode = countryCode;
       this.extension = extension;
@@ -583,7 +584,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
   }
 
   public static class Id {
-    public String id;
+    public Optional<String> id;
 
     public IdSource idSource;
 
@@ -593,7 +594,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Id(String id, IdSource idSource) {
+    public Id(Optional<String> id, IdSource idSource) {
       this.id = id;
       this.idSource = idSource;
     }
@@ -688,9 +689,9 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
   public static class Address {
     public List<String> addressLines;
 
-    public String administrativeArea;
+    public Optional<String> administrativeArea;
 
-    public Object countryCode;
+    public String countryCode;
 
     public String locality;
 
@@ -702,8 +703,8 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Address(List<String> addressLines, String administrativeArea, Object countryCode,
-        String locality, String postalCode) {
+    public Address(List<String> addressLines, Optional<String> administrativeArea,
+        String countryCode, String locality, String postalCode) {
       this.addressLines = addressLines;
       this.administrativeArea = administrativeArea;
       this.countryCode = countryCode;
@@ -765,7 +766,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
   public static class Location {
     public Boolean hideExactLocation;
 
-    public Coordinates coordinates;
+    public Optional<Coordinates> coordinates;
 
     private transient volatile int $hashCode;
 
@@ -773,7 +774,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Location(Boolean hideExactLocation, Coordinates coordinates) {
+    public Location(Boolean hideExactLocation, Optional<Coordinates> coordinates) {
       this.hideExactLocation = hideExactLocation;
       this.coordinates = coordinates;
     }
@@ -1073,7 +1074,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
     /**
      * Value for the given key in the attribute
      */
-    public String value;
+    public Optional<String> value;
 
     private transient volatile int $hashCode;
 
@@ -1081,7 +1082,7 @@ public class PropertyQuery implements Query<PropertyQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Value(String type, String value) {
+    public Value(String type, Optional<String> value) {
       this.type = type;
       this.value = value;
     }

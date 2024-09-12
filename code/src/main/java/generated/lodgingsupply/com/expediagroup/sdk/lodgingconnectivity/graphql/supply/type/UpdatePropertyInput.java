@@ -5,34 +5,35 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdatePropertyInput {
-  public final Optional<UpdateAddressInput> address;
+  public final Optional<Optional<UpdateAddressInput>> address;
 
-  public final Optional<List<AmenityInput>> amenities;
+  public final Optional<Optional<List<AmenityInput>>> amenities;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String id;
 
-  public final Optional<UpdatePropertyLocationInput> location;
+  public final Optional<Optional<UpdatePropertyLocationInput>> location;
 
-  public final Optional<String> name;
+  public final Optional<Optional<String>> name;
 
-  public final Optional<List<LocalizedStringInput>> names;
+  public final Optional<Optional<List<LocalizedStringInput>>> names;
 
-  public final Optional<UpdatePoliciesInput> policies;
+  public final Optional<Optional<UpdatePoliciesInput>> policies;
 
-  public final Optional<String> referenceName;
+  public final Optional<Optional<String>> referenceName;
 
-  public final Optional<List<TextInput>> text;
+  public final Optional<Optional<List<TextInput>>> text;
 
-  public final Optional<String> type;
+  public final Optional<Optional<String>> type;
 
   private transient volatile int $hashCode;
 
@@ -40,11 +41,12 @@ public class UpdatePropertyInput {
 
   private transient volatile String $toString;
 
-  public UpdatePropertyInput(Optional<UpdateAddressInput> address,
-      Optional<List<AmenityInput>> amenities, Optional<String> clientMutationId, String id,
-      Optional<UpdatePropertyLocationInput> location, Optional<String> name,
-      Optional<List<LocalizedStringInput>> names, Optional<UpdatePoliciesInput> policies,
-      Optional<String> referenceName, Optional<List<TextInput>> text, Optional<String> type) {
+  public UpdatePropertyInput(Optional<Optional<UpdateAddressInput>> address,
+      Optional<Optional<List<AmenityInput>>> amenities, Optional<Optional<String>> clientMutationId,
+      String id, Optional<Optional<UpdatePropertyLocationInput>> location,
+      Optional<Optional<String>> name, Optional<Optional<List<LocalizedStringInput>>> names,
+      Optional<Optional<UpdatePoliciesInput>> policies, Optional<Optional<String>> referenceName,
+      Optional<Optional<List<TextInput>>> text, Optional<Optional<String>> type) {
     this.address = address;
     this.amenities = amenities;
     this.clientMutationId = clientMutationId;
@@ -137,43 +139,43 @@ public class UpdatePropertyInput {
   }
 
   public static final class Builder {
-    private Optional<UpdateAddressInput> address = Optional.absent();
+    private Optional<Optional<UpdateAddressInput>> address = Optional.empty();
 
-    private Optional<List<AmenityInput>> amenities = Optional.absent();
+    private Optional<Optional<List<AmenityInput>>> amenities = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String id;
 
-    private Optional<UpdatePropertyLocationInput> location = Optional.absent();
+    private Optional<Optional<UpdatePropertyLocationInput>> location = Optional.empty();
 
-    private Optional<String> name = Optional.absent();
+    private Optional<Optional<String>> name = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> names = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> names = Optional.empty();
 
-    private Optional<UpdatePoliciesInput> policies = Optional.absent();
+    private Optional<Optional<UpdatePoliciesInput>> policies = Optional.empty();
 
-    private Optional<String> referenceName = Optional.absent();
+    private Optional<Optional<String>> referenceName = Optional.empty();
 
-    private Optional<List<TextInput>> text = Optional.absent();
+    private Optional<Optional<List<TextInput>>> text = Optional.empty();
 
-    private Optional<String> type = Optional.absent();
+    private Optional<Optional<String>> type = Optional.empty();
 
     Builder() {
     }
 
-    public Builder address(UpdateAddressInput address) {
-      this.address = Optional.present(address);
+    public Builder address(@NotNull Optional<UpdateAddressInput> address) {
+      this.address = Optional.of(address);
       return this;
     }
 
-    public Builder amenities(List<AmenityInput> amenities) {
-      this.amenities = Optional.present(amenities);
+    public Builder amenities(@NotNull Optional<List<AmenityInput>> amenities) {
+      this.amenities = Optional.of(amenities);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -182,38 +184,38 @@ public class UpdatePropertyInput {
       return this;
     }
 
-    public Builder location(UpdatePropertyLocationInput location) {
-      this.location = Optional.present(location);
+    public Builder location(@NotNull Optional<UpdatePropertyLocationInput> location) {
+      this.location = Optional.of(location);
       return this;
     }
 
-    public Builder name(String name) {
-      this.name = Optional.present(name);
+    public Builder name(@NotNull Optional<String> name) {
+      this.name = Optional.of(name);
       return this;
     }
 
-    public Builder names(List<LocalizedStringInput> names) {
-      this.names = Optional.present(names);
+    public Builder names(@NotNull Optional<List<LocalizedStringInput>> names) {
+      this.names = Optional.of(names);
       return this;
     }
 
-    public Builder policies(UpdatePoliciesInput policies) {
-      this.policies = Optional.present(policies);
+    public Builder policies(@NotNull Optional<UpdatePoliciesInput> policies) {
+      this.policies = Optional.of(policies);
       return this;
     }
 
-    public Builder referenceName(String referenceName) {
-      this.referenceName = Optional.present(referenceName);
+    public Builder referenceName(@NotNull Optional<String> referenceName) {
+      this.referenceName = Optional.of(referenceName);
       return this;
     }
 
-    public Builder text(List<TextInput> text) {
-      this.text = Optional.present(text);
+    public Builder text(@NotNull Optional<List<TextInput>> text) {
+      this.text = Optional.of(text);
       return this;
     }
 
-    public Builder type(String type) {
-      this.type = Optional.present(type);
+    public Builder type(@NotNull Optional<String> type) {
+      this.type = Optional.of(type);
       return this;
     }
 

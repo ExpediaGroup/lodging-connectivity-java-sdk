@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CheckInDateFilter;
@@ -36,33 +33,33 @@ public enum ReservationFilterInput_InputAdapter implements Adapter<ReservationFi
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       ReservationFilterInput value) throws IOException {
-    if (value.checkInDate instanceof Optional.Present) {
+    if (value.checkInDate.isPresent()) {
       writer.name("checkInDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CheckInDateFilter>(CheckInDateFilter_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.checkInDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CheckInDateFilter>(CheckInDateFilter_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.checkInDate);
     }
-    if (value.checkOutDate instanceof Optional.Present) {
+    if (value.checkOutDate.isPresent()) {
       writer.name("checkOutDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CheckOutDateFilter>(CheckOutDateFilter_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.checkOutDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CheckOutDateFilter>(CheckOutDateFilter_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.checkOutDate);
     }
-    if (value.reservationIds instanceof Optional.Present) {
+    if (value.reservationIds.isPresent()) {
       writer.name("reservationIds");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<IdNodeInput>(IdNodeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.reservationIds);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<IdNodeInput>(IdNodeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.reservationIds);
     }
-    if (value.ids instanceof Optional.Present) {
+    if (value.ids.isPresent()) {
       writer.name("ids");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.ids);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.ids);
     }
-    if (value.status instanceof Optional.Present) {
+    if (value.status.isPresent()) {
       writer.name("status");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(ReservationStatus_ResponseAdapter.INSTANCE)))).toJson(writer, customScalarAdapters, value.status);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(ReservationStatus_ResponseAdapter.INSTANCE)))).toJson(writer, customScalarAdapters, value.status);
     }
-    if (value.subStatus instanceof Optional.Present) {
+    if (value.subStatus.isPresent()) {
       writer.name("subStatus");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.subStatus);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.subStatus);
     }
-    if (value.lastUpdatedDateTime instanceof Optional.Present) {
+    if (value.lastUpdatedDateTime.isPresent()) {
       writer.name("lastUpdatedDateTime");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<LastUpdatedDateTimeFilter>(LastUpdatedDateTimeFilter_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.lastUpdatedDateTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<LastUpdatedDateTimeFilter>(LastUpdatedDateTimeFilter_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.lastUpdatedDateTime);
     }
   }
 }

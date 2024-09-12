@@ -5,10 +5,11 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Key/value pair representing an individual attribute of a tax record
@@ -16,7 +17,7 @@ import java.lang.String;
 public class RegulatoryAttributeInput {
   public final String name;
 
-  public final Optional<RegulatoryAttributeValueInput> value;
+  public final Optional<Optional<RegulatoryAttributeValueInput>> value;
 
   private transient volatile int $hashCode;
 
@@ -24,7 +25,8 @@ public class RegulatoryAttributeInput {
 
   private transient volatile String $toString;
 
-  public RegulatoryAttributeInput(String name, Optional<RegulatoryAttributeValueInput> value) {
+  public RegulatoryAttributeInput(String name,
+      Optional<Optional<RegulatoryAttributeValueInput>> value) {
     this.name = name;
     this.value = value;
   }
@@ -74,7 +76,7 @@ public class RegulatoryAttributeInput {
   public static final class Builder {
     private String name;
 
-    private Optional<RegulatoryAttributeValueInput> value = Optional.absent();
+    private Optional<Optional<RegulatoryAttributeValueInput>> value = Optional.empty();
 
     Builder() {
     }
@@ -90,8 +92,8 @@ public class RegulatoryAttributeInput {
     /**
      * Value for the given key in the attribute
      */
-    public Builder value(RegulatoryAttributeValueInput value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<RegulatoryAttributeValueInput> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

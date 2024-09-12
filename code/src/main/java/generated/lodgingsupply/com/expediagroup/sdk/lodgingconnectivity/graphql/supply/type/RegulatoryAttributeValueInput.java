@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class RegulatoryAttributeValueInput {
-  public final Optional<String> value;
+  public final Optional<Optional<String>> value;
 
   private transient volatile int $hashCode;
 
@@ -19,7 +20,7 @@ public class RegulatoryAttributeValueInput {
 
   private transient volatile String $toString;
 
-  public RegulatoryAttributeValueInput(Optional<String> value) {
+  public RegulatoryAttributeValueInput(Optional<Optional<String>> value) {
     this.value = value;
   }
 
@@ -62,7 +63,7 @@ public class RegulatoryAttributeValueInput {
   }
 
   public static final class Builder {
-    private Optional<String> value = Optional.absent();
+    private Optional<Optional<String>> value = Optional.empty();
 
     Builder() {
     }
@@ -70,8 +71,8 @@ public class RegulatoryAttributeValueInput {
     /**
      * Value for the given key in the attribute
      */
-    public Builder value(String value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<String> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

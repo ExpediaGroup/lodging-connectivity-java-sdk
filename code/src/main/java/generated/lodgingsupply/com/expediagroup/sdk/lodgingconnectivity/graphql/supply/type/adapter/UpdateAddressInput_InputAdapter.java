@@ -7,17 +7,16 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CountryCode;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.UpdateAddressInput;
 import java.io.IOException;
 import java.lang.IllegalStateException;
 import java.lang.Override;
+import java.lang.String;
 
 public enum UpdateAddressInput_InputAdapter implements Adapter<UpdateAddressInput> {
   INSTANCE;
@@ -31,25 +30,25 @@ public enum UpdateAddressInput_InputAdapter implements Adapter<UpdateAddressInpu
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateAddressInput value) throws IOException {
-    if (value.addressLines instanceof Optional.Present) {
+    if (value.addressLines.isPresent()) {
       writer.name("addressLines");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.addressLines);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.addressLines);
     }
-    if (value.administrativeArea instanceof Optional.Present) {
+    if (value.administrativeArea.isPresent()) {
       writer.name("administrativeArea");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.administrativeArea);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.administrativeArea);
     }
-    if (value.countryCode instanceof Optional.Present) {
+    if (value.countryCode.isPresent()) {
       writer.name("countryCode");
-      new ApolloOptionalAdapter<>(Adapters.NullableAnyAdapter).toJson(writer, customScalarAdapters, value.countryCode);
+      new OptionalAdapter<>(new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(CountryCode.type)))).toJson(writer, customScalarAdapters, value.countryCode);
     }
-    if (value.locality instanceof Optional.Present) {
+    if (value.locality.isPresent()) {
       writer.name("locality");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.locality);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.locality);
     }
-    if (value.postalCode instanceof Optional.Present) {
+    if (value.postalCode.isPresent()) {
       writer.name("postalCode");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.postalCode);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.postalCode);
     }
   }
 }

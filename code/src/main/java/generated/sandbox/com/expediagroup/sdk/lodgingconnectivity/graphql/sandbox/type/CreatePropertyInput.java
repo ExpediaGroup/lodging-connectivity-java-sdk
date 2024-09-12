@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input object for creating a property.
  */
 public class CreatePropertyInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
-  public final Optional<String> name;
+  public final Optional<Optional<String>> name;
 
   private transient volatile int $hashCode;
 
@@ -24,7 +25,8 @@ public class CreatePropertyInput {
 
   private transient volatile String $toString;
 
-  public CreatePropertyInput(Optional<String> clientMutationId, Optional<String> name) {
+  public CreatePropertyInput(Optional<Optional<String>> clientMutationId,
+      Optional<Optional<String>> name) {
     this.clientMutationId = clientMutationId;
     this.name = name;
   }
@@ -72,9 +74,9 @@ public class CreatePropertyInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
-    private Optional<String> name = Optional.absent();
+    private Optional<Optional<String>> name = Optional.empty();
 
     Builder() {
     }
@@ -82,16 +84,16 @@ public class CreatePropertyInput {
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
     /**
      * Optional name for the property.
      */
-    public Builder name(String name) {
-      this.name = Optional.present(name);
+    public Builder name(@NotNull Optional<String> name) {
+      this.name = Optional.of(name);
       return this;
     }
 

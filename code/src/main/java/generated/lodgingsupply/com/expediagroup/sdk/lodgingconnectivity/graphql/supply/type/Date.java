@@ -11,5 +11,5 @@ import com.apollographql.apollo.api.CustomScalarType;
  * An RFC-3339 compliant Full Date Scalar
  */
 public class Date {
-  public static CustomScalarType type = new CustomScalarType("Date", "java.lang.Object");
+  public static CustomScalarType type = new CustomScalarType("Date", "java.time.LocalDate");
 }

@@ -5,38 +5,39 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateRatePlanInput {
-  public final Optional<Integer> baseRateGuestCount;
+  public final Optional<Optional<Integer>> baseRateGuestCount;
 
-  public final Optional<String> cancellationPolicyConfigId;
+  public final Optional<Optional<String>> cancellationPolicyConfigId;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
-  public final Optional<List<RatePlanDistributionRuleInput>> distributionRules;
+  public final Optional<Optional<List<RatePlanDistributionRuleInput>>> distributionRules;
 
-  public final Optional<String> feeSetId;
+  public final Optional<Optional<String>> feeSetId;
 
   public final String id;
 
-  public final Optional<String> name;
+  public final Optional<Optional<String>> name;
 
-  public final Optional<Boolean> paymentScheduleApplicable;
+  public final Optional<Optional<Boolean>> paymentScheduleApplicable;
 
   public final String propertyId;
 
-  public final Optional<UpdateRatePlanRestrictionsInput> restrictions;
+  public final Optional<Optional<UpdateRatePlanRestrictionsInput>> restrictions;
 
-  public final Optional<RatePlanStatus> status;
+  public final Optional<Optional<RatePlanStatus>> status;
 
-  public final Optional<Boolean> taxInclusive;
+  public final Optional<Optional<Boolean>> taxInclusive;
 
   public final String unitId;
 
@@ -46,12 +47,15 @@ public class UpdateRatePlanInput {
 
   private transient volatile String $toString;
 
-  public UpdateRatePlanInput(Optional<Integer> baseRateGuestCount,
-      Optional<String> cancellationPolicyConfigId, Optional<String> clientMutationId,
-      Optional<List<RatePlanDistributionRuleInput>> distributionRules, Optional<String> feeSetId,
-      String id, Optional<String> name, Optional<Boolean> paymentScheduleApplicable,
-      String propertyId, Optional<UpdateRatePlanRestrictionsInput> restrictions,
-      Optional<RatePlanStatus> status, Optional<Boolean> taxInclusive, String unitId) {
+  public UpdateRatePlanInput(Optional<Optional<Integer>> baseRateGuestCount,
+      Optional<Optional<String>> cancellationPolicyConfigId,
+      Optional<Optional<String>> clientMutationId,
+      Optional<Optional<List<RatePlanDistributionRuleInput>>> distributionRules,
+      Optional<Optional<String>> feeSetId, String id, Optional<Optional<String>> name,
+      Optional<Optional<Boolean>> paymentScheduleApplicable, String propertyId,
+      Optional<Optional<UpdateRatePlanRestrictionsInput>> restrictions,
+      Optional<Optional<RatePlanStatus>> status, Optional<Optional<Boolean>> taxInclusive,
+      String unitId) {
     this.baseRateGuestCount = baseRateGuestCount;
     this.cancellationPolicyConfigId = cancellationPolicyConfigId;
     this.clientMutationId = clientMutationId;
@@ -154,57 +158,59 @@ public class UpdateRatePlanInput {
   }
 
   public static final class Builder {
-    private Optional<Integer> baseRateGuestCount = Optional.absent();
+    private Optional<Optional<Integer>> baseRateGuestCount = Optional.empty();
 
-    private Optional<String> cancellationPolicyConfigId = Optional.absent();
+    private Optional<Optional<String>> cancellationPolicyConfigId = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
-    private Optional<List<RatePlanDistributionRuleInput>> distributionRules = Optional.absent();
+    private Optional<Optional<List<RatePlanDistributionRuleInput>>> distributionRules = Optional.empty();
 
-    private Optional<String> feeSetId = Optional.absent();
+    private Optional<Optional<String>> feeSetId = Optional.empty();
 
     private String id;
 
-    private Optional<String> name = Optional.absent();
+    private Optional<Optional<String>> name = Optional.empty();
 
-    private Optional<Boolean> paymentScheduleApplicable = Optional.absent();
+    private Optional<Optional<Boolean>> paymentScheduleApplicable = Optional.empty();
 
     private String propertyId;
 
-    private Optional<UpdateRatePlanRestrictionsInput> restrictions = Optional.absent();
+    private Optional<Optional<UpdateRatePlanRestrictionsInput>> restrictions = Optional.empty();
 
-    private Optional<RatePlanStatus> status = Optional.absent();
+    private Optional<Optional<RatePlanStatus>> status = Optional.empty();
 
-    private Optional<Boolean> taxInclusive = Optional.absent();
+    private Optional<Optional<Boolean>> taxInclusive = Optional.empty();
 
     private String unitId;
 
     Builder() {
     }
 
-    public Builder baseRateGuestCount(Integer baseRateGuestCount) {
-      this.baseRateGuestCount = Optional.present(baseRateGuestCount);
+    public Builder baseRateGuestCount(@NotNull Optional<Integer> baseRateGuestCount) {
+      this.baseRateGuestCount = Optional.of(baseRateGuestCount);
       return this;
     }
 
-    public Builder cancellationPolicyConfigId(String cancellationPolicyConfigId) {
-      this.cancellationPolicyConfigId = Optional.present(cancellationPolicyConfigId);
+    public Builder cancellationPolicyConfigId(
+        @NotNull Optional<String> cancellationPolicyConfigId) {
+      this.cancellationPolicyConfigId = Optional.of(cancellationPolicyConfigId);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
-    public Builder distributionRules(List<RatePlanDistributionRuleInput> distributionRules) {
-      this.distributionRules = Optional.present(distributionRules);
+    public Builder distributionRules(
+        @NotNull Optional<List<RatePlanDistributionRuleInput>> distributionRules) {
+      this.distributionRules = Optional.of(distributionRules);
       return this;
     }
 
-    public Builder feeSetId(String feeSetId) {
-      this.feeSetId = Optional.present(feeSetId);
+    public Builder feeSetId(@NotNull Optional<String> feeSetId) {
+      this.feeSetId = Optional.of(feeSetId);
       return this;
     }
 
@@ -213,13 +219,13 @@ public class UpdateRatePlanInput {
       return this;
     }
 
-    public Builder name(String name) {
-      this.name = Optional.present(name);
+    public Builder name(@NotNull Optional<String> name) {
+      this.name = Optional.of(name);
       return this;
     }
 
-    public Builder paymentScheduleApplicable(Boolean paymentScheduleApplicable) {
-      this.paymentScheduleApplicable = Optional.present(paymentScheduleApplicable);
+    public Builder paymentScheduleApplicable(@NotNull Optional<Boolean> paymentScheduleApplicable) {
+      this.paymentScheduleApplicable = Optional.of(paymentScheduleApplicable);
       return this;
     }
 
@@ -228,18 +234,18 @@ public class UpdateRatePlanInput {
       return this;
     }
 
-    public Builder restrictions(UpdateRatePlanRestrictionsInput restrictions) {
-      this.restrictions = Optional.present(restrictions);
+    public Builder restrictions(@NotNull Optional<UpdateRatePlanRestrictionsInput> restrictions) {
+      this.restrictions = Optional.of(restrictions);
       return this;
     }
 
-    public Builder status(RatePlanStatus status) {
-      this.status = Optional.present(status);
+    public Builder status(@NotNull Optional<RatePlanStatus> status) {
+      this.status = Optional.of(status);
       return this;
     }
 
-    public Builder taxInclusive(Boolean taxInclusive) {
-      this.taxInclusive = Optional.present(taxInclusive);
+    public Builder taxInclusive(@NotNull Optional<Boolean> taxInclusive) {
+      this.taxInclusive = Optional.of(taxInclusive);
       return this;
     }
 

@@ -6,13 +6,11 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyRegistrationQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.IdSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 
 public enum PropertyRegistrationQuery_VariablesAdapter {
@@ -22,9 +20,7 @@ public enum PropertyRegistrationQuery_VariablesAdapter {
       CustomScalarAdapters customScalarAdapters, boolean withDefaultValues) throws IOException {
     writer.name("propertyID");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyID);
-    if (value.idSource instanceof Optional.Present) {
-      writer.name("idSource");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(IdSource_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.idSource);
-    }
+    writer.name("idSource");
+    new OptionalAdapter<>(IdSource_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.idSource);
   }
 }

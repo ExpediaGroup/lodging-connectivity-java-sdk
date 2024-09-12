@@ -5,14 +5,15 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ReviewReservationFilterInput {
-  public final Optional<List<ReviewReservationIdNodeInput>> reservationIds;
+  public final Optional<Optional<List<ReviewReservationIdNodeInput>>> reservationIds;
 
   private transient volatile int $hashCode;
 
@@ -20,7 +21,8 @@ public class ReviewReservationFilterInput {
 
   private transient volatile String $toString;
 
-  public ReviewReservationFilterInput(Optional<List<ReviewReservationIdNodeInput>> reservationIds) {
+  public ReviewReservationFilterInput(
+      Optional<Optional<List<ReviewReservationIdNodeInput>>> reservationIds) {
     this.reservationIds = reservationIds;
   }
 
@@ -63,7 +65,7 @@ public class ReviewReservationFilterInput {
   }
 
   public static final class Builder {
-    private Optional<List<ReviewReservationIdNodeInput>> reservationIds = Optional.absent();
+    private Optional<Optional<List<ReviewReservationIdNodeInput>>> reservationIds = Optional.empty();
 
     Builder() {
     }
@@ -71,8 +73,9 @@ public class ReviewReservationFilterInput {
     /**
      * list reviews of provided reservation ids
      */
-    public Builder reservationIds(List<ReviewReservationIdNodeInput> reservationIds) {
-      this.reservationIds = Optional.present(reservationIds);
+    public Builder reservationIds(
+        @NotNull Optional<List<ReviewReservationIdNodeInput>> reservationIds) {
+      this.reservationIds = Optional.of(reservationIds);
       return this;
     }
 

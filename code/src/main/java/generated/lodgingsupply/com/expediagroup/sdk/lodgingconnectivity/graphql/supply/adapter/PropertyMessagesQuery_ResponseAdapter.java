@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -19,16 +18,19 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.MessageRevie
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.MessageThreadParticipantRole;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.MessageReviewStatus_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.MessageThreadParticipantRole_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyMessagesQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyMessagesQuery.Data> {
@@ -39,12 +41,12 @@ public class PropertyMessagesQuery_ResponseAdapter {
     @Override
     public PropertyMessagesQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyMessagesQuery.Property _property = null;
+      Optional<PropertyMessagesQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -58,7 +60,7 @@ public class PropertyMessagesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMessagesQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -70,12 +72,12 @@ public class PropertyMessagesQuery_ResponseAdapter {
     @Override
     public PropertyMessagesQuery.Property fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyMessagesQuery.Messages _messages = null;
+      Optional<PropertyMessagesQuery.Messages> _messages = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _messages = new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Messages>(Messages.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _messages = new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Messages>(Messages.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -89,7 +91,7 @@ public class PropertyMessagesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMessagesQuery.Property value) throws IOException {
       writer.name("messages");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Messages>(Messages.INSTANCE, false)).toJson(writer, customScalarAdapters, value.messages);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Messages>(Messages.INSTANCE, false)).toJson(writer, customScalarAdapters, value.messages);
     }
   }
 
@@ -101,14 +103,14 @@ public class PropertyMessagesQuery_ResponseAdapter {
     @Override
     public PropertyMessagesQuery.Messages fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _cursor = null;
+      Optional<String> _cursor = null;
       Integer _totalCount = null;
       List<PropertyMessagesQuery.Element> _elements = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _cursor = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _cursor = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _totalCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _elements = new ListAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Element>(Element.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -129,7 +131,7 @@ public class PropertyMessagesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMessagesQuery.Messages value) throws IOException {
       writer.name("cursor");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
 
       writer.name("totalCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalCount);
@@ -148,24 +150,24 @@ public class PropertyMessagesQuery_ResponseAdapter {
     public PropertyMessagesQuery.Element fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       List<PropertyMessagesQuery.Attachment> _attachments = null;
-      PropertyMessagesQuery.Body _body = null;
-      Object _creationDateTimeUtc = null;
-      MessageThreadParticipantRole _fromRole = null;
+      Optional<PropertyMessagesQuery.Body> _body = null;
+      Optional<OffsetDateTime> _creationDateTimeUtc = null;
+      Optional<MessageThreadParticipantRole> _fromRole = null;
       String _id = null;
-      MessageReviewStatus _reviewStatus = null;
-      String _type = null;
+      Optional<MessageReviewStatus> _reviewStatus = null;
+      Optional<String> _type = null;
       PropertyMessagesQuery.MessageThread _messageThread = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _attachments = new ListAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Attachment>(Attachment.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _body = new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Body>(Body.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _creationDateTimeUtc = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _fromRole = new NullableAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 1: _body = new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Body>(Body.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _creationDateTimeUtc = new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 3: _fromRole = new OptionalAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 4: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _reviewStatus = new NullableAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 6: _type = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _reviewStatus = new OptionalAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 6: _type = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 7: _messageThread = new ObjectAdapter<PropertyMessagesQuery.MessageThread>(MessageThread.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -194,22 +196,22 @@ public class PropertyMessagesQuery_ResponseAdapter {
       new ListAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Attachment>(Attachment.INSTANCE, false)).toJson(writer, customScalarAdapters, value.attachments);
 
       writer.name("body");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Body>(Body.INSTANCE, false)).toJson(writer, customScalarAdapters, value.body);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.Body>(Body.INSTANCE, false)).toJson(writer, customScalarAdapters, value.body);
 
       writer.name("creationDateTimeUtc");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
+      new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
 
       writer.name("fromRole");
-      new NullableAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.fromRole);
+      new OptionalAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.fromRole);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("reviewStatus");
-      new NullableAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.reviewStatus);
+      new OptionalAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.reviewStatus);
 
       writer.name("type");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.type);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("messageThread");
       new ObjectAdapter<PropertyMessagesQuery.MessageThread>(MessageThread.INSTANCE, false).toJson(writer, customScalarAdapters, value.messageThread);
@@ -226,7 +228,7 @@ public class PropertyMessagesQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      Object _uploadDateTimeUtc = null;
+      OffsetDateTime _uploadDateTimeUtc = null;
       URL _url = null;
 
       loop:
@@ -234,7 +236,7 @@ public class PropertyMessagesQuery_ResponseAdapter {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _uploadDateTimeUtc = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _uploadDateTimeUtc = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 3: _url = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -263,7 +265,7 @@ public class PropertyMessagesQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("uploadDateTimeUtc");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.uploadDateTimeUtc);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.uploadDateTimeUtc);
 
       writer.name("url");
       com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.url);
@@ -311,20 +313,20 @@ public class PropertyMessagesQuery_ResponseAdapter {
     @Override
     public PropertyMessagesQuery.MessageThread fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyMessagesQuery.BookingInquiry _bookingInquiry = null;
-      Object _creationDateTimeUtc = null;
+      Optional<PropertyMessagesQuery.BookingInquiry> _bookingInquiry = null;
+      Optional<OffsetDateTime> _creationDateTimeUtc = null;
       String _id = null;
-      PropertyMessagesQuery.PrimaryTraveler _primaryTraveler = null;
-      PropertyMessagesQuery.ReservationSummary _reservationSummary = null;
+      Optional<PropertyMessagesQuery.PrimaryTraveler> _primaryTraveler = null;
+      Optional<PropertyMessagesQuery.ReservationSummary> _reservationSummary = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _bookingInquiry = new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _creationDateTimeUtc = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _bookingInquiry = new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _creationDateTimeUtc = new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 2: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _primaryTraveler = new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 4: _reservationSummary = new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 3: _primaryTraveler = new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 4: _reservationSummary = new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -344,19 +346,19 @@ public class PropertyMessagesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMessagesQuery.MessageThread value) throws IOException {
       writer.name("bookingInquiry");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).toJson(writer, customScalarAdapters, value.bookingInquiry);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).toJson(writer, customScalarAdapters, value.bookingInquiry);
 
       writer.name("creationDateTimeUtc");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
+      new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("primaryTraveler");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).toJson(writer, customScalarAdapters, value.primaryTraveler);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).toJson(writer, customScalarAdapters, value.primaryTraveler);
 
       writer.name("reservationSummary");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMessagesQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationSummary);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMessagesQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationSummary);
     }
   }
 
@@ -369,8 +371,8 @@ public class PropertyMessagesQuery_ResponseAdapter {
     public PropertyMessagesQuery.BookingInquiry fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       Integer _adultCount = null;
-      LocalDate _checkInDate = null;
-      LocalDate _checkOutDate = null;
+      Optional<LocalDate> _checkInDate = null;
+      Optional<LocalDate> _checkOutDate = null;
       Integer _childCount = null;
       Boolean _hasPets = null;
       String _id = null;
@@ -379,8 +381,8 @@ public class PropertyMessagesQuery_ResponseAdapter {
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _adultCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _checkInDate = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 2: _checkOutDate = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 1: _checkInDate = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 2: _checkOutDate = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 3: _childCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _hasPets = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 5: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
@@ -410,10 +412,10 @@ public class PropertyMessagesQuery_ResponseAdapter {
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.adultCount);
 
       writer.name("checkInDate");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkInDate);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkInDate);
 
       writer.name("checkOutDate");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkOutDate);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkOutDate);
 
       writer.name("childCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.childCount);
@@ -434,14 +436,14 @@ public class PropertyMessagesQuery_ResponseAdapter {
     @Override
     public PropertyMessagesQuery.PrimaryTraveler fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _firstName = null;
-      String _lastName = null;
+      Optional<String> _firstName = null;
+      Optional<String> _lastName = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _firstName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _lastName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _firstName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _lastName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -456,10 +458,10 @@ public class PropertyMessagesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMessagesQuery.PrimaryTraveler value) throws IOException {
       writer.name("firstName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.firstName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.firstName);
 
       writer.name("lastName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.lastName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.lastName);
     }
   }
 

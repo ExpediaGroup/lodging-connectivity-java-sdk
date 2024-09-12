@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -19,16 +18,19 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.MessageRevie
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.MessageThreadParticipantRole;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.MessageReviewStatus_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.MessageThreadParticipantRole_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class MessageThreadQuery_ResponseAdapter {
   public enum Data implements Adapter<MessageThreadQuery.Data> {
@@ -39,12 +41,12 @@ public class MessageThreadQuery_ResponseAdapter {
     @Override
     public MessageThreadQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      MessageThreadQuery.MessageThread _messageThread = null;
+      Optional<MessageThreadQuery.MessageThread> _messageThread = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _messageThread = new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.MessageThread>(MessageThread.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _messageThread = new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.MessageThread>(MessageThread.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -58,7 +60,7 @@ public class MessageThreadQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         MessageThreadQuery.Data value) throws IOException {
       writer.name("messageThread");
-      new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.MessageThread>(MessageThread.INSTANCE, false)).toJson(writer, customScalarAdapters, value.messageThread);
+      new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.MessageThread>(MessageThread.INSTANCE, false)).toJson(writer, customScalarAdapters, value.messageThread);
     }
   }
 
@@ -71,22 +73,22 @@ public class MessageThreadQuery_ResponseAdapter {
     public MessageThreadQuery.MessageThread fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
-      Object _creationDateTimeUtc = null;
-      MessageThreadQuery.BookingInquiry _bookingInquiry = null;
+      Optional<OffsetDateTime> _creationDateTimeUtc = null;
+      Optional<MessageThreadQuery.BookingInquiry> _bookingInquiry = null;
       MessageThreadQuery.Property _property = null;
-      MessageThreadQuery.PrimaryTraveler _primaryTraveler = null;
-      MessageThreadQuery.ReservationSummary _reservationSummary = null;
+      Optional<MessageThreadQuery.PrimaryTraveler> _primaryTraveler = null;
+      Optional<MessageThreadQuery.ReservationSummary> _reservationSummary = null;
       MessageThreadQuery.Messages _messages = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _creationDateTimeUtc = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _bookingInquiry = new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _creationDateTimeUtc = new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 2: _bookingInquiry = new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 3: _property = new ObjectAdapter<MessageThreadQuery.Property>(Property.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 4: _primaryTraveler = new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 5: _reservationSummary = new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 4: _primaryTraveler = new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 5: _reservationSummary = new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 6: _messages = new ObjectAdapter<MessageThreadQuery.Messages>(Messages.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -114,19 +116,19 @@ public class MessageThreadQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("creationDateTimeUtc");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
+      new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
 
       writer.name("bookingInquiry");
-      new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).toJson(writer, customScalarAdapters, value.bookingInquiry);
+      new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.BookingInquiry>(BookingInquiry.INSTANCE, false)).toJson(writer, customScalarAdapters, value.bookingInquiry);
 
       writer.name("property");
       new ObjectAdapter<MessageThreadQuery.Property>(Property.INSTANCE, false).toJson(writer, customScalarAdapters, value.property);
 
       writer.name("primaryTraveler");
-      new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).toJson(writer, customScalarAdapters, value.primaryTraveler);
+      new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.PrimaryTraveler>(PrimaryTraveler.INSTANCE, false)).toJson(writer, customScalarAdapters, value.primaryTraveler);
 
       writer.name("reservationSummary");
-      new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationSummary);
+      new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.ReservationSummary>(ReservationSummary.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationSummary);
 
       writer.name("messages");
       new ObjectAdapter<MessageThreadQuery.Messages>(Messages.INSTANCE, false).toJson(writer, customScalarAdapters, value.messages);
@@ -142,8 +144,8 @@ public class MessageThreadQuery_ResponseAdapter {
     public MessageThreadQuery.BookingInquiry fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       Integer _adultCount = null;
-      LocalDate _checkInDate = null;
-      LocalDate _checkOutDate = null;
+      Optional<LocalDate> _checkInDate = null;
+      Optional<LocalDate> _checkOutDate = null;
       Integer _childCount = null;
       Boolean _hasPets = null;
       String _id = null;
@@ -152,8 +154,8 @@ public class MessageThreadQuery_ResponseAdapter {
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _adultCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _checkInDate = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 2: _checkOutDate = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 1: _checkInDate = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 2: _checkOutDate = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 3: _childCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _hasPets = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 5: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
@@ -183,10 +185,10 @@ public class MessageThreadQuery_ResponseAdapter {
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.adultCount);
 
       writer.name("checkInDate");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkInDate);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkInDate);
 
       writer.name("checkOutDate");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkOutDate);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.checkOutDate);
 
       writer.name("childCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.childCount);
@@ -240,14 +242,14 @@ public class MessageThreadQuery_ResponseAdapter {
     @Override
     public MessageThreadQuery.PrimaryTraveler fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _firstName = null;
-      String _lastName = null;
+      Optional<String> _firstName = null;
+      Optional<String> _lastName = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _firstName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _lastName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _firstName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _lastName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -262,10 +264,10 @@ public class MessageThreadQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         MessageThreadQuery.PrimaryTraveler value) throws IOException {
       writer.name("firstName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.firstName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.firstName);
 
       writer.name("lastName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.lastName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.lastName);
     }
   }
 
@@ -385,14 +387,14 @@ public class MessageThreadQuery_ResponseAdapter {
     @Override
     public MessageThreadQuery.Messages fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _cursor = null;
+      Optional<String> _cursor = null;
       Integer _totalCount = null;
       List<MessageThreadQuery.Element> _elements = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _cursor = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _cursor = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _totalCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _elements = new ListAdapter<>(new ObjectAdapter<MessageThreadQuery.Element>(Element.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -413,7 +415,7 @@ public class MessageThreadQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         MessageThreadQuery.Messages value) throws IOException {
       writer.name("cursor");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
 
       writer.name("totalCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalCount);
@@ -432,23 +434,23 @@ public class MessageThreadQuery_ResponseAdapter {
     public MessageThreadQuery.Element fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
-      String _type = null;
-      Object _creationDateTimeUtc = null;
-      MessageThreadParticipantRole _fromRole = null;
-      MessageReviewStatus _reviewStatus = null;
+      Optional<String> _type = null;
+      Optional<OffsetDateTime> _creationDateTimeUtc = null;
+      Optional<MessageThreadParticipantRole> _fromRole = null;
+      Optional<MessageReviewStatus> _reviewStatus = null;
       List<MessageThreadQuery.Attachment> _attachments = null;
-      MessageThreadQuery.Body _body = null;
+      Optional<MessageThreadQuery.Body> _body = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _type = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _creationDateTimeUtc = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _fromRole = new NullableAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 4: _reviewStatus = new NullableAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 1: _type = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _creationDateTimeUtc = new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 3: _fromRole = new OptionalAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 4: _reviewStatus = new OptionalAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 5: _attachments = new ListAdapter<>(new ObjectAdapter<MessageThreadQuery.Attachment>(Attachment.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 6: _body = new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.Body>(Body.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 6: _body = new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.Body>(Body.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -474,22 +476,22 @@ public class MessageThreadQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("type");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.type);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("creationDateTimeUtc");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
+      new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.creationDateTimeUtc);
 
       writer.name("fromRole");
-      new NullableAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.fromRole);
+      new OptionalAdapter<>(MessageThreadParticipantRole_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.fromRole);
 
       writer.name("reviewStatus");
-      new NullableAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.reviewStatus);
+      new OptionalAdapter<>(MessageReviewStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.reviewStatus);
 
       writer.name("attachments");
       new ListAdapter<>(new ObjectAdapter<MessageThreadQuery.Attachment>(Attachment.INSTANCE, false)).toJson(writer, customScalarAdapters, value.attachments);
 
       writer.name("body");
-      new NullableAdapter<>(new ObjectAdapter<MessageThreadQuery.Body>(Body.INSTANCE, false)).toJson(writer, customScalarAdapters, value.body);
+      new OptionalAdapter<>(new ObjectAdapter<MessageThreadQuery.Body>(Body.INSTANCE, false)).toJson(writer, customScalarAdapters, value.body);
     }
   }
 
@@ -503,7 +505,7 @@ public class MessageThreadQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      Object _uploadDateTimeUtc = null;
+      OffsetDateTime _uploadDateTimeUtc = null;
       URL _url = null;
 
       loop:
@@ -511,7 +513,7 @@ public class MessageThreadQuery_ResponseAdapter {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _uploadDateTimeUtc = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _uploadDateTimeUtc = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 3: _url = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -540,7 +542,7 @@ public class MessageThreadQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("uploadDateTimeUtc");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.uploadDateTimeUtc);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.uploadDateTimeUtc);
 
       writer.name("url");
       com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.url);

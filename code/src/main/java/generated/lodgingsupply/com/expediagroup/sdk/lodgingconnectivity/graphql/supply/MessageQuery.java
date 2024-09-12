@@ -24,7 +24,9 @@ import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class MessageQuery implements Query<MessageQuery.Data> {
   public static final String OPERATION_ID = "ad222f256723925087d8fcf4826734403114f7be2661933a3299d3937e6bcb6d";
@@ -192,7 +194,7 @@ public class MessageQuery implements Query<MessageQuery.Data> {
     /**
      * Retrieves a single message using its unique identifier.
      */
-    public Message message;
+    public Optional<Message> message;
 
     private transient volatile int $hashCode;
 
@@ -200,7 +202,7 @@ public class MessageQuery implements Query<MessageQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Data(Message message) {
+    public Data(Optional<Message> message) {
       this.message = message;
     }
 
@@ -248,22 +250,22 @@ public class MessageQuery implements Query<MessageQuery.Data> {
     /**
      *  Time at which the message was created. ISO format (yyyy-MM-dd'T'HH:mm:ss.SSSZ) and UTC timezone
      */
-    public Object creationDateTimeUtc;
+    public Optional<OffsetDateTime> creationDateTimeUtc;
 
     /**
      *  Message identifier from the client perspective. This value is set by the client in addMessage mutation.
      */
-    public MessageThreadParticipantRole fromRole;
+    public Optional<MessageThreadParticipantRole> fromRole;
 
     /**
      *  Review status of a Message. 
      */
-    public MessageReviewStatus reviewStatus;
+    public Optional<MessageReviewStatus> reviewStatus;
 
     /**
      *  Message type 
      */
-    public String type;
+    public Optional<String> type;
 
     /**
      *  List of attachments associated with this message 
@@ -273,7 +275,7 @@ public class MessageQuery implements Query<MessageQuery.Data> {
     /**
      *  Message body (only plaintext allowed; should not contain any HTML tags)
      */
-    public Body body;
+    public Optional<Body> body;
 
     /**
      *  The associated message thread for the message 
@@ -286,8 +288,9 @@ public class MessageQuery implements Query<MessageQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Message(String id, Object creationDateTimeUtc, MessageThreadParticipantRole fromRole,
-        MessageReviewStatus reviewStatus, String type, List<Attachment> attachments, Body body,
+    public Message(String id, Optional<OffsetDateTime> creationDateTimeUtc,
+        Optional<MessageThreadParticipantRole> fromRole, Optional<MessageReviewStatus> reviewStatus,
+        Optional<String> type, List<Attachment> attachments, Optional<Body> body,
         MessageThread messageThread) {
       this.id = id;
       this.creationDateTimeUtc = creationDateTimeUtc;
@@ -376,7 +379,7 @@ public class MessageQuery implements Query<MessageQuery.Data> {
     /**
      *  attachment upload date time in ISO format and UTC timezone
      */
-    public Object uploadDateTimeUtc;
+    public OffsetDateTime uploadDateTimeUtc;
 
     /**
      *  The attachment location 
@@ -389,7 +392,7 @@ public class MessageQuery implements Query<MessageQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Attachment(String id, String name, Object uploadDateTimeUtc, URL url) {
+    public Attachment(String id, String name, OffsetDateTime uploadDateTimeUtc, URL url) {
       this.id = id;
       this.name = name;
       this.uploadDateTimeUtc = uploadDateTimeUtc;
@@ -500,17 +503,17 @@ public class MessageQuery implements Query<MessageQuery.Data> {
     /**
      *  Message creation date time in ISO format and UTC timezone
      */
-    public Object creationDateTimeUtc;
+    public Optional<OffsetDateTime> creationDateTimeUtc;
 
     /**
      *  Booking Inquiry associated to MessageThread 
      */
-    public BookingInquiry bookingInquiry;
+    public Optional<BookingInquiry> bookingInquiry;
 
     /**
      *  Primary Traveler 
      */
-    public PrimaryTraveler primaryTraveler;
+    public Optional<PrimaryTraveler> primaryTraveler;
 
     /**
      *  Property Details 
@@ -520,7 +523,7 @@ public class MessageQuery implements Query<MessageQuery.Data> {
     /**
      *  Reservation associated to MessageThread 
      */
-    public ReservationSummary reservationSummary;
+    public Optional<ReservationSummary> reservationSummary;
 
     private transient volatile int $hashCode;
 
@@ -528,8 +531,9 @@ public class MessageQuery implements Query<MessageQuery.Data> {
 
     private transient volatile String $toString;
 
-    public MessageThread(String id, Object creationDateTimeUtc, BookingInquiry bookingInquiry,
-        PrimaryTraveler primaryTraveler, Property property, ReservationSummary reservationSummary) {
+    public MessageThread(String id, Optional<OffsetDateTime> creationDateTimeUtc,
+        Optional<BookingInquiry> bookingInquiry, Optional<PrimaryTraveler> primaryTraveler,
+        Property property, Optional<ReservationSummary> reservationSummary) {
       this.id = id;
       this.creationDateTimeUtc = creationDateTimeUtc;
       this.bookingInquiry = bookingInquiry;
@@ -598,9 +602,9 @@ public class MessageQuery implements Query<MessageQuery.Data> {
 
     public Integer adultCount;
 
-    public LocalDate checkInDate;
+    public Optional<LocalDate> checkInDate;
 
-    public LocalDate checkOutDate;
+    public Optional<LocalDate> checkOutDate;
 
     public Integer childCount;
 
@@ -612,8 +616,8 @@ public class MessageQuery implements Query<MessageQuery.Data> {
 
     private transient volatile String $toString;
 
-    public BookingInquiry(String id, Integer adultCount, LocalDate checkInDate,
-        LocalDate checkOutDate, Integer childCount, Boolean hasPets) {
+    public BookingInquiry(String id, Integer adultCount, Optional<LocalDate> checkInDate,
+        Optional<LocalDate> checkOutDate, Integer childCount, Boolean hasPets) {
       this.id = id;
       this.adultCount = adultCount;
       this.checkInDate = checkInDate;
@@ -678,9 +682,9 @@ public class MessageQuery implements Query<MessageQuery.Data> {
   }
 
   public static class PrimaryTraveler {
-    public String firstName;
+    public Optional<String> firstName;
 
-    public String lastName;
+    public Optional<String> lastName;
 
     private transient volatile int $hashCode;
 
@@ -688,7 +692,7 @@ public class MessageQuery implements Query<MessageQuery.Data> {
 
     private transient volatile String $toString;
 
-    public PrimaryTraveler(String firstName, String lastName) {
+    public PrimaryTraveler(Optional<String> firstName, Optional<String> lastName) {
       this.firstName = firstName;
       this.lastName = lastName;
     }

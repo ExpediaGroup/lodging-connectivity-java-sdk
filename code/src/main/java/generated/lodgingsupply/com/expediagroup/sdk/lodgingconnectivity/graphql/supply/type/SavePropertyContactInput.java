@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class SavePropertyContactInput {
-  public final Optional<List<String>> emailAddresses;
+  public final Optional<Optional<List<String>>> emailAddresses;
 
-  public final Optional<String> name;
+  public final Optional<Optional<String>> name;
 
-  public final Optional<List<PhoneNumberInput>> phoneNumbers;
+  public final Optional<Optional<List<PhoneNumberInput>>> phoneNumbers;
 
   public final ContactType type;
 
@@ -26,8 +27,9 @@ public class SavePropertyContactInput {
 
   private transient volatile String $toString;
 
-  public SavePropertyContactInput(Optional<List<String>> emailAddresses, Optional<String> name,
-      Optional<List<PhoneNumberInput>> phoneNumbers, ContactType type) {
+  public SavePropertyContactInput(Optional<Optional<List<String>>> emailAddresses,
+      Optional<Optional<String>> name, Optional<Optional<List<PhoneNumberInput>>> phoneNumbers,
+      ContactType type) {
     this.emailAddresses = emailAddresses;
     this.name = name;
     this.phoneNumbers = phoneNumbers;
@@ -85,29 +87,29 @@ public class SavePropertyContactInput {
   }
 
   public static final class Builder {
-    private Optional<List<String>> emailAddresses = Optional.absent();
+    private Optional<Optional<List<String>>> emailAddresses = Optional.empty();
 
-    private Optional<String> name = Optional.absent();
+    private Optional<Optional<String>> name = Optional.empty();
 
-    private Optional<List<PhoneNumberInput>> phoneNumbers = Optional.absent();
+    private Optional<Optional<List<PhoneNumberInput>>> phoneNumbers = Optional.empty();
 
     private ContactType type;
 
     Builder() {
     }
 
-    public Builder emailAddresses(List<String> emailAddresses) {
-      this.emailAddresses = Optional.present(emailAddresses);
+    public Builder emailAddresses(@NotNull Optional<List<String>> emailAddresses) {
+      this.emailAddresses = Optional.of(emailAddresses);
       return this;
     }
 
-    public Builder name(String name) {
-      this.name = Optional.present(name);
+    public Builder name(@NotNull Optional<String> name) {
+      this.name = Optional.of(name);
       return this;
     }
 
-    public Builder phoneNumbers(List<PhoneNumberInput> phoneNumbers) {
-      this.phoneNumbers = Optional.present(phoneNumbers);
+    public Builder phoneNumbers(@NotNull Optional<List<PhoneNumberInput>> phoneNumbers) {
+      this.phoneNumbers = Optional.of(phoneNumbers);
       return this;
     }
 

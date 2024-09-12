@@ -5,23 +5,24 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ReviewsOrderBy {
-  public final Optional<SortOrder> createdDateTime;
+  public final Optional<Optional<SortOrder>> createdDateTime;
 
-  public final Optional<SortOrder> lastUpdatedDateTime;
+  public final Optional<Optional<SortOrder>> lastUpdatedDateTime;
 
-  public final Optional<SortOrder> ownerResponseCreatedDateTime;
+  public final Optional<Optional<SortOrder>> ownerResponseCreatedDateTime;
 
-  public final Optional<SortOrder> ownerResponseLastUpdatedDateTime;
+  public final Optional<Optional<SortOrder>> ownerResponseLastUpdatedDateTime;
 
-  public final Optional<SortOrder> reservationCheckInDate;
+  public final Optional<Optional<SortOrder>> reservationCheckInDate;
 
-  public final Optional<SortOrder> reservationCheckOutDate;
+  public final Optional<Optional<SortOrder>> reservationCheckOutDate;
 
   private transient volatile int $hashCode;
 
@@ -29,10 +30,12 @@ public class ReviewsOrderBy {
 
   private transient volatile String $toString;
 
-  public ReviewsOrderBy(Optional<SortOrder> createdDateTime,
-      Optional<SortOrder> lastUpdatedDateTime, Optional<SortOrder> ownerResponseCreatedDateTime,
-      Optional<SortOrder> ownerResponseLastUpdatedDateTime,
-      Optional<SortOrder> reservationCheckInDate, Optional<SortOrder> reservationCheckOutDate) {
+  public ReviewsOrderBy(Optional<Optional<SortOrder>> createdDateTime,
+      Optional<Optional<SortOrder>> lastUpdatedDateTime,
+      Optional<Optional<SortOrder>> ownerResponseCreatedDateTime,
+      Optional<Optional<SortOrder>> ownerResponseLastUpdatedDateTime,
+      Optional<Optional<SortOrder>> reservationCheckInDate,
+      Optional<Optional<SortOrder>> reservationCheckOutDate) {
     this.createdDateTime = createdDateTime;
     this.lastUpdatedDateTime = lastUpdatedDateTime;
     this.ownerResponseCreatedDateTime = ownerResponseCreatedDateTime;
@@ -100,17 +103,17 @@ public class ReviewsOrderBy {
   }
 
   public static final class Builder {
-    private Optional<SortOrder> createdDateTime = Optional.absent();
+    private Optional<Optional<SortOrder>> createdDateTime = Optional.empty();
 
-    private Optional<SortOrder> lastUpdatedDateTime = Optional.absent();
+    private Optional<Optional<SortOrder>> lastUpdatedDateTime = Optional.empty();
 
-    private Optional<SortOrder> ownerResponseCreatedDateTime = Optional.absent();
+    private Optional<Optional<SortOrder>> ownerResponseCreatedDateTime = Optional.empty();
 
-    private Optional<SortOrder> ownerResponseLastUpdatedDateTime = Optional.absent();
+    private Optional<Optional<SortOrder>> ownerResponseLastUpdatedDateTime = Optional.empty();
 
-    private Optional<SortOrder> reservationCheckInDate = Optional.absent();
+    private Optional<Optional<SortOrder>> reservationCheckInDate = Optional.empty();
 
-    private Optional<SortOrder> reservationCheckOutDate = Optional.absent();
+    private Optional<Optional<SortOrder>> reservationCheckOutDate = Optional.empty();
 
     Builder() {
     }
@@ -118,48 +121,50 @@ public class ReviewsOrderBy {
     /**
      * Sort based on review created dateTime
      */
-    public Builder createdDateTime(SortOrder createdDateTime) {
-      this.createdDateTime = Optional.present(createdDateTime);
+    public Builder createdDateTime(@NotNull Optional<SortOrder> createdDateTime) {
+      this.createdDateTime = Optional.of(createdDateTime);
       return this;
     }
 
     /**
      * Sort based on review updated dateTime
      */
-    public Builder lastUpdatedDateTime(SortOrder lastUpdatedDateTime) {
-      this.lastUpdatedDateTime = Optional.present(lastUpdatedDateTime);
+    public Builder lastUpdatedDateTime(@NotNull Optional<SortOrder> lastUpdatedDateTime) {
+      this.lastUpdatedDateTime = Optional.of(lastUpdatedDateTime);
       return this;
     }
 
     /**
      * Sort based on owner response created dateTime
      */
-    public Builder ownerResponseCreatedDateTime(SortOrder ownerResponseCreatedDateTime) {
-      this.ownerResponseCreatedDateTime = Optional.present(ownerResponseCreatedDateTime);
+    public Builder ownerResponseCreatedDateTime(
+        @NotNull Optional<SortOrder> ownerResponseCreatedDateTime) {
+      this.ownerResponseCreatedDateTime = Optional.of(ownerResponseCreatedDateTime);
       return this;
     }
 
     /**
      * Sort based on owner response updated dateTime
      */
-    public Builder ownerResponseLastUpdatedDateTime(SortOrder ownerResponseLastUpdatedDateTime) {
-      this.ownerResponseLastUpdatedDateTime = Optional.present(ownerResponseLastUpdatedDateTime);
+    public Builder ownerResponseLastUpdatedDateTime(
+        @NotNull Optional<SortOrder> ownerResponseLastUpdatedDateTime) {
+      this.ownerResponseLastUpdatedDateTime = Optional.of(ownerResponseLastUpdatedDateTime);
       return this;
     }
 
     /**
      * Sort based on reservation checkIn date
      */
-    public Builder reservationCheckInDate(SortOrder reservationCheckInDate) {
-      this.reservationCheckInDate = Optional.present(reservationCheckInDate);
+    public Builder reservationCheckInDate(@NotNull Optional<SortOrder> reservationCheckInDate) {
+      this.reservationCheckInDate = Optional.of(reservationCheckInDate);
       return this;
     }
 
     /**
      * Sort based on reservation checkOut date
      */
-    public Builder reservationCheckOutDate(SortOrder reservationCheckOutDate) {
-      this.reservationCheckOutDate = Optional.present(reservationCheckOutDate);
+    public Builder reservationCheckOutDate(@NotNull Optional<SortOrder> reservationCheckOutDate) {
+      this.reservationCheckOutDate = Optional.of(reservationCheckOutDate);
       return this;
     }
 

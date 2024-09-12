@@ -6,11 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ApplicableRegulationsInput;
@@ -30,13 +26,13 @@ public enum ApplicableRegulationsInput_InputAdapter implements Adapter<Applicabl
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       ApplicableRegulationsInput value) throws IOException {
-    if (value.key instanceof Optional.Present) {
+    if (value.key.isPresent()) {
       writer.name("key");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(ApplicableRegulationsKey_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.key);
+      new OptionalAdapter<>(new OptionalAdapter<>(ApplicableRegulationsKey_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.key);
     }
-    if (value.value instanceof Optional.Present) {
+    if (value.value.isPresent()) {
       writer.name("value");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.value);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.value);
     }
   }
 }

@@ -23,6 +23,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyAggregatedReviewsQuery implements Query<PropertyAggregatedReviewsQuery.Data> {
   public static final String OPERATION_ID = "6ad28b6dee539a9864078eb3b9d8d329dbd4e3ec0806597cdcad17676dabe2dc";
@@ -170,7 +171,7 @@ public class PropertyAggregatedReviewsQuery implements Query<PropertyAggregatedR
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -178,7 +179,7 @@ public class PropertyAggregatedReviewsQuery implements Query<PropertyAggregatedR
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -218,7 +219,7 @@ public class PropertyAggregatedReviewsQuery implements Query<PropertyAggregatedR
   }
 
   public static class Property {
-    public AggregatedReviews aggregatedReviews;
+    public Optional<AggregatedReviews> aggregatedReviews;
 
     private transient volatile int $hashCode;
 
@@ -226,7 +227,7 @@ public class PropertyAggregatedReviewsQuery implements Query<PropertyAggregatedR
 
     private transient volatile String $toString;
 
-    public Property(AggregatedReviews aggregatedReviews) {
+    public Property(Optional<AggregatedReviews> aggregatedReviews) {
       this.aggregatedReviews = aggregatedReviews;
     }
 

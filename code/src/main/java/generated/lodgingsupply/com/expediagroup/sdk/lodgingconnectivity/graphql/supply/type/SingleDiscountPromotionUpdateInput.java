@@ -5,30 +5,31 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class SingleDiscountPromotionUpdateInput {
   public final String id;
 
-  public final Optional<PromotionName> name;
+  public final Optional<Optional<PromotionName>> name;
 
-  public final Optional<PromotionStatus> status;
+  public final Optional<Optional<PromotionStatus>> status;
 
-  public final Optional<PromotionCategory> category;
+  public final Optional<Optional<PromotionCategory>> category;
 
-  public final Optional<String> code;
+  public final Optional<Optional<String>> code;
 
-  public final Optional<RestrictionsUpdateInput> restrictions;
+  public final Optional<Optional<RestrictionsUpdateInput>> restrictions;
 
-  public final Optional<List<EligibleRatePlanInput>> eligibleRatePlans;
+  public final Optional<Optional<List<EligibleRatePlanInput>>> eligibleRatePlans;
 
-  public final Optional<List<BlackoutDateRangeInput>> blackoutDates;
+  public final Optional<Optional<List<BlackoutDateRangeInput>>> blackoutDates;
 
-  public final Optional<SingleDiscountUpdateInput> discount;
+  public final Optional<Optional<SingleDiscountUpdateInput>> discount;
 
   private transient volatile int $hashCode;
 
@@ -36,12 +37,12 @@ public class SingleDiscountPromotionUpdateInput {
 
   private transient volatile String $toString;
 
-  public SingleDiscountPromotionUpdateInput(String id, Optional<PromotionName> name,
-      Optional<PromotionStatus> status, Optional<PromotionCategory> category, Optional<String> code,
-      Optional<RestrictionsUpdateInput> restrictions,
-      Optional<List<EligibleRatePlanInput>> eligibleRatePlans,
-      Optional<List<BlackoutDateRangeInput>> blackoutDates,
-      Optional<SingleDiscountUpdateInput> discount) {
+  public SingleDiscountPromotionUpdateInput(String id, Optional<Optional<PromotionName>> name,
+      Optional<Optional<PromotionStatus>> status, Optional<Optional<PromotionCategory>> category,
+      Optional<Optional<String>> code, Optional<Optional<RestrictionsUpdateInput>> restrictions,
+      Optional<Optional<List<EligibleRatePlanInput>>> eligibleRatePlans,
+      Optional<Optional<List<BlackoutDateRangeInput>>> blackoutDates,
+      Optional<Optional<SingleDiscountUpdateInput>> discount) {
     this.id = id;
     this.name = name;
     this.status = status;
@@ -126,21 +127,21 @@ public class SingleDiscountPromotionUpdateInput {
   public static final class Builder {
     private String id;
 
-    private Optional<PromotionName> name = Optional.absent();
+    private Optional<Optional<PromotionName>> name = Optional.empty();
 
-    private Optional<PromotionStatus> status = Optional.absent();
+    private Optional<Optional<PromotionStatus>> status = Optional.empty();
 
-    private Optional<PromotionCategory> category = Optional.absent();
+    private Optional<Optional<PromotionCategory>> category = Optional.empty();
 
-    private Optional<String> code = Optional.absent();
+    private Optional<Optional<String>> code = Optional.empty();
 
-    private Optional<RestrictionsUpdateInput> restrictions = Optional.absent();
+    private Optional<Optional<RestrictionsUpdateInput>> restrictions = Optional.empty();
 
-    private Optional<List<EligibleRatePlanInput>> eligibleRatePlans = Optional.absent();
+    private Optional<Optional<List<EligibleRatePlanInput>>> eligibleRatePlans = Optional.empty();
 
-    private Optional<List<BlackoutDateRangeInput>> blackoutDates = Optional.absent();
+    private Optional<Optional<List<BlackoutDateRangeInput>>> blackoutDates = Optional.empty();
 
-    private Optional<SingleDiscountUpdateInput> discount = Optional.absent();
+    private Optional<Optional<SingleDiscountUpdateInput>> discount = Optional.empty();
 
     Builder() {
     }
@@ -156,48 +157,49 @@ public class SingleDiscountPromotionUpdateInput {
     /**
      * Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
      */
-    public Builder name(PromotionName name) {
-      this.name = Optional.present(name);
+    public Builder name(@NotNull Optional<PromotionName> name) {
+      this.name = Optional.of(name);
       return this;
     }
 
     /**
      * Status of the promotion. Values: ACTIVE or INACTIVE.
      */
-    public Builder status(PromotionStatus status) {
-      this.status = Optional.present(status);
+    public Builder status(@NotNull Optional<PromotionStatus> status) {
+      this.status = Optional.of(status);
       return this;
     }
 
     /**
      * Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
      */
-    public Builder category(PromotionCategory category) {
-      this.category = Optional.present(category);
+    public Builder category(@NotNull Optional<PromotionCategory> category) {
+      this.category = Optional.of(category);
       return this;
     }
 
     /**
      * Name of the promotion as the partner wants to call it.
      */
-    public Builder code(String code) {
-      this.code = Optional.present(code);
+    public Builder code(@NotNull Optional<String> code) {
+      this.code = Optional.of(code);
       return this;
     }
 
     /**
      * List of restrictions that can be applied to these promotions.
      */
-    public Builder restrictions(RestrictionsUpdateInput restrictions) {
-      this.restrictions = Optional.present(restrictions);
+    public Builder restrictions(@NotNull Optional<RestrictionsUpdateInput> restrictions) {
+      this.restrictions = Optional.of(restrictions);
       return this;
     }
 
     /**
      * The rate plans for which this promotion is applicable for.
      */
-    public Builder eligibleRatePlans(List<EligibleRatePlanInput> eligibleRatePlans) {
-      this.eligibleRatePlans = Optional.present(eligibleRatePlans);
+    public Builder eligibleRatePlans(
+        @NotNull Optional<List<EligibleRatePlanInput>> eligibleRatePlans) {
+      this.eligibleRatePlans = Optional.of(eligibleRatePlans);
       return this;
     }
 
@@ -205,16 +207,16 @@ public class SingleDiscountPromotionUpdateInput {
      * The 'exception' dates for which the promotion should NOT apply.
      * This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
      */
-    public Builder blackoutDates(List<BlackoutDateRangeInput> blackoutDates) {
-      this.blackoutDates = Optional.present(blackoutDates);
+    public Builder blackoutDates(@NotNull Optional<List<BlackoutDateRangeInput>> blackoutDates) {
+      this.blackoutDates = Optional.of(blackoutDates);
       return this;
     }
 
     /**
      * Detail of the actual discount being applied on the promotion.
      */
-    public Builder discount(SingleDiscountUpdateInput discount) {
-      this.discount = Optional.present(discount);
+    public Builder discount(@NotNull Optional<SingleDiscountUpdateInput> discount) {
+      this.discount = Optional.of(discount);
       return this;
     }
 

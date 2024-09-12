@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class UpdateRatePlanMutation implements Mutation<UpdateRatePlanMutation.Data> {
   public static final String OPERATION_ID = "122554cdc25de560e7af010e18e6eb7c7e420fa8eb167d99af665b0fedeb0f55";
@@ -143,7 +144,7 @@ public class UpdateRatePlanMutation implements Mutation<UpdateRatePlanMutation.D
   }
 
   public static class Data implements Mutation.Data {
-    public UpdateRatePlan updateRatePlan;
+    public Optional<UpdateRatePlan> updateRatePlan;
 
     private transient volatile int $hashCode;
 
@@ -151,7 +152,7 @@ public class UpdateRatePlanMutation implements Mutation<UpdateRatePlanMutation.D
 
     private transient volatile String $toString;
 
-    public Data(UpdateRatePlan updateRatePlan) {
+    public Data(Optional<UpdateRatePlan> updateRatePlan) {
       this.updateRatePlan = updateRatePlan;
     }
 
@@ -191,9 +192,9 @@ public class UpdateRatePlanMutation implements Mutation<UpdateRatePlanMutation.D
   }
 
   public static class UpdateRatePlan {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
-    public RatePlan ratePlan;
+    public Optional<RatePlan> ratePlan;
 
     private transient volatile int $hashCode;
 
@@ -201,7 +202,7 @@ public class UpdateRatePlanMutation implements Mutation<UpdateRatePlanMutation.D
 
     private transient volatile String $toString;
 
-    public UpdateRatePlan(String clientMutationId, RatePlan ratePlan) {
+    public UpdateRatePlan(Optional<String> clientMutationId, Optional<RatePlan> ratePlan) {
       this.clientMutationId = clientMutationId;
       this.ratePlan = ratePlan;
     }

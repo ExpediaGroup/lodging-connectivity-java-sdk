@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.DeleteImageMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class DeleteImageMutation_ResponseAdapter {
   public enum Data implements Adapter<DeleteImageMutation.Data> {
@@ -29,12 +31,12 @@ public class DeleteImageMutation_ResponseAdapter {
     @Override
     public DeleteImageMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      DeleteImageMutation.DeleteImage _deleteImage = null;
+      Optional<DeleteImageMutation.DeleteImage> _deleteImage = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _deleteImage = new NullableAdapter<>(new ObjectAdapter<DeleteImageMutation.DeleteImage>(DeleteImage.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _deleteImage = new OptionalAdapter<>(new ObjectAdapter<DeleteImageMutation.DeleteImage>(DeleteImage.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class DeleteImageMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         DeleteImageMutation.Data value) throws IOException {
       writer.name("deleteImage");
-      new NullableAdapter<>(new ObjectAdapter<DeleteImageMutation.DeleteImage>(DeleteImage.INSTANCE, false)).toJson(writer, customScalarAdapters, value.deleteImage);
+      new OptionalAdapter<>(new ObjectAdapter<DeleteImageMutation.DeleteImage>(DeleteImage.INSTANCE, false)).toJson(writer, customScalarAdapters, value.deleteImage);
     }
   }
 
@@ -60,13 +62,13 @@ public class DeleteImageMutation_ResponseAdapter {
     @Override
     public DeleteImageMutation.DeleteImage fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       String _id = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -84,7 +86,7 @@ public class DeleteImageMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         DeleteImageMutation.DeleteImage value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

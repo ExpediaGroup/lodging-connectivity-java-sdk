@@ -6,12 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DateTimeRangeFilterInput;
@@ -32,13 +28,13 @@ public enum UndeliveredNotificationsFiltersInput_InputAdapter implements Adapter
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UndeliveredNotificationsFiltersInput value) throws IOException {
-    if (value.eventType instanceof Optional.Present) {
+    if (value.eventType.isPresent()) {
       writer.name("eventType");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.eventType);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.eventType);
     }
-    if (value.creationDateTime instanceof Optional.Present) {
+    if (value.creationDateTime.isPresent()) {
       writer.name("creationDateTime");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<DateTimeRangeFilterInput>(DateTimeRangeFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.creationDateTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<DateTimeRangeFilterInput>(DateTimeRangeFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.creationDateTime);
     }
   }
 }

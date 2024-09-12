@@ -5,27 +5,28 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ReviewFilter {
-  public final Optional<List<ReviewBrand>> brandNames;
+  public final Optional<Optional<List<ReviewBrand>>> brandNames;
 
-  public final Optional<DateInput> createdDate;
+  public final Optional<Optional<DateInput>> createdDate;
 
-  public final Optional<Boolean> hasOwnerResponse;
+  public final Optional<Optional<Boolean>> hasOwnerResponse;
 
-  public final Optional<ReviewReservationFilterInput> reservation;
+  public final Optional<Optional<ReviewReservationFilterInput>> reservation;
 
-  public final Optional<String> reviewId;
+  public final Optional<Optional<String>> reviewId;
 
-  public final Optional<String> source;
+  public final Optional<Optional<String>> source;
 
-  public final Optional<DateInput> updatedDate;
+  public final Optional<Optional<DateInput>> updatedDate;
 
   private transient volatile int $hashCode;
 
@@ -33,9 +34,11 @@ public class ReviewFilter {
 
   private transient volatile String $toString;
 
-  public ReviewFilter(Optional<List<ReviewBrand>> brandNames, Optional<DateInput> createdDate,
-      Optional<Boolean> hasOwnerResponse, Optional<ReviewReservationFilterInput> reservation,
-      Optional<String> reviewId, Optional<String> source, Optional<DateInput> updatedDate) {
+  public ReviewFilter(Optional<Optional<List<ReviewBrand>>> brandNames,
+      Optional<Optional<DateInput>> createdDate, Optional<Optional<Boolean>> hasOwnerResponse,
+      Optional<Optional<ReviewReservationFilterInput>> reservation,
+      Optional<Optional<String>> reviewId, Optional<Optional<String>> source,
+      Optional<Optional<DateInput>> updatedDate) {
     this.brandNames = brandNames;
     this.createdDate = createdDate;
     this.hasOwnerResponse = hasOwnerResponse;
@@ -108,19 +111,19 @@ public class ReviewFilter {
   }
 
   public static final class Builder {
-    private Optional<List<ReviewBrand>> brandNames = Optional.absent();
+    private Optional<Optional<List<ReviewBrand>>> brandNames = Optional.empty();
 
-    private Optional<DateInput> createdDate = Optional.absent();
+    private Optional<Optional<DateInput>> createdDate = Optional.empty();
 
-    private Optional<Boolean> hasOwnerResponse = Optional.absent();
+    private Optional<Optional<Boolean>> hasOwnerResponse = Optional.empty();
 
-    private Optional<ReviewReservationFilterInput> reservation = Optional.absent();
+    private Optional<Optional<ReviewReservationFilterInput>> reservation = Optional.empty();
 
-    private Optional<String> reviewId = Optional.absent();
+    private Optional<Optional<String>> reviewId = Optional.empty();
 
-    private Optional<String> source = Optional.absent();
+    private Optional<Optional<String>> source = Optional.empty();
 
-    private Optional<DateInput> updatedDate = Optional.absent();
+    private Optional<Optional<DateInput>> updatedDate = Optional.empty();
 
     Builder() {
     }
@@ -128,56 +131,56 @@ public class ReviewFilter {
     /**
      * filter by brandNames
      */
-    public Builder brandNames(List<ReviewBrand> brandNames) {
-      this.brandNames = Optional.present(brandNames);
+    public Builder brandNames(@NotNull Optional<List<ReviewBrand>> brandNames) {
+      this.brandNames = Optional.of(brandNames);
       return this;
     }
 
     /**
      * filter reviews within created date range
      */
-    public Builder createdDate(DateInput createdDate) {
-      this.createdDate = Optional.present(createdDate);
+    public Builder createdDate(@NotNull Optional<DateInput> createdDate) {
+      this.createdDate = Optional.of(createdDate);
       return this;
     }
 
     /**
      * filter by owner response exist or not
      */
-    public Builder hasOwnerResponse(Boolean hasOwnerResponse) {
-      this.hasOwnerResponse = Optional.present(hasOwnerResponse);
+    public Builder hasOwnerResponse(@NotNull Optional<Boolean> hasOwnerResponse) {
+      this.hasOwnerResponse = Optional.of(hasOwnerResponse);
       return this;
     }
 
     /**
      * filter by Reservation
      */
-    public Builder reservation(ReviewReservationFilterInput reservation) {
-      this.reservation = Optional.present(reservation);
+    public Builder reservation(@NotNull Optional<ReviewReservationFilterInput> reservation) {
+      this.reservation = Optional.of(reservation);
       return this;
     }
 
     /**
      * Id of the review as in the Expedia review platform.
      */
-    public Builder reviewId(String reviewId) {
-      this.reviewId = Optional.present(reviewId);
+    public Builder reviewId(@NotNull Optional<String> reviewId) {
+      this.reviewId = Optional.of(reviewId);
       return this;
     }
 
     /**
      * filter by source eg: PLATFORM or IMPORTED
      */
-    public Builder source(String source) {
-      this.source = Optional.present(source);
+    public Builder source(@NotNull Optional<String> source) {
+      this.source = Optional.of(source);
       return this;
     }
 
     /**
      * filter reviews within updated date range
      */
-    public Builder updatedDate(DateInput updatedDate) {
-      this.updatedDate = Optional.present(updatedDate);
+    public Builder updatedDate(@NotNull Optional<DateInput> updatedDate) {
+      this.updatedDate = Optional.of(updatedDate);
       return this;
     }
 

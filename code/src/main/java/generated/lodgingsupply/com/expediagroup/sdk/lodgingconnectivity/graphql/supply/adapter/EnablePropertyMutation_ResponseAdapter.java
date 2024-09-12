@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.EnablePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class EnablePropertyMutation_ResponseAdapter {
   public enum Data implements Adapter<EnablePropertyMutation.Data> {
@@ -29,12 +31,12 @@ public class EnablePropertyMutation_ResponseAdapter {
     @Override
     public EnablePropertyMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      EnablePropertyMutation.EnableProperty _enableProperty = null;
+      Optional<EnablePropertyMutation.EnableProperty> _enableProperty = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _enableProperty = new NullableAdapter<>(new ObjectAdapter<EnablePropertyMutation.EnableProperty>(EnableProperty.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _enableProperty = new OptionalAdapter<>(new ObjectAdapter<EnablePropertyMutation.EnableProperty>(EnableProperty.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class EnablePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         EnablePropertyMutation.Data value) throws IOException {
       writer.name("enableProperty");
-      new NullableAdapter<>(new ObjectAdapter<EnablePropertyMutation.EnableProperty>(EnableProperty.INSTANCE, false)).toJson(writer, customScalarAdapters, value.enableProperty);
+      new OptionalAdapter<>(new ObjectAdapter<EnablePropertyMutation.EnableProperty>(EnableProperty.INSTANCE, false)).toJson(writer, customScalarAdapters, value.enableProperty);
     }
   }
 
@@ -60,13 +62,13 @@ public class EnablePropertyMutation_ResponseAdapter {
     @Override
     public EnablePropertyMutation.EnableProperty fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       String _id = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -84,7 +86,7 @@ public class EnablePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         EnablePropertyMutation.EnableProperty value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

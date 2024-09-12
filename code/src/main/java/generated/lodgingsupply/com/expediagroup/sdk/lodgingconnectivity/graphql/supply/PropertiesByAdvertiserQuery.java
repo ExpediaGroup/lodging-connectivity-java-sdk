@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertiesByAdvertiserQuery_ResponseAdapter;
@@ -22,6 +21,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertiesByAdvertiserQuery implements Query<PropertiesByAdvertiserQuery.Data> {
   public static final String OPERATION_ID = "5b88ae4d8ecbeffa75dd5a82e9345239f3291efb42af2c802020833e3ded17dc";
@@ -158,9 +158,9 @@ public class PropertiesByAdvertiserQuery implements Query<PropertiesByAdvertiser
 
     private IdSource idSource;
 
-    private Optional<Integer> pageSize = Optional.absent();
+    private Optional<Integer> pageSize = Optional.empty();
 
-    private Optional<String> cursor = Optional.absent();
+    private Optional<String> cursor = Optional.empty();
 
     Builder() {
     }
@@ -176,12 +176,12 @@ public class PropertiesByAdvertiserQuery implements Query<PropertiesByAdvertiser
     }
 
     public Builder pageSize(Integer pageSize) {
-      this.pageSize = Optional.present(pageSize);
+      this.pageSize = Optional.of(pageSize);
       return this;
     }
 
     public Builder cursor(String cursor) {
-      this.cursor = Optional.present(cursor);
+      this.cursor = Optional.of(cursor);
       return this;
     }
 
@@ -194,7 +194,7 @@ public class PropertiesByAdvertiserQuery implements Query<PropertiesByAdvertiser
     /**
      * Retrieve a list of Properties associated for a given Advertiser.
      */
-    public PropertiesByAdvertiser propertiesByAdvertiser;
+    public Optional<PropertiesByAdvertiser> propertiesByAdvertiser;
 
     private transient volatile int $hashCode;
 
@@ -202,7 +202,7 @@ public class PropertiesByAdvertiserQuery implements Query<PropertiesByAdvertiser
 
     private transient volatile String $toString;
 
-    public Data(PropertiesByAdvertiser propertiesByAdvertiser) {
+    public Data(Optional<PropertiesByAdvertiser> propertiesByAdvertiser) {
       this.propertiesByAdvertiser = propertiesByAdvertiser;
     }
 
@@ -242,7 +242,7 @@ public class PropertiesByAdvertiserQuery implements Query<PropertiesByAdvertiser
   }
 
   public static class PropertiesByAdvertiser {
-    public String cursor;
+    public Optional<String> cursor;
 
     public Integer totalCount;
 
@@ -254,7 +254,8 @@ public class PropertiesByAdvertiserQuery implements Query<PropertiesByAdvertiser
 
     private transient volatile String $toString;
 
-    public PropertiesByAdvertiser(String cursor, Integer totalCount, List<Element> elements) {
+    public PropertiesByAdvertiser(Optional<String> cursor, Integer totalCount,
+        List<Element> elements) {
       this.cursor = cursor;
       this.totalCount = totalCount;
       this.elements = elements;

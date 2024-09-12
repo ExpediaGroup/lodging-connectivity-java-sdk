@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.UpdatePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdatePropertyMutation_ResponseAdapter {
   public enum Data implements Adapter<UpdatePropertyMutation.Data> {
@@ -29,12 +31,12 @@ public class UpdatePropertyMutation_ResponseAdapter {
     @Override
     public UpdatePropertyMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      UpdatePropertyMutation.UpdateProperty _updateProperty = null;
+      Optional<UpdatePropertyMutation.UpdateProperty> _updateProperty = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _updateProperty = new NullableAdapter<>(new ObjectAdapter<UpdatePropertyMutation.UpdateProperty>(UpdateProperty.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _updateProperty = new OptionalAdapter<>(new ObjectAdapter<UpdatePropertyMutation.UpdateProperty>(UpdateProperty.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class UpdatePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdatePropertyMutation.Data value) throws IOException {
       writer.name("updateProperty");
-      new NullableAdapter<>(new ObjectAdapter<UpdatePropertyMutation.UpdateProperty>(UpdateProperty.INSTANCE, false)).toJson(writer, customScalarAdapters, value.updateProperty);
+      new OptionalAdapter<>(new ObjectAdapter<UpdatePropertyMutation.UpdateProperty>(UpdateProperty.INSTANCE, false)).toJson(writer, customScalarAdapters, value.updateProperty);
     }
   }
 
@@ -60,14 +62,14 @@ public class UpdatePropertyMutation_ResponseAdapter {
     @Override
     public UpdatePropertyMutation.UpdateProperty fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
-      UpdatePropertyMutation.Property _property = null;
+      Optional<String> _clientMutationId = null;
+      Optional<UpdatePropertyMutation.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _property = new NullableAdapter<>(new ObjectAdapter<UpdatePropertyMutation.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _property = new OptionalAdapter<>(new ObjectAdapter<UpdatePropertyMutation.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -82,10 +84,10 @@ public class UpdatePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdatePropertyMutation.UpdateProperty value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<UpdatePropertyMutation.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<UpdatePropertyMutation.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 

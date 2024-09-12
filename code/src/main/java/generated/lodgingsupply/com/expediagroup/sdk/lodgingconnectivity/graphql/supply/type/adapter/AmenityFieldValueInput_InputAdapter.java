@@ -6,13 +6,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AmenityFieldFeeValueInput;
@@ -35,21 +31,21 @@ public enum AmenityFieldValueInput_InputAdapter implements Adapter<AmenityFieldV
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       AmenityFieldValueInput value) throws IOException {
-    if (value.feeValue instanceof Optional.Present) {
+    if (value.feeValue.isPresent()) {
       writer.name("feeValue");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<AmenityFieldFeeValueInput>(AmenityFieldFeeValueInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.feeValue);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<AmenityFieldFeeValueInput>(AmenityFieldFeeValueInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.feeValue);
     }
-    if (value.measurementValue instanceof Optional.Present) {
+    if (value.measurementValue.isPresent()) {
       writer.name("measurementValue");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<AmenityFieldMeasurementValueInput>(AmenityFieldMeasurementValueInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.measurementValue);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<AmenityFieldMeasurementValueInput>(AmenityFieldMeasurementValueInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.measurementValue);
     }
-    if (value.textValue instanceof Optional.Present) {
+    if (value.textValue.isPresent()) {
       writer.name("textValue");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.textValue);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.textValue);
     }
-    if (value.value instanceof Optional.Present) {
+    if (value.value.isPresent()) {
       writer.name("value");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.value);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.value);
     }
   }
 }

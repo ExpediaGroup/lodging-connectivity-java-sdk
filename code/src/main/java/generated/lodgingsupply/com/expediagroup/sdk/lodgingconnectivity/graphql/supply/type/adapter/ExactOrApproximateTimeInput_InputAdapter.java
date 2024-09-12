@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ExactOrApproximateTimeInput;
@@ -29,13 +26,13 @@ public enum ExactOrApproximateTimeInput_InputAdapter implements Adapter<ExactOrA
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       ExactOrApproximateTimeInput value) throws IOException {
-    if (value.approximateTime instanceof Optional.Present) {
+    if (value.approximateTime.isPresent()) {
       writer.name("approximateTime");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.approximateTime);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.approximateTime);
     }
-    if (value.exactTime instanceof Optional.Present) {
+    if (value.exactTime.isPresent()) {
       writer.name("exactTime");
-      new ApolloOptionalAdapter<>(Adapters.NullableAnyAdapter).toJson(writer, customScalarAdapters, value.exactTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.exactTime);
     }
   }
 }

@@ -11,5 +11,5 @@ import com.apollographql.apollo.api.CustomScalarType;
  * An arbitrary-precision and scale decimal number, serialized as a string.
  */
 public class Decimal {
-  public static CustomScalarType type = new CustomScalarType("Decimal", "java.lang.Object");
+  public static CustomScalarType type = new CustomScalarType("Decimal", "java.lang.String");
 }

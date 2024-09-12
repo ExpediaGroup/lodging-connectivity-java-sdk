@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DeleteUnitSpaceInput;
@@ -29,9 +27,9 @@ public enum DeleteUnitSpaceInput_InputAdapter implements Adapter<DeleteUnitSpace
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       DeleteUnitSpaceInput value) throws IOException {
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);

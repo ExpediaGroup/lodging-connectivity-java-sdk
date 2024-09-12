@@ -5,11 +5,12 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CancelReservationReconciliationInput {
   public final String propertyId;
@@ -18,9 +19,9 @@ public class CancelReservationReconciliationInput {
 
   public final ReservationCancellationReason reason;
 
-  public final Optional<String> currencyCode;
+  public final Optional<Optional<String>> currencyCode;
 
-  public final Optional<Double> penaltyAmount;
+  public final Optional<Optional<Double>> penaltyAmount;
 
   private transient volatile int $hashCode;
 
@@ -29,8 +30,8 @@ public class CancelReservationReconciliationInput {
   private transient volatile String $toString;
 
   public CancelReservationReconciliationInput(String propertyId, String reservationId,
-      ReservationCancellationReason reason, Optional<String> currencyCode,
-      Optional<Double> penaltyAmount) {
+      ReservationCancellationReason reason, Optional<Optional<String>> currencyCode,
+      Optional<Optional<Double>> penaltyAmount) {
     this.propertyId = propertyId;
     this.reservationId = reservationId;
     this.reason = reason;
@@ -99,9 +100,9 @@ public class CancelReservationReconciliationInput {
 
     private ReservationCancellationReason reason;
 
-    private Optional<String> currencyCode = Optional.absent();
+    private Optional<Optional<String>> currencyCode = Optional.empty();
 
-    private Optional<Double> penaltyAmount = Optional.absent();
+    private Optional<Optional<Double>> penaltyAmount = Optional.empty();
 
     Builder() {
     }
@@ -133,16 +134,16 @@ public class CancelReservationReconciliationInput {
     /**
      * Currency in which the amount is shown.
      */
-    public Builder currencyCode(String currencyCode) {
-      this.currencyCode = Optional.present(currencyCode);
+    public Builder currencyCode(@NotNull Optional<String> currencyCode) {
+      this.currencyCode = Optional.of(currencyCode);
       return this;
     }
 
     /**
      * Amount of money to charge for cancelling this reservation.
      */
-    public Builder penaltyAmount(Double penaltyAmount) {
-      this.penaltyAmount = Optional.present(penaltyAmount);
+    public Builder penaltyAmount(@NotNull Optional<Double> penaltyAmount) {
+      this.penaltyAmount = Optional.of(penaltyAmount);
       return this;
     }
 

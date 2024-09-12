@@ -5,24 +5,25 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class MultiNightDiscountCreateInput {
   public final DiscountUnit unit;
 
   public final Double value;
 
-  public final Optional<Double> memberOnlyAdditionalValue;
+  public final Optional<Optional<Double>> memberOnlyAdditionalValue;
 
   public final Integer applicableNight;
 
-  public final Optional<Boolean> isRecurring;
+  public final Optional<Optional<Boolean>> isRecurring;
 
   private transient volatile int $hashCode;
 
@@ -31,8 +32,8 @@ public class MultiNightDiscountCreateInput {
   private transient volatile String $toString;
 
   public MultiNightDiscountCreateInput(DiscountUnit unit, Double value,
-      Optional<Double> memberOnlyAdditionalValue, Integer applicableNight,
-      Optional<Boolean> isRecurring) {
+      Optional<Optional<Double>> memberOnlyAdditionalValue, Integer applicableNight,
+      Optional<Optional<Boolean>> isRecurring) {
     this.unit = unit;
     this.value = value;
     this.memberOnlyAdditionalValue = memberOnlyAdditionalValue;
@@ -99,11 +100,11 @@ public class MultiNightDiscountCreateInput {
 
     private Double value;
 
-    private Optional<Double> memberOnlyAdditionalValue = Optional.absent();
+    private Optional<Optional<Double>> memberOnlyAdditionalValue = Optional.empty();
 
     private Integer applicableNight;
 
-    private Optional<Boolean> isRecurring = Optional.absent();
+    private Optional<Optional<Boolean>> isRecurring = Optional.empty();
 
     Builder() {
     }
@@ -127,8 +128,8 @@ public class MultiNightDiscountCreateInput {
     /**
      * Member only discount value applied.
      */
-    public Builder memberOnlyAdditionalValue(Double memberOnlyAdditionalValue) {
-      this.memberOnlyAdditionalValue = Optional.present(memberOnlyAdditionalValue);
+    public Builder memberOnlyAdditionalValue(@NotNull Optional<Double> memberOnlyAdditionalValue) {
+      this.memberOnlyAdditionalValue = Optional.of(memberOnlyAdditionalValue);
       return this;
     }
 
@@ -143,8 +144,8 @@ public class MultiNightDiscountCreateInput {
     /**
      * Whether this discount will be applied every consecutive applicable night.
      */
-    public Builder isRecurring(Boolean isRecurring) {
-      this.isRecurring = Optional.present(isRecurring);
+    public Builder isRecurring(@NotNull Optional<Boolean> isRecurring) {
+      this.isRecurring = Optional.of(isRecurring);
       return this;
     }
 

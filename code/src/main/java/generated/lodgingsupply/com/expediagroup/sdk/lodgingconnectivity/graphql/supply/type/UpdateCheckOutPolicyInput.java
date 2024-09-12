@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateCheckOutPolicyInput {
-  public final Optional<ExactOrApproximateTimeInput> checkOutTime;
+  public final Optional<Optional<ExactOrApproximateTimeInput>> checkOutTime;
 
   private transient volatile int $hashCode;
 
@@ -19,7 +20,7 @@ public class UpdateCheckOutPolicyInput {
 
   private transient volatile String $toString;
 
-  public UpdateCheckOutPolicyInput(Optional<ExactOrApproximateTimeInput> checkOutTime) {
+  public UpdateCheckOutPolicyInput(Optional<Optional<ExactOrApproximateTimeInput>> checkOutTime) {
     this.checkOutTime = checkOutTime;
   }
 
@@ -62,13 +63,13 @@ public class UpdateCheckOutPolicyInput {
   }
 
   public static final class Builder {
-    private Optional<ExactOrApproximateTimeInput> checkOutTime = Optional.absent();
+    private Optional<Optional<ExactOrApproximateTimeInput>> checkOutTime = Optional.empty();
 
     Builder() {
     }
 
-    public Builder checkOutTime(ExactOrApproximateTimeInput checkOutTime) {
-      this.checkOutTime = Optional.present(checkOutTime);
+    public Builder checkOutTime(@NotNull Optional<ExactOrApproximateTimeInput> checkOutTime) {
+      this.checkOutTime = Optional.of(checkOutTime);
       return this;
     }
 

@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class AllowedEventsInput {
-  public final Optional<Integer> maxAttendees;
+  public final Optional<Optional<Integer>> maxAttendees;
 
-  public final Optional<List<String>> types;
+  public final Optional<Optional<List<String>>> types;
 
   private transient volatile int $hashCode;
 
@@ -23,7 +24,8 @@ public class AllowedEventsInput {
 
   private transient volatile String $toString;
 
-  public AllowedEventsInput(Optional<Integer> maxAttendees, Optional<List<String>> types) {
+  public AllowedEventsInput(Optional<Optional<Integer>> maxAttendees,
+      Optional<Optional<List<String>>> types) {
     this.maxAttendees = maxAttendees;
     this.types = types;
   }
@@ -71,20 +73,20 @@ public class AllowedEventsInput {
   }
 
   public static final class Builder {
-    private Optional<Integer> maxAttendees = Optional.absent();
+    private Optional<Optional<Integer>> maxAttendees = Optional.empty();
 
-    private Optional<List<String>> types = Optional.absent();
+    private Optional<Optional<List<String>>> types = Optional.empty();
 
     Builder() {
     }
 
-    public Builder maxAttendees(Integer maxAttendees) {
-      this.maxAttendees = Optional.present(maxAttendees);
+    public Builder maxAttendees(@NotNull Optional<Integer> maxAttendees) {
+      this.maxAttendees = Optional.of(maxAttendees);
       return this;
     }
 
-    public Builder types(List<String> types) {
-      this.types = Optional.present(types);
+    public Builder types(@NotNull Optional<List<String>> types) {
+      this.types = Optional.of(types);
       return this;
     }
 

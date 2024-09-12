@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class PropertyMessageThreadsFiltersInput {
-  public final Optional<DateTimeRangeFilterInput> createdDate;
+  public final Optional<Optional<DateTimeRangeFilterInput>> createdDate;
 
-  public final Optional<DateTimeRangeFilterInput> creationDateTime;
+  public final Optional<Optional<DateTimeRangeFilterInput>> creationDateTime;
 
   private transient volatile int $hashCode;
 
@@ -21,8 +22,9 @@ public class PropertyMessageThreadsFiltersInput {
 
   private transient volatile String $toString;
 
-  public PropertyMessageThreadsFiltersInput(Optional<DateTimeRangeFilterInput> createdDate,
-      Optional<DateTimeRangeFilterInput> creationDateTime) {
+  public PropertyMessageThreadsFiltersInput(
+      Optional<Optional<DateTimeRangeFilterInput>> createdDate,
+      Optional<Optional<DateTimeRangeFilterInput>> creationDateTime) {
     this.createdDate = createdDate;
     this.creationDateTime = creationDateTime;
   }
@@ -70,9 +72,9 @@ public class PropertyMessageThreadsFiltersInput {
   }
 
   public static final class Builder {
-    private Optional<DateTimeRangeFilterInput> createdDate = Optional.absent();
+    private Optional<Optional<DateTimeRangeFilterInput>> createdDate = Optional.empty();
 
-    private Optional<DateTimeRangeFilterInput> creationDateTime = Optional.absent();
+    private Optional<Optional<DateTimeRangeFilterInput>> creationDateTime = Optional.empty();
 
     Builder() {
     }
@@ -80,13 +82,13 @@ public class PropertyMessageThreadsFiltersInput {
     /**
      * createdDate field is deprecated, please use `creationDateTime`
      */
-    public Builder createdDate(DateTimeRangeFilterInput createdDate) {
-      this.createdDate = Optional.present(createdDate);
+    public Builder createdDate(@NotNull Optional<DateTimeRangeFilterInput> createdDate) {
+      this.createdDate = Optional.of(createdDate);
       return this;
     }
 
-    public Builder creationDateTime(DateTimeRangeFilterInput creationDateTime) {
-      this.creationDateTime = Optional.present(creationDateTime);
+    public Builder creationDateTime(@NotNull Optional<DateTimeRangeFilterInput> creationDateTime) {
+      this.creationDateTime = Optional.of(creationDateTime);
       return this;
     }
 

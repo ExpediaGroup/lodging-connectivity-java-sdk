@@ -10,12 +10,12 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.RatePlanQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CurrencyCode;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Decimal;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeAgeCategory;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeBusinessModel;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeChargeDuration;
@@ -29,17 +29,21 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeB
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeChargeDuration_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.FeeChargeType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.MerchantOfRecord_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PricingModel_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RatePlanStatus_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RatePlanType_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class RatePlanQuery_ResponseAdapter {
   public enum Data implements Adapter<RatePlanQuery.Data> {
@@ -50,12 +54,12 @@ public class RatePlanQuery_ResponseAdapter {
     @Override
     public RatePlanQuery.Data fromJson(JsonReader reader, CustomScalarAdapters customScalarAdapters)
         throws IOException {
-      RatePlanQuery.RatePlan _ratePlan = null;
+      Optional<RatePlanQuery.RatePlan> _ratePlan = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _ratePlan = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.RatePlan>(RatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _ratePlan = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.RatePlan>(RatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -69,7 +73,7 @@ public class RatePlanQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RatePlanQuery.Data value) throws IOException {
       writer.name("ratePlan");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.RatePlan>(RatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.ratePlan);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.RatePlan>(RatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.ratePlan);
     }
   }
 
@@ -82,43 +86,43 @@ public class RatePlanQuery_ResponseAdapter {
     public RatePlanQuery.RatePlan fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
-      Object _lastUpdateDateTime = null;
+      OffsetDateTime _lastUpdateDateTime = null;
       String _name = null;
-      Boolean _paymentScheduleApplicable = null;
+      Optional<Boolean> _paymentScheduleApplicable = null;
       PricingModel _pricingModel = null;
       String _propertyId = null;
       RatePlanStatus _status = null;
-      Boolean _taxInclusive = null;
+      Optional<Boolean> _taxInclusive = null;
       RatePlanType _type = null;
       String _unitId = null;
       List<String> _valueAdds = null;
-      Integer _baseRateGuestCount = null;
-      Object _creationDateTime = null;
+      Optional<Integer> _baseRateGuestCount = null;
+      OffsetDateTime _creationDateTime = null;
       List<RatePlanQuery.DistributionRule> _distributionRules = null;
-      RatePlanQuery.FeeSet _feeSet = null;
+      Optional<RatePlanQuery.FeeSet> _feeSet = null;
       RatePlanQuery.Restrictions1 _restrictions = null;
-      RatePlanQuery.CancellationPolicyConfig _cancellationPolicyConfig = null;
+      Optional<RatePlanQuery.CancellationPolicyConfig> _cancellationPolicyConfig = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _lastUpdateDateTime = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _lastUpdateDateTime = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 2: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _paymentScheduleApplicable = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _paymentScheduleApplicable = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _pricingModel = PricingModel_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 5: _propertyId = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 6: _status = RatePlanStatus_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 7: _taxInclusive = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _taxInclusive = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 8: _type = RatePlanType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 9: _unitId = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 10: _valueAdds = new ListAdapter<>(Adapters.StringAdapter).fromJson(reader, customScalarAdapters); break;
-          case 11: _baseRateGuestCount = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 12: _creationDateTime = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 11: _baseRateGuestCount = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 12: _creationDateTime = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 13: _distributionRules = new ListAdapter<>(new ObjectAdapter<RatePlanQuery.DistributionRule>(DistributionRule.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 14: _feeSet = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.FeeSet>(FeeSet.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 14: _feeSet = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.FeeSet>(FeeSet.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 15: _restrictions = new ObjectAdapter<RatePlanQuery.Restrictions1>(Restrictions1.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 16: _cancellationPolicyConfig = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 16: _cancellationPolicyConfig = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -164,13 +168,13 @@ public class RatePlanQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("lastUpdateDateTime");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.lastUpdateDateTime);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.lastUpdateDateTime);
 
       writer.name("name");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("paymentScheduleApplicable");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.paymentScheduleApplicable);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.paymentScheduleApplicable);
 
       writer.name("pricingModel");
       PricingModel_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.pricingModel);
@@ -182,7 +186,7 @@ public class RatePlanQuery_ResponseAdapter {
       RatePlanStatus_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.status);
 
       writer.name("taxInclusive");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.taxInclusive);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.taxInclusive);
 
       writer.name("type");
       RatePlanType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -194,22 +198,22 @@ public class RatePlanQuery_ResponseAdapter {
       new ListAdapter<>(Adapters.StringAdapter).toJson(writer, customScalarAdapters, value.valueAdds);
 
       writer.name("baseRateGuestCount");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.baseRateGuestCount);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.baseRateGuestCount);
 
       writer.name("creationDateTime");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.creationDateTime);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.creationDateTime);
 
       writer.name("distributionRules");
       new ListAdapter<>(new ObjectAdapter<RatePlanQuery.DistributionRule>(DistributionRule.INSTANCE, false)).toJson(writer, customScalarAdapters, value.distributionRules);
 
       writer.name("feeSet");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.FeeSet>(FeeSet.INSTANCE, false)).toJson(writer, customScalarAdapters, value.feeSet);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.FeeSet>(FeeSet.INSTANCE, false)).toJson(writer, customScalarAdapters, value.feeSet);
 
       writer.name("restrictions");
       new ObjectAdapter<RatePlanQuery.Restrictions1>(Restrictions1.INSTANCE, false).toJson(writer, customScalarAdapters, value.restrictions);
 
       writer.name("cancellationPolicyConfig");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicyConfig);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicyConfig);
     }
   }
 
@@ -317,24 +321,24 @@ public class RatePlanQuery_ResponseAdapter {
         throws IOException {
       String _name = null;
       String _scope = null;
-      Boolean _taxable = null;
+      Optional<Boolean> _taxable = null;
       String _type = null;
-      Boolean _variesByLengthOfStay = null;
-      FeeAgeCategory _ageCategory = null;
+      Optional<Boolean> _variesByLengthOfStay = null;
+      Optional<FeeAgeCategory> _ageCategory = null;
       List<RatePlanQuery.Charge> _charges = null;
-      RatePlanQuery.Restrictions _restrictions = null;
+      Optional<RatePlanQuery.Restrictions> _restrictions = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _scope = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _taxable = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _taxable = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _variesByLengthOfStay = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _ageCategory = new NullableAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 4: _variesByLengthOfStay = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _ageCategory = new OptionalAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 6: _charges = new ListAdapter<>(new ObjectAdapter<RatePlanQuery.Charge>(Charge.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 7: _restrictions = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 7: _restrictions = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -366,22 +370,22 @@ public class RatePlanQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.scope);
 
       writer.name("taxable");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.taxable);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.taxable);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("variesByLengthOfStay");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
 
       writer.name("ageCategory");
-      new NullableAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.ageCategory);
+      new OptionalAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.ageCategory);
 
       writer.name("charges");
       new ListAdapter<>(new ObjectAdapter<RatePlanQuery.Charge>(Charge.INSTANCE, false)).toJson(writer, customScalarAdapters, value.charges);
 
       writer.name("restrictions");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
     }
   }
 
@@ -394,16 +398,16 @@ public class RatePlanQuery_ResponseAdapter {
     public RatePlanQuery.Charge fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       FeeChargeDuration _duration = null;
-      RatePlanQuery.FlatAmount _flatAmount = null;
-      Object _percentage = null;
+      Optional<RatePlanQuery.FlatAmount> _flatAmount = null;
+      Optional<String> _percentage = null;
       FeeChargeType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _duration = FeeChargeDuration_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _flatAmount = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _percentage = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _flatAmount = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _percentage = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).fromJson(reader, customScalarAdapters); break;
           case 3: _type = FeeChargeType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -427,10 +431,10 @@ public class RatePlanQuery_ResponseAdapter {
       FeeChargeDuration_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.duration);
 
       writer.name("flatAmount");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
 
       writer.name("percentage");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.percentage);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).toJson(writer, customScalarAdapters, value.percentage);
 
       writer.name("type");
       FeeChargeType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -445,13 +449,13 @@ public class RatePlanQuery_ResponseAdapter {
     @Override
     public RatePlanQuery.FlatAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -470,7 +474,7 @@ public class RatePlanQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RatePlanQuery.FlatAmount value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -485,16 +489,16 @@ public class RatePlanQuery_ResponseAdapter {
     @Override
     public RatePlanQuery.Restrictions fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      RatePlanQuery.DateRange _dateRange = null;
-      RatePlanQuery.ExtraGuestRange _extraGuestRange = null;
-      RatePlanQuery.RangeOfNight _rangeOfNight = null;
+      Optional<RatePlanQuery.DateRange> _dateRange = null;
+      Optional<RatePlanQuery.ExtraGuestRange> _extraGuestRange = null;
+      Optional<RatePlanQuery.RangeOfNight> _rangeOfNight = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _dateRange = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.DateRange>(DateRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _extraGuestRange = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _rangeOfNight = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _dateRange = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.DateRange>(DateRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _extraGuestRange = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _rangeOfNight = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -510,13 +514,13 @@ public class RatePlanQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RatePlanQuery.Restrictions value) throws IOException {
       writer.name("dateRange");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.DateRange>(DateRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.dateRange);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.DateRange>(DateRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.dateRange);
 
       writer.name("extraGuestRange");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.extraGuestRange);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.ExtraGuestRange>(ExtraGuestRange.INSTANCE, false)).toJson(writer, customScalarAdapters, value.extraGuestRange);
 
       writer.name("rangeOfNight");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rangeOfNight);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.RangeOfNight>(RangeOfNight.INSTANCE, false)).toJson(writer, customScalarAdapters, value.rangeOfNight);
     }
   }
 
@@ -528,14 +532,14 @@ public class RatePlanQuery_ResponseAdapter {
     @Override
     public RatePlanQuery.DateRange fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _from = null;
-      Object _to = null;
+      LocalDate _from = null;
+      Optional<LocalDate> _to = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _from = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _to = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _from = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
+          case 1: _to = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -552,10 +556,10 @@ public class RatePlanQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RatePlanQuery.DateRange value) throws IOException {
       writer.name("from");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
 
       writer.name("to");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.to);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.to);
     }
   }
 
@@ -647,20 +651,20 @@ public class RatePlanQuery_ResponseAdapter {
     @Override
     public RatePlanQuery.Restrictions1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      RatePlanQuery.AdvanceBookingDays _advanceBookingDays = null;
-      RatePlanQuery.LengthOfStay _lengthOfStay = null;
-      Boolean _mobileOnly = null;
-      RatePlanQuery.ReservationDates _reservationDates = null;
-      RatePlanQuery.TravelDates _travelDates = null;
+      Optional<RatePlanQuery.AdvanceBookingDays> _advanceBookingDays = null;
+      Optional<RatePlanQuery.LengthOfStay> _lengthOfStay = null;
+      Optional<Boolean> _mobileOnly = null;
+      Optional<RatePlanQuery.ReservationDates> _reservationDates = null;
+      Optional<RatePlanQuery.TravelDates> _travelDates = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _advanceBookingDays = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.AdvanceBookingDays>(AdvanceBookingDays.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _lengthOfStay = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.LengthOfStay>(LengthOfStay.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _mobileOnly = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _reservationDates = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.ReservationDates>(ReservationDates.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 4: _travelDates = new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.TravelDates>(TravelDates.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _advanceBookingDays = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.AdvanceBookingDays>(AdvanceBookingDays.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _lengthOfStay = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.LengthOfStay>(LengthOfStay.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _mobileOnly = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _reservationDates = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.ReservationDates>(ReservationDates.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 4: _travelDates = new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.TravelDates>(TravelDates.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -678,19 +682,19 @@ public class RatePlanQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RatePlanQuery.Restrictions1 value) throws IOException {
       writer.name("advanceBookingDays");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.AdvanceBookingDays>(AdvanceBookingDays.INSTANCE, false)).toJson(writer, customScalarAdapters, value.advanceBookingDays);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.AdvanceBookingDays>(AdvanceBookingDays.INSTANCE, false)).toJson(writer, customScalarAdapters, value.advanceBookingDays);
 
       writer.name("lengthOfStay");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.LengthOfStay>(LengthOfStay.INSTANCE, false)).toJson(writer, customScalarAdapters, value.lengthOfStay);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.LengthOfStay>(LengthOfStay.INSTANCE, false)).toJson(writer, customScalarAdapters, value.lengthOfStay);
 
       writer.name("mobileOnly");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.mobileOnly);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.mobileOnly);
 
       writer.name("reservationDates");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.ReservationDates>(ReservationDates.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationDates);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.ReservationDates>(ReservationDates.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationDates);
 
       writer.name("travelDates");
-      new NullableAdapter<>(new ObjectAdapter<RatePlanQuery.TravelDates>(TravelDates.INSTANCE, false)).toJson(writer, customScalarAdapters, value.travelDates);
+      new OptionalAdapter<>(new ObjectAdapter<RatePlanQuery.TravelDates>(TravelDates.INSTANCE, false)).toJson(writer, customScalarAdapters, value.travelDates);
     }
   }
 
@@ -782,14 +786,14 @@ public class RatePlanQuery_ResponseAdapter {
     @Override
     public RatePlanQuery.ReservationDates fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _from = null;
-      Object _to = null;
+      LocalDate _from = null;
+      LocalDate _to = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _from = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _to = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _from = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
+          case 1: _to = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -807,10 +811,10 @@ public class RatePlanQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RatePlanQuery.ReservationDates value) throws IOException {
       writer.name("from");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
 
       writer.name("to");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.to);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.to);
     }
   }
 
@@ -822,14 +826,14 @@ public class RatePlanQuery_ResponseAdapter {
     @Override
     public RatePlanQuery.TravelDates fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _from = null;
-      Object _to = null;
+      LocalDate _from = null;
+      LocalDate _to = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _from = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _to = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _from = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
+          case 1: _to = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -847,10 +851,10 @@ public class RatePlanQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RatePlanQuery.TravelDates value) throws IOException {
       writer.name("from");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
 
       writer.name("to");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.to);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.to);
     }
   }
 

@@ -10,16 +10,17 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.NotificationEventTypesQuery;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class NotificationEventTypesQuery_ResponseAdapter {
   public enum Data implements Adapter<NotificationEventTypesQuery.Data> {
@@ -30,12 +31,12 @@ public class NotificationEventTypesQuery_ResponseAdapter {
     @Override
     public NotificationEventTypesQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<NotificationEventTypesQuery.NotificationEventType> _notificationEventTypes = null;
+      Optional<List<NotificationEventTypesQuery.NotificationEventType>> _notificationEventTypes = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _notificationEventTypes = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<NotificationEventTypesQuery.NotificationEventType>(NotificationEventType.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 0: _notificationEventTypes = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<NotificationEventTypesQuery.NotificationEventType>(NotificationEventType.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -49,7 +50,7 @@ public class NotificationEventTypesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         NotificationEventTypesQuery.Data value) throws IOException {
       writer.name("notificationEventTypes");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<NotificationEventTypesQuery.NotificationEventType>(NotificationEventType.INSTANCE, false))).toJson(writer, customScalarAdapters, value.notificationEventTypes);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<NotificationEventTypesQuery.NotificationEventType>(NotificationEventType.INSTANCE, false))).toJson(writer, customScalarAdapters, value.notificationEventTypes);
     }
   }
 

@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.BedTypeInput;
@@ -31,9 +29,9 @@ public enum BedTypeInput_InputAdapter implements Adapter<BedTypeInput> {
       BedTypeInput value) throws IOException {
     writer.name("quantity");
     Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.quantity);
-    if (value.size instanceof Optional.Present) {
+    if (value.size.isPresent()) {
       writer.name("size");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.size);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.size);
     }
     writer.name("type");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);

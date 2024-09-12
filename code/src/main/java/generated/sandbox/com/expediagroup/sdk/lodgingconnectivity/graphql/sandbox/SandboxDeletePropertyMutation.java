@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class SandboxDeletePropertyMutation implements Mutation<SandboxDeletePropertyMutation.Data> {
   public static final String OPERATION_ID = "a972a7d517ffec518ddd2493433dbf5d355f736c40f160f780bd48d7ba4f7b0f";
@@ -194,7 +195,7 @@ public class SandboxDeletePropertyMutation implements Mutation<SandboxDeleteProp
     /**
      * Client mutation ID. Optional value in the input that is echoed back in the response.
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     private transient volatile int $hashCode;
 
@@ -202,7 +203,7 @@ public class SandboxDeletePropertyMutation implements Mutation<SandboxDeleteProp
 
     private transient volatile String $toString;
 
-    public DeleteProperty(String clientMutationId) {
+    public DeleteProperty(Optional<String> clientMutationId) {
       this.clientMutationId = clientMutationId;
     }
 

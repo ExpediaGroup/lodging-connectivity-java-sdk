@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateCheckInPolicyInput {
-  public final Optional<List<ExactOrApproximateTimeRangeInput>> checkInPeriods;
+  public final Optional<Optional<List<ExactOrApproximateTimeRangeInput>>> checkInPeriods;
 
-  public final Optional<CheckInPolicyMinAgeInput> minAge;
+  public final Optional<Optional<CheckInPolicyMinAgeInput>> minAge;
 
   private transient volatile int $hashCode;
 
@@ -22,8 +23,9 @@ public class UpdateCheckInPolicyInput {
 
   private transient volatile String $toString;
 
-  public UpdateCheckInPolicyInput(Optional<List<ExactOrApproximateTimeRangeInput>> checkInPeriods,
-      Optional<CheckInPolicyMinAgeInput> minAge) {
+  public UpdateCheckInPolicyInput(
+      Optional<Optional<List<ExactOrApproximateTimeRangeInput>>> checkInPeriods,
+      Optional<Optional<CheckInPolicyMinAgeInput>> minAge) {
     this.checkInPeriods = checkInPeriods;
     this.minAge = minAge;
   }
@@ -71,20 +73,21 @@ public class UpdateCheckInPolicyInput {
   }
 
   public static final class Builder {
-    private Optional<List<ExactOrApproximateTimeRangeInput>> checkInPeriods = Optional.absent();
+    private Optional<Optional<List<ExactOrApproximateTimeRangeInput>>> checkInPeriods = Optional.empty();
 
-    private Optional<CheckInPolicyMinAgeInput> minAge = Optional.absent();
+    private Optional<Optional<CheckInPolicyMinAgeInput>> minAge = Optional.empty();
 
     Builder() {
     }
 
-    public Builder checkInPeriods(List<ExactOrApproximateTimeRangeInput> checkInPeriods) {
-      this.checkInPeriods = Optional.present(checkInPeriods);
+    public Builder checkInPeriods(
+        @NotNull Optional<List<ExactOrApproximateTimeRangeInput>> checkInPeriods) {
+      this.checkInPeriods = Optional.of(checkInPeriods);
       return this;
     }
 
-    public Builder minAge(CheckInPolicyMinAgeInput minAge) {
-      this.minAge = Optional.present(minAge);
+    public Builder minAge(@NotNull Optional<CheckInPolicyMinAgeInput> minAge) {
+      this.minAge = Optional.of(minAge);
       return this;
     }
 

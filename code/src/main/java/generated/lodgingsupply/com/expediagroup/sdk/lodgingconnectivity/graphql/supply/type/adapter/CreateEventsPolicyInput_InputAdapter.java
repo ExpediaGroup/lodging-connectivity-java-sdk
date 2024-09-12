@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AllowedEventsInput;
@@ -36,13 +33,13 @@ public enum CreateEventsPolicyInput_InputAdapter implements Adapter<CreateEvents
       CreateEventsPolicyInput value) throws IOException {
     writer.name("allowed");
     Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.allowed);
-    if (value.allowedEvents instanceof Optional.Present) {
+    if (value.allowedEvents.isPresent()) {
       writer.name("allowedEvents");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<AllowedEventsInput>(AllowedEventsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.allowedEvents);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<AllowedEventsInput>(AllowedEventsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.allowedEvents);
     }
-    if (value.note instanceof Optional.Present) {
+    if (value.note.isPresent()) {
       writer.name("note");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.note);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.note);
     }
   }
 }

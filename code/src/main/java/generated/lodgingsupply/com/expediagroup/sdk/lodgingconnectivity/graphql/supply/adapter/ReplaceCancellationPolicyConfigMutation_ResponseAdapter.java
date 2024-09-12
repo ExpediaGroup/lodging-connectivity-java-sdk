@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ReplaceCancellationPolicyConfigMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ReplaceCancellationPolicyConfigMutation_ResponseAdapter {
   public enum Data implements Adapter<ReplaceCancellationPolicyConfigMutation.Data> {
@@ -29,12 +31,12 @@ public class ReplaceCancellationPolicyConfigMutation_ResponseAdapter {
     @Override
     public ReplaceCancellationPolicyConfigMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig _replaceCancellationPolicyConfig = null;
+      Optional<ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig> _replaceCancellationPolicyConfig = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _replaceCancellationPolicyConfig = new NullableAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig>(ReplaceCancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _replaceCancellationPolicyConfig = new OptionalAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig>(ReplaceCancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class ReplaceCancellationPolicyConfigMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         ReplaceCancellationPolicyConfigMutation.Data value) throws IOException {
       writer.name("replaceCancellationPolicyConfig");
-      new NullableAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig>(ReplaceCancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.replaceCancellationPolicyConfig);
+      new OptionalAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig>(ReplaceCancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.replaceCancellationPolicyConfig);
     }
   }
 
@@ -60,14 +62,14 @@ public class ReplaceCancellationPolicyConfigMutation_ResponseAdapter {
     @Override
     public ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig fromJson(
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
-      ReplaceCancellationPolicyConfigMutation.CancellationPolicyConfig _cancellationPolicyConfig = null;
+      Optional<String> _clientMutationId = null;
+      Optional<ReplaceCancellationPolicyConfigMutation.CancellationPolicyConfig> _cancellationPolicyConfig = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _cancellationPolicyConfig = new NullableAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _cancellationPolicyConfig = new OptionalAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -83,10 +85,10 @@ public class ReplaceCancellationPolicyConfigMutation_ResponseAdapter {
         ReplaceCancellationPolicyConfigMutation.ReplaceCancellationPolicyConfig value) throws
         IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("cancellationPolicyConfig");
-      new NullableAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicyConfig);
+      new OptionalAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicyConfig);
     }
   }
 
@@ -100,14 +102,14 @@ public class ReplaceCancellationPolicyConfigMutation_ResponseAdapter {
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      ReplaceCancellationPolicyConfigMutation.Property _property = null;
+      Optional<ReplaceCancellationPolicyConfigMutation.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _property = new NullableAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _property = new OptionalAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -132,7 +134,7 @@ public class ReplaceCancellationPolicyConfigMutation_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<ReplaceCancellationPolicyConfigMutation.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 

@@ -10,18 +10,20 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertyQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxPropertyQuery_ResponseAdapter {
   public enum Data implements Adapter<SandboxPropertyQuery.Data> {
@@ -67,14 +69,14 @@ public class SandboxPropertyQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      SandboxPropertyQuery.Reservations _reservations = null;
+      Optional<SandboxPropertyQuery.Reservations> _reservations = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _reservations = new NullableAdapter<>(new ObjectAdapter<SandboxPropertyQuery.Reservations>(Reservations.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _reservations = new OptionalAdapter<>(new ObjectAdapter<SandboxPropertyQuery.Reservations>(Reservations.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -99,7 +101,7 @@ public class SandboxPropertyQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("reservations");
-      new NullableAdapter<>(new ObjectAdapter<SandboxPropertyQuery.Reservations>(Reservations.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservations);
+      new OptionalAdapter<>(new ObjectAdapter<SandboxPropertyQuery.Reservations>(Reservations.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservations);
     }
   }
 
@@ -111,14 +113,14 @@ public class SandboxPropertyQuery_ResponseAdapter {
     @Override
     public SandboxPropertyQuery.Reservations fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _cursor = null;
+      Optional<String> _cursor = null;
       Integer _totalCount = null;
       List<SandboxPropertyQuery.Element> _elements = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _cursor = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _cursor = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _totalCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _elements = new ListAdapter<>(new ObjectAdapter<SandboxPropertyQuery.Element>(Element.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -139,7 +141,7 @@ public class SandboxPropertyQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SandboxPropertyQuery.Reservations value) throws IOException {
       writer.name("cursor");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
 
       writer.name("totalCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalCount);

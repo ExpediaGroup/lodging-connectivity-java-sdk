@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateCheckInPolicyInput {
   public final List<ExactOrApproximateTimeRangeInput> checkInPeriods;
 
-  public final Optional<CheckInPolicyMinAgeInput> minAge;
+  public final Optional<Optional<CheckInPolicyMinAgeInput>> minAge;
 
   private transient volatile int $hashCode;
 
@@ -23,7 +24,7 @@ public class CreateCheckInPolicyInput {
   private transient volatile String $toString;
 
   public CreateCheckInPolicyInput(List<ExactOrApproximateTimeRangeInput> checkInPeriods,
-      Optional<CheckInPolicyMinAgeInput> minAge) {
+      Optional<Optional<CheckInPolicyMinAgeInput>> minAge) {
     this.checkInPeriods = checkInPeriods;
     this.minAge = minAge;
   }
@@ -73,7 +74,7 @@ public class CreateCheckInPolicyInput {
   public static final class Builder {
     private List<ExactOrApproximateTimeRangeInput> checkInPeriods;
 
-    private Optional<CheckInPolicyMinAgeInput> minAge = Optional.absent();
+    private Optional<Optional<CheckInPolicyMinAgeInput>> minAge = Optional.empty();
 
     Builder() {
     }
@@ -83,8 +84,8 @@ public class CreateCheckInPolicyInput {
       return this;
     }
 
-    public Builder minAge(CheckInPolicyMinAgeInput minAge) {
-      this.minAge = Optional.present(minAge);
+    public Builder minAge(@NotNull Optional<CheckInPolicyMinAgeInput> minAge) {
+      this.minAge = Optional.of(minAge);
       return this;
     }
 

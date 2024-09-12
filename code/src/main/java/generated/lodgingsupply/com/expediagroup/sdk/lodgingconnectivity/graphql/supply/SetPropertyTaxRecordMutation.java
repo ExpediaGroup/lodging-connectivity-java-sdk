@@ -21,6 +21,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class SetPropertyTaxRecordMutation implements Mutation<SetPropertyTaxRecordMutation.Data> {
   public static final String OPERATION_ID = "863fd28770c64f4adecbe3c272b770040cbe3650a2002daec69cf9f6c36d161f";
@@ -163,7 +164,7 @@ public class SetPropertyTaxRecordMutation implements Mutation<SetPropertyTaxReco
     /**
      * Mutation for setting the tax record for a property
      */
-    public SetPropertyTaxRecord setPropertyTaxRecord;
+    public Optional<SetPropertyTaxRecord> setPropertyTaxRecord;
 
     private transient volatile int $hashCode;
 
@@ -171,7 +172,7 @@ public class SetPropertyTaxRecordMutation implements Mutation<SetPropertyTaxReco
 
     private transient volatile String $toString;
 
-    public Data(SetPropertyTaxRecord setPropertyTaxRecord) {
+    public Data(Optional<SetPropertyTaxRecord> setPropertyTaxRecord) {
       this.setPropertyTaxRecord = setPropertyTaxRecord;
     }
 
@@ -211,7 +212,7 @@ public class SetPropertyTaxRecordMutation implements Mutation<SetPropertyTaxReco
   }
 
   public static class SetPropertyTaxRecord {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     /**
      * Tax records for the property after completion of the mutation
@@ -224,7 +225,7 @@ public class SetPropertyTaxRecordMutation implements Mutation<SetPropertyTaxReco
 
     private transient volatile String $toString;
 
-    public SetPropertyTaxRecord(String clientMutationId, List<TaxRecord> taxRecords) {
+    public SetPropertyTaxRecord(Optional<String> clientMutationId, List<TaxRecord> taxRecords) {
       this.clientMutationId = clientMutationId;
       this.taxRecords = taxRecords;
     }
@@ -469,7 +470,7 @@ public class SetPropertyTaxRecordMutation implements Mutation<SetPropertyTaxReco
     /**
      * Value for the given key in the attribute
      */
-    public String value;
+    public Optional<String> value;
 
     private transient volatile int $hashCode;
 
@@ -477,7 +478,7 @@ public class SetPropertyTaxRecordMutation implements Mutation<SetPropertyTaxReco
 
     private transient volatile String $toString;
 
-    public Value(String type, String value) {
+    public Value(String type, Optional<String> value) {
       this.type = type;
       this.value = value;
     }

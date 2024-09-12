@@ -7,10 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RegistrationRecordInput;
@@ -30,15 +27,15 @@ public enum RegistrationRecordInput_InputAdapter implements Adapter<Registration
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       RegistrationRecordInput value) throws IOException {
-    if (value.expiry instanceof Optional.Present) {
+    if (value.expiry.isPresent()) {
       writer.name("expiry");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.expiry);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.expiry);
     }
     writer.name("registrationNumber");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.registrationNumber);
-    if (value.registrationNumberType instanceof Optional.Present) {
+    if (value.registrationNumberType.isPresent()) {
       writer.name("registrationNumberType");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(RegistrationNumberType_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.registrationNumberType);
+      new OptionalAdapter<>(new OptionalAdapter<>(RegistrationNumberType_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.registrationNumberType);
     }
   }
 }

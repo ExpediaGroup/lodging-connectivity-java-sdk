@@ -6,12 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AcceptedPaymentFormsInput;
@@ -32,13 +28,13 @@ public enum BookingPolicyInput_InputAdapter implements Adapter<BookingPolicyInpu
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       BookingPolicyInput value) throws IOException {
-    if (value.acceptedPaymentForms instanceof Optional.Present) {
+    if (value.acceptedPaymentForms.isPresent()) {
       writer.name("acceptedPaymentForms");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<AcceptedPaymentFormsInput>(AcceptedPaymentFormsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.acceptedPaymentForms);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<AcceptedPaymentFormsInput>(AcceptedPaymentFormsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.acceptedPaymentForms);
     }
-    if (value.bookingType instanceof Optional.Present) {
+    if (value.bookingType.isPresent()) {
       writer.name("bookingType");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.bookingType);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.bookingType);
     }
   }
 }

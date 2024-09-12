@@ -9,16 +9,17 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.DeleteNotificationCallbackConfigMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class DeleteNotificationCallbackConfigMutation_ResponseAdapter {
   public enum Data implements Adapter<DeleteNotificationCallbackConfigMutation.Data> {
@@ -29,12 +30,12 @@ public class DeleteNotificationCallbackConfigMutation_ResponseAdapter {
     @Override
     public DeleteNotificationCallbackConfigMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      DeleteNotificationCallbackConfigMutation.DeleteNotificationCallbackConfig _deleteNotificationCallbackConfig = null;
+      Optional<DeleteNotificationCallbackConfigMutation.DeleteNotificationCallbackConfig> _deleteNotificationCallbackConfig = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _deleteNotificationCallbackConfig = new NullableAdapter<>(new ObjectAdapter<DeleteNotificationCallbackConfigMutation.DeleteNotificationCallbackConfig>(DeleteNotificationCallbackConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _deleteNotificationCallbackConfig = new OptionalAdapter<>(new ObjectAdapter<DeleteNotificationCallbackConfigMutation.DeleteNotificationCallbackConfig>(DeleteNotificationCallbackConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +49,7 @@ public class DeleteNotificationCallbackConfigMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         DeleteNotificationCallbackConfigMutation.Data value) throws IOException {
       writer.name("deleteNotificationCallbackConfig");
-      new NullableAdapter<>(new ObjectAdapter<DeleteNotificationCallbackConfigMutation.DeleteNotificationCallbackConfig>(DeleteNotificationCallbackConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.deleteNotificationCallbackConfig);
+      new OptionalAdapter<>(new ObjectAdapter<DeleteNotificationCallbackConfigMutation.DeleteNotificationCallbackConfig>(DeleteNotificationCallbackConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.deleteNotificationCallbackConfig);
     }
   }
 

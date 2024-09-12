@@ -7,16 +7,16 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CountryCode;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CreateAddressInput;
 import java.io.IOException;
 import java.lang.IllegalStateException;
 import java.lang.Override;
+import java.lang.String;
 
 public enum CreateAddressInput_InputAdapter implements Adapter<CreateAddressInput> {
   INSTANCE;
@@ -32,12 +32,12 @@ public enum CreateAddressInput_InputAdapter implements Adapter<CreateAddressInpu
       CreateAddressInput value) throws IOException {
     writer.name("addressLines");
     new ListAdapter<>(Adapters.StringAdapter).toJson(writer, customScalarAdapters, value.addressLines);
-    if (value.administrativeArea instanceof Optional.Present) {
+    if (value.administrativeArea.isPresent()) {
       writer.name("administrativeArea");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.administrativeArea);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.administrativeArea);
     }
     writer.name("countryCode");
-    Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.countryCode);
+    (customScalarAdapters.<String>responseAdapterFor(CountryCode.type)).toJson(writer, customScalarAdapters, value.countryCode);
     writer.name("locality");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.locality);
     writer.name("postalCode");

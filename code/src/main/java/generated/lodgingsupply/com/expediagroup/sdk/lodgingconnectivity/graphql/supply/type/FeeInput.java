@@ -5,29 +5,30 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class FeeInput {
-  public final Optional<FeeAgeCategory> ageCategory;
+  public final Optional<Optional<FeeAgeCategory>> ageCategory;
 
   public final List<FeeChargeInput> charges;
 
   public final String name;
 
-  public final Optional<FeeRestrictionsInput> restrictions;
+  public final Optional<Optional<FeeRestrictionsInput>> restrictions;
 
   public final String scope;
 
-  public final Optional<Boolean> taxable;
+  public final Optional<Optional<Boolean>> taxable;
 
   public final String type;
 
-  public final Optional<Boolean> variesByLengthOfStay;
+  public final Optional<Optional<Boolean>> variesByLengthOfStay;
 
   private transient volatile int $hashCode;
 
@@ -35,9 +36,10 @@ public class FeeInput {
 
   private transient volatile String $toString;
 
-  public FeeInput(Optional<FeeAgeCategory> ageCategory, List<FeeChargeInput> charges, String name,
-      Optional<FeeRestrictionsInput> restrictions, String scope, Optional<Boolean> taxable,
-      String type, Optional<Boolean> variesByLengthOfStay) {
+  public FeeInput(Optional<Optional<FeeAgeCategory>> ageCategory, List<FeeChargeInput> charges,
+      String name, Optional<Optional<FeeRestrictionsInput>> restrictions, String scope,
+      Optional<Optional<Boolean>> taxable, String type,
+      Optional<Optional<Boolean>> variesByLengthOfStay) {
     this.ageCategory = ageCategory;
     this.charges = charges;
     this.name = name;
@@ -115,27 +117,27 @@ public class FeeInput {
   }
 
   public static final class Builder {
-    private Optional<FeeAgeCategory> ageCategory = Optional.absent();
+    private Optional<Optional<FeeAgeCategory>> ageCategory = Optional.empty();
 
     private List<FeeChargeInput> charges;
 
     private String name;
 
-    private Optional<FeeRestrictionsInput> restrictions = Optional.absent();
+    private Optional<Optional<FeeRestrictionsInput>> restrictions = Optional.empty();
 
     private String scope;
 
-    private Optional<Boolean> taxable = Optional.absent();
+    private Optional<Optional<Boolean>> taxable = Optional.empty();
 
     private String type;
 
-    private Optional<Boolean> variesByLengthOfStay = Optional.absent();
+    private Optional<Optional<Boolean>> variesByLengthOfStay = Optional.empty();
 
     Builder() {
     }
 
-    public Builder ageCategory(FeeAgeCategory ageCategory) {
-      this.ageCategory = Optional.present(ageCategory);
+    public Builder ageCategory(@NotNull Optional<FeeAgeCategory> ageCategory) {
+      this.ageCategory = Optional.of(ageCategory);
       return this;
     }
 
@@ -149,8 +151,8 @@ public class FeeInput {
       return this;
     }
 
-    public Builder restrictions(FeeRestrictionsInput restrictions) {
-      this.restrictions = Optional.present(restrictions);
+    public Builder restrictions(@NotNull Optional<FeeRestrictionsInput> restrictions) {
+      this.restrictions = Optional.of(restrictions);
       return this;
     }
 
@@ -159,8 +161,8 @@ public class FeeInput {
       return this;
     }
 
-    public Builder taxable(Boolean taxable) {
-      this.taxable = Optional.present(taxable);
+    public Builder taxable(@NotNull Optional<Boolean> taxable) {
+      this.taxable = Optional.of(taxable);
       return this;
     }
 
@@ -169,8 +171,8 @@ public class FeeInput {
       return this;
     }
 
-    public Builder variesByLengthOfStay(Boolean variesByLengthOfStay) {
-      this.variesByLengthOfStay = Optional.present(variesByLengthOfStay);
+    public Builder variesByLengthOfStay(@NotNull Optional<Boolean> variesByLengthOfStay) {
+      this.variesByLengthOfStay = Optional.of(variesByLengthOfStay);
       return this;
     }
 

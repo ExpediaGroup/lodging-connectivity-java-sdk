@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class DeleteUnitSpaceMutation implements Mutation<DeleteUnitSpaceMutation.Data> {
   public static final String OPERATION_ID = "fa05e23987cfd3c6f05e3b08a446503dca3e13d9578979bf4fdc45845b9ba4f1";
@@ -140,7 +141,7 @@ public class DeleteUnitSpaceMutation implements Mutation<DeleteUnitSpaceMutation
   }
 
   public static class Data implements Mutation.Data {
-    public DeleteUnitSpace deleteUnitSpace;
+    public Optional<DeleteUnitSpace> deleteUnitSpace;
 
     private transient volatile int $hashCode;
 
@@ -148,7 +149,7 @@ public class DeleteUnitSpaceMutation implements Mutation<DeleteUnitSpaceMutation
 
     private transient volatile String $toString;
 
-    public Data(DeleteUnitSpace deleteUnitSpace) {
+    public Data(Optional<DeleteUnitSpace> deleteUnitSpace) {
       this.deleteUnitSpace = deleteUnitSpace;
     }
 
@@ -188,7 +189,7 @@ public class DeleteUnitSpaceMutation implements Mutation<DeleteUnitSpaceMutation
   }
 
   public static class DeleteUnitSpace {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     private transient volatile int $hashCode;
 
@@ -196,7 +197,7 @@ public class DeleteUnitSpaceMutation implements Mutation<DeleteUnitSpaceMutation
 
     private transient volatile String $toString;
 
-    public DeleteUnitSpace(String clientMutationId) {
+    public DeleteUnitSpace(Optional<String> clientMutationId) {
       this.clientMutationId = clientMutationId;
     }
 

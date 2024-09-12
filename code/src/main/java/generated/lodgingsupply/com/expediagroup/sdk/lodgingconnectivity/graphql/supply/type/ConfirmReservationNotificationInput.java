@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ConfirmReservationNotificationInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String propertyId;
 
@@ -29,8 +30,9 @@ public class ConfirmReservationNotificationInput {
 
   private transient volatile String $toString;
 
-  public ConfirmReservationNotificationInput(Optional<String> clientMutationId, String propertyId,
-      String reservationId, String confirmationToken, String actionType, String confirmationCode) {
+  public ConfirmReservationNotificationInput(Optional<Optional<String>> clientMutationId,
+      String propertyId, String reservationId, String confirmationToken, String actionType,
+      String confirmationCode) {
     this.clientMutationId = clientMutationId;
     this.propertyId = propertyId;
     this.reservationId = reservationId;
@@ -98,7 +100,7 @@ public class ConfirmReservationNotificationInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String propertyId;
 
@@ -116,8 +118,8 @@ public class ConfirmReservationNotificationInput {
     /**
      * Partner supplied Unique mutation identifier
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 

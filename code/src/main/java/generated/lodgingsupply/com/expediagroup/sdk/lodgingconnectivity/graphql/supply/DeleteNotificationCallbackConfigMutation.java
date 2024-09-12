@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class DeleteNotificationCallbackConfigMutation implements Mutation<DeleteNotificationCallbackConfigMutation.Data> {
   public static final String OPERATION_ID = "3c7e3111787bc967089f2a47a0029b98b4687253bc6e2dfb91b68d6d9bc92e41";
@@ -143,7 +144,7 @@ public class DeleteNotificationCallbackConfigMutation implements Mutation<Delete
     /**
      * Delete callback configuration from notification profile.
      */
-    public DeleteNotificationCallbackConfig deleteNotificationCallbackConfig;
+    public Optional<DeleteNotificationCallbackConfig> deleteNotificationCallbackConfig;
 
     private transient volatile int $hashCode;
 
@@ -151,7 +152,7 @@ public class DeleteNotificationCallbackConfigMutation implements Mutation<Delete
 
     private transient volatile String $toString;
 
-    public Data(DeleteNotificationCallbackConfig deleteNotificationCallbackConfig) {
+    public Data(Optional<DeleteNotificationCallbackConfig> deleteNotificationCallbackConfig) {
       this.deleteNotificationCallbackConfig = deleteNotificationCallbackConfig;
     }
 

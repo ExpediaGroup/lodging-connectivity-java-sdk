@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class SetMessageThreadSpamStatusMutation implements Mutation<SetMessageThreadSpamStatusMutation.Data> {
   public static final String OPERATION_ID = "f4e9058f4f15c91859f6aca972f34228b11021100dad802e43a4737c5e1c6e34";
@@ -144,7 +145,7 @@ public class SetMessageThreadSpamStatusMutation implements Mutation<SetMessageTh
     /**
      * Set spam status for a message thread
      */
-    public SetMessageThreadSpamStatus setMessageThreadSpamStatus;
+    public Optional<SetMessageThreadSpamStatus> setMessageThreadSpamStatus;
 
     private transient volatile int $hashCode;
 
@@ -152,7 +153,7 @@ public class SetMessageThreadSpamStatusMutation implements Mutation<SetMessageTh
 
     private transient volatile String $toString;
 
-    public Data(SetMessageThreadSpamStatus setMessageThreadSpamStatus) {
+    public Data(Optional<SetMessageThreadSpamStatus> setMessageThreadSpamStatus) {
       this.setMessageThreadSpamStatus = setMessageThreadSpamStatus;
     }
 
@@ -195,7 +196,7 @@ public class SetMessageThreadSpamStatusMutation implements Mutation<SetMessageTh
     /**
      *  UUID that uniquely identifies client's request 
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     /**
      *  ID of the message thread marked as spam
@@ -208,7 +209,7 @@ public class SetMessageThreadSpamStatusMutation implements Mutation<SetMessageTh
 
     private transient volatile String $toString;
 
-    public SetMessageThreadSpamStatus(String clientMutationId, String id) {
+    public SetMessageThreadSpamStatus(Optional<String> clientMutationId, String id) {
       this.clientMutationId = clientMutationId;
       this.id = id;
     }

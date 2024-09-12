@@ -6,11 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RestrictionsUpdateInput;
@@ -30,49 +26,49 @@ public enum RestrictionsUpdateInput_InputAdapter implements Adapter<Restrictions
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       RestrictionsUpdateInput value) throws IOException {
-    if (value.isMemberOnly instanceof Optional.Present) {
+    if (value.isMemberOnly.isPresent()) {
       writer.name("isMemberOnly");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.isMemberOnly);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.isMemberOnly);
     }
-    if (value.isMobileUserOnly instanceof Optional.Present) {
+    if (value.isMobileUserOnly.isPresent()) {
       writer.name("isMobileUserOnly");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.isMobileUserOnly);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.isMobileUserOnly);
     }
-    if (value.minLengthOfStay instanceof Optional.Present) {
+    if (value.minLengthOfStay.isPresent()) {
       writer.name("minLengthOfStay");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.minLengthOfStay);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.minLengthOfStay);
     }
-    if (value.maxLengthOfStay instanceof Optional.Present) {
+    if (value.maxLengthOfStay.isPresent()) {
       writer.name("maxLengthOfStay");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.maxLengthOfStay);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.maxLengthOfStay);
     }
-    if (value.minAdvanceBookingDays instanceof Optional.Present) {
+    if (value.minAdvanceBookingDays.isPresent()) {
       writer.name("minAdvanceBookingDays");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.minAdvanceBookingDays);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.minAdvanceBookingDays);
     }
-    if (value.maxAdvanceBookingDays instanceof Optional.Present) {
+    if (value.maxAdvanceBookingDays.isPresent()) {
       writer.name("maxAdvanceBookingDays");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.maxAdvanceBookingDays);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.maxAdvanceBookingDays);
     }
-    if (value.bookingLocalDateTimeFrom instanceof Optional.Present) {
+    if (value.bookingLocalDateTimeFrom.isPresent()) {
       writer.name("bookingLocalDateTimeFrom");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeFrom);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeFrom);
     }
-    if (value.bookingLocalDateTimeTo instanceof Optional.Present) {
+    if (value.bookingLocalDateTimeTo.isPresent()) {
       writer.name("bookingLocalDateTimeTo");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeTo);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeTo);
     }
-    if (value.travelDateFrom instanceof Optional.Present) {
+    if (value.travelDateFrom.isPresent()) {
       writer.name("travelDateFrom");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.travelDateFrom);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.travelDateFrom);
     }
-    if (value.travelDateTo instanceof Optional.Present) {
+    if (value.travelDateTo.isPresent()) {
       writer.name("travelDateTo");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.travelDateTo);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.travelDateTo);
     }
-    if (value.sameDayBookingStartTime instanceof Optional.Present) {
+    if (value.sameDayBookingStartTime.isPresent()) {
       writer.name("sameDayBookingStartTime");
-      new ApolloOptionalAdapter<>(Adapters.NullableAnyAdapter).toJson(writer, customScalarAdapters, value.sameDayBookingStartTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalTimeAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.sameDayBookingStartTime);
     }
   }
 }

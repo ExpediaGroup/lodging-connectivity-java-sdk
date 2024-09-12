@@ -5,23 +5,24 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateUnitSpacesBathroomInput {
-  public final Optional<List<AmenityInput>> amenities;
+  public final Optional<Optional<List<AmenityInput>>> amenities;
 
   public final String id;
 
-  public final Optional<Integer> order;
+  public final Optional<Optional<Integer>> order;
 
-  public final Optional<List<TextInput>> text;
+  public final Optional<Optional<List<TextInput>>> text;
 
-  public final Optional<String> type;
+  public final Optional<Optional<String>> type;
 
   private transient volatile int $hashCode;
 
@@ -29,8 +30,9 @@ public class UpdateUnitSpacesBathroomInput {
 
   private transient volatile String $toString;
 
-  public UpdateUnitSpacesBathroomInput(Optional<List<AmenityInput>> amenities, String id,
-      Optional<Integer> order, Optional<List<TextInput>> text, Optional<String> type) {
+  public UpdateUnitSpacesBathroomInput(Optional<Optional<List<AmenityInput>>> amenities, String id,
+      Optional<Optional<Integer>> order, Optional<Optional<List<TextInput>>> text,
+      Optional<Optional<String>> type) {
     this.amenities = amenities;
     this.id = id;
     this.order = order;
@@ -93,21 +95,21 @@ public class UpdateUnitSpacesBathroomInput {
   }
 
   public static final class Builder {
-    private Optional<List<AmenityInput>> amenities = Optional.absent();
+    private Optional<Optional<List<AmenityInput>>> amenities = Optional.empty();
 
     private String id;
 
-    private Optional<Integer> order = Optional.absent();
+    private Optional<Optional<Integer>> order = Optional.empty();
 
-    private Optional<List<TextInput>> text = Optional.absent();
+    private Optional<Optional<List<TextInput>>> text = Optional.empty();
 
-    private Optional<String> type = Optional.absent();
+    private Optional<Optional<String>> type = Optional.empty();
 
     Builder() {
     }
 
-    public Builder amenities(List<AmenityInput> amenities) {
-      this.amenities = Optional.present(amenities);
+    public Builder amenities(@NotNull Optional<List<AmenityInput>> amenities) {
+      this.amenities = Optional.of(amenities);
       return this;
     }
 
@@ -116,18 +118,18 @@ public class UpdateUnitSpacesBathroomInput {
       return this;
     }
 
-    public Builder order(Integer order) {
-      this.order = Optional.present(order);
+    public Builder order(@NotNull Optional<Integer> order) {
+      this.order = Optional.of(order);
       return this;
     }
 
-    public Builder text(List<TextInput> text) {
-      this.text = Optional.present(text);
+    public Builder text(@NotNull Optional<List<TextInput>> text) {
+      this.text = Optional.of(text);
       return this;
     }
 
-    public Builder type(String type) {
-      this.type = Optional.present(type);
+    public Builder type(@NotNull Optional<String> type) {
+      this.type = Optional.of(type);
       return this;
     }
 

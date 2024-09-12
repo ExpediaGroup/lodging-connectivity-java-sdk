@@ -25,7 +25,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
   public static final String OPERATION_ID = "8715ab8939abfb83580f342ec451df416405ea33be6a19207e51aa334c2075f8";
@@ -199,7 +201,7 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -207,7 +209,7 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -247,7 +249,7 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
   }
 
   public static class Property {
-    public FeeSets feeSets;
+    public Optional<FeeSets> feeSets;
 
     private transient volatile int $hashCode;
 
@@ -255,7 +257,7 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Property(FeeSets feeSets) {
+    public Property(Optional<FeeSets> feeSets) {
       this.feeSets = feeSets;
     }
 
@@ -419,21 +421,21 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
   }
 
   public static class Fee {
-    public FeeAgeCategory ageCategory;
+    public Optional<FeeAgeCategory> ageCategory;
 
     public List<Charge> charges;
 
     public String name;
 
-    public Restrictions restrictions;
+    public Optional<Restrictions> restrictions;
 
     public String scope;
 
-    public Boolean taxable;
+    public Optional<Boolean> taxable;
 
     public String type;
 
-    public Boolean variesByLengthOfStay;
+    public Optional<Boolean> variesByLengthOfStay;
 
     private transient volatile int $hashCode;
 
@@ -441,9 +443,9 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Fee(FeeAgeCategory ageCategory, List<Charge> charges, String name,
-        Restrictions restrictions, String scope, Boolean taxable, String type,
-        Boolean variesByLengthOfStay) {
+    public Fee(Optional<FeeAgeCategory> ageCategory, List<Charge> charges, String name,
+        Optional<Restrictions> restrictions, String scope, Optional<Boolean> taxable, String type,
+        Optional<Boolean> variesByLengthOfStay) {
       this.ageCategory = ageCategory;
       this.charges = charges;
       this.name = name;
@@ -520,9 +522,9 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
   public static class Charge {
     public FeeChargeDuration duration;
 
-    public FlatAmount flatAmount;
+    public Optional<FlatAmount> flatAmount;
 
-    public Object percentage;
+    public Optional<String> percentage;
 
     public FeeChargeType type;
 
@@ -532,8 +534,8 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Charge(FeeChargeDuration duration, FlatAmount flatAmount, Object percentage,
-        FeeChargeType type) {
+    public Charge(FeeChargeDuration duration, Optional<FlatAmount> flatAmount,
+        Optional<String> percentage, FeeChargeType type) {
       this.duration = duration;
       this.flatAmount = flatAmount;
       this.percentage = percentage;
@@ -591,7 +593,7 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -604,7 +606,7 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public FlatAmount(Object amount, String currencyCode) {
+    public FlatAmount(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -649,11 +651,11 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
   }
 
   public static class Restrictions {
-    public DateRange dateRange;
+    public Optional<DateRange> dateRange;
 
-    public ExtraGuestRange extraGuestRange;
+    public Optional<ExtraGuestRange> extraGuestRange;
 
-    public RangeOfNight rangeOfNight;
+    public Optional<RangeOfNight> rangeOfNight;
 
     private transient volatile int $hashCode;
 
@@ -661,8 +663,8 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Restrictions(DateRange dateRange, ExtraGuestRange extraGuestRange,
-        RangeOfNight rangeOfNight) {
+    public Restrictions(Optional<DateRange> dateRange, Optional<ExtraGuestRange> extraGuestRange,
+        Optional<RangeOfNight> rangeOfNight) {
       this.dateRange = dateRange;
       this.extraGuestRange = extraGuestRange;
       this.rangeOfNight = rangeOfNight;
@@ -712,9 +714,9 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
   }
 
   public static class DateRange {
-    public Object from;
+    public LocalDate from;
 
-    public Object to;
+    public Optional<LocalDate> to;
 
     private transient volatile int $hashCode;
 
@@ -722,7 +724,7 @@ public class PropertyFeeSetsQuery implements Query<PropertyFeeSetsQuery.Data> {
 
     private transient volatile String $toString;
 
-    public DateRange(Object from, Object to) {
+    public DateRange(LocalDate from, Optional<LocalDate> to) {
       this.from = from;
       this.to = to;
     }

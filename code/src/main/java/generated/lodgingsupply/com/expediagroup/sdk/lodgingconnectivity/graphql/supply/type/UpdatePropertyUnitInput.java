@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdatePropertyUnitInput {
-  public final Optional<List<AmenityInput>> amenities;
+  public final Optional<Optional<List<AmenityInput>>> amenities;
 
-  public final Optional<UpdateAreaInput> area;
+  public final Optional<Optional<UpdateAreaInput>> area;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String propertyId;
 
@@ -28,9 +29,9 @@ public class UpdatePropertyUnitInput {
 
   private transient volatile String $toString;
 
-  public UpdatePropertyUnitInput(Optional<List<AmenityInput>> amenities,
-      Optional<UpdateAreaInput> area, Optional<String> clientMutationId, String propertyId,
-      String unitId) {
+  public UpdatePropertyUnitInput(Optional<Optional<List<AmenityInput>>> amenities,
+      Optional<Optional<UpdateAreaInput>> area, Optional<Optional<String>> clientMutationId,
+      String propertyId, String unitId) {
     this.amenities = amenities;
     this.area = area;
     this.clientMutationId = clientMutationId;
@@ -93,11 +94,11 @@ public class UpdatePropertyUnitInput {
   }
 
   public static final class Builder {
-    private Optional<List<AmenityInput>> amenities = Optional.absent();
+    private Optional<Optional<List<AmenityInput>>> amenities = Optional.empty();
 
-    private Optional<UpdateAreaInput> area = Optional.absent();
+    private Optional<Optional<UpdateAreaInput>> area = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String propertyId;
 
@@ -106,18 +107,18 @@ public class UpdatePropertyUnitInput {
     Builder() {
     }
 
-    public Builder amenities(List<AmenityInput> amenities) {
-      this.amenities = Optional.present(amenities);
+    public Builder amenities(@NotNull Optional<List<AmenityInput>> amenities) {
+      this.amenities = Optional.of(amenities);
       return this;
     }
 
-    public Builder area(UpdateAreaInput area) {
-      this.area = Optional.present(area);
+    public Builder area(@NotNull Optional<UpdateAreaInput> area) {
+      this.area = Optional.of(area);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 

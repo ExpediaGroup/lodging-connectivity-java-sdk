@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RatePlanDistributionRuleInput;
@@ -34,49 +31,49 @@ public enum UpdateRatePlanInput_InputAdapter implements Adapter<UpdateRatePlanIn
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateRatePlanInput value) throws IOException {
-    if (value.baseRateGuestCount instanceof Optional.Present) {
+    if (value.baseRateGuestCount.isPresent()) {
       writer.name("baseRateGuestCount");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.baseRateGuestCount);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.baseRateGuestCount);
     }
-    if (value.cancellationPolicyConfigId instanceof Optional.Present) {
+    if (value.cancellationPolicyConfigId.isPresent()) {
       writer.name("cancellationPolicyConfigId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.cancellationPolicyConfigId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.cancellationPolicyConfigId);
     }
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
-    if (value.distributionRules instanceof Optional.Present) {
+    if (value.distributionRules.isPresent()) {
       writer.name("distributionRules");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<RatePlanDistributionRuleInput>(RatePlanDistributionRuleInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.distributionRules);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<RatePlanDistributionRuleInput>(RatePlanDistributionRuleInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.distributionRules);
     }
-    if (value.feeSetId instanceof Optional.Present) {
+    if (value.feeSetId.isPresent()) {
       writer.name("feeSetId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.feeSetId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.feeSetId);
     }
     writer.name("id");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
-    if (value.name instanceof Optional.Present) {
+    if (value.name.isPresent()) {
       writer.name("name");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.name);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.name);
     }
-    if (value.paymentScheduleApplicable instanceof Optional.Present) {
+    if (value.paymentScheduleApplicable.isPresent()) {
       writer.name("paymentScheduleApplicable");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.paymentScheduleApplicable);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.paymentScheduleApplicable);
     }
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
-    if (value.restrictions instanceof Optional.Present) {
+    if (value.restrictions.isPresent()) {
       writer.name("restrictions");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<UpdateRatePlanRestrictionsInput>(UpdateRatePlanRestrictionsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<UpdateRatePlanRestrictionsInput>(UpdateRatePlanRestrictionsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
     }
-    if (value.status instanceof Optional.Present) {
+    if (value.status.isPresent()) {
       writer.name("status");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(RatePlanStatus_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.status);
+      new OptionalAdapter<>(new OptionalAdapter<>(RatePlanStatus_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.status);
     }
-    if (value.taxInclusive instanceof Optional.Present) {
+    if (value.taxInclusive.isPresent()) {
       writer.name("taxInclusive");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.taxInclusive);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.taxInclusive);
     }
     writer.name("unitId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.unitId);

@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class LocalizedStringInput {
   public final Object locale;
 
-  public final Optional<String> value;
+  public final Optional<Optional<String>> value;
 
   private transient volatile int $hashCode;
 
@@ -21,7 +22,7 @@ public class LocalizedStringInput {
 
   private transient volatile String $toString;
 
-  public LocalizedStringInput(Object locale, Optional<String> value) {
+  public LocalizedStringInput(Object locale, Optional<Optional<String>> value) {
     this.locale = locale;
     this.value = value;
   }
@@ -71,7 +72,7 @@ public class LocalizedStringInput {
   public static final class Builder {
     private Object locale;
 
-    private Optional<String> value = Optional.absent();
+    private Optional<Optional<String>> value = Optional.empty();
 
     Builder() {
     }
@@ -81,8 +82,8 @@ public class LocalizedStringInput {
       return this;
     }
 
-    public Builder value(String value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<String> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

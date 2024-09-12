@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyInput;
@@ -29,9 +27,9 @@ public enum DeletePropertyInput_InputAdapter implements Adapter<DeletePropertyIn
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       DeletePropertyInput value) throws IOException {
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
     writer.name("id");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

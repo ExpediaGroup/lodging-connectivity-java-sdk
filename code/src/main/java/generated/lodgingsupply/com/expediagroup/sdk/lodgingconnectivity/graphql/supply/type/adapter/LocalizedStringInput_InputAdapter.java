@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.LocalizedStringInput;
@@ -31,9 +29,9 @@ public enum LocalizedStringInput_InputAdapter implements Adapter<LocalizedString
       LocalizedStringInput value) throws IOException {
     writer.name("locale");
     Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.locale);
-    if (value.value instanceof Optional.Present) {
+    if (value.value.isPresent()) {
       writer.name("value");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.value);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.value);
     }
   }
 }

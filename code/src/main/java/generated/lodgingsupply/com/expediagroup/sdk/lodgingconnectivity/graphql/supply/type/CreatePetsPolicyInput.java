@@ -5,19 +5,20 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreatePetsPolicyInput {
   public final Boolean allowed;
 
-  public final Optional<AllowedPetsInput> allowedPets;
+  public final Optional<Optional<AllowedPetsInput>> allowedPets;
 
-  public final Optional<List<LocalizedStringInput>> note;
+  public final Optional<Optional<List<LocalizedStringInput>>> note;
 
   private transient volatile int $hashCode;
 
@@ -25,8 +26,8 @@ public class CreatePetsPolicyInput {
 
   private transient volatile String $toString;
 
-  public CreatePetsPolicyInput(Boolean allowed, Optional<AllowedPetsInput> allowedPets,
-      Optional<List<LocalizedStringInput>> note) {
+  public CreatePetsPolicyInput(Boolean allowed, Optional<Optional<AllowedPetsInput>> allowedPets,
+      Optional<Optional<List<LocalizedStringInput>>> note) {
     this.allowed = allowed;
     this.allowedPets = allowedPets;
     this.note = note;
@@ -81,9 +82,9 @@ public class CreatePetsPolicyInput {
   public static final class Builder {
     private Boolean allowed;
 
-    private Optional<AllowedPetsInput> allowedPets = Optional.absent();
+    private Optional<Optional<AllowedPetsInput>> allowedPets = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> note = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> note = Optional.empty();
 
     Builder() {
     }
@@ -93,13 +94,13 @@ public class CreatePetsPolicyInput {
       return this;
     }
 
-    public Builder allowedPets(AllowedPetsInput allowedPets) {
-      this.allowedPets = Optional.present(allowedPets);
+    public Builder allowedPets(@NotNull Optional<AllowedPetsInput> allowedPets) {
+      this.allowedPets = Optional.of(allowedPets);
       return this;
     }
 
-    public Builder note(List<LocalizedStringInput> note) {
-      this.note = Optional.present(note);
+    public Builder note(@NotNull Optional<List<LocalizedStringInput>> note) {
+      this.note = Optional.of(note);
       return this;
     }
 

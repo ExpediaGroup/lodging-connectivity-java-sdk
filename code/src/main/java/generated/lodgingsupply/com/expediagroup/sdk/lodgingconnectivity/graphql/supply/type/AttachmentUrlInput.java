@@ -5,10 +5,11 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Information about the registration document file.
@@ -16,7 +17,7 @@ import java.lang.String;
 public class AttachmentUrlInput {
   public final AttachmentType key;
 
-  public final Optional<String> value;
+  public final Optional<Optional<String>> value;
 
   private transient volatile int $hashCode;
 
@@ -24,7 +25,7 @@ public class AttachmentUrlInput {
 
   private transient volatile String $toString;
 
-  public AttachmentUrlInput(AttachmentType key, Optional<String> value) {
+  public AttachmentUrlInput(AttachmentType key, Optional<Optional<String>> value) {
     this.key = key;
     this.value = value;
   }
@@ -74,7 +75,7 @@ public class AttachmentUrlInput {
   public static final class Builder {
     private AttachmentType key;
 
-    private Optional<String> value = Optional.absent();
+    private Optional<Optional<String>> value = Optional.empty();
 
     Builder() {
     }
@@ -90,8 +91,8 @@ public class AttachmentUrlInput {
     /**
      * URL of the registration document file.
      */
-    public Builder value(String value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<String> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

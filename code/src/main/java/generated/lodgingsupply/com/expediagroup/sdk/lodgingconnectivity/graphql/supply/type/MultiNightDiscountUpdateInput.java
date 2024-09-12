@@ -5,24 +5,25 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class MultiNightDiscountUpdateInput {
-  public final Optional<DiscountUnit> unit;
+  public final Optional<Optional<DiscountUnit>> unit;
 
-  public final Optional<Double> value;
+  public final Optional<Optional<Double>> value;
 
-  public final Optional<Double> memberOnlyAdditionalValue;
+  public final Optional<Optional<Double>> memberOnlyAdditionalValue;
 
   public final Integer applicableNight;
 
-  public final Optional<Boolean> isRecurring;
+  public final Optional<Optional<Boolean>> isRecurring;
 
   private transient volatile int $hashCode;
 
@@ -30,9 +31,9 @@ public class MultiNightDiscountUpdateInput {
 
   private transient volatile String $toString;
 
-  public MultiNightDiscountUpdateInput(Optional<DiscountUnit> unit, Optional<Double> value,
-      Optional<Double> memberOnlyAdditionalValue, Integer applicableNight,
-      Optional<Boolean> isRecurring) {
+  public MultiNightDiscountUpdateInput(Optional<Optional<DiscountUnit>> unit,
+      Optional<Optional<Double>> value, Optional<Optional<Double>> memberOnlyAdditionalValue,
+      Integer applicableNight, Optional<Optional<Boolean>> isRecurring) {
     this.unit = unit;
     this.value = value;
     this.memberOnlyAdditionalValue = memberOnlyAdditionalValue;
@@ -95,15 +96,15 @@ public class MultiNightDiscountUpdateInput {
   }
 
   public static final class Builder {
-    private Optional<DiscountUnit> unit = Optional.absent();
+    private Optional<Optional<DiscountUnit>> unit = Optional.empty();
 
-    private Optional<Double> value = Optional.absent();
+    private Optional<Optional<Double>> value = Optional.empty();
 
-    private Optional<Double> memberOnlyAdditionalValue = Optional.absent();
+    private Optional<Optional<Double>> memberOnlyAdditionalValue = Optional.empty();
 
     private Integer applicableNight;
 
-    private Optional<Boolean> isRecurring = Optional.absent();
+    private Optional<Optional<Boolean>> isRecurring = Optional.empty();
 
     Builder() {
     }
@@ -111,24 +112,24 @@ public class MultiNightDiscountUpdateInput {
     /**
      * Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
      */
-    public Builder unit(DiscountUnit unit) {
-      this.unit = Optional.present(unit);
+    public Builder unit(@NotNull Optional<DiscountUnit> unit) {
+      this.unit = Optional.of(unit);
       return this;
     }
 
     /**
      * Value of the discount applied.
      */
-    public Builder value(Double value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<Double> value) {
+      this.value = Optional.of(value);
       return this;
     }
 
     /**
      * Member only discount value applied.
      */
-    public Builder memberOnlyAdditionalValue(Double memberOnlyAdditionalValue) {
-      this.memberOnlyAdditionalValue = Optional.present(memberOnlyAdditionalValue);
+    public Builder memberOnlyAdditionalValue(@NotNull Optional<Double> memberOnlyAdditionalValue) {
+      this.memberOnlyAdditionalValue = Optional.of(memberOnlyAdditionalValue);
       return this;
     }
 
@@ -143,8 +144,8 @@ public class MultiNightDiscountUpdateInput {
     /**
      * Whether the discount applied on the applicable night is recurring.
      */
-    public Builder isRecurring(Boolean isRecurring) {
-      this.isRecurring = Optional.present(isRecurring);
+    public Builder isRecurring(@NotNull Optional<Boolean> isRecurring) {
+      this.isRecurring = Optional.of(isRecurring);
       return this;
     }
 

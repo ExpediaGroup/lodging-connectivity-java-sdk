@@ -14,7 +14,6 @@ import com.apollographql.apollo.api.BooleanExpression;
 import com.apollographql.apollo.api.BooleanExpressions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -23,6 +22,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.type.CountryCode
 import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.type.ExpediaVirtualCardChargeStatus;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.type.PaymentType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.type.adapter.ExpediaVirtualCardChargeStatus_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.type.adapter.PaymentType_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Double;
@@ -32,6 +33,7 @@ import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PaymentInstrumentQuery_ResponseAdapter {
   public enum Data implements Adapter<PaymentInstrumentQuery.Data> {
@@ -42,12 +44,12 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     @Override
     public PaymentInstrumentQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PaymentInstrumentQuery.PaymentInstrument _paymentInstrument = null;
+      Optional<PaymentInstrumentQuery.PaymentInstrument> _paymentInstrument = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _paymentInstrument = new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.PaymentInstrument>(PaymentInstrument.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
+          case 0: _paymentInstrument = new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.PaymentInstrument>(PaymentInstrument.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -61,7 +63,7 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PaymentInstrumentQuery.Data value) throws IOException {
       writer.name("paymentInstrument");
-      new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.PaymentInstrument>(PaymentInstrument.INSTANCE, true)).toJson(writer, customScalarAdapters, value.paymentInstrument);
+      new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.PaymentInstrument>(PaymentInstrument.INSTANCE, true)).toJson(writer, customScalarAdapters, value.paymentInstrument);
     }
   }
 
@@ -84,10 +86,10 @@ public class PaymentInstrumentQuery_ResponseAdapter {
       }
 
       Assertions.checkFieldNotMissing(__typename, "__typename");
-      PaymentInstrumentQuery.OnBankIssuedCard _onBankIssuedCard = null;
+      Optional<PaymentInstrumentQuery.OnBankIssuedCard> _onBankIssuedCard = Optional.empty();
       if (BooleanExpressions.evaluate(new BooleanExpression.Element<BTerm>(new BPossibleTypes("BankIssuedCard")), customScalarAdapters.falseVariables, __typename, customScalarAdapters.deferredFragmentIdentifiers, null)) {
         reader.rewind();
-        _onBankIssuedCard = com.expediagroup.sdk.lodgingconnectivity.graphql.payment.adapter.PaymentInstrumentQuery_ResponseAdapter.OnBankIssuedCard.INSTANCE.fromJson(reader, customScalarAdapters);
+        _onBankIssuedCard = Optional.of(com.expediagroup.sdk.lodgingconnectivity.graphql.payment.adapter.PaymentInstrumentQuery_ResponseAdapter.OnBankIssuedCard.INSTANCE.fromJson(reader, customScalarAdapters));
       }
 
       return new PaymentInstrumentQuery.PaymentInstrument(
@@ -102,8 +104,8 @@ public class PaymentInstrumentQuery_ResponseAdapter {
       writer.name("__typename");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
 
-      if (value.onBankIssuedCard != null) {
-        com.expediagroup.sdk.lodgingconnectivity.graphql.payment.adapter.PaymentInstrumentQuery_ResponseAdapter.OnBankIssuedCard.INSTANCE.toJson(writer, customScalarAdapters, value.onBankIssuedCard);
+      if (value.onBankIssuedCard.isPresent()) {
+        com.expediagroup.sdk.lodgingconnectivity.graphql.payment.adapter.PaymentInstrumentQuery_ResponseAdapter.OnBankIssuedCard.INSTANCE.toJson(writer, customScalarAdapters, value.onBankIssuedCard.get());
       }
     }
   }
@@ -116,26 +118,26 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     @Override
     public PaymentInstrumentQuery.OnBankIssuedCard fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      OffsetDateTime _activationDate = null;
+      Optional<OffsetDateTime> _activationDate = null;
       PaymentInstrumentQuery.Customer _customer = null;
-      PaymentInstrumentQuery.ExpediaVirtualCardActivity _expediaVirtualCardActivity = null;
+      Optional<PaymentInstrumentQuery.ExpediaVirtualCardActivity> _expediaVirtualCardActivity = null;
       String _expirationDate = null;
       String _issuerName = null;
       String _number = null;
       PaymentType _type = null;
-      String _verificationNumber = null;
+      Optional<String> _verificationNumber = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _activationDate = new NullableAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 0: _activationDate = new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 1: _customer = new ObjectAdapter<PaymentInstrumentQuery.Customer>(Customer.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 2: _expediaVirtualCardActivity = new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ExpediaVirtualCardActivity>(ExpediaVirtualCardActivity.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _expediaVirtualCardActivity = new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ExpediaVirtualCardActivity>(ExpediaVirtualCardActivity.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 3: _expirationDate = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _issuerName = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 5: _number = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 6: _type = PaymentType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 7: _verificationNumber = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _verificationNumber = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -162,13 +164,13 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PaymentInstrumentQuery.OnBankIssuedCard value) throws IOException {
       writer.name("activationDate");
-      new NullableAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.activationDate);
+      new OptionalAdapter<>(com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.activationDate);
 
       writer.name("customer");
       new ObjectAdapter<PaymentInstrumentQuery.Customer>(Customer.INSTANCE, false).toJson(writer, customScalarAdapters, value.customer);
 
       writer.name("expediaVirtualCardActivity");
-      new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ExpediaVirtualCardActivity>(ExpediaVirtualCardActivity.INSTANCE, false)).toJson(writer, customScalarAdapters, value.expediaVirtualCardActivity);
+      new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ExpediaVirtualCardActivity>(ExpediaVirtualCardActivity.INSTANCE, false)).toJson(writer, customScalarAdapters, value.expediaVirtualCardActivity);
 
       writer.name("expirationDate");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.expirationDate);
@@ -183,7 +185,7 @@ public class PaymentInstrumentQuery_ResponseAdapter {
       PaymentType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("verificationNumber");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.verificationNumber);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.verificationNumber);
     }
   }
 
@@ -195,13 +197,13 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     @Override
     public PaymentInstrumentQuery.Customer fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PaymentInstrumentQuery.Address _address = null;
+      Optional<PaymentInstrumentQuery.Address> _address = null;
       String _fullName = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _address = new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.Address>(Address.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _address = new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.Address>(Address.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 1: _fullName = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -219,7 +221,7 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PaymentInstrumentQuery.Customer value) throws IOException {
       writer.name("address");
-      new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.Address>(Address.INSTANCE, false)).toJson(writer, customScalarAdapters, value.address);
+      new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.Address>(Address.INSTANCE, false)).toJson(writer, customScalarAdapters, value.address);
 
       writer.name("fullName");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.fullName);
@@ -235,23 +237,23 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     public PaymentInstrumentQuery.Address fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       List<String> _addressLines = null;
-      String _administrativeArea = null;
-      String _administrativeAreaCode = null;
+      Optional<String> _administrativeArea = null;
+      Optional<String> _administrativeAreaCode = null;
       String _countryCode = null;
       String _locality = null;
       String _postalCode = null;
-      String _subLocality = null;
+      Optional<String> _subLocality = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _addressLines = new ListAdapter<>(Adapters.StringAdapter).fromJson(reader, customScalarAdapters); break;
-          case 1: _administrativeArea = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _administrativeAreaCode = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _administrativeArea = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _administrativeAreaCode = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _countryCode = (customScalarAdapters.<String>responseAdapterFor(CountryCode.type)).fromJson(reader, customScalarAdapters); break;
           case 4: _locality = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 5: _postalCode = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 6: _subLocality = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 6: _subLocality = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -279,10 +281,10 @@ public class PaymentInstrumentQuery_ResponseAdapter {
       new ListAdapter<>(Adapters.StringAdapter).toJson(writer, customScalarAdapters, value.addressLines);
 
       writer.name("administrativeArea");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.administrativeArea);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.administrativeArea);
 
       writer.name("administrativeAreaCode");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.administrativeAreaCode);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.administrativeAreaCode);
 
       writer.name("countryCode");
       (customScalarAdapters.<String>responseAdapterFor(CountryCode.type)).toJson(writer, customScalarAdapters, value.countryCode);
@@ -294,7 +296,7 @@ public class PaymentInstrumentQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.postalCode);
 
       writer.name("subLocality");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.subLocality);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.subLocality);
     }
   }
 
@@ -306,16 +308,16 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     @Override
     public PaymentInstrumentQuery.ExpediaVirtualCardActivity fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PaymentInstrumentQuery.AvailableBalance _availableBalance = null;
-      ExpediaVirtualCardChargeStatus _chargeStatus = null;
-      PaymentInstrumentQuery.ChargedAmount _chargedAmount = null;
+      Optional<PaymentInstrumentQuery.AvailableBalance> _availableBalance = null;
+      Optional<ExpediaVirtualCardChargeStatus> _chargeStatus = null;
+      Optional<PaymentInstrumentQuery.ChargedAmount> _chargedAmount = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _availableBalance = new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.AvailableBalance>(AvailableBalance.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _chargeStatus = new NullableAdapter<>(ExpediaVirtualCardChargeStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 2: _chargedAmount = new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ChargedAmount>(ChargedAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _availableBalance = new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.AvailableBalance>(AvailableBalance.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _chargeStatus = new OptionalAdapter<>(ExpediaVirtualCardChargeStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 2: _chargedAmount = new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ChargedAmount>(ChargedAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -331,13 +333,13 @@ public class PaymentInstrumentQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PaymentInstrumentQuery.ExpediaVirtualCardActivity value) throws IOException {
       writer.name("availableBalance");
-      new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.AvailableBalance>(AvailableBalance.INSTANCE, false)).toJson(writer, customScalarAdapters, value.availableBalance);
+      new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.AvailableBalance>(AvailableBalance.INSTANCE, false)).toJson(writer, customScalarAdapters, value.availableBalance);
 
       writer.name("chargeStatus");
-      new NullableAdapter<>(ExpediaVirtualCardChargeStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.chargeStatus);
+      new OptionalAdapter<>(ExpediaVirtualCardChargeStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.chargeStatus);
 
       writer.name("chargedAmount");
-      new NullableAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ChargedAmount>(ChargedAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.chargedAmount);
+      new OptionalAdapter<>(new ObjectAdapter<PaymentInstrumentQuery.ChargedAmount>(ChargedAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.chargedAmount);
     }
   }
 

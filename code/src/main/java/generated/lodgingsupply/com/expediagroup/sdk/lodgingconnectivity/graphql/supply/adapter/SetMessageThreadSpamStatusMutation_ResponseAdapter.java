@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.SetMessageThreadSpamStatusMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SetMessageThreadSpamStatusMutation_ResponseAdapter {
   public enum Data implements Adapter<SetMessageThreadSpamStatusMutation.Data> {
@@ -29,12 +31,12 @@ public class SetMessageThreadSpamStatusMutation_ResponseAdapter {
     @Override
     public SetMessageThreadSpamStatusMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus _setMessageThreadSpamStatus = null;
+      Optional<SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus> _setMessageThreadSpamStatus = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _setMessageThreadSpamStatus = new NullableAdapter<>(new ObjectAdapter<SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus>(SetMessageThreadSpamStatus.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _setMessageThreadSpamStatus = new OptionalAdapter<>(new ObjectAdapter<SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus>(SetMessageThreadSpamStatus.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class SetMessageThreadSpamStatusMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SetMessageThreadSpamStatusMutation.Data value) throws IOException {
       writer.name("setMessageThreadSpamStatus");
-      new NullableAdapter<>(new ObjectAdapter<SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus>(SetMessageThreadSpamStatus.INSTANCE, false)).toJson(writer, customScalarAdapters, value.setMessageThreadSpamStatus);
+      new OptionalAdapter<>(new ObjectAdapter<SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus>(SetMessageThreadSpamStatus.INSTANCE, false)).toJson(writer, customScalarAdapters, value.setMessageThreadSpamStatus);
     }
   }
 
@@ -60,13 +62,13 @@ public class SetMessageThreadSpamStatusMutation_ResponseAdapter {
     @Override
     public SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       String _id = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -84,7 +86,7 @@ public class SetMessageThreadSpamStatusMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SetMessageThreadSpamStatusMutation.SetMessageThreadSpamStatus value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateUnitSpacesDiningRoomInput {
-  public final Optional<Integer> capacity;
+  public final Optional<Optional<Integer>> capacity;
 
   public final String id;
 
-  public final Optional<Integer> order;
+  public final Optional<Optional<Integer>> order;
 
   private transient volatile int $hashCode;
 
@@ -24,8 +25,8 @@ public class UpdateUnitSpacesDiningRoomInput {
 
   private transient volatile String $toString;
 
-  public UpdateUnitSpacesDiningRoomInput(Optional<Integer> capacity, String id,
-      Optional<Integer> order) {
+  public UpdateUnitSpacesDiningRoomInput(Optional<Optional<Integer>> capacity, String id,
+      Optional<Optional<Integer>> order) {
     this.capacity = capacity;
     this.id = id;
     this.order = order;
@@ -78,17 +79,17 @@ public class UpdateUnitSpacesDiningRoomInput {
   }
 
   public static final class Builder {
-    private Optional<Integer> capacity = Optional.absent();
+    private Optional<Optional<Integer>> capacity = Optional.empty();
 
     private String id;
 
-    private Optional<Integer> order = Optional.absent();
+    private Optional<Optional<Integer>> order = Optional.empty();
 
     Builder() {
     }
 
-    public Builder capacity(Integer capacity) {
-      this.capacity = Optional.present(capacity);
+    public Builder capacity(@NotNull Optional<Integer> capacity) {
+      this.capacity = Optional.of(capacity);
       return this;
     }
 
@@ -97,8 +98,8 @@ public class UpdateUnitSpacesDiningRoomInput {
       return this;
     }
 
-    public Builder order(Integer order) {
-      this.order = Optional.present(order);
+    public Builder order(@NotNull Optional<Integer> order) {
+      this.order = Optional.of(order);
       return this;
     }
 

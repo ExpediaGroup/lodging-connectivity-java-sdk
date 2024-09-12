@@ -22,6 +22,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class RateGuestMutation implements Mutation<RateGuestMutation.Data> {
   public static final String OPERATION_ID = "0867bea3c6913ef7b1650b533cadb9856a13a254a88e745644a20dd7d6f4ea44";
@@ -175,7 +176,7 @@ public class RateGuestMutation implements Mutation<RateGuestMutation.Data> {
   }
 
   public static class Data implements Mutation.Data {
-    public RateGuest rateGuest;
+    public Optional<RateGuest> rateGuest;
 
     private transient volatile int $hashCode;
 
@@ -183,7 +184,7 @@ public class RateGuestMutation implements Mutation<RateGuestMutation.Data> {
 
     private transient volatile String $toString;
 
-    public Data(RateGuest rateGuest) {
+    public Data(Optional<RateGuest> rateGuest) {
       this.rateGuest = rateGuest;
     }
 
@@ -226,12 +227,12 @@ public class RateGuestMutation implements Mutation<RateGuestMutation.Data> {
     /**
      * will consider Guest for future reservations
      */
-    public Boolean recommendGuest;
+    public Optional<Boolean> recommendGuest;
 
     /**
      * categorized ratings
      */
-    public List<StarRating> starRatings;
+    public List<Optional<StarRating>> starRatings;
 
     private transient volatile int $hashCode;
 
@@ -239,7 +240,7 @@ public class RateGuestMutation implements Mutation<RateGuestMutation.Data> {
 
     private transient volatile String $toString;
 
-    public RateGuest(Boolean recommendGuest, List<StarRating> starRatings) {
+    public RateGuest(Optional<Boolean> recommendGuest, List<Optional<StarRating>> starRatings) {
       this.recommendGuest = recommendGuest;
       this.starRatings = starRatings;
     }

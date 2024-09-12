@@ -10,18 +10,20 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertiesQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxPropertiesQuery_ResponseAdapter {
   public enum Data implements Adapter<SandboxPropertiesQuery.Data> {
@@ -65,14 +67,14 @@ public class SandboxPropertiesQuery_ResponseAdapter {
     @Override
     public SandboxPropertiesQuery.Properties fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _cursor = null;
+      Optional<String> _cursor = null;
       Integer _totalCount = null;
       List<SandboxPropertiesQuery.Element> _elements = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _cursor = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _cursor = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _totalCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _elements = new ListAdapter<>(new ObjectAdapter<SandboxPropertiesQuery.Element>(Element.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -93,7 +95,7 @@ public class SandboxPropertiesQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SandboxPropertiesQuery.Properties value) throws IOException {
       writer.name("cursor");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
 
       writer.name("totalCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalCount);
@@ -113,14 +115,14 @@ public class SandboxPropertiesQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      SandboxPropertiesQuery.Reservations _reservations = null;
+      Optional<SandboxPropertiesQuery.Reservations> _reservations = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _reservations = new NullableAdapter<>(new ObjectAdapter<SandboxPropertiesQuery.Reservations>(Reservations.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _reservations = new OptionalAdapter<>(new ObjectAdapter<SandboxPropertiesQuery.Reservations>(Reservations.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -145,7 +147,7 @@ public class SandboxPropertiesQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("reservations");
-      new NullableAdapter<>(new ObjectAdapter<SandboxPropertiesQuery.Reservations>(Reservations.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservations);
+      new OptionalAdapter<>(new ObjectAdapter<SandboxPropertiesQuery.Reservations>(Reservations.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservations);
     }
   }
 
@@ -158,14 +160,14 @@ public class SandboxPropertiesQuery_ResponseAdapter {
     public SandboxPropertiesQuery.Reservations fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       Integer _totalCount = null;
-      String _cursor = null;
+      Optional<String> _cursor = null;
       List<SandboxPropertiesQuery.Element1> _elements = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _totalCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _cursor = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _cursor = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _elements = new ListAdapter<>(new ObjectAdapter<SandboxPropertiesQuery.Element1>(Element1.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -188,7 +190,7 @@ public class SandboxPropertiesQuery_ResponseAdapter {
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalCount);
 
       writer.name("cursor");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
 
       writer.name("elements");
       new ListAdapter<>(new ObjectAdapter<SandboxPropertiesQuery.Element1>(Element1.INSTANCE, true)).toJson(writer, customScalarAdapters, value.elements);

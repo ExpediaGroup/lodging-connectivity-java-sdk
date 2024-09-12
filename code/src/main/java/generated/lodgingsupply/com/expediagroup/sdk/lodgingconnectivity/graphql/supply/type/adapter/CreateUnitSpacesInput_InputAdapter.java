@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CreateUnitSpacesBathroomInput;
@@ -37,29 +34,29 @@ public enum CreateUnitSpacesInput_InputAdapter implements Adapter<CreateUnitSpac
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       CreateUnitSpacesInput value) throws IOException {
-    if (value.bathrooms instanceof Optional.Present) {
+    if (value.bathrooms.isPresent()) {
       writer.name("bathrooms");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesBathroomInput>(CreateUnitSpacesBathroomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.bathrooms);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesBathroomInput>(CreateUnitSpacesBathroomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.bathrooms);
     }
-    if (value.bedrooms instanceof Optional.Present) {
+    if (value.bedrooms.isPresent()) {
       writer.name("bedrooms");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesBedroomInput>(CreateUnitSpacesBedroomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.bedrooms);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesBedroomInput>(CreateUnitSpacesBedroomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.bedrooms);
     }
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
-    if (value.diningRooms instanceof Optional.Present) {
+    if (value.diningRooms.isPresent()) {
       writer.name("diningRooms");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesDiningRoomInput>(CreateUnitSpacesDiningRoomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.diningRooms);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesDiningRoomInput>(CreateUnitSpacesDiningRoomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.diningRooms);
     }
-    if (value.livingRooms instanceof Optional.Present) {
+    if (value.livingRooms.isPresent()) {
       writer.name("livingRooms");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesLivingRoomInput>(CreateUnitSpacesLivingRoomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.livingRooms);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesLivingRoomInput>(CreateUnitSpacesLivingRoomInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.livingRooms);
     }
-    if (value.offices instanceof Optional.Present) {
+    if (value.offices.isPresent()) {
       writer.name("offices");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesOfficeInput>(CreateUnitSpacesOfficeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.offices);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CreateUnitSpacesOfficeInput>(CreateUnitSpacesOfficeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.offices);
     }
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);

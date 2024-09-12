@@ -10,12 +10,12 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyAggregatedReviewsQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReviewBrand;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ReviewBrand_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Double;
@@ -24,6 +24,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyAggregatedReviewsQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyAggregatedReviewsQuery.Data> {
@@ -34,12 +35,12 @@ public class PropertyAggregatedReviewsQuery_ResponseAdapter {
     @Override
     public PropertyAggregatedReviewsQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyAggregatedReviewsQuery.Property _property = null;
+      Optional<PropertyAggregatedReviewsQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -53,7 +54,7 @@ public class PropertyAggregatedReviewsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyAggregatedReviewsQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -65,12 +66,12 @@ public class PropertyAggregatedReviewsQuery_ResponseAdapter {
     @Override
     public PropertyAggregatedReviewsQuery.Property fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyAggregatedReviewsQuery.AggregatedReviews _aggregatedReviews = null;
+      Optional<PropertyAggregatedReviewsQuery.AggregatedReviews> _aggregatedReviews = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _aggregatedReviews = new NullableAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.AggregatedReviews>(AggregatedReviews.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _aggregatedReviews = new OptionalAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.AggregatedReviews>(AggregatedReviews.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -84,7 +85,7 @@ public class PropertyAggregatedReviewsQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyAggregatedReviewsQuery.Property value) throws IOException {
       writer.name("aggregatedReviews");
-      new NullableAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.AggregatedReviews>(AggregatedReviews.INSTANCE, false)).toJson(writer, customScalarAdapters, value.aggregatedReviews);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyAggregatedReviewsQuery.AggregatedReviews>(AggregatedReviews.INSTANCE, false)).toJson(writer, customScalarAdapters, value.aggregatedReviews);
     }
   }
 

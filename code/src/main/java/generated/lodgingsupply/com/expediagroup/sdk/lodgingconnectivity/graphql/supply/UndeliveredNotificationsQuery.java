@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UndeliveredNotificationsQuery_ResponseAdapter;
@@ -21,7 +20,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificationsQuery.Data> {
   public static final String OPERATION_ID = "82d5b682ceb4e96b615945789f1f89351638305166cea96bffe327058e805318";
@@ -157,9 +158,9 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
   public static final class Builder {
     private UndeliveredNotificationsFiltersInput filters;
 
-    private Optional<String> cursor = Optional.absent();
+    private Optional<String> cursor = Optional.empty();
 
-    private Optional<Integer> limit = Optional.absent();
+    private Optional<Integer> limit = Optional.empty();
 
     Builder() {
     }
@@ -170,12 +171,12 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
     }
 
     public Builder cursor(String cursor) {
-      this.cursor = Optional.present(cursor);
+      this.cursor = Optional.of(cursor);
       return this;
     }
 
     public Builder limit(Integer limit) {
-      this.limit = Optional.present(limit);
+      this.limit = Optional.of(limit);
       return this;
     }
 
@@ -188,7 +189,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
     /**
      * Retrieves failed notifications
      */
-    public UndeliveredNotifications undeliveredNotifications;
+    public Optional<UndeliveredNotifications> undeliveredNotifications;
 
     private transient volatile int $hashCode;
 
@@ -196,7 +197,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
 
     private transient volatile String $toString;
 
-    public Data(UndeliveredNotifications undeliveredNotifications) {
+    public Data(Optional<UndeliveredNotifications> undeliveredNotifications) {
       this.undeliveredNotifications = undeliveredNotifications;
     }
 
@@ -239,7 +240,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
     /**
      *  Represents the next page cursor in the list, Empty if no more pages available
      */
-    public String cursor;
+    public Optional<String> cursor;
 
     /**
      *  Total number of notifications failed to deliver 
@@ -249,7 +250,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
     /**
      *  List of undelivered notifications 
      */
-    public List<Element> elements;
+    public List<Optional<Element>> elements;
 
     private transient volatile int $hashCode;
 
@@ -257,7 +258,8 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
 
     private transient volatile String $toString;
 
-    public UndeliveredNotifications(String cursor, Integer totalCount, List<Element> elements) {
+    public UndeliveredNotifications(Optional<String> cursor, Integer totalCount,
+        List<Optional<Element>> elements) {
       this.cursor = cursor;
       this.totalCount = totalCount;
       this.elements = elements;
@@ -310,7 +312,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
     /**
      * This contains human readable description of any errors encountered when attempting to deliver the notification.
      */
-    public Error error;
+    public Optional<Error> error;
 
     /**
      * Payload of the notification
@@ -323,7 +325,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
 
     private transient volatile String $toString;
 
-    public Element(Error error, Notification notification) {
+    public Element(Optional<Error> error, Notification notification) {
       this.error = error;
       this.notification = notification;
     }
@@ -432,7 +434,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
     /**
      *  creation date time of the notification 
      */
-    public Object creationDateTime;
+    public OffsetDateTime creationDateTime;
 
     /**
      *  The event type 
@@ -455,7 +457,7 @@ public class UndeliveredNotificationsQuery implements Query<UndeliveredNotificat
 
     private transient volatile String $toString;
 
-    public Notification(Object creationDateTime, String eventType, String notificationId,
+    public Notification(OffsetDateTime creationDateTime, String eventType, String notificationId,
         String payload) {
       this.creationDateTime = creationDateTime;
       this.eventType = eventType;

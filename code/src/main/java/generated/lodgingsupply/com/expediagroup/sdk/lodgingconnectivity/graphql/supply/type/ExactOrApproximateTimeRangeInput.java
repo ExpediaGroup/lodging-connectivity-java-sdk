@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ExactOrApproximateTimeRangeInput {
-  public final Optional<ExactOrApproximateTimeInput> end;
+  public final Optional<Optional<ExactOrApproximateTimeInput>> end;
 
   public final ExactOrApproximateTimeInput start;
 
@@ -21,7 +22,7 @@ public class ExactOrApproximateTimeRangeInput {
 
   private transient volatile String $toString;
 
-  public ExactOrApproximateTimeRangeInput(Optional<ExactOrApproximateTimeInput> end,
+  public ExactOrApproximateTimeRangeInput(Optional<Optional<ExactOrApproximateTimeInput>> end,
       ExactOrApproximateTimeInput start) {
     this.end = end;
     this.start = start;
@@ -70,15 +71,15 @@ public class ExactOrApproximateTimeRangeInput {
   }
 
   public static final class Builder {
-    private Optional<ExactOrApproximateTimeInput> end = Optional.absent();
+    private Optional<Optional<ExactOrApproximateTimeInput>> end = Optional.empty();
 
     private ExactOrApproximateTimeInput start;
 
     Builder() {
     }
 
-    public Builder end(ExactOrApproximateTimeInput end) {
-      this.end = Optional.present(end);
+    public Builder end(@NotNull Optional<ExactOrApproximateTimeInput> end) {
+      this.end = Optional.of(end);
       return this;
     }
 

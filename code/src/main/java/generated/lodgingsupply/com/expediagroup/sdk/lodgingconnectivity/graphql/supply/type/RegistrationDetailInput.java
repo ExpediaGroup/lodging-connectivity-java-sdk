@@ -5,34 +5,35 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Registration information for each bookable unit of a multi-unit property.
  */
 public class RegistrationDetailInput {
-  public final Optional<List<AcknowledgementRecordInput>> acknowledgementRecords;
+  public final Optional<Optional<List<AcknowledgementRecordInput>>> acknowledgementRecords;
 
-  public final Optional<List<ApplicableRegulationsInput>> applicableRegulations;
+  public final Optional<Optional<List<ApplicableRegulationsInput>>> applicableRegulations;
 
-  public final Optional<List<AttachmentUrlInput>> attachmentUrls;
+  public final Optional<Optional<List<AttachmentUrlInput>>> attachmentUrls;
 
-  public final Optional<String> displayRegistrationNumber;
+  public final Optional<Optional<String>> displayRegistrationNumber;
 
-  public final Optional<List<ExemptionCategory>> exemptionCategories;
+  public final Optional<Optional<List<ExemptionCategory>>> exemptionCategories;
 
-  public final Optional<Integer> numberOfPhysicalRooms;
+  public final Optional<Optional<Integer>> numberOfPhysicalRooms;
 
   public final List<RegistrationRecordInput> registrationRecords;
 
   public final RegulatoryCategory regulatoryCategory;
 
-  public final Optional<String> regulatorySubType;
+  public final Optional<Optional<String>> regulatorySubType;
 
   public final String regulatoryType;
 
@@ -44,13 +45,15 @@ public class RegistrationDetailInput {
 
   private transient volatile String $toString;
 
-  public RegistrationDetailInput(Optional<List<AcknowledgementRecordInput>> acknowledgementRecords,
-      Optional<List<ApplicableRegulationsInput>> applicableRegulations,
-      Optional<List<AttachmentUrlInput>> attachmentUrls, Optional<String> displayRegistrationNumber,
-      Optional<List<ExemptionCategory>> exemptionCategories,
-      Optional<Integer> numberOfPhysicalRooms, List<RegistrationRecordInput> registrationRecords,
-      RegulatoryCategory regulatoryCategory, Optional<String> regulatorySubType,
-      String regulatoryType, String unitId) {
+  public RegistrationDetailInput(
+      Optional<Optional<List<AcknowledgementRecordInput>>> acknowledgementRecords,
+      Optional<Optional<List<ApplicableRegulationsInput>>> applicableRegulations,
+      Optional<Optional<List<AttachmentUrlInput>>> attachmentUrls,
+      Optional<Optional<String>> displayRegistrationNumber,
+      Optional<Optional<List<ExemptionCategory>>> exemptionCategories,
+      Optional<Optional<Integer>> numberOfPhysicalRooms,
+      List<RegistrationRecordInput> registrationRecords, RegulatoryCategory regulatoryCategory,
+      Optional<Optional<String>> regulatorySubType, String regulatoryType, String unitId) {
     this.acknowledgementRecords = acknowledgementRecords;
     this.applicableRegulations = applicableRegulations;
     this.attachmentUrls = attachmentUrls;
@@ -143,23 +146,23 @@ public class RegistrationDetailInput {
   }
 
   public static final class Builder {
-    private Optional<List<AcknowledgementRecordInput>> acknowledgementRecords = Optional.absent();
+    private Optional<Optional<List<AcknowledgementRecordInput>>> acknowledgementRecords = Optional.empty();
 
-    private Optional<List<ApplicableRegulationsInput>> applicableRegulations = Optional.absent();
+    private Optional<Optional<List<ApplicableRegulationsInput>>> applicableRegulations = Optional.empty();
 
-    private Optional<List<AttachmentUrlInput>> attachmentUrls = Optional.absent();
+    private Optional<Optional<List<AttachmentUrlInput>>> attachmentUrls = Optional.empty();
 
-    private Optional<String> displayRegistrationNumber = Optional.absent();
+    private Optional<Optional<String>> displayRegistrationNumber = Optional.empty();
 
-    private Optional<List<ExemptionCategory>> exemptionCategories = Optional.absent();
+    private Optional<Optional<List<ExemptionCategory>>> exemptionCategories = Optional.empty();
 
-    private Optional<Integer> numberOfPhysicalRooms = Optional.absent();
+    private Optional<Optional<Integer>> numberOfPhysicalRooms = Optional.empty();
 
     private List<RegistrationRecordInput> registrationRecords;
 
     private RegulatoryCategory regulatoryCategory;
 
-    private Optional<String> regulatorySubType = Optional.absent();
+    private Optional<Optional<String>> regulatorySubType = Optional.empty();
 
     private String regulatoryType;
 
@@ -171,48 +174,51 @@ public class RegistrationDetailInput {
     /**
      * Acknowledgement records for the bookable unit.
      */
-    public Builder acknowledgementRecords(List<AcknowledgementRecordInput> acknowledgementRecords) {
-      this.acknowledgementRecords = Optional.present(acknowledgementRecords);
+    public Builder acknowledgementRecords(
+        @NotNull Optional<List<AcknowledgementRecordInput>> acknowledgementRecords) {
+      this.acknowledgementRecords = Optional.of(acknowledgementRecords);
       return this;
     }
 
     /**
      * Additional information about the bookable unit required by certain districts.
      */
-    public Builder applicableRegulations(List<ApplicableRegulationsInput> applicableRegulations) {
-      this.applicableRegulations = Optional.present(applicableRegulations);
+    public Builder applicableRegulations(
+        @NotNull Optional<List<ApplicableRegulationsInput>> applicableRegulations) {
+      this.applicableRegulations = Optional.of(applicableRegulations);
       return this;
     }
 
     /**
      * Links for registration documentation files (if required).
      */
-    public Builder attachmentUrls(List<AttachmentUrlInput> attachmentUrls) {
-      this.attachmentUrls = Optional.present(attachmentUrls);
+    public Builder attachmentUrls(@NotNull Optional<List<AttachmentUrlInput>> attachmentUrls) {
+      this.attachmentUrls = Optional.of(attachmentUrls);
       return this;
     }
 
     /**
      * Registration number displayed to the traveler.
      */
-    public Builder displayRegistrationNumber(String displayRegistrationNumber) {
-      this.displayRegistrationNumber = Optional.present(displayRegistrationNumber);
+    public Builder displayRegistrationNumber(@NotNull Optional<String> displayRegistrationNumber) {
+      this.displayRegistrationNumber = Optional.of(displayRegistrationNumber);
       return this;
     }
 
     /**
      * List of exemptions for the property, such as maximum night cap.
      */
-    public Builder exemptionCategories(List<ExemptionCategory> exemptionCategories) {
-      this.exemptionCategories = Optional.present(exemptionCategories);
+    public Builder exemptionCategories(
+        @NotNull Optional<List<ExemptionCategory>> exemptionCategories) {
+      this.exemptionCategories = Optional.of(exemptionCategories);
       return this;
     }
 
     /**
      * Number of rooms in the bookable unit.
      */
-    public Builder numberOfPhysicalRooms(Integer numberOfPhysicalRooms) {
-      this.numberOfPhysicalRooms = Optional.present(numberOfPhysicalRooms);
+    public Builder numberOfPhysicalRooms(@NotNull Optional<Integer> numberOfPhysicalRooms) {
+      this.numberOfPhysicalRooms = Optional.of(numberOfPhysicalRooms);
       return this;
     }
 
@@ -235,8 +241,8 @@ public class RegistrationDetailInput {
     /**
      * Property subtype, such as primary or secondary, or null if not applicable.
      */
-    public Builder regulatorySubType(String regulatorySubType) {
-      this.regulatorySubType = Optional.present(regulatorySubType);
+    public Builder regulatorySubType(@NotNull Optional<String> regulatorySubType) {
+      this.regulatorySubType = Optional.of(regulatorySubType);
       return this;
     }
 

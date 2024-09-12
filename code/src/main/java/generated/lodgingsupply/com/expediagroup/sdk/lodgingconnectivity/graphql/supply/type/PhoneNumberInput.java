@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class PhoneNumberInput {
-  public final Optional<String> areaCode;
+  public final Optional<Optional<String>> areaCode;
 
-  public final Optional<String> countryCode;
+  public final Optional<Optional<String>> countryCode;
 
-  public final Optional<String> extension;
+  public final Optional<Optional<String>> extension;
 
   public final String number;
 
@@ -27,8 +28,9 @@ public class PhoneNumberInput {
 
   private transient volatile String $toString;
 
-  public PhoneNumberInput(Optional<String> areaCode, Optional<String> countryCode,
-      Optional<String> extension, String number, PhoneNumberType phoneNumberType) {
+  public PhoneNumberInput(Optional<Optional<String>> areaCode,
+      Optional<Optional<String>> countryCode, Optional<Optional<String>> extension, String number,
+      PhoneNumberType phoneNumberType) {
     this.areaCode = areaCode;
     this.countryCode = countryCode;
     this.extension = extension;
@@ -91,11 +93,11 @@ public class PhoneNumberInput {
   }
 
   public static final class Builder {
-    private Optional<String> areaCode = Optional.absent();
+    private Optional<Optional<String>> areaCode = Optional.empty();
 
-    private Optional<String> countryCode = Optional.absent();
+    private Optional<Optional<String>> countryCode = Optional.empty();
 
-    private Optional<String> extension = Optional.absent();
+    private Optional<Optional<String>> extension = Optional.empty();
 
     private String number;
 
@@ -104,18 +106,18 @@ public class PhoneNumberInput {
     Builder() {
     }
 
-    public Builder areaCode(String areaCode) {
-      this.areaCode = Optional.present(areaCode);
+    public Builder areaCode(@NotNull Optional<String> areaCode) {
+      this.areaCode = Optional.of(areaCode);
       return this;
     }
 
-    public Builder countryCode(String countryCode) {
-      this.countryCode = Optional.present(countryCode);
+    public Builder countryCode(@NotNull Optional<String> countryCode) {
+      this.countryCode = Optional.of(countryCode);
       return this;
     }
 
-    public Builder extension(String extension) {
-      this.extension = Optional.present(extension);
+    public Builder extension(@NotNull Optional<String> extension) {
+      this.extension = Optional.of(extension);
       return this;
     }
 

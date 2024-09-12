@@ -6,11 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeDateRangeInput;
@@ -32,17 +29,17 @@ public enum FeeRestrictionsInput_InputAdapter implements Adapter<FeeRestrictions
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       FeeRestrictionsInput value) throws IOException {
-    if (value.dateRange instanceof Optional.Present) {
+    if (value.dateRange.isPresent()) {
       writer.name("dateRange");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<FeeDateRangeInput>(FeeDateRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.dateRange);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<FeeDateRangeInput>(FeeDateRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.dateRange);
     }
-    if (value.extraGuestRange instanceof Optional.Present) {
+    if (value.extraGuestRange.isPresent()) {
       writer.name("extraGuestRange");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.extraGuestRange);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.extraGuestRange);
     }
-    if (value.rangeOfNight instanceof Optional.Present) {
+    if (value.rangeOfNight.isPresent()) {
       writer.name("rangeOfNight");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.rangeOfNight);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.rangeOfNight);
     }
   }
 }

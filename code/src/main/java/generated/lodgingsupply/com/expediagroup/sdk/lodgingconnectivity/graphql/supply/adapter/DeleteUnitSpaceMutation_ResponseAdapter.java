@@ -6,18 +6,19 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.DeleteUnitSpaceMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class DeleteUnitSpaceMutation_ResponseAdapter {
   public enum Data implements Adapter<DeleteUnitSpaceMutation.Data> {
@@ -28,12 +29,12 @@ public class DeleteUnitSpaceMutation_ResponseAdapter {
     @Override
     public DeleteUnitSpaceMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      DeleteUnitSpaceMutation.DeleteUnitSpace _deleteUnitSpace = null;
+      Optional<DeleteUnitSpaceMutation.DeleteUnitSpace> _deleteUnitSpace = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _deleteUnitSpace = new NullableAdapter<>(new ObjectAdapter<DeleteUnitSpaceMutation.DeleteUnitSpace>(DeleteUnitSpace.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _deleteUnitSpace = new OptionalAdapter<>(new ObjectAdapter<DeleteUnitSpaceMutation.DeleteUnitSpace>(DeleteUnitSpace.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -47,7 +48,7 @@ public class DeleteUnitSpaceMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         DeleteUnitSpaceMutation.Data value) throws IOException {
       writer.name("deleteUnitSpace");
-      new NullableAdapter<>(new ObjectAdapter<DeleteUnitSpaceMutation.DeleteUnitSpace>(DeleteUnitSpace.INSTANCE, false)).toJson(writer, customScalarAdapters, value.deleteUnitSpace);
+      new OptionalAdapter<>(new ObjectAdapter<DeleteUnitSpaceMutation.DeleteUnitSpace>(DeleteUnitSpace.INSTANCE, false)).toJson(writer, customScalarAdapters, value.deleteUnitSpace);
     }
   }
 
@@ -59,12 +60,12 @@ public class DeleteUnitSpaceMutation_ResponseAdapter {
     @Override
     public DeleteUnitSpaceMutation.DeleteUnitSpace fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -78,7 +79,7 @@ public class DeleteUnitSpaceMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         DeleteUnitSpaceMutation.DeleteUnitSpace value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
     }
   }
 }

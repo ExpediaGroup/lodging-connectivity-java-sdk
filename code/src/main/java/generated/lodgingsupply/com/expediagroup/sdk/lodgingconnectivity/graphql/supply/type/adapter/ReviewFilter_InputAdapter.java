@@ -6,13 +6,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DateInput;
@@ -34,33 +30,33 @@ public enum ReviewFilter_InputAdapter implements Adapter<ReviewFilter> {
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       ReviewFilter value) throws IOException {
-    if (value.brandNames instanceof Optional.Present) {
+    if (value.brandNames.isPresent()) {
       writer.name("brandNames");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(ReviewBrand_ResponseAdapter.INSTANCE))).toJson(writer, customScalarAdapters, value.brandNames);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(ReviewBrand_ResponseAdapter.INSTANCE))).toJson(writer, customScalarAdapters, value.brandNames);
     }
-    if (value.createdDate instanceof Optional.Present) {
+    if (value.createdDate.isPresent()) {
       writer.name("createdDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<DateInput>(DateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.createdDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<DateInput>(DateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.createdDate);
     }
-    if (value.hasOwnerResponse instanceof Optional.Present) {
+    if (value.hasOwnerResponse.isPresent()) {
       writer.name("hasOwnerResponse");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.hasOwnerResponse);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.hasOwnerResponse);
     }
-    if (value.reservation instanceof Optional.Present) {
+    if (value.reservation.isPresent()) {
       writer.name("reservation");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<ReviewReservationFilterInput>(ReviewReservationFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.reservation);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<ReviewReservationFilterInput>(ReviewReservationFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.reservation);
     }
-    if (value.reviewId instanceof Optional.Present) {
+    if (value.reviewId.isPresent()) {
       writer.name("reviewId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.reviewId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.reviewId);
     }
-    if (value.source instanceof Optional.Present) {
+    if (value.source.isPresent()) {
       writer.name("source");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.source);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.source);
     }
-    if (value.updatedDate instanceof Optional.Present) {
+    if (value.updatedDate.isPresent()) {
       writer.name("updatedDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<DateInput>(DateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.updatedDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<DateInput>(DateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.updatedDate);
     }
   }
 }

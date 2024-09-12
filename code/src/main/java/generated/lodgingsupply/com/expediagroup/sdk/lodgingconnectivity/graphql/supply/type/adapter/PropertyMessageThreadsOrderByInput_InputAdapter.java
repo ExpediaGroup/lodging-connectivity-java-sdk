@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyMessageThreadsOrderByInput;
@@ -29,13 +26,13 @@ public enum PropertyMessageThreadsOrderByInput_InputAdapter implements Adapter<P
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       PropertyMessageThreadsOrderByInput value) throws IOException {
-    if (value.field instanceof Optional.Present) {
+    if (value.field.isPresent()) {
       writer.name("field");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(PropertyMessageThreadsSortField_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.field);
+      new OptionalAdapter<>(new OptionalAdapter<>(PropertyMessageThreadsSortField_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.field);
     }
-    if (value.order instanceof Optional.Present) {
+    if (value.order.isPresent()) {
       writer.name("order");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.order);
+      new OptionalAdapter<>(new OptionalAdapter<>(SortOrder_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.order);
     }
   }
 }

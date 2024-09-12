@@ -9,12 +9,13 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.SendTestNotificationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.TestNotificationOutcome;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.TestNotificationOutcome_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Integer;
@@ -22,6 +23,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SendTestNotificationMutation_ResponseAdapter {
   public enum Data implements Adapter<SendTestNotificationMutation.Data> {
@@ -32,12 +34,12 @@ public class SendTestNotificationMutation_ResponseAdapter {
     @Override
     public SendTestNotificationMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      SendTestNotificationMutation.SendTestNotification _sendTestNotification = null;
+      Optional<SendTestNotificationMutation.SendTestNotification> _sendTestNotification = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _sendTestNotification = new NullableAdapter<>(new ObjectAdapter<SendTestNotificationMutation.SendTestNotification>(SendTestNotification.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _sendTestNotification = new OptionalAdapter<>(new ObjectAdapter<SendTestNotificationMutation.SendTestNotification>(SendTestNotification.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -51,7 +53,7 @@ public class SendTestNotificationMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SendTestNotificationMutation.Data value) throws IOException {
       writer.name("sendTestNotification");
-      new NullableAdapter<>(new ObjectAdapter<SendTestNotificationMutation.SendTestNotification>(SendTestNotification.INSTANCE, false)).toJson(writer, customScalarAdapters, value.sendTestNotification);
+      new OptionalAdapter<>(new ObjectAdapter<SendTestNotificationMutation.SendTestNotification>(SendTestNotification.INSTANCE, false)).toJson(writer, customScalarAdapters, value.sendTestNotification);
     }
   }
 
@@ -63,15 +65,15 @@ public class SendTestNotificationMutation_ResponseAdapter {
     @Override
     public SendTestNotificationMutation.SendTestNotification fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      SendTestNotificationMutation.Error _error = null;
-      Integer _httpStatusCode = null;
+      Optional<SendTestNotificationMutation.Error> _error = null;
+      Optional<Integer> _httpStatusCode = null;
       TestNotificationOutcome _outcome = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _error = new NullableAdapter<>(new ObjectAdapter<SendTestNotificationMutation.Error>(Error.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 1: _httpStatusCode = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _error = new OptionalAdapter<>(new ObjectAdapter<SendTestNotificationMutation.Error>(Error.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _httpStatusCode = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _outcome = TestNotificationOutcome_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -90,10 +92,10 @@ public class SendTestNotificationMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SendTestNotificationMutation.SendTestNotification value) throws IOException {
       writer.name("error");
-      new NullableAdapter<>(new ObjectAdapter<SendTestNotificationMutation.Error>(Error.INSTANCE, false)).toJson(writer, customScalarAdapters, value.error);
+      new OptionalAdapter<>(new ObjectAdapter<SendTestNotificationMutation.Error>(Error.INSTANCE, false)).toJson(writer, customScalarAdapters, value.error);
 
       writer.name("httpStatusCode");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.httpStatusCode);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.httpStatusCode);
 
       writer.name("outcome");
       TestNotificationOutcome_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.outcome);

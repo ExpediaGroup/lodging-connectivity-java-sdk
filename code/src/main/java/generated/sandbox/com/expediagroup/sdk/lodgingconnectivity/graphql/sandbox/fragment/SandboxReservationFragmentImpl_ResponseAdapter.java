@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -22,6 +21,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.Reservation
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.BookingSource_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.BusinessModel_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.IdSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.ReconciliationType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.ReservationStatus_ResponseAdapter;
 import java.io.IOException;
@@ -33,6 +34,7 @@ import java.lang.String;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxReservationFragmentImpl_ResponseAdapter {
   public enum SandboxReservationFragment implements Adapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment> {
@@ -45,68 +47,68 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
       List<String> _accessibilityText = null;
       Integer _adultCount = null;
-      com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts _amounts = null;
-      String _bedTypes = null;
+      Optional<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts> _amounts = null;
+      Optional<String> _bedTypes = null;
       BookingSource _bookingSource = null;
       BusinessModel _businessModel = null;
       LocalDate _checkInDate = null;
       LocalDate _checkOutDate = null;
-      List<Integer> _childAges = null;
+      Optional<List<Integer>> _childAges = null;
       Integer _childCount = null;
       String _creationDateTime = null;
       String _id = null;
       Boolean _isReconciled = null;
       String _lastUpdatedDateTime = null;
-      String _multiRoomText = null;
+      Optional<String> _multiRoomText = null;
       com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Payment _payment = null;
-      Integer _petCount = null;
+      Optional<Integer> _petCount = null;
       com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.PrimaryGuest _primaryGuest = null;
       String _propertyId = null;
-      List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.RateId> _rateIds = null;
-      ReconciliationType _reconciliationType = null;
+      Optional<List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.RateId>> _rateIds = null;
+      Optional<ReconciliationType> _reconciliationType = null;
       List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ReservationId> _reservationIds = null;
       String _smokingType = null;
-      String _specialRequest = null;
+      Optional<String> _specialRequest = null;
       ReservationStatus _status = null;
-      String _subStatus = null;
-      Integer _tidsCode = null;
+      Optional<String> _subStatus = null;
+      Optional<Integer> _tidsCode = null;
       Integer _totalGuestCount = null;
-      List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.UnitId> _unitIds = null;
-      List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ValueAddedPromotion> _valueAddedPromotions = null;
+      Optional<List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.UnitId>> _unitIds = null;
+      Optional<List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ValueAddedPromotion>> _valueAddedPromotions = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _accessibilityText = new ListAdapter<>(Adapters.StringAdapter).fromJson(reader, customScalarAdapters); break;
           case 1: _adultCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _amounts = new NullableAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts>(Amounts.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 3: _bedTypes = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _amounts = new OptionalAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts>(Amounts.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 3: _bedTypes = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _bookingSource = BookingSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 5: _businessModel = BusinessModel_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 6: _checkInDate = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 7: _checkOutDate = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 8: _childAges = new NullableAdapter<>(new ListAdapter<>(Adapters.IntAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 8: _childAges = new OptionalAdapter<>(new ListAdapter<>(Adapters.IntAdapter)).fromJson(reader, customScalarAdapters); break;
           case 9: _childCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 10: _creationDateTime = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 11: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 12: _isReconciled = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 13: _lastUpdatedDateTime = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 14: _multiRoomText = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 14: _multiRoomText = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 15: _payment = new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Payment>(Payment.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 16: _petCount = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 16: _petCount = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
           case 17: _primaryGuest = new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.PrimaryGuest>(PrimaryGuest.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 18: _propertyId = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 19: _rateIds = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.RateId>(RateId.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 20: _reconciliationType = new NullableAdapter<>(ReconciliationType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 19: _rateIds = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.RateId>(RateId.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 20: _reconciliationType = new OptionalAdapter<>(ReconciliationType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 21: _reservationIds = new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ReservationId>(ReservationId.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 22: _smokingType = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 23: _specialRequest = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 23: _specialRequest = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 24: _status = ReservationStatus_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 25: _subStatus = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 26: _tidsCode = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 25: _subStatus = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 26: _tidsCode = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
           case 27: _totalGuestCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 28: _unitIds = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.UnitId>(UnitId.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 29: _valueAddedPromotions = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ValueAddedPromotion>(ValueAddedPromotion.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 28: _unitIds = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.UnitId>(UnitId.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 29: _valueAddedPromotions = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ValueAddedPromotion>(ValueAddedPromotion.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -175,10 +177,10 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.adultCount);
 
       writer.name("amounts");
-      new NullableAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts>(Amounts.INSTANCE, false)).toJson(writer, customScalarAdapters, value.amounts);
+      new OptionalAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts>(Amounts.INSTANCE, false)).toJson(writer, customScalarAdapters, value.amounts);
 
       writer.name("bedTypes");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.bedTypes);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.bedTypes);
 
       writer.name("bookingSource");
       BookingSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.bookingSource);
@@ -193,7 +195,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.checkOutDate);
 
       writer.name("childAges");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.IntAdapter)).toJson(writer, customScalarAdapters, value.childAges);
+      new OptionalAdapter<>(new ListAdapter<>(Adapters.IntAdapter)).toJson(writer, customScalarAdapters, value.childAges);
 
       writer.name("childCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.childCount);
@@ -211,13 +213,13 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.lastUpdatedDateTime);
 
       writer.name("multiRoomText");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.multiRoomText);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.multiRoomText);
 
       writer.name("payment");
       new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Payment>(Payment.INSTANCE, false).toJson(writer, customScalarAdapters, value.payment);
 
       writer.name("petCount");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.petCount);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.petCount);
 
       writer.name("primaryGuest");
       new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.PrimaryGuest>(PrimaryGuest.INSTANCE, false).toJson(writer, customScalarAdapters, value.primaryGuest);
@@ -226,10 +228,10 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
 
       writer.name("rateIds");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.RateId>(RateId.INSTANCE, false))).toJson(writer, customScalarAdapters, value.rateIds);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.RateId>(RateId.INSTANCE, false))).toJson(writer, customScalarAdapters, value.rateIds);
 
       writer.name("reconciliationType");
-      new NullableAdapter<>(ReconciliationType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.reconciliationType);
+      new OptionalAdapter<>(ReconciliationType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.reconciliationType);
 
       writer.name("reservationIds");
       new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ReservationId>(ReservationId.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservationIds);
@@ -238,25 +240,25 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.smokingType);
 
       writer.name("specialRequest");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.specialRequest);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.specialRequest);
 
       writer.name("status");
       ReservationStatus_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.status);
 
       writer.name("subStatus");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.subStatus);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.subStatus);
 
       writer.name("tidsCode");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.tidsCode);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.tidsCode);
 
       writer.name("totalGuestCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalGuestCount);
 
       writer.name("unitIds");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.UnitId>(UnitId.INSTANCE, false))).toJson(writer, customScalarAdapters, value.unitIds);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.UnitId>(UnitId.INSTANCE, false))).toJson(writer, customScalarAdapters, value.unitIds);
 
       writer.name("valueAddedPromotions");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ValueAddedPromotion>(ValueAddedPromotion.INSTANCE, false))).toJson(writer, customScalarAdapters, value.valueAddedPromotions);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.ValueAddedPromotion>(ValueAddedPromotion.INSTANCE, false))).toJson(writer, customScalarAdapters, value.valueAddedPromotions);
     }
   }
 
@@ -268,12 +270,12 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
     @Override
     public com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts fromJson(
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
-      com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.NightlyPayments _nightlyPayments = null;
+      Optional<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.NightlyPayments> _nightlyPayments = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _nightlyPayments = new NullableAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.NightlyPayments>(NightlyPayments.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _nightlyPayments = new OptionalAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.NightlyPayments>(NightlyPayments.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -288,7 +290,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
         com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amounts value)
         throws IOException {
       writer.name("nightlyPayments");
-      new NullableAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.NightlyPayments>(NightlyPayments.INSTANCE, false)).toJson(writer, customScalarAdapters, value.nightlyPayments);
+      new OptionalAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.NightlyPayments>(NightlyPayments.INSTANCE, false)).toJson(writer, customScalarAdapters, value.nightlyPayments);
     }
   }
 
@@ -350,7 +352,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
       com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amount _amount = null;
       String _description = null;
-      Double _percent = null;
+      Optional<Double> _percent = null;
       String _type = null;
 
       loop:
@@ -358,7 +360,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _amount = new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amount>(Amount.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 1: _description = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _percent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _percent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -387,7 +389,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("percent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -446,7 +448,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amount1 _amount = null;
       LocalDate _date = null;
       String _description = null;
-      Double _percent = null;
+      Optional<Double> _percent = null;
       String _type = null;
 
       loop:
@@ -455,7 +457,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
           case 0: _amount = new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amount1>(Amount1.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 1: _date = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 2: _description = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _percent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _percent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -489,7 +491,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("percent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -547,7 +549,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
       com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amount2 _amount = null;
       String _description = null;
-      Double _percent = null;
+      Optional<Double> _percent = null;
       String _type = null;
 
       loop:
@@ -555,7 +557,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _amount = new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.Amount2>(Amount2.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 1: _description = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _percent = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _percent = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -584,7 +586,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("percent");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.percent);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
@@ -700,7 +702,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       String _lastName = null;
       String _loyaltyTier = null;
       List<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.PhoneNumber> _phoneNumbers = null;
-      com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.SupplierLoyaltyPlanInfo _supplierLoyaltyPlanInfo = null;
+      Optional<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.SupplierLoyaltyPlanInfo> _supplierLoyaltyPlanInfo = null;
 
       loop:
       while(true) {
@@ -710,7 +712,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
           case 2: _lastName = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _loyaltyTier = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _phoneNumbers = new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.PhoneNumber>(PhoneNumber.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 5: _supplierLoyaltyPlanInfo = new NullableAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 5: _supplierLoyaltyPlanInfo = new OptionalAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -751,7 +753,7 @@ public class SandboxReservationFragmentImpl_ResponseAdapter {
       new ListAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.PhoneNumber>(PhoneNumber.INSTANCE, false)).toJson(writer, customScalarAdapters, value.phoneNumbers);
 
       writer.name("supplierLoyaltyPlanInfo");
-      new NullableAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).toJson(writer, customScalarAdapters, value.supplierLoyaltyPlanInfo);
+      new OptionalAdapter<>(new ObjectAdapter<com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationFragment.SupplierLoyaltyPlanInfo>(SupplierLoyaltyPlanInfo.INSTANCE, false)).toJson(writer, customScalarAdapters, value.supplierLoyaltyPlanInfo);
     }
   }
 

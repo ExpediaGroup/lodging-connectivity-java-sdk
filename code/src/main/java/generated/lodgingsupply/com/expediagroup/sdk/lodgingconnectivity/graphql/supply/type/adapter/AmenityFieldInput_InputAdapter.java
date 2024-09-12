@@ -7,11 +7,8 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AmenityFieldInput;
@@ -34,9 +31,9 @@ public enum AmenityFieldInput_InputAdapter implements Adapter<AmenityFieldInput>
       AmenityFieldInput value) throws IOException {
     writer.name("key");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.key);
-    if (value.value instanceof Optional.Present) {
+    if (value.value.isPresent()) {
       writer.name("value");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<AmenityFieldValueInput>(AmenityFieldValueInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.value);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<AmenityFieldValueInput>(AmenityFieldValueInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.value);
     }
   }
 }

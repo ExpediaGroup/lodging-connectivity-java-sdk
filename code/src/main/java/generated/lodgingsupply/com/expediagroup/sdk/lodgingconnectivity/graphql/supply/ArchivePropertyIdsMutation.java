@@ -20,6 +20,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class ArchivePropertyIdsMutation implements Mutation<ArchivePropertyIdsMutation.Data> {
   public static final String OPERATION_ID = "f6f77fcafa1140234f50eaed73abe42b7e41c01842baa09292bd9f3ec5d16a3b";
@@ -145,7 +146,7 @@ public class ArchivePropertyIdsMutation implements Mutation<ArchivePropertyIdsMu
     /**
      * Provide a list of Property IDs that should be archived during the Property ID mapping process.
      */
-    public ArchivePropertyIds archivePropertyIds;
+    public Optional<ArchivePropertyIds> archivePropertyIds;
 
     private transient volatile int $hashCode;
 
@@ -153,7 +154,7 @@ public class ArchivePropertyIdsMutation implements Mutation<ArchivePropertyIdsMu
 
     private transient volatile String $toString;
 
-    public Data(ArchivePropertyIds archivePropertyIds) {
+    public Data(Optional<ArchivePropertyIds> archivePropertyIds) {
       this.archivePropertyIds = archivePropertyIds;
     }
 

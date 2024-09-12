@@ -22,6 +22,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class CreateNotificationCallbackConfigMutation implements Mutation<CreateNotificationCallbackConfigMutation.Data> {
   public static final String OPERATION_ID = "4168c4886f934dbba7573288a4b21b06147d6ccb3fb7a3b9b64dbdf3d7837652";
@@ -153,7 +154,7 @@ public class CreateNotificationCallbackConfigMutation implements Mutation<Create
     /**
      * Create callback configuration for notification profile.
      */
-    public CreateNotificationCallbackConfig createNotificationCallbackConfig;
+    public Optional<CreateNotificationCallbackConfig> createNotificationCallbackConfig;
 
     private transient volatile int $hashCode;
 
@@ -161,7 +162,7 @@ public class CreateNotificationCallbackConfigMutation implements Mutation<Create
 
     private transient volatile String $toString;
 
-    public Data(CreateNotificationCallbackConfig createNotificationCallbackConfig) {
+    public Data(Optional<CreateNotificationCallbackConfig> createNotificationCallbackConfig) {
       this.createNotificationCallbackConfig = createNotificationCallbackConfig;
     }
 
@@ -270,7 +271,7 @@ public class CreateNotificationCallbackConfigMutation implements Mutation<Create
     /**
      * Email address for correspondence
      */
-    public String contactEmail;
+    public Optional<String> contactEmail;
 
     /**
      * Id of the callback configuration object
@@ -293,7 +294,7 @@ public class CreateNotificationCallbackConfigMutation implements Mutation<Create
 
     private transient volatile String $toString;
 
-    public CallbackConfig(URL callbackUrl, String contactEmail, String id,
+    public CallbackConfig(URL callbackUrl, Optional<String> contactEmail, String id,
         Integer requestTimeoutSeconds, LocalDateTime secretExpirationDateTime) {
       this.callbackUrl = callbackUrl;
       this.contactEmail = contactEmail;

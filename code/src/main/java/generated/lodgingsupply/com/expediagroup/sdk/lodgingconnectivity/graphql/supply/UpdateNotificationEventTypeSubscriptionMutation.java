@@ -22,6 +22,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class UpdateNotificationEventTypeSubscriptionMutation implements Mutation<UpdateNotificationEventTypeSubscriptionMutation.Data> {
   public static final String OPERATION_ID = "fa4094e45a6c0a6c4e4eea7719b69fb97ca432a9a35a4b9666c3486d43c18512";
@@ -154,7 +155,7 @@ public class UpdateNotificationEventTypeSubscriptionMutation implements Mutation
     /**
      * Update notification callback configuration for a subscribed notification event type
      */
-    public UpdateNotificationEventTypeSubscription updateNotificationEventTypeSubscription;
+    public Optional<UpdateNotificationEventTypeSubscription> updateNotificationEventTypeSubscription;
 
     private transient volatile int $hashCode;
 
@@ -162,7 +163,8 @@ public class UpdateNotificationEventTypeSubscriptionMutation implements Mutation
 
     private transient volatile String $toString;
 
-    public Data(UpdateNotificationEventTypeSubscription updateNotificationEventTypeSubscription) {
+    public Data(
+        Optional<UpdateNotificationEventTypeSubscription> updateNotificationEventTypeSubscription) {
       this.updateNotificationEventTypeSubscription = updateNotificationEventTypeSubscription;
     }
 
@@ -272,7 +274,7 @@ public class UpdateNotificationEventTypeSubscriptionMutation implements Mutation
     /**
      * Email address for correspondence
      */
-    public String contactEmail;
+    public Optional<String> contactEmail;
 
     /**
      * Id of the callback configuration object
@@ -295,7 +297,7 @@ public class UpdateNotificationEventTypeSubscriptionMutation implements Mutation
 
     private transient volatile String $toString;
 
-    public CallbackConfig(URL callbackUrl, String contactEmail, String id,
+    public CallbackConfig(URL callbackUrl, Optional<String> contactEmail, String id,
         Integer requestTimeoutSeconds, LocalDateTime secretExpirationDateTime) {
       this.callbackUrl = callbackUrl;
       this.contactEmail = contactEmail;

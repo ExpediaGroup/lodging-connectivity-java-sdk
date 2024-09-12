@@ -22,6 +22,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class SubscribeNotificationEventTypeMutation implements Mutation<SubscribeNotificationEventTypeMutation.Data> {
   public static final String OPERATION_ID = "4b35c7b2c319354d291d9e8fb5b63b01aed2e50d46f1a68cc13174aa01721071";
@@ -153,7 +154,7 @@ public class SubscribeNotificationEventTypeMutation implements Mutation<Subscrib
     /**
      * Subscribe to notification event type for a given notification subscription profile.
      */
-    public SubscribeNotificationEventType subscribeNotificationEventType;
+    public Optional<SubscribeNotificationEventType> subscribeNotificationEventType;
 
     private transient volatile int $hashCode;
 
@@ -161,7 +162,7 @@ public class SubscribeNotificationEventTypeMutation implements Mutation<Subscrib
 
     private transient volatile String $toString;
 
-    public Data(SubscribeNotificationEventType subscribeNotificationEventType) {
+    public Data(Optional<SubscribeNotificationEventType> subscribeNotificationEventType) {
       this.subscribeNotificationEventType = subscribeNotificationEventType;
     }
 
@@ -270,7 +271,7 @@ public class SubscribeNotificationEventTypeMutation implements Mutation<Subscrib
     /**
      * Email address for correspondence
      */
-    public String contactEmail;
+    public Optional<String> contactEmail;
 
     /**
      * Id of the callback configuration object
@@ -293,7 +294,7 @@ public class SubscribeNotificationEventTypeMutation implements Mutation<Subscrib
 
     private transient volatile String $toString;
 
-    public CallbackConfig(URL callbackUrl, String contactEmail, String id,
+    public CallbackConfig(URL callbackUrl, Optional<String> contactEmail, String id,
         Integer requestTimeoutSeconds, LocalDateTime secretExpirationDateTime) {
       this.callbackUrl = callbackUrl;
       this.contactEmail = contactEmail;

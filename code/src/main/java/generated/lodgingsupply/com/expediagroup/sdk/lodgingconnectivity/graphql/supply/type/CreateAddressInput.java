@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateAddressInput {
   public final List<String> addressLines;
 
-  public final Optional<String> administrativeArea;
+  public final Optional<Optional<String>> administrativeArea;
 
-  public final Object countryCode;
+  public final String countryCode;
 
   public final String locality;
 
@@ -28,8 +29,9 @@ public class CreateAddressInput {
 
   private transient volatile String $toString;
 
-  public CreateAddressInput(List<String> addressLines, Optional<String> administrativeArea,
-      Object countryCode, String locality, String postalCode) {
+  public CreateAddressInput(List<String> addressLines,
+      Optional<Optional<String>> administrativeArea, String countryCode, String locality,
+      String postalCode) {
     this.addressLines = addressLines;
     this.administrativeArea = administrativeArea;
     this.countryCode = countryCode;
@@ -94,9 +96,9 @@ public class CreateAddressInput {
   public static final class Builder {
     private List<String> addressLines;
 
-    private Optional<String> administrativeArea = Optional.absent();
+    private Optional<Optional<String>> administrativeArea = Optional.empty();
 
-    private Object countryCode;
+    private String countryCode;
 
     private String locality;
 
@@ -110,12 +112,12 @@ public class CreateAddressInput {
       return this;
     }
 
-    public Builder administrativeArea(String administrativeArea) {
-      this.administrativeArea = Optional.present(administrativeArea);
+    public Builder administrativeArea(@NotNull Optional<String> administrativeArea) {
+      this.administrativeArea = Optional.of(administrativeArea);
       return this;
     }
 
-    public Builder countryCode(Object countryCode) {
+    public Builder countryCode(String countryCode) {
       this.countryCode = countryCode;
       return this;
     }

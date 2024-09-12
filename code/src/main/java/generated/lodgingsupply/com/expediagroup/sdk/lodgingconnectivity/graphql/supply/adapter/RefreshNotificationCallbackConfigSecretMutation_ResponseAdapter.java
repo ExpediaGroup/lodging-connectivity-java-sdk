@@ -9,17 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.RefreshNotificationCallbackConfigSecretMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class RefreshNotificationCallbackConfigSecretMutation_ResponseAdapter {
   public enum Data implements Adapter<RefreshNotificationCallbackConfigSecretMutation.Data> {
@@ -30,12 +31,12 @@ public class RefreshNotificationCallbackConfigSecretMutation_ResponseAdapter {
     @Override
     public RefreshNotificationCallbackConfigSecretMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      RefreshNotificationCallbackConfigSecretMutation.RefreshNotificationCallbackConfigSecret _refreshNotificationCallbackConfigSecret = null;
+      Optional<RefreshNotificationCallbackConfigSecretMutation.RefreshNotificationCallbackConfigSecret> _refreshNotificationCallbackConfigSecret = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _refreshNotificationCallbackConfigSecret = new NullableAdapter<>(new ObjectAdapter<RefreshNotificationCallbackConfigSecretMutation.RefreshNotificationCallbackConfigSecret>(RefreshNotificationCallbackConfigSecret.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _refreshNotificationCallbackConfigSecret = new OptionalAdapter<>(new ObjectAdapter<RefreshNotificationCallbackConfigSecretMutation.RefreshNotificationCallbackConfigSecret>(RefreshNotificationCallbackConfigSecret.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -49,7 +50,7 @@ public class RefreshNotificationCallbackConfigSecretMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         RefreshNotificationCallbackConfigSecretMutation.Data value) throws IOException {
       writer.name("refreshNotificationCallbackConfigSecret");
-      new NullableAdapter<>(new ObjectAdapter<RefreshNotificationCallbackConfigSecretMutation.RefreshNotificationCallbackConfigSecret>(RefreshNotificationCallbackConfigSecret.INSTANCE, false)).toJson(writer, customScalarAdapters, value.refreshNotificationCallbackConfigSecret);
+      new OptionalAdapter<>(new ObjectAdapter<RefreshNotificationCallbackConfigSecretMutation.RefreshNotificationCallbackConfigSecret>(RefreshNotificationCallbackConfigSecret.INSTANCE, false)).toJson(writer, customScalarAdapters, value.refreshNotificationCallbackConfigSecret);
     }
   }
 

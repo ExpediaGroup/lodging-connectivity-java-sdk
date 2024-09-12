@@ -19,6 +19,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyListingsQuery implements Query<PropertyListingsQuery.Data> {
   public static final String OPERATION_ID = "09edb3ce3fbd3abd1913132ccec9d1ad8c58265ff571b446a2bf857f15bf1bad";
@@ -157,7 +158,7 @@ public class PropertyListingsQuery implements Query<PropertyListingsQuery.Data> 
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -165,7 +166,7 @@ public class PropertyListingsQuery implements Query<PropertyListingsQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -208,7 +209,7 @@ public class PropertyListingsQuery implements Query<PropertyListingsQuery.Data> 
     /**
      * Listings of the property on the requested domains, supported domains: [expedia.com, vrbo.com]
      */
-    public List<Listing> listings;
+    public Optional<List<Optional<Listing>>> listings;
 
     private transient volatile int $hashCode;
 
@@ -216,7 +217,7 @@ public class PropertyListingsQuery implements Query<PropertyListingsQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Property(List<Listing> listings) {
+    public Property(Optional<List<Optional<Listing>>> listings) {
       this.listings = listings;
     }
 
@@ -259,12 +260,12 @@ public class PropertyListingsQuery implements Query<PropertyListingsQuery.Data> 
     /**
      * Locale for the property listing on the requested domain
      */
-    public String locale;
+    public Optional<String> locale;
 
     /**
      * URL listing the property when the property is enabled and distributed on the requested domain
      */
-    public String url;
+    public Optional<String> url;
 
     private transient volatile int $hashCode;
 
@@ -272,7 +273,7 @@ public class PropertyListingsQuery implements Query<PropertyListingsQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Listing(String locale, String url) {
+    public Listing(Optional<String> locale, Optional<String> url) {
       this.locale = locale;
       this.url = url;
     }

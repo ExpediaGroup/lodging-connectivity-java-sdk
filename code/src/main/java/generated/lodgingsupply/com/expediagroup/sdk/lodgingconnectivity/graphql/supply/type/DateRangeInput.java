@@ -8,11 +8,12 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
 
 public class DateRangeInput {
-  public final Object from;
+  public final LocalDate from;
 
-  public final Object to;
+  public final LocalDate to;
 
   private transient volatile int $hashCode;
 
@@ -20,7 +21,7 @@ public class DateRangeInput {
 
   private transient volatile String $toString;
 
-  public DateRangeInput(Object from, Object to) {
+  public DateRangeInput(LocalDate from, LocalDate to) {
     this.from = from;
     this.to = to;
   }
@@ -68,19 +69,19 @@ public class DateRangeInput {
   }
 
   public static final class Builder {
-    private Object from;
+    private LocalDate from;
 
-    private Object to;
+    private LocalDate to;
 
     Builder() {
     }
 
-    public Builder from(Object from) {
+    public Builder from(LocalDate from) {
       this.from = from;
       return this;
     }
 
-    public Builder to(Object to) {
+    public Builder to(LocalDate to) {
       this.to = to;
       return this;
     }

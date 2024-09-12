@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.VrboCancellationPolicyPenalty;
@@ -31,9 +28,9 @@ public enum VrboCancellationPolicyPenalty_InputAdapter implements Adapter<VrboCa
       VrboCancellationPolicyPenalty value) throws IOException {
     writer.name("type");
     VrboCancellationPolicyPenaltyType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
-    if (value.percent instanceof Optional.Present) {
+    if (value.percent.isPresent()) {
       writer.name("percent");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.percent);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.percent);
     }
   }
 }

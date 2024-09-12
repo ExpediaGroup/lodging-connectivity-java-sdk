@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.Mutation;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateUnitRegistrationMutation_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateUnitRegistrationMutation_VariablesAdapter;
@@ -24,6 +23,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegistrationMutation.Data> {
   public static final String OPERATION_ID = "877b00a6f96122ab26d3fa355f6884330be09cc68f53d6306585e686d4dfc1b0";
@@ -163,7 +163,7 @@ public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegist
 
     private UpdateUnitRegistrationInput registration;
 
-    private Optional<Boolean> forceSave = Optional.absent();
+    private Optional<Boolean> forceSave = Optional.empty();
 
     private String propertyId;
 
@@ -181,7 +181,7 @@ public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegist
     }
 
     public Builder forceSave(Boolean forceSave) {
-      this.forceSave = Optional.present(forceSave);
+      this.forceSave = Optional.of(forceSave);
       return this;
     }
 
@@ -250,7 +250,7 @@ public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegist
     /**
      * Geographical jurisdiction identifier. For non-configured districts, this is null.
      */
-    public String district;
+    public Optional<String> district;
 
     /**
      * Whether the property registration information is sufficient to fulfill the requirements of the property's district.
@@ -265,7 +265,7 @@ public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegist
     /**
      * Additional property registration information required by certain districts.
      */
-    public List<ApplicableRegulation> applicableRegulations;
+    public Optional<List<ApplicableRegulation>> applicableRegulations;
 
     private transient volatile int $hashCode;
 
@@ -273,8 +273,8 @@ public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegist
 
     private transient volatile String $toString;
 
-    public UpdateUnitRegistration(String district, Boolean complete, List<Detail> details,
-        List<ApplicableRegulation> applicableRegulations) {
+    public UpdateUnitRegistration(Optional<String> district, Boolean complete, List<Detail> details,
+        Optional<List<ApplicableRegulation>> applicableRegulations) {
       this.district = district;
       this.complete = complete;
       this.details = details;
@@ -383,12 +383,12 @@ public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegist
     /**
      * Identifier for additional information required by the district.
      */
-    public ApplicableRegulationsKey key;
+    public Optional<ApplicableRegulationsKey> key;
 
     /**
      * Value of the key required by the district.
      */
-    public String value;
+    public Optional<String> value;
 
     private transient volatile int $hashCode;
 
@@ -396,7 +396,7 @@ public class UpdateUnitRegistrationMutation implements Mutation<UpdateUnitRegist
 
     private transient volatile String $toString;
 
-    public ApplicableRegulation(ApplicableRegulationsKey key, String value) {
+    public ApplicableRegulation(Optional<ApplicableRegulationsKey> key, Optional<String> value) {
       this.key = key;
       this.value = value;
     }

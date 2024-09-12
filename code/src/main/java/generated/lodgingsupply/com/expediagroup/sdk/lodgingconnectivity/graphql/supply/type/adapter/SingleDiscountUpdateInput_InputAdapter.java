@@ -6,11 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.SingleDiscountUpdateInput;
@@ -30,17 +26,17 @@ public enum SingleDiscountUpdateInput_InputAdapter implements Adapter<SingleDisc
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       SingleDiscountUpdateInput value) throws IOException {
-    if (value.unit instanceof Optional.Present) {
+    if (value.unit.isPresent()) {
       writer.name("unit");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(DiscountUnit_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.unit);
+      new OptionalAdapter<>(new OptionalAdapter<>(DiscountUnit_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.unit);
     }
-    if (value.value instanceof Optional.Present) {
+    if (value.value.isPresent()) {
       writer.name("value");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.value);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.value);
     }
-    if (value.memberOnlyAdditionalValue instanceof Optional.Present) {
+    if (value.memberOnlyAdditionalValue.isPresent()) {
       writer.name("memberOnlyAdditionalValue");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.memberOnlyAdditionalValue);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.memberOnlyAdditionalValue);
     }
   }
 }

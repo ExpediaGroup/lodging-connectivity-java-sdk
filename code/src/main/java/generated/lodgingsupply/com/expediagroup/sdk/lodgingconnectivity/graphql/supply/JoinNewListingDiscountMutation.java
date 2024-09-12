@@ -20,6 +20,7 @@ import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class JoinNewListingDiscountMutation implements Mutation<JoinNewListingDiscountMutation.Data> {
   public static final String OPERATION_ID = "9d2a440cd21e72fb194322656a7a77f1053c8bbbb6a8a163c89667da6793835f";
@@ -156,7 +157,7 @@ public class JoinNewListingDiscountMutation implements Mutation<JoinNewListingDi
     /**
      * Add new listing discount
      */
-    public Boolean joinNewListingDiscount;
+    public Optional<Boolean> joinNewListingDiscount;
 
     private transient volatile int $hashCode;
 
@@ -164,7 +165,7 @@ public class JoinNewListingDiscountMutation implements Mutation<JoinNewListingDi
 
     private transient volatile String $toString;
 
-    public Data(Boolean joinNewListingDiscount) {
+    public Data(Optional<Boolean> joinNewListingDiscount) {
       this.joinNewListingDiscount = joinNewListingDiscount;
     }
 

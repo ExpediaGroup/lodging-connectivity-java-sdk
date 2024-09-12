@@ -5,29 +5,30 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * facilitates filtering reservations
  */
 public class ReservationFilterInput {
-  public final Optional<CheckInDateFilter> checkInDate;
+  public final Optional<Optional<CheckInDateFilter>> checkInDate;
 
-  public final Optional<CheckOutDateFilter> checkOutDate;
+  public final Optional<Optional<CheckOutDateFilter>> checkOutDate;
 
-  public final Optional<List<IdNodeInput>> reservationIds;
+  public final Optional<Optional<List<IdNodeInput>>> reservationIds;
 
-  public final Optional<List<String>> ids;
+  public final Optional<Optional<List<String>>> ids;
 
-  public final Optional<List<ReservationStatus>> status;
+  public final Optional<Optional<List<Optional<ReservationStatus>>>> status;
 
-  public final Optional<String> subStatus;
+  public final Optional<Optional<String>> subStatus;
 
-  public final Optional<LastUpdatedDateTimeFilter> lastUpdatedDateTime;
+  public final Optional<Optional<LastUpdatedDateTimeFilter>> lastUpdatedDateTime;
 
   private transient volatile int $hashCode;
 
@@ -35,10 +36,12 @@ public class ReservationFilterInput {
 
   private transient volatile String $toString;
 
-  public ReservationFilterInput(Optional<CheckInDateFilter> checkInDate,
-      Optional<CheckOutDateFilter> checkOutDate, Optional<List<IdNodeInput>> reservationIds,
-      Optional<List<String>> ids, Optional<List<ReservationStatus>> status,
-      Optional<String> subStatus, Optional<LastUpdatedDateTimeFilter> lastUpdatedDateTime) {
+  public ReservationFilterInput(Optional<Optional<CheckInDateFilter>> checkInDate,
+      Optional<Optional<CheckOutDateFilter>> checkOutDate,
+      Optional<Optional<List<IdNodeInput>>> reservationIds, Optional<Optional<List<String>>> ids,
+      Optional<Optional<List<Optional<ReservationStatus>>>> status,
+      Optional<Optional<String>> subStatus,
+      Optional<Optional<LastUpdatedDateTimeFilter>> lastUpdatedDateTime) {
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
     this.reservationIds = reservationIds;
@@ -111,19 +114,19 @@ public class ReservationFilterInput {
   }
 
   public static final class Builder {
-    private Optional<CheckInDateFilter> checkInDate = Optional.absent();
+    private Optional<Optional<CheckInDateFilter>> checkInDate = Optional.empty();
 
-    private Optional<CheckOutDateFilter> checkOutDate = Optional.absent();
+    private Optional<Optional<CheckOutDateFilter>> checkOutDate = Optional.empty();
 
-    private Optional<List<IdNodeInput>> reservationIds = Optional.absent();
+    private Optional<Optional<List<IdNodeInput>>> reservationIds = Optional.empty();
 
-    private Optional<List<String>> ids = Optional.absent();
+    private Optional<Optional<List<String>>> ids = Optional.empty();
 
-    private Optional<List<ReservationStatus>> status = Optional.absent();
+    private Optional<Optional<List<Optional<ReservationStatus>>>> status = Optional.empty();
 
-    private Optional<String> subStatus = Optional.absent();
+    private Optional<Optional<String>> subStatus = Optional.empty();
 
-    private Optional<LastUpdatedDateTimeFilter> lastUpdatedDateTime = Optional.absent();
+    private Optional<Optional<LastUpdatedDateTimeFilter>> lastUpdatedDateTime = Optional.empty();
 
     Builder() {
     }
@@ -131,56 +134,57 @@ public class ReservationFilterInput {
     /**
      * limit results to reservations with arrival date within the window defined by CheckInDateFilter
      */
-    public Builder checkInDate(CheckInDateFilter checkInDate) {
-      this.checkInDate = Optional.present(checkInDate);
+    public Builder checkInDate(@NotNull Optional<CheckInDateFilter> checkInDate) {
+      this.checkInDate = Optional.of(checkInDate);
       return this;
     }
 
     /**
      * limit results to reservations with departure date within the window defined by CheckOutDateFilter
      */
-    public Builder checkOutDate(CheckOutDateFilter checkOutDate) {
-      this.checkOutDate = Optional.present(checkOutDate);
+    public Builder checkOutDate(@NotNull Optional<CheckOutDateFilter> checkOutDate) {
+      this.checkOutDate = Optional.of(checkOutDate);
       return this;
     }
 
     /**
      * list results with provided reservation ids
      */
-    public Builder reservationIds(List<IdNodeInput> reservationIds) {
-      this.reservationIds = Optional.present(reservationIds);
+    public Builder reservationIds(@NotNull Optional<List<IdNodeInput>> reservationIds) {
+      this.reservationIds = Optional.of(reservationIds);
       return this;
     }
 
     /**
      * list results with provided reservation ids
      */
-    public Builder ids(List<String> ids) {
-      this.ids = Optional.present(ids);
+    public Builder ids(@NotNull Optional<List<String>> ids) {
+      this.ids = Optional.of(ids);
       return this;
     }
 
     /**
      * limit results to reservations with status defined by ReservationStatus's
      */
-    public Builder status(List<ReservationStatus> status) {
-      this.status = Optional.present(status);
+    public Builder status(@NotNull Optional<List<Optional<ReservationStatus>>> status) {
+      this.status = Optional.of(status);
       return this;
     }
 
     /**
      * limit results to reservations with sub status of a reservation
      */
-    public Builder subStatus(String subStatus) {
-      this.subStatus = Optional.present(subStatus);
+    public Builder subStatus(@NotNull Optional<String> subStatus) {
+      this.subStatus = Optional.of(subStatus);
       return this;
     }
 
     /**
      * limit results to reservations with updated date time from the date defined by LastUpdatedDateTimeFilter
      */
-    public Builder lastUpdatedDateTime(LastUpdatedDateTimeFilter lastUpdatedDateTime) {
-      this.lastUpdatedDateTime = Optional.present(lastUpdatedDateTime);
+    public Builder lastUpdatedDateTime(
+        @NotNull Optional<LastUpdatedDateTimeFilter> lastUpdatedDateTime) {
+      this.lastUpdatedDateTime = Optional.of(lastUpdatedDateTime);
       return this;
     }
 

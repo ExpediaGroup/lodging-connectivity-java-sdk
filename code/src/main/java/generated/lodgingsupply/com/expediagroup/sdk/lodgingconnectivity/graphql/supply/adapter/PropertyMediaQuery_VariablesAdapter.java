@@ -6,15 +6,13 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyMediaQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ImagesFiltersInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ImagesFiltersInput_InputAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 
 public enum PropertyMediaQuery_VariablesAdapter {
@@ -24,9 +22,7 @@ public enum PropertyMediaQuery_VariablesAdapter {
       CustomScalarAdapters customScalarAdapters, boolean withDefaultValues) throws IOException {
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
-    if (value.filters instanceof Optional.Present) {
-      writer.name("filters");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<ImagesFiltersInput>(ImagesFiltersInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.filters);
-    }
+    writer.name("filters");
+    new OptionalAdapter<>(new ObjectAdapter<ImagesFiltersInput>(ImagesFiltersInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.filters);
   }
 }

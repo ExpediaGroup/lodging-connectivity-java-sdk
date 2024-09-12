@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class SingleDiscountCreateInput {
   public final DiscountUnit unit;
 
   public final Double value;
 
-  public final Optional<Double> memberOnlyAdditionalValue;
+  public final Optional<Optional<Double>> memberOnlyAdditionalValue;
 
   private transient volatile int $hashCode;
 
@@ -25,7 +26,7 @@ public class SingleDiscountCreateInput {
   private transient volatile String $toString;
 
   public SingleDiscountCreateInput(DiscountUnit unit, Double value,
-      Optional<Double> memberOnlyAdditionalValue) {
+      Optional<Optional<Double>> memberOnlyAdditionalValue) {
     this.unit = unit;
     this.value = value;
     this.memberOnlyAdditionalValue = memberOnlyAdditionalValue;
@@ -82,7 +83,7 @@ public class SingleDiscountCreateInput {
 
     private Double value;
 
-    private Optional<Double> memberOnlyAdditionalValue = Optional.absent();
+    private Optional<Optional<Double>> memberOnlyAdditionalValue = Optional.empty();
 
     Builder() {
     }
@@ -106,8 +107,8 @@ public class SingleDiscountCreateInput {
     /**
      * Member only discount value applied
      */
-    public Builder memberOnlyAdditionalValue(Double memberOnlyAdditionalValue) {
-      this.memberOnlyAdditionalValue = Optional.present(memberOnlyAdditionalValue);
+    public Builder memberOnlyAdditionalValue(@NotNull Optional<Double> memberOnlyAdditionalValue) {
+      this.memberOnlyAdditionalValue = Optional.of(memberOnlyAdditionalValue);
       return this;
     }
 

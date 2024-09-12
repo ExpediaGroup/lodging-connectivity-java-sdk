@@ -5,20 +5,21 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input object for updating a property.
  */
 public class UpdatePropertyInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String id;
 
-  public final Optional<String> name;
+  public final Optional<Optional<String>> name;
 
   private transient volatile int $hashCode;
 
@@ -26,7 +27,8 @@ public class UpdatePropertyInput {
 
   private transient volatile String $toString;
 
-  public UpdatePropertyInput(Optional<String> clientMutationId, String id, Optional<String> name) {
+  public UpdatePropertyInput(Optional<Optional<String>> clientMutationId, String id,
+      Optional<Optional<String>> name) {
     this.clientMutationId = clientMutationId;
     this.id = id;
     this.name = name;
@@ -79,11 +81,11 @@ public class UpdatePropertyInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String id;
 
-    private Optional<String> name = Optional.absent();
+    private Optional<Optional<String>> name = Optional.empty();
 
     Builder() {
     }
@@ -91,8 +93,8 @@ public class UpdatePropertyInput {
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -107,8 +109,8 @@ public class UpdatePropertyInput {
     /**
      * The new name for the property.
      */
-    public Builder name(String name) {
-      this.name = Optional.present(name);
+    public Builder name(@NotNull Optional<String> name) {
+      this.name = Optional.of(name);
       return this;
     }
 

@@ -23,7 +23,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class CancellationPolicyConfigQuery implements Query<CancellationPolicyConfigQuery.Data> {
   public static final String OPERATION_ID = "3878a9e85d4628836add73c96a86bff89613a67d5a5ed0647b6e00974fcdc037";
@@ -187,7 +189,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
   }
 
   public static class Data implements Query.Data {
-    public CancellationPolicyConfig cancellationPolicyConfig;
+    public Optional<CancellationPolicyConfig> cancellationPolicyConfig;
 
     private transient volatile int $hashCode;
 
@@ -195,7 +197,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     private transient volatile String $toString;
 
-    public Data(CancellationPolicyConfig cancellationPolicyConfig) {
+    public Data(Optional<CancellationPolicyConfig> cancellationPolicyConfig) {
       this.cancellationPolicyConfig = cancellationPolicyConfig;
     }
 
@@ -239,13 +241,13 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     public String name;
 
-    public AdditionalCancellationFee additionalCancellationFee;
+    public Optional<AdditionalCancellationFee> additionalCancellationFee;
 
     public List<DefaultPolicy> defaultPolicies;
 
     public List<OverridePolicy> overridePolicies;
 
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -254,8 +256,9 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
     private transient volatile String $toString;
 
     public CancellationPolicyConfig(String id, String name,
-        AdditionalCancellationFee additionalCancellationFee, List<DefaultPolicy> defaultPolicies,
-        List<OverridePolicy> overridePolicies, Property property) {
+        Optional<AdditionalCancellationFee> additionalCancellationFee,
+        List<DefaultPolicy> defaultPolicies, List<OverridePolicy> overridePolicies,
+        Optional<Property> property) {
       this.id = id;
       this.name = name;
       this.additionalCancellationFee = additionalCancellationFee;
@@ -323,7 +326,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -336,7 +339,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     private transient volatile String $toString;
 
-    public AdditionalCancellationFee(Object amount, String currencyCode) {
+    public AdditionalCancellationFee(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -383,7 +386,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
   public static class DefaultPolicy {
     public CancellationPolicyType type;
 
-    public List<Tier> tiers;
+    public Optional<List<Tier>> tiers;
 
     private transient volatile int $hashCode;
 
@@ -391,7 +394,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     private transient volatile String $toString;
 
-    public DefaultPolicy(CancellationPolicyType type, List<Tier> tiers) {
+    public DefaultPolicy(CancellationPolicyType type, Optional<List<Tier>> tiers) {
       this.type = type;
       this.tiers = tiers;
     }
@@ -548,14 +551,14 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
   public static class PenaltyRule {
     public CancellationPenaltyRuleApplicability applicability;
 
-    public FlatAmount flatAmount;
+    public Optional<FlatAmount> flatAmount;
 
-    public Integer numberOfNights;
+    public Optional<Integer> numberOfNights;
 
     /**
      * Represented as a fraction of 1. Example: 15% should be represented as 0.15 and 100% as 1.0
      */
-    public Object percentage;
+    public Optional<String> percentage;
 
     public CancellationPenaltyRuleType type;
 
@@ -565,8 +568,9 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     private transient volatile String $toString;
 
-    public PenaltyRule(CancellationPenaltyRuleApplicability applicability, FlatAmount flatAmount,
-        Integer numberOfNights, Object percentage, CancellationPenaltyRuleType type) {
+    public PenaltyRule(CancellationPenaltyRuleApplicability applicability,
+        Optional<FlatAmount> flatAmount, Optional<Integer> numberOfNights,
+        Optional<String> percentage, CancellationPenaltyRuleType type) {
       this.applicability = applicability;
       this.flatAmount = flatAmount;
       this.numberOfNights = numberOfNights;
@@ -629,7 +633,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -642,7 +646,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     private transient volatile String $toString;
 
-    public FlatAmount(Object amount, String currencyCode) {
+    public FlatAmount(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -744,7 +748,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
   public static class CancellationPolicy {
     public CancellationPolicyType type;
 
-    public List<Tier1> tiers;
+    public Optional<List<Tier1>> tiers;
 
     private transient volatile int $hashCode;
 
@@ -752,7 +756,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     private transient volatile String $toString;
 
-    public CancellationPolicy(CancellationPolicyType type, List<Tier1> tiers) {
+    public CancellationPolicy(CancellationPolicyType type, Optional<List<Tier1>> tiers) {
       this.type = type;
       this.tiers = tiers;
     }
@@ -900,9 +904,9 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
   }
 
   public static class DateRange {
-    public Object from;
+    public LocalDate from;
 
-    public Object to;
+    public LocalDate to;
 
     private transient volatile int $hashCode;
 
@@ -910,7 +914,7 @@ public class CancellationPolicyConfigQuery implements Query<CancellationPolicyCo
 
     private transient volatile String $toString;
 
-    public DateRange(Object from, Object to) {
+    public DateRange(LocalDate from, LocalDate to) {
       this.from = from;
       this.to = to;
     }

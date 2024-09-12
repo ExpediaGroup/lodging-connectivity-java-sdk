@@ -5,19 +5,20 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateNotificationCallbackConfigInput {
   public final URL callbackUrl;
 
   public final String apiKey;
 
-  public final Optional<Integer> requestTimeoutSeconds;
+  public final Optional<Optional<Integer>> requestTimeoutSeconds;
 
   public final String contactEmail;
 
@@ -28,7 +29,7 @@ public class CreateNotificationCallbackConfigInput {
   private transient volatile String $toString;
 
   public CreateNotificationCallbackConfigInput(URL callbackUrl, String apiKey,
-      Optional<Integer> requestTimeoutSeconds, String contactEmail) {
+      Optional<Optional<Integer>> requestTimeoutSeconds, String contactEmail) {
     this.callbackUrl = callbackUrl;
     this.apiKey = apiKey;
     this.requestTimeoutSeconds = requestTimeoutSeconds;
@@ -90,7 +91,7 @@ public class CreateNotificationCallbackConfigInput {
 
     private String apiKey;
 
-    private Optional<Integer> requestTimeoutSeconds = Optional.absent();
+    private Optional<Optional<Integer>> requestTimeoutSeconds = Optional.empty();
 
     private String contactEmail;
 
@@ -116,8 +117,8 @@ public class CreateNotificationCallbackConfigInput {
     /**
      * Request timeout in seconds of callback configuration
      */
-    public Builder requestTimeoutSeconds(Integer requestTimeoutSeconds) {
-      this.requestTimeoutSeconds = Optional.present(requestTimeoutSeconds);
+    public Builder requestTimeoutSeconds(@NotNull Optional<Integer> requestTimeoutSeconds) {
+      this.requestTimeoutSeconds = Optional.of(requestTimeoutSeconds);
       return this;
     }
 

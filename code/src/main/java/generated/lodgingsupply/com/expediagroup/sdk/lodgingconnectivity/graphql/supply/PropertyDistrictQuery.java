@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyDistrictQuery_ResponseAdapter;
@@ -26,6 +25,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> {
   public static final String OPERATION_ID = "e55d9bd36c6f363c571dab87c9a1c5d967a432f9e74fce28a6f75a5caf72050b";
@@ -196,7 +196,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
   public static final class Builder {
     private String propertyId;
 
-    private Optional<String> locale = Optional.absent();
+    private Optional<String> locale = Optional.empty();
 
     Builder() {
     }
@@ -207,7 +207,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     }
 
     public Builder locale(String locale) {
-      this.locale = Optional.present(locale);
+      this.locale = Optional.of(locale);
       return this;
     }
 
@@ -217,7 +217,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -225,7 +225,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -268,7 +268,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Jurisdiction regulatory requirements/parameters that apply to this property's rental conditions.
      */
-    public District district;
+    public Optional<District> district;
 
     private transient volatile int $hashCode;
 
@@ -276,7 +276,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Property(District district) {
+    public Property(Optional<District> district) {
       this.district = district;
     }
 
@@ -319,7 +319,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Description of the district regulation.
      */
-    public String description;
+    public Optional<String> description;
 
     /**
      * District ID (such as Miami Beach).
@@ -329,22 +329,22 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * List of legal property types.
      */
-    public List<LegalPropertyType> legalPropertyTypes;
+    public List<Optional<LegalPropertyType>> legalPropertyTypes;
 
     /**
      * Localized district name that can be used for display.
      */
-    public String localizedName;
+    public Optional<String> localizedName;
 
     /**
      * Four-character locale code (language and country codes) of property's local district (such as ja-JP for a property in Japan).
      */
-    public String nativeLocale;
+    public Optional<String> nativeLocale;
 
     /**
      * URL to jurisdiction regulation information.
      */
-    public List<String> referenceUrls;
+    public Optional<List<Optional<String>>> referenceUrls;
 
     /**
      * Whether registration is required by the jurisdiction.
@@ -354,7 +354,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Jurisdiction regulations that the partner needs to meet to comply with onboarding.
      */
-    public List<Requirement> requirements;
+    public Optional<List<Optional<Requirement>>> requirements;
 
     private transient volatile int $hashCode;
 
@@ -362,9 +362,10 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public District(String description, String id, List<LegalPropertyType> legalPropertyTypes,
-        String localizedName, String nativeLocale, List<String> referenceUrls,
-        Boolean registrationRequired, List<Requirement> requirements) {
+    public District(Optional<String> description, String id,
+        List<Optional<LegalPropertyType>> legalPropertyTypes, Optional<String> localizedName,
+        Optional<String> nativeLocale, Optional<List<Optional<String>>> referenceUrls,
+        Boolean registrationRequired, Optional<List<Optional<Requirement>>> requirements) {
       this.description = description;
       this.id = id;
       this.legalPropertyTypes = legalPropertyTypes;
@@ -442,12 +443,12 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Legal property subtype, applicable for residences, such as primary home or secondary home.
      */
-    public String subtype;
+    public Optional<String> subtype;
 
     /**
      * Legal property type, such as hotel, bed and breakfast, residence, etc.
      */
-    public String type;
+    public Optional<String> type;
 
     private transient volatile int $hashCode;
 
@@ -455,7 +456,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public LegalPropertyType(String subtype, String type) {
+    public LegalPropertyType(Optional<String> subtype, Optional<String> type) {
       this.subtype = subtype;
       this.type = type;
     }
@@ -503,22 +504,22 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Additional required regulation data by jurisdiction, such as license holder name or property address.
      */
-    public List<AdditionalDataRequirement> additionalDataRequirements;
+    public Optional<List<Optional<AdditionalDataRequirement>>> additionalDataRequirements;
 
     /**
      * Exemptions of a requirement under certain conditions.
      */
-    public List<Exemption> exemptions;
+    public Optional<List<Optional<Exemption>>> exemptions;
 
     /**
      * Whether this regulatory category is a vacation rental.
      */
-    public Boolean isVacationRental;
+    public Optional<Boolean> isVacationRental;
 
     /**
      * Maximum number of nights allowed by the jurisdiction. null means no requirement.
      */
-    public MaxNightCap maxNightCap;
+    public Optional<MaxNightCap> maxNightCap;
 
     /**
      * Minimum number of stay nights for this category (default is 1).
@@ -528,22 +529,22 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Regulation requirement that EG supports.
      */
-    public List<QualifiedPropertyType> qualifiedPropertyTypes;
+    public Optional<List<Optional<QualifiedPropertyType>>> qualifiedPropertyTypes;
 
     /**
      * List of registration number requirements.
      */
-    public List<RegistrationNumberRequirement> registrationNumberRequirements;
+    public Optional<List<RegistrationNumberRequirement>> registrationNumberRequirements;
 
     /**
      * Property regulatory category where the registration number requirements apply.
      */
-    public RegulatoryCategory regulatoryCategory;
+    public Optional<RegulatoryCategory> regulatoryCategory;
 
     /**
      * Localized string of the regulatory category.
      */
-    public String regulatoryCategoryLabel;
+    public Optional<String> regulatoryCategoryLabel;
 
     private transient volatile int $hashCode;
 
@@ -551,11 +552,13 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Requirement(List<AdditionalDataRequirement> additionalDataRequirements,
-        List<Exemption> exemptions, Boolean isVacationRental, MaxNightCap maxNightCap,
-        Integer minStayNights, List<QualifiedPropertyType> qualifiedPropertyTypes,
-        List<RegistrationNumberRequirement> registrationNumberRequirements,
-        RegulatoryCategory regulatoryCategory, String regulatoryCategoryLabel) {
+    public Requirement(
+        Optional<List<Optional<AdditionalDataRequirement>>> additionalDataRequirements,
+        Optional<List<Optional<Exemption>>> exemptions, Optional<Boolean> isVacationRental,
+        Optional<MaxNightCap> maxNightCap, Integer minStayNights,
+        Optional<List<Optional<QualifiedPropertyType>>> qualifiedPropertyTypes,
+        Optional<List<RegistrationNumberRequirement>> registrationNumberRequirements,
+        Optional<RegulatoryCategory> regulatoryCategory, Optional<String> regulatoryCategoryLabel) {
       this.additionalDataRequirements = additionalDataRequirements;
       this.exemptions = exemptions;
       this.isVacationRental = isVacationRental;
@@ -638,17 +641,17 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Grouping to which the field belongs, for UI layout purposes.
      */
-    public String group;
+    public Optional<String> group;
 
     /**
      * Description of the group, to be localized.
      */
-    public String groupLocalized;
+    public Optional<String> groupLocalized;
 
     /**
      * Whether the data is optional.
      */
-    public String isOptional;
+    public Optional<String> isOptional;
 
     /**
      * Field name for the information to be captured.
@@ -658,27 +661,27 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Description of the key, to be localized.
      */
-    public String keyLocalized;
+    public Optional<String> keyLocalized;
 
     /**
      * Subtype of data.
      */
-    public String subtype;
+    public Optional<String> subtype;
 
     /**
      * Description of subtype, to be localized.
      */
-    public String subtypeLocalized;
+    public Optional<String> subtypeLocalized;
 
     /**
      * Type of data.
      */
-    public String type;
+    public Optional<String> type;
 
     /**
      * Description of type, to be localized.
      */
-    public String typeLocalized;
+    public Optional<String> typeLocalized;
 
     private transient volatile int $hashCode;
 
@@ -686,9 +689,10 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public AdditionalDataRequirement(String group, String groupLocalized, String isOptional,
-        String key, String keyLocalized, String subtype, String subtypeLocalized, String type,
-        String typeLocalized) {
+    public AdditionalDataRequirement(Optional<String> group, Optional<String> groupLocalized,
+        Optional<String> isOptional, String key, Optional<String> keyLocalized,
+        Optional<String> subtype, Optional<String> subtypeLocalized, Optional<String> type,
+        Optional<String> typeLocalized) {
       this.group = group;
       this.groupLocalized = groupLocalized;
       this.isOptional = isOptional;
@@ -771,12 +775,12 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Exemption type.
      */
-    public ExemptionCategory category;
+    public Optional<ExemptionCategory> category;
 
     /**
      * Description of the exemption.
      */
-    public String description;
+    public Optional<String> description;
 
     private transient volatile int $hashCode;
 
@@ -784,7 +788,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Exemption(ExemptionCategory category, String description) {
+    public Exemption(Optional<ExemptionCategory> category, Optional<String> description) {
       this.category = category;
       this.description = description;
     }
@@ -832,12 +836,12 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Annual night cap.
      */
-    public Integer annualLimit;
+    public Optional<Integer> annualLimit;
 
     /**
      * Whether the cap is enforced (or just educational).
      */
-    public Boolean isEnforced;
+    public Optional<Boolean> isEnforced;
 
     private transient volatile int $hashCode;
 
@@ -845,7 +849,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public MaxNightCap(Integer annualLimit, Boolean isEnforced) {
+    public MaxNightCap(Optional<Integer> annualLimit, Optional<Boolean> isEnforced) {
       this.annualLimit = annualLimit;
       this.isEnforced = isEnforced;
     }
@@ -893,12 +897,12 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Legal property subtype, applicable for residences, such as primary home or secondary home.
      */
-    public String subtype;
+    public Optional<String> subtype;
 
     /**
      * Legal property type, such as hotel, bed and breakfast, residence, etc.
      */
-    public String type;
+    public Optional<String> type;
 
     private transient volatile int $hashCode;
 
@@ -906,7 +910,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public QualifiedPropertyType(String subtype, String type) {
+    public QualifiedPropertyType(Optional<String> subtype, Optional<String> type) {
       this.subtype = subtype;
       this.type = type;
     }
@@ -959,7 +963,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Sample format string to use as an example for partners.
      */
-    public String format;
+    public Optional<String> format;
 
     /**
      * Whether the registration expiration date is required.
@@ -974,37 +978,37 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Localized display name (such as みんぱく for Japan Minpaku).
      */
-    public String localName;
+    public Optional<String> localName;
 
     /**
      * Registration number type.
      */
-    public RegistrationNumberType numberType;
+    public Optional<RegistrationNumberType> numberType;
 
     /**
      * Label of the registration number.
      */
-    public String numberTypeLabel;
+    public Optional<String> numberTypeLabel;
 
     /**
      * Purpose of this requirement if other besides common regulatory validations.
      */
-    public Purpose purpose;
+    public Optional<Purpose> purpose;
 
     /**
      * Regex used to validate the syntax of the registration number.
      */
-    public String regex;
+    public Optional<String> regex;
 
     /**
      * Information about external validation parameters, if required for the registration number.
      */
-    public ThirdPartyValidation thirdPartyValidation;
+    public Optional<ThirdPartyValidation> thirdPartyValidation;
 
     /**
      * URL of a page that provides information about the number requirement.
      */
-    public String url;
+    public Optional<String> url;
 
     private transient volatile int $hashCode;
 
@@ -1012,10 +1016,11 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public RegistrationNumberRequirement(Boolean allowPendingRegistrations, String format,
-        Boolean isExpirationDateRequired, Boolean isOptional, String localName,
-        RegistrationNumberType numberType, String numberTypeLabel, Purpose purpose, String regex,
-        ThirdPartyValidation thirdPartyValidation, String url) {
+    public RegistrationNumberRequirement(Boolean allowPendingRegistrations, Optional<String> format,
+        Boolean isExpirationDateRequired, Boolean isOptional, Optional<String> localName,
+        Optional<RegistrationNumberType> numberType, Optional<String> numberTypeLabel,
+        Optional<Purpose> purpose, Optional<String> regex,
+        Optional<ThirdPartyValidation> thirdPartyValidation, Optional<String> url) {
       this.allowPendingRegistrations = allowPendingRegistrations;
       this.format = format;
       this.isExpirationDateRequired = isExpirationDateRequired;
@@ -1108,7 +1113,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
     /**
      * Attributes used to validate the registration number as provided by the third-party.
      */
-    public List<String> attributes;
+    public Optional<List<Optional<String>>> attributes;
 
     /**
      * Whether third-party validation is required.
@@ -1121,7 +1126,7 @@ public class PropertyDistrictQuery implements Query<PropertyDistrictQuery.Data> 
 
     private transient volatile String $toString;
 
-    public ThirdPartyValidation(List<String> attributes, Boolean required) {
+    public ThirdPartyValidation(Optional<List<Optional<String>>> attributes, Boolean required) {
       this.attributes = attributes;
       this.required = required;
     }

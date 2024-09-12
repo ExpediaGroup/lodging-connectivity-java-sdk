@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateAreaInput {
-  public final Optional<AreaUnit> unit;
+  public final Optional<Optional<AreaUnit>> unit;
 
-  public final Optional<Integer> value;
+  public final Optional<Optional<Integer>> value;
 
   private transient volatile int $hashCode;
 
@@ -22,7 +23,7 @@ public class UpdateAreaInput {
 
   private transient volatile String $toString;
 
-  public UpdateAreaInput(Optional<AreaUnit> unit, Optional<Integer> value) {
+  public UpdateAreaInput(Optional<Optional<AreaUnit>> unit, Optional<Optional<Integer>> value) {
     this.unit = unit;
     this.value = value;
   }
@@ -70,20 +71,20 @@ public class UpdateAreaInput {
   }
 
   public static final class Builder {
-    private Optional<AreaUnit> unit = Optional.absent();
+    private Optional<Optional<AreaUnit>> unit = Optional.empty();
 
-    private Optional<Integer> value = Optional.absent();
+    private Optional<Optional<Integer>> value = Optional.empty();
 
     Builder() {
     }
 
-    public Builder unit(AreaUnit unit) {
-      this.unit = Optional.present(unit);
+    public Builder unit(@NotNull Optional<AreaUnit> unit) {
+      this.unit = Optional.of(unit);
       return this;
     }
 
-    public Builder value(Integer value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<Integer> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

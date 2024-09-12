@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class StatusInput {
-  public final Optional<String> reason;
+  public final Optional<Optional<String>> reason;
 
   public final String type;
 
@@ -21,7 +22,7 @@ public class StatusInput {
 
   private transient volatile String $toString;
 
-  public StatusInput(Optional<String> reason, String type) {
+  public StatusInput(Optional<Optional<String>> reason, String type) {
     this.reason = reason;
     this.type = type;
   }
@@ -69,15 +70,15 @@ public class StatusInput {
   }
 
   public static final class Builder {
-    private Optional<String> reason = Optional.absent();
+    private Optional<Optional<String>> reason = Optional.empty();
 
     private String type;
 
     Builder() {
     }
 
-    public Builder reason(String reason) {
-      this.reason = Optional.present(reason);
+    public Builder reason(@NotNull Optional<String> reason) {
+      this.reason = Optional.of(reason);
       return this;
     }
 

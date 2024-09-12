@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PhoneNumberInput;
@@ -33,17 +30,17 @@ public enum SavePropertyContactInput_InputAdapter implements Adapter<SavePropert
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       SavePropertyContactInput value) throws IOException {
-    if (value.emailAddresses instanceof Optional.Present) {
+    if (value.emailAddresses.isPresent()) {
       writer.name("emailAddresses");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.emailAddresses);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.emailAddresses);
     }
-    if (value.name instanceof Optional.Present) {
+    if (value.name.isPresent()) {
       writer.name("name");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.name);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.name);
     }
-    if (value.phoneNumbers instanceof Optional.Present) {
+    if (value.phoneNumbers.isPresent()) {
       writer.name("phoneNumbers");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PhoneNumberInput>(PhoneNumberInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.phoneNumbers);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PhoneNumberInput>(PhoneNumberInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.phoneNumbers);
     }
     writer.name("type");
     ContactType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);

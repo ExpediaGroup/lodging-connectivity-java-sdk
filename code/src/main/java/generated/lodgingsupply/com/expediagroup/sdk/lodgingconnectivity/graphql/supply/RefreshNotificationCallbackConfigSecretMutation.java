@@ -20,6 +20,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class RefreshNotificationCallbackConfigSecretMutation implements Mutation<RefreshNotificationCallbackConfigSecretMutation.Data> {
   public static final String OPERATION_ID = "a1a51980028fbdcfa8e411dec3600c0877cb1fbe539374255970b8d79001380f";
@@ -147,7 +148,7 @@ public class RefreshNotificationCallbackConfigSecretMutation implements Mutation
     /**
      * Refresh secret for callback configuration based on callbackConfigId.
      */
-    public RefreshNotificationCallbackConfigSecret refreshNotificationCallbackConfigSecret;
+    public Optional<RefreshNotificationCallbackConfigSecret> refreshNotificationCallbackConfigSecret;
 
     private transient volatile int $hashCode;
 
@@ -155,7 +156,8 @@ public class RefreshNotificationCallbackConfigSecretMutation implements Mutation
 
     private transient volatile String $toString;
 
-    public Data(RefreshNotificationCallbackConfigSecret refreshNotificationCallbackConfigSecret) {
+    public Data(
+        Optional<RefreshNotificationCallbackConfigSecret> refreshNotificationCallbackConfigSecret) {
       this.refreshNotificationCallbackConfigSecret = refreshNotificationCallbackConfigSecret;
     }
 

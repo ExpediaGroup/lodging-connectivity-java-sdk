@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyMessagesQuery_ResponseAdapter;
@@ -26,7 +25,9 @@ import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> {
   public static final String OPERATION_ID = "31015ddcd3973c22beb5978858e5d9d950c6018ad8ee0edf444c1e7dae3b0af0";
@@ -204,9 +205,9 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private String propertyId;
 
-    private Optional<String> cursor = Optional.absent();
+    private Optional<String> cursor = Optional.empty();
 
-    private Optional<Integer> limit = Optional.absent();
+    private Optional<Integer> limit = Optional.empty();
 
     Builder() {
     }
@@ -222,12 +223,12 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
     }
 
     public Builder cursor(String cursor) {
-      this.cursor = Optional.present(cursor);
+      this.cursor = Optional.of(cursor);
       return this;
     }
 
     public Builder limit(Integer limit) {
-      this.limit = Optional.present(limit);
+      this.limit = Optional.of(limit);
       return this;
     }
 
@@ -237,7 +238,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -245,7 +246,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -285,7 +286,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
   }
 
   public static class Property {
-    public Messages messages;
+    public Optional<Messages> messages;
 
     private transient volatile int $hashCode;
 
@@ -293,7 +294,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Property(Messages messages) {
+    public Property(Optional<Messages> messages) {
       this.messages = messages;
     }
 
@@ -336,7 +337,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
     /**
      *  Represents the next page cursor in the list, Empty if no more pages available
      */
-    public String cursor;
+    public Optional<String> cursor;
 
     /**
      *  Total number of message returned that meet the search criteria 
@@ -354,7 +355,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Messages(String cursor, Integer totalCount, List<Element> elements) {
+    public Messages(Optional<String> cursor, Integer totalCount, List<Element> elements) {
       this.cursor = cursor;
       this.totalCount = totalCount;
       this.elements = elements;
@@ -412,17 +413,17 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
     /**
      *  Message body (only plaintext allowed; should not contain any HTML tags)
      */
-    public Body body;
+    public Optional<Body> body;
 
     /**
      *  Time at which the message was created. ISO format (yyyy-MM-dd'T'HH:mm:ss.SSSZ) and UTC timezone
      */
-    public Object creationDateTimeUtc;
+    public Optional<OffsetDateTime> creationDateTimeUtc;
 
     /**
      *  Message identifier from the client perspective. This value is set by the client in addMessage mutation.
      */
-    public MessageThreadParticipantRole fromRole;
+    public Optional<MessageThreadParticipantRole> fromRole;
 
     /**
      *  The message id
@@ -432,12 +433,12 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
     /**
      *  Review status of a Message. 
      */
-    public MessageReviewStatus reviewStatus;
+    public Optional<MessageReviewStatus> reviewStatus;
 
     /**
      *  Message type 
      */
-    public String type;
+    public Optional<String> type;
 
     /**
      *  The associated message thread for the message 
@@ -450,9 +451,11 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Element(List<Attachment> attachments, Body body, Object creationDateTimeUtc,
-        MessageThreadParticipantRole fromRole, String id, MessageReviewStatus reviewStatus,
-        String type, MessageThread messageThread) {
+    public Element(List<Attachment> attachments, Optional<Body> body,
+        Optional<OffsetDateTime> creationDateTimeUtc,
+        Optional<MessageThreadParticipantRole> fromRole, String id,
+        Optional<MessageReviewStatus> reviewStatus, Optional<String> type,
+        MessageThread messageThread) {
       this.attachments = attachments;
       this.body = body;
       this.creationDateTimeUtc = creationDateTimeUtc;
@@ -540,7 +543,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
     /**
      *  attachment upload date time in ISO format and UTC timezone
      */
-    public Object uploadDateTimeUtc;
+    public OffsetDateTime uploadDateTimeUtc;
 
     /**
      *  The attachment location 
@@ -553,7 +556,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public Attachment(String id, String name, Object uploadDateTimeUtc, URL url) {
+    public Attachment(String id, String name, OffsetDateTime uploadDateTimeUtc, URL url) {
       this.id = id;
       this.name = name;
       this.uploadDateTimeUtc = uploadDateTimeUtc;
@@ -659,12 +662,12 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
     /**
      *  Booking Inquiry associated to MessageThread 
      */
-    public BookingInquiry bookingInquiry;
+    public Optional<BookingInquiry> bookingInquiry;
 
     /**
      *  Message creation date time in ISO format and UTC timezone
      */
-    public Object creationDateTimeUtc;
+    public Optional<OffsetDateTime> creationDateTimeUtc;
 
     /**
      *  The message thread id 
@@ -674,12 +677,12 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
     /**
      *  Primary Traveler 
      */
-    public PrimaryTraveler primaryTraveler;
+    public Optional<PrimaryTraveler> primaryTraveler;
 
     /**
      *  Reservation associated to MessageThread 
      */
-    public ReservationSummary reservationSummary;
+    public Optional<ReservationSummary> reservationSummary;
 
     private transient volatile int $hashCode;
 
@@ -687,8 +690,10 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public MessageThread(BookingInquiry bookingInquiry, Object creationDateTimeUtc, String id,
-        PrimaryTraveler primaryTraveler, ReservationSummary reservationSummary) {
+    public MessageThread(Optional<BookingInquiry> bookingInquiry,
+        Optional<OffsetDateTime> creationDateTimeUtc, String id,
+        Optional<PrimaryTraveler> primaryTraveler,
+        Optional<ReservationSummary> reservationSummary) {
       this.bookingInquiry = bookingInquiry;
       this.creationDateTimeUtc = creationDateTimeUtc;
       this.id = id;
@@ -750,9 +755,9 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
   public static class BookingInquiry {
     public Integer adultCount;
 
-    public LocalDate checkInDate;
+    public Optional<LocalDate> checkInDate;
 
-    public LocalDate checkOutDate;
+    public Optional<LocalDate> checkOutDate;
 
     public Integer childCount;
 
@@ -766,8 +771,8 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public BookingInquiry(Integer adultCount, LocalDate checkInDate, LocalDate checkOutDate,
-        Integer childCount, Boolean hasPets, String id) {
+    public BookingInquiry(Integer adultCount, Optional<LocalDate> checkInDate,
+        Optional<LocalDate> checkOutDate, Integer childCount, Boolean hasPets, String id) {
       this.adultCount = adultCount;
       this.checkInDate = checkInDate;
       this.checkOutDate = checkOutDate;
@@ -832,9 +837,9 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
   }
 
   public static class PrimaryTraveler {
-    public String firstName;
+    public Optional<String> firstName;
 
-    public String lastName;
+    public Optional<String> lastName;
 
     private transient volatile int $hashCode;
 
@@ -842,7 +847,7 @@ public class PropertyMessagesQuery implements Query<PropertyMessagesQuery.Data> 
 
     private transient volatile String $toString;
 
-    public PrimaryTraveler(String firstName, String lastName) {
+    public PrimaryTraveler(Optional<String> firstName, Optional<String> lastName) {
       this.firstName = firstName;
       this.lastName = lastName;
     }

@@ -5,14 +5,12 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.UndeliveredNotificationsQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.UndeliveredNotificationsFiltersInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.UndeliveredNotificationsFiltersInput_InputAdapter;
 import java.io.IOException;
 
@@ -23,13 +21,9 @@ public enum UndeliveredNotificationsQuery_VariablesAdapter {
       CustomScalarAdapters customScalarAdapters, boolean withDefaultValues) throws IOException {
     writer.name("filters");
     new ObjectAdapter<UndeliveredNotificationsFiltersInput>(UndeliveredNotificationsFiltersInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.filters);
-    if (value.cursor instanceof Optional.Present) {
-      writer.name("cursor");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.cursor);
-    }
-    if (value.limit instanceof Optional.Present) {
-      writer.name("limit");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.limit);
-    }
+    writer.name("cursor");
+    OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+    writer.name("limit");
+    OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.limit);
   }
 }

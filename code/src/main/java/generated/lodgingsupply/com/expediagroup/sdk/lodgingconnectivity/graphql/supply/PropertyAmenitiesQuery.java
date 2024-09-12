@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyAmenitiesQuery_ResponseAdapter;
@@ -23,6 +22,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data> {
   public static final String OPERATION_ID = "e853ecdf37369c14485d1fb4c80c19f9fb588ea75b976f2452278c4bfd08eb0c";
@@ -160,7 +160,7 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
   public static final class Builder {
     private String propertyId;
 
-    private Optional<AmenitiesFiltersInput> filters = Optional.absent();
+    private Optional<AmenitiesFiltersInput> filters = Optional.empty();
 
     Builder() {
     }
@@ -171,7 +171,7 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
     }
 
     public Builder filters(AmenitiesFiltersInput filters) {
-      this.filters = Optional.present(filters);
+      this.filters = Optional.of(filters);
       return this;
     }
 
@@ -181,7 +181,7 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -189,7 +189,7 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -229,7 +229,7 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
   }
 
   public static class Property {
-    public List<Amenity> amenities;
+    public Optional<List<Amenity>> amenities;
 
     private transient volatile int $hashCode;
 
@@ -237,7 +237,7 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
 
     private transient volatile String $toString;
 
-    public Property(List<Amenity> amenities) {
+    public Property(Optional<List<Amenity>> amenities) {
       this.amenities = amenities;
     }
 
@@ -452,22 +452,22 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
     /**
      * Used for field type: fee.
      */
-    public FeeValue feeValue;
+    public Optional<FeeValue> feeValue;
 
     /**
      * Used for field type: measurement.
      */
-    public MeasurementValue measurementValue;
+    public Optional<MeasurementValue> measurementValue;
 
     /**
      * Used for field type: text.
      */
-    public List<TextValue> textValue;
+    public Optional<List<TextValue>> textValue;
 
     /**
      * Used for field types: enum, string, trilean, int, and decimal.
      */
-    public String value;
+    public Optional<String> value;
 
     private transient volatile int $hashCode;
 
@@ -475,8 +475,8 @@ public class PropertyAmenitiesQuery implements Query<PropertyAmenitiesQuery.Data
 
     private transient volatile String $toString;
 
-    public Value1(FeeValue feeValue, MeasurementValue measurementValue, List<TextValue> textValue,
-        String value) {
+    public Value1(Optional<FeeValue> feeValue, Optional<MeasurementValue> measurementValue,
+        Optional<List<TextValue>> textValue, Optional<String> value) {
       this.feeValue = feeValue;
       this.measurementValue = measurementValue;
       this.textValue = textValue;

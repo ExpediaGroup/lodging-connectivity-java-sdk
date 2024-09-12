@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReservationInput;
@@ -34,79 +31,79 @@ public enum CreateReservationInput_InputAdapter implements Adapter<CreateReserva
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       CreateReservationInput value) throws IOException {
-    if (value.accessibilityText instanceof Optional.Present) {
+    if (value.accessibilityText.isPresent()) {
       writer.name("accessibilityText");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.accessibilityText);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.accessibilityText);
     }
-    if (value.adultCount instanceof Optional.Present) {
+    if (value.adultCount.isPresent()) {
       writer.name("adultCount");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.adultCount);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.adultCount);
     }
-    if (value.bedTypes instanceof Optional.Present) {
+    if (value.bedTypes.isPresent()) {
       writer.name("bedTypes");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.bedTypes);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.bedTypes);
     }
-    if (value.businessModel instanceof Optional.Present) {
+    if (value.businessModel.isPresent()) {
       writer.name("businessModel");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(BusinessModelInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.businessModel);
+      new OptionalAdapter<>(new OptionalAdapter<>(BusinessModelInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.businessModel);
     }
-    if (value.checkInDate instanceof Optional.Present) {
+    if (value.checkInDate.isPresent()) {
       writer.name("checkInDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.checkInDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.checkInDate);
     }
-    if (value.checkOutDate instanceof Optional.Present) {
+    if (value.checkOutDate.isPresent()) {
       writer.name("checkOutDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.checkOutDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.checkOutDate);
     }
-    if (value.childAges instanceof Optional.Present) {
+    if (value.childAges.isPresent()) {
       writer.name("childAges");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(Adapters.IntAdapter))).toJson(writer, customScalarAdapters, value.childAges);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(Adapters.IntAdapter))).toJson(writer, customScalarAdapters, value.childAges);
     }
-    if (value.childCount instanceof Optional.Present) {
+    if (value.childCount.isPresent()) {
       writer.name("childCount");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.childCount);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.childCount);
     }
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
-    if (value.multiRoomText instanceof Optional.Present) {
+    if (value.multiRoomText.isPresent()) {
       writer.name("multiRoomText");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.multiRoomText);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.multiRoomText);
     }
-    if (value.primaryGuest instanceof Optional.Present) {
+    if (value.primaryGuest.isPresent()) {
       writer.name("primaryGuest");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<GuestInput>(GuestInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.primaryGuest);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<GuestInput>(GuestInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.primaryGuest);
     }
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
-    if (value.reconciliationType instanceof Optional.Present) {
+    if (value.reconciliationType.isPresent()) {
       writer.name("reconciliationType");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(ReconciliationTypeInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reconciliationType);
+      new OptionalAdapter<>(new OptionalAdapter<>(ReconciliationTypeInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reconciliationType);
     }
-    if (value.remittanceType instanceof Optional.Present) {
+    if (value.remittanceType.isPresent()) {
       writer.name("remittanceType");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(RemittanceTypeInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.remittanceType);
+      new OptionalAdapter<>(new OptionalAdapter<>(RemittanceTypeInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.remittanceType);
     }
-    if (value.sendNotification instanceof Optional.Present) {
+    if (value.sendNotification.isPresent()) {
       writer.name("sendNotification");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.sendNotification);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.sendNotification);
     }
-    if (value.smokingType instanceof Optional.Present) {
+    if (value.smokingType.isPresent()) {
       writer.name("smokingType");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.smokingType);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.smokingType);
     }
-    if (value.specialRequest instanceof Optional.Present) {
+    if (value.specialRequest.isPresent()) {
       writer.name("specialRequest");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.specialRequest);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.specialRequest);
     }
-    if (value.status instanceof Optional.Present) {
+    if (value.status.isPresent()) {
       writer.name("status");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(ReservationStatusInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.status);
+      new OptionalAdapter<>(new OptionalAdapter<>(ReservationStatusInput_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.status);
     }
-    if (value.valueAddedPromotions instanceof Optional.Present) {
+    if (value.valueAddedPromotions.isPresent()) {
       writer.name("valueAddedPromotions");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<ReservationValueAddedPromotionInput>(ReservationValueAddedPromotionInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.valueAddedPromotions);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<ReservationValueAddedPromotionInput>(ReservationValueAddedPromotionInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.valueAddedPromotions);
     }
   }
 }

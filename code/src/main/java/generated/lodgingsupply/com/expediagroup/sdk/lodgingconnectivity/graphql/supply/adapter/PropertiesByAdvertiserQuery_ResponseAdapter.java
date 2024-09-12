@@ -10,17 +10,19 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertiesByAdvertiserQuery;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertiesByAdvertiserQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertiesByAdvertiserQuery.Data> {
@@ -31,12 +33,12 @@ public class PropertiesByAdvertiserQuery_ResponseAdapter {
     @Override
     public PropertiesByAdvertiserQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertiesByAdvertiserQuery.PropertiesByAdvertiser _propertiesByAdvertiser = null;
+      Optional<PropertiesByAdvertiserQuery.PropertiesByAdvertiser> _propertiesByAdvertiser = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _propertiesByAdvertiser = new NullableAdapter<>(new ObjectAdapter<PropertiesByAdvertiserQuery.PropertiesByAdvertiser>(PropertiesByAdvertiser.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _propertiesByAdvertiser = new OptionalAdapter<>(new ObjectAdapter<PropertiesByAdvertiserQuery.PropertiesByAdvertiser>(PropertiesByAdvertiser.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -50,7 +52,7 @@ public class PropertiesByAdvertiserQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertiesByAdvertiserQuery.Data value) throws IOException {
       writer.name("propertiesByAdvertiser");
-      new NullableAdapter<>(new ObjectAdapter<PropertiesByAdvertiserQuery.PropertiesByAdvertiser>(PropertiesByAdvertiser.INSTANCE, false)).toJson(writer, customScalarAdapters, value.propertiesByAdvertiser);
+      new OptionalAdapter<>(new ObjectAdapter<PropertiesByAdvertiserQuery.PropertiesByAdvertiser>(PropertiesByAdvertiser.INSTANCE, false)).toJson(writer, customScalarAdapters, value.propertiesByAdvertiser);
     }
   }
 
@@ -62,14 +64,14 @@ public class PropertiesByAdvertiserQuery_ResponseAdapter {
     @Override
     public PropertiesByAdvertiserQuery.PropertiesByAdvertiser fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _cursor = null;
+      Optional<String> _cursor = null;
       Integer _totalCount = null;
       List<PropertiesByAdvertiserQuery.Element> _elements = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _cursor = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _cursor = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _totalCount = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _elements = new ListAdapter<>(new ObjectAdapter<PropertiesByAdvertiserQuery.Element>(Element.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -90,7 +92,7 @@ public class PropertiesByAdvertiserQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertiesByAdvertiserQuery.PropertiesByAdvertiser value) throws IOException {
       writer.name("cursor");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
 
       writer.name("totalCount");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.totalCount);

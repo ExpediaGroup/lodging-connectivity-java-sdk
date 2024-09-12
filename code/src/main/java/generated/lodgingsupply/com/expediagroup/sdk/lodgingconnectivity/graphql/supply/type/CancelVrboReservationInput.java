@@ -5,13 +5,14 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CancelVrboReservationInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String propertyId;
 
@@ -19,9 +20,9 @@ public class CancelVrboReservationInput {
 
   public final VrboCancellationReason primaryReason;
 
-  public final Optional<VrboCancellationSecondaryReason> secondaryReason;
+  public final Optional<Optional<VrboCancellationSecondaryReason>> secondaryReason;
 
-  public final Optional<VrboCancellationPolicyOverride> cancellationPolicyOverride;
+  public final Optional<Optional<VrboCancellationPolicyOverride>> cancellationPolicyOverride;
 
   private transient volatile int $hashCode;
 
@@ -29,10 +30,10 @@ public class CancelVrboReservationInput {
 
   private transient volatile String $toString;
 
-  public CancelVrboReservationInput(Optional<String> clientMutationId, String propertyId,
+  public CancelVrboReservationInput(Optional<Optional<String>> clientMutationId, String propertyId,
       String reservationId, VrboCancellationReason primaryReason,
-      Optional<VrboCancellationSecondaryReason> secondaryReason,
-      Optional<VrboCancellationPolicyOverride> cancellationPolicyOverride) {
+      Optional<Optional<VrboCancellationSecondaryReason>> secondaryReason,
+      Optional<Optional<VrboCancellationPolicyOverride>> cancellationPolicyOverride) {
     this.clientMutationId = clientMutationId;
     this.propertyId = propertyId;
     this.reservationId = reservationId;
@@ -100,7 +101,7 @@ public class CancelVrboReservationInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String propertyId;
 
@@ -108,9 +109,9 @@ public class CancelVrboReservationInput {
 
     private VrboCancellationReason primaryReason;
 
-    private Optional<VrboCancellationSecondaryReason> secondaryReason = Optional.absent();
+    private Optional<Optional<VrboCancellationSecondaryReason>> secondaryReason = Optional.empty();
 
-    private Optional<VrboCancellationPolicyOverride> cancellationPolicyOverride = Optional.absent();
+    private Optional<Optional<VrboCancellationPolicyOverride>> cancellationPolicyOverride = Optional.empty();
 
     Builder() {
     }
@@ -118,8 +119,8 @@ public class CancelVrboReservationInput {
     /**
      * Partner supplied Unique mutation identifier
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -150,8 +151,9 @@ public class CancelVrboReservationInput {
     /**
      * Secondary reason for cancellation - Only valid when reason is GUEST_REQUESTED_CANCEL
      */
-    public Builder secondaryReason(VrboCancellationSecondaryReason secondaryReason) {
-      this.secondaryReason = Optional.present(secondaryReason);
+    public Builder secondaryReason(
+        @NotNull Optional<VrboCancellationSecondaryReason> secondaryReason) {
+      this.secondaryReason = Optional.of(secondaryReason);
       return this;
     }
 
@@ -159,8 +161,8 @@ public class CancelVrboReservationInput {
      * Cancellation Policy Override
      */
     public Builder cancellationPolicyOverride(
-        VrboCancellationPolicyOverride cancellationPolicyOverride) {
-      this.cancellationPolicyOverride = Optional.present(cancellationPolicyOverride);
+        @NotNull Optional<VrboCancellationPolicyOverride> cancellationPolicyOverride) {
+      this.cancellationPolicyOverride = Optional.of(cancellationPolicyOverride);
       return this;
     }
 

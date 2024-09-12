@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.BlackoutDateRangeInput;
@@ -38,37 +35,37 @@ public enum SingleDiscountPromotionUpdateInput_InputAdapter implements Adapter<S
       SingleDiscountPromotionUpdateInput value) throws IOException {
     writer.name("id");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
-    if (value.name instanceof Optional.Present) {
+    if (value.name.isPresent()) {
       writer.name("name");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(PromotionName_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.name);
+      new OptionalAdapter<>(new OptionalAdapter<>(PromotionName_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.name);
     }
-    if (value.status instanceof Optional.Present) {
+    if (value.status.isPresent()) {
       writer.name("status");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(PromotionStatus_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.status);
+      new OptionalAdapter<>(new OptionalAdapter<>(PromotionStatus_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.status);
     }
-    if (value.category instanceof Optional.Present) {
+    if (value.category.isPresent()) {
       writer.name("category");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(PromotionCategory_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.category);
+      new OptionalAdapter<>(new OptionalAdapter<>(PromotionCategory_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.category);
     }
-    if (value.code instanceof Optional.Present) {
+    if (value.code.isPresent()) {
       writer.name("code");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.code);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.code);
     }
-    if (value.restrictions instanceof Optional.Present) {
+    if (value.restrictions.isPresent()) {
       writer.name("restrictions");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<RestrictionsUpdateInput>(RestrictionsUpdateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<RestrictionsUpdateInput>(RestrictionsUpdateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
     }
-    if (value.eligibleRatePlans instanceof Optional.Present) {
+    if (value.eligibleRatePlans.isPresent()) {
       writer.name("eligibleRatePlans");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<EligibleRatePlanInput>(EligibleRatePlanInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.eligibleRatePlans);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<EligibleRatePlanInput>(EligibleRatePlanInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.eligibleRatePlans);
     }
-    if (value.blackoutDates instanceof Optional.Present) {
+    if (value.blackoutDates.isPresent()) {
       writer.name("blackoutDates");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<BlackoutDateRangeInput>(BlackoutDateRangeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.blackoutDates);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<BlackoutDateRangeInput>(BlackoutDateRangeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.blackoutDates);
     }
-    if (value.discount instanceof Optional.Present) {
+    if (value.discount.isPresent()) {
       writer.name("discount");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<SingleDiscountUpdateInput>(SingleDiscountUpdateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.discount);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<SingleDiscountUpdateInput>(SingleDiscountUpdateInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.discount);
     }
   }
 }

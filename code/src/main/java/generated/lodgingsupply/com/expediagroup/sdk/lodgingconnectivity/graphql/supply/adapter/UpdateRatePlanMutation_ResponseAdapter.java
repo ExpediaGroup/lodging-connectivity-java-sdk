@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.UpdateRatePlanMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateRatePlanMutation_ResponseAdapter {
   public enum Data implements Adapter<UpdateRatePlanMutation.Data> {
@@ -29,12 +31,12 @@ public class UpdateRatePlanMutation_ResponseAdapter {
     @Override
     public UpdateRatePlanMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      UpdateRatePlanMutation.UpdateRatePlan _updateRatePlan = null;
+      Optional<UpdateRatePlanMutation.UpdateRatePlan> _updateRatePlan = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _updateRatePlan = new NullableAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.UpdateRatePlan>(UpdateRatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _updateRatePlan = new OptionalAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.UpdateRatePlan>(UpdateRatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class UpdateRatePlanMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdateRatePlanMutation.Data value) throws IOException {
       writer.name("updateRatePlan");
-      new NullableAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.UpdateRatePlan>(UpdateRatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.updateRatePlan);
+      new OptionalAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.UpdateRatePlan>(UpdateRatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.updateRatePlan);
     }
   }
 
@@ -60,14 +62,14 @@ public class UpdateRatePlanMutation_ResponseAdapter {
     @Override
     public UpdateRatePlanMutation.UpdateRatePlan fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
-      UpdateRatePlanMutation.RatePlan _ratePlan = null;
+      Optional<String> _clientMutationId = null;
+      Optional<UpdateRatePlanMutation.RatePlan> _ratePlan = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _ratePlan = new NullableAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _ratePlan = new OptionalAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -82,10 +84,10 @@ public class UpdateRatePlanMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdateRatePlanMutation.UpdateRatePlan value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("ratePlan");
-      new NullableAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.ratePlan);
+      new OptionalAdapter<>(new ObjectAdapter<UpdateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.ratePlan);
     }
   }
 

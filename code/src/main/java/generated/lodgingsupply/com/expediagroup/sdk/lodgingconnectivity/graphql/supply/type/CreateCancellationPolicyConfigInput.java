@@ -5,22 +5,23 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateCancellationPolicyConfigInput {
-  public final Optional<MoneyInput> additionalCancellationFee;
+  public final Optional<Optional<MoneyInput>> additionalCancellationFee;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final List<CancellationPolicyInput> defaultPolicies;
 
   public final String name;
 
-  public final Optional<List<CancellationPolicyOverrideInput>> overridePolicies;
+  public final Optional<Optional<List<CancellationPolicyOverrideInput>>> overridePolicies;
 
   public final String propertyId;
 
@@ -30,9 +31,11 @@ public class CreateCancellationPolicyConfigInput {
 
   private transient volatile String $toString;
 
-  public CreateCancellationPolicyConfigInput(Optional<MoneyInput> additionalCancellationFee,
-      Optional<String> clientMutationId, List<CancellationPolicyInput> defaultPolicies, String name,
-      Optional<List<CancellationPolicyOverrideInput>> overridePolicies, String propertyId) {
+  public CreateCancellationPolicyConfigInput(
+      Optional<Optional<MoneyInput>> additionalCancellationFee,
+      Optional<Optional<String>> clientMutationId, List<CancellationPolicyInput> defaultPolicies,
+      String name, Optional<Optional<List<CancellationPolicyOverrideInput>>> overridePolicies,
+      String propertyId) {
     this.additionalCancellationFee = additionalCancellationFee;
     this.clientMutationId = clientMutationId;
     this.defaultPolicies = defaultPolicies;
@@ -100,28 +103,29 @@ public class CreateCancellationPolicyConfigInput {
   }
 
   public static final class Builder {
-    private Optional<MoneyInput> additionalCancellationFee = Optional.absent();
+    private Optional<Optional<MoneyInput>> additionalCancellationFee = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private List<CancellationPolicyInput> defaultPolicies;
 
     private String name;
 
-    private Optional<List<CancellationPolicyOverrideInput>> overridePolicies = Optional.absent();
+    private Optional<Optional<List<CancellationPolicyOverrideInput>>> overridePolicies = Optional.empty();
 
     private String propertyId;
 
     Builder() {
     }
 
-    public Builder additionalCancellationFee(MoneyInput additionalCancellationFee) {
-      this.additionalCancellationFee = Optional.present(additionalCancellationFee);
+    public Builder additionalCancellationFee(
+        @NotNull Optional<MoneyInput> additionalCancellationFee) {
+      this.additionalCancellationFee = Optional.of(additionalCancellationFee);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -135,8 +139,9 @@ public class CreateCancellationPolicyConfigInput {
       return this;
     }
 
-    public Builder overridePolicies(List<CancellationPolicyOverrideInput> overridePolicies) {
-      this.overridePolicies = Optional.present(overridePolicies);
+    public Builder overridePolicies(
+        @NotNull Optional<List<CancellationPolicyOverrideInput>> overridePolicies) {
+      this.overridePolicies = Optional.of(overridePolicies);
       return this;
     }
 

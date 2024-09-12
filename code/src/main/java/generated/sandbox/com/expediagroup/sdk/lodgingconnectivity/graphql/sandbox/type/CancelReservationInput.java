@@ -5,21 +5,22 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input to cancel a reservation.
  */
 public class CancelReservationInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String id;
 
-  public final Optional<Boolean> sendNotification;
+  public final Optional<Optional<Boolean>> sendNotification;
 
   private transient volatile int $hashCode;
 
@@ -27,8 +28,8 @@ public class CancelReservationInput {
 
   private transient volatile String $toString;
 
-  public CancelReservationInput(Optional<String> clientMutationId, String id,
-      Optional<Boolean> sendNotification) {
+  public CancelReservationInput(Optional<Optional<String>> clientMutationId, String id,
+      Optional<Optional<Boolean>> sendNotification) {
     this.clientMutationId = clientMutationId;
     this.id = id;
     this.sendNotification = sendNotification;
@@ -81,11 +82,11 @@ public class CancelReservationInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String id;
 
-    private Optional<Boolean> sendNotification = Optional.absent();
+    private Optional<Optional<Boolean>> sendNotification = Optional.empty();
 
     Builder() {
     }
@@ -93,8 +94,8 @@ public class CancelReservationInput {
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -109,8 +110,8 @@ public class CancelReservationInput {
     /**
      * Whether to send a notification upon the cancellation of the reservation.
      */
-    public Builder sendNotification(Boolean sendNotification) {
-      this.sendNotification = Optional.present(sendNotification);
+    public Builder sendNotification(@NotNull Optional<Boolean> sendNotification) {
+      this.sendNotification = Optional.of(sendNotification);
       return this;
     }
 

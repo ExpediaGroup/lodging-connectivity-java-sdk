@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class CancelReservationMutation implements Mutation<CancelReservationMutation.Data> {
   public static final String OPERATION_ID = "b17cc886cc4471684fe3076311a4536d67efc36b45c079fdcadde7f3a5264f24";
@@ -196,7 +197,7 @@ public class CancelReservationMutation implements Mutation<CancelReservationMuta
     /**
      * Identifier associated with the reservation cancelled
      */
-    public Reservation reservation;
+    public Optional<Reservation> reservation;
 
     private transient volatile int $hashCode;
 
@@ -204,7 +205,7 @@ public class CancelReservationMutation implements Mutation<CancelReservationMuta
 
     private transient volatile String $toString;
 
-    public CancelReservation(Reservation reservation) {
+    public CancelReservation(Optional<Reservation> reservation) {
       this.reservation = reservation;
     }
 

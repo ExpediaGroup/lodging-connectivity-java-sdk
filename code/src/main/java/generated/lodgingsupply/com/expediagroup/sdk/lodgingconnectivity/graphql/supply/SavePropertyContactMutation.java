@@ -22,6 +22,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class SavePropertyContactMutation implements Mutation<SavePropertyContactMutation.Data> {
   public static final String OPERATION_ID = "fe115d3756e0cedc89cc383fc1b639b88465cf7e57ab3ecbd70bec769f0e9a5f";
@@ -166,7 +167,7 @@ public class SavePropertyContactMutation implements Mutation<SavePropertyContact
   }
 
   public static class Data implements Mutation.Data {
-    public SavePropertyContact savePropertyContact;
+    public Optional<SavePropertyContact> savePropertyContact;
 
     private transient volatile int $hashCode;
 
@@ -174,7 +175,7 @@ public class SavePropertyContactMutation implements Mutation<SavePropertyContact
 
     private transient volatile String $toString;
 
-    public Data(SavePropertyContact savePropertyContact) {
+    public Data(Optional<SavePropertyContact> savePropertyContact) {
       this.savePropertyContact = savePropertyContact;
     }
 
@@ -214,11 +215,11 @@ public class SavePropertyContactMutation implements Mutation<SavePropertyContact
   }
 
   public static class SavePropertyContact {
-    public List<String> emailAddresses;
+    public Optional<List<String>> emailAddresses;
 
-    public String name;
+    public Optional<String> name;
 
-    public List<PhoneNumber> phoneNumbers;
+    public Optional<List<PhoneNumber>> phoneNumbers;
 
     public ContactType type;
 
@@ -228,8 +229,8 @@ public class SavePropertyContactMutation implements Mutation<SavePropertyContact
 
     private transient volatile String $toString;
 
-    public SavePropertyContact(List<String> emailAddresses, String name,
-        List<PhoneNumber> phoneNumbers, ContactType type) {
+    public SavePropertyContact(Optional<List<String>> emailAddresses, Optional<String> name,
+        Optional<List<PhoneNumber>> phoneNumbers, ContactType type) {
       this.emailAddresses = emailAddresses;
       this.name = name;
       this.phoneNumbers = phoneNumbers;
@@ -284,11 +285,11 @@ public class SavePropertyContactMutation implements Mutation<SavePropertyContact
   }
 
   public static class PhoneNumber {
-    public String areaCode;
+    public Optional<String> areaCode;
 
-    public String countryCode;
+    public Optional<String> countryCode;
 
-    public String extension;
+    public Optional<String> extension;
 
     public String number;
 
@@ -300,8 +301,8 @@ public class SavePropertyContactMutation implements Mutation<SavePropertyContact
 
     private transient volatile String $toString;
 
-    public PhoneNumber(String areaCode, String countryCode, String extension, String number,
-        PhoneNumberType phoneNumberType) {
+    public PhoneNumber(Optional<String> areaCode, Optional<String> countryCode,
+        Optional<String> extension, String number, PhoneNumberType phoneNumberType) {
       this.areaCode = areaCode;
       this.countryCode = countryCode;
       this.extension = extension;

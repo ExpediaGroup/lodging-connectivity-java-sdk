@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateUnitSpacesBathroomInput {
-  public final Optional<List<AmenityInput>> amenities;
+  public final Optional<Optional<List<AmenityInput>>> amenities;
 
   public final Integer order;
 
@@ -27,8 +28,8 @@ public class CreateUnitSpacesBathroomInput {
 
   private transient volatile String $toString;
 
-  public CreateUnitSpacesBathroomInput(Optional<List<AmenityInput>> amenities, Integer order,
-      List<TextInput> text, String type) {
+  public CreateUnitSpacesBathroomInput(Optional<Optional<List<AmenityInput>>> amenities,
+      Integer order, List<TextInput> text, String type) {
     this.amenities = amenities;
     this.order = order;
     this.text = text;
@@ -86,7 +87,7 @@ public class CreateUnitSpacesBathroomInput {
   }
 
   public static final class Builder {
-    private Optional<List<AmenityInput>> amenities = Optional.absent();
+    private Optional<Optional<List<AmenityInput>>> amenities = Optional.empty();
 
     private Integer order;
 
@@ -97,8 +98,8 @@ public class CreateUnitSpacesBathroomInput {
     Builder() {
     }
 
-    public Builder amenities(List<AmenityInput> amenities) {
-      this.amenities = Optional.present(amenities);
+    public Builder amenities(@NotNull Optional<List<AmenityInput>> amenities) {
+      this.amenities = Optional.of(amenities);
       return this;
     }
 

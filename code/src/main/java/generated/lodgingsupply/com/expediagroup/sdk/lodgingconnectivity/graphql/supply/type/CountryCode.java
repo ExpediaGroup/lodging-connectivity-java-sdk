@@ -11,5 +11,5 @@ import com.apollographql.apollo.api.CustomScalarType;
  * An ISO 3166-1 alpha-3 CountryCode Scalar
  */
 public class CountryCode {
-  public static CustomScalarType type = new CustomScalarType("CountryCode", "java.lang.Object");
+  public static CustomScalarType type = new CustomScalarType("CountryCode", "java.lang.String");
 }

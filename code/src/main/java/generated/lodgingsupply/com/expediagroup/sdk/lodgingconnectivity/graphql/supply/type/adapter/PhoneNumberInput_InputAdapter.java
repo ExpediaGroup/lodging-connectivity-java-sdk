@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PhoneNumberInput;
@@ -29,17 +27,17 @@ public enum PhoneNumberInput_InputAdapter implements Adapter<PhoneNumberInput> {
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       PhoneNumberInput value) throws IOException {
-    if (value.areaCode instanceof Optional.Present) {
+    if (value.areaCode.isPresent()) {
       writer.name("areaCode");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.areaCode);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.areaCode);
     }
-    if (value.countryCode instanceof Optional.Present) {
+    if (value.countryCode.isPresent()) {
       writer.name("countryCode");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.countryCode);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.countryCode);
     }
-    if (value.extension instanceof Optional.Present) {
+    if (value.extension.isPresent()) {
       writer.name("extension");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.extension);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.extension);
     }
     writer.name("number");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.number);

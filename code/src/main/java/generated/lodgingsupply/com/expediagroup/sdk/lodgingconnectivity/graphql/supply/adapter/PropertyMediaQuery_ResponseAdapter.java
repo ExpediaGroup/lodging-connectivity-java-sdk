@@ -10,21 +10,24 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyMediaQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ImageSource;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ImageSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyMediaQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyMediaQuery.Data> {
@@ -35,12 +38,12 @@ public class PropertyMediaQuery_ResponseAdapter {
     @Override
     public PropertyMediaQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyMediaQuery.Property _property = null;
+      Optional<PropertyMediaQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyMediaQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyMediaQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -54,7 +57,7 @@ public class PropertyMediaQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMediaQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMediaQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMediaQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -99,12 +102,12 @@ public class PropertyMediaQuery_ResponseAdapter {
     @Override
     public PropertyMediaQuery.Media fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyMediaQuery.Images _images = null;
+      Optional<PropertyMediaQuery.Images> _images = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _images = new NullableAdapter<>(new ObjectAdapter<PropertyMediaQuery.Images>(Images.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _images = new OptionalAdapter<>(new ObjectAdapter<PropertyMediaQuery.Images>(Images.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -118,7 +121,7 @@ public class PropertyMediaQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMediaQuery.Media value) throws IOException {
       writer.name("images");
-      new NullableAdapter<>(new ObjectAdapter<PropertyMediaQuery.Images>(Images.INSTANCE, false)).toJson(writer, customScalarAdapters, value.images);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyMediaQuery.Images>(Images.INSTANCE, false)).toJson(writer, customScalarAdapters, value.images);
     }
   }
 
@@ -173,15 +176,15 @@ public class PropertyMediaQuery_ResponseAdapter {
       Boolean _active = null;
       List<PropertyMediaQuery.Caption> _captions = null;
       Boolean _featured = null;
-      String _fileName = null;
+      Optional<String> _fileName = null;
       String _id = null;
-      Integer _order = null;
-      String _originalUrl = null;
-      String _publishedUrl = null;
+      Optional<Integer> _order = null;
+      Optional<String> _originalUrl = null;
+      Optional<String> _publishedUrl = null;
       Integer _rotation = null;
       ImageSource _source = null;
       PropertyMediaQuery.Status _status = null;
-      Object _updatedDate = null;
+      OffsetDateTime _updatedDate = null;
 
       loop:
       while(true) {
@@ -189,15 +192,15 @@ public class PropertyMediaQuery_ResponseAdapter {
           case 0: _active = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _captions = new ListAdapter<>(new ObjectAdapter<PropertyMediaQuery.Caption>(Caption.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 2: _featured = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _fileName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _fileName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _order = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 6: _originalUrl = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 7: _publishedUrl = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _order = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 6: _originalUrl = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _publishedUrl = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 8: _rotation = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 9: _source = ImageSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 10: _status = new ObjectAdapter<PropertyMediaQuery.Status>(Status.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 11: _updatedDate = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 11: _updatedDate = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -240,19 +243,19 @@ public class PropertyMediaQuery_ResponseAdapter {
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.featured);
 
       writer.name("fileName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.fileName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.fileName);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("order");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.order);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.order);
 
       writer.name("originalUrl");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.originalUrl);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.originalUrl);
 
       writer.name("publishedUrl");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.publishedUrl);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.publishedUrl);
 
       writer.name("rotation");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.rotation);
@@ -264,7 +267,7 @@ public class PropertyMediaQuery_ResponseAdapter {
       new ObjectAdapter<PropertyMediaQuery.Status>(Status.INSTANCE, false).toJson(writer, customScalarAdapters, value.status);
 
       writer.name("updatedDate");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.updatedDate);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.updatedDate);
     }
   }
 
@@ -316,13 +319,13 @@ public class PropertyMediaQuery_ResponseAdapter {
     @Override
     public PropertyMediaQuery.Status fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _reason = null;
+      Optional<String> _reason = null;
       String _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _reason = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _reason = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -340,7 +343,7 @@ public class PropertyMediaQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyMediaQuery.Status value) throws IOException {
       writer.name("reason");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.reason);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.reason);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);

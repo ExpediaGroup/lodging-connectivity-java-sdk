@@ -6,11 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.BookingPolicyInput;
@@ -32,13 +29,13 @@ public enum UpdatePoliciesInput_InputAdapter implements Adapter<UpdatePoliciesIn
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdatePoliciesInput value) throws IOException {
-    if (value.bookingPolicy instanceof Optional.Present) {
+    if (value.bookingPolicy.isPresent()) {
       writer.name("bookingPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<BookingPolicyInput>(BookingPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.bookingPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<BookingPolicyInput>(BookingPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.bookingPolicy);
     }
-    if (value.stayPolicy instanceof Optional.Present) {
+    if (value.stayPolicy.isPresent()) {
       writer.name("stayPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<UpdateStayPolicyInput>(UpdateStayPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.stayPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<UpdateStayPolicyInput>(UpdateStayPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.stayPolicy);
     }
   }
 }

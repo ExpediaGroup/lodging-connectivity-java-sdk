@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class AddMessageThreadMessageInput {
-  public final Optional<MessageThreadLocalizedStringInput> body;
+  public final Optional<Optional<MessageThreadLocalizedStringInput>> body;
 
-  public final Optional<List<String>> attachmentIds;
+  public final Optional<Optional<List<String>>> attachmentIds;
 
   private transient volatile int $hashCode;
 
@@ -22,8 +23,8 @@ public class AddMessageThreadMessageInput {
 
   private transient volatile String $toString;
 
-  public AddMessageThreadMessageInput(Optional<MessageThreadLocalizedStringInput> body,
-      Optional<List<String>> attachmentIds) {
+  public AddMessageThreadMessageInput(Optional<Optional<MessageThreadLocalizedStringInput>> body,
+      Optional<Optional<List<String>>> attachmentIds) {
     this.body = body;
     this.attachmentIds = attachmentIds;
   }
@@ -71,20 +72,20 @@ public class AddMessageThreadMessageInput {
   }
 
   public static final class Builder {
-    private Optional<MessageThreadLocalizedStringInput> body = Optional.absent();
+    private Optional<Optional<MessageThreadLocalizedStringInput>> body = Optional.empty();
 
-    private Optional<List<String>> attachmentIds = Optional.absent();
+    private Optional<Optional<List<String>>> attachmentIds = Optional.empty();
 
     Builder() {
     }
 
-    public Builder body(MessageThreadLocalizedStringInput body) {
-      this.body = Optional.present(body);
+    public Builder body(@NotNull Optional<MessageThreadLocalizedStringInput> body) {
+      this.body = Optional.of(body);
       return this;
     }
 
-    public Builder attachmentIds(List<String> attachmentIds) {
-      this.attachmentIds = Optional.present(attachmentIds);
+    public Builder attachmentIds(@NotNull Optional<List<String>> attachmentIds) {
+      this.attachmentIds = Optional.of(attachmentIds);
       return this;
     }
 

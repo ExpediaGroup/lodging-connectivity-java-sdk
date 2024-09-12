@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class SingleDiscountUpdateInput {
-  public final Optional<DiscountUnit> unit;
+  public final Optional<Optional<DiscountUnit>> unit;
 
-  public final Optional<Double> value;
+  public final Optional<Optional<Double>> value;
 
-  public final Optional<Double> memberOnlyAdditionalValue;
+  public final Optional<Optional<Double>> memberOnlyAdditionalValue;
 
   private transient volatile int $hashCode;
 
@@ -24,8 +25,8 @@ public class SingleDiscountUpdateInput {
 
   private transient volatile String $toString;
 
-  public SingleDiscountUpdateInput(Optional<DiscountUnit> unit, Optional<Double> value,
-      Optional<Double> memberOnlyAdditionalValue) {
+  public SingleDiscountUpdateInput(Optional<Optional<DiscountUnit>> unit,
+      Optional<Optional<Double>> value, Optional<Optional<Double>> memberOnlyAdditionalValue) {
     this.unit = unit;
     this.value = value;
     this.memberOnlyAdditionalValue = memberOnlyAdditionalValue;
@@ -78,11 +79,11 @@ public class SingleDiscountUpdateInput {
   }
 
   public static final class Builder {
-    private Optional<DiscountUnit> unit = Optional.absent();
+    private Optional<Optional<DiscountUnit>> unit = Optional.empty();
 
-    private Optional<Double> value = Optional.absent();
+    private Optional<Optional<Double>> value = Optional.empty();
 
-    private Optional<Double> memberOnlyAdditionalValue = Optional.absent();
+    private Optional<Optional<Double>> memberOnlyAdditionalValue = Optional.empty();
 
     Builder() {
     }
@@ -90,24 +91,24 @@ public class SingleDiscountUpdateInput {
     /**
      * Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
      */
-    public Builder unit(DiscountUnit unit) {
-      this.unit = Optional.present(unit);
+    public Builder unit(@NotNull Optional<DiscountUnit> unit) {
+      this.unit = Optional.of(unit);
       return this;
     }
 
     /**
      * Value of the discount applied.
      */
-    public Builder value(Double value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<Double> value) {
+      this.value = Optional.of(value);
       return this;
     }
 
     /**
      * Member only discount value applied
      */
-    public Builder memberOnlyAdditionalValue(Double memberOnlyAdditionalValue) {
-      this.memberOnlyAdditionalValue = Optional.present(memberOnlyAdditionalValue);
+    public Builder memberOnlyAdditionalValue(@NotNull Optional<Double> memberOnlyAdditionalValue) {
+      this.memberOnlyAdditionalValue = Optional.of(memberOnlyAdditionalValue);
       return this;
     }
 

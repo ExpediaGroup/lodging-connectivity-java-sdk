@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.MessageThreadQuery_ResponseAdapter;
@@ -26,7 +25,9 @@ import java.lang.Override;
 import java.lang.String;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
   public static final String OPERATION_ID = "c0ca74cf357f310c247566b493af5cd98abe642dde7fde225c5a032ca9f9b860";
@@ -204,11 +205,11 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
   public static final class Builder {
     private String messageThreadId;
 
-    private Optional<Integer> messagesLimit = Optional.absent();
+    private Optional<Integer> messagesLimit = Optional.empty();
 
-    private Optional<String> messagesCursor = Optional.absent();
+    private Optional<String> messagesCursor = Optional.empty();
 
-    private Optional<MessageThreadMessagesOrderByInput> orderMessagesBy = Optional.absent();
+    private Optional<MessageThreadMessagesOrderByInput> orderMessagesBy = Optional.empty();
 
     Builder() {
     }
@@ -219,17 +220,17 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     }
 
     public Builder messagesLimit(Integer messagesLimit) {
-      this.messagesLimit = Optional.present(messagesLimit);
+      this.messagesLimit = Optional.of(messagesLimit);
       return this;
     }
 
     public Builder messagesCursor(String messagesCursor) {
-      this.messagesCursor = Optional.present(messagesCursor);
+      this.messagesCursor = Optional.of(messagesCursor);
       return this;
     }
 
     public Builder orderMessagesBy(MessageThreadMessagesOrderByInput orderMessagesBy) {
-      this.orderMessagesBy = Optional.present(orderMessagesBy);
+      this.orderMessagesBy = Optional.of(orderMessagesBy);
       return this;
     }
 
@@ -242,7 +243,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     /**
      * Retrieves a single message thread using its unique identifier.
      */
-    public MessageThread messageThread;
+    public Optional<MessageThread> messageThread;
 
     private transient volatile int $hashCode;
 
@@ -250,7 +251,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Data(MessageThread messageThread) {
+    public Data(Optional<MessageThread> messageThread) {
       this.messageThread = messageThread;
     }
 
@@ -298,12 +299,12 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     /**
      *  Message creation date time in ISO format and UTC timezone
      */
-    public Object creationDateTimeUtc;
+    public Optional<OffsetDateTime> creationDateTimeUtc;
 
     /**
      *  Booking Inquiry associated to MessageThread 
      */
-    public BookingInquiry bookingInquiry;
+    public Optional<BookingInquiry> bookingInquiry;
 
     /**
      *  Property Details 
@@ -313,12 +314,12 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     /**
      *  Primary Traveler 
      */
-    public PrimaryTraveler primaryTraveler;
+    public Optional<PrimaryTraveler> primaryTraveler;
 
     /**
      *  Reservation associated to MessageThread 
      */
-    public ReservationSummary reservationSummary;
+    public Optional<ReservationSummary> reservationSummary;
 
     /**
      *  List of messages 
@@ -331,8 +332,9 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
 
     private transient volatile String $toString;
 
-    public MessageThread(String id, Object creationDateTimeUtc, BookingInquiry bookingInquiry,
-        Property property, PrimaryTraveler primaryTraveler, ReservationSummary reservationSummary,
+    public MessageThread(String id, Optional<OffsetDateTime> creationDateTimeUtc,
+        Optional<BookingInquiry> bookingInquiry, Property property,
+        Optional<PrimaryTraveler> primaryTraveler, Optional<ReservationSummary> reservationSummary,
         Messages messages) {
       this.id = id;
       this.creationDateTimeUtc = creationDateTimeUtc;
@@ -405,9 +407,9 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
   public static class BookingInquiry {
     public Integer adultCount;
 
-    public LocalDate checkInDate;
+    public Optional<LocalDate> checkInDate;
 
-    public LocalDate checkOutDate;
+    public Optional<LocalDate> checkOutDate;
 
     public Integer childCount;
 
@@ -421,8 +423,8 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
 
     private transient volatile String $toString;
 
-    public BookingInquiry(Integer adultCount, LocalDate checkInDate, LocalDate checkOutDate,
-        Integer childCount, Boolean hasPets, String id) {
+    public BookingInquiry(Integer adultCount, Optional<LocalDate> checkInDate,
+        Optional<LocalDate> checkOutDate, Integer childCount, Boolean hasPets, String id) {
       this.adultCount = adultCount;
       this.checkInDate = checkInDate;
       this.checkOutDate = checkOutDate;
@@ -538,9 +540,9 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
   }
 
   public static class PrimaryTraveler {
-    public String firstName;
+    public Optional<String> firstName;
 
-    public String lastName;
+    public Optional<String> lastName;
 
     private transient volatile int $hashCode;
 
@@ -548,7 +550,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
 
     private transient volatile String $toString;
 
-    public PrimaryTraveler(String firstName, String lastName) {
+    public PrimaryTraveler(Optional<String> firstName, Optional<String> lastName) {
       this.firstName = firstName;
       this.lastName = lastName;
     }
@@ -739,7 +741,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     /**
      *  Represents the next page cursor in the list, Empty if no more pages available
      */
-    public String cursor;
+    public Optional<String> cursor;
 
     /**
      *  Total number of message returned that meet the search criteria 
@@ -757,7 +759,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Messages(String cursor, Integer totalCount, List<Element> elements) {
+    public Messages(Optional<String> cursor, Integer totalCount, List<Element> elements) {
       this.cursor = cursor;
       this.totalCount = totalCount;
       this.elements = elements;
@@ -815,22 +817,22 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     /**
      *  Message type 
      */
-    public String type;
+    public Optional<String> type;
 
     /**
      *  Time at which the message was created. ISO format (yyyy-MM-dd'T'HH:mm:ss.SSSZ) and UTC timezone
      */
-    public Object creationDateTimeUtc;
+    public Optional<OffsetDateTime> creationDateTimeUtc;
 
     /**
      *  Message identifier from the client perspective. This value is set by the client in addMessage mutation.
      */
-    public MessageThreadParticipantRole fromRole;
+    public Optional<MessageThreadParticipantRole> fromRole;
 
     /**
      *  Review status of a Message. 
      */
-    public MessageReviewStatus reviewStatus;
+    public Optional<MessageReviewStatus> reviewStatus;
 
     /**
      *  List of attachments associated with this message 
@@ -840,7 +842,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     /**
      *  Message body (only plaintext allowed; should not contain any HTML tags)
      */
-    public Body body;
+    public Optional<Body> body;
 
     private transient volatile int $hashCode;
 
@@ -848,9 +850,9 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Element(String id, String type, Object creationDateTimeUtc,
-        MessageThreadParticipantRole fromRole, MessageReviewStatus reviewStatus,
-        List<Attachment> attachments, Body body) {
+    public Element(String id, Optional<String> type, Optional<OffsetDateTime> creationDateTimeUtc,
+        Optional<MessageThreadParticipantRole> fromRole, Optional<MessageReviewStatus> reviewStatus,
+        List<Attachment> attachments, Optional<Body> body) {
       this.id = id;
       this.type = type;
       this.creationDateTimeUtc = creationDateTimeUtc;
@@ -933,7 +935,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
     /**
      *  attachment upload date time in ISO format and UTC timezone
      */
-    public Object uploadDateTimeUtc;
+    public OffsetDateTime uploadDateTimeUtc;
 
     /**
      *  The attachment location 
@@ -946,7 +948,7 @@ public class MessageThreadQuery implements Query<MessageThreadQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Attachment(String id, String name, Object uploadDateTimeUtc, URL url) {
+    public Attachment(String id, String name, OffsetDateTime uploadDateTimeUtc, URL url) {
       this.id = id;
       this.name = name;
       this.uploadDateTimeUtc = uploadDateTimeUtc;

@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -20,6 +19,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Purpose;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RegistrationNumberType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RegulatoryCategory;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ExemptionCategory_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.Purpose_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RegistrationNumberType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RegulatoryCategory_ResponseAdapter;
@@ -30,6 +31,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyDistrictQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyDistrictQuery.Data> {
@@ -40,12 +42,12 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyDistrictQuery.Property _property = null;
+      Optional<PropertyDistrictQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -59,7 +61,7 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -71,12 +73,12 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.Property fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      PropertyDistrictQuery.District _district = null;
+      Optional<PropertyDistrictQuery.District> _district = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _district = new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.District>(District.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _district = new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.District>(District.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -90,7 +92,7 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.Property value) throws IOException {
       writer.name("district");
-      new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.District>(District.INSTANCE, false)).toJson(writer, customScalarAdapters, value.district);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.District>(District.INSTANCE, false)).toJson(writer, customScalarAdapters, value.district);
     }
   }
 
@@ -102,26 +104,26 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.District fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _description = null;
+      Optional<String> _description = null;
       String _id = null;
-      List<PropertyDistrictQuery.LegalPropertyType> _legalPropertyTypes = null;
-      String _localizedName = null;
-      String _nativeLocale = null;
-      List<String> _referenceUrls = null;
+      List<Optional<PropertyDistrictQuery.LegalPropertyType>> _legalPropertyTypes = null;
+      Optional<String> _localizedName = null;
+      Optional<String> _nativeLocale = null;
+      Optional<List<Optional<String>>> _referenceUrls = null;
       Boolean _registrationRequired = null;
-      List<PropertyDistrictQuery.Requirement> _requirements = null;
+      Optional<List<Optional<PropertyDistrictQuery.Requirement>>> _requirements = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _description = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _description = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _legalPropertyTypes = new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.LegalPropertyType>(LegalPropertyType.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 3: _localizedName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _nativeLocale = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _referenceUrls = new NullableAdapter<>(new ListAdapter<>(Adapters.NullableStringAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 2: _legalPropertyTypes = new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.LegalPropertyType>(LegalPropertyType.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 3: _localizedName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 4: _nativeLocale = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _referenceUrls = new OptionalAdapter<>(new ListAdapter<>(OptionalAdapters.OptionalStringAdapter)).fromJson(reader, customScalarAdapters); break;
           case 6: _registrationRequired = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 7: _requirements = new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Requirement>(Requirement.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
+          case 7: _requirements = new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Requirement>(Requirement.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -146,28 +148,28 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.District value) throws IOException {
       writer.name("description");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.description);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.description);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("legalPropertyTypes");
-      new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.LegalPropertyType>(LegalPropertyType.INSTANCE, false))).toJson(writer, customScalarAdapters, value.legalPropertyTypes);
+      new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.LegalPropertyType>(LegalPropertyType.INSTANCE, false))).toJson(writer, customScalarAdapters, value.legalPropertyTypes);
 
       writer.name("localizedName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.localizedName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.localizedName);
 
       writer.name("nativeLocale");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.nativeLocale);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.nativeLocale);
 
       writer.name("referenceUrls");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.NullableStringAdapter)).toJson(writer, customScalarAdapters, value.referenceUrls);
+      new OptionalAdapter<>(new ListAdapter<>(OptionalAdapters.OptionalStringAdapter)).toJson(writer, customScalarAdapters, value.referenceUrls);
 
       writer.name("registrationRequired");
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.registrationRequired);
 
       writer.name("requirements");
-      new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Requirement>(Requirement.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.requirements);
+      new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Requirement>(Requirement.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.requirements);
     }
   }
 
@@ -179,14 +181,14 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.LegalPropertyType fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _subtype = null;
-      String _type = null;
+      Optional<String> _subtype = null;
+      Optional<String> _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _subtype = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _type = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _subtype = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _type = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -201,10 +203,10 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.LegalPropertyType value) throws IOException {
       writer.name("subtype");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.subtype);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.subtype);
 
       writer.name("type");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.type);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.type);
     }
   }
 
@@ -216,28 +218,28 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.Requirement fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<PropertyDistrictQuery.AdditionalDataRequirement> _additionalDataRequirements = null;
-      List<PropertyDistrictQuery.Exemption> _exemptions = null;
-      Boolean _isVacationRental = null;
-      PropertyDistrictQuery.MaxNightCap _maxNightCap = null;
+      Optional<List<Optional<PropertyDistrictQuery.AdditionalDataRequirement>>> _additionalDataRequirements = null;
+      Optional<List<Optional<PropertyDistrictQuery.Exemption>>> _exemptions = null;
+      Optional<Boolean> _isVacationRental = null;
+      Optional<PropertyDistrictQuery.MaxNightCap> _maxNightCap = null;
       Integer _minStayNights = null;
-      List<PropertyDistrictQuery.QualifiedPropertyType> _qualifiedPropertyTypes = null;
-      List<PropertyDistrictQuery.RegistrationNumberRequirement> _registrationNumberRequirements = null;
-      RegulatoryCategory _regulatoryCategory = null;
-      String _regulatoryCategoryLabel = null;
+      Optional<List<Optional<PropertyDistrictQuery.QualifiedPropertyType>>> _qualifiedPropertyTypes = null;
+      Optional<List<PropertyDistrictQuery.RegistrationNumberRequirement>> _registrationNumberRequirements = null;
+      Optional<RegulatoryCategory> _regulatoryCategory = null;
+      Optional<String> _regulatoryCategoryLabel = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _additionalDataRequirements = new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.AdditionalDataRequirement>(AdditionalDataRequirement.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
-          case 1: _exemptions = new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Exemption>(Exemption.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
-          case 2: _isVacationRental = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _maxNightCap = new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.MaxNightCap>(MaxNightCap.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _additionalDataRequirements = new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.AdditionalDataRequirement>(AdditionalDataRequirement.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
+          case 1: _exemptions = new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Exemption>(Exemption.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
+          case 2: _isVacationRental = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _maxNightCap = new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.MaxNightCap>(MaxNightCap.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 4: _minStayNights = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _qualifiedPropertyTypes = new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.QualifiedPropertyType>(QualifiedPropertyType.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
-          case 6: _registrationNumberRequirements = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyDistrictQuery.RegistrationNumberRequirement>(RegistrationNumberRequirement.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 7: _regulatoryCategory = new NullableAdapter<>(RegulatoryCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 8: _regulatoryCategoryLabel = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _qualifiedPropertyTypes = new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.QualifiedPropertyType>(QualifiedPropertyType.INSTANCE, false)))).fromJson(reader, customScalarAdapters); break;
+          case 6: _registrationNumberRequirements = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyDistrictQuery.RegistrationNumberRequirement>(RegistrationNumberRequirement.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 7: _regulatoryCategory = new OptionalAdapter<>(RegulatoryCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 8: _regulatoryCategoryLabel = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -261,31 +263,31 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.Requirement value) throws IOException {
       writer.name("additionalDataRequirements");
-      new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.AdditionalDataRequirement>(AdditionalDataRequirement.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.additionalDataRequirements);
+      new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.AdditionalDataRequirement>(AdditionalDataRequirement.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.additionalDataRequirements);
 
       writer.name("exemptions");
-      new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Exemption>(Exemption.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.exemptions);
+      new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.Exemption>(Exemption.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.exemptions);
 
       writer.name("isVacationRental");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isVacationRental);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isVacationRental);
 
       writer.name("maxNightCap");
-      new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.MaxNightCap>(MaxNightCap.INSTANCE, false)).toJson(writer, customScalarAdapters, value.maxNightCap);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.MaxNightCap>(MaxNightCap.INSTANCE, false)).toJson(writer, customScalarAdapters, value.maxNightCap);
 
       writer.name("minStayNights");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.minStayNights);
 
       writer.name("qualifiedPropertyTypes");
-      new NullableAdapter<>(new ListAdapter<>(new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.QualifiedPropertyType>(QualifiedPropertyType.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.qualifiedPropertyTypes);
+      new OptionalAdapter<>(new ListAdapter<>(new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.QualifiedPropertyType>(QualifiedPropertyType.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.qualifiedPropertyTypes);
 
       writer.name("registrationNumberRequirements");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyDistrictQuery.RegistrationNumberRequirement>(RegistrationNumberRequirement.INSTANCE, false))).toJson(writer, customScalarAdapters, value.registrationNumberRequirements);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyDistrictQuery.RegistrationNumberRequirement>(RegistrationNumberRequirement.INSTANCE, false))).toJson(writer, customScalarAdapters, value.registrationNumberRequirements);
 
       writer.name("regulatoryCategory");
-      new NullableAdapter<>(RegulatoryCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.regulatoryCategory);
+      new OptionalAdapter<>(RegulatoryCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.regulatoryCategory);
 
       writer.name("regulatoryCategoryLabel");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.regulatoryCategoryLabel);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.regulatoryCategoryLabel);
     }
   }
 
@@ -297,28 +299,28 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.AdditionalDataRequirement fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _group = null;
-      String _groupLocalized = null;
-      String _isOptional = null;
+      Optional<String> _group = null;
+      Optional<String> _groupLocalized = null;
+      Optional<String> _isOptional = null;
       String _key = null;
-      String _keyLocalized = null;
-      String _subtype = null;
-      String _subtypeLocalized = null;
-      String _type = null;
-      String _typeLocalized = null;
+      Optional<String> _keyLocalized = null;
+      Optional<String> _subtype = null;
+      Optional<String> _subtypeLocalized = null;
+      Optional<String> _type = null;
+      Optional<String> _typeLocalized = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _group = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _groupLocalized = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _isOptional = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _group = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _groupLocalized = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _isOptional = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _key = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _keyLocalized = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _subtype = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 6: _subtypeLocalized = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 7: _type = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 8: _typeLocalized = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 4: _keyLocalized = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _subtype = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 6: _subtypeLocalized = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _type = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 8: _typeLocalized = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -342,31 +344,31 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.AdditionalDataRequirement value) throws IOException {
       writer.name("group");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.group);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.group);
 
       writer.name("groupLocalized");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.groupLocalized);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.groupLocalized);
 
       writer.name("isOptional");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.isOptional);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.isOptional);
 
       writer.name("key");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.key);
 
       writer.name("keyLocalized");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.keyLocalized);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.keyLocalized);
 
       writer.name("subtype");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.subtype);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.subtype);
 
       writer.name("subtypeLocalized");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.subtypeLocalized);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.subtypeLocalized);
 
       writer.name("type");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.type);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("typeLocalized");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.typeLocalized);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.typeLocalized);
     }
   }
 
@@ -378,14 +380,14 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.Exemption fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      ExemptionCategory _category = null;
-      String _description = null;
+      Optional<ExemptionCategory> _category = null;
+      Optional<String> _description = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _category = new NullableAdapter<>(ExemptionCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 1: _description = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _category = new OptionalAdapter<>(ExemptionCategory_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 1: _description = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -400,10 +402,10 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.Exemption value) throws IOException {
       writer.name("category");
-      new NullableAdapter<>(ExemptionCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.category);
+      new OptionalAdapter<>(ExemptionCategory_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.category);
 
       writer.name("description");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.description);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.description);
     }
   }
 
@@ -415,14 +417,14 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.MaxNightCap fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Integer _annualLimit = null;
-      Boolean _isEnforced = null;
+      Optional<Integer> _annualLimit = null;
+      Optional<Boolean> _isEnforced = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _annualLimit = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _isEnforced = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _annualLimit = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _isEnforced = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -437,10 +439,10 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.MaxNightCap value) throws IOException {
       writer.name("annualLimit");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.annualLimit);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.annualLimit);
 
       writer.name("isEnforced");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isEnforced);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isEnforced);
     }
   }
 
@@ -452,14 +454,14 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.QualifiedPropertyType fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _subtype = null;
-      String _type = null;
+      Optional<String> _subtype = null;
+      Optional<String> _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _subtype = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _type = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _subtype = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _type = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -474,10 +476,10 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.QualifiedPropertyType value) throws IOException {
       writer.name("subtype");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.subtype);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.subtype);
 
       writer.name("type");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.type);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.type);
     }
   }
 
@@ -490,31 +492,31 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public PropertyDistrictQuery.RegistrationNumberRequirement fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       Boolean _allowPendingRegistrations = null;
-      String _format = null;
+      Optional<String> _format = null;
       Boolean _isExpirationDateRequired = null;
       Boolean _isOptional = null;
-      String _localName = null;
-      RegistrationNumberType _numberType = null;
-      String _numberTypeLabel = null;
-      Purpose _purpose = null;
-      String _regex = null;
-      PropertyDistrictQuery.ThirdPartyValidation _thirdPartyValidation = null;
-      String _url = null;
+      Optional<String> _localName = null;
+      Optional<RegistrationNumberType> _numberType = null;
+      Optional<String> _numberTypeLabel = null;
+      Optional<Purpose> _purpose = null;
+      Optional<String> _regex = null;
+      Optional<PropertyDistrictQuery.ThirdPartyValidation> _thirdPartyValidation = null;
+      Optional<String> _url = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _allowPendingRegistrations = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _format = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _format = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _isExpirationDateRequired = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _isOptional = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _localName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _numberType = new NullableAdapter<>(RegistrationNumberType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 6: _numberTypeLabel = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 7: _purpose = new NullableAdapter<>(Purpose_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 8: _regex = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 9: _thirdPartyValidation = new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.ThirdPartyValidation>(ThirdPartyValidation.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 10: _url = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 4: _localName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _numberType = new OptionalAdapter<>(RegistrationNumberType_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 6: _numberTypeLabel = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _purpose = new OptionalAdapter<>(Purpose_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 8: _regex = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 9: _thirdPartyValidation = new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.ThirdPartyValidation>(ThirdPartyValidation.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 10: _url = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -545,7 +547,7 @@ public class PropertyDistrictQuery_ResponseAdapter {
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.allowPendingRegistrations);
 
       writer.name("format");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.format);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.format);
 
       writer.name("isExpirationDateRequired");
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.isExpirationDateRequired);
@@ -554,25 +556,25 @@ public class PropertyDistrictQuery_ResponseAdapter {
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.isOptional);
 
       writer.name("localName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.localName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.localName);
 
       writer.name("numberType");
-      new NullableAdapter<>(RegistrationNumberType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.numberType);
+      new OptionalAdapter<>(RegistrationNumberType_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.numberType);
 
       writer.name("numberTypeLabel");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.numberTypeLabel);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.numberTypeLabel);
 
       writer.name("purpose");
-      new NullableAdapter<>(Purpose_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.purpose);
+      new OptionalAdapter<>(Purpose_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.purpose);
 
       writer.name("regex");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.regex);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.regex);
 
       writer.name("thirdPartyValidation");
-      new NullableAdapter<>(new ObjectAdapter<PropertyDistrictQuery.ThirdPartyValidation>(ThirdPartyValidation.INSTANCE, false)).toJson(writer, customScalarAdapters, value.thirdPartyValidation);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyDistrictQuery.ThirdPartyValidation>(ThirdPartyValidation.INSTANCE, false)).toJson(writer, customScalarAdapters, value.thirdPartyValidation);
 
       writer.name("url");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.url);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.url);
     }
   }
 
@@ -584,13 +586,13 @@ public class PropertyDistrictQuery_ResponseAdapter {
     @Override
     public PropertyDistrictQuery.ThirdPartyValidation fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<String> _attributes = null;
+      Optional<List<Optional<String>>> _attributes = null;
       Boolean _required = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _attributes = new NullableAdapter<>(new ListAdapter<>(Adapters.NullableStringAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 0: _attributes = new OptionalAdapter<>(new ListAdapter<>(OptionalAdapters.OptionalStringAdapter)).fromJson(reader, customScalarAdapters); break;
           case 1: _required = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -608,7 +610,7 @@ public class PropertyDistrictQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyDistrictQuery.ThirdPartyValidation value) throws IOException {
       writer.name("attributes");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.NullableStringAdapter)).toJson(writer, customScalarAdapters, value.attributes);
+      new OptionalAdapter<>(new ListAdapter<>(OptionalAdapters.OptionalStringAdapter)).toJson(writer, customScalarAdapters, value.attributes);
 
       writer.name("required");
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.required);

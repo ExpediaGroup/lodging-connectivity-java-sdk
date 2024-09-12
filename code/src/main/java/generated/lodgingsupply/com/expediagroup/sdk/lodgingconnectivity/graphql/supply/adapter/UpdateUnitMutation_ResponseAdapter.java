@@ -9,16 +9,18 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.UpdateUnitMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateUnitMutation_ResponseAdapter {
   public enum Data implements Adapter<UpdateUnitMutation.Data> {
@@ -29,12 +31,12 @@ public class UpdateUnitMutation_ResponseAdapter {
     @Override
     public UpdateUnitMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      UpdateUnitMutation.UpdateUnit _updateUnit = null;
+      Optional<UpdateUnitMutation.UpdateUnit> _updateUnit = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _updateUnit = new NullableAdapter<>(new ObjectAdapter<UpdateUnitMutation.UpdateUnit>(UpdateUnit.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _updateUnit = new OptionalAdapter<>(new ObjectAdapter<UpdateUnitMutation.UpdateUnit>(UpdateUnit.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -48,7 +50,7 @@ public class UpdateUnitMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdateUnitMutation.Data value) throws IOException {
       writer.name("updateUnit");
-      new NullableAdapter<>(new ObjectAdapter<UpdateUnitMutation.UpdateUnit>(UpdateUnit.INSTANCE, false)).toJson(writer, customScalarAdapters, value.updateUnit);
+      new OptionalAdapter<>(new ObjectAdapter<UpdateUnitMutation.UpdateUnit>(UpdateUnit.INSTANCE, false)).toJson(writer, customScalarAdapters, value.updateUnit);
     }
   }
 
@@ -60,13 +62,13 @@ public class UpdateUnitMutation_ResponseAdapter {
     @Override
     public UpdateUnitMutation.UpdateUnit fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       UpdateUnitMutation.Unit _unit = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _unit = new ObjectAdapter<UpdateUnitMutation.Unit>(Unit.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -84,7 +86,7 @@ public class UpdateUnitMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdateUnitMutation.UpdateUnit value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("unit");
       new ObjectAdapter<UpdateUnitMutation.Unit>(Unit.INSTANCE, false).toJson(writer, customScalarAdapters, value.unit);

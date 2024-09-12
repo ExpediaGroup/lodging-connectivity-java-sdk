@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyPromotionsQuery_ResponseAdapter;
@@ -31,7 +30,9 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Data> {
   public static final String OPERATION_ID = "ba5f195a6dd5737628e933ff0b3976fe81fbce58c0260a7cb4d5549dc39265fa";
@@ -238,11 +239,11 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
   public static final class Builder {
     private String propertyId;
 
-    private Optional<FiltersInput> filter = Optional.absent();
+    private Optional<FiltersInput> filter = Optional.empty();
 
     private Integer pageSize;
 
-    private Optional<String> after = Optional.absent();
+    private Optional<String> after = Optional.empty();
 
     Builder() {
     }
@@ -253,7 +254,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     }
 
     public Builder filter(FiltersInput filter) {
-      this.filter = Optional.present(filter);
+      this.filter = Optional.of(filter);
       return this;
     }
 
@@ -263,7 +264,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     }
 
     public Builder after(String after) {
-      this.after = Optional.present(after);
+      this.after = Optional.of(after);
       return this;
     }
 
@@ -273,7 +274,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -281,7 +282,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -443,7 +444,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Value of the cursor of the last promotion in the current page.
      */
-    public String endCursor;
+    public Optional<String> endCursor;
 
     /**
      * It indicates if there are additional pages to retrieve.
@@ -456,7 +457,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
 
     private transient volatile String $toString;
 
-    public PageInfo(String endCursor, Boolean hasNextPage) {
+    public PageInfo(Optional<String> endCursor, Boolean hasNextPage) {
       this.endCursor = endCursor;
       this.hasNextPage = hasNextPage;
     }
@@ -577,7 +578,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * It indicates if the promotion is negotiated.
      */
-    public Boolean isContractedPromotion;
+    public Optional<Boolean> isContractedPromotion;
 
     /**
      * Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
@@ -587,7 +588,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Sell status of the promotion. Values: EXPIRED, CURRENT or FUTURE. For retrieval only.
      */
-    public PromotionSellStatus sellStatus;
+    public Optional<PromotionSellStatus> sellStatus;
 
     /**
      * Status of the promotion. Values: ACTIVE or INACTIVE.
@@ -597,7 +598,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Synthetic field for inline fragment on DiscountPromotion
      */
-    public OnDiscountPromotion onDiscountPromotion;
+    public Optional<OnDiscountPromotion> onDiscountPromotion;
 
     private transient volatile int $hashCode;
 
@@ -606,8 +607,9 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     private transient volatile String $toString;
 
     public Node(String __typename, PromotionCategory category, String id,
-        Boolean isContractedPromotion, PromotionName name, PromotionSellStatus sellStatus,
-        PromotionStatus status, OnDiscountPromotion onDiscountPromotion) {
+        Optional<Boolean> isContractedPromotion, PromotionName name,
+        Optional<PromotionSellStatus> sellStatus, PromotionStatus status,
+        Optional<OnDiscountPromotion> onDiscountPromotion) {
       this.__typename = __typename;
       this.category = category;
       this.id = id;
@@ -686,7 +688,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
      * The 'exception' dates for which the promotion should NOT apply.
      * This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
      */
-    public List<BlackoutDate> blackoutDates;
+    public Optional<List<BlackoutDate>> blackoutDates;
 
     /**
      * Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
@@ -701,7 +703,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Detail of the actual discount being applied on the promotion.
      */
-    public Discount discount;
+    public Optional<Discount> discount;
 
     /**
      * The rate plans for which this promotion is applicable for.
@@ -716,7 +718,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * It indicates if the promotion is negotiated.
      */
-    public Boolean isContractedPromotion;
+    public Optional<Boolean> isContractedPromotion;
 
     /**
      * Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
@@ -726,12 +728,12 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * List of restrictions that can be applied to these promotions.
      */
-    public Restrictions restrictions;
+    public Optional<Restrictions> restrictions;
 
     /**
      * Sell status of the promotion. Values: EXPIRED, CURRENT or FUTURE. For retrieval only.
      */
-    public PromotionSellStatus sellStatus;
+    public Optional<PromotionSellStatus> sellStatus;
 
     /**
      * Status of the promotion. Values: ACTIVE or INACTIVE.
@@ -744,10 +746,12 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
 
     private transient volatile String $toString;
 
-    public OnDiscountPromotion(List<BlackoutDate> blackoutDates, PromotionCategory category,
-        String code, Discount discount, List<EligibleRatePlan> eligibleRatePlans, String id,
-        Boolean isContractedPromotion, PromotionName name, Restrictions restrictions,
-        PromotionSellStatus sellStatus, PromotionStatus status) {
+    public OnDiscountPromotion(Optional<List<BlackoutDate>> blackoutDates,
+        PromotionCategory category, String code, Optional<Discount> discount,
+        List<EligibleRatePlan> eligibleRatePlans, String id,
+        Optional<Boolean> isContractedPromotion, PromotionName name,
+        Optional<Restrictions> restrictions, Optional<PromotionSellStatus> sellStatus,
+        PromotionStatus status) {
       this.blackoutDates = blackoutDates;
       this.category = category;
       this.code = code;
@@ -913,17 +917,17 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Synthetic field for inline fragment on DayOfWeekDiscount
      */
-    public OnDayOfWeekDiscount onDayOfWeekDiscount;
+    public Optional<OnDayOfWeekDiscount> onDayOfWeekDiscount;
 
     /**
      * Synthetic field for inline fragment on MultiNightDiscount
      */
-    public OnMultiNightDiscount onMultiNightDiscount;
+    public Optional<OnMultiNightDiscount> onMultiNightDiscount;
 
     /**
      * Synthetic field for inline fragment on SingleDiscount
      */
-    public OnSingleDiscount onSingleDiscount;
+    public Optional<OnSingleDiscount> onSingleDiscount;
 
     private transient volatile int $hashCode;
 
@@ -932,8 +936,9 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     private transient volatile String $toString;
 
     public Discount(String __typename, DiscountType type, DiscountUnit unit,
-        OnDayOfWeekDiscount onDayOfWeekDiscount, OnMultiNightDiscount onMultiNightDiscount,
-        OnSingleDiscount onSingleDiscount) {
+        Optional<OnDayOfWeekDiscount> onDayOfWeekDiscount,
+        Optional<OnMultiNightDiscount> onMultiNightDiscount,
+        Optional<OnSingleDiscount> onSingleDiscount) {
       this.__typename = __typename;
       this.type = type;
       this.unit = unit;
@@ -1127,7 +1132,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Member only discount value applied
      */
-    public Double memberOnlyAdditionalValue;
+    public Optional<Double> memberOnlyAdditionalValue;
 
     /**
      * Value of the applicable night on which the discount will be applied. Values permitted: 2 to 28
@@ -1137,7 +1142,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Whether the discount applied on the applicable night is recurring
      */
-    public Boolean isRecurring;
+    public Optional<Boolean> isRecurring;
 
     private transient volatile int $hashCode;
 
@@ -1146,7 +1151,8 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     private transient volatile String $toString;
 
     public OnMultiNightDiscount(DiscountType type, DiscountUnit unit, Double value,
-        Double memberOnlyAdditionalValue, Integer applicableNight, Boolean isRecurring) {
+        Optional<Double> memberOnlyAdditionalValue, Integer applicableNight,
+        Optional<Boolean> isRecurring) {
       this.type = type;
       this.unit = unit;
       this.value = value;
@@ -1229,7 +1235,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     /**
      * Member only discount value applied
      */
-    public Double memberOnlyAdditionalValue;
+    public Optional<Double> memberOnlyAdditionalValue;
 
     private transient volatile int $hashCode;
 
@@ -1238,7 +1244,7 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
     private transient volatile String $toString;
 
     public OnSingleDiscount(DiscountType type, DiscountUnit unit, Double value,
-        Double memberOnlyAdditionalValue) {
+        Optional<Double> memberOnlyAdditionalValue) {
       this.type = type;
       this.unit = unit;
       this.value = value;
@@ -1348,60 +1354,60 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
      * The Booking Date Time from which this promotion is applicable.
      * YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
      */
-    public LocalDateTime bookingLocalDateTimeFrom;
+    public Optional<LocalDateTime> bookingLocalDateTimeFrom;
 
     /**
      * The Booking Date Time until which this promotion is applicable.
      * YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
      */
-    public LocalDateTime bookingLocalDateTimeTo;
+    public Optional<LocalDateTime> bookingLocalDateTimeTo;
 
     /**
      * Applicable only for SAME_DAY_PROMOTION. The start time for the same day from which the promotion is applicable.
      * The timezone in consideration will be the local time for the property the promotion is applied for.
      */
-    public Object sameDayBookingStartTime;
+    public Optional<LocalTime> sameDayBookingStartTime;
 
     /**
      * The Travel date from which this promotion is applicable in YYYY-MM-DD format.
      */
-    public LocalDate travelDateFrom;
+    public Optional<LocalDate> travelDateFrom;
 
     /**
      * Setting this to true indicates that the promotion is targeted exclusively towards Expedia Group members whose loyalty drives bookings.
      */
-    public Boolean isMemberOnly;
+    public Optional<Boolean> isMemberOnly;
 
     /**
      * It indicates if this promotion is applicable only for travelers booking on the mobile device.
      * This field will be null in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
      */
-    public Boolean isMobileUserOnly;
+    public Optional<Boolean> isMobileUserOnly;
 
     /**
      * The maximum number of days in advance the reservation must be made for the promotion to be applicable.
      */
-    public Integer maxAdvanceBookingDays;
+    public Optional<Integer> maxAdvanceBookingDays;
 
     /**
      * The maximum duration of stay for which the promotion can be applicable. The maximum value possible here is 28.
      */
-    public Integer maxLengthOfStay;
+    public Optional<Integer> maxLengthOfStay;
 
     /**
      * The minimum number of days in advance the reservation must be made for the promotion to be applicable.
      */
-    public Integer minAdvanceBookingDays;
+    public Optional<Integer> minAdvanceBookingDays;
 
     /**
      * The minimum duration of stay for which the promotion can be applicable.
      */
-    public Integer minLengthOfStay;
+    public Optional<Integer> minLengthOfStay;
 
     /**
      * The Travel date until which this promotion is applicable in YYYY-MM-DD format.
      */
-    public LocalDate travelDateTo;
+    public Optional<LocalDate> travelDateTo;
 
     private transient volatile int $hashCode;
 
@@ -1409,11 +1415,12 @@ public class PropertyPromotionsQuery implements Query<PropertyPromotionsQuery.Da
 
     private transient volatile String $toString;
 
-    public Restrictions(LocalDateTime bookingLocalDateTimeFrom,
-        LocalDateTime bookingLocalDateTimeTo, Object sameDayBookingStartTime,
-        LocalDate travelDateFrom, Boolean isMemberOnly, Boolean isMobileUserOnly,
-        Integer maxAdvanceBookingDays, Integer maxLengthOfStay, Integer minAdvanceBookingDays,
-        Integer minLengthOfStay, LocalDate travelDateTo) {
+    public Restrictions(Optional<LocalDateTime> bookingLocalDateTimeFrom,
+        Optional<LocalDateTime> bookingLocalDateTimeTo, Optional<LocalTime> sameDayBookingStartTime,
+        Optional<LocalDate> travelDateFrom, Optional<Boolean> isMemberOnly,
+        Optional<Boolean> isMobileUserOnly, Optional<Integer> maxAdvanceBookingDays,
+        Optional<Integer> maxLengthOfStay, Optional<Integer> minAdvanceBookingDays,
+        Optional<Integer> minLengthOfStay, Optional<LocalDate> travelDateTo) {
       this.bookingLocalDateTimeFrom = bookingLocalDateTimeFrom;
       this.bookingLocalDateTimeTo = bookingLocalDateTimeTo;
       this.sameDayBookingStartTime = sameDayBookingStartTime;

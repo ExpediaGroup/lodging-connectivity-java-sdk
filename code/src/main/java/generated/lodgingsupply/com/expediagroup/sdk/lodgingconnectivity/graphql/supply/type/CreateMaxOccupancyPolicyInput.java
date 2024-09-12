@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreateMaxOccupancyPolicyInput {
-  public final Optional<Integer> adultCount;
+  public final Optional<Optional<Integer>> adultCount;
 
-  public final Optional<List<LocalizedStringInput>> note;
+  public final Optional<Optional<List<LocalizedStringInput>>> note;
 
   public final Integer totalGuestCount;
 
@@ -25,8 +26,8 @@ public class CreateMaxOccupancyPolicyInput {
 
   private transient volatile String $toString;
 
-  public CreateMaxOccupancyPolicyInput(Optional<Integer> adultCount,
-      Optional<List<LocalizedStringInput>> note, Integer totalGuestCount) {
+  public CreateMaxOccupancyPolicyInput(Optional<Optional<Integer>> adultCount,
+      Optional<Optional<List<LocalizedStringInput>>> note, Integer totalGuestCount) {
     this.adultCount = adultCount;
     this.note = note;
     this.totalGuestCount = totalGuestCount;
@@ -79,22 +80,22 @@ public class CreateMaxOccupancyPolicyInput {
   }
 
   public static final class Builder {
-    private Optional<Integer> adultCount = Optional.absent();
+    private Optional<Optional<Integer>> adultCount = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> note = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> note = Optional.empty();
 
     private Integer totalGuestCount;
 
     Builder() {
     }
 
-    public Builder adultCount(Integer adultCount) {
-      this.adultCount = Optional.present(adultCount);
+    public Builder adultCount(@NotNull Optional<Integer> adultCount) {
+      this.adultCount = Optional.of(adultCount);
       return this;
     }
 
-    public Builder note(List<LocalizedStringInput> note) {
-      this.note = Optional.present(note);
+    public Builder note(@NotNull Optional<List<LocalizedStringInput>> note) {
+      this.note = Optional.of(note);
       return this;
     }
 

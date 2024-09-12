@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UndeliveredNotificationsFiltersInput {
-  public final Optional<String> eventType;
+  public final Optional<Optional<String>> eventType;
 
-  public final Optional<DateTimeRangeFilterInput> creationDateTime;
+  public final Optional<Optional<DateTimeRangeFilterInput>> creationDateTime;
 
   private transient volatile int $hashCode;
 
@@ -21,8 +22,8 @@ public class UndeliveredNotificationsFiltersInput {
 
   private transient volatile String $toString;
 
-  public UndeliveredNotificationsFiltersInput(Optional<String> eventType,
-      Optional<DateTimeRangeFilterInput> creationDateTime) {
+  public UndeliveredNotificationsFiltersInput(Optional<Optional<String>> eventType,
+      Optional<Optional<DateTimeRangeFilterInput>> creationDateTime) {
     this.eventType = eventType;
     this.creationDateTime = creationDateTime;
   }
@@ -70,9 +71,9 @@ public class UndeliveredNotificationsFiltersInput {
   }
 
   public static final class Builder {
-    private Optional<String> eventType = Optional.absent();
+    private Optional<Optional<String>> eventType = Optional.empty();
 
-    private Optional<DateTimeRangeFilterInput> creationDateTime = Optional.absent();
+    private Optional<Optional<DateTimeRangeFilterInput>> creationDateTime = Optional.empty();
 
     Builder() {
     }
@@ -80,13 +81,13 @@ public class UndeliveredNotificationsFiltersInput {
     /**
      *  The event type 
      */
-    public Builder eventType(String eventType) {
-      this.eventType = Optional.present(eventType);
+    public Builder eventType(@NotNull Optional<String> eventType) {
+      this.eventType = Optional.of(eventType);
       return this;
     }
 
-    public Builder creationDateTime(DateTimeRangeFilterInput creationDateTime) {
-      this.creationDateTime = Optional.present(creationDateTime);
+    public Builder creationDateTime(@NotNull Optional<DateTimeRangeFilterInput> creationDateTime) {
+      this.creationDateTime = Optional.of(creationDateTime);
       return this;
     }
 

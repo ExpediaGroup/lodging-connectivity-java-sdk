@@ -7,10 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AcknowledgementRecordInput;
@@ -30,9 +27,9 @@ public enum AcknowledgementRecordInput_InputAdapter implements Adapter<Acknowled
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       AcknowledgementRecordInput value) throws IOException {
-    if (value.acknowledgementType instanceof Optional.Present) {
+    if (value.acknowledgementType.isPresent()) {
       writer.name("acknowledgementType");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(AcknowledgementType_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.acknowledgementType);
+      new OptionalAdapter<>(new OptionalAdapter<>(AcknowledgementType_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.acknowledgementType);
     }
     writer.name("id");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

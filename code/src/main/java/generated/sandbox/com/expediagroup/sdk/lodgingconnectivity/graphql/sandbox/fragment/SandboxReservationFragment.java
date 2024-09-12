@@ -19,6 +19,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxReservationFragment implements Fragment.Data {
   /**
@@ -34,12 +35,12 @@ public class SandboxReservationFragment implements Fragment.Data {
   /**
    * Amounts associated with the reservation.
    */
-  public Amounts amounts;
+  public Optional<Amounts> amounts;
 
   /**
    * Bed type of the reservation.
    */
-  public String bedTypes;
+  public Optional<String> bedTypes;
 
   /**
    * Source of the reservation booking.
@@ -64,7 +65,7 @@ public class SandboxReservationFragment implements Fragment.Data {
   /**
    * Ages of children associated with the reservation.
    */
-  public List<Integer> childAges;
+  public Optional<List<Integer>> childAges;
 
   /**
    * Count for all child guests associated with the reservation.
@@ -94,7 +95,7 @@ public class SandboxReservationFragment implements Fragment.Data {
   /**
    * Text that is displayed to guests if there is a multi-room booking associated with the reservation.
    */
-  public String multiRoomText;
+  public Optional<String> multiRoomText;
 
   /**
    * Payment details associated with the reservation.
@@ -104,7 +105,7 @@ public class SandboxReservationFragment implements Fragment.Data {
   /**
    * Count of pets associated with the reservation.
    */
-  public Integer petCount;
+  public Optional<Integer> petCount;
 
   /**
    * Guest who made the reservation.
@@ -119,12 +120,12 @@ public class SandboxReservationFragment implements Fragment.Data {
   /**
    * Unique identifiers for the rates associated with the reservation.
    */
-  public List<RateId> rateIds;
+  public Optional<List<RateId>> rateIds;
 
   /**
    * Type of reconciliation that has been performed on the reservation, if any.
    */
-  public ReconciliationType reconciliationType;
+  public Optional<ReconciliationType> reconciliationType;
 
   /**
    * Unique identifiers for the reservation, each corresponding to a different source associated with the reservation.
@@ -139,7 +140,7 @@ public class SandboxReservationFragment implements Fragment.Data {
   /**
    * ext that is displayed to guests if there is a special request associated with the reservation.
    */
-  public String specialRequest;
+  public Optional<String> specialRequest;
 
   /**
    * Current status of the reservation.
@@ -149,12 +150,12 @@ public class SandboxReservationFragment implements Fragment.Data {
   /**
    * Current substatus of the reservation. Applicable for Vrbo reservations only.
    */
-  public String subStatus;
+  public Optional<String> subStatus;
 
   /**
    * Travel Industry Designator Service (TIDS) code that allows a reservation to be recognized by industry suppliers.
    */
-  public Integer tidsCode;
+  public Optional<Integer> tidsCode;
 
   /**
    * Total number of guests associated with the reservation.
@@ -166,12 +167,12 @@ public class SandboxReservationFragment implements Fragment.Data {
    * - If the property was onboarded onto Vrbo, three IDs are returned: the partnerâ€™s (external ID), Vrboâ€™s (Vrbo internal ID), and Expedia's (EID).
    * - If the property was onboarded onto Expedia, only the Expedia ID is included in the response.
    */
-  public List<UnitId> unitIds;
+  public Optional<List<UnitId>> unitIds;
 
   /**
    * Value add promotion(s) used to book the reservation.
    */
-  public List<ValueAddedPromotion> valueAddedPromotions;
+  public Optional<List<ValueAddedPromotion>> valueAddedPromotions;
 
   private transient volatile int $hashCode;
 
@@ -180,14 +181,16 @@ public class SandboxReservationFragment implements Fragment.Data {
   private transient volatile String $toString;
 
   public SandboxReservationFragment(List<String> accessibilityText, Integer adultCount,
-      Amounts amounts, String bedTypes, BookingSource bookingSource, BusinessModel businessModel,
-      LocalDate checkInDate, LocalDate checkOutDate, List<Integer> childAges, Integer childCount,
-      String creationDateTime, String id, Boolean isReconciled, String lastUpdatedDateTime,
-      String multiRoomText, Payment payment, Integer petCount, PrimaryGuest primaryGuest,
-      String propertyId, List<RateId> rateIds, ReconciliationType reconciliationType,
-      List<ReservationId> reservationIds, String smokingType, String specialRequest,
-      ReservationStatus status, String subStatus, Integer tidsCode, Integer totalGuestCount,
-      List<UnitId> unitIds, List<ValueAddedPromotion> valueAddedPromotions) {
+      Optional<Amounts> amounts, Optional<String> bedTypes, BookingSource bookingSource,
+      BusinessModel businessModel, LocalDate checkInDate, LocalDate checkOutDate,
+      Optional<List<Integer>> childAges, Integer childCount, String creationDateTime, String id,
+      Boolean isReconciled, String lastUpdatedDateTime, Optional<String> multiRoomText,
+      Payment payment, Optional<Integer> petCount, PrimaryGuest primaryGuest, String propertyId,
+      Optional<List<RateId>> rateIds, Optional<ReconciliationType> reconciliationType,
+      List<ReservationId> reservationIds, String smokingType, Optional<String> specialRequest,
+      ReservationStatus status, Optional<String> subStatus, Optional<Integer> tidsCode,
+      Integer totalGuestCount, Optional<List<UnitId>> unitIds,
+      Optional<List<ValueAddedPromotion>> valueAddedPromotions) {
     this.accessibilityText = accessibilityText;
     this.adultCount = adultCount;
     this.amounts = amounts;
@@ -374,7 +377,7 @@ public class SandboxReservationFragment implements Fragment.Data {
     /**
      * Detailed list of payments associated with the reservation.
      */
-    public NightlyPayments nightlyPayments;
+    public Optional<NightlyPayments> nightlyPayments;
 
     private transient volatile int $hashCode;
 
@@ -382,7 +385,7 @@ public class SandboxReservationFragment implements Fragment.Data {
 
     private transient volatile String $toString;
 
-    public Amounts(NightlyPayments nightlyPayments) {
+    public Amounts(Optional<NightlyPayments> nightlyPayments) {
       this.nightlyPayments = nightlyPayments;
     }
 
@@ -532,7 +535,7 @@ public class SandboxReservationFragment implements Fragment.Data {
     /**
      * Details about the frequent traveler reward program.
      */
-    public SupplierLoyaltyPlanInfo supplierLoyaltyPlanInfo;
+    public Optional<SupplierLoyaltyPlanInfo> supplierLoyaltyPlanInfo;
 
     private transient volatile int $hashCode;
 
@@ -541,7 +544,7 @@ public class SandboxReservationFragment implements Fragment.Data {
     private transient volatile String $toString;
 
     public PrimaryGuest(String emailAddress, String firstName, String lastName, String loyaltyTier,
-        List<PhoneNumber> phoneNumbers, SupplierLoyaltyPlanInfo supplierLoyaltyPlanInfo) {
+        List<PhoneNumber> phoneNumbers, Optional<SupplierLoyaltyPlanInfo> supplierLoyaltyPlanInfo) {
       this.emailAddress = emailAddress;
       this.firstName = firstName;
       this.lastName = lastName;
@@ -935,7 +938,7 @@ public class SandboxReservationFragment implements Fragment.Data {
     /**
      * Percentage of amount (when applicable), expressed as a fraction of 1 (e.g., 0.12 for 12%).
      */
-    public Double percent;
+    public Optional<Double> percent;
 
     /**
      * Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...).
@@ -948,7 +951,8 @@ public class SandboxReservationFragment implements Fragment.Data {
 
     private transient volatile String $toString;
 
-    public CancellationAmount(Amount amount, String description, Double percent, String type) {
+    public CancellationAmount(Amount amount, String description, Optional<Double> percent,
+        String type) {
       this.amount = amount;
       this.description = description;
       this.percent = percent;
@@ -1082,7 +1086,7 @@ public class SandboxReservationFragment implements Fragment.Data {
     /**
      * Percentage of amount (when applicable), expressed as a fraction of 1 (e.g., 0.12 for 12%).
      */
-    public Double percent;
+    public Optional<Double> percent;
 
     /**
      * Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...).
@@ -1095,7 +1099,7 @@ public class SandboxReservationFragment implements Fragment.Data {
 
     private transient volatile String $toString;
 
-    public DailyAmount(Amount1 amount, LocalDate date, String description, Double percent,
+    public DailyAmount(Amount1 amount, LocalDate date, String description, Optional<Double> percent,
         String type) {
       this.amount = amount;
       this.date = date;
@@ -1230,7 +1234,7 @@ public class SandboxReservationFragment implements Fragment.Data {
     /**
      * Percentage of amount (when applicable), expressed as a fraction of 1 (e.g., 0.12 for 12%).
      */
-    public Double percent;
+    public Optional<Double> percent;
 
     /**
      * Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...).
@@ -1243,7 +1247,8 @@ public class SandboxReservationFragment implements Fragment.Data {
 
     private transient volatile String $toString;
 
-    public PerStayAmount(Amount2 amount, String description, Double percent, String type) {
+    public PerStayAmount(Amount2 amount, String description, Optional<Double> percent,
+        String type) {
       this.amount = amount;
       this.description = description;
       this.percent = percent;

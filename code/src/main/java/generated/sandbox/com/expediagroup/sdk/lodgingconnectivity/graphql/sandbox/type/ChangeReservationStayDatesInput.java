@@ -5,12 +5,13 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input to change the stay dates of a reservation.
@@ -20,11 +21,11 @@ public class ChangeReservationStayDatesInput {
 
   public final LocalDate checkOutDate;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String id;
 
-  public final Optional<Boolean> sendNotification;
+  public final Optional<Optional<Boolean>> sendNotification;
 
   private transient volatile int $hashCode;
 
@@ -33,7 +34,8 @@ public class ChangeReservationStayDatesInput {
   private transient volatile String $toString;
 
   public ChangeReservationStayDatesInput(LocalDate checkInDate, LocalDate checkOutDate,
-      Optional<String> clientMutationId, String id, Optional<Boolean> sendNotification) {
+      Optional<Optional<String>> clientMutationId, String id,
+      Optional<Optional<Boolean>> sendNotification) {
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
     this.clientMutationId = clientMutationId;
@@ -100,11 +102,11 @@ public class ChangeReservationStayDatesInput {
 
     private LocalDate checkOutDate;
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String id;
 
-    private Optional<Boolean> sendNotification = Optional.absent();
+    private Optional<Optional<Boolean>> sendNotification = Optional.empty();
 
     Builder() {
     }
@@ -128,8 +130,8 @@ public class ChangeReservationStayDatesInput {
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -144,8 +146,8 @@ public class ChangeReservationStayDatesInput {
     /**
      * Whether to send a notification upon the change of the reservation dates.
      */
-    public Builder sendNotification(Boolean sendNotification) {
-      this.sendNotification = Optional.present(sendNotification);
+    public Builder sendNotification(@NotNull Optional<Boolean> sendNotification) {
+      this.sendNotification = Optional.of(sendNotification);
       return this;
     }
 

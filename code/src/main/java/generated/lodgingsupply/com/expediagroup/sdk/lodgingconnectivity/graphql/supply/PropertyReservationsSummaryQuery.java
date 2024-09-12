@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyReservationsSummaryQuery_ResponseAdapter;
@@ -37,7 +36,9 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyReservationsSummaryQuery implements Query<PropertyReservationsSummaryQuery.Data> {
   public static final String OPERATION_ID = "82f3f55ae3d1c3341da7a8026eee4b7dc44fd96842769ef4df41e5b3ee38295f";
@@ -342,13 +343,13 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
   public static final class Builder {
     private String propertyId;
 
-    private Optional<CheckOutDateFilter> checkOutDate = Optional.absent();
+    private Optional<CheckOutDateFilter> checkOutDate = Optional.empty();
 
-    private Optional<ReservationFilterInput> filter = Optional.absent();
+    private Optional<ReservationFilterInput> filter = Optional.empty();
 
     private Integer pageSize;
 
-    private Optional<String> after = Optional.absent();
+    private Optional<String> after = Optional.empty();
 
     Builder() {
     }
@@ -359,12 +360,12 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     }
 
     public Builder checkOutDate(CheckOutDateFilter checkOutDate) {
-      this.checkOutDate = Optional.present(checkOutDate);
+      this.checkOutDate = Optional.of(checkOutDate);
       return this;
     }
 
     public Builder filter(ReservationFilterInput filter) {
-      this.filter = Optional.present(filter);
+      this.filter = Optional.of(filter);
       return this;
     }
 
@@ -374,7 +375,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     }
 
     public Builder after(String after) {
-      this.after = Optional.present(after);
+      this.after = Optional.of(after);
       return this;
     }
 
@@ -384,7 +385,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -392,7 +393,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -486,17 +487,17 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * the total number of reservations
      */
-    public Integer totalCount;
+    public Optional<Integer> totalCount;
 
     /**
      * information about the current page of results
      */
-    public PageInfo pageInfo;
+    public Optional<PageInfo> pageInfo;
 
     /**
      * the edges in the connection to traverse, each contain a cursor and node
      */
-    public List<Edge> edges;
+    public List<Optional<Edge>> edges;
 
     private transient volatile int $hashCode;
 
@@ -504,7 +505,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public Reservations(Integer totalCount, PageInfo pageInfo, List<Edge> edges) {
+    public Reservations(Optional<Integer> totalCount, Optional<PageInfo> pageInfo,
+        List<Optional<Edge>> edges) {
       this.totalCount = totalCount;
       this.pageInfo = pageInfo;
       this.edges = edges;
@@ -557,7 +559,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * the value of the cursor of the last reservation in the current page
      */
-    public String endCursor;
+    public Optional<String> endCursor;
 
     /**
      * indicates if there are additional pages to retrieve
@@ -570,7 +572,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public PageInfo(String endCursor, Boolean hasNextPage) {
+    public PageInfo(Optional<String> endCursor, Boolean hasNextPage) {
       this.endCursor = endCursor;
       this.hasNextPage = hasNextPage;
     }
@@ -689,7 +691,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Accessibility requests made by the guest for the reservation.
      */
-    public List<String> accessibilityText;
+    public Optional<List<String>> accessibilityText;
 
     /**
      * Count for all adult guests associated with the reservation.
@@ -704,7 +706,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Bed type of the reservation.
      */
-    public String bedTypes;
+    public Optional<String> bedTypes;
 
     /**
      * Entity that collects payment for the reservation.
@@ -714,12 +716,12 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Details on the cancellations if the reservation has been canceled
      */
-    public Cancellation cancellation;
+    public Optional<Cancellation> cancellation;
 
     /**
      * Policy applied for cancelling the reservation
      */
-    public CancellationPolicy cancellationPolicy;
+    public Optional<CancellationPolicy> cancellationPolicy;
 
     /**
      * the reservation's arrival date (format: YYYY-MM-DD)
@@ -734,7 +736,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Count for all children associated with the reservation.
      */
-    public List<Integer> childAges;
+    public Optional<List<Optional<Integer>>> childAges;
 
     /**
      * Count for all children associated with the reservation.
@@ -759,12 +761,12 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Inventory type used for this Reservation
      */
-    public InventoryType inventoryType;
+    public Optional<InventoryType> inventoryType;
 
     /**
      * Is the reservation reconciled
      */
-    public Boolean isReconciled;
+    public Optional<Boolean> isReconciled;
 
     /**
      * last updated Date Time
@@ -779,12 +781,12 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * the ID of the message thread associated with the reservation
      */
-    public String messageThreadId;
+    public Optional<String> messageThreadId;
 
     /**
      * Text that is displayed to travelers if there is a multi-room booking associated with the reservation.
      */
-    public String multiRoomText;
+    public Optional<String> multiRoomText;
 
     /**
      * Text that is displayed to travelers if a payment type is associated with the reservation.
@@ -794,7 +796,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * VRBO only, Count for all pets associated with the reservation.
      */
-    public Integer petCount;
+    public Optional<Integer> petCount;
 
     /**
      * Policies attached to the Reservation
@@ -814,17 +816,17 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Eligibility of reconciling current reservation
      */
-    public ReconciliationEligibility reconciliationEligibility;
+    public Optional<ReconciliationEligibility> reconciliationEligibility;
 
     /**
      * The reconciliation type of the reservation
      */
-    public String reconciliationType;
+    public Optional<String> reconciliationType;
 
     /**
      * Remittance Type of the Reservation
      */
-    public RemittanceType remittanceType;
+    public Optional<RemittanceType> remittanceType;
 
     /**
      * an array of IDs associated with the reservation
@@ -844,7 +846,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Text that is displayed to travelers if there is a special request associated with the reservation.
      */
-    public String specialRequest;
+    public Optional<String> specialRequest;
 
     /**
      * Current status of the reservation.
@@ -864,17 +866,17 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Current sub status of the reservation, it is applicable for vrbo reservations only.
      */
-    public String subStatus;
+    public Optional<String> subStatus;
 
     /**
      * Operating Model of the Supplier for this Reservation
      */
-    public SupplierOperatingModel supplierOperatingModel;
+    public Optional<SupplierOperatingModel> supplierOperatingModel;
 
     /**
      * Travel Industry Designator Service is a unique code that allows a bookings to be recognized by industry suppliers
      */
-    public Integer tidsCode;
+    public Optional<Integer> tidsCode;
 
     /**
      * Total number of guests associated with the reservation.
@@ -897,19 +899,22 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public Node(String id, AlternativeIds alternativeIds, List<String> accessibilityText,
-        Integer adultCount, Audit audit, String bedTypes, BusinessModel businessModel,
-        Cancellation cancellation, CancellationPolicy cancellationPolicy, LocalDate checkInDate,
-        LocalDate checkOutDate, List<Integer> childAges, Integer childCount,
-        String creationDateTime, Distribution distribution, Guests guests,
-        InventoryType inventoryType, Boolean isReconciled, String lastUpdatedDateTime,
-        MerchantOfRecord merchantOfRecord, String messageThreadId, String multiRoomText,
-        String paymentInstructions, Integer petCount, Policies policies, PrimaryGuest1 primaryGuest,
-        List<RateId> rateIds, ReconciliationEligibility reconciliationEligibility,
-        String reconciliationType, RemittanceType remittanceType,
+    public Node(String id, AlternativeIds alternativeIds, Optional<List<String>> accessibilityText,
+        Integer adultCount, Audit audit, Optional<String> bedTypes, BusinessModel businessModel,
+        Optional<Cancellation> cancellation, Optional<CancellationPolicy> cancellationPolicy,
+        LocalDate checkInDate, LocalDate checkOutDate, Optional<List<Optional<Integer>>> childAges,
+        Integer childCount, String creationDateTime, Distribution distribution, Guests guests,
+        Optional<InventoryType> inventoryType, Optional<Boolean> isReconciled,
+        String lastUpdatedDateTime, MerchantOfRecord merchantOfRecord,
+        Optional<String> messageThreadId, Optional<String> multiRoomText,
+        String paymentInstructions, Optional<Integer> petCount, Policies policies,
+        PrimaryGuest1 primaryGuest, List<RateId> rateIds,
+        Optional<ReconciliationEligibility> reconciliationEligibility,
+        Optional<String> reconciliationType, Optional<RemittanceType> remittanceType,
         List<ReservationId> reservationIds, String smokingType, String source,
-        String specialRequest, ReservationStatus status, Statuses statuses, StayDates stayDates,
-        String subStatus, SupplierOperatingModel supplierOperatingModel, Integer tidsCode,
+        Optional<String> specialRequest, ReservationStatus status, Statuses statuses,
+        StayDates stayDates, Optional<String> subStatus,
+        Optional<SupplierOperatingModel> supplierOperatingModel, Optional<Integer> tidsCode,
         Integer totalGuestCount, List<UnitId> unitIds,
         List<ValueAddedPromotion> valueAddedPromotions) {
       this.id = id;
@@ -1281,7 +1286,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Indicates the point of sale of the booking
      */
-    public VrboCancellationReason vrboPrimaryReason;
+    public Optional<VrboCancellationReason> vrboPrimaryReason;
 
     private transient volatile int $hashCode;
 
@@ -1289,7 +1294,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public Cancellation(Boolean pendingCancellation, VrboCancellationReason vrboPrimaryReason) {
+    public Cancellation(Boolean pendingCancellation,
+        Optional<VrboCancellationReason> vrboPrimaryReason) {
       this.pendingCancellation = pendingCancellation;
       this.vrboPrimaryReason = vrboPrimaryReason;
     }
@@ -1337,9 +1343,9 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The effective policy for the reservation
      */
-    public EffectivePolicy effectivePolicy;
+    public Optional<EffectivePolicy> effectivePolicy;
 
-    public List<Tier> tiers;
+    public Optional<List<Tier>> tiers;
 
     private transient volatile int $hashCode;
 
@@ -1347,7 +1353,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public CancellationPolicy(EffectivePolicy effectivePolicy, List<Tier> tiers) {
+    public CancellationPolicy(Optional<EffectivePolicy> effectivePolicy,
+        Optional<List<Tier>> tiers) {
       this.effectivePolicy = effectivePolicy;
       this.tiers = tiers;
     }
@@ -1395,7 +1402,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The end date and time of the policy in UTC
      */
-    public Object endDateTimeUtc;
+    public OffsetDateTime endDateTimeUtc;
 
     /**
      * The type of policy being applied. One of: REGULATORY_WAIVER
@@ -1405,7 +1412,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The start date and time of the policy in UTC
      */
-    public Object startDateTimeUtc;
+    public OffsetDateTime startDateTimeUtc;
 
     private transient volatile int $hashCode;
 
@@ -1413,7 +1420,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public EffectivePolicy(Object endDateTimeUtc, String policyType, Object startDateTimeUtc) {
+    public EffectivePolicy(OffsetDateTime endDateTimeUtc, String policyType,
+        OffsetDateTime startDateTimeUtc) {
       this.endDateTimeUtc = endDateTimeUtc;
       this.policyType = policyType;
       this.startDateTimeUtc = startDateTimeUtc;
@@ -1576,19 +1584,19 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      *  cancellation penalty amount for the reservation paid by the customer, minus the Expedia commission
      */
-    public CostFlatAmount costFlatAmount;
+    public Optional<CostFlatAmount> costFlatAmount;
 
-    public Integer numberOfNights;
+    public Optional<Integer> numberOfNights;
 
     /**
      *  Represented as a fraction of 1. Example: 15% should be represented as 0.15
      */
-    public Double percentage;
+    public Optional<Double> percentage;
 
     /**
      *  total cancellation penalty amount for the reservation paid by the customer, including the Expedia commission
      */
-    public PriceAmount priceAmount;
+    public Optional<PriceAmount> priceAmount;
 
     public CancellationPenaltyRuleType type;
 
@@ -1598,8 +1606,9 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public PenaltyRule(CostFlatAmount costFlatAmount, Integer numberOfNights, Double percentage,
-        PriceAmount priceAmount, CancellationPenaltyRuleType type) {
+    public PenaltyRule(Optional<CostFlatAmount> costFlatAmount, Optional<Integer> numberOfNights,
+        Optional<Double> percentage, Optional<PriceAmount> priceAmount,
+        CancellationPenaltyRuleType type) {
       this.costFlatAmount = costFlatAmount;
       this.numberOfNights = numberOfNights;
       this.percentage = percentage;
@@ -1662,7 +1671,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -1675,7 +1684,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public CostFlatAmount(Object amount, String currencyCode) {
+    public CostFlatAmount(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -1723,7 +1732,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -1736,7 +1745,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public PriceAmount(Object amount, String currencyCode) {
+    public PriceAmount(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -1789,7 +1798,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Indicates the point of sale of the booking
      */
-    public String reservationSource;
+    public Optional<String> reservationSource;
 
     private transient volatile int $hashCode;
 
@@ -1797,7 +1806,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public Distribution(DistributionChannel distributionChannel, String reservationSource) {
+    public Distribution(DistributionChannel distributionChannel,
+        Optional<String> reservationSource) {
       this.distributionChannel = distributionChannel;
       this.reservationSource = reservationSource;
     }
@@ -1855,7 +1865,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Details of pets associated with the reservation.
      */
-    public Pets pets;
+    public Optional<Pets> pets;
 
     /**
      * Details of the Primary Guest
@@ -1868,7 +1878,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public Guests(Integer adultCount, Integer childCount, Pets pets, PrimaryGuest primaryGuest) {
+    public Guests(Integer adultCount, Integer childCount, Optional<Pets> pets,
+        PrimaryGuest primaryGuest) {
       this.adultCount = adultCount;
       this.childCount = childCount;
       this.pets = pets;
@@ -1977,12 +1988,12 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * First Name of the Primary Guest
      */
-    public String firstName;
+    public Optional<String> firstName;
 
     /**
      * Last Name of the Primary Guest
      */
-    public String lastName;
+    public Optional<String> lastName;
 
     /**
      * email address of the Primary Guest
@@ -1992,7 +2003,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Full phone number of the Primary Guest as entered on the point of sale
      */
-    public String fullPhoneNumber;
+    public Optional<String> fullPhoneNumber;
 
     private transient volatile int $hashCode;
 
@@ -2000,8 +2011,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public PrimaryGuest(String firstName, String lastName, String emailAddress,
-        String fullPhoneNumber) {
+    public PrimaryGuest(Optional<String> firstName, Optional<String> lastName, String emailAddress,
+        Optional<String> fullPhoneNumber) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.emailAddress = emailAddress;
@@ -2110,9 +2121,9 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The effective policy for the reservation
      */
-    public EffectivePolicy1 effectivePolicy;
+    public Optional<EffectivePolicy1> effectivePolicy;
 
-    public List<Tier1> tiers;
+    public Optional<List<Tier1>> tiers;
 
     private transient volatile int $hashCode;
 
@@ -2120,7 +2131,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public CancellationPolicy1(EffectivePolicy1 effectivePolicy, List<Tier1> tiers) {
+    public CancellationPolicy1(Optional<EffectivePolicy1> effectivePolicy,
+        Optional<List<Tier1>> tiers) {
       this.effectivePolicy = effectivePolicy;
       this.tiers = tiers;
     }
@@ -2168,7 +2180,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The end date and time of the policy in UTC
      */
-    public Object endDateTimeUtc;
+    public OffsetDateTime endDateTimeUtc;
 
     /**
      * The type of policy being applied. One of: REGULATORY_WAIVER
@@ -2178,7 +2190,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The start date and time of the policy in UTC
      */
-    public Object startDateTimeUtc;
+    public OffsetDateTime startDateTimeUtc;
 
     private transient volatile int $hashCode;
 
@@ -2186,7 +2198,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public EffectivePolicy1(Object endDateTimeUtc, String policyType, Object startDateTimeUtc) {
+    public EffectivePolicy1(OffsetDateTime endDateTimeUtc, String policyType,
+        OffsetDateTime startDateTimeUtc) {
       this.endDateTimeUtc = endDateTimeUtc;
       this.policyType = policyType;
       this.startDateTimeUtc = startDateTimeUtc;
@@ -2349,19 +2362,19 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      *  cancellation penalty amount for the reservation paid by the customer, minus the Expedia commission
      */
-    public CostFlatAmount1 costFlatAmount;
+    public Optional<CostFlatAmount1> costFlatAmount;
 
-    public Integer numberOfNights;
+    public Optional<Integer> numberOfNights;
 
     /**
      *  Represented as a fraction of 1. Example: 15% should be represented as 0.15
      */
-    public Double percentage;
+    public Optional<Double> percentage;
 
     /**
      *  total cancellation penalty amount for the reservation paid by the customer, including the Expedia commission
      */
-    public PriceAmount1 priceAmount;
+    public Optional<PriceAmount1> priceAmount;
 
     public CancellationPenaltyRuleType type;
 
@@ -2371,8 +2384,9 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public PenaltyRule1(CostFlatAmount1 costFlatAmount, Integer numberOfNights, Double percentage,
-        PriceAmount1 priceAmount, CancellationPenaltyRuleType type) {
+    public PenaltyRule1(Optional<CostFlatAmount1> costFlatAmount, Optional<Integer> numberOfNights,
+        Optional<Double> percentage, Optional<PriceAmount1> priceAmount,
+        CancellationPenaltyRuleType type) {
       this.costFlatAmount = costFlatAmount;
       this.numberOfNights = numberOfNights;
       this.percentage = percentage;
@@ -2435,7 +2449,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -2448,7 +2462,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public CostFlatAmount1(Object amount, String currencyCode) {
+    public CostFlatAmount1(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -2496,7 +2510,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
      */
-    public Object amount;
+    public String amount;
 
     /**
      * The code of the currency of the amount.
@@ -2509,7 +2523,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public PriceAmount1(Object amount, String currencyCode) {
+    public PriceAmount1(String amount, String currencyCode) {
       this.amount = amount;
       this.currencyCode = currencyCode;
     }
@@ -2557,7 +2571,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Email address
      */
-    public String emailAddress;
+    public Optional<String> emailAddress;
 
     public String firstName;
 
@@ -2566,22 +2580,22 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * Guest loyalty tier. Values include MEMBER, VIP, PREMIUMVIP and null.
      */
-    public String loyaltyTier;
+    public Optional<String> loyaltyTier;
 
     /**
      * The phone numbers of the guest
      */
-    public List<PhoneNumber> phoneNumbers;
+    public Optional<List<PhoneNumber>> phoneNumbers;
 
     /**
      * identifies the frequent customer reward program and (optionally) indicates points awarded for stay activity
      */
-    public SupplierLoyaltyPlanInfo supplierLoyaltyPlanInfo;
+    public Optional<SupplierLoyaltyPlanInfo> supplierLoyaltyPlanInfo;
 
     /**
      * Purpose of the reservation
      */
-    public TravelPurpose travelPurpose;
+    public Optional<TravelPurpose> travelPurpose;
 
     private transient volatile int $hashCode;
 
@@ -2589,9 +2603,10 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public PrimaryGuest1(String emailAddress, String firstName, String lastName, String loyaltyTier,
-        List<PhoneNumber> phoneNumbers, SupplierLoyaltyPlanInfo supplierLoyaltyPlanInfo,
-        TravelPurpose travelPurpose) {
+    public PrimaryGuest1(Optional<String> emailAddress, String firstName, String lastName,
+        Optional<String> loyaltyTier, Optional<List<PhoneNumber>> phoneNumbers,
+        Optional<SupplierLoyaltyPlanInfo> supplierLoyaltyPlanInfo,
+        Optional<TravelPurpose> travelPurpose) {
       this.emailAddress = emailAddress;
       this.firstName = firstName;
       this.lastName = lastName;
@@ -2735,12 +2750,12 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * membership number of the customer
      */
-    public Integer membershipNumber;
+    public Optional<Integer> membershipNumber;
 
     /**
      * identifies the customer reward program
      */
-    public String planCode;
+    public Optional<String> planCode;
 
     private transient volatile int $hashCode;
 
@@ -2748,7 +2763,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public SupplierLoyaltyPlanInfo(Integer membershipNumber, String planCode) {
+    public SupplierLoyaltyPlanInfo(Optional<Integer> membershipNumber, Optional<String> planCode) {
       this.membershipNumber = membershipNumber;
       this.planCode = planCode;
     }
@@ -2793,7 +2808,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
   }
 
   public static class RateId {
-    public String id;
+    public Optional<String> id;
 
     public IdSource idSource;
 
@@ -2803,7 +2818,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public RateId(String id, IdSource idSource) {
+    public RateId(Optional<String> id, IdSource idSource) {
       this.id = id;
       this.idSource = idSource;
     }
@@ -2851,12 +2866,12 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
     /**
      * irreconcilable scenarios collection
      */
-    public List<InvalidScenario> invalidScenarios;
+    public Optional<List<InvalidScenario>> invalidScenarios;
 
     /**
      * Reconcilable scenarios
      */
-    public List<String> validScenarios;
+    public Optional<List<String>> validScenarios;
 
     private transient volatile int $hashCode;
 
@@ -2864,8 +2879,8 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public ReconciliationEligibility(List<InvalidScenario> invalidScenarios,
-        List<String> validScenarios) {
+    public ReconciliationEligibility(Optional<List<InvalidScenario>> invalidScenarios,
+        Optional<List<String>> validScenarios) {
       this.invalidScenarios = invalidScenarios;
       this.validScenarios = validScenarios;
     }
@@ -2971,7 +2986,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
   }
 
   public static class ReservationId {
-    public String id;
+    public Optional<String> id;
 
     public IdSource idSource;
 
@@ -2981,7 +2996,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public ReservationId(String id, IdSource idSource) {
+    public ReservationId(Optional<String> id, IdSource idSource) {
       this.id = id;
       this.idSource = idSource;
     }
@@ -3138,7 +3153,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
   }
 
   public static class UnitId {
-    public String id;
+    public Optional<String> id;
 
     public IdSource idSource;
 
@@ -3148,7 +3163,7 @@ public class PropertyReservationsSummaryQuery implements Query<PropertyReservati
 
     private transient volatile String $toString;
 
-    public UnitId(String id, IdSource idSource) {
+    public UnitId(Optional<String> id, IdSource idSource) {
       this.id = id;
       this.idSource = idSource;
     }

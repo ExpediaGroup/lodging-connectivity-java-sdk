@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CreateNotificationCallbackConfigInput;
@@ -35,9 +33,9 @@ public enum CreateNotificationCallbackConfigInput_InputAdapter implements Adapte
     com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.callbackUrl);
     writer.name("apiKey");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.apiKey);
-    if (value.requestTimeoutSeconds instanceof Optional.Present) {
+    if (value.requestTimeoutSeconds.isPresent()) {
       writer.name("requestTimeoutSeconds");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.requestTimeoutSeconds);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.requestTimeoutSeconds);
     }
     writer.name("contactEmail");
     (customScalarAdapters.<String>responseAdapterFor(EmailAddress.type)).toJson(writer, customScalarAdapters, value.contactEmail);

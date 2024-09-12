@@ -5,19 +5,20 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateRatePlanRestrictionsInput {
-  public final Optional<IntRangeInput> advanceBookingDays;
+  public final Optional<Optional<IntRangeInput>> advanceBookingDays;
 
-  public final Optional<IntRangeInput> lengthOfStay;
+  public final Optional<Optional<IntRangeInput>> lengthOfStay;
 
-  public final Optional<DateRangeInput> reservationDates;
+  public final Optional<Optional<DateRangeInput>> reservationDates;
 
-  public final Optional<DateRangeInput> travelDates;
+  public final Optional<Optional<DateRangeInput>> travelDates;
 
   private transient volatile int $hashCode;
 
@@ -25,9 +26,10 @@ public class UpdateRatePlanRestrictionsInput {
 
   private transient volatile String $toString;
 
-  public UpdateRatePlanRestrictionsInput(Optional<IntRangeInput> advanceBookingDays,
-      Optional<IntRangeInput> lengthOfStay, Optional<DateRangeInput> reservationDates,
-      Optional<DateRangeInput> travelDates) {
+  public UpdateRatePlanRestrictionsInput(Optional<Optional<IntRangeInput>> advanceBookingDays,
+      Optional<Optional<IntRangeInput>> lengthOfStay,
+      Optional<Optional<DateRangeInput>> reservationDates,
+      Optional<Optional<DateRangeInput>> travelDates) {
     this.advanceBookingDays = advanceBookingDays;
     this.lengthOfStay = lengthOfStay;
     this.reservationDates = reservationDates;
@@ -85,34 +87,34 @@ public class UpdateRatePlanRestrictionsInput {
   }
 
   public static final class Builder {
-    private Optional<IntRangeInput> advanceBookingDays = Optional.absent();
+    private Optional<Optional<IntRangeInput>> advanceBookingDays = Optional.empty();
 
-    private Optional<IntRangeInput> lengthOfStay = Optional.absent();
+    private Optional<Optional<IntRangeInput>> lengthOfStay = Optional.empty();
 
-    private Optional<DateRangeInput> reservationDates = Optional.absent();
+    private Optional<Optional<DateRangeInput>> reservationDates = Optional.empty();
 
-    private Optional<DateRangeInput> travelDates = Optional.absent();
+    private Optional<Optional<DateRangeInput>> travelDates = Optional.empty();
 
     Builder() {
     }
 
-    public Builder advanceBookingDays(IntRangeInput advanceBookingDays) {
-      this.advanceBookingDays = Optional.present(advanceBookingDays);
+    public Builder advanceBookingDays(@NotNull Optional<IntRangeInput> advanceBookingDays) {
+      this.advanceBookingDays = Optional.of(advanceBookingDays);
       return this;
     }
 
-    public Builder lengthOfStay(IntRangeInput lengthOfStay) {
-      this.lengthOfStay = Optional.present(lengthOfStay);
+    public Builder lengthOfStay(@NotNull Optional<IntRangeInput> lengthOfStay) {
+      this.lengthOfStay = Optional.of(lengthOfStay);
       return this;
     }
 
-    public Builder reservationDates(DateRangeInput reservationDates) {
-      this.reservationDates = Optional.present(reservationDates);
+    public Builder reservationDates(@NotNull Optional<DateRangeInput> reservationDates) {
+      this.reservationDates = Optional.of(reservationDates);
       return this;
     }
 
-    public Builder travelDates(DateRangeInput travelDates) {
-      this.travelDates = Optional.present(travelDates);
+    public Builder travelDates(@NotNull Optional<DateRangeInput> travelDates) {
+      this.travelDates = Optional.of(travelDates);
       return this;
     }
 

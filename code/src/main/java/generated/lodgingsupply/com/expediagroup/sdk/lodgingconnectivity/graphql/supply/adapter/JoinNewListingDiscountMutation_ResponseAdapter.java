@@ -6,17 +6,18 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.JoinNewListingDiscountMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class JoinNewListingDiscountMutation_ResponseAdapter {
   public enum Data implements Adapter<JoinNewListingDiscountMutation.Data> {
@@ -27,12 +28,12 @@ public class JoinNewListingDiscountMutation_ResponseAdapter {
     @Override
     public JoinNewListingDiscountMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Boolean _joinNewListingDiscount = null;
+      Optional<Boolean> _joinNewListingDiscount = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _joinNewListingDiscount = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _joinNewListingDiscount = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -46,7 +47,7 @@ public class JoinNewListingDiscountMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         JoinNewListingDiscountMutation.Data value) throws IOException {
       writer.name("joinNewListingDiscount");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.joinNewListingDiscount);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.joinNewListingDiscount);
     }
   }
 }

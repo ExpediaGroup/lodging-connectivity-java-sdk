@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class BedTypeInput {
   public final Integer quantity;
 
-  public final Optional<String> size;
+  public final Optional<Optional<String>> size;
 
   public final String type;
 
@@ -24,7 +25,7 @@ public class BedTypeInput {
 
   private transient volatile String $toString;
 
-  public BedTypeInput(Integer quantity, Optional<String> size, String type) {
+  public BedTypeInput(Integer quantity, Optional<Optional<String>> size, String type) {
     this.quantity = quantity;
     this.size = size;
     this.type = type;
@@ -79,7 +80,7 @@ public class BedTypeInput {
   public static final class Builder {
     private Integer quantity;
 
-    private Optional<String> size = Optional.absent();
+    private Optional<Optional<String>> size = Optional.empty();
 
     private String type;
 
@@ -91,8 +92,8 @@ public class BedTypeInput {
       return this;
     }
 
-    public Builder size(String size) {
-      this.size = Optional.present(size);
+    public Builder size(@NotNull Optional<String> size) {
+      this.size = Optional.of(size);
       return this;
     }
 

@@ -5,15 +5,16 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdatePoliciesInput {
-  public final Optional<BookingPolicyInput> bookingPolicy;
+  public final Optional<Optional<BookingPolicyInput>> bookingPolicy;
 
-  public final Optional<UpdateStayPolicyInput> stayPolicy;
+  public final Optional<Optional<UpdateStayPolicyInput>> stayPolicy;
 
   private transient volatile int $hashCode;
 
@@ -21,8 +22,8 @@ public class UpdatePoliciesInput {
 
   private transient volatile String $toString;
 
-  public UpdatePoliciesInput(Optional<BookingPolicyInput> bookingPolicy,
-      Optional<UpdateStayPolicyInput> stayPolicy) {
+  public UpdatePoliciesInput(Optional<Optional<BookingPolicyInput>> bookingPolicy,
+      Optional<Optional<UpdateStayPolicyInput>> stayPolicy) {
     this.bookingPolicy = bookingPolicy;
     this.stayPolicy = stayPolicy;
   }
@@ -70,20 +71,20 @@ public class UpdatePoliciesInput {
   }
 
   public static final class Builder {
-    private Optional<BookingPolicyInput> bookingPolicy = Optional.absent();
+    private Optional<Optional<BookingPolicyInput>> bookingPolicy = Optional.empty();
 
-    private Optional<UpdateStayPolicyInput> stayPolicy = Optional.absent();
+    private Optional<Optional<UpdateStayPolicyInput>> stayPolicy = Optional.empty();
 
     Builder() {
     }
 
-    public Builder bookingPolicy(BookingPolicyInput bookingPolicy) {
-      this.bookingPolicy = Optional.present(bookingPolicy);
+    public Builder bookingPolicy(@NotNull Optional<BookingPolicyInput> bookingPolicy) {
+      this.bookingPolicy = Optional.of(bookingPolicy);
       return this;
     }
 
-    public Builder stayPolicy(UpdateStayPolicyInput stayPolicy) {
-      this.stayPolicy = Optional.present(stayPolicy);
+    public Builder stayPolicy(@NotNull Optional<UpdateStayPolicyInput> stayPolicy) {
+      this.stayPolicy = Optional.of(stayPolicy);
       return this;
     }
 

@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Guest who made the reservation. Guest personal information cannot be set and is automatically generated.
  */
 public class GuestInput {
-  public final Optional<String> loyaltyTier;
+  public final Optional<Optional<String>> loyaltyTier;
 
-  public final Optional<SupplierLoyaltyPlanInfoInput> supplierLoyaltyPlanInfo;
+  public final Optional<Optional<SupplierLoyaltyPlanInfoInput>> supplierLoyaltyPlanInfo;
 
   private transient volatile int $hashCode;
 
@@ -24,8 +25,8 @@ public class GuestInput {
 
   private transient volatile String $toString;
 
-  public GuestInput(Optional<String> loyaltyTier,
-      Optional<SupplierLoyaltyPlanInfoInput> supplierLoyaltyPlanInfo) {
+  public GuestInput(Optional<Optional<String>> loyaltyTier,
+      Optional<Optional<SupplierLoyaltyPlanInfoInput>> supplierLoyaltyPlanInfo) {
     this.loyaltyTier = loyaltyTier;
     this.supplierLoyaltyPlanInfo = supplierLoyaltyPlanInfo;
   }
@@ -73,9 +74,9 @@ public class GuestInput {
   }
 
   public static final class Builder {
-    private Optional<String> loyaltyTier = Optional.absent();
+    private Optional<Optional<String>> loyaltyTier = Optional.empty();
 
-    private Optional<SupplierLoyaltyPlanInfoInput> supplierLoyaltyPlanInfo = Optional.absent();
+    private Optional<Optional<SupplierLoyaltyPlanInfoInput>> supplierLoyaltyPlanInfo = Optional.empty();
 
     Builder() {
     }
@@ -83,16 +84,17 @@ public class GuestInput {
     /**
      * Loyalty tier of the guest. Defaults to "MEMBER".
      */
-    public Builder loyaltyTier(String loyaltyTier) {
-      this.loyaltyTier = Optional.present(loyaltyTier);
+    public Builder loyaltyTier(@NotNull Optional<String> loyaltyTier) {
+      this.loyaltyTier = Optional.of(loyaltyTier);
       return this;
     }
 
     /**
      * Details about the frequent traveler reward program. Defaults to null.
      */
-    public Builder supplierLoyaltyPlanInfo(SupplierLoyaltyPlanInfoInput supplierLoyaltyPlanInfo) {
-      this.supplierLoyaltyPlanInfo = Optional.present(supplierLoyaltyPlanInfo);
+    public Builder supplierLoyaltyPlanInfo(
+        @NotNull Optional<SupplierLoyaltyPlanInfoInput> supplierLoyaltyPlanInfo) {
+      this.supplierLoyaltyPlanInfo = Optional.of(supplierLoyaltyPlanInfo);
       return this;
     }
 

@@ -5,20 +5,21 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Registration record for the bookable unit that has been filed with the governing jurisdiction.
  */
 public class RegistrationRecordInput {
-  public final Optional<String> expiry;
+  public final Optional<Optional<String>> expiry;
 
   public final String registrationNumber;
 
-  public final Optional<RegistrationNumberType> registrationNumberType;
+  public final Optional<Optional<RegistrationNumberType>> registrationNumberType;
 
   private transient volatile int $hashCode;
 
@@ -26,8 +27,8 @@ public class RegistrationRecordInput {
 
   private transient volatile String $toString;
 
-  public RegistrationRecordInput(Optional<String> expiry, String registrationNumber,
-      Optional<RegistrationNumberType> registrationNumberType) {
+  public RegistrationRecordInput(Optional<Optional<String>> expiry, String registrationNumber,
+      Optional<Optional<RegistrationNumberType>> registrationNumberType) {
     this.expiry = expiry;
     this.registrationNumber = registrationNumber;
     this.registrationNumberType = registrationNumberType;
@@ -80,11 +81,11 @@ public class RegistrationRecordInput {
   }
 
   public static final class Builder {
-    private Optional<String> expiry = Optional.absent();
+    private Optional<Optional<String>> expiry = Optional.empty();
 
     private String registrationNumber;
 
-    private Optional<RegistrationNumberType> registrationNumberType = Optional.absent();
+    private Optional<Optional<RegistrationNumberType>> registrationNumberType = Optional.empty();
 
     Builder() {
     }
@@ -92,8 +93,8 @@ public class RegistrationRecordInput {
     /**
      * Registration record expiration date in this format: yyyy-mm-dd
      */
-    public Builder expiry(String expiry) {
-      this.expiry = Optional.present(expiry);
+    public Builder expiry(@NotNull Optional<String> expiry) {
+      this.expiry = Optional.of(expiry);
       return this;
     }
 
@@ -108,8 +109,9 @@ public class RegistrationRecordInput {
     /**
      * Type of registration/license.
      */
-    public Builder registrationNumberType(RegistrationNumberType registrationNumberType) {
-      this.registrationNumberType = Optional.present(registrationNumberType);
+    public Builder registrationNumberType(
+        @NotNull Optional<RegistrationNumberType> registrationNumberType) {
+      this.registrationNumberType = Optional.of(registrationNumberType);
       return this;
     }
 

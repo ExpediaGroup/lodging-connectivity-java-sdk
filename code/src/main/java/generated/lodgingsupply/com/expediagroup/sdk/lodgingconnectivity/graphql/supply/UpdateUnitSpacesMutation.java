@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class UpdateUnitSpacesMutation implements Mutation<UpdateUnitSpacesMutation.Data> {
   public static final String OPERATION_ID = "f9435d59b459773ccf21e9a8022fa78a1405ef342f53bbb303a26ab46b739ab1";
@@ -140,7 +141,7 @@ public class UpdateUnitSpacesMutation implements Mutation<UpdateUnitSpacesMutati
   }
 
   public static class Data implements Mutation.Data {
-    public UpdateUnitSpaces updateUnitSpaces;
+    public Optional<UpdateUnitSpaces> updateUnitSpaces;
 
     private transient volatile int $hashCode;
 
@@ -148,7 +149,7 @@ public class UpdateUnitSpacesMutation implements Mutation<UpdateUnitSpacesMutati
 
     private transient volatile String $toString;
 
-    public Data(UpdateUnitSpaces updateUnitSpaces) {
+    public Data(Optional<UpdateUnitSpaces> updateUnitSpaces) {
       this.updateUnitSpaces = updateUnitSpaces;
     }
 
@@ -188,7 +189,7 @@ public class UpdateUnitSpacesMutation implements Mutation<UpdateUnitSpacesMutati
   }
 
   public static class UpdateUnitSpaces {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     private transient volatile int $hashCode;
 
@@ -196,7 +197,7 @@ public class UpdateUnitSpacesMutation implements Mutation<UpdateUnitSpacesMutati
 
     private transient volatile String $toString;
 
-    public UpdateUnitSpaces(String clientMutationId) {
+    public UpdateUnitSpaces(Optional<String> clientMutationId) {
       this.clientMutationId = clientMutationId;
     }
 

@@ -6,18 +6,19 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ReplaceFeeSetMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ReplaceFeeSetMutation_ResponseAdapter {
   public enum Data implements Adapter<ReplaceFeeSetMutation.Data> {
@@ -28,12 +29,12 @@ public class ReplaceFeeSetMutation_ResponseAdapter {
     @Override
     public ReplaceFeeSetMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      ReplaceFeeSetMutation.ReplaceFeeSet _replaceFeeSet = null;
+      Optional<ReplaceFeeSetMutation.ReplaceFeeSet> _replaceFeeSet = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _replaceFeeSet = new NullableAdapter<>(new ObjectAdapter<ReplaceFeeSetMutation.ReplaceFeeSet>(ReplaceFeeSet.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _replaceFeeSet = new OptionalAdapter<>(new ObjectAdapter<ReplaceFeeSetMutation.ReplaceFeeSet>(ReplaceFeeSet.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -47,7 +48,7 @@ public class ReplaceFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         ReplaceFeeSetMutation.Data value) throws IOException {
       writer.name("replaceFeeSet");
-      new NullableAdapter<>(new ObjectAdapter<ReplaceFeeSetMutation.ReplaceFeeSet>(ReplaceFeeSet.INSTANCE, false)).toJson(writer, customScalarAdapters, value.replaceFeeSet);
+      new OptionalAdapter<>(new ObjectAdapter<ReplaceFeeSetMutation.ReplaceFeeSet>(ReplaceFeeSet.INSTANCE, false)).toJson(writer, customScalarAdapters, value.replaceFeeSet);
     }
   }
 
@@ -59,12 +60,12 @@ public class ReplaceFeeSetMutation_ResponseAdapter {
     @Override
     public ReplaceFeeSetMutation.ReplaceFeeSet fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -78,7 +79,7 @@ public class ReplaceFeeSetMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         ReplaceFeeSetMutation.ReplaceFeeSet value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
     }
   }
 }

@@ -6,11 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DateTimeRangeFilterInput;
@@ -31,13 +28,13 @@ public enum PropertyMessageThreadsFiltersInput_InputAdapter implements Adapter<P
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       PropertyMessageThreadsFiltersInput value) throws IOException {
-    if (value.createdDate instanceof Optional.Present) {
+    if (value.createdDate.isPresent()) {
       writer.name("createdDate");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<DateTimeRangeFilterInput>(DateTimeRangeFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.createdDate);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<DateTimeRangeFilterInput>(DateTimeRangeFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.createdDate);
     }
-    if (value.creationDateTime instanceof Optional.Present) {
+    if (value.creationDateTime.isPresent()) {
       writer.name("creationDateTime");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<DateTimeRangeFilterInput>(DateTimeRangeFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.creationDateTime);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<DateTimeRangeFilterInput>(DateTimeRangeFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.creationDateTime);
     }
   }
 }

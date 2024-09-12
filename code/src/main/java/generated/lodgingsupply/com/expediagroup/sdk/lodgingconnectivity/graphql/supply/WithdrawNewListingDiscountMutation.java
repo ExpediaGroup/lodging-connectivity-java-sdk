@@ -20,6 +20,7 @@ import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class WithdrawNewListingDiscountMutation implements Mutation<WithdrawNewListingDiscountMutation.Data> {
   public static final String OPERATION_ID = "e11c9b197a2a85cdcc47f15ba62c9f88efe840a4b7d3f0d25e41b94ca81f3ea2";
@@ -157,7 +158,7 @@ public class WithdrawNewListingDiscountMutation implements Mutation<WithdrawNewL
     /**
      * Remove new listing discount
      */
-    public Boolean withdrawNewListingDiscount;
+    public Optional<Boolean> withdrawNewListingDiscount;
 
     private transient volatile int $hashCode;
 
@@ -165,7 +166,7 @@ public class WithdrawNewListingDiscountMutation implements Mutation<WithdrawNewL
 
     private transient volatile String $toString;
 
-    public Data(Boolean withdrawNewListingDiscount) {
+    public Data(Optional<Boolean> withdrawNewListingDiscount) {
       this.withdrawNewListingDiscount = withdrawNewListingDiscount;
     }
 

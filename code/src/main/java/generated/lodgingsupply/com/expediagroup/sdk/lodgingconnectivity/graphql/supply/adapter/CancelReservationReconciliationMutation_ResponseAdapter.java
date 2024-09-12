@@ -9,16 +9,17 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.CancelReservationReconciliationMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CancelReservationReconciliationMutation_ResponseAdapter {
   public enum Data implements Adapter<CancelReservationReconciliationMutation.Data> {
@@ -62,12 +63,12 @@ public class CancelReservationReconciliationMutation_ResponseAdapter {
     @Override
     public CancelReservationReconciliationMutation.CancelReservationReconciliation fromJson(
         JsonReader reader, CustomScalarAdapters customScalarAdapters) throws IOException {
-      CancelReservationReconciliationMutation.Reservation _reservation = null;
+      Optional<CancelReservationReconciliationMutation.Reservation> _reservation = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _reservation = new NullableAdapter<>(new ObjectAdapter<CancelReservationReconciliationMutation.Reservation>(Reservation.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _reservation = new OptionalAdapter<>(new ObjectAdapter<CancelReservationReconciliationMutation.Reservation>(Reservation.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -82,7 +83,7 @@ public class CancelReservationReconciliationMutation_ResponseAdapter {
         CancelReservationReconciliationMutation.CancelReservationReconciliation value) throws
         IOException {
       writer.name("reservation");
-      new NullableAdapter<>(new ObjectAdapter<CancelReservationReconciliationMutation.Reservation>(Reservation.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservation);
+      new OptionalAdapter<>(new ObjectAdapter<CancelReservationReconciliationMutation.Reservation>(Reservation.INSTANCE, false)).toJson(writer, customScalarAdapters, value.reservation);
     }
   }
 

@@ -22,7 +22,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class CreatePropertyImageMutation implements Mutation<CreatePropertyImageMutation.Data> {
   public static final String OPERATION_ID = "e4272abc82084162c91a870dc69fc487da57c2528bbf3d5f097caf5399e5ba5b";
@@ -167,7 +169,7 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
   }
 
   public static class Data implements Mutation.Data {
-    public CreatePropertyImage createPropertyImage;
+    public Optional<CreatePropertyImage> createPropertyImage;
 
     private transient volatile int $hashCode;
 
@@ -175,7 +177,7 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
 
     private transient volatile String $toString;
 
-    public Data(CreatePropertyImage createPropertyImage) {
+    public Data(Optional<CreatePropertyImage> createPropertyImage) {
       this.createPropertyImage = createPropertyImage;
     }
 
@@ -215,9 +217,9 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
   }
 
   public static class CreatePropertyImage {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
-    public Image image;
+    public Optional<Image> image;
 
     private transient volatile int $hashCode;
 
@@ -225,7 +227,7 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
 
     private transient volatile String $toString;
 
-    public CreatePropertyImage(String clientMutationId, Image image) {
+    public CreatePropertyImage(Optional<String> clientMutationId, Optional<Image> image) {
       this.clientMutationId = clientMutationId;
       this.image = image;
     }
@@ -276,17 +278,17 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
 
     public Boolean featured;
 
-    public String fileName;
+    public Optional<String> fileName;
 
     public String id;
 
-    public Integer order;
+    public Optional<Integer> order;
 
-    public String originalUrl;
+    public Optional<String> originalUrl;
 
-    public Property property;
+    public Optional<Property> property;
 
-    public String publishedUrl;
+    public Optional<String> publishedUrl;
 
     /**
      * Clockwise rotation to be applied to the image. Accepted values are 0, 90, 180 and 270. Defaults to 0 when not provided.
@@ -297,7 +299,7 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
 
     public Status status;
 
-    public Object updatedDate;
+    public OffsetDateTime updatedDate;
 
     private transient volatile int $hashCode;
 
@@ -305,9 +307,10 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
 
     private transient volatile String $toString;
 
-    public Image(Boolean active, List<Caption> captions, Boolean featured, String fileName,
-        String id, Integer order, String originalUrl, Property property, String publishedUrl,
-        Integer rotation, ImageSource source, Status status, Object updatedDate) {
+    public Image(Boolean active, List<Caption> captions, Boolean featured,
+        Optional<String> fileName, String id, Optional<Integer> order, Optional<String> originalUrl,
+        Optional<Property> property, Optional<String> publishedUrl, Integer rotation,
+        ImageSource source, Status status, OffsetDateTime updatedDate) {
       this.active = active;
       this.captions = captions;
       this.featured = featured;
@@ -513,7 +516,7 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
   }
 
   public static class Status {
-    public String reason;
+    public Optional<String> reason;
 
     public String type;
 
@@ -523,7 +526,7 @@ public class CreatePropertyImageMutation implements Mutation<CreatePropertyImage
 
     private transient volatile String $toString;
 
-    public Status(String reason, String type) {
+    public Status(Optional<String> reason, String type) {
       this.reason = reason;
       this.type = type;
     }

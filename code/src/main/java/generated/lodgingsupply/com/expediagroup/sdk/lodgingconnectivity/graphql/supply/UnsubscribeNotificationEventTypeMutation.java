@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class UnsubscribeNotificationEventTypeMutation implements Mutation<UnsubscribeNotificationEventTypeMutation.Data> {
   public static final String OPERATION_ID = "9ac23bf9a6e76de9b1eb6ae092993e4f7cabe346818e55bc8f0334dc73e34748";
@@ -143,7 +144,7 @@ public class UnsubscribeNotificationEventTypeMutation implements Mutation<Unsubs
     /**
      * Unsubscribe from notification event type for a given notification subscription profile.
      */
-    public UnsubscribeNotificationEventType unsubscribeNotificationEventType;
+    public Optional<UnsubscribeNotificationEventType> unsubscribeNotificationEventType;
 
     private transient volatile int $hashCode;
 
@@ -151,7 +152,7 @@ public class UnsubscribeNotificationEventTypeMutation implements Mutation<Unsubs
 
     private transient volatile String $toString;
 
-    public Data(UnsubscribeNotificationEventType unsubscribeNotificationEventType) {
+    public Data(Optional<UnsubscribeNotificationEventType> unsubscribeNotificationEventType) {
       this.unsubscribeNotificationEventType = unsubscribeNotificationEventType;
     }
 

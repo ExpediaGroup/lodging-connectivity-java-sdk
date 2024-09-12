@@ -6,11 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ExactOrApproximateTimeInput;
@@ -31,9 +28,9 @@ public enum ExactOrApproximateTimeRangeInput_InputAdapter implements Adapter<Exa
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       ExactOrApproximateTimeRangeInput value) throws IOException {
-    if (value.end instanceof Optional.Present) {
+    if (value.end.isPresent()) {
       writer.name("end");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<ExactOrApproximateTimeInput>(ExactOrApproximateTimeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.end);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<ExactOrApproximateTimeInput>(ExactOrApproximateTimeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.end);
     }
     writer.name("start");
     new ObjectAdapter<ExactOrApproximateTimeInput>(ExactOrApproximateTimeInput_InputAdapter.INSTANCE, false).toJson(writer, customScalarAdapters, value.start);

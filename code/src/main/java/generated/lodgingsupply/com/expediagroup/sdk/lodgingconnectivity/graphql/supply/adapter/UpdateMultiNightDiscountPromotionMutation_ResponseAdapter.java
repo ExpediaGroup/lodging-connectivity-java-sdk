@@ -14,7 +14,6 @@ import com.apollographql.apollo.api.BooleanExpression;
 import com.apollographql.apollo.api.BooleanExpressions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -27,6 +26,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PromotionSel
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PromotionStatus;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.DiscountType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.DiscountUnit_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PromotionCategory_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PromotionName_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PromotionSellStatus_ResponseAdapter;
@@ -35,13 +36,14 @@ import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
   public enum Data implements Adapter<UpdateMultiNightDiscountPromotionMutation.Data> {
@@ -88,9 +90,9 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       String __typename = null;
       PromotionCategory _category = null;
       String _id = null;
-      Boolean _isContractedPromotion = null;
+      Optional<Boolean> _isContractedPromotion = null;
       PromotionName _name = null;
-      PromotionSellStatus _sellStatus = null;
+      Optional<PromotionSellStatus> _sellStatus = null;
       PromotionStatus _status = null;
 
       loop:
@@ -99,19 +101,19 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
           case 0: __typename = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _category = PromotionCategory_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 2: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _isContractedPromotion = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _isContractedPromotion = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _name = PromotionName_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 5: _sellStatus = new NullableAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 5: _sellStatus = new OptionalAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           case 6: _status = PromotionStatus_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
 
       Assertions.checkFieldNotMissing(__typename, "__typename");
-      UpdateMultiNightDiscountPromotionMutation.OnDiscountPromotion _onDiscountPromotion = null;
+      Optional<UpdateMultiNightDiscountPromotionMutation.OnDiscountPromotion> _onDiscountPromotion = Optional.empty();
       if (BooleanExpressions.evaluate(new BooleanExpression.Element<BTerm>(new BPossibleTypes("DiscountPromotion")), customScalarAdapters.falseVariables, __typename, customScalarAdapters.deferredFragmentIdentifiers, null)) {
         reader.rewind();
-        _onDiscountPromotion = com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnDiscountPromotion.INSTANCE.fromJson(reader, customScalarAdapters);
+        _onDiscountPromotion = Optional.of(com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnDiscountPromotion.INSTANCE.fromJson(reader, customScalarAdapters));
       }
 
       Assertions.checkFieldNotMissing(_category, "category");
@@ -145,19 +147,19 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("isContractedPromotion");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isContractedPromotion);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isContractedPromotion);
 
       writer.name("name");
       PromotionName_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("sellStatus");
-      new NullableAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.sellStatus);
+      new OptionalAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.sellStatus);
 
       writer.name("status");
       PromotionStatus_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.status);
 
-      if (value.onDiscountPromotion != null) {
-        com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnDiscountPromotion.INSTANCE.toJson(writer, customScalarAdapters, value.onDiscountPromotion);
+      if (value.onDiscountPromotion.isPresent()) {
+        com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnDiscountPromotion.INSTANCE.toJson(writer, customScalarAdapters, value.onDiscountPromotion.get());
       }
     }
   }
@@ -175,12 +177,12 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       PromotionCategory _category = null;
       PromotionStatus _status = null;
       String _code = null;
-      UpdateMultiNightDiscountPromotionMutation.Restrictions _restrictions = null;
+      Optional<UpdateMultiNightDiscountPromotionMutation.Restrictions> _restrictions = null;
       List<UpdateMultiNightDiscountPromotionMutation.EligibleRatePlan> _eligibleRatePlans = null;
-      List<UpdateMultiNightDiscountPromotionMutation.BlackoutDate> _blackoutDates = null;
-      UpdateMultiNightDiscountPromotionMutation.Discount _discount = null;
-      PromotionSellStatus _sellStatus = null;
-      Boolean _isContractedPromotion = null;
+      Optional<List<UpdateMultiNightDiscountPromotionMutation.BlackoutDate>> _blackoutDates = null;
+      Optional<UpdateMultiNightDiscountPromotionMutation.Discount> _discount = null;
+      Optional<PromotionSellStatus> _sellStatus = null;
+      Optional<Boolean> _isContractedPromotion = null;
 
       loop:
       while(true) {
@@ -190,12 +192,12 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
           case 2: _category = PromotionCategory_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 3: _status = PromotionStatus_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 4: _code = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _restrictions = new NullableAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 5: _restrictions = new OptionalAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Restrictions>(Restrictions.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 6: _eligibleRatePlans = new ListAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.EligibleRatePlan>(EligibleRatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 7: _blackoutDates = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.BlackoutDate>(BlackoutDate.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
-          case 8: _discount = new NullableAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Discount>(Discount.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
-          case 9: _sellStatus = new NullableAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 10: _isContractedPromotion = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _blackoutDates = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.BlackoutDate>(BlackoutDate.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 8: _discount = new OptionalAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Discount>(Discount.INSTANCE, true)).fromJson(reader, customScalarAdapters); break;
+          case 9: _sellStatus = new OptionalAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 10: _isContractedPromotion = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -241,22 +243,22 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.code);
 
       writer.name("restrictions");
-      new NullableAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Restrictions>(Restrictions.INSTANCE, false)).toJson(writer, customScalarAdapters, value.restrictions);
 
       writer.name("eligibleRatePlans");
       new ListAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.EligibleRatePlan>(EligibleRatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.eligibleRatePlans);
 
       writer.name("blackoutDates");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.BlackoutDate>(BlackoutDate.INSTANCE, false))).toJson(writer, customScalarAdapters, value.blackoutDates);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.BlackoutDate>(BlackoutDate.INSTANCE, false))).toJson(writer, customScalarAdapters, value.blackoutDates);
 
       writer.name("discount");
-      new NullableAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Discount>(Discount.INSTANCE, true)).toJson(writer, customScalarAdapters, value.discount);
+      new OptionalAdapter<>(new ObjectAdapter<UpdateMultiNightDiscountPromotionMutation.Discount>(Discount.INSTANCE, true)).toJson(writer, customScalarAdapters, value.discount);
 
       writer.name("sellStatus");
-      new NullableAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.sellStatus);
+      new OptionalAdapter<>(PromotionSellStatus_ResponseAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.sellStatus);
 
       writer.name("isContractedPromotion");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isContractedPromotion);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isContractedPromotion);
     }
   }
 
@@ -268,32 +270,32 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
     @Override
     public UpdateMultiNightDiscountPromotionMutation.Restrictions fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Boolean _isMemberOnly = null;
-      Boolean _isMobileUserOnly = null;
-      Integer _minLengthOfStay = null;
-      Integer _maxLengthOfStay = null;
-      Integer _minAdvanceBookingDays = null;
-      Integer _maxAdvanceBookingDays = null;
-      LocalDateTime _bookingLocalDateTimeFrom = null;
-      LocalDateTime _bookingLocalDateTimeTo = null;
-      LocalDate _travelDateFrom = null;
-      LocalDate _travelDateTo = null;
-      Object _sameDayBookingStartTime = null;
+      Optional<Boolean> _isMemberOnly = null;
+      Optional<Boolean> _isMobileUserOnly = null;
+      Optional<Integer> _minLengthOfStay = null;
+      Optional<Integer> _maxLengthOfStay = null;
+      Optional<Integer> _minAdvanceBookingDays = null;
+      Optional<Integer> _maxAdvanceBookingDays = null;
+      Optional<LocalDateTime> _bookingLocalDateTimeFrom = null;
+      Optional<LocalDateTime> _bookingLocalDateTimeTo = null;
+      Optional<LocalDate> _travelDateFrom = null;
+      Optional<LocalDate> _travelDateTo = null;
+      Optional<LocalTime> _sameDayBookingStartTime = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _isMemberOnly = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _isMobileUserOnly = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _minLengthOfStay = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _maxLengthOfStay = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _minAdvanceBookingDays = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _maxAdvanceBookingDays = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 6: _bookingLocalDateTimeFrom = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 7: _bookingLocalDateTimeTo = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 8: _travelDateFrom = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 9: _travelDateTo = new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
-          case 10: _sameDayBookingStartTime = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _isMemberOnly = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _isMobileUserOnly = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _minLengthOfStay = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _maxLengthOfStay = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 4: _minAdvanceBookingDays = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _maxAdvanceBookingDays = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 6: _bookingLocalDateTimeFrom = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 7: _bookingLocalDateTimeTo = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 8: _travelDateFrom = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 9: _travelDateTo = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
+          case 10: _sameDayBookingStartTime = new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalTimeAdapter.INSTANCE).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -317,37 +319,37 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         UpdateMultiNightDiscountPromotionMutation.Restrictions value) throws IOException {
       writer.name("isMemberOnly");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isMemberOnly);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isMemberOnly);
 
       writer.name("isMobileUserOnly");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isMobileUserOnly);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isMobileUserOnly);
 
       writer.name("minLengthOfStay");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.minLengthOfStay);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.minLengthOfStay);
 
       writer.name("maxLengthOfStay");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.maxLengthOfStay);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.maxLengthOfStay);
 
       writer.name("minAdvanceBookingDays");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.minAdvanceBookingDays);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.minAdvanceBookingDays);
 
       writer.name("maxAdvanceBookingDays");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.maxAdvanceBookingDays);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.maxAdvanceBookingDays);
 
       writer.name("bookingLocalDateTimeFrom");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeFrom);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeFrom);
 
       writer.name("bookingLocalDateTimeTo");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeTo);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.bookingLocalDateTimeTo);
 
       writer.name("travelDateFrom");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.travelDateFrom);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.travelDateFrom);
 
       writer.name("travelDateTo");
-      new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.travelDateTo);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.travelDateTo);
 
       writer.name("sameDayBookingStartTime");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.sameDayBookingStartTime);
+      new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalTimeAdapter.INSTANCE).toJson(writer, customScalarAdapters, value.sameDayBookingStartTime);
     }
   }
 
@@ -443,10 +445,10 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       }
 
       Assertions.checkFieldNotMissing(__typename, "__typename");
-      UpdateMultiNightDiscountPromotionMutation.OnMultiNightDiscount _onMultiNightDiscount = null;
+      Optional<UpdateMultiNightDiscountPromotionMutation.OnMultiNightDiscount> _onMultiNightDiscount = Optional.empty();
       if (BooleanExpressions.evaluate(new BooleanExpression.Element<BTerm>(new BPossibleTypes("MultiNightDiscount")), customScalarAdapters.falseVariables, __typename, customScalarAdapters.deferredFragmentIdentifiers, null)) {
         reader.rewind();
-        _onMultiNightDiscount = com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnMultiNightDiscount.INSTANCE.fromJson(reader, customScalarAdapters);
+        _onMultiNightDiscount = Optional.of(com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnMultiNightDiscount.INSTANCE.fromJson(reader, customScalarAdapters));
       }
 
       return new UpdateMultiNightDiscountPromotionMutation.Discount(
@@ -461,8 +463,8 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       writer.name("__typename");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.__typename);
 
-      if (value.onMultiNightDiscount != null) {
-        com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnMultiNightDiscount.INSTANCE.toJson(writer, customScalarAdapters, value.onMultiNightDiscount);
+      if (value.onMultiNightDiscount.isPresent()) {
+        com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.UpdateMultiNightDiscountPromotionMutation_ResponseAdapter.OnMultiNightDiscount.INSTANCE.toJson(writer, customScalarAdapters, value.onMultiNightDiscount.get());
       }
     }
   }
@@ -478,9 +480,9 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       DiscountType _type = null;
       DiscountUnit _unit = null;
       Double _value = null;
-      Double _memberOnlyAdditionalValue = null;
+      Optional<Double> _memberOnlyAdditionalValue = null;
       Integer _applicableNight = null;
-      Boolean _isRecurring = null;
+      Optional<Boolean> _isRecurring = null;
 
       loop:
       while(true) {
@@ -488,9 +490,9 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
           case 0: _type = DiscountType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 1: _unit = DiscountUnit_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 2: _value = Adapters.DoubleAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _memberOnlyAdditionalValue = Adapters.NullableDoubleAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _memberOnlyAdditionalValue = OptionalAdapters.OptionalDoubleAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _applicableNight = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _isRecurring = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _isRecurring = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -523,13 +525,13 @@ public class UpdateMultiNightDiscountPromotionMutation_ResponseAdapter {
       Adapters.DoubleAdapter.toJson(writer, customScalarAdapters, value.value);
 
       writer.name("memberOnlyAdditionalValue");
-      Adapters.NullableDoubleAdapter.toJson(writer, customScalarAdapters, value.memberOnlyAdditionalValue);
+      OptionalAdapters.OptionalDoubleAdapter.toJson(writer, customScalarAdapters, value.memberOnlyAdditionalValue);
 
       writer.name("applicableNight");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.applicableNight);
 
       writer.name("isRecurring");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.isRecurring);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.isRecurring);
     }
   }
 }

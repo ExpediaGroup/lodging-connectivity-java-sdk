@@ -5,21 +5,22 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Unit level tax records
  */
 public class SetPropertyTaxRecordInput {
-  public final Optional<List<RegulatoryAttributeInput>> attributes;
+  public final Optional<Optional<List<RegulatoryAttributeInput>>> attributes;
 
   public final String categoryCode;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String propertyId;
 
@@ -29,8 +30,8 @@ public class SetPropertyTaxRecordInput {
 
   private transient volatile String $toString;
 
-  public SetPropertyTaxRecordInput(Optional<List<RegulatoryAttributeInput>> attributes,
-      String categoryCode, Optional<String> clientMutationId, String propertyId) {
+  public SetPropertyTaxRecordInput(Optional<Optional<List<RegulatoryAttributeInput>>> attributes,
+      String categoryCode, Optional<Optional<String>> clientMutationId, String propertyId) {
     this.attributes = attributes;
     this.categoryCode = categoryCode;
     this.clientMutationId = clientMutationId;
@@ -88,11 +89,11 @@ public class SetPropertyTaxRecordInput {
   }
 
   public static final class Builder {
-    private Optional<List<RegulatoryAttributeInput>> attributes = Optional.absent();
+    private Optional<Optional<List<RegulatoryAttributeInput>>> attributes = Optional.empty();
 
     private String categoryCode;
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String propertyId;
 
@@ -102,8 +103,8 @@ public class SetPropertyTaxRecordInput {
     /**
      * List of constituent values for the tax record as key/value pairs
      */
-    public Builder attributes(List<RegulatoryAttributeInput> attributes) {
-      this.attributes = Optional.present(attributes);
+    public Builder attributes(@NotNull Optional<List<RegulatoryAttributeInput>> attributes) {
+      this.attributes = Optional.of(attributes);
       return this;
     }
 
@@ -115,8 +116,8 @@ public class SetPropertyTaxRecordInput {
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 

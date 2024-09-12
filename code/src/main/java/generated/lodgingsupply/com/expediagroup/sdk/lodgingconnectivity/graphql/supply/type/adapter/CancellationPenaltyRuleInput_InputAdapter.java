@@ -6,19 +6,17 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancellationPenaltyRuleInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Decimal;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.MoneyInput;
 import java.io.IOException;
 import java.lang.IllegalStateException;
 import java.lang.Override;
+import java.lang.String;
 
 public enum CancellationPenaltyRuleInput_InputAdapter implements Adapter<CancellationPenaltyRuleInput> {
   INSTANCE;
@@ -34,17 +32,17 @@ public enum CancellationPenaltyRuleInput_InputAdapter implements Adapter<Cancell
       CancellationPenaltyRuleInput value) throws IOException {
     writer.name("applicability");
     CancellationPenaltyRuleApplicability_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.applicability);
-    if (value.flatAmount instanceof Optional.Present) {
+    if (value.flatAmount.isPresent()) {
       writer.name("flatAmount");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<MoneyInput>(MoneyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.flatAmount);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<MoneyInput>(MoneyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.flatAmount);
     }
-    if (value.numberOfNights instanceof Optional.Present) {
+    if (value.numberOfNights.isPresent()) {
       writer.name("numberOfNights");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.numberOfNights);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.numberOfNights);
     }
-    if (value.percentage instanceof Optional.Present) {
+    if (value.percentage.isPresent()) {
       writer.name("percentage");
-      new ApolloOptionalAdapter<>(Adapters.NullableAnyAdapter).toJson(writer, customScalarAdapters, value.percentage);
+      new OptionalAdapter<>(new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type)))).toJson(writer, customScalarAdapters, value.percentage);
     }
     writer.name("type");
     CancellationPenaltyRuleType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);

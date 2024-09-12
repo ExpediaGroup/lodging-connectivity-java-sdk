@@ -14,12 +14,14 @@ import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCancelReservationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ReservationStatus;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.ReservationStatus_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxCancelReservationMutation_ResponseAdapter {
   public enum Data implements Adapter<SandboxCancelReservationMutation.Data> {
@@ -63,13 +65,13 @@ public class SandboxCancelReservationMutation_ResponseAdapter {
     @Override
     public SandboxCancelReservationMutation.CancelReservation fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       SandboxCancelReservationMutation.Reservation _reservation = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _reservation = new ObjectAdapter<SandboxCancelReservationMutation.Reservation>(Reservation.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -87,7 +89,7 @@ public class SandboxCancelReservationMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SandboxCancelReservationMutation.CancelReservation value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("reservation");
       new ObjectAdapter<SandboxCancelReservationMutation.Reservation>(Reservation.INSTANCE, false).toJson(writer, customScalarAdapters, value.reservation);

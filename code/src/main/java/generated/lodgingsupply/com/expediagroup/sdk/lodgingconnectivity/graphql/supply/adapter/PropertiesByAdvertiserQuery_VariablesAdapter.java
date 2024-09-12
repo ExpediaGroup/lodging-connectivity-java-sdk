@@ -6,12 +6,11 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertiesByAdvertiserQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.IdSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 
 public enum PropertiesByAdvertiserQuery_VariablesAdapter {
@@ -23,13 +22,9 @@ public enum PropertiesByAdvertiserQuery_VariablesAdapter {
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
     writer.name("idSource");
     IdSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.idSource);
-    if (value.pageSize instanceof Optional.Present) {
-      writer.name("pageSize");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.pageSize);
-    }
-    if (value.cursor instanceof Optional.Present) {
-      writer.name("cursor");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.cursor);
-    }
+    writer.name("pageSize");
+    OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.pageSize);
+    writer.name("cursor");
+    OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
   }
 }

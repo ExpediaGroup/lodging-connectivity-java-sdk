@@ -5,32 +5,33 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CreatePropertyImageInput {
-  public final Optional<Boolean> active;
+  public final Optional<Optional<Boolean>> active;
 
-  public final Optional<List<LocalizedStringInput>> captions;
+  public final Optional<Optional<List<LocalizedStringInput>>> captions;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
-  public final Optional<Boolean> featured;
+  public final Optional<Optional<Boolean>> featured;
 
-  public final Optional<String> fileName;
+  public final Optional<Optional<String>> fileName;
 
   public final String fileUrl;
 
-  public final Optional<Integer> order;
+  public final Optional<Optional<Integer>> order;
 
   public final String propertyId;
 
-  public final Optional<Integer> rotation;
+  public final Optional<Optional<Integer>> rotation;
 
   private transient volatile int $hashCode;
 
@@ -38,10 +39,11 @@ public class CreatePropertyImageInput {
 
   private transient volatile String $toString;
 
-  public CreatePropertyImageInput(Optional<Boolean> active,
-      Optional<List<LocalizedStringInput>> captions, Optional<String> clientMutationId,
-      Optional<Boolean> featured, Optional<String> fileName, String fileUrl,
-      Optional<Integer> order, String propertyId, Optional<Integer> rotation) {
+  public CreatePropertyImageInput(Optional<Optional<Boolean>> active,
+      Optional<Optional<List<LocalizedStringInput>>> captions,
+      Optional<Optional<String>> clientMutationId, Optional<Optional<Boolean>> featured,
+      Optional<Optional<String>> fileName, String fileUrl, Optional<Optional<Integer>> order,
+      String propertyId, Optional<Optional<Integer>> rotation) {
     this.active = active;
     this.captions = captions;
     this.clientMutationId = clientMutationId;
@@ -124,52 +126,52 @@ public class CreatePropertyImageInput {
   }
 
   public static final class Builder {
-    private Optional<Boolean> active = Optional.absent();
+    private Optional<Optional<Boolean>> active = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> captions = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> captions = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
-    private Optional<Boolean> featured = Optional.absent();
+    private Optional<Optional<Boolean>> featured = Optional.empty();
 
-    private Optional<String> fileName = Optional.absent();
+    private Optional<Optional<String>> fileName = Optional.empty();
 
     private String fileUrl;
 
-    private Optional<Integer> order = Optional.absent();
+    private Optional<Optional<Integer>> order = Optional.empty();
 
     private String propertyId;
 
-    private Optional<Integer> rotation = Optional.absent();
+    private Optional<Optional<Integer>> rotation = Optional.empty();
 
     Builder() {
     }
 
-    public Builder active(Boolean active) {
-      this.active = Optional.present(active);
+    public Builder active(@NotNull Optional<Boolean> active) {
+      this.active = Optional.of(active);
       return this;
     }
 
-    public Builder captions(List<LocalizedStringInput> captions) {
-      this.captions = Optional.present(captions);
+    public Builder captions(@NotNull Optional<List<LocalizedStringInput>> captions) {
+      this.captions = Optional.of(captions);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
-    public Builder featured(Boolean featured) {
-      this.featured = Optional.present(featured);
+    public Builder featured(@NotNull Optional<Boolean> featured) {
+      this.featured = Optional.of(featured);
       return this;
     }
 
     /**
      * Original file name of the image. If the file name is not provided, one will be automatically generated.
      */
-    public Builder fileName(String fileName) {
-      this.fileName = Optional.present(fileName);
+    public Builder fileName(@NotNull Optional<String> fileName) {
+      this.fileName = Optional.of(fileName);
       return this;
     }
 
@@ -178,8 +180,8 @@ public class CreatePropertyImageInput {
       return this;
     }
 
-    public Builder order(Integer order) {
-      this.order = Optional.present(order);
+    public Builder order(@NotNull Optional<Integer> order) {
+      this.order = Optional.of(order);
       return this;
     }
 
@@ -188,8 +190,8 @@ public class CreatePropertyImageInput {
       return this;
     }
 
-    public Builder rotation(Integer rotation) {
-      this.rotation = Optional.present(rotation);
+    public Builder rotation(@NotNull Optional<Integer> rotation) {
+      this.rotation = Optional.of(rotation);
       return this;
     }
 

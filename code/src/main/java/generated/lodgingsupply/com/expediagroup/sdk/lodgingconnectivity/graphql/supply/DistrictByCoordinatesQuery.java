@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.DistrictByCoordinatesQuery_ResponseAdapter;
@@ -27,6 +26,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
 
 public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQuery.Data> {
   public static final String OPERATION_ID = "63d3b6d7b12195c2226160a32dd6930b726459a626d122ca027a0b547e535001";
@@ -204,7 +204,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private Double longitude;
 
-    private Optional<String> locale = Optional.absent();
+    private Optional<String> locale = Optional.empty();
 
     Builder() {
     }
@@ -220,7 +220,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     }
 
     public Builder locale(String locale) {
-      this.locale = Optional.present(locale);
+      this.locale = Optional.of(locale);
       return this;
     }
 
@@ -233,7 +233,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * retrieve District information by latitude/longitude coordinates and optionally locale
      */
-    public DistrictByCoordinates districtByCoordinates;
+    public Optional<DistrictByCoordinates> districtByCoordinates;
 
     private transient volatile int $hashCode;
 
@@ -241,7 +241,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public Data(DistrictByCoordinates districtByCoordinates) {
+    public Data(Optional<DistrictByCoordinates> districtByCoordinates) {
       this.districtByCoordinates = districtByCoordinates;
     }
 
@@ -289,22 +289,22 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Description of the district regulation.
      */
-    public String description;
+    public Optional<String> description;
 
     /**
      * Localized district name that can be used for display.
      */
-    public String localizedName;
+    public Optional<String> localizedName;
 
     /**
      * Four-character locale code (language and country codes) of property's local district (such as ja-JP for a property in Japan).
      */
-    public String nativeLocale;
+    public Optional<String> nativeLocale;
 
     /**
      * URL to jurisdiction regulation information.
      */
-    public List<String> referenceUrls;
+    public Optional<List<Optional<String>>> referenceUrls;
 
     /**
      * Whether registration is required by the jurisdiction.
@@ -314,12 +314,12 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * List of legal property types.
      */
-    public List<LegalPropertyType> legalPropertyTypes;
+    public List<Optional<LegalPropertyType>> legalPropertyTypes;
 
     /**
      * Jurisdiction regulations that the partner needs to meet to comply with onboarding.
      */
-    public List<Requirement> requirements;
+    public Optional<List<Optional<Requirement>>> requirements;
 
     private transient volatile int $hashCode;
 
@@ -327,9 +327,11 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public DistrictByCoordinates(String id, String description, String localizedName,
-        String nativeLocale, List<String> referenceUrls, Boolean registrationRequired,
-        List<LegalPropertyType> legalPropertyTypes, List<Requirement> requirements) {
+    public DistrictByCoordinates(String id, Optional<String> description,
+        Optional<String> localizedName, Optional<String> nativeLocale,
+        Optional<List<Optional<String>>> referenceUrls, Boolean registrationRequired,
+        List<Optional<LegalPropertyType>> legalPropertyTypes,
+        Optional<List<Optional<Requirement>>> requirements) {
       this.id = id;
       this.description = description;
       this.localizedName = localizedName;
@@ -407,12 +409,12 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Legal property subtype, applicable for residences, such as primary home or secondary home.
      */
-    public String subtype;
+    public Optional<String> subtype;
 
     /**
      * Legal property type, such as hotel, bed and breakfast, residence, etc.
      */
-    public String type;
+    public Optional<String> type;
 
     private transient volatile int $hashCode;
 
@@ -420,7 +422,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public LegalPropertyType(String subtype, String type) {
+    public LegalPropertyType(Optional<String> subtype, Optional<String> type) {
       this.subtype = subtype;
       this.type = type;
     }
@@ -468,17 +470,17 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Property regulatory category where the registration number requirements apply.
      */
-    public RegulatoryCategory regulatoryCategory;
+    public Optional<RegulatoryCategory> regulatoryCategory;
 
     /**
      * Localized string of the regulatory category.
      */
-    public String regulatoryCategoryLabel;
+    public Optional<String> regulatoryCategoryLabel;
 
     /**
      * Whether this regulatory category is a vacation rental.
      */
-    public Boolean isVacationRental;
+    public Optional<Boolean> isVacationRental;
 
     /**
      * Minimum number of stay nights for this category (default is 1).
@@ -488,27 +490,27 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Additional required regulation data by jurisdiction, such as license holder name or property address.
      */
-    public List<AdditionalDataRequirement> additionalDataRequirements;
+    public Optional<List<Optional<AdditionalDataRequirement>>> additionalDataRequirements;
 
     /**
      * Exemptions of a requirement under certain conditions.
      */
-    public List<Exemption> exemptions;
+    public Optional<List<Optional<Exemption>>> exemptions;
 
     /**
      * Maximum number of nights allowed by the jurisdiction. null means no requirement.
      */
-    public MaxNightCap maxNightCap;
+    public Optional<MaxNightCap> maxNightCap;
 
     /**
      * Regulation requirement that EG supports.
      */
-    public List<QualifiedPropertyType> qualifiedPropertyTypes;
+    public Optional<List<Optional<QualifiedPropertyType>>> qualifiedPropertyTypes;
 
     /**
      * List of registration number requirements.
      */
-    public List<RegistrationNumberRequirement> registrationNumberRequirements;
+    public Optional<List<RegistrationNumberRequirement>> registrationNumberRequirements;
 
     private transient volatile int $hashCode;
 
@@ -516,11 +518,13 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public Requirement(RegulatoryCategory regulatoryCategory, String regulatoryCategoryLabel,
-        Boolean isVacationRental, Integer minStayNights,
-        List<AdditionalDataRequirement> additionalDataRequirements, List<Exemption> exemptions,
-        MaxNightCap maxNightCap, List<QualifiedPropertyType> qualifiedPropertyTypes,
-        List<RegistrationNumberRequirement> registrationNumberRequirements) {
+    public Requirement(Optional<RegulatoryCategory> regulatoryCategory,
+        Optional<String> regulatoryCategoryLabel, Optional<Boolean> isVacationRental,
+        Integer minStayNights,
+        Optional<List<Optional<AdditionalDataRequirement>>> additionalDataRequirements,
+        Optional<List<Optional<Exemption>>> exemptions, Optional<MaxNightCap> maxNightCap,
+        Optional<List<Optional<QualifiedPropertyType>>> qualifiedPropertyTypes,
+        Optional<List<RegistrationNumberRequirement>> registrationNumberRequirements) {
       this.regulatoryCategory = regulatoryCategory;
       this.regulatoryCategoryLabel = regulatoryCategoryLabel;
       this.isVacationRental = isVacationRental;
@@ -603,17 +607,17 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Grouping to which the field belongs, for UI layout purposes.
      */
-    public String group;
+    public Optional<String> group;
 
     /**
      * Description of the group, to be localized.
      */
-    public String groupLocalized;
+    public Optional<String> groupLocalized;
 
     /**
      * Whether the data is optional.
      */
-    public String isOptional;
+    public Optional<String> isOptional;
 
     /**
      * Field name for the information to be captured.
@@ -623,27 +627,27 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Description of the key, to be localized.
      */
-    public String keyLocalized;
+    public Optional<String> keyLocalized;
 
     /**
      * Subtype of data.
      */
-    public String subtype;
+    public Optional<String> subtype;
 
     /**
      * Description of subtype, to be localized.
      */
-    public String subtypeLocalized;
+    public Optional<String> subtypeLocalized;
 
     /**
      * Type of data.
      */
-    public String type;
+    public Optional<String> type;
 
     /**
      * Description of type, to be localized.
      */
-    public String typeLocalized;
+    public Optional<String> typeLocalized;
 
     private transient volatile int $hashCode;
 
@@ -651,9 +655,10 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public AdditionalDataRequirement(String group, String groupLocalized, String isOptional,
-        String key, String keyLocalized, String subtype, String subtypeLocalized, String type,
-        String typeLocalized) {
+    public AdditionalDataRequirement(Optional<String> group, Optional<String> groupLocalized,
+        Optional<String> isOptional, String key, Optional<String> keyLocalized,
+        Optional<String> subtype, Optional<String> subtypeLocalized, Optional<String> type,
+        Optional<String> typeLocalized) {
       this.group = group;
       this.groupLocalized = groupLocalized;
       this.isOptional = isOptional;
@@ -736,12 +741,12 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Exemption type.
      */
-    public ExemptionCategory category;
+    public Optional<ExemptionCategory> category;
 
     /**
      * Description of the exemption.
      */
-    public String description;
+    public Optional<String> description;
 
     private transient volatile int $hashCode;
 
@@ -749,7 +754,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public Exemption(ExemptionCategory category, String description) {
+    public Exemption(Optional<ExemptionCategory> category, Optional<String> description) {
       this.category = category;
       this.description = description;
     }
@@ -797,12 +802,12 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Annual night cap.
      */
-    public Integer annualLimit;
+    public Optional<Integer> annualLimit;
 
     /**
      * Whether the cap is enforced (or just educational).
      */
-    public Boolean isEnforced;
+    public Optional<Boolean> isEnforced;
 
     private transient volatile int $hashCode;
 
@@ -810,7 +815,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public MaxNightCap(Integer annualLimit, Boolean isEnforced) {
+    public MaxNightCap(Optional<Integer> annualLimit, Optional<Boolean> isEnforced) {
       this.annualLimit = annualLimit;
       this.isEnforced = isEnforced;
     }
@@ -858,12 +863,12 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Legal property subtype, applicable for residences, such as primary home or secondary home.
      */
-    public String subtype;
+    public Optional<String> subtype;
 
     /**
      * Legal property type, such as hotel, bed and breakfast, residence, etc.
      */
-    public String type;
+    public Optional<String> type;
 
     private transient volatile int $hashCode;
 
@@ -871,7 +876,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public QualifiedPropertyType(String subtype, String type) {
+    public QualifiedPropertyType(Optional<String> subtype, Optional<String> type) {
       this.subtype = subtype;
       this.type = type;
     }
@@ -919,7 +924,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * URL of a page that provides information about the number requirement.
      */
-    public String url;
+    public Optional<String> url;
 
     /**
      * Whether pending applications are allowed to list.
@@ -929,7 +934,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Sample format string to use as an example for partners.
      */
-    public String format;
+    public Optional<String> format;
 
     /**
      * Whether the registration expiration date is required.
@@ -944,32 +949,32 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Localized display name (such as みんぱく for Japan Minpaku).
      */
-    public String localName;
+    public Optional<String> localName;
 
     /**
      * Registration number type.
      */
-    public RegistrationNumberType numberType;
+    public Optional<RegistrationNumberType> numberType;
 
     /**
      * Label of the registration number.
      */
-    public String numberTypeLabel;
+    public Optional<String> numberTypeLabel;
 
     /**
      * Purpose of this requirement if other besides common regulatory validations.
      */
-    public Purpose purpose;
+    public Optional<Purpose> purpose;
 
     /**
      * Regex used to validate the syntax of the registration number.
      */
-    public String regex;
+    public Optional<String> regex;
 
     /**
      * Information about external validation parameters, if required for the registration number.
      */
-    public ThirdPartyValidation thirdPartyValidation;
+    public Optional<ThirdPartyValidation> thirdPartyValidation;
 
     private transient volatile int $hashCode;
 
@@ -977,10 +982,11 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public RegistrationNumberRequirement(String url, Boolean allowPendingRegistrations,
-        String format, Boolean isExpirationDateRequired, Boolean isOptional, String localName,
-        RegistrationNumberType numberType, String numberTypeLabel, Purpose purpose, String regex,
-        ThirdPartyValidation thirdPartyValidation) {
+    public RegistrationNumberRequirement(Optional<String> url, Boolean allowPendingRegistrations,
+        Optional<String> format, Boolean isExpirationDateRequired, Boolean isOptional,
+        Optional<String> localName, Optional<RegistrationNumberType> numberType,
+        Optional<String> numberTypeLabel, Optional<Purpose> purpose, Optional<String> regex,
+        Optional<ThirdPartyValidation> thirdPartyValidation) {
       this.url = url;
       this.allowPendingRegistrations = allowPendingRegistrations;
       this.format = format;
@@ -1073,7 +1079,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
     /**
      * Attributes used to validate the registration number as provided by the third-party.
      */
-    public List<String> attributes;
+    public Optional<List<Optional<String>>> attributes;
 
     /**
      * Whether third-party validation is required.
@@ -1086,7 +1092,7 @@ public class DistrictByCoordinatesQuery implements Query<DistrictByCoordinatesQu
 
     private transient volatile String $toString;
 
-    public ThirdPartyValidation(List<String> attributes, Boolean required) {
+    public ThirdPartyValidation(Optional<List<Optional<String>>> attributes, Boolean required) {
       this.attributes = attributes;
       this.required = required;
     }

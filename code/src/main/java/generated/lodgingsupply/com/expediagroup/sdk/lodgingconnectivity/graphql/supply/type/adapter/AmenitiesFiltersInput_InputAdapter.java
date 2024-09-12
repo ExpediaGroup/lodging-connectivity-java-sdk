@@ -6,12 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AmenitiesFiltersInput;
@@ -32,13 +28,13 @@ public enum AmenitiesFiltersInput_InputAdapter implements Adapter<AmenitiesFilte
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       AmenitiesFiltersInput value) throws IOException {
-    if (value.available instanceof Optional.Present) {
+    if (value.available.isPresent()) {
       writer.name("available");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.available);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.available);
     }
-    if (value.keys instanceof Optional.Present) {
+    if (value.keys.isPresent()) {
       writer.name("keys");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<OneOfStringFilterInput>(OneOfStringFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.keys);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<OneOfStringFilterInput>(OneOfStringFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.keys);
     }
   }
 }

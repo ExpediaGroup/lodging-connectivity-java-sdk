@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class DisablePropertyMutation implements Mutation<DisablePropertyMutation.Data> {
   public static final String OPERATION_ID = "b9a5670ff1279c1c132ac4ff0da1e91d95b44a96357dd0775499da0212e64001";
@@ -141,7 +142,7 @@ public class DisablePropertyMutation implements Mutation<DisablePropertyMutation
   }
 
   public static class Data implements Mutation.Data {
-    public DisableProperty disableProperty;
+    public Optional<DisableProperty> disableProperty;
 
     private transient volatile int $hashCode;
 
@@ -149,7 +150,7 @@ public class DisablePropertyMutation implements Mutation<DisablePropertyMutation
 
     private transient volatile String $toString;
 
-    public Data(DisableProperty disableProperty) {
+    public Data(Optional<DisableProperty> disableProperty) {
       this.disableProperty = disableProperty;
     }
 
@@ -189,7 +190,7 @@ public class DisablePropertyMutation implements Mutation<DisablePropertyMutation
   }
 
   public static class DisableProperty {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     public String id;
 
@@ -199,7 +200,7 @@ public class DisablePropertyMutation implements Mutation<DisablePropertyMutation
 
     private transient volatile String $toString;
 
-    public DisableProperty(String clientMutationId, String id) {
+    public DisableProperty(Optional<String> clientMutationId, String id) {
       this.clientMutationId = clientMutationId;
       this.id = id;
     }

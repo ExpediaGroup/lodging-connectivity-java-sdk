@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class AmenitiesFiltersInput {
-  public final Optional<Boolean> available;
+  public final Optional<Optional<Boolean>> available;
 
-  public final Optional<OneOfStringFilterInput> keys;
+  public final Optional<Optional<OneOfStringFilterInput>> keys;
 
   private transient volatile int $hashCode;
 
@@ -22,7 +23,8 @@ public class AmenitiesFiltersInput {
 
   private transient volatile String $toString;
 
-  public AmenitiesFiltersInput(Optional<Boolean> available, Optional<OneOfStringFilterInput> keys) {
+  public AmenitiesFiltersInput(Optional<Optional<Boolean>> available,
+      Optional<Optional<OneOfStringFilterInput>> keys) {
     this.available = available;
     this.keys = keys;
   }
@@ -70,20 +72,20 @@ public class AmenitiesFiltersInput {
   }
 
   public static final class Builder {
-    private Optional<Boolean> available = Optional.absent();
+    private Optional<Optional<Boolean>> available = Optional.empty();
 
-    private Optional<OneOfStringFilterInput> keys = Optional.absent();
+    private Optional<Optional<OneOfStringFilterInput>> keys = Optional.empty();
 
     Builder() {
     }
 
-    public Builder available(Boolean available) {
-      this.available = Optional.present(available);
+    public Builder available(@NotNull Optional<Boolean> available) {
+      this.available = Optional.of(available);
       return this;
     }
 
-    public Builder keys(OneOfStringFilterInput keys) {
-      this.keys = Optional.present(keys);
+    public Builder keys(@NotNull Optional<OneOfStringFilterInput> keys) {
+      this.keys = Optional.of(keys);
       return this;
     }
 

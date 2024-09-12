@@ -11,5 +11,5 @@ import com.apollographql.apollo.api.CustomScalarType;
  * A slightly refined version of RFC-3339 compliant DateTime Scalar
  */
 public class DateTime {
-  public static CustomScalarType type = new CustomScalarType("DateTime", "java.lang.Object");
+  public static CustomScalarType type = new CustomScalarType("DateTime", "java.time.OffsetDateTime");
 }

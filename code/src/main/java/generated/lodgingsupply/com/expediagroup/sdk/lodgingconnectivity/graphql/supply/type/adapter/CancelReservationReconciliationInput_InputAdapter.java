@@ -7,9 +7,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationReconciliationInput;
@@ -35,13 +33,13 @@ public enum CancelReservationReconciliationInput_InputAdapter implements Adapter
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.reservationId);
     writer.name("reason");
     ReservationCancellationReason_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.reason);
-    if (value.currencyCode instanceof Optional.Present) {
+    if (value.currencyCode.isPresent()) {
       writer.name("currencyCode");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.currencyCode);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.currencyCode);
     }
-    if (value.penaltyAmount instanceof Optional.Present) {
+    if (value.penaltyAmount.isPresent()) {
       writer.name("penaltyAmount");
-      new ApolloOptionalAdapter<>(Adapters.NullableDoubleAdapter).toJson(writer, customScalarAdapters, value.penaltyAmount);
+      new OptionalAdapter<>(OptionalAdapters.OptionalDoubleAdapter).toJson(writer, customScalarAdapters, value.penaltyAmount);
     }
   }
 }

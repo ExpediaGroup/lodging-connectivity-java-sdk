@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input object for deleting a property.
  */
 public class DeletePropertyInput {
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String id;
 
@@ -24,7 +25,7 @@ public class DeletePropertyInput {
 
   private transient volatile String $toString;
 
-  public DeletePropertyInput(Optional<String> clientMutationId, String id) {
+  public DeletePropertyInput(Optional<Optional<String>> clientMutationId, String id) {
     this.clientMutationId = clientMutationId;
     this.id = id;
   }
@@ -72,7 +73,7 @@ public class DeletePropertyInput {
   }
 
   public static final class Builder {
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String id;
 
@@ -82,8 +83,8 @@ public class DeletePropertyInput {
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 

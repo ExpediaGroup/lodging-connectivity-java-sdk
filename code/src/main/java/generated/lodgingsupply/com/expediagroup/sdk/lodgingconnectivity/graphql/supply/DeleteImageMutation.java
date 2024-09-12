@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class DeleteImageMutation implements Mutation<DeleteImageMutation.Data> {
   public static final String OPERATION_ID = "35cd50abf37ee8baaf16a38ef63ed6330b28d933dcd91f9c16f44797461ad805";
@@ -141,7 +142,7 @@ public class DeleteImageMutation implements Mutation<DeleteImageMutation.Data> {
   }
 
   public static class Data implements Mutation.Data {
-    public DeleteImage deleteImage;
+    public Optional<DeleteImage> deleteImage;
 
     private transient volatile int $hashCode;
 
@@ -149,7 +150,7 @@ public class DeleteImageMutation implements Mutation<DeleteImageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public Data(DeleteImage deleteImage) {
+    public Data(Optional<DeleteImage> deleteImage) {
       this.deleteImage = deleteImage;
     }
 
@@ -189,7 +190,7 @@ public class DeleteImageMutation implements Mutation<DeleteImageMutation.Data> {
   }
 
   public static class DeleteImage {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     public String id;
 
@@ -199,7 +200,7 @@ public class DeleteImageMutation implements Mutation<DeleteImageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public DeleteImage(String clientMutationId, String id) {
+    public DeleteImage(Optional<String> clientMutationId, String id) {
       this.clientMutationId = clientMutationId;
       this.id = id;
     }

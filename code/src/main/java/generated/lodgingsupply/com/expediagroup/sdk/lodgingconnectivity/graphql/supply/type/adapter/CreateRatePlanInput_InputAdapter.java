@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CreateRatePlanInput;
@@ -34,39 +31,39 @@ public enum CreateRatePlanInput_InputAdapter implements Adapter<CreateRatePlanIn
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       CreateRatePlanInput value) throws IOException {
-    if (value.baseRateGuestCount instanceof Optional.Present) {
+    if (value.baseRateGuestCount.isPresent()) {
       writer.name("baseRateGuestCount");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.baseRateGuestCount);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.baseRateGuestCount);
     }
     writer.name("cancellationPolicyConfigId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.cancellationPolicyConfigId);
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
     writer.name("distributionRules");
     new ListAdapter<>(new ObjectAdapter<RatePlanDistributionRuleInput>(RatePlanDistributionRuleInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.distributionRules);
-    if (value.feeSetId instanceof Optional.Present) {
+    if (value.feeSetId.isPresent()) {
       writer.name("feeSetId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.feeSetId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.feeSetId);
     }
     writer.name("name");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
-    if (value.paymentScheduleApplicable instanceof Optional.Present) {
+    if (value.paymentScheduleApplicable.isPresent()) {
       writer.name("paymentScheduleApplicable");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.paymentScheduleApplicable);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.paymentScheduleApplicable);
     }
     writer.name("pricingModel");
     PricingModel_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.pricingModel);
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
-    if (value.restrictions instanceof Optional.Present) {
+    if (value.restrictions.isPresent()) {
       writer.name("restrictions");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CreateRatePlanRestrictionsInput>(CreateRatePlanRestrictionsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CreateRatePlanRestrictionsInput>(CreateRatePlanRestrictionsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
     }
-    if (value.taxInclusive instanceof Optional.Present) {
+    if (value.taxInclusive.isPresent()) {
       writer.name("taxInclusive");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.taxInclusive);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.taxInclusive);
     }
     writer.name("type");
     RatePlanType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);

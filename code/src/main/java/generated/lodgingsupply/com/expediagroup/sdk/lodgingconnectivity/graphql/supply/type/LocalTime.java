@@ -11,5 +11,5 @@ import com.apollographql.apollo.api.CustomScalarType;
  * A type representing a time with no time zone in format HH:mm:ss or HH:mm. ex: 10:15:30, 10:15
  */
 public class LocalTime {
-  public static CustomScalarType type = new CustomScalarType("LocalTime", "java.lang.Object");
+  public static CustomScalarType type = new CustomScalarType("LocalTime", "java.time.LocalTime");
 }

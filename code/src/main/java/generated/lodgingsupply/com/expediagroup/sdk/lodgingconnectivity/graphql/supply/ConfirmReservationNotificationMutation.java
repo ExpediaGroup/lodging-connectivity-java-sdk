@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 public class ConfirmReservationNotificationMutation implements Mutation<ConfirmReservationNotificationMutation.Data> {
   public static final String OPERATION_ID = "efe89d1059a24ea786822bf2646058a3d44363686d0a1369148dd69058fce07c";
@@ -194,7 +195,7 @@ public class ConfirmReservationNotificationMutation implements Mutation<ConfirmR
     /**
      * Partner supplied Unique mutation identifier
      */
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
     private transient volatile int $hashCode;
 
@@ -202,7 +203,7 @@ public class ConfirmReservationNotificationMutation implements Mutation<ConfirmR
 
     private transient volatile String $toString;
 
-    public ConfirmReservationNotification(String clientMutationId) {
+    public ConfirmReservationNotification(Optional<String> clientMutationId) {
       this.clientMutationId = clientMutationId;
     }
 

@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.AllowedPetsInput;
@@ -33,17 +30,17 @@ public enum AllowedPetsInput_InputAdapter implements Adapter<AllowedPetsInput> {
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       AllowedPetsInput value) throws IOException {
-    if (value.maxAllowed instanceof Optional.Present) {
+    if (value.maxAllowed.isPresent()) {
       writer.name("maxAllowed");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.maxAllowed);
+      new OptionalAdapter<>(OptionalAdapters.OptionalIntAdapter).toJson(writer, customScalarAdapters, value.maxAllowed);
     }
-    if (value.maxWeight instanceof Optional.Present) {
+    if (value.maxWeight.isPresent()) {
       writer.name("maxWeight");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<WeightInput>(WeightInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.maxWeight);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<WeightInput>(WeightInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.maxWeight);
     }
-    if (value.types instanceof Optional.Present) {
+    if (value.types.isPresent()) {
       writer.name("types");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.types);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter))).toJson(writer, customScalarAdapters, value.types);
     }
   }
 }

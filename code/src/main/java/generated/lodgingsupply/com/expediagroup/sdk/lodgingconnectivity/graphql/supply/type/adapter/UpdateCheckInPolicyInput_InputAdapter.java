@@ -6,12 +6,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CheckInPolicyMinAgeInput;
@@ -33,13 +30,13 @@ public enum UpdateCheckInPolicyInput_InputAdapter implements Adapter<UpdateCheck
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateCheckInPolicyInput value) throws IOException {
-    if (value.checkInPeriods instanceof Optional.Present) {
+    if (value.checkInPeriods.isPresent()) {
       writer.name("checkInPeriods");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<ExactOrApproximateTimeRangeInput>(ExactOrApproximateTimeRangeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.checkInPeriods);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<ExactOrApproximateTimeRangeInput>(ExactOrApproximateTimeRangeInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.checkInPeriods);
     }
-    if (value.minAge instanceof Optional.Present) {
+    if (value.minAge.isPresent()) {
       writer.name("minAge");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<CheckInPolicyMinAgeInput>(CheckInPolicyMinAgeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.minAge);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<CheckInPolicyMinAgeInput>(CheckInPolicyMinAgeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.minAge);
     }
   }
 }

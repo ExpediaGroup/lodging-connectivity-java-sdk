@@ -13,11 +13,13 @@ import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreatePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SandboxCreatePropertyMutation_ResponseAdapter {
   public enum Data implements Adapter<SandboxCreatePropertyMutation.Data> {
@@ -61,13 +63,13 @@ public class SandboxCreatePropertyMutation_ResponseAdapter {
     @Override
     public SandboxCreatePropertyMutation.CreateProperty fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
+      Optional<String> _clientMutationId = null;
       SandboxCreatePropertyMutation.Property _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _property = new ObjectAdapter<SandboxCreatePropertyMutation.Property>(Property.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -85,7 +87,7 @@ public class SandboxCreatePropertyMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         SandboxCreatePropertyMutation.CreateProperty value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("property");
       new ObjectAdapter<SandboxCreatePropertyMutation.Property>(Property.INSTANCE, false).toJson(writer, customScalarAdapters, value.property);

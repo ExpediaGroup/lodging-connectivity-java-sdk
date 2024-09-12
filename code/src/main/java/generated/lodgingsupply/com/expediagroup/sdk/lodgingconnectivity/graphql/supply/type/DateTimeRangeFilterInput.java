@@ -5,17 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class DateTimeRangeFilterInput {
-  public final Object from;
+  public final OffsetDateTime from;
 
-  public final Object to;
+  public final OffsetDateTime to;
 
-  public final Optional<RangeOperator> operator;
+  public final Optional<Optional<RangeOperator>> operator;
 
   private transient volatile int $hashCode;
 
@@ -23,7 +25,8 @@ public class DateTimeRangeFilterInput {
 
   private transient volatile String $toString;
 
-  public DateTimeRangeFilterInput(Object from, Object to, Optional<RangeOperator> operator) {
+  public DateTimeRangeFilterInput(OffsetDateTime from, OffsetDateTime to,
+      Optional<Optional<RangeOperator>> operator) {
     this.from = from;
     this.to = to;
     this.operator = operator;
@@ -76,27 +79,27 @@ public class DateTimeRangeFilterInput {
   }
 
   public static final class Builder {
-    private Object from;
+    private OffsetDateTime from;
 
-    private Object to;
+    private OffsetDateTime to;
 
-    private Optional<RangeOperator> operator = Optional.absent();
+    private Optional<Optional<RangeOperator>> operator = Optional.empty();
 
     Builder() {
     }
 
-    public Builder from(Object from) {
+    public Builder from(OffsetDateTime from) {
       this.from = from;
       return this;
     }
 
-    public Builder to(Object to) {
+    public Builder to(OffsetDateTime to) {
       this.to = to;
       return this;
     }
 
-    public Builder operator(RangeOperator operator) {
-      this.operator = Optional.present(operator);
+    public Builder operator(@NotNull Optional<RangeOperator> operator) {
+      this.operator = Optional.of(operator);
       return this;
     }
 

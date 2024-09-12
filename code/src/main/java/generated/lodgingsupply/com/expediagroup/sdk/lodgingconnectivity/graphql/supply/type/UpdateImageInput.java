@@ -5,28 +5,29 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateImageInput {
-  public final Optional<Boolean> active;
+  public final Optional<Optional<Boolean>> active;
 
-  public final Optional<List<LocalizedStringInput>> captions;
+  public final Optional<Optional<List<LocalizedStringInput>>> captions;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
-  public final Optional<Boolean> featured;
+  public final Optional<Optional<Boolean>> featured;
 
   public final String id;
 
-  public final Optional<Integer> order;
+  public final Optional<Optional<Integer>> order;
 
-  public final Optional<Integer> rotation;
+  public final Optional<Optional<Integer>> rotation;
 
   private transient volatile int $hashCode;
 
@@ -34,9 +35,10 @@ public class UpdateImageInput {
 
   private transient volatile String $toString;
 
-  public UpdateImageInput(Optional<Boolean> active, Optional<List<LocalizedStringInput>> captions,
-      Optional<String> clientMutationId, Optional<Boolean> featured, String id,
-      Optional<Integer> order, Optional<Integer> rotation) {
+  public UpdateImageInput(Optional<Optional<Boolean>> active,
+      Optional<Optional<List<LocalizedStringInput>>> captions,
+      Optional<Optional<String>> clientMutationId, Optional<Optional<Boolean>> featured, String id,
+      Optional<Optional<Integer>> order, Optional<Optional<Integer>> rotation) {
     this.active = active;
     this.captions = captions;
     this.clientMutationId = clientMutationId;
@@ -109,40 +111,40 @@ public class UpdateImageInput {
   }
 
   public static final class Builder {
-    private Optional<Boolean> active = Optional.absent();
+    private Optional<Optional<Boolean>> active = Optional.empty();
 
-    private Optional<List<LocalizedStringInput>> captions = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> captions = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
-    private Optional<Boolean> featured = Optional.absent();
+    private Optional<Optional<Boolean>> featured = Optional.empty();
 
     private String id;
 
-    private Optional<Integer> order = Optional.absent();
+    private Optional<Optional<Integer>> order = Optional.empty();
 
-    private Optional<Integer> rotation = Optional.absent();
+    private Optional<Optional<Integer>> rotation = Optional.empty();
 
     Builder() {
     }
 
-    public Builder active(Boolean active) {
-      this.active = Optional.present(active);
+    public Builder active(@NotNull Optional<Boolean> active) {
+      this.active = Optional.of(active);
       return this;
     }
 
-    public Builder captions(List<LocalizedStringInput> captions) {
-      this.captions = Optional.present(captions);
+    public Builder captions(@NotNull Optional<List<LocalizedStringInput>> captions) {
+      this.captions = Optional.of(captions);
       return this;
     }
 
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
-    public Builder featured(Boolean featured) {
-      this.featured = Optional.present(featured);
+    public Builder featured(@NotNull Optional<Boolean> featured) {
+      this.featured = Optional.of(featured);
       return this;
     }
 
@@ -151,13 +153,13 @@ public class UpdateImageInput {
       return this;
     }
 
-    public Builder order(Integer order) {
-      this.order = Optional.present(order);
+    public Builder order(@NotNull Optional<Integer> order) {
+      this.order = Optional.of(order);
       return this;
     }
 
-    public Builder rotation(Integer rotation) {
-      this.rotation = Optional.present(rotation);
+    public Builder rotation(@NotNull Optional<Integer> rotation) {
+      this.rotation = Optional.of(rotation);
       return this;
     }
 

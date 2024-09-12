@@ -5,16 +5,17 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Acknowledgement record information for a bookable unit.
  */
 public class AcknowledgementRecordInput {
-  public final Optional<AcknowledgementType> acknowledgementType;
+  public final Optional<Optional<AcknowledgementType>> acknowledgementType;
 
   public final String id;
 
@@ -24,7 +25,8 @@ public class AcknowledgementRecordInput {
 
   private transient volatile String $toString;
 
-  public AcknowledgementRecordInput(Optional<AcknowledgementType> acknowledgementType, String id) {
+  public AcknowledgementRecordInput(Optional<Optional<AcknowledgementType>> acknowledgementType,
+      String id) {
     this.acknowledgementType = acknowledgementType;
     this.id = id;
   }
@@ -72,7 +74,7 @@ public class AcknowledgementRecordInput {
   }
 
   public static final class Builder {
-    private Optional<AcknowledgementType> acknowledgementType = Optional.absent();
+    private Optional<Optional<AcknowledgementType>> acknowledgementType = Optional.empty();
 
     private String id;
 
@@ -82,8 +84,8 @@ public class AcknowledgementRecordInput {
     /**
      * Type of acknowledgement record.
      */
-    public Builder acknowledgementType(AcknowledgementType acknowledgementType) {
-      this.acknowledgementType = Optional.present(acknowledgementType);
+    public Builder acknowledgementType(@NotNull Optional<AcknowledgementType> acknowledgementType) {
+      this.acknowledgementType = Optional.of(acknowledgementType);
       return this;
     }
 

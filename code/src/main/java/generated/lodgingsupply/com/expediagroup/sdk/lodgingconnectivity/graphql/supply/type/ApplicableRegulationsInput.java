@@ -5,18 +5,19 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Additional property registration information required by certain districts
  */
 public class ApplicableRegulationsInput {
-  public final Optional<ApplicableRegulationsKey> key;
+  public final Optional<Optional<ApplicableRegulationsKey>> key;
 
-  public final Optional<String> value;
+  public final Optional<Optional<String>> value;
 
   private transient volatile int $hashCode;
 
@@ -24,8 +25,8 @@ public class ApplicableRegulationsInput {
 
   private transient volatile String $toString;
 
-  public ApplicableRegulationsInput(Optional<ApplicableRegulationsKey> key,
-      Optional<String> value) {
+  public ApplicableRegulationsInput(Optional<Optional<ApplicableRegulationsKey>> key,
+      Optional<Optional<String>> value) {
     this.key = key;
     this.value = value;
   }
@@ -73,9 +74,9 @@ public class ApplicableRegulationsInput {
   }
 
   public static final class Builder {
-    private Optional<ApplicableRegulationsKey> key = Optional.absent();
+    private Optional<Optional<ApplicableRegulationsKey>> key = Optional.empty();
 
-    private Optional<String> value = Optional.absent();
+    private Optional<Optional<String>> value = Optional.empty();
 
     Builder() {
     }
@@ -83,16 +84,16 @@ public class ApplicableRegulationsInput {
     /**
      * Identifier for additional information required by the district.
      */
-    public Builder key(ApplicableRegulationsKey key) {
-      this.key = Optional.present(key);
+    public Builder key(@NotNull Optional<ApplicableRegulationsKey> key) {
+      this.key = Optional.of(key);
       return this;
     }
 
     /**
      * Value of the key required by the district.
      */
-    public Builder value(String value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<String> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

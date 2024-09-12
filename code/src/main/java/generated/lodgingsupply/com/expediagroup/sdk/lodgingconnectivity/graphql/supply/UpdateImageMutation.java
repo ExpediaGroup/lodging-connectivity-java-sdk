@@ -22,7 +22,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
   public static final String OPERATION_ID = "85f1668a916ddd9eb1b4355db2fc1fd760c23849cbe24d4c7885c3ca6b4f85fb";
@@ -167,7 +169,7 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
   }
 
   public static class Data implements Mutation.Data {
-    public UpdateImage updateImage;
+    public Optional<UpdateImage> updateImage;
 
     private transient volatile int $hashCode;
 
@@ -175,7 +177,7 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public Data(UpdateImage updateImage) {
+    public Data(Optional<UpdateImage> updateImage) {
       this.updateImage = updateImage;
     }
 
@@ -215,9 +217,9 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
   }
 
   public static class UpdateImage {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
-    public Image image;
+    public Optional<Image> image;
 
     private transient volatile int $hashCode;
 
@@ -225,7 +227,7 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public UpdateImage(String clientMutationId, Image image) {
+    public UpdateImage(Optional<String> clientMutationId, Optional<Image> image) {
       this.clientMutationId = clientMutationId;
       this.image = image;
     }
@@ -276,17 +278,17 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
 
     public Boolean featured;
 
-    public String fileName;
+    public Optional<String> fileName;
 
     public String id;
 
-    public Integer order;
+    public Optional<Integer> order;
 
-    public String originalUrl;
+    public Optional<String> originalUrl;
 
-    public Property property;
+    public Optional<Property> property;
 
-    public String publishedUrl;
+    public Optional<String> publishedUrl;
 
     /**
      * Clockwise rotation to be applied to the image. Accepted values are 0, 90, 180 and 270. Defaults to 0 when not provided.
@@ -297,7 +299,7 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
 
     public Status status;
 
-    public Object updatedDate;
+    public OffsetDateTime updatedDate;
 
     private transient volatile int $hashCode;
 
@@ -305,9 +307,10 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public Image(Boolean active, List<Caption> captions, Boolean featured, String fileName,
-        String id, Integer order, String originalUrl, Property property, String publishedUrl,
-        Integer rotation, ImageSource source, Status status, Object updatedDate) {
+    public Image(Boolean active, List<Caption> captions, Boolean featured,
+        Optional<String> fileName, String id, Optional<Integer> order, Optional<String> originalUrl,
+        Optional<Property> property, Optional<String> publishedUrl, Integer rotation,
+        ImageSource source, Status status, OffsetDateTime updatedDate) {
       this.active = active;
       this.captions = captions;
       this.featured = featured;
@@ -513,7 +516,7 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
   }
 
   public static class Status {
-    public String reason;
+    public Optional<String> reason;
 
     public String type;
 
@@ -523,7 +526,7 @@ public class UpdateImageMutation implements Mutation<UpdateImageMutation.Data> {
 
     private transient volatile String $toString;
 
-    public Status(String reason, String type) {
+    public Status(Optional<String> reason, String type) {
       this.reason = reason;
       this.type = type;
     }

@@ -6,13 +6,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.LocalizedStringInput;
@@ -34,21 +30,21 @@ public enum UpdateSmokingPolicyInput_InputAdapter implements Adapter<UpdateSmoki
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateSmokingPolicyInput value) throws IOException {
-    if (value.allowed instanceof Optional.Present) {
+    if (value.allowed.isPresent()) {
       writer.name("allowed");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.allowed);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.allowed);
     }
-    if (value.indoorPolicy instanceof Optional.Present) {
+    if (value.indoorPolicy.isPresent()) {
       writer.name("indoorPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<UpdateSmokingLocationPolicyInput>(UpdateSmokingLocationPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.indoorPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<UpdateSmokingLocationPolicyInput>(UpdateSmokingLocationPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.indoorPolicy);
     }
-    if (value.note instanceof Optional.Present) {
+    if (value.note.isPresent()) {
       writer.name("note");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.note);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<LocalizedStringInput>(LocalizedStringInput_InputAdapter.INSTANCE, false)))).toJson(writer, customScalarAdapters, value.note);
     }
-    if (value.outdoorPolicy instanceof Optional.Present) {
+    if (value.outdoorPolicy.isPresent()) {
       writer.name("outdoorPolicy");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<UpdateSmokingLocationPolicyInput>(UpdateSmokingLocationPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.outdoorPolicy);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<UpdateSmokingLocationPolicyInput>(UpdateSmokingLocationPolicyInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.outdoorPolicy);
     }
   }
 }

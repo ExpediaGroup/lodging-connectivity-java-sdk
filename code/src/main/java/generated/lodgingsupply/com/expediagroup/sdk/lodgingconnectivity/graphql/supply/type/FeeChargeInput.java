@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class FeeChargeInput {
   public final FeeChargeDuration duration;
 
-  public final Optional<MoneyInput> flatAmount;
+  public final Optional<Optional<MoneyInput>> flatAmount;
 
-  public final Optional<Object> percentage;
+  public final Optional<Optional<String>> percentage;
 
   public final FeeChargeType type;
 
@@ -25,8 +26,8 @@ public class FeeChargeInput {
 
   private transient volatile String $toString;
 
-  public FeeChargeInput(FeeChargeDuration duration, Optional<MoneyInput> flatAmount,
-      Optional<Object> percentage, FeeChargeType type) {
+  public FeeChargeInput(FeeChargeDuration duration, Optional<Optional<MoneyInput>> flatAmount,
+      Optional<Optional<String>> percentage, FeeChargeType type) {
     this.duration = duration;
     this.flatAmount = flatAmount;
     this.percentage = percentage;
@@ -86,9 +87,9 @@ public class FeeChargeInput {
   public static final class Builder {
     private FeeChargeDuration duration;
 
-    private Optional<MoneyInput> flatAmount = Optional.absent();
+    private Optional<Optional<MoneyInput>> flatAmount = Optional.empty();
 
-    private Optional<Object> percentage = Optional.absent();
+    private Optional<Optional<String>> percentage = Optional.empty();
 
     private FeeChargeType type;
 
@@ -100,13 +101,13 @@ public class FeeChargeInput {
       return this;
     }
 
-    public Builder flatAmount(MoneyInput flatAmount) {
-      this.flatAmount = Optional.present(flatAmount);
+    public Builder flatAmount(@NotNull Optional<MoneyInput> flatAmount) {
+      this.flatAmount = Optional.of(flatAmount);
       return this;
     }
 
-    public Builder percentage(Object percentage) {
-      this.percentage = Optional.present(percentage);
+    public Builder percentage(@NotNull Optional<String> percentage) {
+      this.percentage = Optional.of(percentage);
       return this;
     }
 

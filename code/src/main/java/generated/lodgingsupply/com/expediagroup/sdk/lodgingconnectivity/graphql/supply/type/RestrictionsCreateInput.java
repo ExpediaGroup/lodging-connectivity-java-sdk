@@ -5,7 +5,6 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
@@ -13,19 +12,22 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class RestrictionsCreateInput {
-  public final Optional<Boolean> isMemberOnly;
+  public final Optional<Optional<Boolean>> isMemberOnly;
 
-  public final Optional<Boolean> isMobileUserOnly;
+  public final Optional<Optional<Boolean>> isMobileUserOnly;
 
-  public final Optional<Integer> minLengthOfStay;
+  public final Optional<Optional<Integer>> minLengthOfStay;
 
-  public final Optional<Integer> maxLengthOfStay;
+  public final Optional<Optional<Integer>> maxLengthOfStay;
 
-  public final Optional<Integer> minAdvanceBookingDays;
+  public final Optional<Optional<Integer>> minAdvanceBookingDays;
 
-  public final Optional<Integer> maxAdvanceBookingDays;
+  public final Optional<Optional<Integer>> maxAdvanceBookingDays;
 
   public final LocalDateTime bookingLocalDateTimeFrom;
 
@@ -35,7 +37,7 @@ public class RestrictionsCreateInput {
 
   public final LocalDate travelDateTo;
 
-  public final Optional<Object> sameDayBookingStartTime;
+  public final Optional<Optional<LocalTime>> sameDayBookingStartTime;
 
   private transient volatile int $hashCode;
 
@@ -43,11 +45,13 @@ public class RestrictionsCreateInput {
 
   private transient volatile String $toString;
 
-  public RestrictionsCreateInput(Optional<Boolean> isMemberOnly, Optional<Boolean> isMobileUserOnly,
-      Optional<Integer> minLengthOfStay, Optional<Integer> maxLengthOfStay,
-      Optional<Integer> minAdvanceBookingDays, Optional<Integer> maxAdvanceBookingDays,
-      LocalDateTime bookingLocalDateTimeFrom, LocalDateTime bookingLocalDateTimeTo,
-      LocalDate travelDateFrom, LocalDate travelDateTo, Optional<Object> sameDayBookingStartTime) {
+  public RestrictionsCreateInput(Optional<Optional<Boolean>> isMemberOnly,
+      Optional<Optional<Boolean>> isMobileUserOnly, Optional<Optional<Integer>> minLengthOfStay,
+      Optional<Optional<Integer>> maxLengthOfStay,
+      Optional<Optional<Integer>> minAdvanceBookingDays,
+      Optional<Optional<Integer>> maxAdvanceBookingDays, LocalDateTime bookingLocalDateTimeFrom,
+      LocalDateTime bookingLocalDateTimeTo, LocalDate travelDateFrom, LocalDate travelDateTo,
+      Optional<Optional<LocalTime>> sameDayBookingStartTime) {
     this.isMemberOnly = isMemberOnly;
     this.isMobileUserOnly = isMobileUserOnly;
     this.minLengthOfStay = minLengthOfStay;
@@ -140,17 +144,17 @@ public class RestrictionsCreateInput {
   }
 
   public static final class Builder {
-    private Optional<Boolean> isMemberOnly = Optional.absent();
+    private Optional<Optional<Boolean>> isMemberOnly = Optional.empty();
 
-    private Optional<Boolean> isMobileUserOnly = Optional.absent();
+    private Optional<Optional<Boolean>> isMobileUserOnly = Optional.empty();
 
-    private Optional<Integer> minLengthOfStay = Optional.absent();
+    private Optional<Optional<Integer>> minLengthOfStay = Optional.empty();
 
-    private Optional<Integer> maxLengthOfStay = Optional.absent();
+    private Optional<Optional<Integer>> maxLengthOfStay = Optional.empty();
 
-    private Optional<Integer> minAdvanceBookingDays = Optional.absent();
+    private Optional<Optional<Integer>> minAdvanceBookingDays = Optional.empty();
 
-    private Optional<Integer> maxAdvanceBookingDays = Optional.absent();
+    private Optional<Optional<Integer>> maxAdvanceBookingDays = Optional.empty();
 
     private LocalDateTime bookingLocalDateTimeFrom;
 
@@ -160,7 +164,7 @@ public class RestrictionsCreateInput {
 
     private LocalDate travelDateTo;
 
-    private Optional<Object> sameDayBookingStartTime = Optional.absent();
+    private Optional<Optional<LocalTime>> sameDayBookingStartTime = Optional.empty();
 
     Builder() {
     }
@@ -168,8 +172,8 @@ public class RestrictionsCreateInput {
     /**
      * Setting this to true indicates that the promotion is targeted exclusively towards Expedia Group members whose loyalty drives bookings.
      */
-    public Builder isMemberOnly(Boolean isMemberOnly) {
-      this.isMemberOnly = Optional.present(isMemberOnly);
+    public Builder isMemberOnly(@NotNull Optional<Boolean> isMemberOnly) {
+      this.isMemberOnly = Optional.of(isMemberOnly);
       return this;
     }
 
@@ -177,40 +181,40 @@ public class RestrictionsCreateInput {
      * It indicates if this promotion is applicable only for travelers booking on the mobile device.
      * This field will be null in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
      */
-    public Builder isMobileUserOnly(Boolean isMobileUserOnly) {
-      this.isMobileUserOnly = Optional.present(isMobileUserOnly);
+    public Builder isMobileUserOnly(@NotNull Optional<Boolean> isMobileUserOnly) {
+      this.isMobileUserOnly = Optional.of(isMobileUserOnly);
       return this;
     }
 
     /**
      * The minimum duration of stay for which the promotion can be applicable.
      */
-    public Builder minLengthOfStay(Integer minLengthOfStay) {
-      this.minLengthOfStay = Optional.present(minLengthOfStay);
+    public Builder minLengthOfStay(@NotNull Optional<Integer> minLengthOfStay) {
+      this.minLengthOfStay = Optional.of(minLengthOfStay);
       return this;
     }
 
     /**
      * The maximum duration of stay for which the promotion can be applicable. The maximum value possible here is 28.
      */
-    public Builder maxLengthOfStay(Integer maxLengthOfStay) {
-      this.maxLengthOfStay = Optional.present(maxLengthOfStay);
+    public Builder maxLengthOfStay(@NotNull Optional<Integer> maxLengthOfStay) {
+      this.maxLengthOfStay = Optional.of(maxLengthOfStay);
       return this;
     }
 
     /**
      * The minimum number of days in advance the reservation must be made for the promotion to be applicable.
      */
-    public Builder minAdvanceBookingDays(Integer minAdvanceBookingDays) {
-      this.minAdvanceBookingDays = Optional.present(minAdvanceBookingDays);
+    public Builder minAdvanceBookingDays(@NotNull Optional<Integer> minAdvanceBookingDays) {
+      this.minAdvanceBookingDays = Optional.of(minAdvanceBookingDays);
       return this;
     }
 
     /**
      * The maximum number of days in advance the reservation must be made for the promotion to be applicable.
      */
-    public Builder maxAdvanceBookingDays(Integer maxAdvanceBookingDays) {
-      this.maxAdvanceBookingDays = Optional.present(maxAdvanceBookingDays);
+    public Builder maxAdvanceBookingDays(@NotNull Optional<Integer> maxAdvanceBookingDays) {
+      this.maxAdvanceBookingDays = Optional.of(maxAdvanceBookingDays);
       return this;
     }
 
@@ -252,8 +256,8 @@ public class RestrictionsCreateInput {
      * Applicable only for SAME_DAY_PROMOTION. The start time for the same day from which the promotion is applicable.
      * The timezone in consideration will be the local time for the property the promotion is applied for.
      */
-    public Builder sameDayBookingStartTime(Object sameDayBookingStartTime) {
-      this.sameDayBookingStartTime = Optional.present(sameDayBookingStartTime);
+    public Builder sameDayBookingStartTime(@NotNull Optional<LocalTime> sameDayBookingStartTime) {
+      this.sameDayBookingStartTime = Optional.of(sameDayBookingStartTime);
       return this;
     }
 

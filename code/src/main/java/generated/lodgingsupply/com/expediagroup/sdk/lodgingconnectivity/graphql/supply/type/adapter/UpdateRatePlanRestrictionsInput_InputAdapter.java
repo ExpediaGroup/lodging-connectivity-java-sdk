@@ -6,11 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.DateRangeInput;
@@ -32,21 +29,21 @@ public enum UpdateRatePlanRestrictionsInput_InputAdapter implements Adapter<Upda
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       UpdateRatePlanRestrictionsInput value) throws IOException {
-    if (value.advanceBookingDays instanceof Optional.Present) {
+    if (value.advanceBookingDays.isPresent()) {
       writer.name("advanceBookingDays");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.advanceBookingDays);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.advanceBookingDays);
     }
-    if (value.lengthOfStay instanceof Optional.Present) {
+    if (value.lengthOfStay.isPresent()) {
       writer.name("lengthOfStay");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.lengthOfStay);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<IntRangeInput>(IntRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.lengthOfStay);
     }
-    if (value.reservationDates instanceof Optional.Present) {
+    if (value.reservationDates.isPresent()) {
       writer.name("reservationDates");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<DateRangeInput>(DateRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.reservationDates);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<DateRangeInput>(DateRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.reservationDates);
     }
-    if (value.travelDates instanceof Optional.Present) {
+    if (value.travelDates.isPresent()) {
       writer.name("travelDates");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<DateRangeInput>(DateRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.travelDates);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<DateRangeInput>(DateRangeInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.travelDates);
     }
   }
 }

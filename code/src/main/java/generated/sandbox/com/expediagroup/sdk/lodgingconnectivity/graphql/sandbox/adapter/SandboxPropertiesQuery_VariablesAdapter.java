@@ -6,11 +6,11 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.adapter;
 
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertiesQuery;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.adapter.OptionalAdapters;
 import java.io.IOException;
 
 public enum SandboxPropertiesQuery_VariablesAdapter {
@@ -18,17 +18,13 @@ public enum SandboxPropertiesQuery_VariablesAdapter {
 
   public void serializeVariables(JsonWriter writer, SandboxPropertiesQuery value,
       CustomScalarAdapters customScalarAdapters, boolean withDefaultValues) throws IOException {
-    if (value.cursor instanceof Optional.Present) {
-      writer.name("cursor");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.cursor);
-    }
-    if (value.limit instanceof Optional.Present) {
-      writer.name("limit");
-      new ApolloOptionalAdapter<>(Adapters.NullableIntAdapter).toJson(writer, customScalarAdapters, value.limit);
-    }
-    if (value.skipReservations instanceof Optional.Present) {
+    writer.name("cursor");
+    OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.cursor);
+    writer.name("limit");
+    OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.limit);
+    if (value.skipReservations.isPresent()) {
       writer.name("skipReservations");
-      new ApolloOptionalAdapter<>(Adapters.BooleanAdapter).toJson(writer, customScalarAdapters, value.skipReservations);
+      new OptionalAdapter<>(Adapters.BooleanAdapter).toJson(writer, customScalarAdapters, value.skipReservations);
     }
     else if (withDefaultValues) {
       writer.name("skipReservations");

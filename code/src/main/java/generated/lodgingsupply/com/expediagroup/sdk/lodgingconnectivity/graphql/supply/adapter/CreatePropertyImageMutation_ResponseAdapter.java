@@ -10,21 +10,24 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.CreatePropertyImageMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ImageSource;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ImageSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CreatePropertyImageMutation_ResponseAdapter {
   public enum Data implements Adapter<CreatePropertyImageMutation.Data> {
@@ -35,12 +38,12 @@ public class CreatePropertyImageMutation_ResponseAdapter {
     @Override
     public CreatePropertyImageMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      CreatePropertyImageMutation.CreatePropertyImage _createPropertyImage = null;
+      Optional<CreatePropertyImageMutation.CreatePropertyImage> _createPropertyImage = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _createPropertyImage = new NullableAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.CreatePropertyImage>(CreatePropertyImage.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _createPropertyImage = new OptionalAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.CreatePropertyImage>(CreatePropertyImage.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -54,7 +57,7 @@ public class CreatePropertyImageMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreatePropertyImageMutation.Data value) throws IOException {
       writer.name("createPropertyImage");
-      new NullableAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.CreatePropertyImage>(CreatePropertyImage.INSTANCE, false)).toJson(writer, customScalarAdapters, value.createPropertyImage);
+      new OptionalAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.CreatePropertyImage>(CreatePropertyImage.INSTANCE, false)).toJson(writer, customScalarAdapters, value.createPropertyImage);
     }
   }
 
@@ -66,14 +69,14 @@ public class CreatePropertyImageMutation_ResponseAdapter {
     @Override
     public CreatePropertyImageMutation.CreatePropertyImage fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
-      CreatePropertyImageMutation.Image _image = null;
+      Optional<String> _clientMutationId = null;
+      Optional<CreatePropertyImageMutation.Image> _image = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _image = new NullableAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Image>(Image.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _image = new OptionalAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Image>(Image.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -88,10 +91,10 @@ public class CreatePropertyImageMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreatePropertyImageMutation.CreatePropertyImage value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("image");
-      new NullableAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Image>(Image.INSTANCE, false)).toJson(writer, customScalarAdapters, value.image);
+      new OptionalAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Image>(Image.INSTANCE, false)).toJson(writer, customScalarAdapters, value.image);
     }
   }
 
@@ -106,16 +109,16 @@ public class CreatePropertyImageMutation_ResponseAdapter {
       Boolean _active = null;
       List<CreatePropertyImageMutation.Caption> _captions = null;
       Boolean _featured = null;
-      String _fileName = null;
+      Optional<String> _fileName = null;
       String _id = null;
-      Integer _order = null;
-      String _originalUrl = null;
-      CreatePropertyImageMutation.Property _property = null;
-      String _publishedUrl = null;
+      Optional<Integer> _order = null;
+      Optional<String> _originalUrl = null;
+      Optional<CreatePropertyImageMutation.Property> _property = null;
+      Optional<String> _publishedUrl = null;
       Integer _rotation = null;
       ImageSource _source = null;
       CreatePropertyImageMutation.Status _status = null;
-      Object _updatedDate = null;
+      OffsetDateTime _updatedDate = null;
 
       loop:
       while(true) {
@@ -123,16 +126,16 @@ public class CreatePropertyImageMutation_ResponseAdapter {
           case 0: _active = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _captions = new ListAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Caption>(Caption.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 2: _featured = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _fileName = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _fileName = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 5: _order = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 6: _originalUrl = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 7: _property = new NullableAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 8: _publishedUrl = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 5: _order = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 6: _originalUrl = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _property = new OptionalAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 8: _publishedUrl = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 9: _rotation = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 10: _source = ImageSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 11: _status = new ObjectAdapter<CreatePropertyImageMutation.Status>(Status.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
-          case 12: _updatedDate = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 12: _updatedDate = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -176,22 +179,22 @@ public class CreatePropertyImageMutation_ResponseAdapter {
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.featured);
 
       writer.name("fileName");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.fileName);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.fileName);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("order");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.order);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.order);
 
       writer.name("originalUrl");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.originalUrl);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.originalUrl);
 
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<CreatePropertyImageMutation.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
 
       writer.name("publishedUrl");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.publishedUrl);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.publishedUrl);
 
       writer.name("rotation");
       Adapters.IntAdapter.toJson(writer, customScalarAdapters, value.rotation);
@@ -203,7 +206,7 @@ public class CreatePropertyImageMutation_ResponseAdapter {
       new ObjectAdapter<CreatePropertyImageMutation.Status>(Status.INSTANCE, false).toJson(writer, customScalarAdapters, value.status);
 
       writer.name("updatedDate");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.updatedDate);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.updatedDate);
     }
   }
 
@@ -288,13 +291,13 @@ public class CreatePropertyImageMutation_ResponseAdapter {
     @Override
     public CreatePropertyImageMutation.Status fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _reason = null;
+      Optional<String> _reason = null;
       String _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _reason = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _reason = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -312,7 +315,7 @@ public class CreatePropertyImageMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreatePropertyImageMutation.Status value) throws IOException {
       writer.name("reason");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.reason);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.reason);
 
       writer.name("type");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);

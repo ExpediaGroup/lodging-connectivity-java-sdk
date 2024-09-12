@@ -7,11 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeInput;
@@ -34,9 +32,9 @@ public enum ReplaceFeeSetInput_InputAdapter implements Adapter<ReplaceFeeSetInpu
       ReplaceFeeSetInput value) throws IOException {
     writer.name("businessModel");
     FeeBusinessModel_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.businessModel);
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
     writer.name("fees");
     new ListAdapter<>(new ObjectAdapter<FeeInput>(FeeInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.fees);

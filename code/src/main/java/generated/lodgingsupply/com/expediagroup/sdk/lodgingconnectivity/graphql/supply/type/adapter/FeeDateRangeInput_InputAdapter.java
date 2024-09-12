@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeDateRangeInput;
@@ -30,10 +27,10 @@ public enum FeeDateRangeInput_InputAdapter implements Adapter<FeeDateRangeInput>
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       FeeDateRangeInput value) throws IOException {
     writer.name("from");
-    Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
-    if (value.to instanceof Optional.Present) {
+    com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
+    if (value.to.isPresent()) {
       writer.name("to");
-      new ApolloOptionalAdapter<>(Adapters.NullableAnyAdapter).toJson(writer, customScalarAdapters, value.to);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.to);
     }
   }
 }

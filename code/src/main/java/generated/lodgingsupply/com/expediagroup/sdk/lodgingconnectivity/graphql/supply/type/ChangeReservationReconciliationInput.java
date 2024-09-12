@@ -5,24 +5,25 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ChangeReservationReconciliationInput {
   public final String propertyId;
 
   public final String reservationId;
 
-  public final Optional<SupplierAmountInput> supplierAmount;
+  public final Optional<Optional<SupplierAmountInput>> supplierAmount;
 
   public final LocalDate checkInDate;
 
   public final LocalDate checkOutDate;
 
-  public final Optional<ReservationChangeReason> reason;
+  public final Optional<Optional<ReservationChangeReason>> reason;
 
   private transient volatile int $hashCode;
 
@@ -31,8 +32,8 @@ public class ChangeReservationReconciliationInput {
   private transient volatile String $toString;
 
   public ChangeReservationReconciliationInput(String propertyId, String reservationId,
-      Optional<SupplierAmountInput> supplierAmount, LocalDate checkInDate, LocalDate checkOutDate,
-      Optional<ReservationChangeReason> reason) {
+      Optional<Optional<SupplierAmountInput>> supplierAmount, LocalDate checkInDate,
+      LocalDate checkOutDate, Optional<Optional<ReservationChangeReason>> reason) {
     this.propertyId = propertyId;
     this.reservationId = reservationId;
     this.supplierAmount = supplierAmount;
@@ -104,13 +105,13 @@ public class ChangeReservationReconciliationInput {
 
     private String reservationId;
 
-    private Optional<SupplierAmountInput> supplierAmount = Optional.absent();
+    private Optional<Optional<SupplierAmountInput>> supplierAmount = Optional.empty();
 
     private LocalDate checkInDate;
 
     private LocalDate checkOutDate;
 
-    private Optional<ReservationChangeReason> reason = Optional.absent();
+    private Optional<Optional<ReservationChangeReason>> reason = Optional.empty();
 
     Builder() {
     }
@@ -134,8 +135,8 @@ public class ChangeReservationReconciliationInput {
     /**
      * Updated supplier amount of the reservation.
      */
-    public Builder supplierAmount(SupplierAmountInput supplierAmount) {
-      this.supplierAmount = Optional.present(supplierAmount);
+    public Builder supplierAmount(@NotNull Optional<SupplierAmountInput> supplierAmount) {
+      this.supplierAmount = Optional.of(supplierAmount);
       return this;
     }
 
@@ -158,8 +159,8 @@ public class ChangeReservationReconciliationInput {
     /**
      * The reason for modifying the reservation.
      */
-    public Builder reason(ReservationChangeReason reason) {
-      this.reason = Optional.present(reason);
+    public Builder reason(@NotNull Optional<ReservationChangeReason> reason) {
+      this.reason = Optional.of(reason);
       return this;
     }
 

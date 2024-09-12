@@ -5,21 +5,22 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class UpdateUnitSpacesOfficeInput {
-  public final Optional<List<BedGroupInput>> bedGroups;
+  public final Optional<Optional<List<BedGroupInput>>> bedGroups;
 
   public final String id;
 
-  public final Optional<Integer> order;
+  public final Optional<Optional<Integer>> order;
 
-  public final Optional<List<TextInput>> text;
+  public final Optional<Optional<List<TextInput>>> text;
 
   private transient volatile int $hashCode;
 
@@ -27,8 +28,8 @@ public class UpdateUnitSpacesOfficeInput {
 
   private transient volatile String $toString;
 
-  public UpdateUnitSpacesOfficeInput(Optional<List<BedGroupInput>> bedGroups, String id,
-      Optional<Integer> order, Optional<List<TextInput>> text) {
+  public UpdateUnitSpacesOfficeInput(Optional<Optional<List<BedGroupInput>>> bedGroups, String id,
+      Optional<Optional<Integer>> order, Optional<Optional<List<TextInput>>> text) {
     this.bedGroups = bedGroups;
     this.id = id;
     this.order = order;
@@ -86,19 +87,19 @@ public class UpdateUnitSpacesOfficeInput {
   }
 
   public static final class Builder {
-    private Optional<List<BedGroupInput>> bedGroups = Optional.absent();
+    private Optional<Optional<List<BedGroupInput>>> bedGroups = Optional.empty();
 
     private String id;
 
-    private Optional<Integer> order = Optional.absent();
+    private Optional<Optional<Integer>> order = Optional.empty();
 
-    private Optional<List<TextInput>> text = Optional.absent();
+    private Optional<Optional<List<TextInput>>> text = Optional.empty();
 
     Builder() {
     }
 
-    public Builder bedGroups(List<BedGroupInput> bedGroups) {
-      this.bedGroups = Optional.present(bedGroups);
+    public Builder bedGroups(@NotNull Optional<List<BedGroupInput>> bedGroups) {
+      this.bedGroups = Optional.of(bedGroups);
       return this;
     }
 
@@ -107,13 +108,13 @@ public class UpdateUnitSpacesOfficeInput {
       return this;
     }
 
-    public Builder order(Integer order) {
-      this.order = Optional.present(order);
+    public Builder order(@NotNull Optional<Integer> order) {
+      this.order = Optional.of(order);
       return this;
     }
 
-    public Builder text(List<TextInput> text) {
-      this.text = Optional.present(text);
+    public Builder text(@NotNull Optional<List<TextInput>> text) {
+      this.text = Optional.of(text);
       return this;
     }
 

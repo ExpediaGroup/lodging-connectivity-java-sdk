@@ -10,23 +10,25 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.CreateRatePlanMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RatePlanStatus;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RatePlanType;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RatePlanStatus_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.RatePlanType_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CreateRatePlanMutation_ResponseAdapter {
   public enum Data implements Adapter<CreateRatePlanMutation.Data> {
@@ -37,12 +39,12 @@ public class CreateRatePlanMutation_ResponseAdapter {
     @Override
     public CreateRatePlanMutation.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      CreateRatePlanMutation.CreateRatePlan _createRatePlan = null;
+      Optional<CreateRatePlanMutation.CreateRatePlan> _createRatePlan = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _createRatePlan = new NullableAdapter<>(new ObjectAdapter<CreateRatePlanMutation.CreateRatePlan>(CreateRatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _createRatePlan = new OptionalAdapter<>(new ObjectAdapter<CreateRatePlanMutation.CreateRatePlan>(CreateRatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -56,7 +58,7 @@ public class CreateRatePlanMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateRatePlanMutation.Data value) throws IOException {
       writer.name("createRatePlan");
-      new NullableAdapter<>(new ObjectAdapter<CreateRatePlanMutation.CreateRatePlan>(CreateRatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.createRatePlan);
+      new OptionalAdapter<>(new ObjectAdapter<CreateRatePlanMutation.CreateRatePlan>(CreateRatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.createRatePlan);
     }
   }
 
@@ -68,14 +70,14 @@ public class CreateRatePlanMutation_ResponseAdapter {
     @Override
     public CreateRatePlanMutation.CreateRatePlan fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _clientMutationId = null;
-      CreateRatePlanMutation.RatePlan _ratePlan = null;
+      Optional<String> _clientMutationId = null;
+      Optional<CreateRatePlanMutation.RatePlan> _ratePlan = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _clientMutationId = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _ratePlan = new NullableAdapter<>(new ObjectAdapter<CreateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _clientMutationId = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _ratePlan = new OptionalAdapter<>(new ObjectAdapter<CreateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -90,10 +92,10 @@ public class CreateRatePlanMutation_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CreateRatePlanMutation.CreateRatePlan value) throws IOException {
       writer.name("clientMutationId");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.clientMutationId);
 
       writer.name("ratePlan");
-      new NullableAdapter<>(new ObjectAdapter<CreateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.ratePlan);
+      new OptionalAdapter<>(new ObjectAdapter<CreateRatePlanMutation.RatePlan>(RatePlan.INSTANCE, false)).toJson(writer, customScalarAdapters, value.ratePlan);
     }
   }
 
@@ -108,14 +110,14 @@ public class CreateRatePlanMutation_ResponseAdapter {
       String _id = null;
       String _propertyId = null;
       String _name = null;
-      Object _creationDateTime = null;
+      OffsetDateTime _creationDateTime = null;
       RatePlanType _type = null;
       String _unitId = null;
       List<String> _valueAdds = null;
-      Boolean _taxInclusive = null;
+      Optional<Boolean> _taxInclusive = null;
       RatePlanStatus _status = null;
-      Object _lastUpdateDateTime = null;
-      Integer _baseRateGuestCount = null;
+      OffsetDateTime _lastUpdateDateTime = null;
+      Optional<Integer> _baseRateGuestCount = null;
 
       loop:
       while(true) {
@@ -123,14 +125,14 @@ public class CreateRatePlanMutation_ResponseAdapter {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _propertyId = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _creationDateTime = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _creationDateTime = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 4: _type = RatePlanType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           case 5: _unitId = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 6: _valueAdds = new ListAdapter<>(Adapters.StringAdapter).fromJson(reader, customScalarAdapters); break;
-          case 7: _taxInclusive = Adapters.NullableBooleanAdapter.fromJson(reader, customScalarAdapters); break;
+          case 7: _taxInclusive = OptionalAdapters.OptionalBooleanAdapter.fromJson(reader, customScalarAdapters); break;
           case 8: _status = RatePlanStatus_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 9: _lastUpdateDateTime = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 10: _baseRateGuestCount = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 9: _lastUpdateDateTime = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
+          case 10: _baseRateGuestCount = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -173,7 +175,7 @@ public class CreateRatePlanMutation_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("creationDateTime");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.creationDateTime);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.creationDateTime);
 
       writer.name("type");
       RatePlanType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -185,16 +187,16 @@ public class CreateRatePlanMutation_ResponseAdapter {
       new ListAdapter<>(Adapters.StringAdapter).toJson(writer, customScalarAdapters, value.valueAdds);
 
       writer.name("taxInclusive");
-      Adapters.NullableBooleanAdapter.toJson(writer, customScalarAdapters, value.taxInclusive);
+      OptionalAdapters.OptionalBooleanAdapter.toJson(writer, customScalarAdapters, value.taxInclusive);
 
       writer.name("status");
       RatePlanStatus_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.status);
 
       writer.name("lastUpdateDateTime");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.lastUpdateDateTime);
+      com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.lastUpdateDateTime);
 
       writer.name("baseRateGuestCount");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.baseRateGuestCount);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.baseRateGuestCount);
     }
   }
 }

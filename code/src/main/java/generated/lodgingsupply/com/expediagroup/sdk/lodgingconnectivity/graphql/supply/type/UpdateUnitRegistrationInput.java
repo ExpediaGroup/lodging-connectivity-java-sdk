@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Government registration information for a given property
  */
 public class UpdateUnitRegistrationInput {
-  public final Optional<List<ApplicableRegulationsInput>> applicableRegulations;
+  public final Optional<Optional<List<ApplicableRegulationsInput>>> applicableRegulations;
 
   public final List<RegistrationDetailInput> details;
 
@@ -26,7 +27,7 @@ public class UpdateUnitRegistrationInput {
   private transient volatile String $toString;
 
   public UpdateUnitRegistrationInput(
-      Optional<List<ApplicableRegulationsInput>> applicableRegulations,
+      Optional<Optional<List<ApplicableRegulationsInput>>> applicableRegulations,
       List<RegistrationDetailInput> details) {
     this.applicableRegulations = applicableRegulations;
     this.details = details;
@@ -75,7 +76,7 @@ public class UpdateUnitRegistrationInput {
   }
 
   public static final class Builder {
-    private Optional<List<ApplicableRegulationsInput>> applicableRegulations = Optional.absent();
+    private Optional<Optional<List<ApplicableRegulationsInput>>> applicableRegulations = Optional.empty();
 
     private List<RegistrationDetailInput> details;
 
@@ -85,8 +86,9 @@ public class UpdateUnitRegistrationInput {
     /**
      * Additional property registration information required by certain districts
      */
-    public Builder applicableRegulations(List<ApplicableRegulationsInput> applicableRegulations) {
-      this.applicableRegulations = Optional.present(applicableRegulations);
+    public Builder applicableRegulations(
+        @NotNull Optional<List<ApplicableRegulationsInput>> applicableRegulations) {
+      this.applicableRegulations = Optional.of(applicableRegulations);
       return this;
     }
 

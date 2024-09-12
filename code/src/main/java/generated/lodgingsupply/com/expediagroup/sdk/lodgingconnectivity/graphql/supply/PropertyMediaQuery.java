@@ -9,7 +9,6 @@ import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.CompiledField;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.Query;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.adapter.PropertyMediaQuery_ResponseAdapter;
@@ -23,7 +22,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
   public static final String OPERATION_ID = "b8f892b9487c9166744df2b77923cbfa4a258aa62601052a3de527084b3e6869";
@@ -162,7 +163,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
   public static final class Builder {
     private String propertyId;
 
-    private Optional<ImagesFiltersInput> filters = Optional.absent();
+    private Optional<ImagesFiltersInput> filters = Optional.empty();
 
     Builder() {
     }
@@ -173,7 +174,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
     }
 
     public Builder filters(ImagesFiltersInput filters) {
-      this.filters = Optional.present(filters);
+      this.filters = Optional.of(filters);
       return this;
     }
 
@@ -183,7 +184,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
   }
 
   public static class Data implements Query.Data {
-    public Property property;
+    public Optional<Property> property;
 
     private transient volatile int $hashCode;
 
@@ -191,7 +192,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Data(Property property) {
+    public Data(Optional<Property> property) {
       this.property = property;
     }
 
@@ -279,7 +280,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
   }
 
   public static class Media {
-    public Images images;
+    public Optional<Images> images;
 
     private transient volatile int $hashCode;
 
@@ -287,7 +288,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Media(Images images) {
+    public Media(Optional<Images> images) {
       this.images = images;
     }
 
@@ -388,15 +389,15 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
 
     public Boolean featured;
 
-    public String fileName;
+    public Optional<String> fileName;
 
     public String id;
 
-    public Integer order;
+    public Optional<Integer> order;
 
-    public String originalUrl;
+    public Optional<String> originalUrl;
 
-    public String publishedUrl;
+    public Optional<String> publishedUrl;
 
     /**
      * Clockwise rotation to be applied to the image. Accepted values are 0, 90, 180 and 270. Defaults to 0 when not provided.
@@ -407,7 +408,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
 
     public Status status;
 
-    public Object updatedDate;
+    public OffsetDateTime updatedDate;
 
     private transient volatile int $hashCode;
 
@@ -415,9 +416,10 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Element(Boolean active, List<Caption> captions, Boolean featured, String fileName,
-        String id, Integer order, String originalUrl, String publishedUrl, Integer rotation,
-        ImageSource source, Status status, Object updatedDate) {
+    public Element(Boolean active, List<Caption> captions, Boolean featured,
+        Optional<String> fileName, String id, Optional<Integer> order, Optional<String> originalUrl,
+        Optional<String> publishedUrl, Integer rotation, ImageSource source, Status status,
+        OffsetDateTime updatedDate) {
       this.active = active;
       this.captions = captions;
       this.featured = featured;
@@ -567,7 +569,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
   }
 
   public static class Status {
-    public String reason;
+    public Optional<String> reason;
 
     public String type;
 
@@ -577,7 +579,7 @@ public class PropertyMediaQuery implements Query<PropertyMediaQuery.Data> {
 
     private transient volatile String $toString;
 
-    public Status(String reason, String type) {
+    public Status(Optional<String> reason, String type) {
       this.reason = reason;
       this.type = type;
     }

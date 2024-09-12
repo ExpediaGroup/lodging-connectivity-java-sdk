@@ -7,11 +7,8 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelVrboReservationInput;
@@ -32,9 +29,9 @@ public enum CancelVrboReservationInput_InputAdapter implements Adapter<CancelVrb
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       CancelVrboReservationInput value) throws IOException {
-    if (value.clientMutationId instanceof Optional.Present) {
+    if (value.clientMutationId.isPresent()) {
       writer.name("clientMutationId");
-      new ApolloOptionalAdapter<>(Adapters.NullableStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
+      new OptionalAdapter<>(OptionalAdapters.OptionalStringAdapter).toJson(writer, customScalarAdapters, value.clientMutationId);
     }
     writer.name("propertyId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
@@ -42,13 +39,13 @@ public enum CancelVrboReservationInput_InputAdapter implements Adapter<CancelVrb
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.reservationId);
     writer.name("primaryReason");
     VrboCancellationReason_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.primaryReason);
-    if (value.secondaryReason instanceof Optional.Present) {
+    if (value.secondaryReason.isPresent()) {
       writer.name("secondaryReason");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(VrboCancellationSecondaryReason_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.secondaryReason);
+      new OptionalAdapter<>(new OptionalAdapter<>(VrboCancellationSecondaryReason_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.secondaryReason);
     }
-    if (value.cancellationPolicyOverride instanceof Optional.Present) {
+    if (value.cancellationPolicyOverride.isPresent()) {
       writer.name("cancellationPolicyOverride");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<VrboCancellationPolicyOverride>(VrboCancellationPolicyOverride_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.cancellationPolicyOverride);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<VrboCancellationPolicyOverride>(VrboCancellationPolicyOverride_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.cancellationPolicyOverride);
     }
   }
 }

@@ -21,7 +21,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.*;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 /**
  * Example class to demonstrate different operations supported by the LodgingSupplySandboxClient
@@ -53,7 +53,7 @@ public class LodgingSupplySandboxClientUsageExample {
         deletePropertyIfExists();
 
         //  ******* Create Property *******
-        var createPropertyInput = CreatePropertyInput.builder().name(PROPERTY_NAME).build();
+        var createPropertyInput = CreatePropertyInput.builder().name(Optional.of(PROPERTY_NAME)).build();
         var createPropertyResponse = client.execute(new SandboxCreatePropertyMutation(createPropertyInput));
 
 
@@ -64,7 +64,7 @@ public class LodgingSupplySandboxClientUsageExample {
 
 
         // ******* Update Property Name *******
-        var updatePropertyInput = UpdatePropertyInput.builder().id(propertyId).name(UPDATED_PROPERTY_NAME).build();
+        var updatePropertyInput = UpdatePropertyInput.builder().id(propertyId).name(Optional.of(UPDATED_PROPERTY_NAME)).build();
         var updatePropertyResponse = client.execute(new SandboxUpdatePropertyMutation(updatePropertyInput));
 
         System.out.println("Property Updated: " + propertyId);
@@ -72,18 +72,18 @@ public class LodgingSupplySandboxClientUsageExample {
 
 
         // ******* Create Reservation *******
-        var createReservationInput = CreateReservationInput.builder().propertyId(propertyId).childCount(4).adultCount(2).build();
+        var createReservationInput = CreateReservationInput.builder().propertyId(propertyId).childCount(Optional.of(4)).adultCount(Optional.of(2)).build();
         var createReservationResponse = client.execute(new SandboxCreateReservationMutation(createReservationInput));
 
 
         var reservationId = createReservationResponse.createReservation.reservation.sandboxReservationFragment.id;
 
         System.out.println("Reservation Created: " + reservationId);
-        System.out.println(createReservationResponse);
+        System.out.println(createReservationResponse.createReservation.reservation.sandboxReservationFragment.bedTypes);
 
 
         // ******* Update Reservation *******
-        var updateReservationInput = UpdateReservationInput.builder().id(reservationId).childAges(List.of(3, 5, 7)).build();
+        var updateReservationInput = UpdateReservationInput.builder().id(reservationId).childAges(Optional.of(List.of(3, 5, 7))).build();
         var updateReservationResponse = client.execute(new SandboxUpdateReservationMutation(updateReservationInput));
 
         System.out.println("Reservation Updated: " + reservationId);
@@ -105,7 +105,7 @@ public class LodgingSupplySandboxClientUsageExample {
 
 
         // ******* Cancel Reservation *******
-        var cancelReservationInput = CancelReservationInput.builder().id(reservationId).sendNotification(false).build();
+        var cancelReservationInput = CancelReservationInput.builder().id(reservationId).sendNotification(Optional.of(false)).build();
         var cancelReservationResponse = client.execute(new SandboxCancelReservationMutation(cancelReservationInput));
 
         System.out.println("Reservation Was Canceled: " + reservationId);

@@ -10,7 +10,6 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
@@ -20,17 +19,21 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Cancellation
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancellationPolicyType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancellationWindowTemporalUnit;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CurrencyCode;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.Decimal;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.CancellationPenaltyRuleApplicability_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.CancellationPenaltyRuleType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.CancellationPolicyType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.CancellationWindowTemporalUnit_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import java.io.IOException;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CancellationPolicyConfigQuery_ResponseAdapter {
   public enum Data implements Adapter<CancellationPolicyConfigQuery.Data> {
@@ -41,12 +44,12 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     @Override
     public CancellationPolicyConfigQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      CancellationPolicyConfigQuery.CancellationPolicyConfig _cancellationPolicyConfig = null;
+      Optional<CancellationPolicyConfigQuery.CancellationPolicyConfig> _cancellationPolicyConfig = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _cancellationPolicyConfig = new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _cancellationPolicyConfig = new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -60,7 +63,7 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CancellationPolicyConfigQuery.Data value) throws IOException {
       writer.name("cancellationPolicyConfig");
-      new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicyConfig);
+      new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.CancellationPolicyConfig>(CancellationPolicyConfig.INSTANCE, false)).toJson(writer, customScalarAdapters, value.cancellationPolicyConfig);
     }
   }
 
@@ -74,20 +77,20 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      CancellationPolicyConfigQuery.AdditionalCancellationFee _additionalCancellationFee = null;
+      Optional<CancellationPolicyConfigQuery.AdditionalCancellationFee> _additionalCancellationFee = null;
       List<CancellationPolicyConfigQuery.DefaultPolicy> _defaultPolicies = null;
       List<CancellationPolicyConfigQuery.OverridePolicy> _overridePolicies = null;
-      CancellationPolicyConfigQuery.Property _property = null;
+      Optional<CancellationPolicyConfigQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _additionalCancellationFee = new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.AdditionalCancellationFee>(AdditionalCancellationFee.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _additionalCancellationFee = new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.AdditionalCancellationFee>(AdditionalCancellationFee.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 3: _defaultPolicies = new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.DefaultPolicy>(DefaultPolicy.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 4: _overridePolicies = new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.OverridePolicy>(OverridePolicy.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 5: _property = new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 5: _property = new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -117,7 +120,7 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("additionalCancellationFee");
-      new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.AdditionalCancellationFee>(AdditionalCancellationFee.INSTANCE, false)).toJson(writer, customScalarAdapters, value.additionalCancellationFee);
+      new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.AdditionalCancellationFee>(AdditionalCancellationFee.INSTANCE, false)).toJson(writer, customScalarAdapters, value.additionalCancellationFee);
 
       writer.name("defaultPolicies");
       new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.DefaultPolicy>(DefaultPolicy.INSTANCE, false)).toJson(writer, customScalarAdapters, value.defaultPolicies);
@@ -126,7 +129,7 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
       new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.OverridePolicy>(OverridePolicy.INSTANCE, false)).toJson(writer, customScalarAdapters, value.overridePolicies);
 
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -138,13 +141,13 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     @Override
     public CancellationPolicyConfigQuery.AdditionalCancellationFee fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -163,7 +166,7 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CancellationPolicyConfigQuery.AdditionalCancellationFee value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -179,13 +182,13 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     public CancellationPolicyConfigQuery.DefaultPolicy fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       CancellationPolicyType _type = null;
-      List<CancellationPolicyConfigQuery.Tier> _tiers = null;
+      Optional<List<CancellationPolicyConfigQuery.Tier>> _tiers = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _type = CancellationPolicyType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _tiers = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier>(Tier.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 1: _tiers = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier>(Tier.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -205,7 +208,7 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
       CancellationPolicyType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("tiers");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier>(Tier.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier>(Tier.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
     }
   }
 
@@ -298,18 +301,18 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     public CancellationPolicyConfigQuery.PenaltyRule fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       CancellationPenaltyRuleApplicability _applicability = null;
-      CancellationPolicyConfigQuery.FlatAmount _flatAmount = null;
-      Integer _numberOfNights = null;
-      Object _percentage = null;
+      Optional<CancellationPolicyConfigQuery.FlatAmount> _flatAmount = null;
+      Optional<Integer> _numberOfNights = null;
+      Optional<String> _percentage = null;
       CancellationPenaltyRuleType _type = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _applicability = CancellationPenaltyRuleApplicability_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _flatAmount = new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
-          case 2: _numberOfNights = Adapters.NullableIntAdapter.fromJson(reader, customScalarAdapters); break;
-          case 3: _percentage = Adapters.NullableAnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _flatAmount = new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.FlatAmount>(FlatAmount.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 2: _numberOfNights = OptionalAdapters.OptionalIntAdapter.fromJson(reader, customScalarAdapters); break;
+          case 3: _percentage = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).fromJson(reader, customScalarAdapters); break;
           case 4: _type = CancellationPenaltyRuleType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -334,13 +337,13 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
       CancellationPenaltyRuleApplicability_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.applicability);
 
       writer.name("flatAmount");
-      new NullableAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
+      new OptionalAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.FlatAmount>(FlatAmount.INSTANCE, false)).toJson(writer, customScalarAdapters, value.flatAmount);
 
       writer.name("numberOfNights");
-      Adapters.NullableIntAdapter.toJson(writer, customScalarAdapters, value.numberOfNights);
+      OptionalAdapters.OptionalIntAdapter.toJson(writer, customScalarAdapters, value.numberOfNights);
 
       writer.name("percentage");
-      Adapters.NullableAnyAdapter.toJson(writer, customScalarAdapters, value.percentage);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(Decimal.type))).toJson(writer, customScalarAdapters, value.percentage);
 
       writer.name("type");
       CancellationPenaltyRuleType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
@@ -355,13 +358,13 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     @Override
     public CancellationPolicyConfigQuery.FlatAmount fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _amount = null;
+      String _amount = null;
       String _currencyCode = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _amount = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _amount = (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).fromJson(reader, customScalarAdapters); break;
           case 1: _currencyCode = (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -380,7 +383,7 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CancellationPolicyConfigQuery.FlatAmount value) throws IOException {
       writer.name("amount");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.amount);
+      (customScalarAdapters.<String>responseAdapterFor(Decimal.type)).toJson(writer, customScalarAdapters, value.amount);
 
       writer.name("currencyCode");
       (customScalarAdapters.<String>responseAdapterFor(CurrencyCode.type)).toJson(writer, customScalarAdapters, value.currencyCode);
@@ -436,13 +439,13 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     public CancellationPolicyConfigQuery.CancellationPolicy fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       CancellationPolicyType _type = null;
-      List<CancellationPolicyConfigQuery.Tier1> _tiers = null;
+      Optional<List<CancellationPolicyConfigQuery.Tier1>> _tiers = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _type = CancellationPolicyType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _tiers = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier1>(Tier1.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 1: _tiers = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier1>(Tier1.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -462,7 +465,7 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
       CancellationPolicyType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("tiers");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier1>(Tier1.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<CancellationPolicyConfigQuery.Tier1>(Tier1.INSTANCE, false))).toJson(writer, customScalarAdapters, value.tiers);
     }
   }
 
@@ -547,14 +550,14 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     @Override
     public CancellationPolicyConfigQuery.DateRange fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      Object _from = null;
-      Object _to = null;
+      LocalDate _from = null;
+      LocalDate _to = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _from = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _to = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _from = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
+          case 1: _to = com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -572,10 +575,10 @@ public class CancellationPolicyConfigQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         CancellationPolicyConfigQuery.DateRange value) throws IOException {
       writer.name("from");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.from);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
 
       writer.name("to");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.to);
+      com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.to);
     }
   }
 

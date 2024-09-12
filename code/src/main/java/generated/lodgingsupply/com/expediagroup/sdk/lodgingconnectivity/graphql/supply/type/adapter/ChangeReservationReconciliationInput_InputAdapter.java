@@ -7,11 +7,8 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ChangeReservationReconciliationInput;
@@ -36,17 +33,17 @@ public enum ChangeReservationReconciliationInput_InputAdapter implements Adapter
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.propertyId);
     writer.name("reservationId");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.reservationId);
-    if (value.supplierAmount instanceof Optional.Present) {
+    if (value.supplierAmount.isPresent()) {
       writer.name("supplierAmount");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<SupplierAmountInput>(SupplierAmountInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.supplierAmount);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<SupplierAmountInput>(SupplierAmountInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.supplierAmount);
     }
     writer.name("checkInDate");
     com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.checkInDate);
     writer.name("checkOutDate");
     com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.checkOutDate);
-    if (value.reason instanceof Optional.Present) {
+    if (value.reason.isPresent()) {
       writer.name("reason");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(ReservationChangeReason_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reason);
+      new OptionalAdapter<>(new OptionalAdapter<>(ReservationChangeReason_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.reason);
     }
   }
 }

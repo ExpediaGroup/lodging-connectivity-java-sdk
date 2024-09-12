@@ -6,10 +6,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CheckInDateFilter;
@@ -31,9 +28,9 @@ public enum CheckInDateFilter_InputAdapter implements Adapter<CheckInDateFilter>
       CheckInDateFilter value) throws IOException {
     writer.name("from");
     com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.from);
-    if (value.to instanceof Optional.Present) {
+    if (value.to.isPresent()) {
       writer.name("to");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.to);
+      new OptionalAdapter<>(new OptionalAdapter<>(com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.to);
     }
   }
 }

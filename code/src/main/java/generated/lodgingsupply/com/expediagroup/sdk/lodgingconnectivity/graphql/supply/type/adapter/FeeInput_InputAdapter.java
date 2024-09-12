@@ -7,12 +7,9 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
 import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.FeeChargeInput;
@@ -34,29 +31,29 @@ public enum FeeInput_InputAdapter implements Adapter<FeeInput> {
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters, FeeInput value)
       throws IOException {
-    if (value.ageCategory instanceof Optional.Present) {
+    if (value.ageCategory.isPresent()) {
       writer.name("ageCategory");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.ageCategory);
+      new OptionalAdapter<>(new OptionalAdapter<>(FeeAgeCategory_ResponseAdapter.INSTANCE)).toJson(writer, customScalarAdapters, value.ageCategory);
     }
     writer.name("charges");
     new ListAdapter<>(new ObjectAdapter<FeeChargeInput>(FeeChargeInput_InputAdapter.INSTANCE, false)).toJson(writer, customScalarAdapters, value.charges);
     writer.name("name");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
-    if (value.restrictions instanceof Optional.Present) {
+    if (value.restrictions.isPresent()) {
       writer.name("restrictions");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<FeeRestrictionsInput>(FeeRestrictionsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<FeeRestrictionsInput>(FeeRestrictionsInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.restrictions);
     }
     writer.name("scope");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.scope);
-    if (value.taxable instanceof Optional.Present) {
+    if (value.taxable.isPresent()) {
       writer.name("taxable");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.taxable);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.taxable);
     }
     writer.name("type");
     Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
-    if (value.variesByLengthOfStay instanceof Optional.Present) {
+    if (value.variesByLengthOfStay.isPresent()) {
       writer.name("variesByLengthOfStay");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.variesByLengthOfStay);
     }
   }
 }

@@ -31,7 +31,9 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSingleDiscountPromotionMutation.Data> {
   public static final String OPERATION_ID = "f0ee55bc14123269c366fc51a863b8b41844045644c079606a9670cd3995cfa8";
@@ -292,7 +294,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     /**
      * It indicates if the promotion is negotiated.
      */
-    public Boolean isContractedPromotion;
+    public Optional<Boolean> isContractedPromotion;
 
     /**
      * Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
@@ -302,7 +304,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     /**
      * Sell status of the promotion. Values: EXPIRED, CURRENT or FUTURE. For retrieval only.
      */
-    public PromotionSellStatus sellStatus;
+    public Optional<PromotionSellStatus> sellStatus;
 
     /**
      * Status of the promotion. Values: ACTIVE or INACTIVE.
@@ -312,7 +314,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     /**
      * Synthetic field for inline fragment on DiscountPromotion
      */
-    public OnDiscountPromotion onDiscountPromotion;
+    public Optional<OnDiscountPromotion> onDiscountPromotion;
 
     private transient volatile int $hashCode;
 
@@ -321,8 +323,9 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     private transient volatile String $toString;
 
     public CreateSingleDiscountPromotion(String __typename, PromotionCategory category, String id,
-        Boolean isContractedPromotion, PromotionName name, PromotionSellStatus sellStatus,
-        PromotionStatus status, OnDiscountPromotion onDiscountPromotion) {
+        Optional<Boolean> isContractedPromotion, PromotionName name,
+        Optional<PromotionSellStatus> sellStatus, PromotionStatus status,
+        Optional<OnDiscountPromotion> onDiscountPromotion) {
       this.__typename = __typename;
       this.category = category;
       this.id = id;
@@ -425,7 +428,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     /**
      * List of restrictions that can be applied to these promotions.
      */
-    public Restrictions restrictions;
+    public Optional<Restrictions> restrictions;
 
     /**
      * The rate plans for which this promotion is applicable for.
@@ -436,22 +439,22 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
      * The 'exception' dates for which the promotion should NOT apply.
      * This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
      */
-    public List<BlackoutDate> blackoutDates;
+    public Optional<List<BlackoutDate>> blackoutDates;
 
     /**
      * Detail of the actual discount being applied on the promotion.
      */
-    public Discount discount;
+    public Optional<Discount> discount;
 
     /**
      * Sell status of the promotion. Values: EXPIRED, CURRENT or FUTURE. For retrieval only.
      */
-    public PromotionSellStatus sellStatus;
+    public Optional<PromotionSellStatus> sellStatus;
 
     /**
      * It indicates if the promotion is negotiated.
      */
-    public Boolean isContractedPromotion;
+    public Optional<Boolean> isContractedPromotion;
 
     private transient volatile int $hashCode;
 
@@ -460,9 +463,10 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     private transient volatile String $toString;
 
     public OnDiscountPromotion(String id, PromotionName name, PromotionCategory category,
-        PromotionStatus status, String code, Restrictions restrictions,
-        List<EligibleRatePlan> eligibleRatePlans, List<BlackoutDate> blackoutDates,
-        Discount discount, PromotionSellStatus sellStatus, Boolean isContractedPromotion) {
+        PromotionStatus status, String code, Optional<Restrictions> restrictions,
+        List<EligibleRatePlan> eligibleRatePlans, Optional<List<BlackoutDate>> blackoutDates,
+        Optional<Discount> discount, Optional<PromotionSellStatus> sellStatus,
+        Optional<Boolean> isContractedPromotion) {
       this.id = id;
       this.name = name;
       this.category = category;
@@ -555,61 +559,61 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     /**
      * Setting this to true indicates that the promotion is targeted exclusively towards Expedia Group members whose loyalty drives bookings.
      */
-    public Boolean isMemberOnly;
+    public Optional<Boolean> isMemberOnly;
 
     /**
      * It indicates if this promotion is applicable only for travelers booking on the mobile device.
      * This field will be null in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
      */
-    public Boolean isMobileUserOnly;
+    public Optional<Boolean> isMobileUserOnly;
 
     /**
      * The minimum duration of stay for which the promotion can be applicable.
      */
-    public Integer minLengthOfStay;
+    public Optional<Integer> minLengthOfStay;
 
     /**
      * The maximum duration of stay for which the promotion can be applicable. The maximum value possible here is 28.
      */
-    public Integer maxLengthOfStay;
+    public Optional<Integer> maxLengthOfStay;
 
     /**
      * The minimum number of days in advance the reservation must be made for the promotion to be applicable.
      */
-    public Integer minAdvanceBookingDays;
+    public Optional<Integer> minAdvanceBookingDays;
 
     /**
      * The maximum number of days in advance the reservation must be made for the promotion to be applicable.
      */
-    public Integer maxAdvanceBookingDays;
+    public Optional<Integer> maxAdvanceBookingDays;
 
     /**
      * The Booking Date Time from which this promotion is applicable.
      * YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
      */
-    public LocalDateTime bookingLocalDateTimeFrom;
+    public Optional<LocalDateTime> bookingLocalDateTimeFrom;
 
     /**
      * The Booking Date Time until which this promotion is applicable.
      * YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
      */
-    public LocalDateTime bookingLocalDateTimeTo;
+    public Optional<LocalDateTime> bookingLocalDateTimeTo;
 
     /**
      * The Travel date from which this promotion is applicable in YYYY-MM-DD format.
      */
-    public LocalDate travelDateFrom;
+    public Optional<LocalDate> travelDateFrom;
 
     /**
      * The Travel date until which this promotion is applicable in YYYY-MM-DD format.
      */
-    public LocalDate travelDateTo;
+    public Optional<LocalDate> travelDateTo;
 
     /**
      * Applicable only for SAME_DAY_PROMOTION. The start time for the same day from which the promotion is applicable.
      * The timezone in consideration will be the local time for the property the promotion is applied for.
      */
-    public Object sameDayBookingStartTime;
+    public Optional<LocalTime> sameDayBookingStartTime;
 
     private transient volatile int $hashCode;
 
@@ -617,10 +621,12 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
 
     private transient volatile String $toString;
 
-    public Restrictions(Boolean isMemberOnly, Boolean isMobileUserOnly, Integer minLengthOfStay,
-        Integer maxLengthOfStay, Integer minAdvanceBookingDays, Integer maxAdvanceBookingDays,
-        LocalDateTime bookingLocalDateTimeFrom, LocalDateTime bookingLocalDateTimeTo,
-        LocalDate travelDateFrom, LocalDate travelDateTo, Object sameDayBookingStartTime) {
+    public Restrictions(Optional<Boolean> isMemberOnly, Optional<Boolean> isMobileUserOnly,
+        Optional<Integer> minLengthOfStay, Optional<Integer> maxLengthOfStay,
+        Optional<Integer> minAdvanceBookingDays, Optional<Integer> maxAdvanceBookingDays,
+        Optional<LocalDateTime> bookingLocalDateTimeFrom,
+        Optional<LocalDateTime> bookingLocalDateTimeTo, Optional<LocalDate> travelDateFrom,
+        Optional<LocalDate> travelDateTo, Optional<LocalTime> sameDayBookingStartTime) {
       this.isMemberOnly = isMemberOnly;
       this.isMobileUserOnly = isMobileUserOnly;
       this.minLengthOfStay = minLengthOfStay;
@@ -827,7 +833,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     /**
      * Synthetic field for inline fragment on SingleDiscount
      */
-    public OnSingleDiscount onSingleDiscount;
+    public Optional<OnSingleDiscount> onSingleDiscount;
 
     private transient volatile int $hashCode;
 
@@ -835,7 +841,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
 
     private transient volatile String $toString;
 
-    public Discount(String __typename, OnSingleDiscount onSingleDiscount) {
+    public Discount(String __typename, Optional<OnSingleDiscount> onSingleDiscount) {
       this.__typename = __typename;
       this.onSingleDiscount = onSingleDiscount;
     }
@@ -898,7 +904,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     /**
      * Member only discount value applied
      */
-    public Double memberOnlyAdditionalValue;
+    public Optional<Double> memberOnlyAdditionalValue;
 
     private transient volatile int $hashCode;
 
@@ -907,7 +913,7 @@ public class CreateSingleDiscountPromotionMutation implements Mutation<CreateSin
     private transient volatile String $toString;
 
     public OnSingleDiscount(DiscountType type, DiscountUnit unit, Double value,
-        Double memberOnlyAdditionalValue) {
+        Optional<Double> memberOnlyAdditionalValue) {
       this.type = type;
       this.unit = unit;
       this.value = value;

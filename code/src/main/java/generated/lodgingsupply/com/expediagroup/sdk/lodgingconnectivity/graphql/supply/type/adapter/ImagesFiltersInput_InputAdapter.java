@@ -6,12 +6,8 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter;
 
 import com.apollographql.apollo.api.Adapter;
-import com.apollographql.apollo.api.Adapters;
-import com.apollographql.apollo.api.ApolloOptionalAdapter;
 import com.apollographql.apollo.api.CustomScalarAdapters;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
-import com.apollographql.apollo.api.Optional;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ImagesFiltersInput;
@@ -33,21 +29,21 @@ public enum ImagesFiltersInput_InputAdapter implements Adapter<ImagesFiltersInpu
   @Override
   public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
       ImagesFiltersInput value) throws IOException {
-    if (value.active instanceof Optional.Present) {
+    if (value.active.isPresent()) {
       writer.name("active");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.active);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.active);
     }
-    if (value.featured instanceof Optional.Present) {
+    if (value.featured.isPresent()) {
       writer.name("featured");
-      new ApolloOptionalAdapter<>(Adapters.NullableBooleanAdapter).toJson(writer, customScalarAdapters, value.featured);
+      new OptionalAdapter<>(OptionalAdapters.OptionalBooleanAdapter).toJson(writer, customScalarAdapters, value.featured);
     }
-    if (value.sources instanceof Optional.Present) {
+    if (value.sources.isPresent()) {
       writer.name("sources");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<OneOfImageSourceFilterInput>(OneOfImageSourceFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.sources);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<OneOfImageSourceFilterInput>(OneOfImageSourceFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.sources);
     }
-    if (value.statuses instanceof Optional.Present) {
+    if (value.statuses.isPresent()) {
       writer.name("statuses");
-      new ApolloOptionalAdapter<>(new NullableAdapter<>(new ObjectAdapter<OneOfMediaStatusFilterInput>(OneOfMediaStatusFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.statuses);
+      new OptionalAdapter<>(new OptionalAdapter<>(new ObjectAdapter<OneOfMediaStatusFilterInput>(OneOfMediaStatusFilterInput_InputAdapter.INSTANCE, false))).toJson(writer, customScalarAdapters, value.statuses);
     }
   }
 }

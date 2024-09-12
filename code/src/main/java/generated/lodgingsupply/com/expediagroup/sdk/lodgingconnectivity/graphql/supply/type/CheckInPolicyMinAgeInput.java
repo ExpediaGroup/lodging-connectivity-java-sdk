@@ -5,17 +5,18 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class CheckInPolicyMinAgeInput {
-  public final Optional<List<LocalizedStringInput>> note;
+  public final Optional<Optional<List<LocalizedStringInput>>> note;
 
-  public final Optional<Integer> value;
+  public final Optional<Optional<Integer>> value;
 
   private transient volatile int $hashCode;
 
@@ -23,8 +24,8 @@ public class CheckInPolicyMinAgeInput {
 
   private transient volatile String $toString;
 
-  public CheckInPolicyMinAgeInput(Optional<List<LocalizedStringInput>> note,
-      Optional<Integer> value) {
+  public CheckInPolicyMinAgeInput(Optional<Optional<List<LocalizedStringInput>>> note,
+      Optional<Optional<Integer>> value) {
     this.note = note;
     this.value = value;
   }
@@ -72,20 +73,20 @@ public class CheckInPolicyMinAgeInput {
   }
 
   public static final class Builder {
-    private Optional<List<LocalizedStringInput>> note = Optional.absent();
+    private Optional<Optional<List<LocalizedStringInput>>> note = Optional.empty();
 
-    private Optional<Integer> value = Optional.absent();
+    private Optional<Optional<Integer>> value = Optional.empty();
 
     Builder() {
     }
 
-    public Builder note(List<LocalizedStringInput> note) {
-      this.note = Optional.present(note);
+    public Builder note(@NotNull Optional<List<LocalizedStringInput>> note) {
+      this.note = Optional.of(note);
       return this;
     }
 
-    public Builder value(Integer value) {
-      this.value = Optional.present(value);
+    public Builder value(@NotNull Optional<Integer> value) {
+      this.value = Optional.of(value);
       return this;
     }
 

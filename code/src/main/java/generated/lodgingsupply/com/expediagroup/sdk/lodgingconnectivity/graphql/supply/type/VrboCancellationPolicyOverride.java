@@ -5,10 +5,11 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Cancel Policy Override for vrbo cancellation
@@ -16,7 +17,7 @@ import java.lang.String;
 public class VrboCancellationPolicyOverride {
   public final VrboCancellationPolicyOverrideType overrideType;
 
-  public final Optional<VrboCancellationPolicyPenalty> penalty;
+  public final Optional<Optional<VrboCancellationPolicyPenalty>> penalty;
 
   private transient volatile int $hashCode;
 
@@ -25,7 +26,7 @@ public class VrboCancellationPolicyOverride {
   private transient volatile String $toString;
 
   public VrboCancellationPolicyOverride(VrboCancellationPolicyOverrideType overrideType,
-      Optional<VrboCancellationPolicyPenalty> penalty) {
+      Optional<Optional<VrboCancellationPolicyPenalty>> penalty) {
     this.overrideType = overrideType;
     this.penalty = penalty;
   }
@@ -75,7 +76,7 @@ public class VrboCancellationPolicyOverride {
   public static final class Builder {
     private VrboCancellationPolicyOverrideType overrideType;
 
-    private Optional<VrboCancellationPolicyPenalty> penalty = Optional.absent();
+    private Optional<Optional<VrboCancellationPolicyPenalty>> penalty = Optional.empty();
 
     Builder() {
     }
@@ -85,8 +86,8 @@ public class VrboCancellationPolicyOverride {
       return this;
     }
 
-    public Builder penalty(VrboCancellationPolicyPenalty penalty) {
-      this.penalty = Optional.present(penalty);
+    public Builder penalty(@NotNull Optional<VrboCancellationPolicyPenalty> penalty) {
+      this.penalty = Optional.of(penalty);
       return this;
     }
 

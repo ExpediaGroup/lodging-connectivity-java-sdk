@@ -10,12 +10,12 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.NotificationProfileQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.EmailAddress;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Override;
@@ -24,6 +24,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class NotificationProfileQuery_ResponseAdapter {
   public enum Data implements Adapter<NotificationProfileQuery.Data> {
@@ -34,12 +35,12 @@ public class NotificationProfileQuery_ResponseAdapter {
     @Override
     public NotificationProfileQuery.Data fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      NotificationProfileQuery.NotificationProfile _notificationProfile = null;
+      Optional<NotificationProfileQuery.NotificationProfile> _notificationProfile = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _notificationProfile = new NullableAdapter<>(new ObjectAdapter<NotificationProfileQuery.NotificationProfile>(NotificationProfile.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _notificationProfile = new OptionalAdapter<>(new ObjectAdapter<NotificationProfileQuery.NotificationProfile>(NotificationProfile.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -53,7 +54,7 @@ public class NotificationProfileQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         NotificationProfileQuery.Data value) throws IOException {
       writer.name("notificationProfile");
-      new NullableAdapter<>(new ObjectAdapter<NotificationProfileQuery.NotificationProfile>(NotificationProfile.INSTANCE, false)).toJson(writer, customScalarAdapters, value.notificationProfile);
+      new OptionalAdapter<>(new ObjectAdapter<NotificationProfileQuery.NotificationProfile>(NotificationProfile.INSTANCE, false)).toJson(writer, customScalarAdapters, value.notificationProfile);
     }
   }
 
@@ -106,7 +107,7 @@ public class NotificationProfileQuery_ResponseAdapter {
     public NotificationProfileQuery.CallbackConfig fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       URL _callbackUrl = null;
-      String _contactEmail = null;
+      Optional<String> _contactEmail = null;
       String _id = null;
       Integer _requestTimeoutSeconds = null;
       LocalDateTime _secretExpirationDateTime = null;
@@ -115,7 +116,7 @@ public class NotificationProfileQuery_ResponseAdapter {
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _callbackUrl = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _contactEmail = new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
+          case 1: _contactEmail = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
           case 2: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _requestTimeoutSeconds = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _secretExpirationDateTime = com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
@@ -144,7 +145,7 @@ public class NotificationProfileQuery_ResponseAdapter {
       com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.callbackUrl);
 
       writer.name("contactEmail");
-      new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.contactEmail);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.contactEmail);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);
@@ -246,7 +247,7 @@ public class NotificationProfileQuery_ResponseAdapter {
     public NotificationProfileQuery.CallbackConfig1 fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       URL _callbackUrl = null;
-      String _contactEmail = null;
+      Optional<String> _contactEmail = null;
       String _id = null;
       Integer _requestTimeoutSeconds = null;
       LocalDateTime _secretExpirationDateTime = null;
@@ -255,7 +256,7 @@ public class NotificationProfileQuery_ResponseAdapter {
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _callbackUrl = com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 1: _contactEmail = new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
+          case 1: _contactEmail = new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).fromJson(reader, customScalarAdapters); break;
           case 2: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _requestTimeoutSeconds = Adapters.IntAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _secretExpirationDateTime = com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
@@ -284,7 +285,7 @@ public class NotificationProfileQuery_ResponseAdapter {
       com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.callbackUrl);
 
       writer.name("contactEmail");
-      new NullableAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.contactEmail);
+      new OptionalAdapter<>((customScalarAdapters.<String>responseAdapterFor(EmailAddress.type))).toJson(writer, customScalarAdapters, value.contactEmail);
 
       writer.name("id");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.id);

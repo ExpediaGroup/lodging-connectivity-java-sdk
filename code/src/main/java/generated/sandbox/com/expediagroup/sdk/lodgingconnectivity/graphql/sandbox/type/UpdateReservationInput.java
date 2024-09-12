@@ -5,7 +5,6 @@
 //
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type;
 
-import com.apollographql.apollo.api.Optional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
@@ -13,30 +12,32 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Input to update a reservation
  */
 public class UpdateReservationInput {
-  public final Optional<Integer> adultCount;
+  public final Optional<Optional<Integer>> adultCount;
 
-  public final Optional<LocalDate> checkInDate;
+  public final Optional<Optional<LocalDate>> checkInDate;
 
-  public final Optional<LocalDate> checkOutDate;
+  public final Optional<Optional<LocalDate>> checkOutDate;
 
-  public final Optional<List<Integer>> childAges;
+  public final Optional<Optional<List<Integer>>> childAges;
 
-  public final Optional<Integer> childCount;
+  public final Optional<Optional<Integer>> childCount;
 
-  public final Optional<String> clientMutationId;
+  public final Optional<Optional<String>> clientMutationId;
 
   public final String id;
 
-  public final Optional<Boolean> sendNotification;
+  public final Optional<Optional<Boolean>> sendNotification;
 
-  public final Optional<String> specialRequestText;
+  public final Optional<Optional<String>> specialRequestText;
 
-  public final Optional<ReservationStatusInput> status;
+  public final Optional<Optional<ReservationStatusInput>> status;
 
   private transient volatile int $hashCode;
 
@@ -44,11 +45,12 @@ public class UpdateReservationInput {
 
   private transient volatile String $toString;
 
-  public UpdateReservationInput(Optional<Integer> adultCount, Optional<LocalDate> checkInDate,
-      Optional<LocalDate> checkOutDate, Optional<List<Integer>> childAges,
-      Optional<Integer> childCount, Optional<String> clientMutationId, String id,
-      Optional<Boolean> sendNotification, Optional<String> specialRequestText,
-      Optional<ReservationStatusInput> status) {
+  public UpdateReservationInput(Optional<Optional<Integer>> adultCount,
+      Optional<Optional<LocalDate>> checkInDate, Optional<Optional<LocalDate>> checkOutDate,
+      Optional<Optional<List<Integer>>> childAges, Optional<Optional<Integer>> childCount,
+      Optional<Optional<String>> clientMutationId, String id,
+      Optional<Optional<Boolean>> sendNotification, Optional<Optional<String>> specialRequestText,
+      Optional<Optional<ReservationStatusInput>> status) {
     this.adultCount = adultCount;
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
@@ -136,25 +138,25 @@ public class UpdateReservationInput {
   }
 
   public static final class Builder {
-    private Optional<Integer> adultCount = Optional.absent();
+    private Optional<Optional<Integer>> adultCount = Optional.empty();
 
-    private Optional<LocalDate> checkInDate = Optional.absent();
+    private Optional<Optional<LocalDate>> checkInDate = Optional.empty();
 
-    private Optional<LocalDate> checkOutDate = Optional.absent();
+    private Optional<Optional<LocalDate>> checkOutDate = Optional.empty();
 
-    private Optional<List<Integer>> childAges = Optional.absent();
+    private Optional<Optional<List<Integer>>> childAges = Optional.empty();
 
-    private Optional<Integer> childCount = Optional.absent();
+    private Optional<Optional<Integer>> childCount = Optional.empty();
 
-    private Optional<String> clientMutationId = Optional.absent();
+    private Optional<Optional<String>> clientMutationId = Optional.empty();
 
     private String id;
 
-    private Optional<Boolean> sendNotification = Optional.absent();
+    private Optional<Optional<Boolean>> sendNotification = Optional.empty();
 
-    private Optional<String> specialRequestText = Optional.absent();
+    private Optional<Optional<String>> specialRequestText = Optional.empty();
 
-    private Optional<ReservationStatusInput> status = Optional.absent();
+    private Optional<Optional<ReservationStatusInput>> status = Optional.empty();
 
     Builder() {
     }
@@ -162,48 +164,48 @@ public class UpdateReservationInput {
     /**
      * New adult count of the reservation.
      */
-    public Builder adultCount(Integer adultCount) {
-      this.adultCount = Optional.present(adultCount);
+    public Builder adultCount(@NotNull Optional<Integer> adultCount) {
+      this.adultCount = Optional.of(adultCount);
       return this;
     }
 
     /**
      * New check-in date of the reservation.
      */
-    public Builder checkInDate(LocalDate checkInDate) {
-      this.checkInDate = Optional.present(checkInDate);
+    public Builder checkInDate(@NotNull Optional<LocalDate> checkInDate) {
+      this.checkInDate = Optional.of(checkInDate);
       return this;
     }
 
     /**
      * New check-out date of the reservation.
      */
-    public Builder checkOutDate(LocalDate checkOutDate) {
-      this.checkOutDate = Optional.present(checkOutDate);
+    public Builder checkOutDate(@NotNull Optional<LocalDate> checkOutDate) {
+      this.checkOutDate = Optional.of(checkOutDate);
       return this;
     }
 
     /**
      * Ages of children as per new child counts. If not specified, defaults to a list of random child ages.
      */
-    public Builder childAges(List<Integer> childAges) {
-      this.childAges = Optional.present(childAges);
+    public Builder childAges(@NotNull Optional<List<Integer>> childAges) {
+      this.childAges = Optional.of(childAges);
       return this;
     }
 
     /**
      * New child count of the reservation.
      */
-    public Builder childCount(Integer childCount) {
-      this.childCount = Optional.present(childCount);
+    public Builder childCount(@NotNull Optional<Integer> childCount) {
+      this.childCount = Optional.of(childCount);
       return this;
     }
 
     /**
      * Client mutation ID. Optional value that is echoed back in the response.
      */
-    public Builder clientMutationId(String clientMutationId) {
-      this.clientMutationId = Optional.present(clientMutationId);
+    public Builder clientMutationId(@NotNull Optional<String> clientMutationId) {
+      this.clientMutationId = Optional.of(clientMutationId);
       return this;
     }
 
@@ -218,24 +220,24 @@ public class UpdateReservationInput {
     /**
      * Whether to send a notification upon the change of the reservation dates.
      */
-    public Builder sendNotification(Boolean sendNotification) {
-      this.sendNotification = Optional.present(sendNotification);
+    public Builder sendNotification(@NotNull Optional<Boolean> sendNotification) {
+      this.sendNotification = Optional.of(sendNotification);
       return this;
     }
 
     /**
      * New special request text of the reservation.
      */
-    public Builder specialRequestText(String specialRequestText) {
-      this.specialRequestText = Optional.present(specialRequestText);
+    public Builder specialRequestText(@NotNull Optional<String> specialRequestText) {
+      this.specialRequestText = Optional.of(specialRequestText);
       return this;
     }
 
     /**
      * New status of the reservation.
      */
-    public Builder status(ReservationStatusInput status) {
-      this.status = Optional.present(status);
+    public Builder status(@NotNull Optional<ReservationStatusInput> status) {
+      this.status = Optional.of(status);
       return this;
     }
 

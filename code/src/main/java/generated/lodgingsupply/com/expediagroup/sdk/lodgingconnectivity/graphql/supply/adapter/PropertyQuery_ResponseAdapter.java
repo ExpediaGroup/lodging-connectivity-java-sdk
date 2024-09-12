@@ -10,16 +10,18 @@ import com.apollographql.apollo.api.Adapters;
 import com.apollographql.apollo.api.Assertions;
 import com.apollographql.apollo.api.CustomScalarAdapters;
 import com.apollographql.apollo.api.ListAdapter;
-import com.apollographql.apollo.api.NullableAdapter;
 import com.apollographql.apollo.api.ObjectAdapter;
 import com.apollographql.apollo.api.json.JsonReader;
 import com.apollographql.apollo.api.json.JsonWriter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyQuery;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ContactType;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CountryCode;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.IdSource;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PhoneNumberType;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.ContactType_ResponseAdapter;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.IdSource_ResponseAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapter;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.OptionalAdapters;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.adapter.PhoneNumberType_ResponseAdapter;
 import java.io.IOException;
 import java.lang.Boolean;
@@ -29,6 +31,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PropertyQuery_ResponseAdapter {
   public enum Data implements Adapter<PropertyQuery.Data> {
@@ -39,12 +42,12 @@ public class PropertyQuery_ResponseAdapter {
     @Override
     public PropertyQuery.Data fromJson(JsonReader reader, CustomScalarAdapters customScalarAdapters)
         throws IOException {
-      PropertyQuery.Property _property = null;
+      Optional<PropertyQuery.Property> _property = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _property = new NullableAdapter<>(new ObjectAdapter<PropertyQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 0: _property = new OptionalAdapter<>(new ObjectAdapter<PropertyQuery.Property>(Property.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -58,7 +61,7 @@ public class PropertyQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyQuery.Data value) throws IOException {
       writer.name("property");
-      new NullableAdapter<>(new ObjectAdapter<PropertyQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyQuery.Property>(Property.INSTANCE, false)).toJson(writer, customScalarAdapters, value.property);
     }
   }
 
@@ -72,9 +75,9 @@ public class PropertyQuery_ResponseAdapter {
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _id = null;
       String _name = null;
-      List<PropertyQuery.Name> _names = null;
+      Optional<List<PropertyQuery.Name>> _names = null;
       Object _defaultLocale = null;
-      List<PropertyQuery.Contact> _contacts = null;
+      Optional<List<PropertyQuery.Contact>> _contacts = null;
       List<PropertyQuery.Id> _ids = null;
       PropertyQuery.Type _type = null;
       PropertyQuery.Address _address = null;
@@ -86,9 +89,9 @@ public class PropertyQuery_ResponseAdapter {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _id = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _name = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _names = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Name>(Name.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 2: _names = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Name>(Name.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           case 3: _defaultLocale = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
-          case 4: _contacts = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Contact>(Contact.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 4: _contacts = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Contact>(Contact.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           case 5: _ids = new ListAdapter<>(new ObjectAdapter<PropertyQuery.Id>(Id.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           case 6: _type = new ObjectAdapter<PropertyQuery.Type>(Type.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
           case 7: _address = new ObjectAdapter<PropertyQuery.Address>(Address.INSTANCE, false).fromJson(reader, customScalarAdapters); break;
@@ -131,13 +134,13 @@ public class PropertyQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("names");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Name>(Name.INSTANCE, false))).toJson(writer, customScalarAdapters, value.names);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Name>(Name.INSTANCE, false))).toJson(writer, customScalarAdapters, value.names);
 
       writer.name("defaultLocale");
       Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.defaultLocale);
 
       writer.name("contacts");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Contact>(Contact.INSTANCE, false))).toJson(writer, customScalarAdapters, value.contacts);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.Contact>(Contact.INSTANCE, false))).toJson(writer, customScalarAdapters, value.contacts);
 
       writer.name("ids");
       new ListAdapter<>(new ObjectAdapter<PropertyQuery.Id>(Id.INSTANCE, false)).toJson(writer, customScalarAdapters, value.ids);
@@ -204,18 +207,18 @@ public class PropertyQuery_ResponseAdapter {
     @Override
     public PropertyQuery.Contact fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      List<String> _emailAddresses = null;
-      String _name = null;
+      Optional<List<String>> _emailAddresses = null;
+      Optional<String> _name = null;
       ContactType _type = null;
-      List<PropertyQuery.PhoneNumber> _phoneNumbers = null;
+      Optional<List<PropertyQuery.PhoneNumber>> _phoneNumbers = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _emailAddresses = new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
-          case 1: _name = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _emailAddresses = new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).fromJson(reader, customScalarAdapters); break;
+          case 1: _name = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 2: _type = ContactType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
-          case 3: _phoneNumbers = new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
+          case 3: _phoneNumbers = new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -234,16 +237,16 @@ public class PropertyQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyQuery.Contact value) throws IOException {
       writer.name("emailAddresses");
-      new NullableAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.emailAddresses);
+      new OptionalAdapter<>(new ListAdapter<>(Adapters.StringAdapter)).toJson(writer, customScalarAdapters, value.emailAddresses);
 
       writer.name("name");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.name);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.name);
 
       writer.name("type");
       ContactType_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("phoneNumbers");
-      new NullableAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).toJson(writer, customScalarAdapters, value.phoneNumbers);
+      new OptionalAdapter<>(new ListAdapter<>(new ObjectAdapter<PropertyQuery.PhoneNumber>(PhoneNumber.INSTANCE, false))).toJson(writer, customScalarAdapters, value.phoneNumbers);
     }
   }
 
@@ -255,18 +258,18 @@ public class PropertyQuery_ResponseAdapter {
     @Override
     public PropertyQuery.PhoneNumber fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
-      String _areaCode = null;
-      String _countryCode = null;
-      String _extension = null;
+      Optional<String> _areaCode = null;
+      Optional<String> _countryCode = null;
+      Optional<String> _extension = null;
       String _number = null;
       PhoneNumberType _phoneNumberType = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _areaCode = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _countryCode = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _extension = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _areaCode = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _countryCode = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _extension = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 3: _number = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _phoneNumberType = PhoneNumberType_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -289,13 +292,13 @@ public class PropertyQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyQuery.PhoneNumber value) throws IOException {
       writer.name("areaCode");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.areaCode);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.areaCode);
 
       writer.name("countryCode");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.countryCode);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.countryCode);
 
       writer.name("extension");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.extension);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.extension);
 
       writer.name("number");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.number);
@@ -313,13 +316,13 @@ public class PropertyQuery_ResponseAdapter {
     @Override
     public PropertyQuery.Id fromJson(JsonReader reader, CustomScalarAdapters customScalarAdapters)
         throws IOException {
-      String _id = null;
+      Optional<String> _id = null;
       IdSource _idSource = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
-          case 0: _id = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 0: _id = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           case 1: _idSource = IdSource_ResponseAdapter.INSTANCE.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
@@ -337,7 +340,7 @@ public class PropertyQuery_ResponseAdapter {
     public void toJson(JsonWriter writer, CustomScalarAdapters customScalarAdapters,
         PropertyQuery.Id value) throws IOException {
       writer.name("id");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.id);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.id);
 
       writer.name("idSource");
       IdSource_ResponseAdapter.INSTANCE.toJson(writer, customScalarAdapters, value.idSource);
@@ -386,8 +389,8 @@ public class PropertyQuery_ResponseAdapter {
     public PropertyQuery.Address fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       List<String> _addressLines = null;
-      String _administrativeArea = null;
-      Object _countryCode = null;
+      Optional<String> _administrativeArea = null;
+      String _countryCode = null;
       String _locality = null;
       String _postalCode = null;
 
@@ -395,8 +398,8 @@ public class PropertyQuery_ResponseAdapter {
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _addressLines = new ListAdapter<>(Adapters.StringAdapter).fromJson(reader, customScalarAdapters); break;
-          case 1: _administrativeArea = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 2: _countryCode = Adapters.AnyAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _administrativeArea = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 2: _countryCode = (customScalarAdapters.<String>responseAdapterFor(CountryCode.type)).fromJson(reader, customScalarAdapters); break;
           case 3: _locality = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           case 4: _postalCode = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
@@ -424,10 +427,10 @@ public class PropertyQuery_ResponseAdapter {
       new ListAdapter<>(Adapters.StringAdapter).toJson(writer, customScalarAdapters, value.addressLines);
 
       writer.name("administrativeArea");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.administrativeArea);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.administrativeArea);
 
       writer.name("countryCode");
-      Adapters.AnyAdapter.toJson(writer, customScalarAdapters, value.countryCode);
+      (customScalarAdapters.<String>responseAdapterFor(CountryCode.type)).toJson(writer, customScalarAdapters, value.countryCode);
 
       writer.name("locality");
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.locality);
@@ -446,13 +449,13 @@ public class PropertyQuery_ResponseAdapter {
     public PropertyQuery.Location fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       Boolean _hideExactLocation = null;
-      PropertyQuery.Coordinates _coordinates = null;
+      Optional<PropertyQuery.Coordinates> _coordinates = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _hideExactLocation = Adapters.BooleanAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _coordinates = new NullableAdapter<>(new ObjectAdapter<PropertyQuery.Coordinates>(Coordinates.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
+          case 1: _coordinates = new OptionalAdapter<>(new ObjectAdapter<PropertyQuery.Coordinates>(Coordinates.INSTANCE, false)).fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -472,7 +475,7 @@ public class PropertyQuery_ResponseAdapter {
       Adapters.BooleanAdapter.toJson(writer, customScalarAdapters, value.hideExactLocation);
 
       writer.name("coordinates");
-      new NullableAdapter<>(new ObjectAdapter<PropertyQuery.Coordinates>(Coordinates.INSTANCE, false)).toJson(writer, customScalarAdapters, value.coordinates);
+      new OptionalAdapter<>(new ObjectAdapter<PropertyQuery.Coordinates>(Coordinates.INSTANCE, false)).toJson(writer, customScalarAdapters, value.coordinates);
     }
   }
 
@@ -659,13 +662,13 @@ public class PropertyQuery_ResponseAdapter {
     public PropertyQuery.Value fromJson(JsonReader reader,
         CustomScalarAdapters customScalarAdapters) throws IOException {
       String _type = null;
-      String _value = null;
+      Optional<String> _value = null;
 
       loop:
       while(true) {
         switch (reader.selectName(RESPONSE_NAMES)) {
           case 0: _type = Adapters.StringAdapter.fromJson(reader, customScalarAdapters); break;
-          case 1: _value = Adapters.NullableStringAdapter.fromJson(reader, customScalarAdapters); break;
+          case 1: _value = OptionalAdapters.OptionalStringAdapter.fromJson(reader, customScalarAdapters); break;
           default: break loop;
         }
       }
@@ -685,7 +688,7 @@ public class PropertyQuery_ResponseAdapter {
       Adapters.StringAdapter.toJson(writer, customScalarAdapters, value.type);
 
       writer.name("value");
-      Adapters.NullableStringAdapter.toJson(writer, customScalarAdapters, value.value);
+      OptionalAdapters.OptionalStringAdapter.toJson(writer, customScalarAdapters, value.value);
     }
   }
 

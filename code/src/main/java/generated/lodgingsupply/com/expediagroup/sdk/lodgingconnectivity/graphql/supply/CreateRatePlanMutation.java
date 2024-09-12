@@ -23,7 +23,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.Data> {
   public static final String OPERATION_ID = "ddf5d5c0bddf46eadf5db99de85fe37349822b24475eab6415e169a9a6e52bed";
@@ -158,7 +160,7 @@ public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.D
   }
 
   public static class Data implements Mutation.Data {
-    public CreateRatePlan createRatePlan;
+    public Optional<CreateRatePlan> createRatePlan;
 
     private transient volatile int $hashCode;
 
@@ -166,7 +168,7 @@ public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.D
 
     private transient volatile String $toString;
 
-    public Data(CreateRatePlan createRatePlan) {
+    public Data(Optional<CreateRatePlan> createRatePlan) {
       this.createRatePlan = createRatePlan;
     }
 
@@ -206,9 +208,9 @@ public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.D
   }
 
   public static class CreateRatePlan {
-    public String clientMutationId;
+    public Optional<String> clientMutationId;
 
-    public RatePlan ratePlan;
+    public Optional<RatePlan> ratePlan;
 
     private transient volatile int $hashCode;
 
@@ -216,7 +218,7 @@ public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.D
 
     private transient volatile String $toString;
 
-    public CreateRatePlan(String clientMutationId, RatePlan ratePlan) {
+    public CreateRatePlan(Optional<String> clientMutationId, Optional<RatePlan> ratePlan) {
       this.clientMutationId = clientMutationId;
       this.ratePlan = ratePlan;
     }
@@ -267,7 +269,7 @@ public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.D
 
     public String name;
 
-    public Object creationDateTime;
+    public OffsetDateTime creationDateTime;
 
     public RatePlanType type;
 
@@ -275,13 +277,13 @@ public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.D
 
     public List<String> valueAdds;
 
-    public Boolean taxInclusive;
+    public Optional<Boolean> taxInclusive;
 
     public RatePlanStatus status;
 
-    public Object lastUpdateDateTime;
+    public OffsetDateTime lastUpdateDateTime;
 
-    public Integer baseRateGuestCount;
+    public Optional<Integer> baseRateGuestCount;
 
     private transient volatile int $hashCode;
 
@@ -289,9 +291,10 @@ public class CreateRatePlanMutation implements Mutation<CreateRatePlanMutation.D
 
     private transient volatile String $toString;
 
-    public RatePlan(String id, String propertyId, String name, Object creationDateTime,
-        RatePlanType type, String unitId, List<String> valueAdds, Boolean taxInclusive,
-        RatePlanStatus status, Object lastUpdateDateTime, Integer baseRateGuestCount) {
+    public RatePlan(String id, String propertyId, String name, OffsetDateTime creationDateTime,
+        RatePlanType type, String unitId, List<String> valueAdds, Optional<Boolean> taxInclusive,
+        RatePlanStatus status, OffsetDateTime lastUpdateDateTime,
+        Optional<Integer> baseRateGuestCount) {
       this.id = id;
       this.propertyId = propertyId;
       this.name = name;
