@@ -43,6 +43,11 @@ kotlin {
     jvmToolchain(11)
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 compileJava {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -101,7 +106,7 @@ publishing {
 
     repositories {
         maven {
-            name = "SonatypeReleases"
+            name = "MavenCentral"
             url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
@@ -109,6 +114,7 @@ publishing {
             }
         }
     }
+
 }
 
 signing {
