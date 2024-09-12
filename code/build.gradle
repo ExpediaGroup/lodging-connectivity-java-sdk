@@ -126,7 +126,7 @@ publishing {
     }
 
     repositories {
-        mavenCentral {
+        maven {
             url = uri("https://repo.maven.apache.org/maven2")
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
