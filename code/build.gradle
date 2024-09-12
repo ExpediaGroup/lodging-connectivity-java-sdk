@@ -4,6 +4,7 @@ buildscript {
     repositories {
         maven {
             credentials {
+                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
                 password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
             }
