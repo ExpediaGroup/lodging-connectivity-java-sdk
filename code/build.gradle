@@ -130,10 +130,12 @@ publishing {
         }
     }
 
-    doLast {
+}
+
+tasks.named("publishMavenJavaPublicationToMavenRepoRepository") { task ->
+    task.doLast {
         println "Publication 'mavenJava' successfully published to MavenRepo!"
     }
-
 }
 
 //signing {
