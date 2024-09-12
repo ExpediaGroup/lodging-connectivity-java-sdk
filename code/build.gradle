@@ -130,6 +130,10 @@ publishing {
         }
     }
 
+    doLast {
+        println "Publication 'mavenJava' successfully published to MavenRepo!"
+    }
+
 }
 
 //signing {
