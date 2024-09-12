@@ -61,4 +61,5 @@ jobs:
         run: |
           echo "Publishing version ${{ inputs.version }}" 
           cd code
-          gradle publish -Pversion=${{ inputs.version }}
+#          gradle publish -Pversion=${{ inputs.version }}
+          gradle publish -Psigning.gnupg.passphrase=$GPG_PASSPHRASE --no-daemon
