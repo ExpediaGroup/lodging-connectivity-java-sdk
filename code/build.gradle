@@ -118,12 +118,10 @@ publishing {
     }
 
     repositories {
-        maven {
-            name = "MavenCentral"
-            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        mavenCentral {
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
-                password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_USER')
+                password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
             }
         }
     }
