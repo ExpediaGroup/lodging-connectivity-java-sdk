@@ -81,10 +81,10 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId project.name
-            groupId project.property('groupId')
-            version project.property('version')
-            description project.property('description')
+            artifactId = project.name
+            groupId = project.property('groupId')
+            version = project.property('version')
+            description = project.property('description')
 
             pom {
                 name = project.property('artifactName')
