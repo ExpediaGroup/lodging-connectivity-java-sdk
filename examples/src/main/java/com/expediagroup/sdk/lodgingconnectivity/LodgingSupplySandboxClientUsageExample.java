@@ -40,8 +40,9 @@ public class LodgingSupplySandboxClientUsageExample {
     private static final SandboxClient client = new SandboxClient(
             ClientConfiguration
                     .builder()
-                    .key("KEY")
-                    .secret("SECRET")
+                    .key("platform_solutions_1")
+                    .secret("b49432ec-5acf-4301-af4b-fbe807c5accb")
+                    .environment(ClientEnvironment.TEST)
                     .build()
     );
 
@@ -79,7 +80,7 @@ public class LodgingSupplySandboxClientUsageExample {
         var reservationId = createReservationResponse.createReservation.reservation.sandboxReservationFragment.id;
 
         System.out.println("Reservation Created: " + reservationId);
-        System.out.println(createReservationResponse.createReservation.reservation.sandboxReservationFragment.bedTypes);
+        System.out.println(createReservationResponse);
 
 
         // ******* Update Reservation *******
