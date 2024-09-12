@@ -18,13 +18,13 @@ jobs:
           server-username: SONATYPE_USERNAME
           server-password: SONATYPE_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-      
+
       - name: Publish
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
-          echo "Publishing version ${{ inputs.version }}" 
+          echo "Release SDK to Maven Central"
           cd code
           gradle clean build publish -Psigning.gnupg.passphrase=$GPG_PASSPHRASE --no-daemon
