@@ -132,35 +132,6 @@ publishing {
 
 }
 
-tasks.named("publishMavenJavaPublicationToMavenRepoRepository") { task ->
-    task.doLast {
-        println "Publication 'mavenJava' successfully published to MavenRepo!"
-    }
-}
-
-//signing {
-//    sign publishing.publications
-////
-////    useGpgCmd()
-////    def signingKeyId = System.getenv("gpg-signing-key")
-////    def signingKey = System.getenv("gpg-private-key")
-////    def signingPassword = System.getenv("gpg-passphrase")
-////
-////    println("Signing key: $signingKeyId")
-////    println("Signing key: $signingKey")
-////    println("Signing password: $signingPassword")
-////
-////    signatory {
-////        gnupg {
-////            keyId = signingKeyId
-////            if (signingKey != null) {
-////                privateKey = signingKey
-////            }
-////            password = signingPassword
-////        }
-////    }
-//}
-
 tasks.register('versionsSet') {
     doLast {
         def pattern = ~/(\R|^)(version\s*=\s*)([-.A-Z0-9]+)(\R|$)/
