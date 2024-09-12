@@ -25,6 +25,6 @@ jobs:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
-          echo "Release SDK to Maven Central"
+          echo "Releasing..."
           cd code
           gradle clean build publish -Psigning.gnupg.passphrase=$GPG_PASSPHRASE --no-daemon
