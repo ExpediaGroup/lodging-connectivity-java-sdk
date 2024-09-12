@@ -135,15 +135,17 @@ signing {
     sign publishing.publications
 
     useGpgCmd()
+    def signingKeyId = System.getenv("gpg-signing-key")
     def signingKey = System.getenv("gpg-private-key")
     def signingPassword = System.getenv("gpg-passphrase")
 
-//     echo the key to the console for debugging purposes
-    println("signingKey: $signingKey")
-    println("signingPassword: $signingPassword")
+    println("Signing key: $signingKeyId")
+    println("Signing key: $signingKey")
+    println("Signing password: $signingPassword")
 
     signatory {
         gnupg {
+            keyId = signingKeyId
             if (signingKey != null) {
                 privateKey = signingKey
             }
