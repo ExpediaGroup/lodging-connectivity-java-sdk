@@ -16,13 +16,12 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.annotations.ApolloExperimental
-import com.apollographql.apollo3.api.Mutation
-import com.apollographql.apollo3.api.Query
-import com.apollographql.apollo3.api.Subscription
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Mutation
+import com.apollographql.apollo.api.Query
+import com.apollographql.apollo.api.Subscription
+import com.apollographql.ktor.http.KtorHttpEngine
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.client.KtorHttpEngine
 import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import io.ktor.client.statement.HttpResponse
@@ -37,7 +36,6 @@ class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : GraphQLExecut
             }
         }
 
-    @OptIn(ApolloExperimental::class)
     private val apolloClient: ApolloClient = ApolloClient.Builder()
         .serverUrl(config.endpoint!!)
         .httpEngine(KtorHttpEngine(expediaGroupClient.httpClient))

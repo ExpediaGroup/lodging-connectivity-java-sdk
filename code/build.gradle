@@ -3,7 +3,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.0.20'
     id 'org.jetbrains.dokka' version '1.9.20'
-    id 'com.apollographql.apollo3' version '3.8.4'
+    id 'com.apollographql.apollo' version '4.0.0'
     id 'java'
     id 'maven-publish'
     id 'signing'
@@ -17,8 +17,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:2.0.20"
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
 
-    implementation("com.apollographql.apollo3:apollo-runtime:3.8.4")
-    implementation("com.apollographql.apollo3:apollo-adapters:3.8.4")
+    implementation("com.apollographql.apollo:apollo-runtime:4.0.0")
+    implementation("com.apollographql.adapters:apollo-adapters-core:0.0.4")
+    implementation("com.apollographql.ktor:apollo-engine-ktor:0.0.2")
     implementation("org.slf4j:slf4j-simple:2.0.13")
     implementation("io.ktor:ktor-client-core:2.3.10")
     implementation("io.ktor:ktor-client-auth-jvm:2.3.10")
@@ -95,7 +96,14 @@ publishing {
             }
         }
     }
+}
 
+sourceSets {
+    main {
+        java {
+            srcDirs += 'build/generated/source/apollo'
+        }
+    }
 }
 
 tasks.withType(DokkaTask.class) {
@@ -149,27 +157,34 @@ tasks.withType(DokkaTask.class) {
 apollo {
     service("lodgingsupply") {
         generateKotlinModels.set(false)
+        nullableFieldStyle.set("javaOptional")
+        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/lodgingsupply")
 
-        outputDir.set(file("src/main/java/generated/lodgingsupply"))
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.supply")
 
         // Custom Scalars Mappings
         mapScalar("CurrencyCode", "java.lang.String")
         mapScalar("EmailAddress", "java.lang.String")
         mapScalar("JSON", "java.lang.String")
+        mapScalar("Decimal", "java.lang.String")
         mapScalar("Url", "java.net.URL", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE")
         mapScalar("ZoneDateTime", "java.time.ZonedDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.ZoneDateTimeAdapter.INSTANCE")
-        mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.apollo3.adapter.JavaLocalDateTimeAdapter.INSTANCE")
-        mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.apollo3.adapter.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE")
+        mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("DateTime", "java.time.OffsetDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE")
+        mapScalar("LocalTime", "java.time.LocalTime", "com.apollographql.adapter.core.JavaLocalTimeAdapter.INSTANCE")
+        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("CountryCode", "java.lang.String")
     }
     service("payment") {
         generateKotlinModels.set(false)
+        nullableFieldStyle.set("javaOptional")
+        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/payment")
 
-        outputDir.set(file("src/main/java/generated/payment"))
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.payment")
 
         // Custom Scalars Mappings
@@ -178,13 +193,14 @@ apollo {
     }
     service("sandbox") {
         generateKotlinModels.set(false)
+        nullableFieldStyle.set("javaOptional")
+        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/sandbox")
 
-        outputDir.set(file("src/main/java/generated/sandbox"))
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox")
 
         // Custom Scalars Mappings
-        mapScalar("Date", "java.time.LocalDate", "com.apollographql.apollo3.adapter.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
     }
 }
