@@ -91,11 +91,11 @@ publishing {
             if (project.version.contains("SNAPSHOT")) {
                 name = "oss-sonatype-snapshots"
                 url = uri("https://oss.sonatype.org/content/repositories/snapshots")
-                println("Publishing to Sonatype Snapshots")
+                println(">>>>> Publishing to Sonatype Snapshots: https://oss.sonatype.org/content/repositories/snapshots/com/expediagroup/lodging-connectivity-sdk/")
             } else {
                 name = "oss-sonatype-releases"
                 url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-                println("Publishing to Sonatype Releases")
+                println(">>>>> Publishing to Sonatype Releases: https://repo1.maven.org/maven2/com/expediagroup/lodging-connectivity-sdk/")
             }
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
