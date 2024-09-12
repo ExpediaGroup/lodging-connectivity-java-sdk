@@ -85,7 +85,6 @@ publishing {
             groupId project.property('groupId')
             version project.property('version')
             description project.property('description')
-            artifact tasks.sourcesJar
 
             pom {
                 name = project.property('artifactName')
