@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
 
     implementation("com.apollographql.apollo3:apollo-runtime:3.8.4")
