@@ -19,6 +19,8 @@ jobs:
           server-password: SONATYPE_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
 
+          settings-path: ${{ github.workspace }}
+
       - name: Publish
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
