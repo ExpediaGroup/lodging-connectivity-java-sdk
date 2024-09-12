@@ -91,9 +91,11 @@ publishing {
             if (project.version.contains("SNAPSHOT")) {
                 name = "oss-sonatype-snapshots"
                 url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+                println("Publishing to Sonatype Snapshots")
             } else {
                 name = "oss-sonatype-releases"
                 url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                println("Publishing to Sonatype Releases")
             }
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
