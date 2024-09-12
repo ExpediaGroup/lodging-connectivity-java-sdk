@@ -60,4 +60,4 @@ jobs:
           gradle tasks
           echo "-------------------"
           cd code
-          gradle publish closeAndReleaseSonatypeStagingRepository -Pversion=${{ inputs.version }}
+          gradle publish -Pversion=${{ inputs.version }}
