@@ -132,6 +132,7 @@ publishing {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
                 password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
             }
+            timeout = 300000 // setting timeout to 5 minutes
         }
     }
 
