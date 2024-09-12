@@ -40,9 +40,8 @@ public class LodgingSupplySandboxClientUsageExample {
     private static final SandboxClient client = new SandboxClient(
             ClientConfiguration
                     .builder()
-                    .key("platform_solutions_1")
-                    .secret("b49432ec-5acf-4301-af4b-fbe807c5accb")
-                    .environment(ClientEnvironment.TEST)
+                    .key("KEY")
+                    .secret("SECRET")
                     .build()
     );
 
