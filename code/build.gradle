@@ -69,12 +69,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-}
-
 subprojects {
     afterEvaluate { project ->
         if (project.name == System.getenv('EXCLUDE_MODULE')) {
