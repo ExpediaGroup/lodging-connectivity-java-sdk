@@ -57,5 +57,7 @@ jobs:
           OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           echo "Publishing version ${{ inputs.version }}" 
+          ../gradlew tasks
+          echo "-------------------"
           cd code
           ../gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Pversion=${{ inputs.version }}
