@@ -3,9 +3,9 @@ plugins {
 }
 rootProject.name = "lodging-connectivity-java-sdk"
 
-include(":examples")
+include(":examples", ":code")
 
-def allModules = [':examples']
+def allModules = [':examples', ":code"]
 
 // Get the module to exclude from project properties or environment variables
 def excludeModule = gradle.startParameter.projectProperties['excludeModule'] ?: System.getenv('EXCLUDE_MODULE')
