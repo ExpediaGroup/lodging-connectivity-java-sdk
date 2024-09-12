@@ -1,4 +1,7 @@
-import org.jetbrains.dokka.gradle.DokkaTask\
+import org.jetbrains.dokka.gradle.DokkaTask
+
+\
+
 
 buildscript {
     repositories {
@@ -124,11 +127,18 @@ publishing {
 
     repositories {
         mavenCentral {
-            clientTimeout = Duration.ofMinutes(10)
             url = uri("https://repo.maven.apache.org/maven2")
             credentials {
                 username = System.getenv("SONATYPE_USERNAME") ?: findProperty('ARTIFACTORY_USER')
                 password = System.getenv("SONATYPE_PASSWORD") ?: findProperty('ARTIFACTORY_PASS')
+            }
+            configure {
+                // This is where you set timeouts
+                it.metadataSources {
+                    mavenPom()
+                    artifact()
+                }
+                it.clientTimeout = Duration.ofMinutes(10) // Or your desired timeout
             }
         }
     }
