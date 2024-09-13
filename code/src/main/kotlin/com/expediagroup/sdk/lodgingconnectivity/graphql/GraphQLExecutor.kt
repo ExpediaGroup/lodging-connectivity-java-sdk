@@ -18,7 +18,6 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql
 
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
-import com.apollographql.apollo.api.Subscription
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 
 /**
@@ -48,15 +47,5 @@ interface GraphQLExecutor {
      * @throws ExpediaGroupServiceException If the mutation execution returns errors.
      */
     fun <T : Mutation.Data> execute(mutation: Mutation<T>): T
-
-    /**
-     * Executes a GraphQL subscription and returns the result.
-     *
-     * @param subscription The GraphQL subscription to execute.
-     * @return The result of the subscription execution.
-     * @param <T> The type of data returned by the subscription, extending `Subscription.Data`.
-     * @throws ExpediaGroupServiceException If the subscription execution returns errors.
-     */
-    fun <T : Subscription.Data> execute(subscription: Subscription<T>): T
 }
 

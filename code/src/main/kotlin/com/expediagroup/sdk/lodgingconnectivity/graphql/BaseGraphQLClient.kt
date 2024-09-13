@@ -61,6 +61,9 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
     override fun <T : Query.Data> execute(query: Query<T>): T {
         return runBlocking {
             apolloClient.query(query).execute().apply {
+                if (exception != null) {
+                    throw ExpediaGroupServiceException(exception?.message)
+                }
                 if (hasErrors()) {
                     throw ExpediaGroupServiceException(errors.toString())
                 }
@@ -78,23 +81,9 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
     override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T {
         return runBlocking {
             apolloClient.mutation(mutation).execute().apply {
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
+                if (exception != null) {
+                    throw ExpediaGroupServiceException(exception?.message)
                 }
-            }.dataAssertNoErrors
-        }
-    }
-
-    /**
-     * Executes a GraphQL subscription and returns the result.
-     *
-     * @param subscription The GraphQL subscription to execute.
-     * @return The result of the subscription execution, with errors handled.
-     * @throws ExpediaGroupServiceException If the subscription execution returns errors.
-     */
-    override fun <T : Subscription.Data> execute(subscription: Subscription<T>): T {
-        return runBlocking {
-            apolloClient.subscription(subscription).execute().apply {
                 if (hasErrors()) {
                     throw ExpediaGroupServiceException(errors.toString())
                 }
