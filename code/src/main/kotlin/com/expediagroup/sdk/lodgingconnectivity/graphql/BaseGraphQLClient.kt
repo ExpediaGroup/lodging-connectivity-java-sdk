@@ -19,7 +19,6 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
-import com.apollographql.apollo.api.Subscription
 import com.apollographql.ktor.http.KtorHttpEngine
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
 import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
