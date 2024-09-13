@@ -1,4 +1,4 @@
-rootProject.name = "lodging-connectivity-sdk"
+rootProject.name = "lodging-connectivity-sdk" // Used as published artifactId
 
 include 'code'
 include 'examples'

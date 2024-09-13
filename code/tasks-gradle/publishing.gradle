@@ -2,7 +2,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId = project.name
+            artifactId = rootProject.name // The code module is published under the rootProject name
             groupId = project.property('groupId')
             version = project.property('version')
             description = project.property('description')
@@ -53,18 +53,4 @@ publishing {
             }
         }
     }
-}
-
-tasks.register('printRepositoryInfo') {
-    doLast {
-        publishing.repositories.maven { repo ->
-            println('Publishing Artifacts: ')
-            println("Repository Name: ${repo.name}")
-            println("Repository URL: ${repo.url}/com/expediagroup/lodging-connectivity-sdk/")
-        }
-    }
-}
-
-tasks.named('publish') {
-    dependsOn 'printRepositoryInfo'
 }
