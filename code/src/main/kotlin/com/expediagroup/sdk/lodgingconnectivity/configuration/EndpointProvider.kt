@@ -29,6 +29,15 @@ enum class AuthEndpoint(val url: String) {
     SANDBOX_TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token/")
 }
 
+/**
+ * An internal utility object for providing API endpoints based on the environment.
+ *
+ * This class contains methods to retrieve the correct endpoint for different clients
+ * (e.g., Supply, Payment, Sandbox, File Management, and Authentication) based on the
+ * provided `ClientEnvironment`.
+ *
+ * If an unsupported environment is passed, an `IllegalArgumentException` is thrown.
+ */
 object EndpointProvider {
     fun getSupplyClientEndpoint(environment: ClientEnvironment): String {
         return try {
