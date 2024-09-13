@@ -26,20 +26,10 @@ import java.net.URISyntaxException
 import java.net.URL
 
 /**
- * A custom `Adapter` implementation for handling the `Url` custom scalar in GraphQL.
- * This adapter is designed to work with Apollo GraphQL to convert the `Url` custom scalar
- * to and from its corresponding `URL` object.
+ * Converts the custom scalar `Url` to and from `java.net.URL`.
  */
 object URLAdapter : Adapter<URL?> {
 
-    /**
-     * Deserializes the `Url` custom scalar from its JSON string representation into a `URL` object.
-     *
-     * @param reader The `JsonReader` used to read the JSON input.
-     * @param customScalarAdapters A `CustomScalarAdapters` instance, provided by Apollo, used to assist in the conversion of custom scalars.
-     * @return The `URL` object parsed from the `Url` JSON string, or `null` if the input string is `null`.
-     * @throws IllegalStateException If the string cannot be converted into a valid `URL`.
-     */
     override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): URL? {
         val urlString = reader.nextString() ?: return null
         return try {
@@ -51,13 +41,6 @@ object URLAdapter : Adapter<URL?> {
         }
     }
 
-    /**
-     * Serializes a `URL` object to its JSON string representation for the `Url` custom scalar.
-     *
-     * @param writer The `JsonWriter` used to write the JSON output.
-     * @param customScalarAdapters A `CustomScalarAdapters` instance, provided by Apollo, used to assist in the conversion of custom scalars.
-     * @param value The `URL` object to serialize, or `null` to write a `null` value.
-     */
     override fun toJson(writer: JsonWriter, customScalarAdapters: CustomScalarAdapters, value: URL?) {
         if (value != null) {
             writer.value(value.toString())

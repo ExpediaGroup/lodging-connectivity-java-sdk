@@ -23,6 +23,9 @@ import com.apollographql.apollo.api.json.JsonWriter
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * Converts ZoneDateTime custom scalar `Url` to and from `java.time.format.DateTimeFormatter`.
+ */
 object ZoneDateTimeAdapter : Adapter<ZonedDateTime?> {
     override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): ZonedDateTime? {
         val dateString = reader.nextString() ?: return null
@@ -36,5 +39,5 @@ object ZoneDateTimeAdapter : Adapter<ZonedDateTime?> {
             writer.nullValue()
         }
     }
-
 }
+

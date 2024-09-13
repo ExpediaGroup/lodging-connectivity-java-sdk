@@ -24,34 +24,14 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * A custom `Adapter` implementation for handling the `DateTime` custom scalar in GraphQL.
- * This adapter is designed to work with Apollo GraphQL to convert the `DateTime` custom scalar
- * to and from its corresponding `OffsetDateTime` object using the `ISO_OFFSET_DATE_TIME` format.
+ * Converts the custom scalar `DateTime` to and from `java.time.OffsetDateTime`.
  */
 object DateTimeAdapter : Adapter<OffsetDateTime?> {
-
-    /**
-     * Deserializes the `DateTime` custom scalar from its JSON string representation into an `OffsetDateTime` object.
-     *
-     * @param reader The `JsonReader` used to read the JSON input.
-     * @param customScalarAdapters A `CustomScalarAdapters` instance, provided by Apollo, used to assist in the conversion of custom scalars.
-     * @return The `OffsetDateTime` object parsed from the `DateTime` JSON string, or `null` if the input string is `null`.
-     * @throws DateTimeParseException If the string cannot be parsed into an `OffsetDateTime`.
-     */
     override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): OffsetDateTime? {
         val dateString = reader.nextString() ?: return null
         return OffsetDateTime.parse(dateString, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
     }
 
-    /**
-     * Serializes an `OffsetDateTime` object to its JSON string representation for the `DateTime` custom scalar.
-     *
-     * @param writer The `JsonWriter` used to write the JSON output.
-     * @param customScalarAdapters A `CustomScalarAdapters` instance, provided by Apollo, used to assist in the conversion of custom scalars.
-     * @param value The `OffsetDateTime` object to serialize, or `null` to write a `null` value.
-     *
-     * @throws DateTimeException – if an error occurs during printing
-     */
     override fun toJson(writer: JsonWriter, customScalarAdapters: CustomScalarAdapters, value: OffsetDateTime?) {
         if (value != null) {
             writer.value(value.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
