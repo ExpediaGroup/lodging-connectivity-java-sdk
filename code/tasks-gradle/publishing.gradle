@@ -1,0 +1,70 @@
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId = project.name
+            groupId = project.property('groupId')
+            version = project.property('version')
+            description = project.property('description')
+
+            pom {
+                name = project.property('artifactName')
+                description = project.property('description')
+                url = 'https://github.com/ExpediaGroup/lodging-connectivity-java-sdk'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                        comments = 'A business-friendly OSS license'
+                    }
+                }
+
+                developers {
+                    developer {
+                        name = 'Expedia Group Committers'
+                        organization = 'Expedia Group'
+                        organizationUrl = 'https://www.expediagroup.com/'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/ExpediaGroup/lodging-connectivity-java-sdk.git'
+                    developerConnection = 'scm:git:ssh://github.com/ExpediaGroup/lodging-connectivity-java-sdk.git'
+                    url = 'https://github.com/ExpediaGroup/lodging-connectivity-java-sdk'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            if (project.version.contains("SNAPSHOT")) {
+                name = "oss-sonatype-snapshots"
+                url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+            } else {
+                name = "oss-sonatype-releases"
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
+}
+
+tasks.register('printRepositoryInfo') {
+    doLast {
+        publishing.repositories.maven { repo ->
+            println('Publishing Artifacts: ')
+            println("Repository Name: ${repo.name}")
+            println("Repository URL: ${repo.url}/com/expediagroup/lodging-connectivity-sdk/")
+        }
+    }
+}
+
+tasks.named('publish') {
+    dependsOn 'printRepositoryInfo'
+}

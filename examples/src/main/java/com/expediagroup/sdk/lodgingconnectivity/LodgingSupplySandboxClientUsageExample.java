@@ -16,12 +16,29 @@
 
 package com.expediagroup.sdk.lodgingconnectivity;
 
-import com.expediagroup.sdk.lodgingconnectivity.configuration.*;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.*;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.*;
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCancelReservationMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxChangeReservationStayDatesMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxClient;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreatePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreateReservationMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDeletePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDeleteReservationMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertiesQuery;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxUpdatePropertyMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxUpdateReservationMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CancelReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeleteReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Optional;
+import java.util.List;
 
 /**
  * Example class to demonstrate different operations supported by the LodgingSupplySandboxClient
@@ -126,6 +143,8 @@ public class LodgingSupplySandboxClientUsageExample {
 
         System.out.println("Property Was Deleted: " + propertyId);
         System.out.println(deletePropertyResponse);
+
+        System.exit(0);
     }
 
     private static void deletePropertyIfExists() {

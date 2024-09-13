@@ -1,0 +1,46 @@
+dokkaHtml {
+    moduleName.set("Lodging Connectivity Java SDK")
+
+    String versioningConfiguration = """
+    {
+      "version": "${project.version}",
+      "olderVersionsDir": "${project.properties["dokka-old-versions-dir"]}",
+      "renderVersionsNavigationOnAllPages": true
+    }
+    """
+
+    String dokkaBaseConfiguration = """
+    {
+        "customAssets": ["${file("assets/logo-icon.svg")}"],
+        "customStyleSheets": ["${file("assets/custom-styles.css")}"]
+    }
+    """
+
+    pluginsMapConfiguration.set(
+            // fully qualified plugin name to json configuration
+            [
+                    "org.jetbrains.dokka.base.DokkaBase"             : dokkaBaseConfiguration,
+                    "org.jetbrains.dokka.versioning.VersioningPlugin": versioningConfiguration
+            ]
+    )
+
+    dokkaSourceSets {
+        configureEach {
+            sourceRoots.setFrom(
+                    file("src/main/kotlin/com/expediagroup/sdk/lodgingconnectivity"),
+                    file("build/classes/java")
+            )
+
+            // Suppress documentation for specific patterns using a consolidated regex
+            perPackageOption {
+                matchingRegex.set('.*com.expediagroup.sdk.lodgingconnectivity.graphql.(supply|payment|sandbox).(adapter|selections|fragment).*')
+                suppress.set(true)
+            }
+
+            perPackageOption {
+                matchingRegex.set('.*com.expediagroup.sdk.lodgingconnectivity.graphql.(supply|payment|sandbox).type.adapter.*')
+                suppress.set(true)
+            }
+        }
+    }
+}
