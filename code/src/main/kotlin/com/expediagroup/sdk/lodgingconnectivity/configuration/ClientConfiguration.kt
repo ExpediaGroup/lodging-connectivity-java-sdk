@@ -60,7 +60,7 @@ data class ClientConfiguration(
         }
 
         /**
-         * Sets the environment (e.g., production or test).
+         * Sets the environment (e.g., production, test, or sandbox).
          * @param environment The `ClientEnvironment` to use.
          */
         fun environment(environment: ClientEnvironment) = apply {
