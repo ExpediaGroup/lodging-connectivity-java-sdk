@@ -1332,18 +1332,6 @@ type DeleteNotificationCallbackConfigPayload {
     callbackConfigId: ID!
 }
 
-input DeleteRatePlanInput {
-    clientMutationId: ID
-    id: ID!
-    propertyId: ID!
-}
-
-type DeleteRatePlanPayload {
-    clientMutationId: ID
-    id: ID!
-    propertyId: ID!
-}
-
 input DeleteUnitSpaceInput {
     clientMutationId: String
     propertyId: ID!
@@ -1500,7 +1488,8 @@ input EligibleRatePlanInput {
 """
 A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
 """
-scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
+scalar EmailAddress
+@specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
 
 input EnablePropertyInput {
     clientMutationId: String
@@ -2440,7 +2429,6 @@ type Mutation {
     createCancellationPolicyConfig(input: CreateCancellationPolicyConfigInput!): CreateCancellationPolicyConfigPayload
     createFeeSet(input: CreateFeeSetInput!): CreateFeeSetPayload
     createRatePlan(input: CreateRatePlanInput!): CreateRatePlanPayload
-    deleteRatePlan(input: DeleteRatePlanInput!): DeleteRatePlanPayload
     replaceCancellationPolicyConfig(input: ReplaceCancellationPolicyConfigInput!): ReplaceCancellationPolicyConfigPayload
     replaceFeeSet(input: ReplaceFeeSetInput!): ReplaceFeeSetPayload
     updateRatePlan(input: UpdateRatePlanInput!): UpdateRatePlanPayload
@@ -5680,7 +5668,6 @@ input UpdateRatePlanInput {
     status: RatePlanStatus
     taxInclusive: Boolean
     unitId: ID!
-    valueAdds: [String!]
 }
 
 type UpdateRatePlanPayload {
