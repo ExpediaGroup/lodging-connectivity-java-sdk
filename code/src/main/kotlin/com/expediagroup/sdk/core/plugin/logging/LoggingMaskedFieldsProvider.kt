@@ -25,8 +25,10 @@ class LoggingMaskedFieldsProvider(maskedLoggingHeaders: Set<String>, maskedLoggi
     private val maskedBodyFields: Set<String>
 
     init {
-        maskedLoggingHeaders.filter(::isInvalid).takeIf { it.isNotEmpty() }?.let { throw ExpediaGroupInvalidFieldNameException(it) }
-        maskedLoggingBodyFields.filter(::isInvalid).takeIf { it.isNotEmpty() }?.let { throw ExpediaGroupInvalidFieldNameException(it) }
+        maskedLoggingHeaders.filter(::isInvalid).takeIf { it.isNotEmpty() }
+            ?.let { throw ExpediaGroupInvalidFieldNameException(it) }
+        maskedLoggingBodyFields.filter(::isInvalid).takeIf { it.isNotEmpty() }
+            ?.let { throw ExpediaGroupInvalidFieldNameException(it) }
         maskedHeaderFields = DEFAULT_MASKED_HEADER_FIELDS.union(maskedLoggingHeaders)
         maskedBodyFields = DEFAULT_MASKED_BODY_FIELDS.union(maskedLoggingBodyFields)
     }

@@ -16,7 +16,7 @@
 package com.expediagroup.sdk.core.configuration
 
 import com.expediagroup.sdk.core.configuration.provider.RuntimeConfigurationProvider
-import java.util.UUID
+import java.util.*
 
 interface ClientConfiguration {
     private val id: UUID
@@ -94,8 +94,12 @@ interface ClientConfiguration {
         open fun requestTimeout(requestTimeout: Long) = apply { this.requestTimeout = requestTimeout }
         open fun connectionTimeout(connectionTimeout: Long) = apply { this.connectionTimeout = connectionTimeout }
         open fun socketTimeout(socketTimeout: Long) = apply { this.socketTimeout = socketTimeout }
-        open fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>) = apply { this.maskedLoggingHeaders = maskedLoggingHeaders }
-        open fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>) = apply { this.maskedLoggingBodyFields = maskedLoggingBodyFields }
+        open fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>) =
+            apply { this.maskedLoggingHeaders = maskedLoggingHeaders }
+
+        open fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>) =
+            apply { this.maskedLoggingBodyFields = maskedLoggingBodyFields }
+
         open fun maxConnTotal(maxConnTotal: Int) = apply { this.maxConnTotal = maxConnTotal }
         open fun maxConnPerRoute(maxConnPerRoute: Int) = apply { this.maxConnPerRoute = maxConnPerRoute }
 

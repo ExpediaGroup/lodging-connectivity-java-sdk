@@ -11,11 +11,16 @@ import com.expediagroup.sdk.core.logging.model.LogMessageTag
 import org.apache.http.Header
 
 fun Array<Header>.getHeadersLogMessage(tags: Set<LogMessageTag>): LogMessage {
+    val self = this
+    val lines = buildList<LogMessageLine> {
+        self.forEach {
+            val value = if (isMaskedField(it.name)) OMITTED else it.value
+            add(LogMessageLine(line = "${it.name}: ${value}", tags = tags))
+        }
+    }
+
     return LogMessage(
         title = LogMessageLine(line = LogMessageConstant.REQUEST_HEADERS + Constant.NEWLINE, tags = tags),
-        body = map {
-            val value = if (isMaskedField(it.name)) OMITTED else it.value
-            LogMessageLine(line = "${it.name}: $value", tags = tags)
-        }.let { LogMessageLines().addLines(it) },
+        body = LogMessageLines(lines = lines)
     )
 }

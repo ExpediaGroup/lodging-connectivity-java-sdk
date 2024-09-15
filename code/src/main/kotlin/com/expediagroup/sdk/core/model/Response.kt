@@ -33,7 +33,11 @@ open class Response<T>(
     val data: T,
     val headers: Map<String, List<String>>
 ) {
-    constructor(statusCode: Int, data: T, headers: Set<Entry<String, List<String>>>) : this(statusCode, data, toHeadersMap(headers))
+    constructor(statusCode: Int, data: T, headers: Set<Entry<String, List<String>>>) : this(
+        statusCode,
+        data,
+        toHeadersMap(headers)
+    )
 
     companion object {
         @JvmStatic

@@ -21,7 +21,7 @@ import com.google.api.client.http.HttpTransport
 import com.google.auth.oauth2.AccessToken
 import com.google.auth.oauth2.OAuth2CredentialsWithRefresh.OAuth2RefreshHandler
 
-internal interface AuthenticationStrategy: OAuth2RefreshHandler {
+internal interface AuthenticationStrategy : OAuth2RefreshHandler {
     override fun refreshAccessToken(): AccessToken
 
     companion object {

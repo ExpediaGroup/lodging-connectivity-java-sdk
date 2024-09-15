@@ -8,7 +8,7 @@ import org.apache.http.HttpResponseInterceptor
 import org.apache.http.protocol.HttpContext
 import org.slf4j.Logger
 
-class ResponseLogger(
+class ResponseLoggingInterceptor(
     private val logger: Logger
 ) : HttpResponseInterceptor {
     override fun process(response: HttpResponse?, context: HttpContext?) {
@@ -18,6 +18,6 @@ class ResponseLogger(
 
         logger.info(response.getMetadataLogMessage(context).toString())
         logger.info(response.getHeadersLogMessage().toString())
-        logger.debug(response.getBodyLogMessage().toString())
+        logger.info(response.getBodyLogMessage().toString())
     }
 }

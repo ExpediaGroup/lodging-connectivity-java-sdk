@@ -69,16 +69,22 @@ data class ExpediaGroupClientConfiguration(
         }
     }
 
-    class Builder: ClientConfiguration.Builder() {
+    class Builder : ClientConfiguration.Builder() {
         override fun key(key: String): Builder = apply { super.key(key) }
         override fun secret(secret: String): Builder = apply { super.secret(secret) }
         override fun endpoint(endpoint: String): Builder = apply { super.endpoint(endpoint) }
         override fun authEndpoint(authEndpoint: String): Builder = apply { super.authEndpoint(authEndpoint) }
         override fun requestTimeout(requestTimeout: Long): Builder = apply { super.requestTimeout(requestTimeout) }
-        override fun connectionTimeout(connectionTimeout: Long): Builder = apply { super.connectionTimeout(connectionTimeout) }
+        override fun connectionTimeout(connectionTimeout: Long): Builder =
+            apply { super.connectionTimeout(connectionTimeout) }
+
         override fun socketTimeout(socketTimeout: Long): Builder = apply { super.socketTimeout(socketTimeout) }
-        override fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>): Builder = apply { super.maskedLoggingHeaders(maskedLoggingHeaders) }
-        override fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>): Builder = apply { super.maskedLoggingBodyFields(maskedLoggingBodyFields) }
+        override fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>): Builder =
+            apply { super.maskedLoggingHeaders(maskedLoggingHeaders) }
+
+        override fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>): Builder =
+            apply { super.maskedLoggingBodyFields(maskedLoggingBodyFields) }
+
         override fun maxConnTotal(maxConnTotal: Int): Builder = apply { super.maxConnTotal(maxConnTotal) }
         override fun maxConnPerRoute(maxConnPerRoute: Int): Builder = apply { super.maxConnPerRoute(maxConnPerRoute) }
 

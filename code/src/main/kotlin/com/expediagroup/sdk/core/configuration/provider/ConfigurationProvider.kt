@@ -16,7 +16,7 @@
 package com.expediagroup.sdk.core.configuration.provider
 
 import com.expediagroup.sdk.core.constant.Constant
-import java.util.UUID
+import java.util.*
 
 /**
  * A configuration provider that can be used to provide configuration values.

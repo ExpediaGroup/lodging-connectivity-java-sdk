@@ -16,22 +16,22 @@ data class LogMessageLines(
     override fun toString(): String =
         lines.joinToString(separator = separator)
 
-    fun addLine(line: LogMessageLine) : LogMessageLines =
+    fun addLine(line: LogMessageLine): LogMessageLines =
         LogMessageLines(
             lines = lines.plus(line),
             separator = separator
         )
 
-    fun addLines(lines: Iterable<LogMessageLine>) : LogMessageLines =
+    fun addLines(lines: Iterable<LogMessageLine>): LogMessageLines =
         LogMessageLines(
             lines = lines.plus(lines),
             separator = separator
         )
 
-    fun addLine(block: () -> LogMessageLine) : LogMessageLines =
+    fun addLine(block: () -> LogMessageLine): LogMessageLines =
         addLine(block())
 
-    fun addLines(block: () -> Iterable<LogMessageLine>) : LogMessageLines =
+    fun addLines(block: () -> Iterable<LogMessageLine>): LogMessageLines =
         addLines(block())
 
 

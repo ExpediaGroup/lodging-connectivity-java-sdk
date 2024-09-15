@@ -68,16 +68,12 @@ class BaseGraphQLClient(config: ClientConfiguration, private val namespace: Stri
             return@runBlocking coroutineScope {
                 return@coroutineScope apolloClient.mutation(mutation).execute()
             }
-        }.also {
-            println("Query executed")
         }
     }
 
     override fun <T : Subscription.Data> execute(subscription: Subscription<T>): ApolloResponse<T> {
         return runBlocking {
             return@runBlocking apolloClient.subscription(subscription).execute()
-        }.also {
-            println("Query executed")
         }
     }
 

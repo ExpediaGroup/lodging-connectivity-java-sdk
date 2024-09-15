@@ -6,7 +6,6 @@ import com.google.api.client.json.gson.GsonFactory
 internal fun createGsonFactory(builder: GsonFactory.Builder? = null) =
     if (builder == null) {
         GsonFactory.getDefaultInstance()
-    }
-    else {
+    } else {
         builder.build()
     }

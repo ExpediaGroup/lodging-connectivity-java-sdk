@@ -1,9 +1,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.filemanagement.client
 
+import com.expediagroup.sdk.core.client.ExpediaGroupClient
 import com.expediagroup.sdk.core.configuration.ClientConfiguration
 import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider
-import com.expediagroup.sdk.core.client.ExpediaGroupClient
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.FileUploadRequest
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileDownloadOperation
@@ -11,7 +11,6 @@ import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileDo
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileUploadOperation
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileUploadOperationParams
 import java.io.*
-import kotlin.jvm.Throws
 
 class FileManagementClient(
     configuration: ClientConfiguration
@@ -88,6 +87,35 @@ class FileManagementClient(
         )
 
         return client.execute<Upload201Response>(operation, false) as Upload201Response
+    }
+
+    @Throws(IOException::class)
+    @JvmOverloads
+    fun upload(
+        stream: InputStream,
+        type: String? = null,
+        value: String? = null,
+        fileContentType: String? = null,
+        fileExtension: String? = null
+    ): Upload201Response {
+        val params = FileUploadOperationParams(
+            type = type,
+            value = value
+        )
+
+        val body = FileUploadRequest(stream)
+
+        val operation = FileUploadOperation(
+            requestBody = body,
+            params = params,
+            fileContentType = fileContentType,
+            fileExtension = fileExtension
+        )
+
+        return client.execute<Upload201Response>(
+            operation = operation,
+            enableGzipContent = false,
+        ) as Upload201Response
     }
 
     companion object {

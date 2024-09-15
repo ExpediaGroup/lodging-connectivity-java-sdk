@@ -15,9 +15,10 @@
  */
 package com.expediagroup.sdk.core.plugin
 
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.HttpClientEngineConfig
+import io.ktor.client.*
+import io.ktor.client.engine.*
 
 internal interface PluginConfiguration
 
-internal abstract class KtorPluginConfiguration(open val httpClientConfiguration: HttpClientConfig<out HttpClientEngineConfig>) : PluginConfiguration
+internal abstract class KtorPluginConfiguration(open val httpClientConfiguration: HttpClientConfig<out HttpClientEngineConfig>) :
+    PluginConfiguration

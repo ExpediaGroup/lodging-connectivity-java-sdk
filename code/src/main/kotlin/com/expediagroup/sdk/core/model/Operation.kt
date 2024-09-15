@@ -15,7 +15,6 @@
  */
 package com.expediagroup.sdk.core.model
 
-import com.google.api.client.http.EmptyContent
 import com.google.api.client.http.HttpContent
 
 abstract class Operation<T>(
@@ -29,5 +28,5 @@ abstract class Operation<T>(
     var transactionId: TransactionId = TransactionId()
         private set
 
-    open fun getHttpContent(): HttpContent = EmptyContent()
+    open fun getHttpContent(): HttpContent? = null
 }

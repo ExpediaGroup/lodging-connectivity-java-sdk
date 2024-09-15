@@ -15,7 +15,7 @@
  */
 package com.expediagroup.sdk.core.constant
 
-import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.*
 
 internal object Constant {
     const val EMPTY_STRING = ""

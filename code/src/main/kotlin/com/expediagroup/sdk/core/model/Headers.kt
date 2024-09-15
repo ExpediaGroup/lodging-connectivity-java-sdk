@@ -16,8 +16,7 @@
 package com.expediagroup.sdk.core.model
 
 import com.expediagroup.sdk.core.constant.HeaderKey
-import io.ktor.http.Headers
-import io.ktor.http.HeadersBuilder
+import io.ktor.http.*
 
 /** Get transaction id from headers. */
 fun Headers.getTransactionId(): String? = get(HeaderKey.TRANSACTION_ID)

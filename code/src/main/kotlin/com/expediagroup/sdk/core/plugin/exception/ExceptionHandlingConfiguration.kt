@@ -16,13 +16,14 @@
 package com.expediagroup.sdk.core.plugin.exception
 
 import com.expediagroup.sdk.core.plugin.KtorPluginConfiguration
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.HttpClientEngineConfig
+import io.ktor.client.*
+import io.ktor.client.engine.*
 
 internal data class ExceptionHandlingConfiguration(
     override val httpClientConfiguration: HttpClientConfig<out HttpClientEngineConfig>
 ) : KtorPluginConfiguration(httpClientConfiguration) {
     companion object {
-        fun from(httpClientConfig: HttpClientConfig<out HttpClientEngineConfig>) = ExceptionHandlingConfiguration(httpClientConfig)
+        fun from(httpClientConfig: HttpClientConfig<out HttpClientEngineConfig>) =
+            ExceptionHandlingConfiguration(httpClientConfig)
     }
 }

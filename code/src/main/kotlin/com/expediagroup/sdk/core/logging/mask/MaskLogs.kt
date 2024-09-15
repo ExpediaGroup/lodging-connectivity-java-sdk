@@ -17,7 +17,7 @@ fun isMaskedField(field: String): Boolean {
     return MaskLogs.maskedFields.contains(field)
 }
 
-private class MaskLogs: (String) -> String {
+private class MaskLogs : (String) -> String {
     companion object {
         @JvmStatic
         val filters: MutableList<BaseFilter> = mutableListOf()
@@ -34,7 +34,7 @@ private class MaskLogs: (String) -> String {
         fun addFields(fields: Set<String>) {
             maskedFields.addAll(fields)
             filters.add(ExpediaGroupJsonFieldFilter(fields.toTypedArray()))
-            filters.forEach{ EJMaskInitializer.addFilter(it) }
+            filters.forEach { EJMaskInitializer.addFilter(it) }
         }
     }
 

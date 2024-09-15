@@ -2,7 +2,7 @@ package com.expediagroup.sdk.core.apache.util
 
 import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
 import com.google.api.client.http.apache.v2.ApacheHttpTransport
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 

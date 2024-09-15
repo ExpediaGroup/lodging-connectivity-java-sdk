@@ -16,13 +16,15 @@
 package com.expediagroup.sdk.core.authentication.strategy
 
 import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
-//import com.expediagroup.sdk.core.plugin.logging.ExpediaGroupLoggerFactory
+import com.expediagroup.sdk.core.constant.LoggingMessage
+import com.expediagroup.sdk.core.logging.model.LogMessage
 import com.google.api.client.auth.oauth2.ClientCredentialsTokenRequest
 import com.google.api.client.http.BasicAuthentication
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.gson.GsonFactory
 import com.google.auth.oauth2.AccessToken
+import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.util.Date
 
@@ -30,7 +32,7 @@ internal class ExpediaGroupAuthenticationStrategy(
     private val provider: ConfigurationProvider,
     private val transport: HttpTransport,
 ) : AuthenticationStrategy {
-//    private val log = ExpediaGroupLoggerFactory.getLogger(javaClass) TODO: Add logger
+    private val log = LoggerFactory.getLogger(javaClass)
 
     override fun refreshAccessToken(): AccessToken =
         ClientCredentialsTokenRequest(
@@ -39,11 +41,15 @@ internal class ExpediaGroupAuthenticationStrategy(
             GenericUrl(provider.authEndpoint),
         ).setClientAuthentication(
             BasicAuthentication(provider.key, provider.secret)
-        ).execute().let {
+        ).also {
+           log.info(LogMessage(body = LoggingMessage.TOKEN_RENEWAL_IN_PROGRESS).toString())
+        }.execute().let {
             return@let AccessToken.newBuilder()
                 .setTokenValue(it.accessToken)
                 .setExpirationTime(Date.from(Instant.now().plusSeconds(it.expiresInSeconds.toLong())))
                 .setScopes(it.scope)
-                .build()
+                .build().also {
+                    log.info(LogMessage(body = LoggingMessage.TOKEN_RENEWAL_SUCCESSFUL).toString())
+                }
         }
 }

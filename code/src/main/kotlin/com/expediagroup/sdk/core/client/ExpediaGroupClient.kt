@@ -4,7 +4,10 @@ import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
 import com.expediagroup.sdk.core.gapiclient.GClient
 import com.expediagroup.sdk.core.gapiclient.model.GRequest
 import com.expediagroup.sdk.core.gapiclient.util.createGClient
+import com.expediagroup.sdk.core.jackson.deserialize
 import com.expediagroup.sdk.core.model.Operation
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import java.io.InputStream
 
 class ExpediaGroupClient(
@@ -16,14 +19,20 @@ class ExpediaGroupClient(
         configurationProvider = configurationProvider,
     )
 
-    inline fun <reified T : Any> execute(operation: Operation<*>, enableGzipContent: Boolean = false): T? =
+    inline fun <reified T : Any> execute(
+        operation: Operation<*>,
+        enableGzipContent: Boolean = false,
+        typeReference: TypeReference<T> = jacksonTypeRef<T>()
+    ): T? =
         GRequest(
             gClient,
             operation,
             T::class.java
         ).setDisableGZipContent(
             enableGzipContent.not()
-        ).execute()
+        ).executeUnparsed().let {
+            deserialize(it.parseAsString(), typeReference)
+        }
 
     fun executeAsInputStream(operation: Operation<*>, enableGzipContent: Boolean = false): InputStream? =
         GRequest(

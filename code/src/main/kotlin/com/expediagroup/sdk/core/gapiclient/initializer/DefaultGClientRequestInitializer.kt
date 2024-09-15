@@ -5,7 +5,7 @@ import com.google.api.client.googleapis.services.CommonGoogleClientRequestInitia
 
 class DefaultGClientRequestInitializer(
     builder: Builder
-): CommonGoogleClientRequestInitializer(builder) {
+) : CommonGoogleClientRequestInitializer(builder) {
     companion object {
         @JvmStatic
         fun getDefaultInstance(): DefaultGClientRequestInitializer {
@@ -13,7 +13,7 @@ class DefaultGClientRequestInitializer(
             return DefaultGClientRequestInitializer(builder)
         }
 
-        class Builder: CommonGoogleClientRequestInitializer.Builder() {
+        class Builder : CommonGoogleClientRequestInitializer.Builder() {
             override fun build(): DefaultGClientRequestInitializer {
                 return DefaultGClientRequestInitializer(this)
             }

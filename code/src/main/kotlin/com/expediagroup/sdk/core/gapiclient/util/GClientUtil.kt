@@ -1,11 +1,11 @@
 package com.expediagroup.sdk.core.gapiclient.util
 
 import com.expediagroup.sdk.core.apache.util.getSingletonApacheHttpTransport
-import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
-import com.expediagroup.sdk.core.gapiclient.GClientBuilder
-import com.expediagroup.sdk.core.gapiclient.GClient
-import com.expediagroup.sdk.core.gson.util.createGsonFactory
 import com.expediagroup.sdk.core.authentication.util.getHttpCredentialsAdapter
+import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
+import com.expediagroup.sdk.core.gapiclient.GClient
+import com.expediagroup.sdk.core.gapiclient.GClientBuilder
+import com.expediagroup.sdk.core.gson.util.createGsonFactory
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpTransport
 

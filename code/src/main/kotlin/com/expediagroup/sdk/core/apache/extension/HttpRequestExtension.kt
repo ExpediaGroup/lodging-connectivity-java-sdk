@@ -8,7 +8,6 @@ import com.expediagroup.sdk.core.logging.model.LogMessage
 import com.expediagroup.sdk.core.logging.model.LogMessageLine
 import com.expediagroup.sdk.core.logging.model.LogMessageLines
 import com.expediagroup.sdk.core.logging.model.LogMessageTag
-import org.apache.commons.io.Charsets
 import org.apache.http.HttpEntityEnclosingRequest
 import org.apache.http.HttpRequest
 import org.apache.http.entity.ContentType

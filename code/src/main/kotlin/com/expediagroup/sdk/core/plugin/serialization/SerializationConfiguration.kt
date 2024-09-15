@@ -16,15 +16,16 @@
 package com.expediagroup.sdk.core.plugin.serialization
 
 import com.expediagroup.sdk.core.plugin.KtorPluginConfiguration
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.HttpClientEngineConfig
-import io.ktor.http.ContentType
+import io.ktor.client.*
+import io.ktor.client.engine.*
+import io.ktor.http.*
 
 internal data class SerializationConfiguration(
     override val httpClientConfiguration: HttpClientConfig<out HttpClientEngineConfig>,
     val contentType: ContentType = ContentType.Application.Json
 ) : KtorPluginConfiguration(httpClientConfiguration) {
     companion object {
-        fun from(httpClientConfig: HttpClientConfig<out HttpClientEngineConfig>) = SerializationConfiguration(httpClientConfig)
+        fun from(httpClientConfig: HttpClientConfig<out HttpClientEngineConfig>) =
+            SerializationConfiguration(httpClientConfig)
     }
 }

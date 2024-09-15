@@ -3,11 +3,11 @@ package com.expediagroup.sdk.core.apache.extension
 import com.expediagroup.sdk.core.constant.Constant
 import com.expediagroup.sdk.core.logging.LOGGABLE_CONTENT_TYPES
 import com.expediagroup.sdk.core.logging.LogMessageConstant
+import com.expediagroup.sdk.core.logging.mask.maskLogs
 import com.expediagroup.sdk.core.logging.model.LogMessage
 import com.expediagroup.sdk.core.logging.model.LogMessageLine
 import com.expediagroup.sdk.core.logging.model.LogMessageLines
 import com.expediagroup.sdk.core.logging.model.LogMessageTag
-import org.apache.commons.io.Charsets
 import org.apache.http.HttpResponse
 import org.apache.http.entity.ContentType
 import org.apache.http.protocol.HttpContext
@@ -18,6 +18,7 @@ fun HttpResponse.getHeadersLogMessage() =
 
 fun HttpResponse.getBodyLogMessage(): LogMessage {
     if (!isBodyLoggable()) {
+        println("body is not loggable")
         return LogMessage.NULL_INSTANCE
     }
 
@@ -32,7 +33,7 @@ fun HttpResponse.getBodyLogMessage(): LogMessage {
         body = LogMessageLines(
             lines = listOf(
                 LogMessageLine(
-                    line = String(byteArray, encoding), tags = setOf(LogMessageTag.INCOMING)
+                    line = maskLogs(String(byteArray, encoding)), tags = setOf(LogMessageTag.INCOMING)
                 )
             )
         )

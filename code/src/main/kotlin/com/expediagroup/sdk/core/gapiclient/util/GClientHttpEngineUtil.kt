@@ -7,8 +7,8 @@ fun createGClientHttpEngine(
     namespace: String,
     configurationProvider: ConfigurationProvider,
 ) = GClientHttpEngine(
-        createGClient(
-            namespace = namespace,
-            configurationProvider = configurationProvider
-        )
+    createGClient(
+        namespace = namespace,
+        configurationProvider = configurationProvider
     )
+)
