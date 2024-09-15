@@ -22,6 +22,8 @@ import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfiguratio
 import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider.requestTimeout
 import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider.socketTimeout
 import com.expediagroup.sdk.core.constant.Constant
+import io.ktor.http.*
+import java.util.*
 
 /**
  * Default configuration provider for ExpediaGroup.
@@ -34,6 +36,7 @@ import com.expediagroup.sdk.core.constant.Constant
  * @property socketTimeout The socket timeout to be used in milliseconds.
  */
 internal object ExpediaGroupConfigurationProvider : ConfigurationProvider {
+    override val id: UUID = UUID.randomUUID()
     override val name: String = "ExpediaGroup Configuration Provider"
     override val endpoint: String = "https://api.expediagroup.com/"
     override val authEndpoint: String = "${endpoint}identity/oauth2/v3/token/"
@@ -42,4 +45,18 @@ internal object ExpediaGroupConfigurationProvider : ConfigurationProvider {
     override val socketTimeout: Long = Constant.FIFTEEN_SECONDS_IN_MILLIS
     override val maxConnTotal: Int = 250
     override val maxConnPerRoute: Int = 25
+    override val maskedLoggingHeaders: Set<String> = setOf(HttpHeaders.Authorization)
+    override val maskedLoggingBodyFields: Set<String> = setOf(
+        "cvv",
+        "pin",
+        "card_cvv",
+        "card_cvv2",
+        "card_number",
+        "access_token",
+        "security_code",
+        "account_number",
+        "card_avs_response",
+        "card_cvv_response",
+        "card_cvv2_response",
+    )
 }

@@ -1,5 +1,6 @@
 package com.expediagroup.sdk.core.gapiclient
 
+import com.expediagroup.sdk.core.gapiclient.initializer.DefaultGClientRequestInitializer
 import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpRequestInitializer
@@ -13,7 +14,7 @@ class GClientBuilder(
     requestInitializer: HttpRequestInitializer? = null,
     servicePath: String = "",
     namespace: String,
-): AbstractGoogleClient.Builder(
+) : AbstractGoogleClient.Builder(
     transport,
     rootUrl.build(),
     servicePath,

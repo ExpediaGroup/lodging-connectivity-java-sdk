@@ -31,9 +31,9 @@ class FileUploadOperation(
                 println(this.build())
             })
 
-
            val fileName = when(requestBody?.content) {
                is File -> requestBody.content.name
+               is InputStream -> "file"
                else -> throw IllegalArgumentException("Unsupported content type")
            }
 
@@ -47,6 +47,7 @@ class FileUploadOperation(
                 // Set the content based on type (File or InputStream)
                 content = when (requestBody.content) {
                     is File -> FileContent("application/octet-stream", requestBody.content.absoluteFile)
+                    is InputStream -> InputStreamContent("application/octet-stream", requestBody.content)
                     else -> throw IllegalArgumentException("Unsupported content type")
                 }.apply {
                     setBoundary("__END_OF_PART__")

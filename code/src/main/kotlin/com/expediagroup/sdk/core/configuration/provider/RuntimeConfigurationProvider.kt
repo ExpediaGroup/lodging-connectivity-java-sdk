@@ -16,6 +16,7 @@
 package com.expediagroup.sdk.core.configuration.provider
 
 import com.expediagroup.sdk.core.constant.ConfigurationName.RUNTIME_CONFIGURATION_PROVIDER
+import java.util.*
 
 /**
  * A runtime-built configuration provider.
@@ -32,6 +33,7 @@ import com.expediagroup.sdk.core.constant.ConfigurationName.RUNTIME_CONFIGURATIO
  * @property maskedLoggingBodyFields The body fields to be masked in logging.
  */
 data class RuntimeConfigurationProvider(
+    override val id: UUID = UUID.randomUUID(),
     override val name: String = RUNTIME_CONFIGURATION_PROVIDER,
     override val key: String? = null,
     override val secret: String? = null,

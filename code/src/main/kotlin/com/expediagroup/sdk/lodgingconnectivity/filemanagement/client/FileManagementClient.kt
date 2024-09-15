@@ -1,222 +1,128 @@
-///*
-// * Copyright (C) 2022 Expedia, Inc.
-// *
-// * Licensed under the Apache License, Version 2.0 (the "License");
-// * you may not use this file except in compliance with the License.
-// * You may obtain a copy of the License at
-// *
-// * http://www.apache.org/licenses/LICENSE-2.0
-// *
-// * Unless required by applicable law or agreed to in writing, software
-// * distributed under the License is distributed on an "AS IS" BASIS,
-// * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// * See the License for the specific language governing permissions and
-// * limitations under the License.
-// */
-//
-//package com.expediagroup.sdk.lodgingconnectivity.filemanagement.client
-//
-//
-//import com.expediagroup.sdk.core.client.ExpediaGroupClient
-//import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
-//import com.expediagroup.sdk.core.model.Response
-//import com.expediagroup.sdk.core.model.exception.handle
-//import com.expediagroup.sdk.core.plugin.logging.ExpediaGroupLoggerFactory
-//import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
-//import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.exception.*
-//import com.fasterxml.jackson.databind.ObjectMapper
-//import io.ktor.client.plugins.onUpload
-//import io.ktor.client.request.forms.MultiPartFormDataContent
-//import io.ktor.client.request.forms.formData
-//import io.ktor.client.request.prepareRequest
-//import io.ktor.client.request.request
-//import io.ktor.client.request.url
-//import io.ktor.client.statement.HttpResponse
-//import io.ktor.client.statement.bodyAsText
-//import io.ktor.http.ContentType
-//import io.ktor.http.Headers
-//import io.ktor.http.HttpHeaders
-//import io.ktor.http.HttpMethod
-//import io.ktor.util.InternalAPI
-//import io.ktor.utils.io.jvm.javaio.toInputStream
-//import java.io.File
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.GlobalScope
-//import kotlinx.coroutines.future.future
-//
-///**
-// *
-// */
-//class FileManagementClient(clientConfiguration: ExpediaGroupClientConfiguration) :
-//    ExpediaGroupClient("filemanagement", clientConfiguration) {
-//
-//    companion object {
-//        @JvmStatic
-//        private val log = ExpediaGroupLoggerFactory.getLogger(this::class.java)
-//        private val mapper = ObjectMapper()
-//    }
-//
-//    override suspend fun throwServiceException(response: HttpResponse, operationId: String) {
-//        throw ErrorObjectMapper.process(response, operationId)
-//    }
-//
-//    private suspend inline fun kdownload(
-//        id: kotlin.String,
-//        type: kotlin.String? = null,
-//        `value`: kotlin.String? = null
-//    ): ByteArray {
-//        return kdownloadWithResponse(id, type, `value`).body
-//    }
-//
-//    @OptIn(InternalAPI::class)
-//    private suspend inline fun kdownloadWithResponse(
-//        id: kotlin.String,
-//        type: kotlin.String? = null,
-//        `value`: kotlin.String? = null,
-//    ): Response<ByteArray> {
-//        return httpClient.prepareRequest {
-//            method = HttpMethod.parse("GET")
-//            url("supply-lodging/v1/files/{id}/content".replace("{" + "id" + "}", "$id"))
-//            appendHeaders()
-//            type?.also { url.parameters.append("type", it.toString()) }
-//            `value`?.also { url.parameters.append("value", it.toString()) }
-//        }.execute { httpResponse ->
-//            throwIfError(httpResponse, "download")
-//            return@execute Response(
-//                httpResponse.status.value,
-//                httpResponse.content.toInputStream().readAllBytes(),
-//                httpResponse.headers.entries()
-//            )
-//        }
-//    }
-//
-//    /**
-//     *
-//     * API that can be used to download file using identifier associated to it
-//     * @param id
-//     * @param type  (optional)
-//     * @param `value`  (optional)
-//     * @throws ExpediaGroupApiGenericErrorException
-//     * @return java.io.File
-//     */
-//    @Throws(
-//        ExpediaGroupApiGenericErrorException::class
-//    )
-//    @JvmOverloads
-//    fun download(id: kotlin.String, type: kotlin.String? = null, `value`: kotlin.String? = null): ByteArray {
-//        return downloadWithResponse(id, type, `value`).body
-//    }
-//
-//    /**
-//     *
-//     * API that can be used to download file using identifier associated to it
-//     * @param id
-//     * @param type  (optional)
-//     * @param `value`  (optional)
-//     * @throws ExpediaGroupApiGenericErrorException
-//     * @return a [Response] object with a body of type java.io.File
-//     */
-//    @Throws(
-//        ExpediaGroupApiGenericErrorException::class
-//    )
-//    @JvmOverloads
-//    fun downloadWithResponse(
-//        id: kotlin.String,
-//        type: kotlin.String? = null,
-//        `value`: kotlin.String? = null
-//    ): Response<ByteArray> {
-//        try {
-//            return GlobalScope.future(Dispatchers.IO) {
-//                kdownloadWithResponse(id, type, `value`)
-//            }.get()
-//        } catch (exception: Exception) {
-//            exception.handle()
-//        }
-//    }
-//
-//    private suspend inline fun kupload(
-//        content: File? = null,
-//        type: kotlin.String? = null,
-//        `value`: kotlin.String? = null
-//    ): Upload201Response {
-//        return kuploadWithResponse(content, type, value).body
-//    }
-//
-//    @OptIn(InternalAPI::class)
-//    private suspend fun kuploadWithResponse(
-//        content: File? = null,
-//        type: kotlin.String? = null,
-//        `value`: kotlin.String? = null
-//    ): Response<Upload201Response> {
-//        val response = httpClient.request {
-//            println("Request Sending...")
-//            method = HttpMethod.parse("POST")
-//            url("supply-lodging/v1/files")
-//            appendHeaders()
-//            type?.also { url.parameters.append("type", it.toString()) }
-//            `value`?.also { url.parameters.append("value", it.toString()) }
-//            body = MultiPartFormDataContent(
-//                formData {
-//                    append("content", content!!.readBytes(), Headers.build {
-//                        append(HttpHeaders.ContentType, ContentType.Application.OctetStream.toString())
-//                        append(HttpHeaders.ContentDisposition, "filename=\"${content.name}\"")
-//                    })
-//                }
-//            )
-//
-//            onUpload { bytesSentTotal, contentLength ->
-//                log.info("Uploaded $bytesSentTotal bytes from $contentLength of file ${content?.name}")
-//            }
-//        }
-//        throwIfError(response, "upload")
-//        val responseBody = mapper.readValue(response.bodyAsText(), Upload201Response::class.java)
-//        return Response(response.status.value, responseBody, response.headers.entries())
-//    }
-//
-//    /**
-//     *
-//     * API that can be used to upload file and get identifier associated to it
-//     * @param content Content of the resource (optional)
-//     * @throws ExpediaGroupApiGenericErrorException
-//     * @return Upload201Response
-//     */
-//    @Throws(
-//        ExpediaGroupApiGenericErrorException::class
-//    )
-//
-//    @JvmOverloads
-//    fun upload(
-//        content: File,
-//        type: kotlin.String? = null,
-//        `value`: kotlin.String? = null
-//    ): Upload201Response {
-//        return uploadWithResponse(content, type, value).body
-//    }
-//
-//    /**
-//     *
-//     * API that can be used to upload file and get identifier associated to it
-//     * @param content Content of the resource (optional)
-//     * @throws ExpediaGroupApiGenericErrorException
-//     * @return a [Response] object with a body of type Upload201Response
-//     */
-//    @Throws(
-//        ExpediaGroupApiGenericErrorException::class
-//    )
-//    @JvmOverloads
-//    fun uploadWithResponse(
-//        content: File? = null,
-//        type: kotlin.String? = null,
-//        `value`: kotlin.String? = null
-//    ): Response<Upload201Response> {
-//        try {
-//            return GlobalScope.future(Dispatchers.IO) {
-//                kuploadWithResponse(content, type, value)
-//            }.get()
-//        } catch (exception: Exception) {
-//            exception.handle()
-//        }
-//    }
-//
-//}
-//
+package com.expediagroup.sdk.lodgingconnectivity.filemanagement.client
+
+import com.expediagroup.sdk.core.configuration.ClientConfiguration
+import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
+import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider
+import com.expediagroup.sdk.core.client.ExpediaGroupClient
+import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.FileUploadRequest
+import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
+import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileDownloadOperation
+import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileDownloadOperationParams
+import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileUploadOperation
+import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileUploadOperationParams
+import java.io.*
+import kotlin.jvm.Throws
+
+class FileManagementClient(
+    configuration: ClientConfiguration
+) {
+    private val client = ExpediaGroupClient(
+        namespace = "filemanagement",
+        configurationProvider = configuration.toProvider()
+            .withDefaultsConfigurationProvider(ExpediaGroupConfigurationProvider)
+    )
+
+    @Throws(IOException::class)
+    private fun buildOperation(
+        id: String,
+        type: String? = null,
+        value: String? = null
+    ) = FileDownloadOperation(
+        params = FileDownloadOperationParams(
+            id = id,
+            type = type,
+            value = value
+        )
+    )
+
+
+    @Throws(IOException::class)
+    @JvmOverloads
+    fun download(
+        id: String,
+        downloadTo: OutputStream,
+        type: String? = null,
+        value: String? = null
+    ) =
+        buildOperation(
+            id = id,
+            type = type,
+            value = value
+        ).let {
+            client.executeAndDownloadTo(it, downloadTo)
+        }
+
+    @Throws(IOException::class)
+    @JvmOverloads
+    fun download(
+        id: String,
+        type: String? = null,
+        value: String? = null
+    ): InputStream? {
+        buildOperation(
+            id = id,
+            type = type,
+            value = value
+        ).let {
+            return client.executeAsInputStream(it)
+        }
+    }
+
+    @Throws(IOException::class)
+    @JvmOverloads
+    fun upload(
+        file: File,
+        type: String? = null,
+        value: String? = null,
+    ): Upload201Response {
+        val params = FileUploadOperationParams(
+            type = type,
+            value = value
+        )
+
+        val body = FileUploadRequest(file)
+
+        val operation = FileUploadOperation(
+            requestBody = body,
+            params = params,
+        )
+
+        return client.execute<Upload201Response>(operation, false) as Upload201Response
+    }
+
+    companion object {
+        @JvmStatic
+        fun builder(): Builder = Builder()
+
+        class Builder {
+            private val configurationBuilder = ExpediaGroupClientConfiguration.builder()
+
+            fun key(key: String): Builder = apply { configurationBuilder.key(key) }
+            fun secret(secret: String): Builder = apply { configurationBuilder.secret(secret) }
+            fun endpoint(endpoint: String): Builder = apply { configurationBuilder.endpoint(endpoint) }
+            fun authEndpoint(authEndpoint: String): Builder = apply { configurationBuilder.authEndpoint(authEndpoint) }
+            fun requestTimeout(requestTimeout: Long): Builder =
+                apply { configurationBuilder.requestTimeout(requestTimeout) }
+
+            fun connectionTimeout(connectionTimeout: Long): Builder =
+                apply { configurationBuilder.connectionTimeout(connectionTimeout) }
+
+            fun socketTimeout(socketTimeout: Long): Builder =
+                apply { configurationBuilder.socketTimeout(socketTimeout) }
+
+            fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>): Builder =
+                apply { configurationBuilder.maskedLoggingHeaders(maskedLoggingHeaders) }
+
+            fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>): Builder =
+                apply { configurationBuilder.maskedLoggingBodyFields(maskedLoggingBodyFields) }
+
+            fun maxConnTotal(maxConnTotal: Int): Builder = apply { configurationBuilder.maxConnTotal(maxConnTotal) }
+            fun maxConnPerRoute(maxConnPerRoute: Int): Builder =
+                apply { configurationBuilder.maxConnPerRoute(maxConnPerRoute) }
+
+            fun build(): FileManagementClient =
+                FileManagementClient(configurationBuilder.build())
+
+        }
+    }
+}

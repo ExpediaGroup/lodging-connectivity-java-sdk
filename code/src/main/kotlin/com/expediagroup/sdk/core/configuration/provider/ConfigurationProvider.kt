@@ -16,11 +16,14 @@
 package com.expediagroup.sdk.core.configuration.provider
 
 import com.expediagroup.sdk.core.constant.Constant
+import java.util.UUID
 
 /**
  * A configuration provider that can be used to provide configuration values.
  */
 interface ConfigurationProvider {
+    val id: UUID
+
     /** The name of the provider. */
     val name: String
 
@@ -98,11 +101,13 @@ interface ConfigurationProvider {
             if (maxConnPerRoute == null) {
                 maxConnPerRoute = provider.maxConnPerRoute
             }
-        }
+        }.toImmutable()
 
     fun toMutable(): MutableConfigurationProvider {
         val self: ConfigurationProvider = this
+
         return object : MutableConfigurationProvider {
+            override val id: UUID = self.id
             override var name: String = self.name
             override var key: String? = self.key
             override var secret: String? = self.secret

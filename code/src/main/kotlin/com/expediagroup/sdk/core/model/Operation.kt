@@ -15,7 +15,6 @@
  */
 package com.expediagroup.sdk.core.model
 
-import com.expediagroup.sdk.core.gapiclient.model.Request
 import com.google.api.client.http.EmptyContent
 import com.google.api.client.http.HttpContent
 

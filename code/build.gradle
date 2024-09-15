@@ -1,22 +1,10 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
 buildscript {
-    ext {
-        artyUser = findProperty('ARTIFACTORY_USER')
-        artyPass = findProperty('ARTIFACTORY_PASS')
-        mavenRepo = 'https://artylab.expedia.biz/expediagroup-maven-release-local/'
-    }
 
     repositories {
         mavenCentral()
         mavenLocal()
-        maven {
-            url mavenRepo
-            credentials {
-                username = artyUser
-                password = artyPass
-            }
-        }
     }
 }
 
@@ -25,26 +13,17 @@ plugins {
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo3' version '3.8.4'
     id 'maven-publish'
-    id 'com.jfrog.artifactory' version '5.1.14'
 }
 
 repositories {
-    maven {
-        url 'https://artylab.expedia.biz/public-maven-virtual'
-        credentials {
-            username = findProperty('ARTIFACTORY_USER')
-            password = findProperty('ARTIFACTORY_PASS')
-        }
-    }
     mavenCentral()
     mavenLocal()
 }
 
 dependencies {
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
-
-    implementation("com.google.api:gax:2.52.0")
-    implementation("io.ktor:ktor-client-apache5-jvm:2.3.12")
+    implementation("com.ebay.ejmask:ejmask-api:1.0.3")
+    implementation("com.ebay.ejmask:ejmask-extensions:1.0.3")
     implementation("com.google.api-client:google-api-client-apache-v5:2.7.0")
     implementation("com.google.api-client:google-api-client:2.7.0")
     implementation("com.apollographql.apollo3:apollo-runtime:3.8.4")
@@ -108,39 +87,8 @@ artifacts {
 //    archives javadocJar
 }
 
-artifactory {
-    contextUrl = 'https://artylab.expedia.biz'
-    publish {
-        repository {
-            username = findProperty('ARTIFACTORY_USER') ?: artyUser
-            password = findProperty('ARTIFACTORY_PASS') ?: artyPass
-        }
-        defaults {
-            publications('mavenJava')
-            publishBuildInfo = true
-            publishArtifacts = true
-            publishPom = true
-            publishIvy = false
-        }
-    }
-}
 
 publishing {
-    repositories {
-        maven {
-            credentials {
-                username = findProperty('ARTIFACTORY_USER') ?: artyUser
-                password = findProperty('ARTIFACTORY_PASS') ?: artyPass
-            }
-
-            if (project.version.endsWith('-SNAPSHOT')) {
-                url 'https://artylab.expedia.biz/expediagroup-maven-snapshot-local/'
-            } else {
-                url 'https://artylab.expedia.biz/expediagroup-maven-release-local/'
-            }
-        }
-    }
-
     publications {
         mavenJava(MavenPublication) {
             from components.java

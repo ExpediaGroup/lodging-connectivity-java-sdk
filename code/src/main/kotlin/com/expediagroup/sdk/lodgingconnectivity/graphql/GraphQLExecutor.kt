@@ -16,13 +16,16 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
+import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Mutation
 import com.apollographql.apollo3.api.Query
 import com.apollographql.apollo3.api.Subscription
+import com.expediagroup.sdk.core.gapiclient.GClientHttpEngine
 
 interface GraphQLExecutor {
     fun <T : Query.Data> execute(query: Query<T>): ApolloResponse<T>
     fun <T : Mutation.Data> execute(mutation: Mutation<T>): ApolloResponse<T>
     fun <T : Subscription.Data> execute(subscription: Subscription<T>): ApolloResponse<T>
 }
+

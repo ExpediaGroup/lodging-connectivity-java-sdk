@@ -2,7 +2,7 @@ package com.expediagroup.sdk.core.client
 
 import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
 import com.expediagroup.sdk.core.gapiclient.GClient
-import com.expediagroup.sdk.core.gapiclient.model.Request
+import com.expediagroup.sdk.core.gapiclient.model.GRequest
 import com.expediagroup.sdk.core.gapiclient.util.createGClient
 import com.expediagroup.sdk.core.model.Operation
 import java.io.InputStream
@@ -16,47 +16,39 @@ class ExpediaGroupClient(
         configurationProvider = configurationProvider,
     )
 
-    inline fun <reified T : Any> execute(operation: Operation<*>, enableGzipContent: Boolean = false): T? {
-        val request = Request(
+    inline fun <reified T : Any> execute(operation: Operation<*>, enableGzipContent: Boolean = false): T? =
+        GRequest(
             gClient,
             operation,
             T::class.java
-        ).apply {
-            setDisableGZipContent(enableGzipContent.not())
-        }
+        ).setDisableGZipContent(
+            enableGzipContent.not()
+        ).execute()
 
-        return request.execute()
-    }
-
-    fun executeAsInputStream(operation: Operation<*>, enableGzipContent: Boolean = false): InputStream? {
-        val request = Request(
+    fun executeAsInputStream(operation: Operation<*>, enableGzipContent: Boolean = false): InputStream? =
+        GRequest(
             gClient,
             operation,
             Any::class.java
         ).apply {
             setDisableGZipContent(enableGzipContent.not())
-        }
+        }.executeAsInputStream()
 
-        return request.executeMediaAsInputStream()
-    }
-
-    fun executeUnparsed(operation: Operation<*>, enableGzipContent: Boolean = false): Any {
-        val request = Request(
+    fun executeUnparsed(operation: Operation<*>, enableGzipContent: Boolean = false): Any =
+        GRequest(
             gClient,
             operation,
             Any::class.java
         ).apply {
             setDisableGZipContent(enableGzipContent.not())
-        }
-        return request.executeUnparsed()
-    }
+        }.executeUnparsed()
 
     fun executeAndDownloadTo(
         operation: Operation<*>,
         outputStream: java.io.OutputStream?,
         enableGzipContent: Boolean = false
     ) {
-        val request = Request(
+        val gRequest = GRequest(
             gClient,
             operation,
             Any::class.java
@@ -64,6 +56,6 @@ class ExpediaGroupClient(
             setDisableGZipContent(enableGzipContent.not())
         }
 
-        request.executeAndDownloadTo(outputStream)
+        gRequest.executeAndDownloadTo(outputStream)
     }
 }

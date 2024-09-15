@@ -8,14 +8,14 @@ version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://artylab.expedia.biz/public-maven-virtual'
-        credentials {
-            username = findProperty('artifactory_user')
-            password = findProperty('artifactory_password')
-        }
-    }
 }
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+
 
 dependencies {
     implementation(project(":code"))

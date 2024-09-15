@@ -1,5 +1,7 @@
 package com.expediagroup.sdk.core.configuration.provider
 
+import java.util.*
+
 interface MutableConfigurationProvider : ConfigurationProvider {
     override var name: String
     override var key: String?
@@ -15,6 +17,7 @@ interface MutableConfigurationProvider : ConfigurationProvider {
     override var maxConnPerRoute: Int?
 
     fun toImmutable(self: MutableConfigurationProvider = this): ConfigurationProvider = object : ConfigurationProvider {
+        override val id: UUID = self.id
         override val name: String = self.name
         override val key: String? = self.key
         override val secret: String? = self.secret

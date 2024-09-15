@@ -16,8 +16,11 @@
 package com.expediagroup.sdk.core.configuration
 
 import com.expediagroup.sdk.core.configuration.provider.RuntimeConfigurationProvider
+import java.util.UUID
 
 interface ClientConfiguration {
+    private val id: UUID
+        get() = UUID.randomUUID()
     val key: String?
     val secret: String?
     val endpoint: String?
@@ -38,6 +41,7 @@ interface ClientConfiguration {
     /** Build a [RuntimeConfigurationProvider] from a [ClientConfiguration]. */
     fun toProvider(): RuntimeConfigurationProvider =
         RuntimeConfigurationProvider(
+            id = id,
             key = key,
             secret = secret,
             endpoint = endpoint,
@@ -50,6 +54,25 @@ interface ClientConfiguration {
             maxConnTotal = maxConnTotal,
             maxConnPerRoute = maxConnPerRoute
         )
+
+    fun toBuilder(): Builder {
+        var builder = Builder()
+
+        key?.let { builder = builder.key(it) }
+        secret?.let { builder = builder.secret(it) }
+        endpoint?.let { builder = builder.endpoint(it) }
+        authEndpoint?.let { builder = builder.authEndpoint(it) }
+        requestTimeout?.let { builder = builder.requestTimeout(it) }
+        connectionTimeout?.let { builder = builder.connectionTimeout(it) }
+        socketTimeout?.let { builder = builder.socketTimeout(it) }
+        maskedLoggingHeaders?.let { builder = builder.maskedLoggingHeaders(it) }
+        maskedLoggingBodyFields?.let { builder = builder.maskedLoggingBodyFields(it) }
+        maxConnTotal?.let { builder = builder.maxConnTotal(it) }
+        maxConnPerRoute?.let { builder = builder.maxConnPerRoute(it) }
+
+        return builder
+    }
+
 
     open class Builder {
         private var key: String? = null
