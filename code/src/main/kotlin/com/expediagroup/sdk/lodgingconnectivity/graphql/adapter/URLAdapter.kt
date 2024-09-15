@@ -25,6 +25,9 @@ import java.net.URI
 import java.net.URISyntaxException
 import java.net.URL
 
+/**
+ * Converts the custom scalar `Url` to and from `java.net.URL`.
+ */
 object URLAdapter : Adapter<URL?> {
 
     override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): URL? {
@@ -45,5 +48,4 @@ object URLAdapter : Adapter<URL?> {
             writer.nullValue()
         }
     }
-
 }

@@ -15,6 +15,7 @@
  */
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.adapter
+
 import com.apollographql.apollo.api.Adapter
 import com.apollographql.apollo.api.CustomScalarAdapters
 import com.apollographql.apollo.api.json.JsonReader
@@ -22,8 +23,10 @@ import com.apollographql.apollo.api.json.JsonWriter
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
-object DateTimeAdapter: Adapter<OffsetDateTime?> {
-
+/**
+ * Converts the custom scalar `DateTime` to and from `java.time.OffsetDateTime`.
+ */
+object DateTimeAdapter : Adapter<OffsetDateTime?> {
     override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): OffsetDateTime? {
         val dateString = reader.nextString() ?: return null
         return OffsetDateTime.parse(dateString, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
@@ -37,3 +40,5 @@ object DateTimeAdapter: Adapter<OffsetDateTime?> {
         }
     }
 }
+
+

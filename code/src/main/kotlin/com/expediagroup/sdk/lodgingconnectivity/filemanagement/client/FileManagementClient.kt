@@ -46,7 +46,25 @@ import kotlinx.coroutines.future.future
 import java.io.File
 
 /**
+ * A client for interacting with EG Lodging Connectivity messages attachments REST API.
  *
+ * This client is configured with a `ClientConfiguration` that includes authentication details,
+ * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
+ *
+ * @constructor Creates a new instance of `FileManagementClient` using the provided configuration.
+ * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
+ * timeouts, and logging masking options.
+ *
+ * Example usage:
+ * ```
+ * FileManagementClient(
+ *     ClientConfiguration
+ *         .builder()
+ *         .key("API_KEY")
+ *         .secret("API_SECRET")
+ *         .build()
+ * )
+ * ```
  */
 class FileManagementClient(config: ClientConfiguration) :
     ExpediaGroupClient(
