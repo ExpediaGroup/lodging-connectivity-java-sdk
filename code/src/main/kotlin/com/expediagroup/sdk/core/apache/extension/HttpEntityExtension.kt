@@ -6,7 +6,7 @@ import org.apache.http.entity.ByteArrayEntity
 import org.apache.http.entity.ContentType
 import org.apache.http.entity.HttpEntityWrapper
 
-fun HttpEntity.readByteArray(): Pair<ByteArray, ByteArrayEntity> =
+fun HttpEntity.readByteArrayAndReset(): Pair<ByteArray, ByteArrayEntity> =
     HttpEntityWrapper(this).let { wrapper ->
         Buffer().apply {
             wrapper.writeTo(outputStream())

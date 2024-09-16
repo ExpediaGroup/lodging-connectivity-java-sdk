@@ -1,7 +1,6 @@
 package com.expediagroup.sdk.lodgingconnectivity.filemanagement.client
 
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.configuration.provider.ExpediaGroupConfigurationProvider
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
@@ -152,7 +151,6 @@ class FileManagementClient(
 
             fun build(): FileManagementClient =
                 FileManagementClient(configurationBuilder.build())
-
         }
     }
 }

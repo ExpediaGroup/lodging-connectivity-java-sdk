@@ -1,79 +1,54 @@
 package com.expediagroup.sdk.core.apache.extension
 
-import com.expediagroup.sdk.core.constant.Constant
 import com.expediagroup.sdk.core.logging.LOGGABLE_CONTENT_TYPES
 import com.expediagroup.sdk.core.logging.LogMessageConstant
 import com.expediagroup.sdk.core.logging.mask.maskLogs
-import com.expediagroup.sdk.core.logging.model.LogMessage
-import com.expediagroup.sdk.core.logging.model.LogMessageLine
-import com.expediagroup.sdk.core.logging.model.LogMessageLines
-import com.expediagroup.sdk.core.logging.model.LogMessageTag
 import org.apache.http.HttpResponse
 import org.apache.http.entity.ContentType
 import org.apache.http.protocol.HttpContext
 import java.nio.charset.Charset
 
-fun HttpResponse.getHeadersLogMessage() =
-    this.allHeaders.getHeadersLogMessage(setOf(LogMessageTag.INCOMING))
+fun HttpResponse.getHeadersLogMessage(): String =
+    this.allHeaders.getHeadersLogMessage()
 
-fun HttpResponse.getBodyLogMessage(): LogMessage {
-    if (!isBodyLoggable()) {
-        return LogMessage.NULL_INSTANCE
+fun HttpResponse.getBodyLogMessage(): String {
+    if (!hasBody()) {
+        return LogMessageConstant.EMPTY_RESPONSE_BODY
     }
 
-    val byteArray = safeReadContentByteArray()
-    val encoding = Charset.forName(entity.contentEncoding?.value ?: Charsets.UTF_8.name())
+    if (entity.contentLength < 0L) {
+        return LogMessageConstant.BODY_CONTENT_LENGTH_NOT_PROVIDED
+    }
 
-    return LogMessage(
-        title = LogMessageLine(
-            line = LogMessageConstant.RESPONSE_BODY + Constant.NEWLINE,
-            tags = setOf(LogMessageTag.INCOMING)
-        ),
-        body = LogMessageLines(
-            lines = listOf(
-                LogMessageLine(
-                    line = maskLogs(String(byteArray, encoding)), tags = setOf(LogMessageTag.INCOMING)
-                )
-            )
-        )
-    )
+    if (ContentType.get(entity).mimeType !in LOGGABLE_CONTENT_TYPES) {
+        return LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED.format(ContentType.get(entity).mimeType)
+    }
+
+    val encoding = Charset.forName(entity.contentEncoding?.value ?: Charsets.UTF_8.name())
+    return maskLogs(String(readByteArrayAndReset(), encoding))
 }
 
-fun HttpResponse.safeReadContentByteArray(): ByteArray =
-    if (!isBodyLoggable()) {
+fun HttpResponse.readByteArrayAndReset(): ByteArray =
+    if (!hasBody()) {
         ByteArray(0)
     } else {
-        entity.readByteArray().let { (byteArray, newEntity) ->
+        entity.readByteArrayAndReset().let { (byteArray, newEntity) ->
             // Replace the entity with a new one since the original entity is consumed
             entity = newEntity
-
             return@let byteArray
         }
     }
 
+fun HttpResponse.getMetadataLogMessage(context: HttpContext): String =
+    "${statusLine.statusCode} ${context.getRequestMetadataLine()}"
 
-fun HttpResponse.isBodyLoggable(): Boolean {
-    if (this.entity == null) {
+fun HttpResponse.hasBody(): Boolean {
+    if (entity == null) {
         return false
     }
-
-    if (this.entity.contentLength <= 0L) {
-        return false
-    }
-
-    if (ContentType.get(entity).mimeType !in LOGGABLE_CONTENT_TYPES) {
+    if (entity.contentLength == 0L) {
         return false
     }
 
     return true
 }
-
-fun HttpResponse.getMetadataLogMessage(context: HttpContext): LogMessage =
-    LogMessage(
-        body = LogMessageLines().addLine {
-            LogMessageLine(
-                line = "${LogMessageConstant.RESPONSE_FROM} ${statusLine.statusCode} ${context.getRequestMetadataLine()}",
-                tags = setOf(LogMessageTag.INCOMING)
-            )
-        },
-    )

@@ -18,7 +18,7 @@ package com.expediagroup.sdk.core.plugin.logging
 import com.expediagroup.sdk.core.constant.Constant
 import com.expediagroup.sdk.core.constant.LoggingMessage.LOGGING_PREFIX
 import com.expediagroup.sdk.core.logging.mask.maskLogs
-import com.expediagroup.sdk.core.logging.model.LogMessageTag
+import com.expediagroup.sdk.core.logging.LogMessageTag
 import org.slf4j.Logger
 
 internal class ExpediaGroupLogger(private val logger: Logger) : Logger by logger {
@@ -33,6 +33,10 @@ internal class ExpediaGroupLogger(private val logger: Logger) : Logger by logger
     override fun debug(msg: String) = logger.debug(decorate(msg))
 
     fun debug(msg: String, tags: Set<LogMessageTag> = emptySet()) = logger.debug(decorate(msg, tags))
+
+    override fun error(msg: String) = logger.error(decorate(msg))
+
+    fun error(msg: String, tags: Set<LogMessageTag> = emptySet()) = logger.error(decorate(msg, tags))
 
     private fun normalize(msg: String, tags: Set<LogMessageTag> = emptySet()): String =
         buildList {

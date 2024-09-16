@@ -22,11 +22,7 @@ internal object LoggingMessage {
 
     const val TOKEN_RENEWAL_SUCCESSFUL = "Token renewal successful"
 
-    const val TOKEN_CLEARING_IN_PROGRESS = "Clearing tokens"
-
-    const val TOKEN_CLEARING_SUCCESSFUL = "Tokens successfully cleared"
-
-    const val TOKEN_EXPIRED = "Token expired or is about to expire. Request will wait until token is renewed"
+    const val TOKEN_RENEWAL_FAILURE = "Token renewal failure"
 
     const val OMITTED = "<-- omitted -->"
 }

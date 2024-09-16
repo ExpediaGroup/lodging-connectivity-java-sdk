@@ -18,8 +18,8 @@ fun createHttpClient(configurationProvider: ConfigurationProvider): HttpClient =
         .setDefaultRequestConfig(createRequestConfig(configurationProvider))
         .setMaxConnTotal(configurationProvider.maxConnTotal!!)
         .setMaxConnPerRoute(configurationProvider.maxConnPerRoute!!)
-        .addInterceptorLast(RequestLoggingInterceptor(LoggerFactory.getLogger(GClient::class.java)))
-        .addInterceptorLast(ResponseLoggingInterceptor(LoggerFactory.getLogger(GClient::class.java)))
+        .addInterceptorLast(RequestLoggingInterceptor())
+        .addInterceptorLast(ResponseLoggingInterceptor())
         .build()
 
 fun getSingletonHttpClient(configurationProvider: ConfigurationProvider) =

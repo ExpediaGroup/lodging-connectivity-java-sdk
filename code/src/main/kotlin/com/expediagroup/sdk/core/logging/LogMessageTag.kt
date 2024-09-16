@@ -1,6 +1,9 @@
-package com.expediagroup.sdk.core.logging.model
+package com.expediagroup.sdk.core.logging
 
 enum class LogMessageTag(val tag: String) {
+    PROGRESSING("PROGRESSING"),
+    SUCCESS("SUCCESS"),
+    ERROR("ERROR"),
     INCOMING("INCOMING"),
     OUTGOING("OUTGOING");
 
