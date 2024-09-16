@@ -9,7 +9,7 @@ import org.apache.http.HttpResponse
 import org.apache.http.HttpResponseInterceptor
 import org.apache.http.protocol.HttpContext
 
-class ResponseLoggingInterceptor : HttpResponseInterceptor {
+class ExpediaGroupResponseInterceptor : HttpResponseInterceptor {
     private val logger = ExpediaGroupLoggerFactory.getLogger(javaClass)
 
     override fun process(response: HttpResponse?, context: HttpContext?) {

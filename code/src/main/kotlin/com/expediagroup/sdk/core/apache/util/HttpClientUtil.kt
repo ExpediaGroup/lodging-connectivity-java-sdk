@@ -1,13 +1,10 @@
 package com.expediagroup.sdk.core.apache.util
 
-import com.expediagroup.sdk.core.apache.interceptor.RequestLoggingInterceptor
-import com.expediagroup.sdk.core.apache.interceptor.ResponseLoggingInterceptor
-import com.expediagroup.sdk.core.client.ExpediaGroupClient
+import com.expediagroup.sdk.core.apache.interceptor.ExpediaGroupRequestInterceptor
+import com.expediagroup.sdk.core.apache.interceptor.ExpediaGroupResponseInterceptor
 import com.expediagroup.sdk.core.configuration.provider.ConfigurationProvider
-import com.expediagroup.sdk.core.gapiclient.GClient
 import com.google.api.client.http.apache.v2.ApacheHttpTransport
 import org.apache.http.client.HttpClient
-import org.slf4j.LoggerFactory
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
@@ -18,8 +15,8 @@ fun createHttpClient(configurationProvider: ConfigurationProvider): HttpClient =
         .setDefaultRequestConfig(createRequestConfig(configurationProvider))
         .setMaxConnTotal(configurationProvider.maxConnTotal!!)
         .setMaxConnPerRoute(configurationProvider.maxConnPerRoute!!)
-        .addInterceptorLast(RequestLoggingInterceptor())
-        .addInterceptorLast(ResponseLoggingInterceptor())
+        .addInterceptorLast(ExpediaGroupRequestInterceptor())
+        .addInterceptorLast(ExpediaGroupResponseInterceptor())
         .build()
 
 fun getSingletonHttpClient(configurationProvider: ConfigurationProvider) =
