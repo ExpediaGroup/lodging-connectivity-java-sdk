@@ -15,7 +15,7 @@
  */
 package com.expediagroup.sdk.core.constant.provider
 
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 
 internal object LoggingMessageProvider {
     fun getTokenExpiresInMessage(expiresIn: Int) = "New token expires in $expiresIn seconds"
@@ -45,5 +45,6 @@ internal object LoggingMessageProvider {
         transactionId: String?
     ) = "Request Body${getTransactionIdMessage(transactionId)}: $body"
 
-    fun getTransactionIdMessage(transactionId: String?) = if (transactionId != null) " for transaction-id [$transactionId]" else ""
+    fun getTransactionIdMessage(transactionId: String?) =
+        if (transactionId != null) " for transaction-id [$transactionId]" else ""
 }

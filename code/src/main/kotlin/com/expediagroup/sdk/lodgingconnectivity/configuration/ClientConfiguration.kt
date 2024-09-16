@@ -27,7 +27,9 @@ data class ClientConfiguration(
     val connectionTimeout: Long? = null,
     val socketTimeout: Long? = null,
     val maskedLoggingHeaders: Set<String>? = null,
-    val maskedLoggingBodyFields: Set<String>? = null
+    val maskedLoggingBodyFields: Set<String>? = null,
+    val maxConnTotal: Int? = null,
+    val maxConnPerRoute: Int? = null
 ) {
 
     /**
@@ -42,6 +44,8 @@ data class ClientConfiguration(
         private var socketTimeout: Long? = null
         private var maskedLoggingHeaders: Set<String>? = null
         private var maskedLoggingBodyFields: Set<String>? = null
+        private var maxConnTotal: Int? = null
+        private var maxConnPerRoute: Int? = null
 
         /**
          * Sets the API key.
@@ -107,6 +111,14 @@ data class ClientConfiguration(
             this.maskedLoggingBodyFields = maskedLoggingBodyFields
         }
 
+        fun maxConnTotal(maxConnTotal: Int) = apply {
+            this.maxConnTotal = maxConnTotal
+        }
+
+        fun maxConnPerRoute(maxConnPerRoute: Int) = apply {
+            this.maxConnPerRoute = maxConnPerRoute
+        }
+
         /**
          * Builds and returns the `ClientConfiguration` instance.
          * @return The configured `ClientConfiguration`.
@@ -120,7 +132,9 @@ data class ClientConfiguration(
                 connectionTimeout,
                 socketTimeout,
                 maskedLoggingHeaders,
-                maskedLoggingBodyFields
+                maskedLoggingBodyFields,
+                maxConnTotal,
+                maxConnPerRoute,
             )
         }
     }
@@ -145,7 +159,9 @@ data class ClientConfiguration(
             connectionTimeout = this.connectionTimeout,
             socketTimeout = this.socketTimeout,
             maskedLoggingHeaders = this.maskedLoggingHeaders,
-            maskedLoggingBodyFields = this.maskedLoggingBodyFields
+            maskedLoggingBodyFields = this.maskedLoggingBodyFields,
+            maxConnTotal = this.maxConnTotal,
+            maxConnPerRoute = this.maxConnPerRoute,
         )
     }
 }

@@ -15,7 +15,7 @@
  */
 package com.expediagroup.sdk.core.constant
 
-import io.ktor.http.HttpHeaders
+import io.ktor.http.*
 
 internal data object LogMaskingFields {
     val DEFAULT_MASKED_HEADER_FIELDS: Set<String> = setOf(HttpHeaders.Authorization)
