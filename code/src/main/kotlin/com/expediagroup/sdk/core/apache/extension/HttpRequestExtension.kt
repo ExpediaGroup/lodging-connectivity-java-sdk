@@ -25,7 +25,7 @@ fun HttpRequest.getBodyLogMessage(): String {
     }
 
     val encoding = Charset.forName(entity.contentEncoding?.value ?: Charsets.UTF_8.name())
-    return maskLogs(String(readByteArrayAndReset(), encoding))
+    return maskLogs(String(readByteArrayAndCloneEntity(), encoding))
 }
 
 fun HttpRequest.getHeadersLogMessage(): String =

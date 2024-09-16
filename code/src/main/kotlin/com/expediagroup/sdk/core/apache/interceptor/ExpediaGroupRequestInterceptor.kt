@@ -11,7 +11,7 @@ import org.apache.http.HttpRequest
 import org.apache.http.HttpRequestInterceptor
 import org.apache.http.protocol.HttpContext
 
-class ExpediaGroupRequestInterceptor: HttpRequestInterceptor {
+class ExpediaGroupRequestInterceptor : HttpRequestInterceptor {
     private val logger = ExpediaGroupLoggerFactory.getLogger(javaClass)
 
     override fun process(request: HttpRequest?, context: HttpContext?) {

@@ -5,7 +5,6 @@ import com.expediagroup.sdk.core.logging.LogMessageConstant
 import com.expediagroup.sdk.core.logging.mask.maskLogs
 import org.apache.http.HttpResponse
 import org.apache.http.entity.ContentType
-import org.apache.http.protocol.HttpContext
 import java.nio.charset.Charset
 
 fun HttpResponse.getHeadersLogMessage(): String =
@@ -25,22 +24,19 @@ fun HttpResponse.getBodyLogMessage(): String {
     }
 
     val encoding = Charset.forName(entity.contentEncoding?.value ?: Charsets.UTF_8.name())
-    return maskLogs(String(readByteArrayAndReset(), encoding))
+    return maskLogs(String(readByteArrayAndCloneEntity(), encoding))
 }
 
-fun HttpResponse.readByteArrayAndReset(): ByteArray =
+fun HttpResponse.readByteArrayAndCloneEntity(): ByteArray =
     if (!hasBody()) {
         ByteArray(0)
     } else {
-        entity.readByteArrayAndReset().let { (byteArray, newEntity) ->
+        entity.readByteArrayAndCloneEntity().let { (byteArray, newEntity) ->
             // Replace the entity with a new one since the original entity is consumed
             entity = newEntity
             return@let byteArray
         }
     }
-
-fun HttpResponse.getMetadataLogMessage(context: HttpContext): String =
-    "${statusLine.statusCode} ${context.getRequestMetadataLine()}"
 
 fun HttpResponse.hasBody(): Boolean {
     if (entity == null) {
