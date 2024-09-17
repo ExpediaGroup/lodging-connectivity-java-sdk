@@ -4,7 +4,7 @@ query MessageThread(
     $cursor: String,
     $orderMessagesBy: MessageThreadMessagesOrderByInput
 ) {
-    messageThread(id: $messageThreadId) {
+    messageThread(id: $id) {
         id
         creationDateTimeUtc
         bookingInquiry {
