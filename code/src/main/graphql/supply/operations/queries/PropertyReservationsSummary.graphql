@@ -1,0 +1,176 @@
+query PropertyReservationsSummary(
+    $propertyId: String!,
+    $pageSize: Int!,
+    $cursor: String,
+    $filter: ReservationFilterInput,
+    $checkOutDate: CheckOutDateFilter,
+) {
+    property(id: $propertyId) {
+        reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $cursor) {
+            totalCount
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+            edges {
+                cursor
+                node {
+                    id
+                    checkInDate
+                    checkOutDate
+                    bedTypes
+                    childAges
+                    childCount
+                    accessibilityText
+                    adultCount
+                    petCount
+                    inventoryType
+                    isReconciled
+                    lastUpdatedDateTime
+                    merchantOfRecord
+                    messageThreadId
+                    multiRoomText
+                    creationDateTime
+                    reconciliationType
+                    remittanceType
+                    smokingType
+                    source
+                    specialRequest
+                    status
+                    subStatus
+                    tidsCode
+                    totalGuestCount
+                    paymentInstructions
+                    businessModel
+                    supplierOperatingModel
+                    alternativeIds {
+                        supplierId
+                    }
+                    audit {
+                        creationDateTimeUtc
+                        lastUpdateDateTimeUtc
+                    }
+                    cancellation {
+                        pendingCancellation
+                        vrboPrimaryReason
+                    }
+                    cancellationPolicy {
+                        effectivePolicy {
+                            endDateTimeUtc
+                            policyType
+                            startDateTimeUtc
+                        }
+                        tiers {
+                            cancellationWindow {
+                                cutoff
+                                temporalUnit
+                            }
+                            penaltyRule {
+                                type
+                                numberOfNights
+                                percentage
+                                costFlatAmount {
+                                    amount
+                                    currencyCode
+                                }
+                                priceAmount {
+                                    amount
+                                    currencyCode
+                                }
+                            }
+                        }
+                    }
+                    distribution {
+                        distributionChannel
+                        reservationSource
+                    }
+                    guests {
+                        adultCount
+                        childCount
+                        petCount
+                        primaryGuest {
+                            emailAddress
+                            firstName
+                            fullPhoneNumber
+                            lastName
+                        }
+                    }
+                    policies {
+                        cancellationPolicy {
+                            effectivePolicy {
+                                endDateTimeUtc
+                                policyType
+                                startDateTimeUtc
+                            }
+                            tiers {
+                                cancellationWindow {
+                                    cutoff
+                                    temporalUnit
+                                }
+                                penaltyRule {
+                                    type
+                                    numberOfNights
+                                    percentage
+                                    costFlatAmount {
+                                        amount
+                                        currencyCode
+                                    }
+                                    priceAmount {
+                                        amount
+                                        currencyCode
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    primaryGuest {
+                        emailAddress
+                        firstName
+                        lastName
+                        loyaltyTier
+                        travelPurpose
+                        phoneNumbers {
+                            areaCode
+                            countryCode
+                            number
+                        }
+                        supplierLoyaltyPlanInfo {
+                            membershipNumber
+                            planCode
+                        }
+                    }
+                    rateIds {
+                        id
+                        idSource
+                    }
+                    reconciliationEligibility {
+                        validScenarios
+                        invalidScenarios {
+                            reason
+                            scenario
+                        }
+                    }
+                    reservationIds {
+                        id
+                        idSource
+                    }
+                    statuses {
+                        status
+                    }
+                    stayDates {
+                        checkInDate
+                        checkOutDate
+                    }
+                    unitIds {
+                        id
+                        idSource
+                    }
+                    valueAddedPromotions {
+                        description
+                        id
+                    }
+                }
+            }
+        }
+    }
+}

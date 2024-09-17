@@ -18,10 +18,11 @@ package com.expediagroup.sdk.lodgingconnectivity.filemanagement.client
 
 
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.model.Response
 import com.expediagroup.sdk.core.model.exception.handle
 import com.expediagroup.sdk.core.plugin.logging.ExpediaGroupLoggerFactory
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.exception.*
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -39,17 +40,39 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.util.InternalAPI
 import io.ktor.utils.io.jvm.javaio.toInputStream
-import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
+import java.io.File
 
 /**
+ * A client for interacting with EG Lodging Connectivity messages attachments REST API.
  *
+ * This client is configured with a `ClientConfiguration` that includes authentication details,
+ * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
+ *
+ * @constructor Creates a new instance of `FileManagementClient` using the provided configuration.
+ * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
+ * timeouts, and logging masking options.
+ *
+ * Example usage:
+ * ```
+ * FileManagementClient(
+ *     ClientConfiguration
+ *         .builder()
+ *         .key("API_KEY")
+ *         .secret("API_SECRET")
+ *         .build()
+ * )
+ * ```
  */
-class FileManagementClient(clientConfiguration: ExpediaGroupClientConfiguration) :
-    ExpediaGroupClient("filemanagement", clientConfiguration) {
-
+class FileManagementClient(config: ClientConfiguration) :
+    ExpediaGroupClient(
+        "filemanagement", config.toExpediaGroupClientConfiguration(
+            endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint
+        )
+    ) {
     companion object {
         @JvmStatic
         private val log = ExpediaGroupLoggerFactory.getLogger(this::class.java)

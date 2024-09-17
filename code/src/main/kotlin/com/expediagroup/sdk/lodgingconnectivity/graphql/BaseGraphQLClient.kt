@@ -16,50 +16,53 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.annotations.ApolloExperimental
-import com.apollographql.apollo3.api.Mutation
-import com.apollographql.apollo3.api.Query
-import com.apollographql.apollo3.api.Subscription
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Mutation
+import com.apollographql.apollo.api.Query
+import com.apollographql.ktor.http.KtorHttpEngine
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.client.KtorHttpEngine
 import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import io.ktor.client.statement.*
+import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.runBlocking
 
+/**
+ * An internal base implementation of a GraphQL client for executing GraphQL queries, mutations, and subscriptions.
+ *
+ * This class integrates the Apollo GraphQL client with a custom `ExpediaGroupClient` for handling HTTP communication
+ * and error management. It provides a foundation for more specific client implementations by executing operations
+ * with error handling.
+ *
+ * @param config The configuration for the `ExpediaGroupClient`
+ */
+internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : GraphQLExecutor {
 
-class BaseGraphQLClient(config: ExpediaGroupClientConfiguration, private val namespace: String) :
-    ExpediaGroupClient(namespace = namespace, clientConfiguration = config),
-    GraphQLExecutor {
+    // Custom client for handling HTTP requests and responses.
+    private val expediaGroupClient =
+        object : ExpediaGroupClient(clientConfiguration = config, namespace = "lodging-connectivity-sdk") {
+            override suspend fun throwServiceException(response: HttpResponse, operationId: String) {
+                throw ExpediaGroupServiceException("Service error occurred for operation $operationId.\nResponse: $response")
+            }
+        }
 
-    @OptIn(ApolloExperimental::class)
     private val apolloClient: ApolloClient = ApolloClient.Builder()
         .serverUrl(config.endpoint!!)
-        .httpEngine(KtorHttpEngine(httpClient))
+        .httpEngine(KtorHttpEngine(expediaGroupClient.httpClient))
         .build()
 
-    class Builder : ExpediaGroupClient.Builder<Builder>() {
-        override fun build(): BaseGraphQLClient =
-            BaseGraphQLClient(
-                ExpediaGroupClientConfiguration(
-                    key,
-                    secret,
-                    endpoint,
-                    requestTimeout,
-                    connectionTimeout,
-                    socketTimeout,
-                    maskedLoggingHeaders,
-                    maskedLoggingBodyFields,
-                    authEndpoint,
-                ),
-                namespace = "lodging-supply"
-            )
-    }
-
+    /**
+     * Executes a GraphQL query and returns the result.
+     *
+     * @param query The GraphQL query to execute.
+     * @return The result of the query execution, with errors handled.
+     * @throws ExpediaGroupServiceException If the query execution returns errors.
+     */
     override fun <T : Query.Data> execute(query: Query<T>): T {
         return runBlocking {
             apolloClient.query(query).execute().apply {
+                if (exception != null) {
+                    throw ExpediaGroupServiceException(exception?.message)
+                }
                 if (hasErrors()) {
                     throw ExpediaGroupServiceException(errors.toString())
                 }
@@ -67,30 +70,24 @@ class BaseGraphQLClient(config: ExpediaGroupClientConfiguration, private val nam
         }
     }
 
+    /**
+     * Executes a GraphQL mutation and returns the result.
+     *
+     * @param mutation The GraphQL mutation to execute.
+     * @return The result of the mutation execution, with errors handled.
+     * @throws ExpediaGroupServiceException If the mutation execution returns errors.
+     */
     override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T {
         return runBlocking {
             apolloClient.mutation(mutation).execute().apply {
+                if (exception != null) {
+                    throw ExpediaGroupServiceException(exception?.message)
+                }
                 if (hasErrors()) {
                     throw ExpediaGroupServiceException(errors.toString())
                 }
             }.dataAssertNoErrors
         }
-    }
-
-    override fun <T : Subscription.Data> execute(subscription: Subscription<T>): T {
-        return runBlocking {
-            apolloClient.subscription(subscription).execute().apply {
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
-                }
-            }.dataAssertNoErrors
-        }
-    }
-
-    override suspend fun throwServiceException(
-        response: HttpResponse,
-        operationId: String,
-    ) {
-        throw ExpediaGroupServiceException("Service error occurred for operation $operationId.\nResponse: $response")
     }
 }
+

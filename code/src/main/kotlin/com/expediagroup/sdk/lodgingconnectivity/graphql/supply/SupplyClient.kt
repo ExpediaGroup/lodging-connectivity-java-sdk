@@ -16,15 +16,40 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply
 
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 
-class SupplyClient(config: ExpediaGroupClientConfiguration) :
-    GraphQLExecutor by BaseGraphQLClient
-        .Builder()
-        .key(config.key!!)
-        .secret(config.secret!!)
-        .endpoint("${config.endpoint!!}${if (config.endpoint.endsWith('/')) "" else "/"}supply/lodging/graphql")
-        .authEndpoint(config.authEndpoint!!)
-        .build()
+/**
+ * A client for interacting with EG Lodging Connectivity Supply GraphQL API that exposes various lodging capabilities
+ * such as reservations, promotions, reviews, notifications, messaging, etc...
+ *
+ * This client is configured with a `ClientConfiguration` that includes authentication details,
+ * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
+ *
+ * In addition, this client can be configured to target the sandbox environment by passing `ClientEnvironment.SANDBOX_PROD` or
+ * `ClientEnvironment.SANDBOX_TEST` to the `environment` configuration option.
+ *
+ * @constructor Creates a new instance of `SupplyClient` using the provided configuration.
+ * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
+ * timeouts, and logging masking options.
+ *
+ * Example usage:
+ * ```
+ * SupplyClient(
+ *     ClientConfiguration
+ *         .builder()
+ *         .key("API_KEY")
+ *         .secret("API_SECRET")
+ *         .build()
+ * )
+ * ```
+ */
+class SupplyClient(config: ClientConfiguration) :
+    GraphQLExecutor by BaseGraphQLClient(
+        config.toExpediaGroupClientConfiguration(
+            endpointProvider = EndpointProvider::getSupplyClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint
+        )
+    )

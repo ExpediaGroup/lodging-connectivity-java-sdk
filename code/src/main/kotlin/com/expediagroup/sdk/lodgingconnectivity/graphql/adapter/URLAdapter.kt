@@ -16,15 +16,18 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.adapter
 
-import com.apollographql.apollo3.api.Adapter
-import com.apollographql.apollo3.api.CustomScalarAdapters
-import com.apollographql.apollo3.api.json.JsonReader
-import com.apollographql.apollo3.api.json.JsonWriter
+import com.apollographql.apollo.api.Adapter
+import com.apollographql.apollo.api.CustomScalarAdapters
+import com.apollographql.apollo.api.json.JsonReader
+import com.apollographql.apollo.api.json.JsonWriter
 import java.net.MalformedURLException
 import java.net.URI
 import java.net.URISyntaxException
 import java.net.URL
 
+/**
+ * Converts the custom scalar `Url` to and from `java.net.URL`.
+ */
 object URLAdapter : Adapter<URL?> {
 
     override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): URL? {
@@ -45,5 +48,4 @@ object URLAdapter : Adapter<URL?> {
             writer.nullValue()
         }
     }
-
 }

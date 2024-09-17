@@ -16,15 +16,36 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.payment
 
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 
-class PaymentClient(config: ExpediaGroupClientConfiguration) :
-    GraphQLExecutor by BaseGraphQLClient
-        .Builder()
-        .key(config.key!!)
-        .secret(config.secret!!)
-        .endpoint("${config.endpoint!!}${if (config.endpoint.endsWith('/')) "" else "/"}supply/payments/graphql")
-        .authEndpoint(config.authEndpoint!!)
-        .build()
+/**
+ * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
+ *
+ * This client is configured with a `ClientConfiguration` that includes authentication details,
+ * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
+ *
+ * @constructor Creates a new instance of `PaymentClient` using the provided configuration.
+ * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
+ * timeouts, and logging masking options.
+ *
+ * Example usage:
+ * ```
+ * PaymentClient(
+ *     ClientConfiguration
+ *         .builder()
+ *         .key("API_KEY")
+ *         .secret("API_SECRET")
+ *         .build()
+ * )
+ * ```
+ */
+class PaymentClient(config: ClientConfiguration) :
+    GraphQLExecutor by BaseGraphQLClient(
+        config.toExpediaGroupClientConfiguration(
+            endpointProvider = EndpointProvider::getPaymentClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint
+        )
+    )

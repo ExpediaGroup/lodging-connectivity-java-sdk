@@ -1,0 +1,6082 @@
+type AcceptedPaymentForms {
+    paymentCardDescriptors: [PaymentCardDescriptor!]!
+    paymentInvoiceDescriptors: [PaymentInvoiceDescriptor!]!
+}
+
+input AcceptedPaymentFormsInput {
+    paymentCardDescriptors: [PaymentCardDescriptorInput!]
+    paymentInvoiceDescriptors: [PaymentInvoiceDescriptorInput!]
+}
+
+type AcceptedPaymentFormsMetadata {
+    paymentCardDescriptors: PaymentCardDescriptorMetadata!
+    paymentInvoiceDescriptors: PaymentInvoiceDescriptorMetadata!
+}
+
+"""Acknowledgement record for a bookable unit."""
+type AcknowledgementRecord {
+    """Type of acknowledgement record."""
+    acknowledgementType: AcknowledgementType
+
+    """ID of the acknowledgement record."""
+    id: String
+
+    """Date when the acknowledgment record was last updated."""
+    lastUpdated: String
+}
+
+"""Acknowledgement record information for a bookable unit."""
+input AcknowledgementRecordInput {
+    """Type of acknowledgement record."""
+    acknowledgementType: AcknowledgementType
+
+    """ID of the acknowledgement record."""
+    id: String!
+}
+
+"""Acknowledgement type values."""
+enum AcknowledgementType {
+    LTR_POLICY
+    PLATFORM
+    PLATFORM_ACK
+    PLATFORM_ACK_STATEMENT
+    PLATFORM_ATTESTATION
+    PLATFORM_ATTESTATION_DSA
+    PLATFORM_ATTESTATION_LEGAL
+    PLATFORM_ATTESTATION_LINK
+    PLATFORM_ATTESTATION_NEVADA
+    PLATFORM_ATTESTATION_VER
+    PLATFORM_CERTIFY
+    PLATFORM_COMPLY
+    PLATFORM_JAPAN
+    PLATFORM_LEGAL
+    PLATFORM_READ
+}
+
+type ActiveStatus {
+    """Whether the property or unit is live in the Expedia Group system"""
+    active: Boolean!
+
+    """Top-level property or unit status derived from supporting checkpoints"""
+    statusCheckpoint: StatusCheckpoint!
+}
+
+"""Additional parameters to meet onboarding requirements."""
+type AdditionalDataRequirement {
+    """Grouping to which the field belongs, for UI layout purposes."""
+    group: String
+
+    """Description of the group, to be localized."""
+    groupLocalized: String
+
+    """Whether the data is optional."""
+    isOptional: String
+
+    """Field name for the information to be captured."""
+    key: String!
+
+    """Description of the key, to be localized."""
+    keyLocalized: String
+
+    """Subtype of data."""
+    subtype: String
+
+    """Description of subtype, to be localized."""
+    subtypeLocalized: String
+
+    """Type of data."""
+    type: String
+
+    """Description of type, to be localized."""
+    typeLocalized: String
+}
+
+input AddMessageThreadMessageInput {
+    body: MessageThreadLocalizedStringInput
+    attachmentIds: [String!]
+}
+
+type Address {
+    addressLines: [String!]!
+    administrativeArea: String
+    city: String! @deprecated(reason: "deprecated, replace with locality")
+    country: CountryCode! @deprecated(reason: "deprecated, replace with countryCode")
+    countryCode: CountryCode!
+    line1: String! @deprecated(reason: "deprecated, replace with addressLines")
+    line2: String! @deprecated(reason: "deprecated, replace with addressLines")
+    line3: String! @deprecated(reason: "deprecated, replace with addressLines")
+    locality: String!
+    postalCode: String!
+    province: String @deprecated(reason: "deprecated, replace with administrativeArea")
+}
+
+enum AdoptionType {
+    ALL
+    LIST
+    UNRECOGNIZED
+}
+
+enum AgeCategory {
+    ADULT
+    CHILD_A
+    CHILD_B
+    CHILD_C
+    CHILD_D
+    INFANT
+}
+
+type AgeRange {
+    maxAge: Int
+    minAge: Int
+}
+
+input AgeRangeInput {
+    maxAge: Int!
+    minAge: Int!
+}
+
+type AgeRangeMetadata {
+    maxAge: Int!
+    minAge: Int!
+}
+
+type AggregatedReviewBrandScore {
+    """Brand name to which the aggregated score belong to"""
+    brandName: ReviewBrand!
+
+    """Score for each category of Review"""
+    categoriesWithScore: [ReviewCategoryScore!]!
+
+    """total number of reviews for that brand name"""
+    totalReviewsCount: Int!
+}
+
+input AggregatedReviewsFiltersInput {
+    brandNames: [ReviewBrand!]!
+}
+
+type AggregatedReviewsResponse {
+    brandsWithScores: [AggregatedReviewBrandScore!]!
+}
+
+type AllowedEvents {
+    maxAttendees: Int
+    types: [String!]!
+}
+
+input AllowedEventsInput {
+    maxAttendees: Int
+    types: [String!]
+}
+
+type AllowedEventsMetadata {
+    types: [String!]!
+}
+
+type AllowedPets {
+    maxAllowed: Int
+    maxWeight: Weight
+    types: [String!]!
+}
+
+input AllowedPetsInput {
+    maxAllowed: Int
+    maxWeight: WeightInput
+    types: [String!]
+}
+
+type AllowedPetsMetadata {
+    types: [String!]!
+}
+
+input AmenitiesFiltersInput {
+    available: Boolean
+    keys: OneOfStringFilterInput
+}
+
+type Amenity {
+    key: String!
+    value: AmenityValue!
+}
+
+type AmenityField {
+    key: String!
+    type: String!
+    value: AmenityFieldValue!
+}
+
+type AmenityFieldEnumTypeDetails {
+    multipleValuesAllowed: Boolean!
+    values: [String!]!
+}
+
+enum AmenityFieldFeeType {
+    FREE
+    SPECIFIC_AMOUNT
+    UNSPECIFIED_AMOUNT
+}
+
+type AmenityFieldFeeTypeDetails {
+    values: [AmenityFieldFeeType!]!
+}
+
+type AmenityFieldFeeValue {
+    type: AmenityFieldFeeType!
+}
+
+input AmenityFieldFeeValueInput {
+    type: AmenityFieldFeeType!
+}
+
+input AmenityFieldInput {
+    key: String!
+    value: AmenityFieldValueInput
+}
+
+type AmenityFieldMeasurementTypeDetails {
+    decimalsValuesAllowed: Boolean!
+    values: [String!]!
+}
+
+type AmenityFieldMeasurementValue {
+    unitOfMeasure: String!
+    value: String!
+}
+
+input AmenityFieldMeasurementValueInput {
+    unitOfMeasure: String!
+    value: String!
+}
+
+type AmenityFieldMetadata {
+    key: String!
+    required: Boolean!
+    type: String!
+    typeDetails: AmenityFieldTypeDetails
+}
+
+union AmenityFieldTypeDetails = AmenityFieldEnumTypeDetails | AmenityFieldFeeTypeDetails | AmenityFieldMeasurementTypeDetails
+
+type AmenityFieldValue {
+    """Used for field type: fee."""
+    feeValue: AmenityFieldFeeValue
+
+    """Used for field type: measurement."""
+    measurementValue: AmenityFieldMeasurementValue
+
+    """Used for field type: text."""
+    textValue: [LocalizedString!]
+
+    """Used for field types: enum, string, trilean, int, and decimal."""
+    value: String
+}
+
+"""
+All fields are nullable, send only the one relevant field value for each amenity field key.
+"""
+input AmenityFieldValueInput {
+    """Used for field type: fee."""
+    feeValue: AmenityFieldFeeValueInput
+
+    """Used for field type: measurement."""
+    measurementValue: AmenityFieldMeasurementValueInput
+
+    """Used for field type: text."""
+    textValue: [LocalizedStringInput!]
+
+    """Used for field types: enum, string, trilean, int, and decimal."""
+    value: String
+}
+
+input AmenityInput {
+    key: String!
+    value: AmenityValueInput!
+}
+
+type AmenityMetadata {
+    """
+    Indicates whether AmenityInput.fields for a given amenity requires at least one AmenityFieldInput for the amenity to be available
+    """
+    fieldsRequired: Boolean!
+    key: String!
+    value: AmenityValueMetadata!
+}
+
+type AmenityValue {
+    available: Boolean!
+    fields: [AmenityField!]!
+}
+
+input AmenityValueInput {
+    available: Boolean!
+    fields: [AmenityFieldInput!]
+}
+
+type AmenityValueMetadata {
+    fields: [AmenityFieldMetadata!]!
+}
+
+"""Additional registration information required by some districts."""
+type ApplicableRegulations {
+    """Identifier for additional information required by the district."""
+    key: ApplicableRegulationsKey
+
+    """Value of the key required by the district."""
+    value: String
+}
+
+"""
+Additional property registration information required by certain districts
+"""
+input ApplicableRegulationsInput {
+    """Identifier for additional information required by the district."""
+    key: ApplicableRegulationsKey
+
+    """Value of the key required by the district."""
+    value: String
+}
+
+"""Regulation key values."""
+enum ApplicableRegulationsKey {
+    IS_VACATION_RENTAL
+    LICENSE_DEPARTMENT_NAME
+    LICENSE_GOVERNMENT_NAME
+    LICENSE_HOLDER_CITY
+    LICENSE_HOLDER_COUNTRY
+    LICENSE_HOLDER_NAME
+    LICENSE_HOLDER_POSTAL
+    LICENSE_HOLDER_PREFECTURE
+    LICENSE_HOLDER_STREET_ADDRESS_1
+    LICENSE_HOLDER_STREET_ADDRESS_2
+    REGISTRATION_NUMBER
+    REGISTRATION_NUMBER_TYPE
+}
+
+"""
+Payload for indicating that the submitted Property IDs should be archived.
+"""
+input ArchivePropertyIdsInput {
+    """
+    The Advertiser ID associated with the property IDs that will be archived.
+    """
+    advertiserId: ID!
+
+    """A list of EG Property IDs that the Partner wishes to archive."""
+    propertyIdsToArchive: [ID!]!
+}
+
+"""
+Response object after successful submission of Property IDs to archive.
+"""
+type ArchivePropertyIdsPayload {
+    """
+    The Advertiser ID associated with the property IDs that will be archived.
+    """
+    advertiserId: ID!
+
+    """
+    A playback of the EG Property IDs that the Partner indicated to archive.
+    """
+    propertyIdsToArchive: [ID!]!
+}
+
+enum AreaUnit {
+    SQUARE_FEET
+    SQUARE_METERS
+}
+
+"""Attachment types."""
+enum AttachmentType {
+    DRIVERS_LICENSE
+}
+
+"""Registration document information."""
+type AttachmentUrl {
+    """Type of document referenced."""
+    key: AttachmentType
+
+    """URL of the registration document file."""
+    value: String
+}
+
+"""Information about the registration document file."""
+input AttachmentUrlInput {
+    """Type of document referenced."""
+    key: AttachmentType!
+
+    """URL of the registration document file."""
+    value: String
+}
+
+enum BaseWeightUnit {
+    KILOGRAMS
+    POUNDS
+}
+
+type Bathroom {
+    amenities: [Amenity!]
+    id: ID!
+    order: Int!
+    text: [Text!]
+    type: String!
+}
+
+type BathroomsMetadata {
+    amenities: [AmenityMetadata!]!
+    text: [TextMetadata!]!
+}
+
+"""
+Represents bed types groups.
+VRs will be always limited to single bed group with multiple bed types
+CLs may use 2 bed groups to represent alternatives. For example, a hotel might have a room type with 1 king bed or 2 full beds
+"""
+type BedGroup {
+    beds: [BedType!]!
+}
+
+input BedGroupInput {
+    beds: [BedTypeInput!]!
+}
+
+type BedGroupsMetadata {
+    beds: [BedTypeMetadata!]!
+}
+
+type Bedroom {
+    bedGroups: [BedGroup!]!
+    id: ID!
+    order: Int!
+    text: [Text!]
+}
+
+type BedroomsMetadata {
+    bedGroups: BedGroupsMetadata!
+    text: [TextMetadata!]!
+}
+
+type BedType {
+    quantity: Int!
+    size: String
+    type: String!
+}
+
+input BedTypeInput {
+    quantity: Int!
+    size: String
+    type: String!
+}
+
+type BedTypeMetadata {
+    size: String!
+    type: String!
+}
+
+type BlackoutDateRange {
+    """The travel start date for the exception window."""
+    travelDateFrom: LocalDate!
+
+    """The travel end date for the exception window."""
+    travelDateTo: LocalDate!
+}
+
+input BlackoutDateRangeInput {
+    """The travel start date for the exception window."""
+    travelDateFrom: LocalDate!
+
+    """The travel end date for the exception window."""
+    travelDateTo: LocalDate!
+}
+
+input BookingLocalDateTimeInput {
+    from: LocalDateTime
+    to: LocalDateTime
+}
+
+type BookingPolicy {
+    acceptedPaymentForms: AcceptedPaymentForms
+
+    """The age categories that are allowed to stay at the hotel"""
+    allowedAgeCategories: [AgeCategory!]!
+    bookingType: String
+
+    """
+    The time of day when a cancellation must be processed before occurring inside window cancellation charges
+    """
+    cancellationTime: LocalTime!
+
+    """
+    The day at which the hotel wishes to make its inventory available until for same day bookings
+    """
+    cutoffDay: CutoffDayType!
+
+    """
+    The time at which the hotel wishes to make its inventory available until for same day bookings
+    """
+    cutoffTime: LocalTime!
+}
+
+input BookingPolicyInput {
+    acceptedPaymentForms: AcceptedPaymentFormsInput
+    bookingType: String
+}
+
+type BookingPolicyMetadata {
+    acceptedPaymentForms: AcceptedPaymentFormsMetadata!
+    bookingTypes: [String!]!
+}
+
+"""Entity that collects payment."""
+enum BusinessModel {
+    """Expedia collects payment."""
+    EXPEDIA_COLLECT
+
+    """Property collects payment."""
+    HOTEL_COLLECT
+}
+
+"""
+Exactly one of the fields percentage, flatAmount, and numberOfNights must be defined, and it must correlate to the CancellationPenaltyRuleType field
+"""
+type CancellationPenaltyRule {
+    applicability: CancellationPenaltyRuleApplicability!
+    flatAmount: Money
+    numberOfNights: Int
+
+    """
+    Represented as a fraction of 1. Example: 15% should be represented as 0.15 and 100% as 1.0
+    """
+    percentage: Decimal
+    type: CancellationPenaltyRuleType!
+}
+
+enum CancellationPenaltyRuleApplicability {
+    BOOKING_TOTAL
+    CLEANING_FEE
+    DEPOSIT
+}
+
+"""
+Exactly one of the fields percentage, flatAmount, and numberOfNights must be defined, and it must correlate to the CancellationPenaltyRuleType field
+"""
+input CancellationPenaltyRuleInput {
+    applicability: CancellationPenaltyRuleApplicability!
+    flatAmount: MoneyInput
+    numberOfNights: Int
+
+    """
+    Represented as a fraction of 1. Example: 15% should be represented as 0.15 and 100% as 1.0
+    """
+    percentage: Decimal
+    type: CancellationPenaltyRuleType!
+}
+
+enum CancellationPenaltyRuleType {
+    FLAT_AMOUNT
+    NUMBER_OF_NIGHTS
+    PERCENTAGE
+}
+
+type CancellationPolicy {
+    tiers: [CancellationPolicyTier!]
+    type: CancellationPolicyType!
+}
+
+type CancellationPolicyCancellationWindow {
+    cutoff: Int!
+    temporalUnit: CancellationWindowTemporalUnit!
+}
+
+input CancellationPolicyCancellationWindowInput {
+    cutoff: Int!
+    temporalUnit: CancellationWindowTemporalUnit!
+}
+
+type CancellationPolicyConfig {
+    additionalCancellationFee: Money
+    defaultPolicies: [CancellationPolicy!]!
+    id: ID!
+    name: String!
+    overridePolicies: [CancellationPolicyOverride!]!
+    property: Property
+}
+
+"""Each date range is a closed and inclusive interval."""
+type CancellationPolicyDateRange {
+    from: Date!
+    to: Date!
+}
+
+"""Each date range is a closed and inclusive interval."""
+input CancellationPolicyDateRangeInput {
+    from: Date!
+    to: Date!
+}
+
+input CancellationPolicyInput {
+    tiers: [CancellationPolicyTierInput!]
+    type: CancellationPolicyType!
+}
+
+type CancellationPolicyOverride {
+    cancellationPolicy: CancellationPolicy!
+    dateRanges: [CancellationPolicyDateRange!]!
+}
+
+input CancellationPolicyOverrideInput {
+    cancellationPolicy: CancellationPolicyInput!
+    dateRanges: [CancellationPolicyDateRangeInput!]!
+}
+
+type CancellationPolicyTier {
+    cancellationWindow: CancellationPolicyCancellationWindow!
+    penaltyRules: [CancellationPenaltyRule!]!
+}
+
+input CancellationPolicyTierInput {
+    cancellationWindow: CancellationPolicyCancellationWindowInput!
+    penaltyRules: [CancellationPenaltyRuleInput!]!
+}
+
+enum CancellationPolicyType {
+    CUSTOM
+    FIRM
+    MODERATE
+    NO_REFUND
+    RELAXED
+    STRICT
+}
+
+"""Time frame to which the cancellation policy is applied."""
+enum CancellationWindowTemporalUnit {
+    DAY
+    HOUR
+    WEEK
+}
+
+input CancelReservationInput {
+    """the ID of the property where a cancellation has been requested"""
+    propertyId: ID!
+
+    """Identifier associated with the reservation to be cancelled."""
+    reservationId: ID!
+
+    """Reason for cancelling the reservation. Values: GUEST_REQUESTED_CANCEL"""
+    reason: ReservationPreStayCancellationReason!
+}
+
+"""Response for cancel pre-stay reservation"""
+type CancelReservationPayload {
+    """Identifier associated with the reservation cancelled"""
+    reservation: Reservation
+}
+
+input CancelReservationReconciliationInput {
+    """the ID of the property where the cancellation has been requested"""
+    propertyId: ID!
+
+    """Identifier associated with the reservation to be cancelled."""
+    reservationId: ID!
+
+    """
+    Reason for cancelling the reservation. Values: GUEST_REQUESTED_CANCEL, NO_SHOW
+    """
+    reason: ReservationCancellationReason!
+
+    """Currency in which the amount is shown."""
+    currencyCode: String
+
+    """Amount of money to charge for cancelling this reservation."""
+    penaltyAmount: Float
+}
+
+type CancelReservationReconciliationPayload {
+    """Identifier associated with the reservation cancelled"""
+    reservation: Reservation
+}
+
+input CancelVrboReservationInput {
+    """Partner supplied Unique mutation identifier"""
+    clientMutationId: String
+
+    """Property ID with which this reservation is associated"""
+    propertyId: ID!
+
+    """Reservation identifier"""
+    reservationId: ID!
+
+    """Primary reason for cancellation"""
+    primaryReason: VrboCancellationReason!
+
+    """
+    Secondary reason for cancellation - Only valid when reason is GUEST_REQUESTED_CANCEL
+    """
+    secondaryReason: VrboCancellationSecondaryReason
+
+    """Cancellation Policy Override"""
+    cancellationPolicyOverride: VrboCancellationPolicyOverride
+}
+
+type CancelVrboReservationPayload {
+    """Partner supplied unique mutation identifier"""
+    clientMutationId: String
+
+    """Reference to reservation that was cancelled"""
+    reservation: Reservation
+}
+
+input ChangeReservationReconciliationInput {
+    """The ID of the property where the change has been requested."""
+    propertyId: ID!
+
+    """Identifier associated with the reservation to be changed."""
+    reservationId: ID!
+
+    """Updated supplier amount of the reservation."""
+    supplierAmount: SupplierAmountInput
+
+    """The reconciled check-in date."""
+    checkInDate: LocalDate!
+
+    """The reconciled check-out date."""
+    checkOutDate: LocalDate!
+
+    """The reason for modifying the reservation."""
+    reason: ReservationChangeReason
+}
+
+type ChangeReservationReconciliationPayload {
+    """Identifier associated with the reservation changed"""
+    reservation: Reservation
+}
+
+"""facilitates filtering reservations by when their arrival date occurs"""
+input CheckInDateFilter {
+    """
+    the date defining the start of the arrival date window (format: YYYY-MM-DD)
+    """
+    from: LocalDate!
+
+    """
+    the date defining the end of the arrival date window (format: YYYY-MM-DD)
+    Note: if to date is not specified, all reservations with arrival date after the from date will be included in the response
+    """
+    to: LocalDate
+}
+
+type CheckInPolicy {
+    checkInPeriods: [ExactOrApproximateTimeRange!]!
+    minAge: CheckInPolicyMinAge
+}
+
+type CheckInPolicyMetadata {
+    checkInPeriods: [ExactOrApproximateTimeRangeMetadata!]!
+}
+
+type CheckInPolicyMinAge {
+    note: [LocalizedString!]!
+    value: Int!
+}
+
+input CheckInPolicyMinAgeInput {
+    note: [LocalizedStringInput!]
+    value: Int
+}
+
+"""facilitates filtering reservations by when their departure date occurs"""
+input CheckOutDateFilter {
+    """
+    the date defining the start of the departure date window (format: YYYY-MM-DD)
+    """
+    from: LocalDate!
+
+    """
+    the date defining the end of the departure date window (format: YYYY-MM-DD)
+    """
+    to: LocalDate!
+}
+
+type CheckOutPolicy {
+    checkOutTime: ExactOrApproximateTime!
+}
+
+type CheckOutPolicyMetadata {
+    checkOutTime: ExactOrApproximateTimeMetadata!
+}
+
+input CheckpointFilterInput {
+    """Filter checkpoints by resolution status"""
+    result: [ResultFilter!]
+}
+
+type ChildrenPolicy {
+    allowed: Boolean!
+    allowedAges: [AgeRange!]!
+    childrenAllowedNote: [LocalizedString!]!
+    childrenNotAllowedNote: [LocalizedString!]!
+}
+
+type ChildrenPolicyMetadata {
+    allowedAges: [AgeRangeMetadata!]!
+}
+
+"""
+Payload for indicating that the Partner has completed their task of Property and Reservation ID mapping.
+"""
+input CommitVrboSupplierIdMappingsInput {
+    """
+    The intended Advertiser ID for which to indicate ID mapping is complete.
+    """
+    advertiserId: ID!
+}
+
+"""Response object after successful commission of submitted ID mappings."""
+type CommitVrboSupplierIdMappingsPayload {
+    """Current system status of ID mapping processing."""
+    vrboMappingStatus: VrboMappingStatus!
+}
+
+"""
+Whether the unit is compliant with the local jurisdiction's regulatory requirements.
+"""
+type Compliant {
+    """Reason why the unit is in or out of compliance."""
+    reason: String!
+
+    """Whether the property is compliant or not."""
+    status: RegulatoryStatus!
+}
+
+input ConfirmReservationNotificationInput {
+    """Partner supplied Unique mutation identifier"""
+    clientMutationId: String
+
+    """Property ID with which this reservation is associated"""
+    propertyId: ID!
+
+    """Reservation identifier"""
+    reservationId: ID!
+
+    """Webhook supplied reservation confirmation token"""
+    confirmationToken: String!
+
+    """Reservation action type (BOOKED, CANCELLED, MODIFIED)"""
+    actionType: String!
+
+    """Partner supplied reservation confirmation code"""
+    confirmationCode: String!
+}
+
+type ConfirmReservationNotificationPayload {
+    """Partner supplied Unique mutation identifier"""
+    clientMutationId: String
+
+    """Reference to reservation that was confirmed"""
+    reservation: Reservation
+}
+
+type Coordinates {
+    latitude: Float!
+    longitude: Float!
+}
+
+input CoordinatesInput {
+    latitude: Float!
+    longitude: Float!
+}
+
+"""An ISO 3166-1 alpha-3 CountryCode Scalar"""
+scalar CountryCode
+
+input CreateAddressInput {
+    addressLines: [String!]!
+    administrativeArea: String
+    countryCode: CountryCode!
+    locality: String!
+    postalCode: String!
+}
+
+input CreateCancellationPolicyConfigInput {
+    additionalCancellationFee: MoneyInput
+    clientMutationId: String
+    defaultPolicies: [CancellationPolicyInput!]!
+    name: String!
+    overridePolicies: [CancellationPolicyOverrideInput!]
+    propertyId: ID!
+}
+
+type CreateCancellationPolicyConfigPayload {
+    cancellationPolicyConfig: CancellationPolicyConfig
+    clientMutationId: String
+}
+
+input CreateCheckInPolicyInput {
+    checkInPeriods: [ExactOrApproximateTimeRangeInput!]!
+    minAge: CheckInPolicyMinAgeInput
+}
+
+input CreateCheckOutPolicyInput {
+    checkOutTime: ExactOrApproximateTimeInput!
+}
+
+input CreateChildrenPolicyInput {
+    allowed: Boolean!
+    allowedAges: [AgeRangeInput!]
+    childrenAllowedNote: [LocalizedStringInput!]
+    childrenNotAllowedNote: [LocalizedStringInput!]
+}
+
+input CreateCustomStayPolicyInput {
+    description: [LocalizedStringInput!]!
+    key: String!
+}
+
+input CreateEventsPolicyInput {
+    allowed: Boolean!
+    allowedEvents: AllowedEventsInput
+    note: [LocalizedStringInput!]
+}
+
+input CreateFeeSetInput {
+    businessModel: FeeBusinessModel!
+    clientMutationId: String
+    fees: [FeeInput!]!
+    name: String!
+    propertyId: ID!
+}
+
+type CreateFeeSetPayload {
+    clientMutationId: String
+    feeSet: FeeSet!
+}
+
+input CreateMaxOccupancyPolicyInput {
+    adultCount: Int
+    note: [LocalizedStringInput!]
+    totalGuestCount: Int!
+}
+
+input CreateNotificationCallbackConfigInput {
+    """Callback url of callback configuration"""
+    callbackUrl: Url!
+
+    """api key of callback configuration"""
+    apiKey: String!
+
+    """Request timeout in seconds of callback configuration"""
+    requestTimeoutSeconds: Int
+
+    """Email address for correspondence"""
+    contactEmail: EmailAddress!
+}
+
+type CreateNotificationCallbackConfigPayload {
+    """Information about the created Callback configuration"""
+    callbackConfig: NotificationCallbackConfig!
+
+    """Callback Configuration secret string"""
+    secret: String!
+}
+
+input CreatePetsPolicyInput {
+    allowed: Boolean!
+    allowedPets: AllowedPetsInput
+    note: [LocalizedStringInput!]
+}
+
+input CreatePoliciesInput {
+    bookingPolicy: BookingPolicyInput
+    stayPolicy: CreateStayPolicyInput
+}
+
+input CreatePropertyImageInput {
+    active: Boolean
+    captions: [LocalizedStringInput!]
+    clientMutationId: String
+    featured: Boolean
+
+    """
+    Original file name of the image. If the file name is not provided, one will be automatically generated.
+    """
+    fileName: String
+    fileUrl: String!
+    order: Int
+    propertyId: ID!
+    rotation: Int
+}
+
+type CreatePropertyImagePayload {
+    clientMutationId: String
+    image: Image
+}
+
+input CreatePropertyInput {
+    address: CreateAddressInput!
+    amenities: [AmenityInput!]
+    clientMutationId: String
+    location: CreatePropertyLocationInput!
+    name: String!
+    names: [LocalizedStringInput!]
+    policies: CreatePoliciesInput
+    referenceName: String
+    supplierPropertyId: String!
+    supplierUnitId: String
+    text: [TextInput!]
+    type: String
+}
+
+input CreatePropertyLocationInput {
+    coordinates: CoordinatesInput!
+    hideExactLocation: Boolean
+}
+
+type CreatePropertyPayload {
+    clientMutationId: String
+    property: Property
+}
+
+input CreateRatePlanInput {
+    baseRateGuestCount: Int
+    cancellationPolicyConfigId: ID!
+    clientMutationId: ID
+    distributionRules: [RatePlanDistributionRuleInput!]!
+    feeSetId: ID
+    name: String!
+    paymentScheduleApplicable: Boolean
+    pricingModel: PricingModel!
+    propertyId: ID!
+    restrictions: CreateRatePlanRestrictionsInput
+    taxInclusive: Boolean
+    type: RatePlanType!
+    unitId: ID!
+    valueAdds: [String!]!
+}
+
+type CreateRatePlanPayload {
+    clientMutationId: String
+    ratePlan: RatePlan
+}
+
+input CreateRatePlanRestrictionsInput {
+    advanceBookingDays: IntRangeInput
+    lengthOfStay: IntRangeInput
+    mobileOnly: Boolean
+    reservationDates: DateRangeInput
+    travelDates: DateRangeInput
+}
+
+input CreateSmokingLocationPolicyInput {
+    allowed: Boolean!
+    allowedNote: [LocalizedStringInput!]
+}
+
+input CreateSmokingPolicyInput {
+    allowed: Boolean!
+    indoorPolicy: CreateSmokingLocationPolicyInput
+    note: [LocalizedStringInput!]
+    outdoorPolicy: CreateSmokingLocationPolicyInput
+}
+
+input CreateStayPolicyInput {
+    checkInPolicy: CreateCheckInPolicyInput!
+    checkOutPolicy: CreateCheckOutPolicyInput!
+    childrenPolicy: CreateChildrenPolicyInput
+    customPolicies: [CreateCustomStayPolicyInput!]
+    eventsPolicy: CreateEventsPolicyInput
+    maxOccupancyPolicy: CreateMaxOccupancyPolicyInput!
+    petsPolicy: CreatePetsPolicyInput
+    rentalAgreementUrl: Url
+    smokingPolicy: CreateSmokingPolicyInput
+}
+
+input CreateUnitSpacesBathroomInput {
+    amenities: [AmenityInput!]
+    order: Int!
+    text: [TextInput!]!
+    type: String!
+}
+
+input CreateUnitSpacesBedroomInput {
+    bedGroups: [BedGroupInput!]!
+    order: Int!
+    text: [TextInput!]!
+}
+
+input CreateUnitSpacesDiningRoomInput {
+    capacity: Int!
+    order: Int!
+}
+
+input CreateUnitSpacesInput {
+    bathrooms: [CreateUnitSpacesBathroomInput!]
+    bedrooms: [CreateUnitSpacesBedroomInput!]
+    clientMutationId: String
+    diningRooms: [CreateUnitSpacesDiningRoomInput!]
+    livingRooms: [CreateUnitSpacesLivingRoomInput!]
+    offices: [CreateUnitSpacesOfficeInput!]
+    propertyId: ID!
+    unitId: ID!
+}
+
+input CreateUnitSpacesLivingRoomInput {
+    bedGroups: [BedGroupInput!]!
+    order: Int!
+    text: [TextInput!]!
+}
+
+input CreateUnitSpacesOfficeInput {
+    bedGroups: [BedGroupInput!]!
+    order: Int!
+    text: [TextInput!]!
+}
+
+type CreateUnitSpacesPayload {
+    clientMutationId: String
+    spaces: UnitSpaces!
+}
+
+"""An ISO-4217 compliant Currency Scalar"""
+scalar Currency
+
+"""A 3-letter currency code defined in ISO 4217 scalar"""
+scalar CurrencyCode
+
+type CursorBasedPageInfo {
+    """It indicates if there are additional pages to retrieve."""
+    hasNextPage: Boolean!
+
+    """Value of the cursor of the last promotion in the current page."""
+    endCursor: String
+}
+
+type CustomStayPolicy {
+    description: [LocalizedString!]!
+    key: String!
+}
+
+type CustomStayPolicyMetadata {
+    key: String!
+}
+
+enum CutoffDayType {
+    NEXT_DAY
+    SAME_DAY
+}
+
+"""An RFC-3339 compliant Full Date Scalar"""
+scalar Date
+
+input DateInput {
+    """begin date"""
+    from: LocalDate!
+
+    """end date"""
+    to: LocalDate!
+}
+
+type DateRange {
+    from: Date!
+    to: Date!
+}
+
+input DateRangeInput {
+    from: Date!
+    to: Date!
+}
+
+"""A slightly refined version of RFC-3339 compliant DateTime Scalar"""
+scalar DateTime
+
+input DateTimeRangeFilterInput {
+    from: DateTime!
+    to: DateTime!
+    operator: RangeOperator = INCLUSIVE
+}
+
+"""
+Day of Week discounts facilitate partners to set discount percentages for specific days of the week.
+The days pertain to the days of the week the discount is applicable for the travel dates (e.g. Mondays at 15%, Tuesdays at 10% discount).
+"""
+type DayOfWeekDiscount implements Discount {
+    """Type of the discount."""
+    type: DiscountType!
+
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit!
+    monday: Float!
+    tuesday: Float!
+    wednesday: Float!
+    thursday: Float!
+    friday: Float!
+    saturday: Float!
+    sunday: Float!
+}
+
+input DayOfWeekDiscountCreateInput {
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit!
+    monday: Float!
+    tuesday: Float!
+    wednesday: Float!
+    thursday: Float!
+    friday: Float!
+    saturday: Float!
+    sunday: Float!
+}
+
+input DayOfWeekDiscountPromotionCreateInput {
+    """Name of the promotion. Values: BASIC or EARLY_BOOKING_PROMOTION."""
+    name: PromotionName!
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus!
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory!
+
+    """Name of the promotion as the partner wants to call it."""
+    code: String!
+
+    """List of restrictions that can be applied to these promotions."""
+    restrictions: RestrictionsCreateInput!
+
+    """The rate plans for which this promotion is applicable for."""
+    eligibleRatePlans: [EligibleRatePlanInput!]!
+
+    """
+    The 'exception' dates for which the promotion should NOT apply.
+    This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    blackoutDates: [BlackoutDateRangeInput!]!
+
+    """Detail of the actual discount being applied on the promotion."""
+    discount: DayOfWeekDiscountCreateInput!
+}
+
+input DayOfWeekDiscountPromotionUpdateInput {
+    """Id of the Promotion as stored in the Expedia platform."""
+    id: ID!
+
+    """Name of the promotion. Values: BASIC or EARLY_BOOKING_PROMOTION."""
+    name: PromotionName
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory
+
+    """Name of the promotion as the partner wants to call it."""
+    code: String
+
+    """List of restrictions that can be applied to these promotions."""
+    restrictions: RestrictionsUpdateInput
+
+    """The rate plans for which this promotion is applicable for."""
+    eligibleRatePlans: [EligibleRatePlanInput!]
+
+    """
+    The 'exception' dates for which the promotion should NOT apply.
+    This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    blackoutDates: [BlackoutDateRangeInput!]
+
+    """Detail of the actual discount being applied on the promotion."""
+    discount: DayOfWeekDiscountUpdateInput
+}
+
+input DayOfWeekDiscountUpdateInput {
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit
+    monday: Float
+    tuesday: Float
+    wednesday: Float
+    thursday: Float
+    friday: Float
+    saturday: Float
+    sunday: Float
+}
+
+"""
+An arbitrary-precision and scale decimal number, serialized as a string.
+"""
+scalar Decimal
+
+input DeleteImageInput {
+    clientMutationId: String
+    id: ID!
+}
+
+type DeleteImagePayload {
+    clientMutationId: String
+    id: ID!
+}
+
+input DeleteNotificationCallbackConfigInput {
+    """Id of callback configuration to be deleted"""
+    callbackConfigId: ID!
+}
+
+type DeleteNotificationCallbackConfigPayload {
+    """Id of callback configuration deleted"""
+    callbackConfigId: ID!
+}
+
+input DeleteUnitSpaceInput {
+    clientMutationId: String
+    propertyId: ID!
+    spaceId: ID!
+    unitId: ID!
+}
+
+type DeleteUnitSpacePayload {
+    clientMutationId: String
+}
+
+type DiningRoom {
+    capacity: Int!
+    id: ID!
+    order: Int!
+}
+
+input DisablePropertyInput {
+    clientMutationId: String
+    id: ID!
+}
+
+type DisablePropertyPayload {
+    clientMutationId: String
+    id: ID!
+}
+
+interface Discount {
+    """Type of the discount."""
+    type: DiscountType!
+
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit!
+}
+
+type DiscountPromotion implements Promotion {
+    """Id of the Promotion as stored in the Expedia platform."""
+    id: ID!
+
+    """
+    Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
+    """
+    name: PromotionName!
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory!
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus!
+
+    """Name of the promotion as the partner wants to call it."""
+    code: String!
+
+    """List of restrictions that can be applied to these promotions."""
+    restrictions: Restrictions
+
+    """The rate plans for which this promotion is applicable for."""
+    eligibleRatePlans: [EligibleRatePlan!]!
+
+    """
+    The 'exception' dates for which the promotion should NOT apply.
+    This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    blackoutDates: [BlackoutDateRange!]
+
+    """Detail of the actual discount being applied on the promotion."""
+    discount: Discount
+
+    """
+    Sell status of the promotion. Values: EXPIRED, CURRENT or FUTURE. For retrieval only.
+    """
+    sellStatus: PromotionSellStatus
+
+    """It indicates if the promotion is negotiated."""
+    isContractedPromotion: Boolean
+}
+
+enum DiscountType {
+    DAY_OF_WEEK_DISCOUNT
+    MULTI_NIGHT_DISCOUNT
+    SINGLE_DISCOUNT
+}
+
+enum DiscountUnit {
+    PERCENT
+    AMOUNT
+}
+
+"""
+Helps partners distinguish between a booking made on a vrbo platform vs all the other Expedia brands
+"""
+enum DistributionChannel {
+    VRBO
+    EXPEDIA_INTEGRATED
+}
+
+"""District regulatory information."""
+type District {
+    """Description of the district regulation."""
+    description: String
+
+    """District ID (such as Miami Beach)."""
+    id: String!
+
+    """List of legal property types."""
+    legalPropertyTypes: [LegalPropertyType]!
+
+    """Localized district name that can be used for display."""
+    localizedName: String
+
+    """
+    Four-character locale code (language and country codes) of property's local district (such as ja-JP for a property in Japan).
+    """
+    nativeLocale: String
+
+    """URL to jurisdiction regulation information."""
+    referenceUrls: [String]
+
+    """Whether registration is required by the jurisdiction."""
+    registrationRequired: Boolean!
+
+    """
+    Jurisdiction regulations that the partner needs to meet to comply with onboarding.
+    """
+    requirements: [JurisdictionRequirement]
+}
+
+"""The effective cancellation policy for the reservation"""
+type EffectivePolicy {
+    """The type of policy being applied. One of: REGULATORY_WAIVER"""
+    policyType: String!
+
+    """The start date and time of the policy in UTC"""
+    startDateTimeUtc: DateTime!
+
+    """The end date and time of the policy in UTC"""
+    endDateTimeUtc: DateTime!
+}
+
+type EligibleRatePlan {
+    """Id of the rate plan as stored in the Expedia platform."""
+    id: ID!
+}
+
+input EligibleRatePlanInput {
+    """Id of the rate plan as stored in the Expedia platform."""
+    id: ID!
+}
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress
+@specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
+
+input EnablePropertyInput {
+    clientMutationId: String
+    id: ID!
+}
+
+type EnablePropertyPayload {
+    clientMutationId: String
+    id: ID!
+}
+
+type EventsPolicy {
+    allowed: Boolean!
+    allowedEvents: AllowedEvents
+    note: [LocalizedString!]!
+}
+
+type EventsPolicyMetadata {
+    allowedEvents: AllowedEventsMetadata!
+}
+
+type ExactOrApproximateTime {
+    approximateTime: String
+    exactTime: LocalTime
+}
+
+input ExactOrApproximateTimeInput {
+    approximateTime: String
+    exactTime: LocalTime
+}
+
+type ExactOrApproximateTimeMetadata {
+    approximateTimes: [String!]!
+}
+
+type ExactOrApproximateTimeRange {
+    end: ExactOrApproximateTime
+    start: ExactOrApproximateTime!
+}
+
+input ExactOrApproximateTimeRangeInput {
+    end: ExactOrApproximateTimeInput
+    start: ExactOrApproximateTimeInput!
+}
+
+type ExactOrApproximateTimeRangeMetadata {
+    end: ExactOrApproximateTimeMetadata!
+    start: ExactOrApproximateTimeMetadata!
+}
+
+input ExecuteVrboReservationUpdateInput {
+    clientMutationId: String
+
+    """The ID of the property where the change has been requested."""
+    propertyId: ID!
+
+    """Identifier associated with the reservation to be changed."""
+    reservationId: ID!
+
+    """
+    Payment due date. Nullable. Defaulted to the reservation checkout date if not supplied
+    """
+    paymentDueDate: LocalDate
+
+    """Free form text field, describing reservation update reason"""
+    description: String!
+
+    """Updated supplier amount of the reservation."""
+    updatePreviewToken: String!
+}
+
+type ExecuteVrboReservationUpdatePayload {
+    clientMutationId: String
+
+    """Reference to reservation that was updated"""
+    reservation: Reservation
+}
+
+"""Exemption to jurisdiction requirements."""
+type Exemption {
+    """Exemption type."""
+    category: ExemptionCategory
+
+    """Description of the exemption."""
+    description: String
+}
+
+"""Exemption categories."""
+enum ExemptionCategory {
+    MAX_NIGHT_CAP
+}
+
+type ExpediaSupplierAmount implements SupplierAmount {
+    """Rate type: NET for Expedia Collect or SELL for Hotel Collect."""
+    rateType: RateType!
+
+    """Currency in which the amount is shown."""
+    currencyCode: String!
+
+    """Total rates for the reservation."""
+    total: SupplierTotal!
+
+    """Daily rates for the reservation."""
+    rates: [SupplierRate!]!
+}
+
+type ExtraBedType {
+    quantity: Int!
+    size: String!
+
+    """
+    Only extra beds of type 'Crib' and 'Rollaway Bed' will have a surcharge defined.
+    """
+    surcharge: Surcharge
+    type: String!
+}
+
+type Fee {
+    ageCategory: FeeAgeCategory
+    charges: [FeeCharge!]!
+    name: String!
+    restrictions: FeeRestrictions
+    scope: String!
+    taxable: Boolean
+    type: String!
+    variesByLengthOfStay: Boolean
+}
+
+enum FeeAgeCategory {
+    ADULT
+    CHILD_A
+    CHILD_B
+    CHILD_C
+    CHILD_D
+    INFANT
+}
+
+enum FeeBusinessModel {
+    AGENCY
+    MERCHANT
+}
+
+type FeeCharge {
+    duration: FeeChargeDuration!
+    flatAmount: Money
+    percentage: Decimal
+    type: FeeChargeType!
+}
+
+enum FeeChargeDuration {
+    NIGHT
+    STAY
+}
+
+input FeeChargeInput {
+    duration: FeeChargeDuration!
+    flatAmount: MoneyInput
+    percentage: Decimal
+    type: FeeChargeType!
+}
+
+enum FeeChargeType {
+    FLAT_AMOUNT
+    PERCENTAGE
+}
+
+type FeeDateRange {
+    from: Date!
+    to: Date
+}
+
+input FeeDateRangeInput {
+    from: Date!
+    to: Date
+}
+
+input FeeInput {
+    ageCategory: FeeAgeCategory
+    charges: [FeeChargeInput!]!
+    name: String!
+    restrictions: FeeRestrictionsInput
+    scope: String!
+    taxable: Boolean
+    type: String!
+    variesByLengthOfStay: Boolean
+}
+
+type FeeRestrictions {
+    dateRange: FeeDateRange
+    extraGuestRange: IntRange
+    rangeOfNight: IntRange
+}
+
+input FeeRestrictionsInput {
+    dateRange: FeeDateRangeInput
+    extraGuestRange: IntRangeInput
+    rangeOfNight: IntRangeInput
+}
+
+type FeeSet {
+    businessModel: FeeBusinessModel!
+    fees: [Fee!]!
+    id: ID!
+    name: String!
+}
+
+input FiltersInput {
+    """Status of the promotions."""
+    status: PromotionStatus
+
+    """List of discount types."""
+    discountTypes: [DiscountType!]
+
+    """Id of the Promotion as stored in the Expedia platform."""
+    id: String
+
+    """
+    The Booking Window being queried for in Date Time format.
+    YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
+    """
+    bookingLocalDateTime: BookingLocalDateTimeInput
+
+    """The Travel date window being queried for in Date format YYYY-MM-DD"""
+    travelDate: TravelDateInput
+}
+
+input GeneratePreviewVrboReservationUpdateInput {
+    clientMutationId: String
+
+    """The ID of the property where the change has been requested."""
+    propertyId: ID!
+
+    """Identifier associated with the reservation to be changed."""
+    reservationId: ID!
+
+    """
+    The updated stay dates. Optional if the stay dates are not being changed.
+    """
+    stayDates: PreviewVrboReservationUpdateStayDatesInput
+
+    """The updated adult count. Optional if occupancy is not being changed."""
+    guests: PreviewVrboReservationUpdateGuestsInput
+}
+
+type GeneratePreviewVrboReservationUpdatePayload {
+    clientMutationId: String
+    amounts: PreviewVrboReservationUpdateAmounts!
+
+    """The token to be used to execute the update"""
+    updatePreviewToken: String!
+    previewTokenExpirationDateTimeUtc: DateTime!
+}
+
+type Guest {
+    firstName: String!
+    lastName: String!
+
+    """Guest loyalty tier. Values include MEMBER, VIP, PREMIUMVIP and null."""
+    loyaltyTier: String
+
+    """The phone numbers of the guest"""
+    phoneNumbers: [GuestContactPhoneNumber!]
+
+    """Email address"""
+    emailAddress: EmailAddress
+
+    """
+    identifies the frequent customer reward program and (optionally) indicates points awarded for stay activity
+    """
+    supplierLoyaltyPlanInfo: SupplierLoyaltyPlanInfo
+
+    """Purpose of the reservation"""
+    travelPurpose: TravelPurpose
+}
+
+"""Contact of the guest who made the reservation"""
+type GuestContact {
+    """The phone numbers of the guest"""
+    phoneNumbers: [GuestContactPhoneNumber!]
+}
+
+"""Phone Number"""
+type GuestContactPhoneNumber {
+    """Country code (format: 44)"""
+    countryCode: String!
+
+    """Area Code (format: 074)"""
+    areaCode: String!
+
+    """Phone number (format: 3737059)"""
+    number: String!
+}
+
+type GuestRating {
+    """will consider Guest for future reservations"""
+    recommendGuest: Boolean
+
+    """categorized ratings"""
+    starRatings: [Rating]!
+}
+
+type IdNode {
+    id: ID
+    idSource: IdSource!
+}
+
+input IdNodeInput {
+    id: ID!
+    idSource: ReservationIdSource!
+}
+
+"""describes the source of a given property ID"""
+enum IdSource {
+    """The source of the ID is the Expedia Group platform."""
+    EXPEDIA
+
+    """The source of the ID is the supplier's platform."""
+    SUPPLIER
+
+    """The source of the ID is VRBO's system."""
+    VRBO
+}
+
+type Image implements MediaAsset {
+    active: Boolean!
+    captions: [LocalizedString!]!
+    featured: Boolean!
+    fileName: String
+    id: ID!
+    order: Int
+    originalUrl: String
+    property: Property
+    publishedUrl: String
+
+    """
+    Clockwise rotation to be applied to the image. Accepted values are 0, 90, 180 and 270. Defaults to 0 when not provided.
+    """
+    rotation: Int!
+    source: ImageSource!
+    status: Status!
+    updatedDate: DateTime!
+}
+
+input ImagesFiltersInput {
+    active: Boolean
+    featured: Boolean
+    sources: OneOfImageSourceFilterInput
+    statuses: OneOfMediaStatusFilterInput
+}
+
+enum ImageSource {
+    API
+    UI
+}
+
+type ImagesResponse implements MediaResponse {
+    elements: [Image!]!
+    totalCount: Int!
+}
+
+input InputLocalizedString {
+    locale: String!
+    value: String!
+}
+
+type Installment {
+    dueDate: LocalDate!
+    amount: Money!
+    paymentStatus: InstallmentPaymentStatus
+
+    """VRBO reservation specific installment distribution details"""
+    distributions: [InstallmentDistribution!]!
+    installmentId: String
+}
+
+"""VRBO reservation specific distribution"""
+type InstallmentDistribution {
+    """
+    type of installment distribution item (PARTNER_PAYMENT, COMMISSION, TRAVELER_SERVICE_FEE, etc)
+    """
+    type: String!
+
+    """amount value for installment distribution item"""
+    amount: Money!
+}
+
+"""Payment Status of the specific Installment"""
+enum InstallmentPaymentStatus {
+    NOT_STARTED
+    SCHEDULED
+    SENT
+    PENDING
+    FAILED
+    PAID
+    CANCELLED
+    PARTIAL_REFUNDED
+    REFUNDED
+    REVERSED
+}
+
+type IntRange {
+    max: Int!
+    min: Int!
+}
+
+input IntRangeInput {
+    max: Int!
+    min: Int!
+}
+
+"""Collection of irreconcilable scenarios"""
+type InvalidScenario {
+    """Scenario name string"""
+    scenario: String!
+
+    """Scenario reason in detail"""
+    reason: String!
+}
+
+type InventoryConfig {
+    """Specifies the pricing model of the property"""
+    pricingModel: PropertyPricingModel!
+
+    """Rate acquisition config for the property"""
+    rateAcquisition: RateAcquisition!
+}
+
+"""Inventory Type"""
+enum InventoryType {
+    """VRBO only supported Inventory Type"""
+    PLATFORM
+
+    """VRBO only supported Inventory Type"""
+    IPM
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+Jurisdiction regulations that the partner needs to meet to comply with onboarding.
+"""
+type JurisdictionRequirement {
+    """
+    Additional required regulation data by jurisdiction, such as license holder name or property address.
+    """
+    additionalDataRequirements: [AdditionalDataRequirement]
+
+    """Exemptions of a requirement under certain conditions."""
+    exemptions: [Exemption]
+
+    """Whether this regulatory category is a vacation rental."""
+    isVacationRental: Boolean
+
+    """
+    Maximum number of nights allowed by the jurisdiction. null means no requirement.
+    """
+    maxNightCap: MaxNightCap
+
+    """Minimum number of stay nights for this category (default is 1)."""
+    minStayNights: Int!
+
+    """Regulation requirement that EG supports."""
+    qualifiedPropertyTypes: [LegalPropertyType]
+
+    """List of registration number requirements."""
+    registrationNumberRequirements: [RegistrationNumberRequirement!]
+
+    """
+    Property regulatory category where the registration number requirements apply.
+    """
+    regulatoryCategory: RegulatoryCategory
+
+    """Localized string of the regulatory category."""
+    regulatoryCategoryLabel: String
+}
+
+"""
+facilitates filtering reservations by when their last updated date time occurs
+"""
+input LastUpdatedDateTimeFilter {
+    """
+    the date defining the start of the last updated date window (format: YYYY-MM-DDTHH:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+    """
+    from: ZoneDateTime!
+
+    """
+    the date defining the end of the last updated date window (format: YYYY-MM-DDTHH:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+    """
+    to: ZoneDateTime!
+}
+
+"""Legacy property type for the district."""
+type LegalPropertyType {
+    """
+    Legal property subtype, applicable for residences, such as primary home or secondary home.
+    """
+    subtype: String
+
+    """Legal property type, such as hotel, bed and breakfast, residence, etc."""
+    type: String
+}
+
+type ListingBundleAdoptionPayload {
+    adoptionList: [String!]!
+    adoptionType: UpdatePropertyListingBundleAdoptionType!
+}
+
+type LivingRoom {
+    bedGroups: [BedGroup!]!
+    id: ID!
+    order: Int!
+    text: [Text!]
+}
+
+type LivingRoomsMetadata {
+    bedGroups: BedGroupsMetadata!
+    text: [TextMetadata!]!
+}
+
+"""
+A type representing a date with no timezone in YYYY-MM-DD. ex: 2007-12-03
+"""
+scalar LocalDate
+
+"""
+A type representing a date time with no timezone in format YYYY-MM-DDTHH:mm:ss. ex: 2007-12-03T10:15:30
+"""
+scalar LocalDateTime
+
+"""A IETF BCP 47 language tag"""
+scalar Locale
+
+type LocalizedString {
+    locale: Locale!
+    value: String!
+}
+
+input LocalizedStringInput {
+    locale: Locale!
+    value: String
+}
+
+"""
+A type representing a time with no time zone in format HH:mm:ss or HH:mm. ex: 10:15:30, 10:15
+"""
+scalar LocalTime
+
+"""Maximum night cap parameters for the jurisdiction."""
+type MaxNightCap {
+    """Annual night cap."""
+    annualLimit: Int
+
+    """Whether the cap is enforced (or just educational)."""
+    isEnforced: Boolean
+}
+
+type MaxOccupancyPolicy {
+    adultCount: Int
+    note: [LocalizedString!]!
+    totalGuestCount: Int!
+}
+
+type Media {
+    images(filters: ImagesFiltersInput): ImagesResponse
+}
+
+interface MediaAsset {
+    active: Boolean!
+    captions: [LocalizedString!]!
+    id: ID!
+    originalUrl: String
+    property: Property
+    publishedUrl: String
+    status: Status!
+    updatedDate: DateTime!
+}
+
+interface MediaResponse {
+    elements: [MediaAsset!]!
+    totalCount: Int!
+}
+
+"""
+Indicates who the merchant of record for the reservation is. In other words, who collects the money from the traveler.
+"""
+enum MerchantOfRecord {
+    """
+    Indicates Expedia Group is the Merchant for this Reservation. Expedia Group Collects payment
+    """
+    EG
+
+    """Indicates Suppliers are the Merchant for this Reservation"""
+    SUPPLIER
+}
+
+enum MessageReviewStatus {
+    IN_REVIEW
+    ACCEPTED
+    BLOCKED
+}
+
+type MessageThread {
+    """ The message thread id """
+    id: ID!
+
+    """ Property Details """
+    property: Property!
+
+    """ Booking Inquiry associated to MessageThread """
+    bookingInquiry: MessageThreadBookingInquiry
+
+    """ Reservation associated to MessageThread """
+    reservationSummary: MessageThreadReservationSummary
+
+    """ Primary Traveler """
+    primaryTraveler: MessageThreadTraveler
+
+    """ List of messages """
+    messages(limit: Int = 10, cursor: String, orderBy: MessageThreadMessagesOrderByInput): MessageThreadMessagesResponse!
+
+    """ Message created date time in ISO format """
+    createdDateTime: DateTime @deprecated(reason: "This field was meant to represent datetime values in UTC timezone. It has been replaced by `creationDateTimeUtc`")
+
+    """ Message creation date time in ISO format and UTC timezone"""
+    creationDateTimeUtc: DateTime
+}
+
+type MessageThreadAddMessageResponse {
+    """ The message Id"""
+    id: ID!
+}
+
+type MessageThreadAttachment {
+    """ The attachment Id"""
+    id: ID!
+
+    """ attachment name """
+    name: String!
+
+    """ attachment uploaded date time in ISO format """
+    uploadedDateTime: DateTime! @deprecated(reason: "This field was meant to represent datetime values in UTC timezone. It has been replaced by `uploadDateTimeUtc`")
+
+    """ attachment upload date time in ISO format and UTC timezone"""
+    uploadDateTimeUtc: DateTime!
+
+    """ The attachment location """
+    url: Url!
+}
+
+type MessageThreadBookingInquiry {
+    id: ID!
+    checkInDate: LocalDate
+    checkOutDate: LocalDate
+    adultCount: Int!
+    childCount: Int!
+    hasPets: Boolean!
+}
+
+type MessageThreadLocalizedString {
+    value: String!
+}
+
+input MessageThreadLocalizedStringInput {
+    value: String!
+}
+
+type MessageThreadMessage {
+    """ The message id"""
+    id: ID!
+
+    """ The associated message thread for the message """
+    messageThread: MessageThread!
+
+    """ Time at which the message was created. ISO format (yyyy-MM-dd'T'HH:mm:ss.SSSZ)
+    """
+    createdDateTime: DateTime @deprecated(reason: "This field was meant to represent datetime values in UTC timezone. It has been replaced by `creationDateTimeUtc`")
+
+    """ Time at which the message was created. ISO format (yyyy-MM-dd'T'HH:mm:ss.SSSZ) and UTC timezone
+    """
+    creationDateTimeUtc: DateTime
+
+    """ Message type """
+    type: String
+
+    """ Message body (only plaintext allowed; should not contain any HTML tags)
+    """
+    body: MessageThreadLocalizedString
+
+    """ List of attachments associated with this message """
+    attachments: [MessageThreadAttachment!]!
+
+    """ Message identifier from the client perspective. This value is set by the client in addMessage mutation.
+    """
+    fromRole: MessageThreadParticipantRole
+
+    """ Review status of a Message. """
+    reviewStatus: MessageReviewStatus
+}
+
+input MessageThreadMessagesOrderByInput {
+    field: MessageThreadMessagesSortField = CREATION_DATE_TIME_UTC
+    order: SortOrder = ASC
+}
+
+type MessageThreadMessagesResponse {
+    """ Total number of message returned that meet the search criteria """
+    totalCount: Int!
+
+    """ Represents the next page cursor in the list, Empty if no more pages available
+    """
+    cursor: String
+
+    """ list of messages """
+    elements: [MessageThreadMessage!]!
+}
+
+enum MessageThreadMessagesSortField {
+    CREATION_DATE_TIME_UTC
+}
+
+enum MessageThreadParticipantRole {
+    TRAVELER
+    SUPPLIER
+}
+
+type MessageThreadReservationSummary {
+    id: ID!
+    checkInDate: LocalDate!
+    checkOutDate: LocalDate!
+    adultCount: Int!
+    childCount: Int!
+    petCount: Int!
+    alternativeIds: ReservationAlternativeIds!
+}
+
+enum MessageThreadSpamStatus {
+    SPAM
+    NOT_SPAM
+}
+
+type MessageThreadsResponse {
+    """ Total number of message threads returned that meet the search criteria
+    """
+    totalCount: Int!
+
+    """ Represents the next page cursor in the list, Empty if no more pages available
+    """
+    cursor: String
+
+    """ List of message threads """
+    elements: [MessageThread!]!
+}
+
+type MessageThreadTraveler {
+    firstName: String
+    lastName: String
+}
+
+type Metadata {
+    locales: [Locale!]!
+    property: PropertyMetadata!
+}
+
+"""
+A Reservation mapping type containing an EG Property ID and a missing Reservation ID.
+"""
+type MissingVrboIdReservationMapping {
+    """The applicable EG Property ID."""
+    egPropertyId: ID!
+
+    """The EG Reservation ID which failed mapping validation."""
+    egReservationId: ID!
+}
+
+"""Represents a monetary amount value along with its currency."""
+type Money {
+    """
+    The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
+    """
+    amount: Decimal!
+
+    """The code of the currency of the amount."""
+    currencyCode: CurrencyCode!
+}
+
+"""Represents a monetary amount value along with its currency."""
+input MoneyInput {
+    """
+    The actual monetary amount value. The scale of the amount will vary according to the currency or any rate conversion that may have been applied.
+    """
+    amount: Decimal!
+
+    """The code of the currency of the amount."""
+    currencyCode: CurrencyCode!
+}
+
+"""
+Multi night discounts are ones that have a flat discount percentage for applicable nights (for eg: 15% off on 3rd night).
+"""
+type MultiNightDiscount implements Discount {
+    """Type of the discount."""
+    type: DiscountType!
+
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit!
+
+    """Value of the discount applied."""
+    value: Float!
+
+    """Member only discount value applied"""
+    memberOnlyAdditionalValue: Float
+
+    """
+    Value of the applicable night on which the discount will be applied. Values permitted: 2 to 28
+    """
+    applicableNight: Int!
+
+    """Whether the discount applied on the applicable night is recurring"""
+    isRecurring: Boolean
+}
+
+input MultiNightDiscountCreateInput {
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit!
+
+    """Value of the discount applied."""
+    value: Float!
+
+    """Member only discount value applied."""
+    memberOnlyAdditionalValue: Float
+
+    """
+    Value of the applicable night on which the discount will be applied. Values permitted: 2 to 28.
+    """
+    applicableNight: Int!
+
+    """
+    Whether this discount will be applied every consecutive applicable night.
+    """
+    isRecurring: Boolean
+}
+
+input MultiNightDiscountPromotionCreateInput {
+    """Name of the promotion. Values: MULTI_NIGHT_PROMOTION"""
+    name: PromotionName!
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus!
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory!
+
+    """Name of the promotion as the partner wants to call it."""
+    code: String!
+
+    """List of restrictions that can be applied to these promotions."""
+    restrictions: RestrictionsCreateInput!
+
+    """The rate plans for which this promotion is applicable for."""
+    eligibleRatePlans: [EligibleRatePlanInput!]!
+
+    """
+    The 'exception' dates for which the promotion should NOT apply.
+    This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    blackoutDates: [BlackoutDateRangeInput!]!
+
+    """Detail of the actual discount being applied on the promotion."""
+    discount: MultiNightDiscountCreateInput!
+}
+
+input MultiNightDiscountPromotionUpdateInput {
+    """Id of the Promotion as stored in the Expedia platform."""
+    id: ID!
+
+    """Name of the promotion. Values: MULTI_NIGHT_PROMOTION"""
+    name: PromotionName
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory
+
+    """Name of the promotion as the partner wants to call it."""
+    code: String
+
+    """List of restrictions that can be applied to these promotions."""
+    restrictions: RestrictionsUpdateInput
+
+    """The rate plans for which this promotion is applicable for."""
+    eligibleRatePlans: [EligibleRatePlanInput!]
+
+    """
+    The 'exception' dates for which the promotion should NOT apply.
+    This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    blackoutDates: [BlackoutDateRangeInput!]
+
+    """Detail of the actual discount being applied on the promotion."""
+    discount: MultiNightDiscountUpdateInput
+}
+
+input MultiNightDiscountUpdateInput {
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit
+
+    """Value of the discount applied."""
+    value: Float
+
+    """Member only discount value applied."""
+    memberOnlyAdditionalValue: Float
+
+    """
+    Value of the applicable night on which the discount will be applied. Values permitted: 2 to 28.
+    """
+    applicableNight: Int!
+
+    """Whether the discount applied on the applicable night is recurring."""
+    isRecurring: Boolean
+}
+
+type Mutation {
+    createCancellationPolicyConfig(input: CreateCancellationPolicyConfigInput!): CreateCancellationPolicyConfigPayload
+    createFeeSet(input: CreateFeeSetInput!): CreateFeeSetPayload
+    createRatePlan(input: CreateRatePlanInput!): CreateRatePlanPayload
+    replaceCancellationPolicyConfig(input: ReplaceCancellationPolicyConfigInput!): ReplaceCancellationPolicyConfigPayload
+    replaceFeeSet(input: ReplaceFeeSetInput!): ReplaceFeeSetPayload
+    updateRatePlan(input: UpdateRatePlanInput!): UpdateRatePlanPayload
+
+    """ Add message to message thread """
+    addMessage(messageThreadId: ID!, message: AddMessageThreadMessageInput!): MessageThreadAddMessageResponse!
+
+    """ Send a new message to a message thread"""
+    sendMessage(input: SendMessageInput!): SendMessagePayload
+
+    """Set spam status for a message thread"""
+    setMessageThreadSpamStatus(input: SetMessageThreadSpamStatusInput!): SetMessageThreadSpamStatusPayload
+
+    """
+    Subscribe to notification event type for a given notification subscription profile.
+    """
+    subscribeNotificationEventType(input: SubscribeNotificationEventTypeInput!): SubscribeNotificationEventTypePayload
+
+    """
+    Unsubscribe from notification event type for a given notification subscription profile.
+    """
+    unsubscribeNotificationEventType(input: UnsubscribeNotificationEventTypeInput!): UnsubscribeNotificationEventTypePayload
+
+    """
+    Update notification callback configuration for a subscribed notification event type
+    """
+    updateNotificationEventTypeSubscription(input: UpdateNotificationEventTypeSubscriptionInput!): UpdateNotificationEventTypeSubscriptionPayload
+
+    """Send test notification using a given eventType and Payload"""
+    sendTestNotification(input: SendTestNotificationInput!): SendTestNotificationPayload
+
+    """Create callback configuration for notification profile."""
+    createNotificationCallbackConfig(input: CreateNotificationCallbackConfigInput!): CreateNotificationCallbackConfigPayload
+
+    """
+    Update notification callback configuration profile attributes (callbackUrl, apiKey, requestTimeout) based on callbackConfigId.
+    """
+    updateNotificationCallbackConfig(input: UpdateNotificationCallbackConfigInput!): UpdateNotificationCallbackConfigPayload
+
+    """Refresh secret for callback configuration based on callbackConfigId."""
+    refreshNotificationCallbackConfigSecret(input: RefreshNotificationCallbackConfigSecretInput!): RefreshNotificationCallbackConfigSecretPayload
+
+    """Delete callback configuration from notification profile."""
+    deleteNotificationCallbackConfig(input: DeleteNotificationCallbackConfigInput!): DeleteNotificationCallbackConfigPayload
+
+    """Create day of week discount promotion"""
+    createDayOfWeekDiscountPromotion(promotion: DayOfWeekDiscountPromotionCreateInput!, propertyId: String!, propertyIdSource: IdSource!): Promotion!
+
+    """Create multi night discount promotion."""
+    createMultiNightDiscountPromotion(promotion: MultiNightDiscountPromotionCreateInput!, propertyId: String!, propertyIdSource: IdSource!): Promotion!
+
+    """Create single discount promotion."""
+    createSingleDiscountPromotion(promotion: SingleDiscountPromotionCreateInput!, propertyId: String!, propertyIdSource: IdSource!): Promotion!
+
+    """Update day of week discount promotion"""
+    updateDayOfWeekDiscountPromotion(promotion: DayOfWeekDiscountPromotionUpdateInput!, propertyId: String!, propertyIdSource: IdSource!): Promotion!
+
+    """Update multi night discount promotion."""
+    updateMultiNightDiscountPromotion(promotion: MultiNightDiscountPromotionUpdateInput!, propertyId: String!, propertyIdSource: IdSource!): Promotion!
+
+    """Update single discount promotion."""
+    updateSingleDiscountPromotion(promotion: SingleDiscountPromotionUpdateInput!, propertyId: String!, propertyIdSource: IdSource!): Promotion!
+
+    """Add new listing discount"""
+    joinNewListingDiscount(id: String!, idSource: IdSource!): Boolean
+
+    """Remove new listing discount"""
+    withdrawNewListingDiscount(id: String!, idSource: IdSource!): Boolean
+
+    """Mutation to cancel a pre-stay reservation"""
+    cancelReservation(input: CancelReservationInput!): CancelReservationPayload!
+
+    """Cancel reservation reconciliation"""
+    cancelReservationReconciliation(input: CancelReservationReconciliationInput!): CancelReservationReconciliationPayload!
+
+    """Update reservation reconciliation"""
+    changeReservationReconciliation(input: ChangeReservationReconciliationInput!): ChangeReservationReconciliationPayload!
+
+    """Update reservation with good will refund"""
+    refundReservation(input: RefundReservationInput!): RefundReservationPayload!
+
+    """Confirm Reservation sent via Webhook"""
+    confirmReservationNotification(input: ConfirmReservationNotificationInput!): ConfirmReservationNotificationPayload!
+
+    """
+    Mutation for suppliers to cancel a VRBO reservation - pre & post arrival
+    """
+    cancelVrboReservation(input: CancelVrboReservationInput!): CancelVrboReservationPayload!
+
+    """Refund Vrbo reservation"""
+    refundVrboReservation(input: RefundVrboReservationInput!): RefundVrboReservationPayload!
+
+    """
+    Mutation for suppliers to generate a preview for a VRBO reservation update
+    """
+    generatePreviewVrboReservationUpdate(input: GeneratePreviewVrboReservationUpdateInput!): GeneratePreviewVrboReservationUpdatePayload!
+
+    """Mutation for suppliers to execute a VRBO reservation update"""
+    executeVrboReservationUpdate(input: ExecuteVrboReservationUpdateInput!): ExecuteVrboReservationUpdatePayload!
+    rateGuest(
+        input: RateGuestInput!
+
+        """
+        Property ID. If using an external ID (from your system, source is SUPPLIER), specify the ID in this format: system_ID/advertiser_ID/property_ID. If the source is EXPEDIA, this is the Expedia ID (EID)
+        """
+        propertyId: ID!
+
+        """Source of the ID."""
+        propertyIdSource: IdSource!
+    ): GuestRating
+    setReviewResponse(
+        """property manager's response to the review (localized)."""
+        body: InputLocalizedString!
+
+        """
+        Property ID. If using an external ID (from your system, source is SUPPLIER), specify the ID in this format: system_ID/advertiser_ID/property_ID. If the source is EXPEDIA, this is the Expedia ID (EID).
+        """
+        propertyId: ID!
+
+        """Source of the ID."""
+        propertyIdSource: IdSource!
+
+        """Expedia's review ID."""
+        reviewId: ID!
+    ): UpdatedReviewResponse!
+    createProperty(input: CreatePropertyInput!): CreatePropertyPayload
+    createPropertyImage(input: CreatePropertyImageInput!): CreatePropertyImagePayload
+    createUnitSpaces(input: CreateUnitSpacesInput!): CreateUnitSpacesPayload
+    deleteImage(input: DeleteImageInput!): DeleteImagePayload
+    deleteUnitSpace(input: DeleteUnitSpaceInput!): DeleteUnitSpacePayload
+    disableProperty(input: DisablePropertyInput!): DisablePropertyPayload
+    enableProperty(input: EnablePropertyInput!): EnablePropertyPayload
+
+    """Mutation for setting the tax record for a property"""
+    setPropertyTaxRecord(input: SetPropertyTaxRecordInput!): SetPropertyTaxRecordPayload
+    updateImage(input: UpdateImageInput!): UpdateImagePayload
+    updateProperty(input: UpdatePropertyInput!): UpdatePropertyPayload
+    updateUnit(input: UpdatePropertyUnitInput!): UpdatePropertyUnitPayload
+
+    """
+    Update unit registration of property using property associated attributes id/idSource
+    """
+    updateUnitRegistration(forceSave: Boolean, propertyId: String!, propertyIdSource: IdSource!, registration: UpdateUnitRegistrationInput!): PropertyRegistration!
+    updateUnitSpaces(input: UpdateUnitSpacesInput!): UpdateUnitSpacesPayload
+
+    """
+    Provide a list of Property IDs that should be archived during the Property ID mapping process.
+    """
+    archivePropertyIds(input: ArchivePropertyIdsInput!): ArchivePropertyIdsPayload
+
+    """
+    Finalize ID mapping submissions, initiate mapping processing, and prevent further mapping update submissions.
+    """
+    commitVrboSupplierIdMappings(input: CommitVrboSupplierIdMappingsInput!): CommitVrboSupplierIdMappingsPayload
+    updatePropertyListingBundleAdoption(input: PropertyListingBundleAdoptionInput!): ListingBundleAdoptionPayload!
+
+    """Submit one or many Property ID mapping updates."""
+    updateVrboSupplierPropertyIds(input: UpdateVrboSupplierPropertyIdsInput!): UpdateVrboSupplierPropertyIdsPayload
+
+    """Submit one or many Reservation ID mapping updates."""
+    updateVrboSupplierReservationIds(input: UpdateVrboSupplierReservationIdsInput!): UpdateVrboSupplierReservationIdsPayload
+}
+
+type Notification {
+    """ The event type """
+    eventType: String!
+
+    """ creation date time of the notification """
+    creationDateTime: DateTime!
+
+    """ notification identifier """
+    notificationId: String!
+
+    """ notification payload """
+    payload: JSON!
+}
+
+type NotificationCallbackConfig {
+    """Id of the callback configuration object"""
+    id: ID!
+
+    """Callback url where the notification will be delivered"""
+    callbackUrl: Url!
+
+    """Secret expiration date time"""
+    secretExpirationDateTime: LocalDateTime!
+
+    """Request timeout when sending a notification on the callback url"""
+    requestTimeoutSeconds: Int!
+
+    """Email address for correspondence"""
+    contactEmail: EmailAddress
+}
+
+type NotificationError {
+    """Code that reflects the specific error encountered during the test"""
+    code: String!
+
+    """Human readable message describing the error encountered"""
+    message: String!
+}
+
+type NotificationEventType {
+    """Event type name"""
+    name: String!
+
+    """Description of the event type"""
+    description: String!
+}
+
+type NotificationEventTypeSubscription {
+    """Name of the event type"""
+    eventType: String!
+
+    """Callback configuration information for the event type subscription"""
+    callbackConfig: NotificationCallbackConfig!
+}
+
+type NotificationProfile {
+    """Retrieve callback configurations of notification profile"""
+    callbackConfigs: [NotificationCallbackConfig!]!
+
+    """Retrieve subscriptions of notification profile"""
+    subscriptions: [NotificationSubscription!]!
+}
+
+type NotificationSubscription {
+    """Product name for the subscription"""
+    product: String!
+
+    """List of event type subscriptions"""
+    eventTypeSubscriptions: [NotificationEventTypeSubscription!]!
+}
+
+type Office {
+    bedGroups: [BedGroup!]!
+    id: ID!
+    order: Int!
+    text: [Text!]
+}
+
+type OfficesMetadata {
+    bedGroups: BedGroupsMetadata!
+    text: [TextMetadata!]!
+}
+
+input OneOfImageSourceFilterInput {
+    operator: OneOfOperator
+    values: [ImageSource!]!
+}
+
+input OneOfLocaleFilterInput {
+    operator: OneOfOperator
+    values: [Locale!]!
+}
+
+input OneOfMediaStatusFilterInput {
+    operator: OneOfOperator
+    values: [StatusInput!]!
+}
+
+enum OneOfOperator {
+    IN
+    NOT_IN
+}
+
+input OneOfStringFilterInput {
+    operator: OneOfOperator
+    values: [String!]!
+}
+
+type OwnerResponse {
+    """review response text"""
+    body: LocalizedString!
+
+    """review create time in ISO format"""
+    createdDateTime: String!
+
+    """review updated time in ISO format"""
+    lastUpdatedDateTime: String!
+
+    """status of the management response"""
+    status: String!
+}
+
+"""
+provides information about the current page of results for a given ReservationsConnection
+"""
+type PageInfo {
+    """indicates if there are additional pages to retrieve"""
+    hasNextPage: Boolean!
+
+    """the value of the cursor of the last reservation in the current page"""
+    endCursor: String
+}
+
+"""Payment Details"""
+type Payment {
+    instrument: PaymentInstrument
+
+    """
+    Text that is displayed to travelers if a payment type is associated with the reservation.
+    """
+    instructions: String!
+
+    """Reservation payment status associated with the reservation."""
+    status: ReservationPaymentStatus
+
+    """Schedule and details of the Payment"""
+    installments: [Installment!]!
+}
+
+type PaymentCardDescriptor {
+    """
+    Specifies the code associated with the provider of this card: AFFIRM, VISA, MASTERCARD, etc.
+    """
+    code: String!
+
+    """
+    Specifies the type of the card: ALTERNATIVE (for Affirm payments), CREDIT, or DEBIT (debit cards used as credit cards).
+    """
+    type: String!
+}
+
+input PaymentCardDescriptorInput {
+    """
+    Specifies the code associated with the provider of this card: AFFIRM, VISA, MASTERCARD, etc.
+    """
+    code: String!
+
+    """
+    Specifies the type of the card: ALTERNATIVE (for Affirm payments), CREDIT, or DEBIT (debit cards used as credit cards).
+    """
+    type: String!
+}
+
+type PaymentCardDescriptorMetadata {
+    codes: [String!]!
+    types: [String!]!
+}
+
+"""Payment Instrument Details"""
+type PaymentInstrument {
+    """Type for Payment Instrument"""
+    type: PaymentInstrumentType!
+
+    """Payment Token and its expiration date time"""
+    token: PaymentToken!
+}
+
+"""Type for Payment Reservation"""
+enum PaymentInstrumentType {
+    GUEST_CREDIT_CARD
+    EXPEDIA_VIRTUAL_CARD
+    BANK_TRANSFER
+    CASH
+    NONE
+}
+
+type PaymentInvoiceDescriptor {
+    """
+    Represents the acceptable invoice payment method: AMEX, CASH, CHECK, PAYPAL, etc.
+    """
+    type: String!
+}
+
+input PaymentInvoiceDescriptorInput {
+    """
+    Represents the acceptable invoice payment method: AMEX, CASH, CHECK, PAYPAL, etc.
+    """
+    type: String!
+}
+
+type PaymentInvoiceDescriptorMetadata {
+    types: [String!]!
+}
+
+type PaymentToken {
+    """Value of the token"""
+    value: String
+
+    """Expiration of the token"""
+    expirationDateTime: String
+}
+
+type PetsPolicy {
+    allowed: Boolean!
+    allowedPets: AllowedPets
+    note: [LocalizedString!]!
+}
+
+type PetsPolicyMetadata {
+    allowedPets: AllowedPetsMetadata!
+}
+
+type Policies {
+    cancellationPolicyConfigs: [CancellationPolicyConfig!]
+    bookingPolicy: BookingPolicy
+    stayPolicy: StayPolicy
+}
+
+type PolicyMetadata {
+    bookingPolicies: BookingPolicyMetadata!
+    stayPolicies: StayPolicyMetadata!
+}
+
+type PreviewVrboReservationUpdateAmounts {
+    totals: PreviewVrboReservationUpdateAmountsTotals!
+    difference: PreviewVrboReservationUpdateAmountsDifference!
+}
+
+type PreviewVrboReservationUpdateAmountsDifference {
+    total: Money!
+
+    """The amount of the rental price difference"""
+    rent: Money!
+
+    """The amount of the cleaning fee difference"""
+    fees: Money!
+
+    """The amount of the tax difference"""
+    taxes: Money!
+}
+
+type PreviewVrboReservationUpdateAmountsTotals {
+    currentTotalAmount: Money!
+    postUpdateTotalAmount: Money!
+}
+
+input PreviewVrboReservationUpdateGuestsInput {
+    """The updated number of adults in the reservation"""
+    adultCount: Int!
+
+    """The updated number of children in the reservation"""
+    childCount: Int!
+
+    """The updated number of pets in the reservation"""
+    petCount: Int!
+}
+
+input PreviewVrboReservationUpdateStayDatesInput {
+    """the reservation's arrival date (format: YYYY-MM-DD)"""
+    checkInDate: LocalDate!
+
+    """the reservation's departure date (format: YYYY-MM-DD)"""
+    checkOutDate: LocalDate!
+}
+
+enum PricingModel {
+    OCCUPANCY_BASED_PRICING
+    OCCUPANCY_BASED_PRICING_BY_DAY_OF_ARRIVAL
+    OCCUPANCY_BASED_PRICING_BY_LENGTH_OF_STAY
+    PER_DAY_PRICING
+    PER_DAY_PRICING_BY_DAY_OF_ARRIVAL
+    PER_DAY_PRICING_BY_LENGTH_OF_STAY
+}
+
+interface Promotion {
+    """Id of the Promotion as stored in the Expedia platform."""
+    id: ID!
+
+    """
+    Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
+    """
+    name: PromotionName!
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory!
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus!
+
+    """
+    Sell status of the promotion. Values: EXPIRED, CURRENT or FUTURE. For retrieval only.
+    """
+    sellStatus: PromotionSellStatus
+
+    """It indicates if the promotion is negotiated."""
+    isContractedPromotion: Boolean
+}
+
+enum PromotionCategory {
+    DISCOUNT_PROMOTION
+}
+
+type PromotionEnrollment {
+    name: PromotionEnrollmentName!
+    status: PromotionStatus!
+    enrolled: Boolean
+    ineligibilityReasons: [String!]
+}
+
+enum PromotionEnrollmentName {
+    NEW_LISTING_DISCOUNT
+}
+
+enum PromotionName {
+    BASIC_PROMOTION
+    EARLY_BOOKING_PROMOTION
+    MULTI_NIGHT_PROMOTION
+    SAME_DAY_PROMOTION
+}
+
+type PromotionNode {
+    """Cursor value for this edge."""
+    cursor: String!
+
+    """node points to the actual promotion data."""
+    node: Promotion!
+}
+
+type Promotions {
+    """Total number of promotions returned that meet the search criteria."""
+    totalCount: Int!
+
+    """Information about the current page of results."""
+    pageInfo: CursorBasedPageInfo!
+
+    """Edges in the connection to traverse, each contain a cursor and node."""
+    edges: [PromotionNode!]!
+}
+
+enum PromotionSellStatus {
+    EXPIRED
+    CURRENT
+    FUTURE
+}
+
+enum PromotionStatus {
+    ACTIVE
+    INACTIVE
+}
+
+"""A list of Properties associated with a given Advertiser account."""
+type PropertiesByAdvertiserResponse {
+    cursor: String
+    elements: [Property!]!
+    totalCount: Int!
+}
+
+"""
+Property content by EG Property ID, as defined in product-listing subgraph
+"""
+type Property {
+    feeSets(filters: PropertyFeeSetsFiltersInput!): PropertyFeeSetsResponse
+
+    """the ID of the property whose reservations you want to retrieve"""
+    id: ID!
+
+    """ Retrieves multiple message threads for a property """
+    messageThreads(limit: Int = 10, cursor: String, filters: PropertyMessageThreadsFiltersInput!, orderBy: PropertyMessageThreadsOrderByInput): MessageThreadsResponse!
+    messages(limit: Int = 10, cursor: String, filters: PropertyMessagesFiltersInput!): MessageThreadMessagesResponse
+    promotions(pageSize: Int!, after: String, filter: FiltersInput): Promotions!
+
+    """retrieve reservation data by property ID"""
+    reservations(
+        """
+        limit results to reservations whose departure date falls within the window defined by CheckOutDateFilter
+        """
+        checkOutDate: CheckOutDateFilter
+
+        """facilitates filtering reservations"""
+        filter: ReservationFilterInput
+
+        """controls the number of results returned on each query request"""
+        pageSize: Int!
+
+        """retrieve reservations after this cursor value"""
+        after: String
+    ): ReservationsConnection!
+    aggregatedReviews(filters: AggregatedReviewsFiltersInput!): AggregatedReviewsResponse
+    reviews(
+        """optional: used to traverse multi-page results"""
+        after: String
+
+        """filter reviews"""
+        filter: ReviewFilter
+
+        """reviews sort params"""
+        orderBy: ReviewsOrderBy
+
+        """controls the number of reviews per page"""
+        pageSize: Int!
+    ): ReviewResponse!
+
+    """
+    Whether a property + associated units or unit is live in the EG system.
+    """
+    activeStatus: ActiveStatus
+    address: Address!
+    amenities(filters: AmenitiesFiltersInput): [Amenity!]
+    coordinates: Coordinates! @deprecated(reason: "Coordinates are now nested under `location`. Use the sibling `location.coordinates` field instead.")
+
+    """
+    Specifies the ISO-4217 currency code of the rates being entered by the property
+    """
+    currency: Currency!
+
+    """
+    The default locale is used as a fallback when no other locale is specified.  IETF BCP 47 language tag, defaulting to en-US.
+    """
+    defaultLocale: Locale!
+
+    """
+    Jurisdiction regulatory requirements/parameters that apply to this property's rental conditions.
+    """
+    district(locale: String): District
+    geoLocation: Coordinates! @deprecated(reason: "deprecated, replace with coordinates")
+
+    """Known IDs for the property."""
+    ids: [IdNode!]!
+
+    """Configuration related to the property's inventory"""
+    inventoryConfig: InventoryConfig!
+
+    """
+    Listings of the property on the requested domains, supported domains: [expedia.com, vrbo.com]
+    """
+    listings(domains: [String!]!): [PropertyListing]
+    location: PropertyLocation!
+    media: Media!
+
+    """Name/headline of the property for the default locale."""
+    name: String!
+
+    """
+    List of all the names for the property, which therefore also contains the above 'name' as well.
+    """
+    names: [LocalizedString!]
+    policies: Policies!
+
+    """Internal reference name for the property for the default locale."""
+    referenceName: String
+
+    """Tax records for the property."""
+    taxRecords: [TaxRecord!]!
+    text(filters: TextFiltersInput): [Text!]
+
+    """The description of the time zone that the hotel is located in"""
+    timeZone: String!
+    type: PropertyType!
+
+    """A collection of Unit configurations for the Property"""
+    units: [Unit]
+}
+
+input PropertyFeeSetsFiltersInput {
+    feeSetIds: [ID!]!
+}
+
+type PropertyFeeSetsResponse {
+    elements: [FeeSet!]!
+    totalCount: Int!
+}
+
+type PropertyListing {
+    """Locale for the property listing on the requested domain"""
+    locale: String
+
+    """
+    URL listing the property when the property is enabled and distributed on the requested domain
+    """
+    url: String
+}
+
+type PropertyListingBundleAdoption {
+    adoptionList: [String!]!
+    adoptionType: AdoptionType!
+}
+
+input PropertyListingBundleAdoptionInput {
+    adoptionList: [String!]
+    adoptionTypes: UpdatePropertyListingBundleAdoptionType!
+}
+
+type PropertyLocation {
+    coordinates: Coordinates
+    hideExactLocation: Boolean!
+}
+
+"""A Property ID mapping type containing the mapped IDs and status info."""
+type PropertyMapping {
+    """The applicable EG Property ID."""
+    egPropertyId: ID!
+
+    """An Error type containing the Error Code and Error message info."""
+    error: VrboIdMappingError
+
+    """Status for processing this mapping."""
+    mappingProcessingStatus: VrboMappingProcessingStatus!
+
+    """The new Supplier Property ID to associate."""
+    supplierPropertyId: ID!
+
+    """The new Supplier Unit ID to associate."""
+    supplierUnitId: ID!
+}
+
+"""
+A Property Error mapping type containing the Property IDs and Error message info.
+"""
+type PropertyMappingError {
+    """The applicable EG Property ID."""
+    egPropertyId: ID!
+
+    """An Error type containing the Error Code and Error message info."""
+    error: VrboIdMappingError!
+}
+
+input PropertyMessagesFiltersInput {
+    """createdDate field is deprecated, please use `creationDateTime`"""
+    createdDate: DateTimeRangeFilterInput
+    creationDateTime: DateTimeRangeFilterInput
+}
+
+input PropertyMessageThreadsFiltersInput {
+    """createdDate field is deprecated, please use `creationDateTime`"""
+    createdDate: DateTimeRangeFilterInput
+    creationDateTime: DateTimeRangeFilterInput
+}
+
+input PropertyMessageThreadsOrderByInput {
+    field: PropertyMessageThreadsSortField = CREATION_DATE_TIME_UTC
+    order: SortOrder = ASC
+}
+
+enum PropertyMessageThreadsSortField {
+    CREATION_DATE_TIME_UTC
+}
+
+type PropertyMetadata {
+    amenities: [AmenityMetadata!]!
+    policies: PolicyMetadata!
+    text: [TextMetadata!]!
+    type: [PropertyTypeMetadata!]!
+    units: UnitsMetadata!
+}
+
+enum PropertyPricingModel {
+    OCCUPANCY_BASED
+    PER_DAY
+}
+
+"""
+Government registration information for a given property and details on the property units.
+"""
+type PropertyRegistration {
+    """
+    Additional property registration information required by certain districts.
+    """
+    applicableRegulations: [ApplicableRegulations!]
+
+    """
+    Whether the property registration information is sufficient to fulfill the requirements of the property's district.
+    """
+    complete: Boolean!
+
+    """
+    List of registration information for each bookable unit of a multi-unit property.
+    """
+    details: [UnitRegistrationDetail!]!
+
+    """
+    Geographical jurisdiction identifier. For non-configured districts, this is null.
+    """
+    district: String
+}
+
+type PropertyType {
+    code: String!
+}
+
+type PropertyTypeMetadata {
+    code: String!
+}
+
+type PropertyUnitArea {
+    unit: AreaUnit!
+    value: Int!
+}
+
+"""Purpose of the requirement."""
+enum Purpose {
+    DATA_SHARING
+}
+
+type Query {
+    cancellationPolicyConfig(id: ID!): CancellationPolicyConfig
+    ratePlan(propertyId: ID!, ratePlanId: ID!): RatePlan
+
+    """Retrieves a single message using its unique identifier."""
+    message(id: ID!): MessageThreadMessage
+
+    """Retrieves a single message thread using its unique identifier."""
+    messageThread(id: ID!): MessageThread
+
+    """Retrieves configurations on notification platform"""
+    notificationProfile: NotificationProfile
+
+    """Retrieves available event types to subscribe to"""
+    notificationEventTypes: [NotificationEventType!]
+
+    """Retrieves failed notifications"""
+    undeliveredNotifications(limit: Int = 10, cursor: String, filters: UndeliveredNotificationsFiltersInput!): UndeliveredNotificationsResponse
+
+    """Get the list of promotions that match the filters specified."""
+    promotions(propertyId: String!, pageSize: Int!, after: String, filter: FiltersInput): Promotions!
+
+    """
+    retrieve District information by latitude/longitude coordinates and optionally locale
+    """
+    districtByCoordinates(latitude: Float!, locale: String, longitude: Float!): District
+    metadata: Metadata
+    property(
+        id: String!
+
+        """Defaults to EXPEDIA."""
+        idSource: IdSource
+    ): Property
+    unit(id: ID!): Unit
+
+    """Get Property Listing Bundle Adoption"""
+    getPropertyListingBundleAdoption: PropertyListingBundleAdoption!
+
+    """Retrieve a list of Properties associated for a given Advertiser."""
+    propertiesByAdvertiser(cursor: String, id: ID!, idSource: IdSource!, pageSize: Int): PropertiesByAdvertiserResponse
+
+    """
+    Retrieve the current status of ID Mapping progress for a given Advertiser.
+    """
+    vrboIdMappingProgress(advertiserId: ID!): VrboIdMappingProgress
+}
+
+enum RangeOperator {
+    INCLUSIVE
+    EXCLUSIVE
+}
+
+type RateAcquisition {
+    """
+    Specifies if the rate includes fees and/or taxes. Only applicable for the SELL_LAR rate acquisition type
+    """
+    pricingComponents: [RateAcquisitionPricingComponent!]!
+
+    """Specifies how an entered rate is interpreted"""
+    type: RateAcquisitionType!
+}
+
+enum RateAcquisitionPricingComponent {
+    FEES
+    TAXES
+}
+
+enum RateAcquisitionType {
+    NET
+    SELL_LAR
+}
+
+input RateGuestInput {
+    """will consider Guest for future reservations"""
+    recommendGuest: Boolean!
+
+    """reservation ID."""
+    reservationId: ID!
+
+    """Source of the reservation ID."""
+    reservationIdSource: IdSource!
+
+    """categorized ratings"""
+    starRatings: [RatingInput!]!
+}
+
+type RatePlan {
+    baseRateGuestCount: Int
+    cancellationPolicyConfig: CancellationPolicyConfig
+    creationDateTime: DateTime!
+    distributionRules: [RatePlanDistributionRule!]!
+    feeSet: FeeSet
+    id: ID!
+    lastUpdateDateTime: DateTime!
+    name: String!
+    paymentScheduleApplicable: Boolean
+    pricingModel: PricingModel!
+    propertyId: ID!
+    restrictions: RatePlanRestrictions!
+    status: RatePlanStatus!
+    taxInclusive: Boolean
+    type: RatePlanType!
+    unitId: ID!
+    valueAdds: [String!]!
+}
+
+type RatePlanDistributionRule {
+    merchantOfRecord: MerchantOfRecord!
+    ratePlanCode: String!
+}
+
+input RatePlanDistributionRuleInput {
+    merchantOfRecord: MerchantOfRecord!
+    ratePlanCode: String!
+}
+
+type RatePlanRestrictions {
+    advanceBookingDays: IntRange
+    lengthOfStay: IntRange
+    mobileOnly: Boolean
+    reservationDates: DateRange
+    travelDates: DateRange
+}
+
+enum RatePlanStatus {
+    ACTIVE
+    INACTIVE
+}
+
+enum RatePlanType {
+    B2B_DISTRIBUTION
+    BUSINESS
+    PACKAGE
+    PACKAGE_DISTRIBUTION
+    STANDALONE
+}
+
+type RateThresholdSettings {
+    """Defines maximum acceptable rate, expressed as a decimal number."""
+    maxAmount: Decimal!
+
+    """Defines minimum acceptable rate, expressed as a decimal number."""
+    minAmount: Decimal!
+
+    """Defines how the minimum and maximum amounts were calculated."""
+    source: RateThresholdsSource!
+}
+
+enum RateThresholdsSource {
+    MANUAL_OVERRIDE
+    RECENT_BOOKINGS
+}
+
+"""Time frame to which the rate is applied."""
+enum RateTimeUnit {
+    PER_DAY
+    PER_WEEK
+    PER_STAY
+}
+
+enum RateType {
+    """net amount: gross amount - commission"""
+    NET
+
+    """gross amount"""
+    SELL
+}
+
+type Rating {
+    """rating category"""
+    category: String!
+
+    """value of the rating"""
+    value: String!
+}
+
+input RatingInput {
+    """rating category"""
+    category: String!
+
+    """value of the rating"""
+    value: String!
+}
+
+"""Type of fee in reconciliation."""
+enum ReconciliationFeeType {
+    RECONCILED_AMOUNT
+}
+
+"""Reconciliation eligibility collection"""
+type ReconEligibility {
+    """Reconcilable scenarios"""
+    validScenarios: [String!]
+
+    """irreconcilable scenarios collection"""
+    invalidScenarios: [InvalidScenario!]
+}
+
+input RefreshNotificationCallbackConfigSecretInput {
+    """Id of callback configuration to update"""
+    callbackConfigId: ID!
+}
+
+type RefreshNotificationCallbackConfigSecretPayload {
+    """Id of callback configuration whose secret is updated"""
+    callbackConfigId: ID!
+
+    """Callback Configuration secret string"""
+    secret: String!
+
+    """Secret expiration date time"""
+    secretExpirationDateTime: LocalDateTime!
+}
+
+input RefundReservationInput {
+    """The ID of the property where the change has been requested."""
+    propertyId: ID!
+
+    """Identifier associated with the reservation to be changed."""
+    reservationId: ID!
+
+    """Reason for cancelling the reservation"""
+    reason: ReservationRefundReason!
+
+    """Amount & currencyCode"""
+    refund: MoneyInput!
+}
+
+type RefundReservationPayload {
+    """Identifier associated with the reservation changed"""
+    reservation: Reservation
+}
+
+input RefundVrboReservationInput {
+    """Partner supplied Unique mutation identifier"""
+    clientMutationId: String
+
+    """The ID of the property where the change has been requested."""
+    propertyId: ID!
+
+    """Text containing the reason for refunding the reservation"""
+    freeTextReason: String!
+
+    """Amount & currencyCode"""
+    refund: RefundVrboReservationRefundInput!
+
+    """Identifier associated with the reservation to be refunded."""
+    reservationId: ID!
+}
+
+type RefundVrboReservationPayload {
+    """Identifier associated with the reservation changed"""
+    reservation: Reservation
+}
+
+input RefundVrboReservationRefundInput {
+    type: RefundVrboReservationRefundType!
+    flatAmount: MoneyInput!
+}
+
+enum RefundVrboReservationRefundType {
+    FLAT_AMOUNT
+}
+
+"""Government registration information for a given property."""
+type Registration {
+    """
+    Additional property registration information required by certain districts.
+    """
+    applicableRegulations: [ApplicableRegulations!]
+
+    """
+    Whether the property registration information is sufficient to fulfill the requirements of the property's district.
+    """
+    complete: Boolean!
+
+    """
+    List of registration information for the specified unit of a multi-unit property.
+    """
+    detail: RegistrationDetail!
+
+    """
+    Geographical jurisdiction identifier. For non-configured districts, this is null.
+    """
+    district: String
+}
+
+"""
+Registration information for each bookable unit of a multi-unit property.
+"""
+type RegistrationDetail {
+    """Acknowledgement records for the bookable unit."""
+    acknowledgementRecords: [AcknowledgementRecord!]!
+
+    """
+    Additional information about the bookable unit required by certain districts.
+    """
+    applicableRegulations: [ApplicableRegulations!]!
+
+    """Links for registration documentation files (if required)."""
+    attachmentUrls: [AttachmentUrl!]
+
+    """
+    Describes whether the unit is compliant with the local jurisdiction's regulatory requirements.
+    """
+    compliant: Compliant
+
+    """Registration number displayed to the traveler."""
+    displayRegistrationNumber: String
+
+    """List of exemptions for the property, such as maximum night cap."""
+    exemptionCategories: [ExemptionCategory!]
+
+    """Number of rooms in the bookable unit."""
+    numberOfPhysicalRooms: Int
+
+    """
+    Registration records for the bookable unit filed with the governing jurisdiction.
+    """
+    registrationRecords: [RegistrationRecord!]!
+
+    """
+    Property classification category as maintained by the governing jurisdiction.
+    """
+    regulatoryCategory: RegulatoryCategory!
+
+    """Regulatory category in the specified locale."""
+    regulatoryCategoryLabel: String!
+
+    """
+    Property subtype, such as primary or secondary, or null if not applicable.
+    """
+    regulatorySubType: String
+
+    """Property type, such as boat, trailer, residence, etc."""
+    regulatoryType: String
+
+    """Unit ID assigned by Expedia Group."""
+    unitId: ID!
+}
+
+"""
+Registration information for each bookable unit of a multi-unit property.
+"""
+input RegistrationDetailInput {
+    """Acknowledgement records for the bookable unit."""
+    acknowledgementRecords: [AcknowledgementRecordInput!]
+
+    """
+    Additional information about the bookable unit required by certain districts.
+    """
+    applicableRegulations: [ApplicableRegulationsInput!]
+
+    """Links for registration documentation files (if required)."""
+    attachmentUrls: [AttachmentUrlInput!]
+
+    """Registration number displayed to the traveler."""
+    displayRegistrationNumber: String
+
+    """List of exemptions for the property, such as maximum night cap."""
+    exemptionCategories: [ExemptionCategory!]
+
+    """Number of rooms in the bookable unit."""
+    numberOfPhysicalRooms: Int
+
+    """
+    Registration records for the bookable unit filed with the governing jurisdiction.
+    """
+    registrationRecords: [RegistrationRecordInput!]!
+
+    """
+    Property classification category as maintained by the governing jurisdiction.
+    """
+    regulatoryCategory: RegulatoryCategory!
+
+    """
+    Property subtype, such as primary or secondary, or null if not applicable.
+    """
+    regulatorySubType: String
+
+    """Property type, such as boat, trailer, residence, etc."""
+    regulatoryType: String!
+
+    """Unit ID assigned by Expedia Group."""
+    unitId: String!
+}
+
+"""Registration number requirements."""
+type RegistrationNumberRequirement {
+    """Whether pending applications are allowed to list."""
+    allowPendingRegistrations: Boolean!
+
+    """Sample format string to use as an example for partners."""
+    format: String
+
+    """Whether the registration expiration date is required."""
+    isExpirationDateRequired: Boolean!
+
+    """Whether the registration number is optional."""
+    isOptional: Boolean!
+
+    """Localized display name (such as みんぱく for Japan Minpaku)."""
+    localName: String
+
+    """Registration number type."""
+    numberType: RegistrationNumberType
+
+    """Label of the registration number."""
+    numberTypeLabel: String
+
+    """
+    Purpose of this requirement if other besides common regulatory validations.
+    """
+    purpose: Purpose
+
+    """Regex used to validate the syntax of the registration number."""
+    regex: String
+
+    """
+    Information about external validation parameters, if required for the registration number.
+    """
+    thirdPartyValidation: ThirdPartyValidation
+
+    """URL of a page that provides information about the number requirement."""
+    url: String
+}
+
+"""Types of registration numbers (licenses)."""
+enum RegistrationNumberType {
+    APPLICATION_NUMBER
+    AUSTRALIAN_BUSINESS_NUMBER
+    BIRTH_DATE
+    BOSTON_REGISTRATION_NUMBER
+    BUSINESS_ISSUING_REGISTRY
+    BUSINESS_LICENSE_NUMBER
+    BUSINESS_REGISTRATION_NUMBER
+    BUSINESS_TAX_ID
+    BUSINESS_TAX_RECEIPT_NUMBER
+    CADASTRAL_REFERENCE
+    CERTIFICATE_OF_USE_NUMBER
+    CITIZEN_ID
+    COUNTY_CODE
+    DATE
+    ENTITY_TYPE
+    FLOOR_SYSTEM_NUMBER
+    FOREIGN_ID
+    GENERAL_EXCISE_TAX_ID
+    HAS_AUSTRALIAN_BUSINESS_NUMBER
+    HOME_SHARING_NUMBER
+    HOME_SHARING_PERMIT_NUMBER
+    HOTEL_LICENSE
+    HOUSE_NUMBER
+    ISSUANCE_DATE
+    ISSUED_TAX_ID
+    IS_ADDRESS_IN_EU
+    IS_CONDITION
+    IS_GOVERNMENT_ENTITY
+    IS_IN_ZONING_PLAN
+    IS_PROFESSIONAL_HOST
+    IS_RESIDENCE_IN_EU
+    IS_TRADED
+    IS_VAT_REGISTERED
+    IS_ZONING_LAW_APPLIED
+    JOURNAL_NUMBER
+    LAND_REGISTRATION_NUMBER
+    LEGAL_ADDRESS
+    LICENSE_ID
+    LICENSE_NUMBER
+    MA_REGISTRATION_CERTIFICATE_NUMBER
+    NATIONAL_ADDRESS_NUMBER
+    NEIGHBORHOOD_NAME
+    OPERATOR_LICENCE_ID
+    OPERATOR_LICENSE_ID
+    OPERATOR_LICENSE_NUMBER
+    OPERATOR_PERMIT
+    OWNER_ID
+    OWNER_IS_CITIZEN
+    OWNER_NAME
+    OWNER_PERMIT
+    PARCEL_NUMBER_TAX_MAP_KEY
+    PARTIAL_TAX_ID
+    PERMANENT_ESTABLISHMENT_COUNTRY
+    PERMIT_NUMBER
+    PLANNING_NUMBER
+    PROPERTY_REGISTRY_NUMBER
+    PROVINCIAL_TOURIST_IDENTIFICATION_CODE
+    REGISTRATION_CERTIFICATE_NUMBER
+    REGISTRATION_NUMBER
+    RESORT_TAX_ID
+    SHORT_TERM_RENTAL_LICENSE
+    SPECIAL_OPERATION_SIGN
+    TAX_IDENTIFICATION_NUMBER
+    TOURIST_DEVELOPMENT_TAX_ACCOUNT_NUMBER
+    TRANSIENT_ACCOMMODATIONS_TAX_ID
+    TRANSIENT_REGISTRATION_NUMBER
+    VAT_ID
+    ZIPCODE
+}
+
+"""
+Registration record for the bookable unit that has been filed with the jurisdiction.
+"""
+type RegistrationRecord {
+    """Registration record expiration date in this format: yyyy-mm-dd."""
+    expiry: String
+
+    """Registration record ID."""
+    registrationNumber: String!
+
+    """Type of registration/license."""
+    registrationNumberType: RegistrationNumberType
+
+    """Localized registration number type."""
+    registrationNumberTypeLabel: String
+}
+
+"""
+Registration record for the bookable unit that has been filed with the governing jurisdiction.
+"""
+input RegistrationRecordInput {
+    """Registration record expiration date in this format: yyyy-mm-dd"""
+    expiry: String
+
+    """Registration record ID."""
+    registrationNumber: String!
+
+    """Type of registration/license."""
+    registrationNumberType: RegistrationNumberType
+}
+
+"""
+Key/value pair representing an individual attribute of a regulatory record
+"""
+type RegulatoryAttribute {
+    """Key identifying an individual attribute of a regulatory record"""
+    name: String!
+    validationResult: RegulatoryAttributeValidationResult!
+
+    """Value for the given key in the attribute"""
+    value: RegulatoryAttributeValue!
+}
+
+"""Key/value pair representing an individual attribute of a tax record"""
+input RegulatoryAttributeInput {
+    """Key identifying an individual attribute of a tax record"""
+    name: String!
+
+    """Value for the given key in the attribute"""
+    value: RegulatoryAttributeValueInput
+}
+
+type RegulatoryAttributeValidationResult {
+    messages: [String!]!
+    valid: Boolean!
+}
+
+type RegulatoryAttributeValue {
+    """Type for the regulatory attribute"""
+    type: String!
+
+    """Value for the given key in the attribute"""
+    value: String
+}
+
+input RegulatoryAttributeValueInput {
+    """Value for the given key in the attribute"""
+    value: String
+}
+
+"""Category values for regulatory categories."""
+enum RegulatoryCategory {
+    APARTMENT_HOTEL
+    BED_AND_BREAKFAST
+    CAMPING_SITES
+    EVENT
+    HOME_SHARING_NUMBER
+    HOSTEL
+    HOTEL
+    HOTEL_OR_BNB
+    HOTEL_RYOKAN
+    LONG_TERM_ONLY
+    MINPAKU
+    MOTEL
+    NO_LICENSE
+    PRIMARY_HOME
+    PRIMARY_HOME_WITH_EXCEPTION
+    PRIMARY_OR_SECONDARY
+    RURAL_LODGING
+    RYOKAN
+    SECONDARY_HOME
+    SHORT_TERM_RENTAL
+    SIMPLE_LODGING
+    SPECIAL
+    TRANSIENT_OCCUPANCY_RESIDENTIAL_STRUCTURE
+    VACATION_RENTAL
+    VACATION_RENTAL_OTHER
+}
+
+type RegulatoryPurposeValidationResult {
+    """Overall compliant status of the record for a given purpose"""
+    complianceStatusCode: String!
+
+    """Validation messages concerning the compliance status"""
+    messages: [String!]!
+}
+
+"""Values for regulatory status."""
+enum RegulatoryStatus {
+    """Listing meets all regulatory requirements."""
+    COMPLIANT
+
+    """
+    Listing meets requirements to remain listed, but will need to provide additional information (or other action) in order to not be delisted.
+    """
+    COMPLIANT_ACTION_NEEDED
+
+    """Listing's status cannot be determined"""
+    NONE
+
+    """
+    Platform does not allow listings in this jurisdiction; no actions from partner can affect status.
+    """
+    NOT_ALLOWED
+
+    """Listing does not meet all regulatory requirements and cannot be shown."""
+    NOT_COMPLIANT
+
+    """
+    Listing is not compliant, but enforcement hasn't started yet. Action should be taken for the listing to be compliant after enforcement date.
+    """
+    NOT_COMPLIANT_ACTION_NEEDED
+}
+
+"""Remittance Type"""
+enum RemittanceType {
+    NET
+    GROSS
+}
+
+input ReplaceCancellationPolicyConfigInput {
+    additionalCancellationFee: MoneyInput
+    clientMutationId: String
+    defaultPolicies: [CancellationPolicyInput!]!
+    id: ID!
+    name: String!
+    overridePolicies: [CancellationPolicyOverrideInput!]
+}
+
+type ReplaceCancellationPolicyConfigPayload {
+    cancellationPolicyConfig: CancellationPolicyConfig
+    clientMutationId: String
+}
+
+input ReplaceFeeSetInput {
+    businessModel: FeeBusinessModel!
+    clientMutationId: String
+    fees: [FeeInput!]!
+    id: ID!
+    name: String!
+    propertyId: ID!
+}
+
+type ReplaceFeeSetPayload {
+    clientMutationId: String
+    feeSet: FeeSet!
+}
+
+"""Reservation details."""
+type Reservation {
+    """Expedia id of the reservation"""
+    id: ID!
+
+    """Alternative IDs for the Reservation"""
+    alternativeIds: ReservationAlternativeIds!
+
+    """Details of the guests in the reservation"""
+    guests: ReservationGuests!
+
+    """Information on the statuses of the reservation"""
+    statuses: ReservationStatuses!
+
+    """Details on the cancellations if the reservation has been canceled"""
+    cancellation: ReservationCancellation
+
+    """
+    Indicates who the merchant of record for the reservation is. In other words, who collects the money from the traveler.
+    """
+    merchantOfRecord: MerchantOfRecord!
+
+    """Relevant dates for the reservation"""
+    stayDates: ReservationStayDates!
+
+    """Time stamp details for audit trails on the reservation"""
+    audit: ReservationAudit!
+
+    """Information about the distribution details of the reservation"""
+    distribution: ReservationDistribution!
+
+    """Policies attached to the Reservation"""
+    policies: ReservationPolicies!
+
+    """last updated Date Time"""
+    lastUpdatedDateTime: String!
+
+    """ID associated with the unit/room and source of the ID."""
+    unitIds: [IdNode!]!
+
+    """ID of the rate/rate plan and the source of the ID."""
+    rateIds: [IdNode!]!
+
+    """Source of the reservation."""
+    source: String!
+
+    """Bed type of the reservation."""
+    bedTypes: String
+
+    """Whether smoking is allowed for the reservation."""
+    smokingType: String!
+
+    """Entity that collects payment for the reservation."""
+    businessModel: BusinessModel!
+
+    """Guest loyalty tier. Values include MEMBER, VIP, PREMIUMVIP and null."""
+    loyaltyTier: String @deprecated(reason: "Use primaryGuest field")
+
+    """Count for all adult guests associated with the reservation."""
+    adultCount: Int!
+
+    """Count for all children associated with the reservation."""
+    childCount: Int!
+
+    """Count for all children associated with the reservation."""
+    childAges: [Int]
+
+    """Total number of guests associated with the reservation."""
+    totalGuestCount: Int!
+
+    """VRBO only, Count for all pets associated with the reservation."""
+    petCount: Int
+
+    """Accessibility requests made by the guest for the reservation."""
+    accessibilityText: [String!]
+
+    """
+    Text that is displayed to travelers if there is a multi-room booking associated with the reservation.
+    """
+    multiRoomText: String
+
+    """
+    Text that is displayed to travelers if there is a special request associated with the reservation.
+    """
+    specialRequest: String
+
+    """
+    Text that is displayed to travelers if a payment type is associated with the reservation.
+    """
+    paymentInstructions: String!
+
+    """
+    Text that is displayed to travelers if a payment type is associated with the reservation.
+    """
+    payment: Payment!
+
+    """Current status of the reservation."""
+    status: ReservationStatus!
+
+    """
+    Current sub status of the reservation, it is applicable for vrbo reservations only.
+    """
+    subStatus: String
+
+    """Eligibility of reconciling current reservation"""
+    reconciliationEligibility: ReconEligibility
+
+    """Value added Promotions"""
+    valueAddedPromotions: [ReservationValueAddedPromotion!]!
+
+    """the amounts for Core-OTA reservation"""
+    amounts: ReservationAmounts
+
+    """the amounts for VRBO reservation"""
+    vrboAmounts: VrboReservationAmounts
+
+    """The contact of the guest who made the reservation"""
+    guestContact: GuestContact @deprecated(reason: "Use primaryGuest field")
+
+    """Is the reservation reconciled"""
+    isReconciled: Boolean
+
+    """The reconciliation type of the reservation"""
+    reconciliationType: String
+
+    """
+    Travel Industry Designator Service is a unique code that allows a bookings to be recognized by industry suppliers
+    """
+    tidsCode: Int
+
+    """an array of IDs associated with the reservation"""
+    reservationIds: [IdNode!]!
+
+    """the reservation's arrival date (format: YYYY-MM-DD)"""
+    checkInDate: LocalDate!
+
+    """the reservation's departure date (format: YYYY-MM-DD)"""
+    checkOutDate: LocalDate!
+
+    """
+    a timestamp for when the reservation was created (format: YYYY-MM-DDThh:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+    """
+    creationDateTime: String!
+
+    """the Guest who made the booking"""
+    primaryGuest: Guest!
+
+    """the supplier amount for the reservation"""
+    supplierAmount: SupplierAmount
+
+    """the ID of the message thread associated with the reservation"""
+    messageThreadId: ID
+
+    """Operating Model of the Supplier for this Reservation"""
+    supplierOperatingModel: SupplierOperatingModel
+
+    """Inventory type used for this Reservation"""
+    inventoryType: InventoryType
+
+    """Remittance Type of the Reservation"""
+    remittanceType: RemittanceType
+
+    """Policy applied for cancelling the reservation"""
+    cancellationPolicy: ReservationCancellationPolicy
+}
+
+"""Alternative Ids for the Reservation"""
+type ReservationAlternativeIds {
+    """Supplier Id for the Reservation"""
+    supplierId: ID!
+}
+
+"""Amounts for Core-OTA reservation"""
+type ReservationAmounts {
+    """Summary list of the reservation amounts"""
+    summary: [ReservationPerStayAmount!]!
+
+    """Detailed (per-day) list of the reservation amounts"""
+    nightlyPayments: ReservationNightlyPayments!
+}
+
+"""Time stamp details for audit trails on the reservation"""
+type ReservationAudit {
+    """
+    A timestamp for when the reservation was created in UTC. (format: YYYY-MM-DDThh:mm:ssZ, with a time zone designator in the form +/-hh:mm)
+    """
+    creationDateTimeUtc: String!
+
+    """
+    A timestamp for when there was a last update on this reservation in UTC. (format: YYYY-MM-DDThh:mm:ssZ, with a time zone designator in the form +/-hh:mm)
+    """
+    lastUpdateDateTimeUtc: String!
+}
+
+"""Details on the Cancellation if the reservation has been canceled."""
+type ReservationCancellation {
+    """Indicates the point of sale of the booking"""
+    vrboPrimaryReason: VrboCancellationReason
+
+    """
+    Helps partners identify if a reservation is in a pending cancel request state
+    """
+    pendingCancellation: Boolean!
+}
+
+""" Only one of the fields percentage, flatAmount, and numberOfNights may be defined and correlate to the CancellationPenaltyRuleType field
+"""
+type ReservationCancellationPenaltyRule {
+    type: CancellationPenaltyRuleType!
+
+    """ Represented as a fraction of 1. Example: 15% should be represented as 0.15
+    """
+    percentage: Float
+
+    """ cancellation penalty amount for the reservation paid by the customer, minus the Expedia commission
+    """
+    costFlatAmount: Money
+
+    """ total cancellation penalty amount for the reservation paid by the customer, including the Expedia commission
+    """
+    priceFlatAmount: Money @deprecated(reason: "Use priceAmount field")
+
+    """ total cancellation penalty amount for the reservation paid by the customer, including the Expedia commission
+    """
+    priceAmount: Money
+    numberOfNights: Int
+}
+
+type ReservationCancellationPolicy {
+    """The effective policy for the reservation"""
+    effectivePolicy: EffectivePolicy
+    tiers: [ReservationCancellationPolicyTier!]
+}
+
+type ReservationCancellationPolicyTier {
+    cancellationWindow: CancellationPolicyCancellationWindow!
+    penaltyRule: ReservationCancellationPenaltyRule!
+}
+
+enum ReservationCancellationReason {
+    GUEST_REQUESTED_CANCEL
+    NO_SHOW
+    EXTENUATING_CIRCUMSTANCE
+    NATURAL_DISASTER
+}
+
+"""Reason for updating post stay the reservation."""
+enum ReservationChangeReason {
+    GUEST_REQUESTED_CHANGE
+    EXTENUATING_CIRCUMSTANCE
+    NATURAL_DISASTER
+    QUALITY_ISSUE
+}
+
+"""Reservation amount that applies to the a specific stay date"""
+type ReservationDailyAmount {
+    """Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...)"""
+    type: String!
+
+    """Description associated to the amount"""
+    description: String
+
+    """Amount date"""
+    date: LocalDate!
+
+    """Amount value"""
+    amount: Money!
+
+    """Percentage of amount (when applicable)"""
+    percent: Float
+}
+
+"""Distribution data on the Reservation"""
+type ReservationDistribution {
+    """Indicates the point of sale of the booking"""
+    reservationSource: String
+
+    """
+    Helps partners distinguish between a booking made on a vrbo platform vs all the other Expedia brands
+    """
+    distributionChannel: DistributionChannel!
+}
+
+type ReservationEdge {
+    """the cursor value for this edge"""
+    cursor: String!
+
+    """node points to the actual Reservation data"""
+    node: Reservation!
+}
+
+"""facilitates filtering reservations"""
+input ReservationFilterInput {
+    """
+    limit results to reservations with arrival date within the window defined by CheckInDateFilter
+    """
+    checkInDate: CheckInDateFilter
+
+    """
+    limit results to reservations with departure date within the window defined by CheckOutDateFilter
+    """
+    checkOutDate: CheckOutDateFilter
+
+    """list results with provided reservation ids"""
+    reservationIds: [IdNodeInput!]
+
+    """list results with provided reservation ids"""
+    ids: [ID!]
+
+    """
+    limit results to reservations with status defined by ReservationStatus's
+    """
+    status: [ReservationStatus]
+
+    """limit results to reservations with sub status of a reservation"""
+    subStatus: String
+
+    """
+    limit results to reservations with updated date time from the date defined by LastUpdatedDateTimeFilter
+    """
+    lastUpdatedDateTime: LastUpdatedDateTimeFilter
+}
+
+"""Details of the primary guest associated with the reservation"""
+type ReservationGuest {
+    """First Name of the Primary Guest"""
+    firstName: String
+
+    """Last Name of the Primary Guest"""
+    lastName: String
+
+    """email address of the Primary Guest"""
+    emailAddress: EmailAddress!
+
+    """Full phone number of the Primary Guest as entered on the point of sale"""
+    fullPhoneNumber: String
+}
+
+"""Details of the Guests"""
+type ReservationGuests {
+    """Details of the Primary Guest"""
+    primaryGuest: ReservationGuest!
+
+    """Count for all adult guests associated with the reservation."""
+    adultCount: Int!
+
+    """Count for all children associated with the reservation."""
+    childCount: Int!
+
+    """Count for all pets associated with the reservation."""
+    petCount: Int!
+}
+
+"""Source of a given reservation ID."""
+enum ReservationIdSource {
+    EXPEDIA
+    VRBO
+    SUPPLIER
+}
+
+"""
+A Reservation ID mapping type containing the mapped IDs and status info.
+"""
+type ReservationMapping {
+    """The applicable EG Property ID."""
+    egPropertyId: ID!
+
+    """An Error type containing the Error Code and Error message info."""
+    error: VrboIdMappingError
+
+    """Status for processing this mapping."""
+    mappingProcessingStatus: VrboMappingProcessingStatus!
+
+    """
+    An array of IDs containing the EG Reservation ID and the new Supplier Reservation ID.
+    """
+    reservationIds: [IdNode!]!
+}
+
+"""
+A Reservation Error mapping type containing the reservation IDs and Error message info.
+"""
+type ReservationMappingError {
+    """The applicable EG Property ID."""
+    egPropertyId: ID!
+
+    """The EG Reservation ID which failed mapping validation."""
+    egReservationId: ID!
+
+    """An Error type containing the Error Code and Error message info."""
+    error: VrboIdMappingError!
+}
+
+"""Detailed (per-day) list of the reservation amounts"""
+type ReservationNightlyPayments {
+    """Reservation amounts for a specific stay date"""
+    dailyAmounts: [ReservationDailyAmount!]!
+
+    """Reservation amounts that apply to the whole stay"""
+    perStayAmounts: [ReservationPerStayAmount!]!
+
+    """Cancellation amounts for the reservation"""
+    cancellationAmounts: [ReservationPerStayAmount!]!
+}
+
+"""Reservation Payment Status"""
+enum ReservationPaymentStatus {
+    UNPAID
+    PARTIAL_PAID
+    OVERPAID
+    PAID
+    EXTERNAL_SOR
+}
+
+"""Reservation amount that applies to the whole stay"""
+type ReservationPerStayAmount {
+    """Amount type (BASE, DISCOUNT, TAX, GUESS_PAYMENT, PAYOUT, ...)"""
+    type: String!
+
+    """Description associated to the amount"""
+    description: String
+
+    """Amount value"""
+    amount: Money!
+
+    """Percentage of amount (when applicable)"""
+    percent: Float
+}
+
+"""Details of the Policies associated with the reservation"""
+type ReservationPolicies {
+    """Penalty for cancelling the reservation"""
+    cancellationPolicy: ReservationCancellationPolicy!
+}
+
+"""Reason for cancelling pre stay reservation."""
+enum ReservationPreStayCancellationReason {
+    GUEST_REQUESTED_CANCEL
+    INVALID_PAYMENT_METHOD
+}
+
+"""Valid reasons for a good will refund."""
+enum ReservationRefundReason {
+    GUEST_SATISFACTION_REFUND
+    ACCESSIBILITY_ISSUE
+    AMENITY_ISSUE
+    ROOM_TYPE_ISSUE
+    SPECIAL_REQUEST_NOT_MET
+    SERVICE_ISSUE
+    LOYALTY_PERK_NOT_FULFILLED
+}
+
+"""represents a logical connection to reservations data"""
+type ReservationsConnection {
+    """the total number of reservations"""
+    totalCount: Int
+
+    """information about the current page of results"""
+    pageInfo: PageInfo
+
+    """
+    the edges in the connection to traverse, each contain a cursor and node
+    """
+    edges: [ReservationEdge]!
+}
+
+"""Status of the reservation."""
+enum ReservationStatus {
+    BOOKED
+    CANCELLED
+    COMPLETE
+    CONFIRMED
+    CREATED
+    DECLINED
+    IN_PROGRESS
+    INVALID
+    RESERVED
+
+    """Added because defined in LSGC"""
+    BUILDING
+    UNCONFIRMED
+    STAY_IN_PROGRESS
+    CANCELLED_BY_HOMEAWAY
+    CANCELLED_BY_OWNER
+    CANCELLED_BY_TRAVELER
+    CANCELLED_BY_SYSTEM
+    DECLINED_BY_OWNER
+    DECLINED_BY_SYSTEM
+    DECLINED_BY_TRAVELER_PAY_FAILURE
+    UNCONFIRMED_BY_OWNER
+    UNCONFIRMED_BY_TRAVELER
+    RAVELER_CANCEL_PENDING_BOOKING
+}
+
+"""Details of the Statuses on the reservation"""
+type ReservationStatuses {
+    """Status of the Reservation"""
+    status: ReservationStatus!
+}
+
+"""Relevant dates associated with the reservation"""
+type ReservationStayDates {
+    """the reservation's arrival date (format: YYYY-MM-DD)"""
+    checkInDate: LocalDate!
+
+    """the reservation's departure date (format: YYYY-MM-DD)"""
+    checkOutDate: LocalDate!
+}
+
+type ReservationValueAddedPromotion {
+    """id of the promotion"""
+    id: String!
+
+    """describes the promotion"""
+    description: String!
+}
+
+enum ResolutionStatus {
+    RESOLVED
+    UNRESOLVED_CHECKPOINT_SYSTEM_UNAVAILABLE
+    UNRESOLVED_PROPERTY_NOT_PROVISIONED
+}
+
+type Restrictions {
+    """
+    Setting this to true indicates that the promotion is targeted exclusively towards Expedia Group members whose loyalty drives bookings.
+    """
+    isMemberOnly: Boolean
+
+    """
+    It indicates if this promotion is applicable only for travelers booking on the mobile device.
+    This field will be null in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    isMobileUserOnly: Boolean
+
+    """
+    The minimum duration of stay for which the promotion can be applicable.
+    """
+    minLengthOfStay: Int
+
+    """
+    The maximum duration of stay for which the promotion can be applicable. The maximum value possible here is 28.
+    """
+    maxLengthOfStay: Int
+
+    """
+    The minimum number of days in advance the reservation must be made for the promotion to be applicable.
+    """
+    minAdvanceBookingDays: Int
+
+    """
+    The maximum number of days in advance the reservation must be made for the promotion to be applicable.
+    """
+    maxAdvanceBookingDays: Int
+
+    """
+    The Booking Date Time from which this promotion is applicable.
+    YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
+    """
+    bookingLocalDateTimeFrom: LocalDateTime
+
+    """
+    The Booking Date Time until which this promotion is applicable.
+    YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
+    """
+    bookingLocalDateTimeTo: LocalDateTime
+
+    """
+    The Travel date from which this promotion is applicable in YYYY-MM-DD format.
+    """
+    travelDateFrom: LocalDate
+
+    """
+    The Travel date until which this promotion is applicable in YYYY-MM-DD format.
+    """
+    travelDateTo: LocalDate
+
+    """
+    Applicable only for SAME_DAY_PROMOTION. The start time for the same day from which the promotion is applicable.
+    The timezone in consideration will be the local time for the property the promotion is applied for.
+    """
+    sameDayBookingStartTime: LocalTime
+}
+
+input RestrictionsCreateInput {
+    """
+    Setting this to true indicates that the promotion is targeted exclusively towards Expedia Group members whose loyalty drives bookings.
+    """
+    isMemberOnly: Boolean
+
+    """
+    It indicates if this promotion is applicable only for travelers booking on the mobile device.
+    This field will be null in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    isMobileUserOnly: Boolean
+
+    """
+    The minimum duration of stay for which the promotion can be applicable.
+    """
+    minLengthOfStay: Int
+
+    """
+    The maximum duration of stay for which the promotion can be applicable. The maximum value possible here is 28.
+    """
+    maxLengthOfStay: Int
+
+    """
+    The minimum number of days in advance the reservation must be made for the promotion to be applicable.
+    """
+    minAdvanceBookingDays: Int
+
+    """
+    The maximum number of days in advance the reservation must be made for the promotion to be applicable.
+    """
+    maxAdvanceBookingDays: Int
+
+    """
+    The Booking Date Time from which this promotion is applicable.
+    YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
+    """
+    bookingLocalDateTimeFrom: LocalDateTime!
+
+    """
+    The Booking Date Time until which this promotion is applicable.
+    YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
+    """
+    bookingLocalDateTimeTo: LocalDateTime!
+
+    """
+    The Travel date from which this promotion is applicable in YYYY-MM-DD format.
+    """
+    travelDateFrom: LocalDate!
+
+    """
+    The Travel date until which this promotion is applicable in YYYY-MM-DD format.
+    """
+    travelDateTo: LocalDate!
+
+    """
+    Applicable only for SAME_DAY_PROMOTION. The start time for the same day from which the promotion is applicable.
+    The timezone in consideration will be the local time for the property the promotion is applied for.
+    """
+    sameDayBookingStartTime: LocalTime
+}
+
+input RestrictionsUpdateInput {
+    """
+    Setting this to true indicates that the promotion is targeted exclusively towards Expedia Group members whose loyalty drives bookings.
+    """
+    isMemberOnly: Boolean
+
+    """
+    It indicates if this promotion is applicable only for travelers booking on the mobile device.
+    This field will be null in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    isMobileUserOnly: Boolean
+
+    """
+    The minimum duration of stay for which the promotion can be applicable.
+    """
+    minLengthOfStay: Int
+
+    """
+    The maximum duration of stay for which the promotion can be applicable. The maximum value possible here is 28.
+    """
+    maxLengthOfStay: Int
+
+    """
+    The minimum number of days in advance the reservation must be made for the promotion to be applicable.
+    """
+    minAdvanceBookingDays: Int
+
+    """
+    The maximum number of days in advance the reservation must be made for the promotion to be applicable.
+    """
+    maxAdvanceBookingDays: Int
+
+    """
+    The Booking Date Time from which this promotion is applicable.
+    YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
+    """
+    bookingLocalDateTimeFrom: LocalDateTime
+
+    """
+    The Booking Date Time until which this promotion is applicable.
+    YYYY-MM-DDThh:mm:ss . Timezone is the time with respect to the property location.
+    """
+    bookingLocalDateTimeTo: LocalDateTime
+
+    """
+    The Travel date from which this promotion is applicable in YYYY-MM-DD format.
+    """
+    travelDateFrom: LocalDate
+
+    """
+    The Travel date until which this promotion is applicable in YYYY-MM-DD format.
+    """
+    travelDateTo: LocalDate
+
+    """
+    Applicable only for SAME_DAY_PROMOTION. The start time for the same day from which the promotion is applicable.
+    The timezone in consideration will be the local time for the property the promotion is applied for.
+    """
+    sameDayBookingStartTime: LocalTime
+}
+
+enum ResultFilter {
+    FAILED
+    PASSED
+    UNRESOLVED
+}
+
+type Review {
+    """review text"""
+    body: LocalizedString!
+
+    """brand to which review belongs"""
+    brandName: String @deprecated(reason: "`brandName` field is deprecated, replace with `brandNameV2`, which contains the value from `ReviewBrand` enum")
+
+    """brandName to which review belongs"""
+    brandNameV2: ReviewBrand
+
+    """review create time in ISO format"""
+    createdDateTime: String!
+
+    """The review id form the domain reviews api"""
+    id: ID!
+
+    """flag to determine if partner would be able to respond to this review"""
+    isEligibleForResponse: Boolean
+
+    """review updated time in ISO format"""
+    lastUpdatedDateTime: String!
+
+    """review media content"""
+    media: ReviewMedia
+
+    """the property Ids"""
+    propertyId: [IdNode]
+
+    """
+    Reservation Details. The reservation details are from a cached source. This is not live reservation
+    """
+    reservation: ReviewReservation
+
+    """The owner submitted review response"""
+    response: OwnerResponse
+
+    """source of the review. PLATFORM or IMPORTED"""
+    source: String
+
+    """categorized ratings"""
+    starRatings: [Rating]!
+
+    """status of the review"""
+    status: String!
+
+    """title of the review"""
+    title: LocalizedString
+}
+
+type ReviewAggregatedScore {
+    """number of reviews for a particular category"""
+    reviewsCount: Int!
+
+    """aggregated score for a particular category"""
+    score: Float!
+}
+
+enum ReviewBrand {
+    CHEAP_TICKETS
+    EBOOKERS
+    EXPEDIA
+    HOTELS
+    HOTWIRE
+    LASTMINUTE
+    MR_JET
+    ORBITZ
+    OTHER
+    TRAVELOCITY
+    VRBO
+    WOTIF
+}
+
+"""Score for each category of Review"""
+type ReviewCategoryScore {
+    """Category to which rating is given; For example cleanliness, overall"""
+    category: String!
+    value: ReviewAggregatedScore!
+}
+
+input ReviewFilter {
+    """filter by brandNames"""
+    brandNames: [ReviewBrand!]
+
+    """filter reviews within created date range"""
+    createdDate: DateInput
+
+    """filter by owner response exist or not"""
+    hasOwnerResponse: Boolean
+
+    """filter by Reservation"""
+    reservation: ReviewReservationFilterInput
+
+    """Id of the review as in the Expedia review platform."""
+    reviewId: String
+
+    """filter by source eg: PLATFORM or IMPORTED"""
+    source: String
+
+    """filter reviews within updated date range"""
+    updatedDate: DateInput
+}
+
+type ReviewGuest {
+    """first name or nickname of the traveler"""
+    firstName: String!
+
+    """last name of the traveler"""
+    lastName: String!
+}
+
+type ReviewMedia {
+    """caption of image"""
+    caption: LocalizedString
+    highResolutionUrl: String
+    thumbnailUrl: String
+}
+
+type ReviewReservation {
+    """checkIn date for the reservation"""
+    checkInDate: LocalDate
+
+    """checkout date for the reservation"""
+    checkOutDate: LocalDate
+
+    """guest information"""
+    primaryGuest: ReviewGuest
+    reservationIds: [IdNode!]!
+
+    """status of the reservation"""
+    status: String
+}
+
+input ReviewReservationFilterInput {
+    """list reviews of provided reservation ids"""
+    reservationIds: [ReviewReservationIdNodeInput!]
+}
+
+input ReviewReservationIdNodeInput {
+    id: ID!
+    idSource: IdSource!
+}
+
+type ReviewResponse {
+    """
+    Represents the next page cursor in the list, Empty if no more pages available
+    """
+    cursor: String
+    reviews: [Review]!
+
+    """Total number of reviews returned that meet the search criteria"""
+    totalCount: Int!
+}
+
+input ReviewsOrderBy {
+    """Sort based on review created dateTime"""
+    createdDateTime: SortOrder
+
+    """Sort based on review updated dateTime"""
+    lastUpdatedDateTime: SortOrder
+
+    """Sort based on owner response created dateTime"""
+    ownerResponseCreatedDateTime: SortOrder
+
+    """Sort based on owner response updated dateTime"""
+    ownerResponseLastUpdatedDateTime: SortOrder
+
+    """Sort based on reservation checkIn date"""
+    reservationCheckInDate: SortOrder
+
+    """Sort based on reservation checkOut date"""
+    reservationCheckOutDate: SortOrder
+}
+
+input SendMessageInput {
+    """ UUID that uniquely identifies client's request """
+    clientMutationId: String
+    messageThreadId: ID!
+    body: String
+    attachmentIds: [ID!]
+}
+
+type SendMessagePayload {
+    """ UUID that uniquely identifies client's request """
+    clientMutationId: String
+
+    """ ID of the sent message """
+    messageId: ID!
+}
+
+input SendTestNotificationInput {
+    """Event type name for testing notifications"""
+    eventType: String!
+
+    """ Payload for testing notifications"""
+    payload: JSON!
+}
+
+type SendTestNotificationPayload {
+    """Outcome of the test payload sent"""
+    outcome: TestNotificationOutcome!
+
+    """
+    The HTTP status code returned by the endpoint to which the notification was delivered to.
+    """
+    httpStatusCode: Int
+
+    """
+    In the case of a failed test, this contains human readable description of any errors encountered when attempting to deliver the notification.
+    """
+    error: TestNotificationError
+}
+
+input SetMessageThreadSpamStatusInput {
+    """ UUID that uniquely identifies client's request """
+    clientMutationId: String
+
+    """ ID of the message thread to be marked as spam"""
+    id: ID!
+
+    """ Status of the message thread to be marked either spam or not spam"""
+    status: MessageThreadSpamStatus!
+}
+
+type SetMessageThreadSpamStatusPayload {
+    """ UUID that uniquely identifies client's request """
+    clientMutationId: String
+
+    """ ID of the message thread marked as spam"""
+    id: ID!
+}
+
+"""Unit level tax records"""
+input SetPropertyTaxRecordInput {
+    """List of constituent values for the tax record as key/value pairs"""
+    attributes: [RegulatoryAttributeInput!]
+
+    """Tax Category for the Property. Currently supported values: FREEMIUM"""
+    categoryCode: String!
+    clientMutationId: String
+
+    """Expedia Property ID for the Property the tax record applies to"""
+    propertyId: ID!
+}
+
+type SetPropertyTaxRecordPayload {
+    clientMutationId: String
+
+    """Tax records for the property after completion of the mutation"""
+    taxRecords: [TaxRecord!]!
+}
+
+"""
+Single discounts are ones that have a flat discount percentage (for eg: 15% off).
+"""
+type SingleDiscount implements Discount {
+    """Type of the discount."""
+    type: DiscountType!
+
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit!
+
+    """Value of the discount applied."""
+    value: Float!
+
+    """Member only discount value applied"""
+    memberOnlyAdditionalValue: Float
+}
+
+input SingleDiscountCreateInput {
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit!
+
+    """Value of the discount applied."""
+    value: Float!
+
+    """Member only discount value applied"""
+    memberOnlyAdditionalValue: Float
+}
+
+input SingleDiscountPromotionCreateInput {
+    """
+    Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
+    """
+    name: PromotionName!
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus!
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory!
+
+    """Name of the promotion as the partner wants to call it."""
+    code: String!
+
+    """List of restrictions that can be applied to these promotions."""
+    restrictions: RestrictionsCreateInput!
+
+    """The rate plans for which this promotion is applicable for."""
+    eligibleRatePlans: [EligibleRatePlanInput!]!
+
+    """
+    The 'exception' dates for which the promotion should NOT apply.
+    This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    blackoutDates: [BlackoutDateRangeInput!]!
+
+    """Detail of the actual discount being applied on the promotion."""
+    discount: SingleDiscountCreateInput!
+}
+
+input SingleDiscountPromotionUpdateInput {
+    """Id of the Promotion as stored in the Expedia platform."""
+    id: ID!
+
+    """
+    Name of the promotion. Values: BASIC, EARLY_BOOKING_PROMOTION or SAME_DAY_PROMOTION.
+    """
+    name: PromotionName
+
+    """Status of the promotion. Values: ACTIVE or INACTIVE."""
+    status: PromotionStatus
+
+    """
+    Category of the promotion. Currently only DISCOUNT_PROMOTION is supported (i.e Priced Promotions).
+    """
+    category: PromotionCategory
+
+    """Name of the promotion as the partner wants to call it."""
+    code: String
+
+    """List of restrictions that can be applied to these promotions."""
+    restrictions: RestrictionsUpdateInput
+
+    """The rate plans for which this promotion is applicable for."""
+    eligibleRatePlans: [EligibleRatePlanInput!]
+
+    """
+    The 'exception' dates for which the promotion should NOT apply.
+    This field will not be returned in the Query All promotions functionality and will ONLY be returned when querying for a Single Promotion (by specifying the promotion Id).
+    """
+    blackoutDates: [BlackoutDateRangeInput!]
+
+    """Detail of the actual discount being applied on the promotion."""
+    discount: SingleDiscountUpdateInput
+}
+
+input SingleDiscountUpdateInput {
+    """
+    Unit of the discount. Currently only PERCENT is supported for MVP for Create and Update. AMOUNT promotions are supported only for Read.
+    """
+    unit: DiscountUnit
+
+    """Value of the discount applied."""
+    value: Float
+
+    """Member only discount value applied"""
+    memberOnlyAdditionalValue: Float
+}
+
+type SmokingLocationPolicy {
+    allowed: Boolean!
+    allowedNote: [LocalizedString!]!
+}
+
+type SmokingPolicy {
+    allowed: Boolean!
+    indoorPolicy: SmokingLocationPolicy
+    note: [LocalizedString!]!
+    outdoorPolicy: SmokingLocationPolicy
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}
+
+type SpacesMetadata {
+    bathrooms: BathroomsMetadata!
+    bedrooms: BedroomsMetadata!
+    livingRooms: LivingRoomsMetadata!
+    offices: OfficesMetadata!
+}
+
+type Status {
+    reason: String
+    type: String!
+}
+
+type StatusCheckpoint {
+    checkpointByName(name: String!): StatusCheckpoint
+    checkpoints(filter: CheckpointFilterInput): [StatusCheckpoint!]
+
+    """
+    The number of checkpoint items associated with the property or unit if quantifiable
+    """
+    foundCount: Int
+
+    """Denotes if checkpoint conditions are satisfied"""
+    fulfilled: Boolean!
+
+    """UTC time when checkpoint was last evaluated"""
+    lastEvaluated: String!
+
+    """Maximum threshold allowed for checkpoint to be satisfied"""
+    maxCount: Int
+
+    """Minimum threshold required for checkpoint to be satisfied"""
+    minCount: Int
+
+    """Checkpoint name"""
+    name: String!
+
+    """
+    Ordered list of ancestor checkpoint nodes in the status calculation tree
+    """
+    path: [String!]!
+
+    """Denotes if the checkpoint status could be retrieved"""
+    resolutionStatus: ResolutionStatus!
+}
+
+input StatusInput {
+    reason: String
+    type: String!
+}
+
+type StayPolicy {
+    checkInPolicy: CheckInPolicy
+    checkOutPolicy: CheckOutPolicy
+    childrenPolicy: ChildrenPolicy
+    customPolicies: [CustomStayPolicy!]!
+    eventsPolicy: EventsPolicy
+    maxOccupancyPolicy: MaxOccupancyPolicy
+    petsPolicy: PetsPolicy
+    rentalAgreementUrl: Url
+    smokingPolicy: SmokingPolicy
+}
+
+type StayPolicyMetadata {
+    checkInPolicy: CheckInPolicyMetadata!
+    checkOutPolicy: CheckOutPolicyMetadata!
+    childrenPolicy: ChildrenPolicyMetadata!
+    customPolicies: [CustomStayPolicyMetadata!]!
+    eventsPolicy: EventsPolicyMetadata!
+    petsPolicy: PetsPolicyMetadata!
+}
+
+input SubscribeNotificationEventTypeInput {
+    """Event type name to subscribe"""
+    eventType: String!
+
+    """Id of callback configuration to associate the subscription"""
+    callbackConfigId: ID!
+}
+
+type SubscribeNotificationEventTypePayload {
+    """Name of the event type"""
+    eventType: String!
+
+    """Callback configuration information for the event type subscription"""
+    callbackConfig: NotificationCallbackConfig!
+}
+
+interface SupplierAmount {
+    """the rate type: NET for Expedia Collect and SELL for Hotel Collect"""
+    rateType: RateType!
+
+    """the currency in which the amount is shown"""
+    currencyCode: String!
+}
+
+type SupplierAmountCompensation {
+    """
+    Compensation base percentage, expressed as a fraction of 1 (so, for example, 0.25)
+    """
+    basePercent: Float
+
+    """
+    Accelerator percentage, expressed as a fraction of 1 (so, for example, 0.25)
+    """
+    acceleratorPercent: Float
+}
+
+"""Updated supplier amount of the reservation"""
+input SupplierAmountInput {
+    """map to currency in domain"""
+    currencyCode: String!
+
+    """the updated daily rates"""
+    rates: [SupplierRateInput!]!
+}
+
+"""Type of fee charged by the supplier."""
+enum SupplierFeeType {
+    BASE_RATE
+    EXTRA_GUEST_FEES
+    SERVICE_FEES
+    RECONCILED_AMOUNT
+}
+
+type SupplierLoyaltyPlanInfo {
+    """identifies the customer reward program"""
+    planCode: String
+
+    """membership number of the customer"""
+    membershipNumber: Int
+}
+
+"""Operation Model of the Supplier"""
+enum SupplierOperatingModel {
+    MERCHANT
+    AGENCY
+}
+
+type SupplierRate {
+    """Date when the rate becomes effective (format: YYYY-MM-DD)."""
+    fromDate: LocalDate!
+
+    """Date when the rate expires (format: YYYY-MM-DD)."""
+    toDate: LocalDate!
+
+    """Time unit of the rate."""
+    rateTimeUnit: RateTimeUnit!
+
+    """Itemized list of fees."""
+    rateItems: [SupplierRateItem!]!
+
+    """
+    Compensation information associated to the reservation for this date range
+    """
+    compensation: SupplierAmountCompensation!
+}
+
+"""Updated rate for an existing stay date/Rate for an extended stay date"""
+input SupplierRateInput {
+    """inclusive. Map to reconciliationAmount.stayDate in domain"""
+    fromDate: LocalDate!
+
+    """
+    exclusive. Since we only support PER_DAY, toDate should always be fromDate + 1
+    """
+    toDate: LocalDate!
+
+    """only PER_DAY is currently supported"""
+    rateTimeUnit: RateTimeUnit!
+
+    """the updated fee"""
+    rateItems: [SupplierRateItemInput!]!
+}
+
+type SupplierRateItem {
+    """Type of fee for this itemized rate."""
+    feeType: SupplierFeeType!
+
+    """Amount of the fee."""
+    amount: Float!
+}
+
+"""Updated fee"""
+input SupplierRateItemInput {
+    """
+    map to reconciliationAmount.type in domain. Map to RECONCILED_AMOUNT in domain.
+    """
+    feeType: ReconciliationFeeType!
+
+    """map to reconciliationAmount.amount in domain"""
+    amount: Float!
+}
+
+type SupplierTotal {
+    """Total amount of the fee before tax is applied."""
+    amountBeforeTax: Float!
+
+    """Total amount of the fee after tax is applied."""
+    amountAfterTax: Float!
+
+    """Compensation information associated to the reservation"""
+    compensation: SupplierAmountCompensation!
+}
+
+type Surcharge {
+    """
+    Defines the amount of the surcharge. Must be defined if type is not 'Free'.
+    """
+    amount: Decimal
+
+    """Defines the surcharge type."""
+    type: String!
+}
+
+type TaxRecord {
+    """List of attributes for the tax record"""
+    attributes: [RegulatoryAttribute!]!
+
+    """Category for the tax record."""
+    categoryCode: String!
+    validationResult: RegulatoryPurposeValidationResult!
+}
+
+type TestNotificationError {
+    """Code that reflects the specific error encountered during the test"""
+    code: String!
+
+    """Human readable message describing the error encountered"""
+    message: String!
+}
+
+enum TestNotificationOutcome {
+    SUCCESS
+    FAILURE
+}
+
+type Text {
+    key: String!
+    values: [LocalizedString!]!
+}
+
+input TextFiltersInput {
+    keys: OneOfStringFilterInput
+    locales: OneOfLocaleFilterInput
+}
+
+input TextInput {
+    key: String!
+    values: [LocalizedStringInput!]!
+}
+
+type TextMetadata {
+    key: String!
+}
+
+"""Third-party validation information."""
+type ThirdPartyValidation {
+    """
+    Attributes used to validate the registration number as provided by the third-party.
+    """
+    attributes: [String]
+
+    """Whether third-party validation is required."""
+    required: Boolean!
+}
+
+input TravelDateInput {
+    from: LocalDate
+    to: LocalDate
+}
+
+"""Travel Purpose type, used to identify business bookings."""
+enum TravelPurpose {
+    NONE
+    KNOWN_BUSINESS_VISIT
+    SUSPECTED_BUSINESS_VISIT
+    KNOWN_PERSONAL_VISIT
+    SUSPECTED_PERSONAL_VISIT
+}
+
+type UndeliveredNotification {
+    """Payload of the notification"""
+    notification: Notification!
+
+    """
+    This contains human readable description of any errors encountered when attempting to deliver the notification.
+    """
+    error: NotificationError
+}
+
+input UndeliveredNotificationsFiltersInput {
+    """ The event type """
+    eventType: String
+    creationDateTime: DateTimeRangeFilterInput
+}
+
+type UndeliveredNotificationsResponse {
+    """ Total number of notifications failed to deliver """
+    totalCount: Int!
+
+    """ Represents the next page cursor in the list, Empty if no more pages available
+    """
+    cursor: String
+
+    """ List of undelivered notifications """
+    elements: [UndeliveredNotification]!
+}
+
+"""Defines a Unit configuration."""
+type Unit {
+    id: ID!
+
+    """new listing discount"""
+    newListingDiscount: [PromotionEnrollment]
+
+    """Whether associated units are live in the EG system."""
+    activeStatus: ActiveStatus
+    ageCategories: [UnitAgeCategory!]!
+    amenities(filters: AmenitiesFiltersInput): [Amenity!]
+    area: PropertyUnitArea
+    bedGroups: [BedGroup!]!
+
+    """The cardinality of this Unit configuration on the Property"""
+    count: Int
+    extraBeds: [ExtraBedType!]!
+    ids: [IdNode]
+    maxOccupancy: UnitOccupancy!
+    nameConfig: UnitNameConfig!
+    propertyId: ID!
+    rateThresholds: RateThresholdSettings!
+
+    """Unit regulatory registration information."""
+    registration(locale: String): Registration
+    smokingPolicy: UnitSmokingPolicy!
+
+    """Represents container to group all available unit spaces."""
+    spaces: UnitSpaces
+}
+
+type UnitAgeCategory {
+    ageCategory: String!
+    minAge: Int!
+}
+
+type UnitNameAccessibility {
+    """
+    Attribute that adds the type of accessibility to be included in the name as specified, and will override includeAccessibility if present.
+    """
+    accessibilityTypeOverride: String!
+
+    """
+    Attribute that determines whether or not to include Accessible in the unit name.
+    """
+    includeAccessibility: Boolean!
+}
+
+type UnitNameAttributes {
+    """Attribute that determines if unit has accessibility."""
+    accessibility: UnitNameAccessibility!
+
+    """
+    Attribute that describes the details of the bedroom, which is used to compose the name.
+    """
+    bedroomDetails: String!
+
+    """
+    Attribute to add a custom label to the unit name, always used in the name if provided.
+    """
+    customLabel: String!
+
+    """
+    Attribute used to highlight a feature of the unit, which is used to compose the name.
+    """
+    featuredAmenity: String!
+
+    """
+    Attribute that determines whether or not to include bed type on the unit name.
+    """
+    includeBedType: Boolean!
+
+    """
+    Attribute that determines whether or not to include unit smoking preferences on the unit name.
+    """
+    includeSmokingPolicy: Boolean!
+
+    """
+    Attribute used to highlight the location of the unit, which is used to compose the name.
+    """
+    location: String!
+
+    """
+    Attribute that described the class of unit, which is used to compose the name, e.g Basic, Standard etc.
+    """
+    unitClass: String!
+
+    """
+    Attribute that determines the type of unit, which is used to compose the name, e.g Room, Apartment, Cabin etc.
+    """
+    unitType: String!
+
+    """
+    Attribute that gives additional information about the view of the unit, which is used to compose the name.
+    """
+    view: String!
+}
+
+type UnitNameConfig {
+    """Collection of attributes that can be used to build a unit name."""
+    attributes: UnitNameAttributes!
+
+    """
+    Contains either auto-generated attribute name or a predefined name, will return auto-generated name if attributes were provided.
+    """
+    value: String!
+}
+
+type UnitOccupancy {
+    """
+    Maximum number of adults that can reside in the unit, will be at least 1 and less than or equal to the total.
+    """
+    adults: Int!
+
+    """
+    Maximum number of children that can reside in the unit, will be less than the total.
+    """
+    children: Int!
+
+    """Total count of people that can reside in the unit, will be at least 1."""
+    total: Int!
+}
+
+"""
+Registration information for each bookable unit of a multi-unit property.
+"""
+type UnitRegistrationDetail {
+    """Acknowledgement records for the bookable unit."""
+    acknowledgementRecords: [AcknowledgementRecord!]!
+
+    """
+    Additional information about the bookable unit required by certain districts.
+    """
+    applicableRegulations: [ApplicableRegulations!]!
+
+    """Links for registration documentation files (if required)."""
+    attachmentUrls: [AttachmentUrl!]
+
+    """
+    Describes whether the unit is compliant with the local jurisdiction's regulatory requirements.
+    """
+    compliant: Compliant
+
+    """Registration number displayed to the traveler."""
+    displayRegistrationNumber: String
+
+    """List of exemptions for the property, such as maximum night cap."""
+    exemptionCategories: [ExemptionCategory!]
+
+    """Number of rooms in the bookable unit."""
+    numberOfPhysicalRooms: Int!
+
+    """
+    Registration records for the bookable unit filed with the governing jurisdiction.
+    """
+    registrationRecords: [RegistrationRecord!]!
+
+    """
+    Property classification category as maintained by the governing jurisdiction.
+    """
+    regulatoryCategory: RegulatoryCategory!
+
+    """Regulatory category in the specified locale."""
+    regulatoryCategoryLabel: String!
+
+    """
+    Property subtype, such as primary or secondary, or null if not applicable.
+    """
+    regulatorySubType: String
+
+    """Property type, such as boat, trailer, residence, etc."""
+    regulatoryType: String
+
+    """Unit ID assigned by Expedia Group."""
+    unitId: ID!
+
+    """Describes the warning status"""
+    warningStatus: WarningStatus
+}
+
+type UnitsMetadata {
+    amenities: [AmenityMetadata!]!
+    spaces: SpacesMetadata!
+}
+
+enum UnitSmokingPolicy {
+    NON_SMOKING
+    SMOKING
+    SMOKING_AND_NON_SMOKING
+}
+
+"""Represents container to group all available unit spaces."""
+type UnitSpaces {
+    bathrooms: [Bathroom!]
+    bedrooms: [Bedroom!]
+    diningRooms: [DiningRoom!]
+    livingRooms: [LivingRoom!]
+    offices: [Office!]
+}
+
+input UnsubscribeNotificationEventTypeInput {
+    """Event type name to unsubscribe from"""
+    eventType: String!
+}
+
+type UnsubscribeNotificationEventTypePayload {
+    """Name of the event type unsubscribed"""
+    eventType: String!
+}
+
+input UpdateAddressInput {
+    addressLines: [String!]
+    administrativeArea: String
+    countryCode: CountryCode
+    locality: String
+    postalCode: String
+}
+
+input UpdateAreaInput {
+    unit: AreaUnit
+    value: Int
+}
+
+input UpdateCheckInPolicyInput {
+    checkInPeriods: [ExactOrApproximateTimeRangeInput!]
+    minAge: CheckInPolicyMinAgeInput
+}
+
+input UpdateCheckOutPolicyInput {
+    checkOutTime: ExactOrApproximateTimeInput
+}
+
+input UpdateChildrenPolicyInput {
+    allowed: Boolean
+    allowedAges: [AgeRangeInput!]
+    childrenAllowedNote: [LocalizedStringInput!]
+    childrenNotAllowedNote: [LocalizedStringInput!]
+}
+
+input UpdateCustomStayPolicyInput {
+    description: [LocalizedStringInput!]!
+    key: String!
+}
+
+type UpdatedReviewResponse {
+    body: LocalizedString!
+    createdDateTime: String!
+    status: String!
+}
+
+input UpdateEventsPolicyInput {
+    allowed: Boolean
+    allowedEvents: AllowedEventsInput
+    note: [LocalizedStringInput!]
+}
+
+input UpdateImageInput {
+    active: Boolean
+    captions: [LocalizedStringInput!]
+    clientMutationId: String
+    featured: Boolean
+    id: ID!
+    order: Int
+    rotation: Int
+}
+
+type UpdateImagePayload {
+    clientMutationId: String
+    image: Image
+}
+
+input UpdateMaxOccupancyPolicyInput {
+    adultCount: Int
+    note: [LocalizedStringInput!]
+    totalGuestCount: Int
+}
+
+input UpdateNotificationCallbackConfigInput {
+    """Id of callback configuration to update"""
+    callbackConfigId: ID!
+
+    """Updated callback url of callback configuration"""
+    callbackUrl: Url
+
+    """Updated api key of callback configuration"""
+    apiKey: String
+
+    """Updated request timeout in seconds of callback configuration"""
+    requestTimeoutSeconds: Int
+
+    """Email address for correspondence"""
+    contactEmail: EmailAddress
+}
+
+type UpdateNotificationCallbackConfigPayload {
+    """Information about the updated Callback configuration"""
+    callbackConfig: NotificationCallbackConfig!
+}
+
+input UpdateNotificationEventTypeSubscriptionInput {
+    """Event type name"""
+    eventType: String!
+
+    """Id of callback configuration to associate the subscription"""
+    callbackConfigId: ID!
+}
+
+type UpdateNotificationEventTypeSubscriptionPayload {
+    """Name of the event type"""
+    eventType: String!
+
+    """Callback configuration information for the event type subscription"""
+    callbackConfig: NotificationCallbackConfig!
+}
+
+input UpdatePetsPolicyInput {
+    allowed: Boolean
+    allowedPets: AllowedPetsInput
+    note: [LocalizedStringInput!]
+}
+
+input UpdatePoliciesInput {
+    bookingPolicy: BookingPolicyInput
+    stayPolicy: UpdateStayPolicyInput
+}
+
+input UpdatePropertyInput {
+    address: UpdateAddressInput
+    amenities: [AmenityInput!]
+    clientMutationId: String
+    id: ID!
+    location: UpdatePropertyLocationInput
+    name: String
+    names: [LocalizedStringInput!]
+    policies: UpdatePoliciesInput
+    referenceName: String
+    text: [TextInput!]
+    type: String
+}
+
+enum UpdatePropertyListingBundleAdoptionType {
+    ALL
+    LIST
+}
+
+input UpdatePropertyLocationInput {
+    coordinates: CoordinatesInput
+    hideExactLocation: Boolean
+}
+
+type UpdatePropertyPayload {
+    clientMutationId: String
+    property: Property
+}
+
+input UpdatePropertyUnitInput {
+    amenities: [AmenityInput!]
+    area: UpdateAreaInput
+    clientMutationId: String
+    propertyId: ID!
+    unitId: ID!
+}
+
+type UpdatePropertyUnitPayload {
+    clientMutationId: String
+    unit: Unit!
+}
+
+input UpdateRatePlanInput {
+    baseRateGuestCount: Int
+    cancellationPolicyConfigId: ID
+    clientMutationId: ID
+    distributionRules: [RatePlanDistributionRuleInput!]
+    feeSetId: ID
+    id: ID!
+    name: String
+    paymentScheduleApplicable: Boolean
+    propertyId: ID!
+    restrictions: UpdateRatePlanRestrictionsInput
+    status: RatePlanStatus
+    taxInclusive: Boolean
+    unitId: ID!
+}
+
+type UpdateRatePlanPayload {
+    clientMutationId: String
+    ratePlan: RatePlan
+}
+
+input UpdateRatePlanRestrictionsInput {
+    advanceBookingDays: IntRangeInput
+    lengthOfStay: IntRangeInput
+    reservationDates: DateRangeInput
+    travelDates: DateRangeInput
+}
+
+input UpdateSmokingLocationPolicyInput {
+    allowed: Boolean
+    allowedNote: [LocalizedStringInput!]
+}
+
+input UpdateSmokingPolicyInput {
+    allowed: Boolean
+    indoorPolicy: UpdateSmokingLocationPolicyInput
+    note: [LocalizedStringInput!]
+    outdoorPolicy: UpdateSmokingLocationPolicyInput
+}
+
+input UpdateStayPolicyInput {
+    checkInPolicy: UpdateCheckInPolicyInput
+    checkOutPolicy: UpdateCheckOutPolicyInput
+    childrenPolicy: UpdateChildrenPolicyInput
+    customPolicies: [UpdateCustomStayPolicyInput!]
+    eventsPolicy: UpdateEventsPolicyInput
+    maxOccupancyPolicy: UpdateMaxOccupancyPolicyInput
+    petsPolicy: UpdatePetsPolicyInput
+    rentalAgreementUrl: Url
+    smokingPolicy: UpdateSmokingPolicyInput
+}
+
+"""Government registration information for a given property"""
+input UpdateUnitRegistrationInput {
+    """
+    Additional property registration information required by certain districts
+    """
+    applicableRegulations: [ApplicableRegulationsInput!]
+
+    """
+    List of registration information for each bookable unit of a multi-unit property
+    """
+    details: [RegistrationDetailInput!]!
+}
+
+input UpdateUnitSpacesBathroomInput {
+    amenities: [AmenityInput!]
+    id: ID!
+    order: Int
+    text: [TextInput!]
+    type: String
+}
+
+input UpdateUnitSpacesBedroomInput {
+    bedGroups: [BedGroupInput!]
+    id: ID!
+    order: Int
+    text: [TextInput!]
+}
+
+input UpdateUnitSpacesDiningRoomInput {
+    capacity: Int
+    id: ID!
+    order: Int
+}
+
+input UpdateUnitSpacesInput {
+    bathrooms: [UpdateUnitSpacesBathroomInput!]
+    bedrooms: [UpdateUnitSpacesBedroomInput!]
+    clientMutationId: String
+    diningRooms: [UpdateUnitSpacesDiningRoomInput!]
+    livingRooms: [UpdateUnitSpacesLivingRoomInput!]
+    offices: [UpdateUnitSpacesOfficeInput!]
+    propertyId: ID!
+    unitId: ID!
+}
+
+input UpdateUnitSpacesLivingRoomInput {
+    bedGroups: [BedGroupInput!]
+    id: ID!
+    order: Int
+    text: [TextInput!]
+}
+
+input UpdateUnitSpacesOfficeInput {
+    bedGroups: [BedGroupInput!]
+    id: ID!
+    order: Int
+    text: [TextInput!]
+}
+
+type UpdateUnitSpacesPayload {
+    clientMutationId: String
+    spaces: UnitSpaces!
+}
+
+"""Payload for sending one or many Property ID mappings."""
+input UpdateVrboSupplierPropertyIdsInput {
+    """The intended Advertiser ID associated with these updates."""
+    advertiserId: ID!
+
+    """A list of one or many Property ID mappings."""
+    vrboSupplierPropertyIdMappings: [VrboSupplierPropertyIdMappingInput!]!
+}
+
+"""Response object after successful Property ID mapping submission."""
+type UpdateVrboSupplierPropertyIdsPayload {
+    """The applicable Advertiser ID for the submitted mappings."""
+    advertiserId: ID!
+
+    """list of properties with error messages that errored while mapping"""
+    propertyMappingErrors: [PropertyMappingError!]!
+
+    """A playback of submitted Property ID mappings."""
+    vrboSupplierPropertyIdMappings: [VrboSupplierPropertyIdMapping!]!
+}
+
+"""Payload for sending one or many Reservation ID mappings."""
+input UpdateVrboSupplierReservationIdsInput {
+    """The intended Advertiser ID associated with these updates."""
+    advertiserId: ID!
+
+    """A list of one or many Reservation ID mappings."""
+    vrboSupplierReservationIdMappings: [VrboSupplierReservationIdMappingInput!]!
+}
+
+"""Response object after successful Reservation ID mapping submission."""
+type UpdateVrboSupplierReservationIdsPayload {
+    """The applicable Advertiser ID for the submitted mappings."""
+    advertiserId: ID!
+
+    """list of reservations with error messages that errored while mapping"""
+    reservationMappingErrors: [ReservationMappingError!]!
+
+    """A playback of submitted Reservation ID mappings."""
+    vrboSupplierReservationIdMappings: [VrboSupplierReservationIdMapping!]!
+}
+
+"""
+Represents a Uniform Resource Locator (URL), as defined by RFC 3986, serialized as a JSON string.
+"""
+scalar Url
+
+"""Cancel Policy Override for vrbo cancellation"""
+input VrboCancellationPolicyOverride {
+    overrideType: VrboCancellationPolicyOverrideType!
+    penalty: VrboCancellationPolicyPenalty
+}
+
+"""Possible override types on the vrbo cancellation"""
+enum VrboCancellationPolicyOverrideType {
+    PENALTY
+}
+
+input VrboCancellationPolicyPenalty {
+    """The penalty type for the cancellation"""
+    type: VrboCancellationPolicyPenaltyType!
+
+    """The percentage of the penalty for the cancellation"""
+    percent: Float
+}
+
+"""Possible penalty types on the vrbo cancellation penalty"""
+enum VrboCancellationPolicyPenaltyType {
+    PERCENT
+}
+
+"""Primary reasons for vrbo cancellation"""
+enum VrboCancellationReason {
+    DATES_BOOKED_ANOTHER_PLATFORM
+    EXTENUATING_CIRCUMSTANCE
+    GUEST_REQUESTED_CANCEL
+    HOUSE_RULES_CONFLICT
+    PAYMENT_NOT_RECEIVED
+    PROPERTY_SOLD_OWNERSHIP_CHANGE
+}
+
+"""
+Secondary reasons for vrbo cancellation. Only valid if CancellationReason is GUEST_REQUESTED_CANCEL
+"""
+enum VrboCancellationSecondaryReason {
+    CHANGED_DESTINATION
+    BOOKING_MISTAKE
+    CHANGE_OF_PLANS
+    CHANGE_DATES
+    CHANGE_GUESTS
+    OWNER_REQUEST
+    AMENITY_NOT_AVAILABLE
+    OWNER_DISAGREE
+    PAYMENT
+    OTHER
+}
+
+"""An Error type containing the Error Code and Error message info."""
+type VrboIdMappingError {
+    """An error code to identify error"""
+    code: String!
+
+    """
+    An error message associated with mapping ERROR to provide more details.
+    """
+    message: String!
+}
+
+"""
+A status type for returning current ID Mapping progress. This type is only applicable to Vrbo IPM Onboarding Software Switch and PPM --> IPM workflows.
+"""
+type VrboIdMappingProgress {
+    """The Advertiser ID an IPM is switching to."""
+    advertiserId: ID!
+
+    """A Property mappings type containing the Property Mapping Details"""
+    vrboIdPropertyMappings: VrboIdPropertyMappings!
+
+    """A Reservation mappings type containing the Reservation Mapping Details"""
+    vrboIdReservationMappings: VrboIdReservationMappings!
+}
+
+"""A Property mappings type containing the Property Mapping Details"""
+type VrboIdPropertyMappings {
+    """The timestamp for when this status record was created."""
+    createDateTime: String!
+
+    """
+    A list of Property IDs without mappings, discovered during mapping validation.
+    """
+    missingVrboIdMappingProperties: [ID!]!
+
+    """A list of EG Property IDs that the Partner wishes to archive."""
+    propertyIdsToArchive: [ID!]!
+
+    """The overall processing status for committed Property ID mappings."""
+    propertyMappingUpdateStatus: VrboOnboardingIdMappingStatus!
+
+    """A list of individual Property ID mappings."""
+    propertyMappings: [PropertyMapping!]!
+
+    """The timestamp for when this status record was updated."""
+    updateDateTime: String!
+}
+
+"""A Reservation mappings type containing the Reservation Mapping Details"""
+type VrboIdReservationMappings {
+    """The timestamp for when this status record was created."""
+    createDateTime: String!
+
+    """
+    A list of Reservation IDs without mappings, discovered during mapping validation.
+    """
+    missingVrboIdReservationMappings: [MissingVrboIdReservationMapping!]!
+
+    """The overall processing status for committed Reservation ID mappings."""
+    reservationMappingUpdateStatus: VrboOnboardingIdMappingStatus!
+
+    """A list of individual Reservation ID mappings."""
+    reservationMappings: [ReservationMapping!]!
+
+    """The timestamp for when this status record was updated."""
+    updateDateTime: String!
+}
+
+"""Available processing statuses for an individual ID Mapping submission."""
+enum VrboMappingProcessingStatus {
+    """Mapping processing is complete for this individual ID Mapping."""
+    MAPPED
+
+    """
+    There was a problem encountered during the processing of this individual ID Mapping. See the accompanying error message for details.
+    """
+    MAPPING_ERROR
+
+    """The default status upon submitting an ID Mapping."""
+    UNPROCESSED
+
+    """
+    After committing mappings by partner, this individual ID Mapping is validated by Expedia.
+    """
+    VALIDATED
+
+    """
+    After committing mappings by partner, this individual ID Mapping has validation Errors. See the accompanying error message for details.
+    """
+    VALIDATION_ERROR
+}
+
+"""The current processing status for an ID mapping submission."""
+type VrboMappingStatus {
+    """Advertiser ID for mapping submission."""
+    advertiserId: ID!
+
+    """The current status of ID mapping processing."""
+    vrboOnboardingIdMappingStatus: VrboOnboardingIdMappingStatus!
+}
+
+"""Status values for ID mapping processing stages."""
+enum VrboOnboardingIdMappingStatus {
+    """System has finished processing ID mappings."""
+    COMPLETE
+
+    """
+    There was a problem encountered during ID Mapping processing. See the accompanying error message for details.
+    """
+    ERROR
+
+    """System is processing ID mappings."""
+    IN_PROGRESS_WITH_EXPEDIA_GROUP
+
+    """Partner is submitting mappings for Property and Reservation IDs."""
+    IN_PROGRESS_WITH_PARTNER
+
+    """Expedia is validating mappings for Property and Reservation IDs."""
+    VALIDATION_IN_PROGRESS
+}
+
+"""VRBO reservation amount details"""
+type VrboReservationAmount {
+    """amount value for reservation"""
+    amount: Money!
+
+    """product code for reservation amount"""
+    productCode: String
+
+    """
+    Amount type (RENT, PARTNER_FEE, TRAVELER_SERVICE_FEE, PROPERTY_DAMAGE_PROTECTION, VRBO_REMITTED_LODGING_TAX, ...)
+    """
+    type: String!
+}
+
+"""Amounts for VRBO reservation"""
+type VrboReservationAmounts {
+    """Summary list of the reservation amounts"""
+    summary: [VrboReservationAmount!]!
+}
+
+"""A mapping of an EG Property ID to a current Supplier Property ID."""
+type VrboSupplierPropertyIdMapping {
+    """The EG Property ID for a given Property."""
+    egPropertyId: ID!
+
+    """The Supplier Property ID for a given Property."""
+    vrboSupplierPropertyId: ID!
+
+    """The Supplier Unit ID for this Property."""
+    vrboSupplierUnitId: ID!
+}
+
+"""A mapping of an EG Property ID to a current Supplier Property ID."""
+input VrboSupplierPropertyIdMappingInput {
+    """The EG Property ID for a given Property."""
+    egPropertyId: ID!
+
+    """The Supplier Property ID for a given Property."""
+    vrboSupplierPropertyId: String
+
+    """The Supplier Unit ID for this Property."""
+    vrboSupplierUnitId: String
+}
+
+"""A mapping object to return reservation IDs with EG Property ID."""
+type VrboSupplierReservationIdMapping {
+    """The applicable EG Property ID."""
+    egPropertyId: ID!
+
+    """
+    An array of IDs containing the EG Reservation ID and the new Supplier Reservation ID.
+    """
+    reservationIds: [IdNode!]!
+}
+
+"""
+A mapping of an EG Reservation ID to a current Supplier Reservation ID.
+"""
+input VrboSupplierReservationIdMappingInput {
+    """The EG Property ID for a given Reservation."""
+    egPropertyId: ID!
+
+    """The EG Reservation ID for a given Reservation."""
+    egReservationId: ID!
+
+    """The current Reservation Supplier ID for a given Reservation."""
+    vrboSupplierReservationId: String
+}
+
+"""Describes the warning codes"""
+type WarningStatus {
+    """Warning code."""
+    code: String!
+
+    """Description of the warning."""
+    description: String!
+}
+
+type Weight {
+    amount: Int!
+    weightUnit: BaseWeightUnit!
+}
+
+input WeightInput {
+    amount: Int!
+    weightUnit: BaseWeightUnit!
+}
+
+"""
+A type representing a date time with a timezone in format YYYY-MM-DDTHH:mm:ssTZD, TZD is a time zone designator in the form +/-hh:mm)
+"""
+scalar ZoneDateTime

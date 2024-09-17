@@ -1,0 +1,59 @@
+query PropertyUnitRegistrations(
+    $propertyID: String!,
+    $idSource: IdSource
+) {
+    property(id: $propertyID, idSource: $idSource) {
+        id
+        name
+        units {
+            id
+            propertyId
+            count
+            ids {
+                id
+                idSource
+            }
+            registration {
+                applicableRegulations {
+                    key
+                    value
+                }
+                complete
+                detail {
+                    acknowledgementRecords {
+                        acknowledgementType
+                        id
+                        lastUpdated
+                    }
+                    applicableRegulations {
+                        key
+                        value
+                    }
+                    attachmentUrls {
+                        key
+                        value
+                    }
+                    compliant {
+                        reason
+                        status
+                    }
+                    displayRegistrationNumber
+                    exemptionCategories
+                    numberOfPhysicalRooms
+                    registrationRecords {
+                        expiry
+                        registrationNumber
+                        registrationNumberType
+                        registrationNumberTypeLabel
+                    }
+                    regulatoryCategory
+                    regulatoryCategoryLabel
+                    regulatorySubType
+                    regulatoryType
+                    unitId
+                }
+                district
+            }
+        }
+    }
+}
