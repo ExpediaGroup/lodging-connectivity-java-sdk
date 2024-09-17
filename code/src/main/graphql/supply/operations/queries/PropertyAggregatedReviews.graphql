@@ -1,5 +1,9 @@
-query PropertyAggregatedReviews($propertyId: String!, $filters: AggregatedReviewsFiltersInput!) {
-    property(id: $propertyId) {
+query PropertyAggregatedReviews(
+    $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
+    $filters: AggregatedReviewsFiltersInput!
+) {
+    property(id: $propertyId, idSource: $idSource) {
         aggregatedReviews(filters: $filters) {
             brandsWithScores {
                 brandName

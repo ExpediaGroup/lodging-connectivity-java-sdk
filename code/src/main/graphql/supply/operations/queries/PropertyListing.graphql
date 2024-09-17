@@ -1,5 +1,9 @@
-query PropertyListings($propertyId: String!, $domains: [String!]!) {
-    property(id: $propertyId) {
+query PropertyListings(
+    $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
+    $domains: [String!]!
+) {
+    property(id: $propertyId, idSource: $idSource) {
         listings(domains: $domains) {
             locale
             url
