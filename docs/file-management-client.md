@@ -8,7 +8,7 @@ You can refer to the [configuration]() document to explore the full configuratio
 
 ### Initialize the Client
 ```java
-ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
+ClientConfiguration config = ClientConfiguration
         .builder()
         .key("KEY")
         .secret("SECRET")
