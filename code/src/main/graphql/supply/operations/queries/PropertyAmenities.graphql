@@ -1,6 +1,6 @@
 query PropertyAmenities(
     $propertyId: String!,
-    $idSource: IdSource,
+    $idSource: IdSource = EXPEDIA,
     $filters: AmenitiesFiltersInput
 ) {
     property(id: $propertyId, idSource: $idSource) {
