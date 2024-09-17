@@ -54,9 +54,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name | Type      | Required |
-|------|-----------|----------|
-| `Id` | `String!` | Yes      |
+| Name          | Type               | Required             |
+|---------------|--------------------|----------------------|
+| `Id`          | `String!`          | Yes                  |
+| `idSource`    | `IdSource`         | No (default EXPEDIA) |
+| `textFilters` | `TextFiltersInput` | No                   |
 
 <br />
 
@@ -82,7 +84,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 |---------------------------------|--------------------------|---------------------|
 | `propertyId`                    | `String!`                | Yes                 |
 | `pageSize`                      | `Int!`                   | Yes                 |
-| `after`                         | `String`                 | No                  |
+| `cursor`                        | `String`                 | No                  |
 | `filter`                        | `ReservationFilterInput` | No                  |
 | `checkOutDate`                  | `CheckOutDateFilter`     | No                  |
 | `includePaymentInstrumentToken` | `Boolean`                | No (default: false) |
@@ -93,6 +95,34 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/reservations_query/) 
 - [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReservations.graphql) 
+- [Reference]()
+
+</details>
+
+<hr />
+
+<details>
+   <summary>PropertyReservationsSummary</summary>
+
+<br />
+
+**Operation Class Name:** `PropertyReservationsQuery`
+
+**Operation Inputs:**
+
+| Name                            | Type                     | Required            |
+|---------------------------------|--------------------------|---------------------|
+| `propertyId`                    | `String!`                | Yes                 |
+| `pageSize`                      | `Int!`                   | Yes                 |
+| `cursor`                        | `String`                 | No                  |
+| `filter`                        | `ReservationFilterInput` | No                  |
+| `checkOutDate`                  | `CheckOutDateFilter`     | No                  |
+
+<br />
+
+**Resources**
+- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/reservations_query/)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReservations.graphql)
 - [Reference]()
 
 </details>
@@ -299,6 +329,31 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <hr />
 
 <details>
+   <summary>PropertyPolicies</summary>
+
+<br />
+
+**Operation Class Name:** `PropertyPolicies`
+
+**Operation Inputs:**
+
+| Name         | Type       | Required              |
+|--------------|------------|-----------------------|
+| `propertyId` | `String!`  | Yes                   |
+| `idSource`   | `IdSource` | No (default: EXPEDIA) |
+
+<br />
+
+**Resources**
+- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/messaging/reference/messagethreads_query/)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyMessageThreads.graphql)
+- [Reference]()
+
+</details>
+
+<hr />
+
+<details>
    <summary>PropertyPromotions</summary>
 <br />
 
@@ -363,6 +418,55 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 | `filter`     | `ReviewFilter`   | No       |
 | `pageSize`   | `Int!`           | Yes      |
 | `after`      | `String`         | No       |
+
+<br />
+
+**Resources**
+- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/reviews/reference/reviews_query/)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReviews.graphql)
+- [Reference]()
+
+</details>
+
+<hr />
+
+<details>
+   <summary>PropertyUnits</summary>
+<br />
+
+**Operation Class Name:** `PropertyUnitsQuery`
+
+**Operation Inputs:**
+
+| Name                  | Type       | Required              |
+|-----------------------|------------|-----------------------|
+| `propertyId`          | `String!`  | Yes                   |
+| `idSource`            | `IdSource` | No (default: EXPEDIA) |
+| `includeRegistration` | `Boolean`  | No (default: false)   |
+
+<br />
+
+**Resources**
+- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/reviews/reference/reviews_query/)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReviews.graphql)
+- [Reference]()
+
+</details>
+
+<hr />
+
+<details>
+   <summary>PropertyUnitsRegistration</summary>
+<br />
+
+**Operation Class Name:** `PropertyUnitsRegistrationQuery`
+
+**Operation Inputs:**
+
+| Name                  | Type       | Required              |
+|-----------------------|------------|-----------------------|
+| `propertyId`          | `String!`  | Yes                   |
+| `idSource`            | `IdSource` | No (default: EXPEDIA) |
 
 <br />
 
@@ -608,6 +712,30 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 </details>
 
 <hr />
+
+<details>
+   <summary>Unit</summary>
+<br />
+
+**Operation Class Name:** `UnitQuery`
+
+**Operation Inputs:**
+
+| Name | Type  | Required |
+|------|-------|----------|
+| `id` | `ID!` | Yes      |
+
+<br />
+
+**Resources**
+- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/undeliverednotifications_query/)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/UndeliveredNotifications.graphql)
+- [Reference]()
+
+</details>
+
+<hr />
+
 <br /><br />
 
 ### SupplyClient - Mutations
@@ -637,7 +765,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>ArchivePropertyIds</summary>
 
 <br />
@@ -659,7 +789,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CancelReservation</summary>
 
 <br />
@@ -681,7 +813,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CancelReservationReconciliation</summary>
 
 <br />
@@ -703,7 +837,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CancelVrboReservation</summary>
 
 <br />
@@ -725,7 +861,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>ChangeReservationReconciliation</summary>
 
 <br />
@@ -747,7 +885,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>ConfirmReservationNotification</summary>
 
 <br />
@@ -769,7 +909,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateCancellationPolicyConfig</summary>
 
 <br />
@@ -791,7 +933,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateDayOfWeekDiscountPromotion</summary>
 
 <br />
@@ -815,7 +959,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateFeeSet</summary>
 
 <br />
@@ -837,7 +983,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateMultiNightDiscountPromotion</summary>
 
 <br />
@@ -861,7 +1009,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateNotificationCallbackConfig</summary>
 
 <br />
@@ -883,7 +1033,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateProperty</summary>
 
 <br />
@@ -905,7 +1057,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreatePropertyImage</summary>
 
 <br />
@@ -927,7 +1081,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateRatePlan</summary>
 
 <br />
@@ -949,7 +1105,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateSingleDiscountPromotion</summary>
 
 <br />
@@ -973,7 +1131,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>CreateUnitSpaces</summary>
 
 <br />
@@ -995,7 +1155,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>DeleteImage</summary>
 
 <br />
@@ -1017,7 +1179,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>DeleteNotificationCallbackConfig</summary>
 
 <br />
@@ -1039,7 +1203,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>DeleteUnitSpace</summary>
 
 <br />
@@ -1061,7 +1227,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>DisableProperty</summary>
 
 <br />
@@ -1083,7 +1251,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>EnableProperty</summary>
 
 <br />
@@ -1105,7 +1275,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>JoinNewListingDiscount</summary>
 
 <br />
@@ -1128,7 +1300,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>RateGuest</summary>
 
 <br />
@@ -1152,7 +1326,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>RefreshNotificationCallbackConfigSecret</summary>
 
 <br />
@@ -1174,7 +1350,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>RefundReservation</summary>
 
 <br />
@@ -1196,7 +1374,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>ReplaceCancellationPolicyConfig</summary>
 
 <br />
@@ -1218,7 +1398,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>ReplaceFeeSet</summary>
 
 <br />
@@ -1240,30 +1422,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
-   <summary>SavePropertyContact</summary>
+<hr />
 
-<br />
-
-**Operation Class Name:** `SavePropertyContactMutation`
-
-**Operation Inputs:**
-
-| Name         | Type                        | Required |
-|--------------|-----------------------------|----------|
-| `contact`    | `SavePropertyContactInput!` | Yes      |
-| `propertyId` | `ID!`                       | Yes      |
-
-<br />
-
-**Resources**
-- ⚠️ Documentation is unavailable at the moment
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/SavePropertyContact.graphql)
-- [Reference]()
-
-</details>
-
-<hr /><details>
+<details>
    <summary>SendMessage</summary>
 
 <br />
@@ -1285,7 +1446,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>SendTestNotification</summary>
 
 <br />
@@ -1307,7 +1470,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>SetMessageThreadSpamStatus</summary>
 
 <br />
@@ -1329,7 +1494,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>SetPropertyTaxRecord</summary>
 
 <br />
@@ -1351,7 +1518,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>SetReviewResponse</summary>
 
 <br />
@@ -1376,7 +1545,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>SubscribeNotificationEventType</summary>
 
 <br />
@@ -1398,7 +1569,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UnsubscribeNotificationEventType</summary>
 
 <br />
@@ -1420,7 +1593,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateDayOfWeekDiscountPromotion</summary>
 
 <br />
@@ -1444,7 +1619,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateImage</summary>
 
 <br />
@@ -1466,7 +1643,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateMultiNightDiscountPromotion</summary>
 
 <br />
@@ -1490,7 +1669,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateNotificationCallbackConfig</summary>
 
 <br />
@@ -1512,7 +1693,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateNotificationEventTypeSubscription</summary>
 
 <br />
@@ -1534,7 +1717,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateProperty</summary>
 
 <br />
@@ -1556,7 +1741,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateRatePlan</summary>
 
 <br />
@@ -1578,7 +1765,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateSingleDiscountPromotion</summary>
 
 <br />
@@ -1602,7 +1791,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateUnit</summary>
 
 <br />
@@ -1624,7 +1815,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateUnitRegistration</summary>
 
 <br />
@@ -1649,7 +1842,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>UpdateUnitSpaces</summary>
 
 <br />
@@ -1671,7 +1866,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 </details>
 
-<hr /><details>
+<hr />
+
+<details>
    <summary>WithdrawNewListingDiscount</summary>
 
 <br />
