@@ -107,7 +107,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br />
 
-**Operation Class Name:** `PropertyReservationsQuery`
+**Operation Class Name:** `PropertyReservationsSummaryQuery`
 
 **Operation Inputs:**
 
@@ -124,7 +124,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/reservations_query/)
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReservations.graphql)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReservationsSummary.graphql)
 - [Reference]()
 
 </details>
@@ -354,8 +354,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <br />
 
 **Resources**
-- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/messaging/reference/messagethreads_query/)
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyMessageThreads.graphql)
+- ⚠️ Documentation is unavailable at the moment
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyPolicies.graphql)
 - [Reference]()
 
 </details>
@@ -383,30 +383,6 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/avail_and_rate_apis/promotions/reference/promotions_query/)
 - [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyPromotions.graphql)
-- [Reference]()
-
-</details>
-
-<hr />
-
-<details>
-   <summary>PropertyRegistration</summary>
-<br />
-
-**Operation Class Name:** `PropertyRegistrationQuery`
-
-**Operation Inputs:**
-
-| Name         | Type       | Required |
-|--------------|------------|----------|
-| `propertyId` | `String!`  | Yes      |
-| `idSource`   | `IdSource` | No       |
-
-<br />
-
-**Resources**
-- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/compliance/reference/registration_query/)
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyRegistration.graphql)
 - [Reference]()
 
 </details>
@@ -458,8 +434,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <br />
 
 **Resources**
-- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/reviews/reference/reviews_query/)
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReviews.graphql)
+- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/property_status/reference/property_query/)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyUnits.graphql)
 - [Reference]()
 
 </details>
@@ -482,8 +458,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <br />
 
 **Resources**
-- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/reviews/reference/reviews_query/)
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReviews.graphql)
+- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/compliance/reference/registration_query/)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyUnitsRegistration.graphql)
 - [Reference]()
 
 </details>
@@ -740,8 +716,8 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 <br />
 
 **Resources**
-- [Documentation](https://developers.expediagroup.com/supply/lodging/docs/property_mgmt_apis/notifications/reference/undeliverednotifications_query/)
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/UndeliveredNotifications.graphql)
+- ⚠️ Documentation is unavailable at the moment
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/Unit.graphql)
 - [Reference]()
 
 </details>
