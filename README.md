@@ -19,7 +19,7 @@ Make sure you have **Java 8** or higher.
 ```groovy
 // gradle.build
 dependencies {
-    implementation 'com.expediagroup:lodging-connectivity-java-sdk:1.0.0'
+    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.0-SNAPSHOT'
 }
 ```
 
@@ -28,11 +28,38 @@ dependencies {
 <!-- pom.xml -->
 <dependency>
     <groupId>com.expediagroup</groupId>
-    <artifactId>lodging-connectivity-java-sdk</artifactId>
-    <version>1.0.0</version>
+    <artifactId>lodging-connectivity-sdk</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
+>[!NOTE]
+> The SDK is currently published as SNAPSHOT versions, so you will need to configure your build tool to pull packages from the Maven snapshots repository
+> 
+> **Gradle**
+> ```groovy
+> repositories {
+>   maven {
+>      url "https://oss.sonatype.org/content/repositories/snapshots/"
+>    }
+> }
+> ```
+> 
+> **Gradle**
+> ```xml
+> <repositories>
+>    <repository>
+>        <id>sonatype-snapshots</id>
+>        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+>        <releases>
+>            <enabled>false</enabled>
+>        </releases>
+>        <snapshots>
+>            <enabled>true</enabled>
+>        </snapshots>
+>    </repository>
+> </repositories>
+> ```
 ## Quick Start
 Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains four different clients, each linked to a separate endpoint
 
