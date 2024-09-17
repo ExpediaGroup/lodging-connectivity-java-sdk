@@ -1,11 +1,4 @@
-repositories {
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
-}
-
 dependencies {
-    implementation 'com.expediagroup:lodging-connectivity-sdk:0.0.4-SNAPSHOT'
-//    implementation(project(":code"))
+    implementation(project(":code"))
 }
 
