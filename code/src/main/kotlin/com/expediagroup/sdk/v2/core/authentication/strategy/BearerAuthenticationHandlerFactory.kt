@@ -7,7 +7,7 @@ import com.expediagroup.sdk.v2.core.logging.LogMessageTag
 import com.expediagroup.sdk.v2.core.trait.authentication.CreateAuthenticationHandlerTrait
 import com.expediagroup.sdk.v2.core.trait.authentication.RefreshAccessTokenTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.AuthEndpointTrait
-import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfigurationTrait
+import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
 import com.expediagroup.sdk.v2.core.trait.configuration.KeyTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.SecretTrait
 import com.google.api.client.auth.oauth2.ClientCredentialsTokenRequest
@@ -22,7 +22,7 @@ import java.util.*
 object BearerAuthenticationHandlerFactory: CreateAuthenticationHandlerTrait {
 
     override fun createAuthenticationHandler(
-        config: ClientConfigurationTrait,
+        config: ClientConfiguration,
         transport: HttpTransport,
     ): RefreshAccessTokenTrait {
 

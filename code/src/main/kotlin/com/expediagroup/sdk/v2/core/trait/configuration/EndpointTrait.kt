@@ -1,5 +1,5 @@
 package com.expediagroup.sdk.v2.core.trait.configuration
 
-interface EndpointTrait: ClientConfigurationTrait {
+interface EndpointTrait: ClientConfiguration {
     fun getEndpoint(): String
 }

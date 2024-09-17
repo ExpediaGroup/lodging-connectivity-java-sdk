@@ -1,5 +1,5 @@
 package com.expediagroup.sdk.v2.core.trait.configuration
 
-interface KeyTrait: ClientConfigurationTrait {
+interface KeyTrait: ClientConfiguration {
     fun getKey(): String
 }
