@@ -1,4 +1,8 @@
-query DistrictByCoordinates($latitude: Float!, $longitude: Float!, $locale: String) {
+query DistrictByCoordinates(
+    $latitude: Float!,
+    $longitude: Float!,
+    $locale: String
+) {
     districtByCoordinates(latitude: $latitude, longitude: $longitude, locale: $locale) {
         id
         description

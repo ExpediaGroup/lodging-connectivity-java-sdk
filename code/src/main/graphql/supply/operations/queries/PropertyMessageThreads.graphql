@@ -1,12 +1,13 @@
 query PropertyMessageThreads(
     $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
     $filters: PropertyMessageThreadsFiltersInput!,
     $orderBy: PropertyMessageThreadsOrderByInput
-    $limit: Int,
+    $pageSize: Int,
     $cursor: String,
 ) {
-    property(id: $propertyId) {
-        messageThreads(filters: $filters, limit: $limit, cursor: $cursor, orderBy: $orderBy) {
+    property(id: $propertyId, idSource: $idSource) {
+        messageThreads(filters: $filters, limit: $pageSize, cursor: $cursor, orderBy: $orderBy) {
             cursor
             totalCount
             elements {

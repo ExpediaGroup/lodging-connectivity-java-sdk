@@ -1,12 +1,13 @@
 query PropertyReviews(
     $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
     $orderBy: ReviewsOrderBy,
     $filter: ReviewFilter,
     $pageSize: Int!,
-    $after: String
+    $cursor: String
 ) {
-    property(id: $propertyId) {
-        reviews(pageSize: $pageSize, orderBy: $orderBy, filter: $filter, after: $after) {
+    property(id: $propertyId, idSource: $idSource) {
+        reviews(pageSize: $pageSize, orderBy: $orderBy, filter: $filter, after: $cursor) {
             cursor
             reviews {
                 body {

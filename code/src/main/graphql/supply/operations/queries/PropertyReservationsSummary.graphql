@@ -1,11 +1,12 @@
 query PropertyReservationsSummary(
     $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
     $pageSize: Int!,
     $cursor: String,
     $filter: ReservationFilterInput,
     $checkOutDate: CheckOutDateFilter,
 ) {
-    property(id: $propertyId) {
+    property(id: $propertyId, idSource: $idSource) {
         reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $cursor) {
             totalCount
             pageInfo {
