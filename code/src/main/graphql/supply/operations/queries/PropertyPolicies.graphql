@@ -1,0 +1,179 @@
+query PropertyPolicies($propertyId: String!, $idSource: IdSource = EXPEDIA) {
+    property(id: $propertyId, idSource: $idSource) {
+        policies {
+            bookingPolicy {
+                allowedAgeCategories
+                bookingType
+                cancellationTime
+                cutoffDay
+                cutoffTime
+                acceptedPaymentForms {
+                    paymentCardDescriptors {
+                        code
+                        type
+                    }
+                    paymentInvoiceDescriptors {
+                        type
+                    }
+                }
+            }
+            cancellationPolicyConfigs {
+                id
+                name
+                additionalCancellationFee {
+                    amount
+                    currencyCode
+                }
+                defaultPolicies {
+                    type
+                    tiers {
+                        cancellationWindow {
+                            cutoff
+                            temporalUnit
+                        }
+                        penaltyRules {
+                            numberOfNights
+                            percentage
+                            type
+                            applicability
+                            flatAmount {
+                                amount
+                                currencyCode
+                            }
+                        }
+                    }
+                }
+                overridePolicies {
+                    cancellationPolicy {
+                        type
+                        tiers {
+                            cancellationWindow {
+                                cutoff
+                                temporalUnit
+                            }
+                            penaltyRules {
+                                numberOfNights
+                                percentage
+                                type
+                                applicability
+                                flatAmount {
+                                    amount
+                                    currencyCode
+                                }
+                            }
+                        }
+                    }
+                    dateRanges {
+                        from
+                        to
+                    }
+                }
+            }
+            stayPolicy {
+                rentalAgreementUrl
+                checkInPolicy {
+                    checkInPeriods {
+                        end {
+                            approximateTime
+                            exactTime
+                        }
+                        start {
+                            approximateTime
+                            exactTime
+                        }
+                    }
+                    minAge {
+                        note {
+                            locale
+                            value
+                        }
+                        value
+                    }
+                }
+                checkOutPolicy {
+                    checkOutTime {
+                        approximateTime
+                        exactTime
+                    }
+                }
+                childrenPolicy {
+                    allowed
+                    allowedAges {
+                        maxAge
+                        minAge
+                    }
+                    childrenAllowedNote {
+                        locale
+                        value
+                    }
+                    childrenNotAllowedNote {
+                        locale
+                        value
+                    }
+                }
+                customPolicies {
+                    key
+                    description {
+                        locale
+                        value
+                    }
+                }
+                eventsPolicy {
+                    allowed
+                    allowedEvents {
+                        maxAttendees
+                        types
+                    }
+                    note {
+                        locale
+                        value
+                    }
+                }
+                maxOccupancyPolicy {
+                    adultCount
+                    note {
+                        locale
+                        value
+                    }
+                    totalGuestCount
+                }
+                petsPolicy {
+                    allowed
+                    allowedPets {
+                        maxAllowed
+                        maxWeight {
+                            amount
+                            weightUnit
+                        }
+                        types
+                    }
+                    note {
+                        locale
+                        value
+                    }
+                }
+                smokingPolicy {
+                    allowed
+                    indoorPolicy {
+                        allowed
+                        allowedNote {
+                            locale
+                            value
+                        }
+                    }
+                    note {
+                        locale
+                        value
+                    }
+                    outdoorPolicy {
+                        allowed
+                        allowedNote {
+                            locale
+                            value
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

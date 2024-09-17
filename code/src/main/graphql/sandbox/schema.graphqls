@@ -43,6 +43,12 @@ type ChangeReservationStayDatesPayload {
     reservation: Reservation!
 }
 
+type CreateDatasetPayload {
+    clientMutationId: String
+    propertyId: String!
+    result: [String!]!
+}
+
 "Response payload to the createProperty mutation."
 type CreatePropertyPayload {
     "Client mutation ID. Optional value in the input that is echoed back in the response."
@@ -174,6 +180,11 @@ type Mutation {
     """
     deleteReservation(input: DeleteReservationInput!): DeleteReservationPayload!
     """
+    Creates test data for a given capability and scenario.
+    The mutation is currently setup to setup reservation specific test data but this can be extended to other capabilities.
+    """
+    setupTestData(input: SetupTestDataInput!): CreateDatasetPayload!
+    """
     Updates a property in the sandbox environment.
 
     The mutation accepts an optional name for the property. Unspecified
@@ -201,7 +212,7 @@ type Payment {
     "Type of payment instrument. Sandbox value is \"GUEST_CREDIT_CARD\" for HOTEL_COLLECT reservations and \"EXPEDIA_VIRTUAL_CARD\" for EXPEDIA_COLLECT reservations."
     paymentInstrumentType: String!
     "Randomly generated 3-digits verification number associated with the card."
-    verificationNumber: String!
+    verificationNumber: String
 }
 
 "Response object for property query."
@@ -266,7 +277,7 @@ type Reservation {
     "Bed type of the reservation."
     bedTypes: String
     "Source of the reservation booking."
-    bookingSource: BookingSource!
+    bookingSource: BookingSource! @deprecated(reason : "Use source field instead.")
     "Entity that collects payment for the reservation."
     businessModel: BusinessModel!
     "Check-in date (format: YYYY-MM-DD) of the reservation."
@@ -303,6 +314,8 @@ type Reservation {
     reservationIds: [IdNode!]!
     "Whether smoking is allowed for the reservation."
     smokingType: String!
+    "Source of the reservation booking."
+    source: String!
     "ext that is displayed to guests if there is a special request associated with the reservation."
     specialRequest: String
     "Current status of the reservation."
@@ -441,6 +454,20 @@ enum IdSource {
     VRBO
 }
 
+"Type of payment instrument."
+enum PaymentInstrumentTypeInput {
+    "Expedia collects payment via Bank Transfer."
+    BANK_TRANSFER
+    "Property collects payment via Cash."
+    CASH
+    "Expedia collects payment via Expedia Virtual card."
+    EXPEDIA_VIRTUAL_CARD
+    "Property collects payment via Guest credit card."
+    GUEST_CREDIT_CARD
+    "No payment instrument."
+    NONE
+}
+
 "Type of reconciliation that has been performed on the reservation."
 enum ReconciliationType {
     "Reservation was cancelled."
@@ -485,6 +512,16 @@ enum ReservationStatusInput {
     BOOKED
     "The reservation is cancelled."
     CANCELLED
+}
+
+enum TestDataCapability {
+    RESERVATION_CORE_OTA
+}
+
+enum TestDataScenario {
+    STEP_01_RES_CREATE_AND_CANCEL_RECON
+    STEP_02_SOFT_HARD_MOD_AND_CREATE_RES
+    STEP_03_SOFT_HARD_MOD
 }
 
 "An RFC-3339 compliant Full Date Scalar"
@@ -544,6 +581,8 @@ input CreateReservationInput {
     clientMutationId: String
     "Text that is displayed to guests if there are multiple rooms associated with the reservation."
     multiRoomText: String
+    "Type of payment instrument. Defaults to EXPEDIA_VIRTUAL_CARD in case of EXPEDIA_COLLECT else GUEST_CREDIT_CARD."
+    paymentInstrumentType: PaymentInstrumentTypeInput
     "Guest who made the reservation. Guest personal information cannot be set and is automatically generated."
     primaryGuest: GuestInput
     "Property id on which to associate the reservation."
@@ -604,6 +643,13 @@ input ReservationValueAddedPromotionInput {
     id: String!
 }
 
+input SetupTestDataInput {
+    capability: TestDataCapability!
+    clientMutationIds: String
+    propertyId: String
+    scenario: TestDataScenario!
+}
+
 "Details about the frequent traveler reward program."
 input SupplierLoyaltyPlanInfoInput {
     "Traveler's membership number."
@@ -641,7 +687,7 @@ input UpdateReservationInput {
     "Whether to send a notification upon the change of the reservation dates."
     sendNotification: Boolean
     "New special request text of the reservation."
-    specialRequestText: String
+    specialRequest: String
     "New status of the reservation."
     status: ReservationStatusInput
 }

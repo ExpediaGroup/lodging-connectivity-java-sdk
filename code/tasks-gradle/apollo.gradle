@@ -14,6 +14,7 @@ apollo {
         mapScalar("JSON", "java.lang.String")
         mapScalar("Decimal", "java.lang.String")
         mapScalar("CurrencyCode", "java.lang.String")
+        mapScalar("Currency", "java.lang.String")
         mapScalar("EmailAddress", "java.lang.String")
         mapScalar("CountryCode", "java.lang.String")
 

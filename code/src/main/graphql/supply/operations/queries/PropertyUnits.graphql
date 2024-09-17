@@ -1,0 +1,219 @@
+query PropertyUnits(
+    $propertyID: String!,
+    $idSource: IdSource,
+    $includeRegistration: Boolean! = false
+) {
+    property(id: $propertyID, idSource: $idSource) {
+        id
+        name
+        units {
+            id
+            propertyId
+            count
+            ids {
+                id
+                idSource
+            }
+            spaces {
+                bathrooms {
+                    amenities {
+                        key
+                        value {
+                            available
+                            fields {
+                                key
+                                type
+                                value {
+                                    feeValue {
+                                        type
+                                    }
+                                    measurementValue {
+                                        unitOfMeasure
+                                        value
+                                    }
+                                    textValue {
+                                        locale
+                                        value
+                                    }
+                                    value
+                                }
+                            }
+                        }
+                    }
+                    id
+                    order
+                    text {
+                        values {
+                            locale
+                            value
+                        }
+                        key
+                    }
+                    type
+                }
+                bedrooms {
+                    bedGroups {
+                        beds {
+                            quantity
+                            size
+                            type
+                        }
+                    }
+                    id
+                    order
+                    text {
+                        key
+                        values {
+                            locale
+                            value
+                        }
+                    }
+                }
+                diningRooms {
+                    capacity
+                    id
+                    order
+                }
+                livingRooms {
+                    bedGroups {
+                        beds {
+                            quantity
+                            size
+                            type
+                        }
+                    }
+                    id
+                    order
+                    text {
+                        key
+                        values {
+                            locale
+                            value
+                        }
+                    }
+                }
+                offices {
+                    bedGroups {
+                        beds {
+                            quantity
+                            size
+                            type
+                        }
+                    }
+                    id
+                    order
+                    text {
+                        key
+                        values {
+                            locale
+                            value
+                        }
+                    }
+                }
+            }
+            smokingPolicy
+            registration @include(if: $includeRegistration) {
+                applicableRegulations {
+                    key
+                    value
+                }
+                complete
+                detail {
+                    acknowledgementRecords {
+                        acknowledgementType
+                        id
+                        lastUpdated
+                    }
+                    applicableRegulations {
+                        key
+                        value
+                    }
+                    attachmentUrls {
+                        key
+                        value
+                    }
+                    compliant {
+                        reason
+                        status
+                    }
+                    displayRegistrationNumber
+                    exemptionCategories
+                    numberOfPhysicalRooms
+                    registrationRecords {
+                        expiry
+                        registrationNumber
+                        registrationNumberType
+                        registrationNumberTypeLabel
+                    }
+                    regulatoryCategory
+                    regulatoryCategoryLabel
+                    regulatorySubType
+                    regulatoryType
+                    unitId
+                }
+                district
+            }
+            rateThresholds {
+                maxAmount
+                minAmount
+                source
+            }
+            newListingDiscount {
+                enrolled
+                ineligibilityReasons
+                name
+                status
+            }
+            nameConfig {
+                attributes {
+                    accessibility {
+                        accessibilityTypeOverride
+                        includeAccessibility
+                    }
+                    bedroomDetails
+                    customLabel
+                    featuredAmenity
+                    includeBedType
+                    includeSmokingPolicy
+                    location
+                    unitClass
+                    unitType
+                    view
+                }
+                value
+            }
+            maxOccupancy {
+                adults
+                children
+                total
+            }
+            extraBeds {
+                quantity
+                size
+                surcharge {
+                    amount
+                    type
+                }
+                type
+            }
+            bedGroups {
+                beds {
+                    quantity
+                    size
+                    type
+                }
+            }
+            area {
+                unit
+                value
+            }
+            ageCategories {
+                ageCategory
+                minAge
+            }
+            activeStatus {
+                active
+            }
+        }
+    }
+}

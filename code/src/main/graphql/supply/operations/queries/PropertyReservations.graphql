@@ -1,14 +1,14 @@
 query PropertyReservations(
     $propertyId: String!,
-    $checkOutDate: CheckOutDateFilter,
-    $filter: ReservationFilterInput,
     $pageSize: Int!,
-    $after: String,
+    $cursor: String,
+    $filter: ReservationFilterInput,
+    $checkOutDate: CheckOutDateFilter,
     $includePaymentInstrumentToken: Boolean! =  false,
     $includeSupplierAmount: Boolean! = false
 ) {
     property(id: $propertyId) {
-        reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $after) {
+        reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $cursor) {
             totalCount
             pageInfo {
                 endCursor
@@ -18,58 +18,81 @@ query PropertyReservations(
                 cursor
                 node {
                     id
+                    checkInDate
+                    checkOutDate
+                    bedTypes
+                    childAges
+                    childCount
+                    accessibilityText
+                    adultCount
+                    petCount
+                    inventoryType
+                    isReconciled
+                    lastUpdatedDateTime
+                    merchantOfRecord
+                    messageThreadId
+                    multiRoomText
+                    creationDateTime
+                    reconciliationType
+                    remittanceType
+                    smokingType
+                    source
+                    specialRequest
+                    status
+                    subStatus
+                    tidsCode
+                    totalGuestCount
+                    paymentInstructions
+                    businessModel
+                    supplierOperatingModel
                     alternativeIds {
                         supplierId
                     }
-                    accessibilityText
-                    adultCount
                     amounts {
-                        nightlyPayments {
-                            cancellationAmounts {
-                                amount {
-                                    amount
-                                    currencyCode
-                                }
-                                description
-                                percent
-                                type
-                            }
-                            dailyAmounts {
-                                amount {
-                                    amount
-                                    currencyCode
-                                }
-                                date
-                                description
-                                percent
-                                type
-                            }
-                            perStayAmounts {
-                                amount {
-                                    amount
-                                    currencyCode
-                                }
-                                description
-                                percent
-                                type
-                            }
-                        }
                         summary {
+                            description
+                            percent
+                            type
                             amount {
                                 amount
                                 currencyCode
                             }
-                            description
-                            percent
-                            type
+                        }
+                        nightlyPayments {
+                            cancellationAmounts {
+                                description
+                                percent
+                                type
+                                amount {
+                                    amount
+                                    currencyCode
+                                }
+                            }
+                            dailyAmounts {
+                                date
+                                description
+                                percent
+                                type
+                                amount {
+                                    amount
+                                    currencyCode
+                                }
+                            }
+                            perStayAmounts {
+                                description
+                                percent
+                                type
+                                amount {
+                                    amount
+                                    currencyCode
+                                }
+                            }
                         }
                     }
                     audit {
                         creationDateTimeUtc
                         lastUpdateDateTimeUtc
                     }
-                    bedTypes
-                    businessModel
                     cancellation {
                         pendingCancellation
                         vrboPrimaryReason
@@ -86,25 +109,20 @@ query PropertyReservations(
                                 temporalUnit
                             }
                             penaltyRule {
+                                type
+                                numberOfNights
+                                percentage
                                 costFlatAmount {
                                     amount
                                     currencyCode
                                 }
-                                numberOfNights
-                                percentage
                                 priceAmount {
                                     amount
                                     currencyCode
                                 }
-                                type
                             }
                         }
                     }
-                    checkInDate
-                    checkOutDate
-                    childAges
-                    childCount
-                    creationDateTime
                     distribution {
                         distributionChannel
                         reservationSource
@@ -112,51 +130,41 @@ query PropertyReservations(
                     guests {
                         adultCount
                         childCount
-                        pets {
-                            travelingWithPets
-                        }
+                        petCount
                         primaryGuest {
-                            firstName
-                            lastName
                             emailAddress
+                            firstName
                             fullPhoneNumber
+                            lastName
                         }
                     }
-                    inventoryType
-                    isReconciled
-                    lastUpdatedDateTime
-                    merchantOfRecord
-                    messageThreadId
-                    multiRoomText
                     payment {
+                        status
+                        instructions
                         installments {
+                            dueDate
+                            installmentId
+                            paymentStatus
                             amount {
                                 amount
                                 currencyCode
                             }
                             distributions {
-                                amount {
-                                    currencyCode
-                                    amount
-                                }
                                 type
+                                amount {
+                                    amount
+                                    currencyCode
+                                }
                             }
-                            dueDate
-                            installmentId
-                            paymentStatus
                         }
-                        instructions
                         instrument {
+                            type
                             token @include(if: $includePaymentInstrumentToken) {
                                 expirationDateTime
                                 value
                             }
-                            type
                         }
-                        status
                     }
-                    paymentInstructions
-                    petCount
                     policies {
                         cancellationPolicy {
                             effectivePolicy {
@@ -170,17 +178,17 @@ query PropertyReservations(
                                     temporalUnit
                                 }
                                 penaltyRule {
+                                    type
+                                    numberOfNights
+                                    percentage
                                     costFlatAmount {
                                         amount
                                         currencyCode
                                     }
-                                    numberOfNights
-                                    percentage
                                     priceAmount {
                                         amount
                                         currencyCode
                                     }
-                                    type
                                 }
                             }
                         }
@@ -190,6 +198,7 @@ query PropertyReservations(
                         firstName
                         lastName
                         loyaltyTier
+                        travelPurpose
                         phoneNumbers {
                             areaCode
                             countryCode
@@ -199,29 +208,22 @@ query PropertyReservations(
                             membershipNumber
                             planCode
                         }
-                        travelPurpose
                     }
                     rateIds {
                         id
                         idSource
                     }
                     reconciliationEligibility {
+                        validScenarios
                         invalidScenarios {
                             reason
                             scenario
                         }
-                        validScenarios
                     }
-                    reconciliationType
-                    remittanceType
                     reservationIds {
                         id
                         idSource
                     }
-                    smokingType
-                    source
-                    specialRequest
-                    status
                     statuses {
                         status
                     }
@@ -229,25 +231,24 @@ query PropertyReservations(
                         checkInDate
                         checkOutDate
                     }
-                    subStatus
                     supplierAmount @include(if: $includeSupplierAmount) {
-                        currencyCode
-                        rateType
                         ... on ExpediaSupplierAmount {
                             currencyCode
                             rateType
+                            currencyCode
+                            rateType
                             rates {
+                                fromDate
+                                toDate
+                                rateTimeUnit
                                 compensation {
                                     acceleratorPercent
                                     basePercent
                                 }
-                                fromDate
                                 rateItems {
                                     amount
                                     feeType
                                 }
-                                rateTimeUnit
-                                toDate
                             }
                             total {
                                 amountAfterTax
@@ -259,9 +260,6 @@ query PropertyReservations(
                             }
                         }
                     }
-                    supplierOperatingModel
-                    tidsCode
-                    totalGuestCount
                     unitIds {
                         id
                         idSource
@@ -272,12 +270,12 @@ query PropertyReservations(
                     }
                     vrboAmounts {
                         summary {
+                            productCode
+                            type
                             amount {
                                 amount
                                 currencyCode
                             }
-                            productCode
-                            type
                         }
                     }
                 }
