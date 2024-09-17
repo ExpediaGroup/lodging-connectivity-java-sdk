@@ -1,12 +1,12 @@
 query PropertyReservationsSummary(
     $propertyId: String!,
-    $checkOutDate: CheckOutDateFilter,
-    $filter: ReservationFilterInput,
     $pageSize: Int!,
-    $after: String,
+    $cursor: String,
+    $filter: ReservationFilterInput,
+    $checkOutDate: CheckOutDateFilter,
 ) {
     property(id: $propertyId) {
-        reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $after) {
+        reservations(pageSize: $pageSize, checkOutDate: $checkOutDate, filter: $filter, after: $cursor) {
             totalCount
             pageInfo {
                 endCursor
@@ -16,17 +16,40 @@ query PropertyReservationsSummary(
                 cursor
                 node {
                     id
+                    checkInDate
+                    checkOutDate
+                    bedTypes
+                    childAges
+                    childCount
+                    accessibilityText
+                    adultCount
+                    petCount
+                    inventoryType
+                    isReconciled
+                    lastUpdatedDateTime
+                    merchantOfRecord
+                    messageThreadId
+                    multiRoomText
+                    creationDateTime
+                    reconciliationType
+                    remittanceType
+                    smokingType
+                    source
+                    specialRequest
+                    status
+                    subStatus
+                    tidsCode
+                    totalGuestCount
+                    paymentInstructions
+                    businessModel
+                    supplierOperatingModel
                     alternativeIds {
                         supplierId
                     }
-                    accessibilityText
-                    adultCount
                     audit {
                         creationDateTimeUtc
                         lastUpdateDateTimeUtc
                     }
-                    bedTypes
-                    businessModel
                     cancellation {
                         pendingCancellation
                         vrboPrimaryReason
@@ -43,25 +66,20 @@ query PropertyReservationsSummary(
                                 temporalUnit
                             }
                             penaltyRule {
+                                type
+                                numberOfNights
+                                percentage
                                 costFlatAmount {
                                     amount
                                     currencyCode
                                 }
-                                numberOfNights
-                                percentage
                                 priceAmount {
                                     amount
                                     currencyCode
                                 }
-                                type
                             }
                         }
                     }
-                    checkInDate
-                    checkOutDate
-                    childAges
-                    childCount
-                    creationDateTime
                     distribution {
                         distributionChannel
                         reservationSource
@@ -69,24 +87,14 @@ query PropertyReservationsSummary(
                     guests {
                         adultCount
                         childCount
-                        pets {
-                            travelingWithPets
-                        }
+                        petCount
                         primaryGuest {
-                            firstName
-                            lastName
                             emailAddress
+                            firstName
                             fullPhoneNumber
+                            lastName
                         }
                     }
-                    inventoryType
-                    isReconciled
-                    lastUpdatedDateTime
-                    merchantOfRecord
-                    messageThreadId
-                    multiRoomText
-                    paymentInstructions
-                    petCount
                     policies {
                         cancellationPolicy {
                             effectivePolicy {
@@ -100,17 +108,17 @@ query PropertyReservationsSummary(
                                     temporalUnit
                                 }
                                 penaltyRule {
+                                    type
+                                    numberOfNights
+                                    percentage
                                     costFlatAmount {
                                         amount
                                         currencyCode
                                     }
-                                    numberOfNights
-                                    percentage
                                     priceAmount {
                                         amount
                                         currencyCode
                                     }
-                                    type
                                 }
                             }
                         }
@@ -120,6 +128,7 @@ query PropertyReservationsSummary(
                         firstName
                         lastName
                         loyaltyTier
+                        travelPurpose
                         phoneNumbers {
                             areaCode
                             countryCode
@@ -129,29 +138,22 @@ query PropertyReservationsSummary(
                             membershipNumber
                             planCode
                         }
-                        travelPurpose
                     }
                     rateIds {
                         id
                         idSource
                     }
                     reconciliationEligibility {
+                        validScenarios
                         invalidScenarios {
                             reason
                             scenario
                         }
-                        validScenarios
                     }
-                    reconciliationType
-                    remittanceType
                     reservationIds {
                         id
                         idSource
                     }
-                    smokingType
-                    source
-                    specialRequest
-                    status
                     statuses {
                         status
                     }
@@ -159,10 +161,6 @@ query PropertyReservationsSummary(
                         checkInDate
                         checkOutDate
                     }
-                    subStatus
-                    supplierOperatingModel
-                    tidsCode
-                    totalGuestCount
                     unitIds {
                         id
                         idSource
