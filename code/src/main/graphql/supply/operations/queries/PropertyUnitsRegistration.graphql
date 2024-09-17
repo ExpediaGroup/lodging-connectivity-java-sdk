@@ -1,6 +1,6 @@
 query PropertyUnitRegistrations(
     $propertyID: String!,
-    $idSource: IdSource
+    $idSource: IdSource = EXPEDIA
 ) {
     property(id: $propertyID, idSource: $idSource) {
         id

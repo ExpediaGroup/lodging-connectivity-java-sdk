@@ -1,5 +1,9 @@
-query PropertyDistrict($propertyId: String!, $locale: String) {
-    property(id: $propertyId) {
+query PropertyDistrict(
+    $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
+    $locale: String
+) {
+    property(id: $propertyId, idSource: $idSource) {
         district(locale: $locale) {
             description
             id

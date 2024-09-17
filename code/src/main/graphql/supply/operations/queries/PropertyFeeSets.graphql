@@ -1,5 +1,9 @@
-query PropertyFeeSets($propertyId: String!, $filters: PropertyFeeSetsFiltersInput!,) {
-    property(id: $propertyId) {
+query PropertyFeeSets(
+    $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
+    $filters: PropertyFeeSetsFiltersInput!
+) {
+    property(id: $propertyId, idSource: $idSource) {
         feeSets(filters: $filters) {
             elements {
                 businessModel

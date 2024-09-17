@@ -1,10 +1,10 @@
 query MessageThread(
-    $messageThreadId: ID!,
-    $messagesLimit: Int,
-    $messagesCursor: String,
+    $id: ID!,
+    $pageSize: Int,
+    $cursor: String,
     $orderMessagesBy: MessageThreadMessagesOrderByInput
 ) {
-    messageThread(id: $messageThreadId) {
+    messageThread(id: $id) {
         id
         creationDateTimeUtc
         bookingInquiry {
@@ -33,7 +33,7 @@ query MessageThread(
             id
             petCount
         }
-        messages(limit: $messagesLimit, cursor: $messagesCursor, orderBy: $orderMessagesBy) {
+        messages(limit: $pageSize, cursor: $cursor, orderBy: $orderMessagesBy) {
             cursor
             totalCount
             elements {

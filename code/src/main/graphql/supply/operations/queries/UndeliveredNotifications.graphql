@@ -1,5 +1,5 @@
-query UndeliveredNotifications($filters: UndeliveredNotificationsFiltersInput!, $cursor: String, $limit: Int) {
-    undeliveredNotifications(filters: $filters, cursor: $cursor, limit: $limit) {
+query UndeliveredNotifications($filters: UndeliveredNotificationsFiltersInput!, $cursor: String, $pageSize: Int) {
+    undeliveredNotifications(filters: $filters, cursor: $cursor, limit: $pageSize) {
         cursor
         totalCount
         elements {
