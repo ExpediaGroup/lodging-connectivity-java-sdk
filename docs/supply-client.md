@@ -80,15 +80,16 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**   
 
-| Name                            | Type                     | Required            |
-|---------------------------------|--------------------------|---------------------|
-| `propertyId`                    | `String!`                | Yes                 |
-| `pageSize`                      | `Int!`                   | Yes                 |
-| `cursor`                        | `String`                 | No                  |
-| `filter`                        | `ReservationFilterInput` | No                  |
-| `checkOutDate`                  | `CheckOutDateFilter`     | No                  |
-| `includePaymentInstrumentToken` | `Boolean`                | No (default: false) |
-| `includeSupplierAmount`         | `Boolean`                | No (default: false) |
+| Name                            | Type                     | Required              |
+|---------------------------------|--------------------------|-----------------------|
+| `propertyId`                    | `String!`                | Yes                   |
+| `idSource`                      | `IdSource`               | No (default: EXPEDIA) |
+| `pageSize`                      | `Int!`                   | Yes                   |
+| `cursor`                        | `String`                 | No                    |
+| `filter`                        | `ReservationFilterInput` | No                    |
+| `checkOutDate`                  | `CheckOutDateFilter`     | No                    |
+| `includePaymentInstrumentToken` | `Boolean`                | No (default: false)   |
+| `includeSupplierAmount`         | `Boolean`                | No (default: false)   |
 
 <br />
 
@@ -110,13 +111,14 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name                            | Type                     | Required            |
-|---------------------------------|--------------------------|---------------------|
-| `propertyId`                    | `String!`                | Yes                 |
-| `pageSize`                      | `Int!`                   | Yes                 |
-| `cursor`                        | `String`                 | No                  |
-| `filter`                        | `ReservationFilterInput` | No                  |
-| `checkOutDate`                  | `CheckOutDateFilter`     | No                  |
+| Name           | Type                     | Required              |
+|----------------|--------------------------|-----------------------|
+| `propertyId`   | `String!`                | Yes                   |
+| `idSource`     | `IdSource`               | No (default: EXPEDIA) |
+| `pageSize`     | `Int!`                   | Yes                   |
+| `cursor`       | `String`                 | No                    |
+| `filter`       | `ReservationFilterInput` | No                    |
+| `checkOutDate` | `CheckOutDateFilter`     | No                    |
 
 <br />
 
@@ -138,10 +140,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type                    | Required |
-|--------------|-------------------------|----------|
-| `propertyId` | `String!`               | Yes      |
-| `filters`    | `AmenitiesFiltersInput` | No       |
+| Name         | Type                    | Required              |
+|--------------|-------------------------|-----------------------|
+| `propertyId` | `String!`               | Yes                   |
+| `idSource`   | `IdSource`              | No (default: EXPEDIA) |
+| `filters`    | `AmenitiesFiltersInput` | No                    |
 
 <br />
 
@@ -163,10 +166,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type      | Required |
-|--------------|-----------|----------|
-| `propertyId` | `String!` | Yes      |
-| `locale`     | `String`  | No       |
+| Name         | Type       | Required              |
+|--------------|------------|-----------------------|
+| `propertyId` | `String!`  | Yes                   |
+| `idSource`   | `IdSource` | No (default: EXPEDIA) |
+| `locale`     | `String`   | No                    |
 
 <br />
 
@@ -188,10 +192,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type                          | Required |
-|--------------|-------------------------------|----------|
-| `propertyId` | `String!`                     | Yes      |
-| `filters`    | `PropertyFeeSetsFiltersInput` | No       |
+| Name         | Type                          | Required              |
+|--------------|-------------------------------|-----------------------|
+| `propertyId` | `String!`                     | Yes                   |
+| `idSource`   | `IdSource`                    | No (default: EXPEDIA) |
+| `filters`    | `PropertyFeeSetsFiltersInput` | No                    |
 
 <br />
 
@@ -213,10 +218,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type         | Required |
-|--------------|--------------|----------|
-| `propertyId` | `String!`    | Yes      |
-| `domains`    | `[String!]!` | Yes      |
+| Name         | Type         | Required              |
+|--------------|--------------|-----------------------|
+| `propertyId` | `String!`    | Yes                   |
+| `idSource`   | `IdSource`   | No (default: EXPEDIA) |
+| `domains`    | `[String!]!` | Yes                   |
 
 <br />
 
@@ -258,10 +264,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type                 | Required |
-|--------------|----------------------|----------|
-| `propertyId` | `String!`            | Yes      |
-| `filters`    | `ImagesFiltersInput` | No       |
+| Name         | Type                 | Required              |
+|--------------|----------------------|-----------------------|
+| `propertyId` | `String!`            | Yes                   |
+| `idSource`   | `IdSource`           | No (default: EXPEDIA) |
+| `filters`    | `ImagesFiltersInput` | No                    |
 
 <br />
 
@@ -282,12 +289,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type                           | Required |
-|--------------|--------------------------------|----------|
-| `propertyId` | `String!`                      | Yes      |
-| `filters`    | `PropertyMessagesFiltersInput` | Yes      |
-| `limit`      | `Int`                          | No       |
-| `cursor`     | `String`                       | No       |
+| Name         | Type                            | Required              |
+|--------------|---------------------------------|-----------------------|
+| `propertyId` | `String!`                       | Yes                   |
+| `idSource`   | `IdSource`                      | No (default: EXPEDIA) |
+| `filters`    | `PropertyMessagesFiltersInput!` | Yes                   |
+| `pageSize`   | `Int`                           | No                    |
+| `cursor`     | `String`                        | No                    |
 
 <br />
 
@@ -309,13 +317,14 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type                                 | Required |
-|--------------|--------------------------------------|----------|
-| `propertyId` | `String!`                            | Yes      |
-| `filters`    | `PropertyMessageThreadsFiltersInput` | Yes      |
-| `orderBy`    | `PropertyMessageThreadsOrderByInput` | No       |
-| `limit`      | `Int`                                | No       |
-| `cursor`     | `String`                             | No       |
+| Name         | Type                                 | Required              |
+|--------------|--------------------------------------|-----------------------|
+| `propertyId` | `String!`                            | Yes                   |
+| `idSource`   | `IdSource`                           | No (default: EXPEDIA) |
+| `filters`    | `PropertyMessageThreadsFiltersInput` | Yes                   |
+| `orderBy`    | `PropertyMessageThreadsOrderByInput` | No                    |
+| `pageSize`   | `Int`                                | No                    |
+| `cursor`     | `String`                             | No                    |
 
 <br />
 
@@ -361,12 +370,13 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type           | Required |
-|--------------|----------------|----------|
-| `propertyId` | `String!`      | Yes      |
-| `filters`    | `FiltersInput` | No       |
-| `pageSize`   | `Int!`         | Yes      |
-| `after`      | `String`       | No       |
+| Name         | Type           | Required              |
+|--------------|----------------|-----------------------|
+| `propertyId` | `String!`      | Yes                   |
+| `filters`    | `FiltersInput` | No                    |
+| `idSource`   | `IdSource`     | No (default: EXPEDIA) |
+| `pageSize`   | `Int!`         | Yes                   |
+| `cursor`     | `String`       | No                    |
 
 <br />
 
@@ -411,13 +421,14 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type             | Required |
-|--------------|------------------|----------|
-| `propertyId` | `String!`        | Yes      |
-| `orderBy`    | `ReviewsOrderBy` | No       |
-| `filter`     | `ReviewFilter`   | No       |
-| `pageSize`   | `Int!`           | Yes      |
-| `after`      | `String`         | No       |
+| Name         | Type             | Required              |
+|--------------|------------------|-----------------------|
+| `propertyId` | `String!`        | Yes                   |
+| `idSource`   | `IdSource`       | No (default: EXPEDIA) |
+| `orderBy`    | `ReviewsOrderBy` | No                    |
+| `filter`     | `ReviewFilter`   | No                    |
+| `pageSize`   | `Int!`           | Yes                   |
+| `cursor`     | `String`         | No                    |
 
 <br />
 
@@ -487,10 +498,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name         | Type                            | Required |
-|--------------|---------------------------------|----------|
-| `propertyId` | `String!`                       | Yes      |
-| `filters`    | `AggregatedReviewsFiltersInput` | Yes      |
+| Name         | Type                             | Required              |
+|--------------|----------------------------------|-----------------------|
+| `propertyId` | `String!`                        | Yes                   |
+| `idSource`   | `IdSource`                       | No (default: EXPEDIA) |
+| `filters`    | `AggregatedReviewsFiltersInput!` | Yes                   |
 
 <br />
 
@@ -511,12 +523,12 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name       | Type        | Required |
-|------------|-------------|----------|
-| `id`       | `String!`   | Yes      |
-| `idSource` | `IdSource!` | Yes      |
-| `pageSize` | `Int`       | No       |
-| `cursor`   | `String`    | No       |
+| Name       | Type        | Required              |
+|------------|-------------|-----------------------|
+| `id`       | `String!`   | Yes                   |
+| `idSource` | `IdSource!` | No (default: EXPEDIA) |
+| `pageSize` | `Int`       | No                    |
+| `cursor`   | `String`    | No                    |
 
 <br />
 
@@ -610,9 +622,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 | Name              | Type                                | Required |
 |-------------------|-------------------------------------|----------|
-| `messageThreadId` | `ID!`                               | Yes      |
-| `messagesLimit`   | `Int`                               | No       |
-| `messagesCursor`  | `String`                            | No       |
+| `id`              | `ID!`                               | Yes      |
+| `pageSize`        | `Int`                               | No       |
+| `cursor`          | `String`                            | No       |
 | `orderMessagesBy` | `MessageThreadMessagesOrderByInput` | No       |
 
 <br />
@@ -696,11 +708,11 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name      | Type                                    | Required |
-|-----------|-----------------------------------------|----------|
-| `filters` | `UndeliveredNotificationsFiltersInput!` | Yes      |
-| `cursor`  | `String`                                | No       |
-| `limit`   | `Int`                                   | No       |
+| Name       | Type                                    | Required |
+|------------|-----------------------------------------|----------|
+| `filters`  | `UndeliveredNotificationsFiltersInput!` | Yes      |
+| `cursor`   | `String`                                | No       |
+| `pageSize` | `Int`                                   | No       |
 
 <br />
 
