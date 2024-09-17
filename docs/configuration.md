@@ -1,6 +1,6 @@
 # SDK Configuration
 
-The `ExpediaGroupClientConfiguration` object is used to configure the different clients provided by the SDK to interact with various endpoints and services. This section provides a detailed breakdown of how to configure these SDK clients and customize various settings.
+The `ClientConfiguration` object is used to configure the different clients provided by the SDK to interact with various endpoints and services. This section provides a detailed breakdown of how to configure these SDK clients and customize various settings.
 
 ## Basic Configuration
 
@@ -9,7 +9,7 @@ The essential configuration parameters are the `key` and `secret`. These are req
 ### Example:
 
 ```java
-ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
+ClientConfiguration config = ClientConfiguration
                     .builder()
                     .key("YOUR_API_KEY")
                     .secret("YOUR_API_SECRET")
@@ -87,14 +87,13 @@ ClientConfiguration config = ClientConfiguration
 
 ## Summary of Configuration Options
 
-| Parameter                 | Required | Description                                                        |
-|---------------------------|----------|--------------------------------------------------------------------|
-| `key`                     | Yes      | Your API key for authentication.                                   |
-| `secret`                  | Yes      | Your API secret for authentication.                                |
-| `endpoint`                | No       | Specifies the base URL for API requests.                           |
-| `authEndpoint`            | No       | Specifies a custom authentication endpoint.                        |
-| `connectionTimeout`       | No       | Time to wait when establishing a connection.                       |
-| `requestTimeout`          | No       | Time to wait for a response after sending a request.               |
-| `socketTimeout`           | No       | Time to wait for data while reading from the API.                  |
-| `maskedLoggingHeaders`    | No       | Headers that should be masked when logging.                        |
-| `maskedLoggingBodyFields` | No       | Fields in the request/response body that should be masked in logs. |
+| Parameter                 | Required | Description                                                               |
+|---------------------------|----------|---------------------------------------------------------------------------|
+| `key`                     | Yes      | Your API key for authentication.                                          |
+| `secret`                  | Yes      | Your API secret for authentication.                                       |
+| `environment`             | No       | Specifies the client environment (PROD, TEST, SANDBOX_PROD, SANDBOX_TEST) |
+| `connectionTimeout`       | No       | Time to wait when establishing a connection.                              |
+| `requestTimeout`          | No       | Time to wait for a response after sending a request.                      |
+| `socketTimeout`           | No       | Time to wait for data while reading from the API.                         |
+| `maskedLoggingHeaders`    | No       | Headers that should be masked when logging.                               |
+| `maskedLoggingBodyFields` | No       | Fields in the request/response body that should be masked in logs.        |
