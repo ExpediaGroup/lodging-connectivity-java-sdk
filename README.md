@@ -6,11 +6,11 @@ focus on their core business needs.
 With robust features and seamless integration, it enhances developer productivity, providing all necessary tools to efficiently query and mutate data from GraphQL APIs.
 
 ## Key Features
-1. **Pre-Built Operations for Lodging Connectivity GraphQL APIs**
-2. **Strongly Typed Responses**
-3. **Authentication & Automatic Token Renewal**
-4. **Logging & Sensitive Data Masking**
-5. **Error Handling**
+1. Pre-Built Operations for Lodging Connectivity GraphQL APIs
+2. Strongly Typed Responses
+3. Authentication & Automatic Token Renewal
+4. Logging & Sensitive Data Masking
+5. Error Handling
 
 ## Installation
 Make sure you have **Java 8** or higher.
@@ -36,10 +36,10 @@ dependencies {
 ## Quick Start
 Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains four different clients, each linked to a separate endpoint
 
-1. **Supply Client**
-2. **Payment Client**
-3. **Sandbox  Client**
-4. **File Management Client**
+1. Supply Client
+2. Payment Client
+3. Sandbox  Client
+4. File Management Client
 
 ### Typical Usage Flow
 Follow these three simple steps to start using any client in the SDK:
@@ -48,10 +48,10 @@ Follow these three simple steps to start using any client in the SDK:
 
    ```java
    ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
-     .builder()
-     .key("KEY")
-     .secret("SECRET")
-     .build();
+           .builder()
+           .key("KEY")
+           .secret("SECRET")
+           .build();
    ```
 
 2. Initialize a client.
@@ -62,3 +62,19 @@ Follow these three simple steps to start using any client in the SDK:
    ```java
    supplyClient.execute(/* GraphQL Operation */);
    ```
+
+## Documentation
+The list below lists detailed documentation files for some components of the SDK. Whether you're looking to configure the SDK, explore the pre-built GraphQL operations, or learn how to use specific clients, the following resources will guide you through all the necessary steps.
+
+1. [Supply Client Documentation](docs/supply-client.md)
+2. [Payment Client Documentation](docs/payment-client.md)
+3. [Sandbox Client Documentation](docs/sandbox-client.md)
+4. [File Managements Documentation](docs/file-management-client.md)
+5. [Configuration](docs/configuration.md)
+6. [Logging](docs/logging.md)
+7. [Exception Handling](docs/exception-handling.md)
+
+## Related Resources
+- [EG Connectivity Hub](https://developers.expediagroup.com/supply/lodging)
+- [EG Lodging Connectivity SDK GraphQL Operations Definitions](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations)
+- [EG Lodging Connectivity Node.JS SDK](https://github.com/ExpediaGroup/lodging-connectivity-nodejs-sdk)
