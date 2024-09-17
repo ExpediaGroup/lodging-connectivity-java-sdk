@@ -20,21 +20,12 @@ ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
 
 In addition to the basic configuration, the SDK offers several optional parameters to customize various aspects of the connection and request handling.
 
-### 1. **Endpoint (Optional)**
-
+### 1. **Client Environment (Optional)**
 ```java
-.endpoint("https://api.yourdomain.com")
+.environment(ClientEnvironment.PROD)
 ```
-- **Description**: This parameter allows you to specify a custom API domain.
-- **Default**: If not provided, the SDK uses the default API domain https://api.expediagroup.com.
-
-### 2. **Auth Endpoint (Optional)**
-
-```java
-.authEndpoint("https://auth.yourdomain.com")
-```
-- **Description**: If the API requires a separate authentication endpoint, this can be specified here.
-- **Default**: If not provided, the SDK uses the default authentication endpoint.
+- **Description**: This parameter allows you to run the client in different environments (PROD, TEST, SANDBOX_PROD, SANDBOX_TEST)
+- **Default**: If not provided, the SDK uses the default environment `PROD` which maps to https://api.expediagroup.com endpoint.
 
 ### 3. **Connection Timeout (Optional)**
 
@@ -81,12 +72,11 @@ In addition to the basic configuration, the SDK offers several optional paramete
 Here’s an example that uses all the available configuration options:
 
 ```java
-ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
+ClientConfiguration config = ClientConfiguration
                     .builder()
                     .key("YOUR_API_KEY")
                     .secret("YOUR_API_SECRET")
-                    .endpoint("https://api.yourdomain.com")
-                    .authEndpoint("https://auth.yourdomain.com")
+                    .environment(ClientEnvironment.PROD)
                     .connectionTimeout(5000)
                     .requestTimeout(5000)
                     .socketTimeout(5000)
