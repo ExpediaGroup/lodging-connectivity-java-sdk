@@ -34,6 +34,9 @@ dependencies {
     implementation 'com.apollographql.ktor:apollo-engine-ktor:0.0.2'
 
     /* EG SDK Core */
+    implementation("com.google.api-client:google-api-client:2.7.0")
+    implementation("com.ebay.ejmask:ejmask-api:1.0.3")
+    implementation("com.ebay.ejmask:ejmask-extensions:1.0.3")
     implementation 'org.slf4j:slf4j-simple:2.0.13'
     implementation 'io.ktor:ktor-client-core:2.3.10'
     implementation 'io.ktor:ktor-client-auth-jvm:2.3.10'
