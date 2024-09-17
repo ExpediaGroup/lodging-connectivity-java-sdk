@@ -1,11 +1,12 @@
 query PropertyPromotions(
     $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
     $filter: FiltersInput
     $pageSize: Int!,
-    $after: String,
+    $cursor: String,
 ) {
-    property(id: $propertyId) {
-        promotions(pageSize: $pageSize, after: $after, filter: $filter) {
+    property(id: $propertyId, idSource: $idSource) {
+        promotions(pageSize: $pageSize, after: $cursor, filter: $filter) {
             totalCount
             pageInfo {
                 endCursor

@@ -1,6 +1,12 @@
-query PropertyMessages($filters: PropertyMessagesFiltersInput!, $propertyId: String!, $cursor: String, $limit: Int) {
-    property(id: $propertyId) {
-        messages(filters: $filters, cursor: $cursor, limit: $limit) {
+query PropertyMessages(
+    $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
+    $cursor: String,
+    $pageSize: Int,
+    $filters: PropertyMessagesFiltersInput!
+) {
+    property(id: $propertyId, idSource: $idSource) {
+        messages(filters: $filters, cursor: $cursor, limit: $pageSize) {
             cursor
             totalCount
             elements {

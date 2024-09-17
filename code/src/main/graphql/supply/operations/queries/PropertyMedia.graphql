@@ -1,5 +1,9 @@
-query PropertyMedia($propertyId: String!, $filters: ImagesFiltersInput) {
-    property(id: $propertyId) {
+query PropertyMedia(
+    $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
+    $filters: ImagesFiltersInput
+) {
+    property(id: $propertyId, idSource: $idSource) {
         media {
             images(filters: $filters) {
                 elements {

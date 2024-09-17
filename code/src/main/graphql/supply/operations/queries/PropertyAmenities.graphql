@@ -1,5 +1,9 @@
-query PropertyAmenities($propertyId: String!, $filters: AmenitiesFiltersInput) {
-    property(id: $propertyId) {
+query PropertyAmenities(
+    $propertyId: String!,
+    $idSource: IdSource = EXPEDIA,
+    $filters: AmenitiesFiltersInput
+) {
+    property(id: $propertyId, idSource: $idSource) {
         amenities(filters: $filters) {
             key
             value {
