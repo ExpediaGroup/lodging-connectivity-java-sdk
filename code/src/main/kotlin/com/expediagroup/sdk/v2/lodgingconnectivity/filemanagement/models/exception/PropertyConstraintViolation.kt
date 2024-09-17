@@ -13,9 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.sdk.v2.core.model
+
+
+package com.expediagroup.sdk.v2.lodgingconnectivity.filemanagement.models.exception
 
 /**
- * A representation of nothingness. Philosophers have debated the existence of nothing for centuries, but we have finally found it.
+ * An entity to represent a constraint violation of a property.
+ *
+ * @property name The name of the constraint-violated field
+ * @property path The path of the constraint-violated field
+ * @property message The constraint violation message
  */
-data object Nothing
+data class PropertyConstraintViolation(
+    val name: String,
+    val path: String,
+    val message: String
+)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Expedia, Inc.
+ * Copyright (C) 2024 Expedia, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.sdk.v2.core.constant
 
-internal object HeaderKey {
-    const val PAGINATION_TOTAL_RESULTS = "pagination-total-results"
+package com.expediagroup.sdk.v2.lodgingconnectivity.graphql
 
-    const val LINK = "link"
+import com.apollographql.apollo.api.Mutation
+import com.apollographql.apollo.api.Query
 
-    const val TRANSACTION_ID = "transaction-id"
-
-    const val X_SDK_TITLE = "x-sdk-title"
+interface GraphQLExecutor {
+    fun <T : Query.Data> execute(query: Query<T>): T
+    fun <T : Mutation.Data> execute(mutation: Mutation<T>): T
 }

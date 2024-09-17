@@ -16,6 +16,7 @@
 package com.expediagroup.sdk.v2.core.model
 
 import com.google.api.client.http.HttpContent
+import com.expediagroup.sdk.core.model.TransactionId
 
 abstract class Operation<T>(
     val url: String,

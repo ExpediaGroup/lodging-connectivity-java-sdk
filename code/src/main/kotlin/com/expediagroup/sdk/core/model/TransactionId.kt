@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.sdk.v2.core.constant
+package com.expediagroup.sdk.core.model
 
-internal object Key {
-    const val CLIENT_KEY = "client_key"
+import java.util.UUID
 
-    const val CLIENT_SECRET = "client_secret"
+class TransactionId {
+    private var transactionId: UUID = UUID.randomUUID()
 
-    const val ENDPOINT = "endpoint"
+    fun peek(): UUID {
+        return transactionId
+    }
 
-    const val AUTH_ENDPOINT = "auth_endpoint"
+    fun dequeue(): UUID {
+        return transactionId.also { transactionId = UUID.randomUUID() }
+    }
 }

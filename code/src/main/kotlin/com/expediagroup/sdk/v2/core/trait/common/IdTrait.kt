@@ -5,4 +5,5 @@ import java.util.UUID
 
 interface IdTrait: Trait {
     val id: UUID
+        get() = UUID.randomUUID()
 }

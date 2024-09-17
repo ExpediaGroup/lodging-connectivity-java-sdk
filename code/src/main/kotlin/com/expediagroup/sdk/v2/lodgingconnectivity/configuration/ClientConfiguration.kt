@@ -1,6 +1,10 @@
-package com.expediagroup.sdk.lodgingconnectivity.configuration
+package com.expediagroup.sdk.v2.lodgingconnectivity.configuration
 
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
+import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
+import com.expediagroup.sdk.v2.core.authentication.strategy.AuthenticationStrategy
+import com.expediagroup.sdk.v2.core.configuration.ExpediaGroupDefaultClientConfiguration
+import com.expediagroup.sdk.v2.core.configuration.FullClientConfiguration
+import java.util.*
 
 /**
  * A configuration class that holds the necessary credentials and settings for API clients.
@@ -27,7 +31,9 @@ data class ClientConfiguration(
     val connectionTimeout: Long? = null,
     val socketTimeout: Long? = null,
     val maskedLoggingHeaders: Set<String>? = null,
-    val maskedLoggingBodyFields: Set<String>? = null
+    val maskedLoggingBodyFields: Set<String>? = null,
+    val maxConnTotal: Int? = null,
+    val maxConnPerRoute: Int? = null
 ) {
 
     /**
@@ -42,6 +48,8 @@ data class ClientConfiguration(
         private var socketTimeout: Long? = null
         private var maskedLoggingHeaders: Set<String>? = null
         private var maskedLoggingBodyFields: Set<String>? = null
+        private var maxConnTotal: Int? = null
+        private var maxConnPerRoute: Int? = null
 
         /**
          * Sets the API key.
@@ -107,6 +115,14 @@ data class ClientConfiguration(
             this.maskedLoggingBodyFields = maskedLoggingBodyFields
         }
 
+        fun maxConnTotal(maxConnTotal: Int) = apply {
+            this.maxConnTotal = maxConnTotal
+        }
+
+        fun maxConnPerRoute(maxConnPerRoute: Int) = apply {
+            this.maxConnPerRoute = maxConnPerRoute
+        }
+
         /**
          * Builds and returns the `ClientConfiguration` instance.
          * @return The configured `ClientConfiguration`.
@@ -120,7 +136,9 @@ data class ClientConfiguration(
                 connectionTimeout,
                 socketTimeout,
                 maskedLoggingHeaders,
-                maskedLoggingBodyFields
+                maskedLoggingBodyFields,
+                maxConnTotal,
+                maxConnPerRoute,
             )
         }
     }
@@ -133,20 +151,46 @@ data class ClientConfiguration(
     internal fun toExpediaGroupClientConfiguration(
         endpointProvider: (ClientEnvironment) -> String,
         authEndpointProvider: (ClientEnvironment) -> String
-    ): ExpediaGroupClientConfiguration {
+    ): FullClientConfiguration {
         val environment = this.environment ?: ClientEnvironment.PROD
 
-        return ExpediaGroupClientConfiguration(
-            key = this.key,
-            secret = this.secret,
-            endpoint = endpointProvider(environment),
-            authEndpoint = authEndpointProvider(environment),
-            requestTimeout = this.requestTimeout,
-            connectionTimeout = this.connectionTimeout,
-            socketTimeout = this.socketTimeout,
-            maskedLoggingHeaders = this.maskedLoggingHeaders,
-            maskedLoggingBodyFields = this.maskedLoggingBodyFields
-        )
+        return object : FullClientConfiguration {
+            override fun getKey(): String =
+                key ?: throw ExpediaGroupConfigurationException("API key is required for authentication.")
+
+
+            override fun getSecret(): String =
+                secret ?: throw ExpediaGroupConfigurationException("API secret is required for authentication.")
+
+            override fun getEndpoint(): String =
+                endpointProvider(environment)
+
+            override fun getAuthEndpoint(): String =
+                authEndpointProvider(environment)
+
+            override fun getMaskedLoggingHeaders(): Set<String> =
+                maskedLoggingHeaders ?: ExpediaGroupDefaultClientConfiguration.getMaskedLoggingHeaders()
+
+            override fun getMaskedLoggingBodyFields(): Set<String> =
+                maskedLoggingBodyFields ?: ExpediaGroupDefaultClientConfiguration.getMaskedLoggingBodyFields()
+
+            override fun getRequestTimeout(): Long =
+                requestTimeout ?: ExpediaGroupDefaultClientConfiguration.getRequestTimeout()
+
+            override fun getSocketTimeout(): Long =
+                socketTimeout ?: ExpediaGroupDefaultClientConfiguration.getSocketTimeout()
+
+            override fun getConnectionTimeout(): Long =
+                connectionTimeout ?: ExpediaGroupDefaultClientConfiguration.getConnectionTimeout()
+
+            override fun getAuthenticationStrategy(): AuthenticationStrategy =
+                ExpediaGroupDefaultClientConfiguration.getAuthenticationStrategy()
+
+            override fun getMaxConnectionsTotal(): Int =
+                maxConnTotal ?: ExpediaGroupDefaultClientConfiguration.getMaxConnectionsTotal()
+
+            override fun getMaxConnectionsPerRoute(): Int =
+                maxConnPerRoute ?: ExpediaGroupDefaultClientConfiguration.getMaxConnectionsPerRoute()
+        }
     }
 }
-

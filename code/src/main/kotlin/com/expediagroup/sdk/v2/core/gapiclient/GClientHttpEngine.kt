@@ -4,9 +4,9 @@ import com.apollographql.apollo.api.http.HttpRequest
 import com.apollographql.apollo.api.http.HttpResponse
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.apollo.network.http.HttpEngine
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.v2.core.gapiclient.model.GRequest
 import com.expediagroup.sdk.v2.core.gapiclient.util.toApolloHeaders
-import com.expediagroup.sdk.v2.core.model.exception.service.ExpediaGroupServiceException
 import okio.Buffer
 import kotlin.coroutines.cancellation.CancellationException
 
