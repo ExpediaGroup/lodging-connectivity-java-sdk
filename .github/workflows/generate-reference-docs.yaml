@@ -38,7 +38,12 @@ jobs:
         run: git checkout gh-pages
 
       - name: Extract and Store Latest Live Docs Version Number
-        run: echo "LATEST_DOCS_VERSION=$(jq -r '.version' version.json)" >> $GITHUB_ENV
+        run: |
+          VERSION=$(jq -r '.version' version.json)
+          if [ -z "$VERSION" ]; then
+            VERSION="1.0.0-SNAPSHOT"
+          fi
+          echo "LATEST_DOCS_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Move Latest Docs to the "older" Directory (Archiving latest live release)
         run: |
