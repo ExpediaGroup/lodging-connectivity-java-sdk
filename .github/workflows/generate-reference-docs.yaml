@@ -38,20 +38,15 @@ jobs:
         run: git checkout gh-pages
 
       - name: Extract and Store Latest Live Docs Version Number
-        run: |
-          VERSION=$(jq -r '.version' version.json)
-          if [ -z "$VERSION" ]; then
-            VERSION="1.0.0-SNAPSHOT"
-          fi
-          echo "LATEST_DOCS_VERSION=$VERSION" >> $GITHUB_ENV
+        run: echo "LATEST_DOCS_VERSION=$(jq -r '.version' version.json)" >> $GITHUB_ENV
 
       - name: Move Latest Docs to the "older" Directory (Archiving latest live release)
         run: |
           mkdir older/${{ env.LATEST_DOCS_VERSION }} 
-          mv -f images -- '-lodging--connectivity-java-s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }} 2>/dev/null
+          mv images -- '-lodging--connectivity-java-s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }}
 
       - name: Move the "older" and "assets" Directories to a Temporary Workspace
-        run: mv -f older assets ${{ runner.temp }} 2>/dev/null
+        run: mv older assets ${{ runner.temp }}
 
       - name: Checkout "main" Branch
         run: git checkout main
@@ -76,7 +71,7 @@ jobs:
           done
 
       - name: Move the Newly Generated Docs to a Temporary Workspace
-        run: mv -f code/target/dokka ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}
+        run: mv code/target/dokka ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}
 
       - name: Checkout "gh-pages" Branch
         run: git checkout gh-pages
