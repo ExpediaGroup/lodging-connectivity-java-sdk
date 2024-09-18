@@ -42,13 +42,13 @@ jobs:
 
       - name: Move Latest Docs to the "older" Directory (Archiving latest live release)
         run: |
-          mkdir -p older/${{ env.LATEST_DOCS_VERSION }} 
+          mkdir -p older/${{ env.LATEST_DOCS_VERSION }}
           mv images -- '-lodging -connectivity -java -s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }}
 
       - name: Move the "older" and "assets" Directories to a Temporary Workspace
         run: mv older assets ${{ runner.temp }}
 
-      - name: Checkout "main" Branch
+      - name: Checkout ${{ inputs.ref }} Branch
         run: git checkout ${{ inputs.ref }}
 
       - name: Generate New Release Reference Docs
@@ -56,7 +56,7 @@ jobs:
           # show all files in the current directory
           pwd
           ls -la
-          gradle -p code dokkaHtml -Ddokka-old-versions.location=${{ runner.temp }}/older -Ddokka-assets.location=${{ runner.temp }}/assets
+          gradle -p code dokkaHtml -Pdokka-old-versions.location=${{ runner.temp }}/older -Pdokka-assets.location=${{ runner.temp }}/assets
 
       - name: Extract and Store Newly Generated Docs Version Number
         run: echo "NEW_DOCS_VERSION=$(jq -r '.version' code/target/dokka/version.json)" >> $GITHUB_ENV
