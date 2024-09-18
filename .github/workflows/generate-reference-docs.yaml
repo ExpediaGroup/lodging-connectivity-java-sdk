@@ -43,10 +43,10 @@ jobs:
       - name: Move Latest Docs to the "older" Directory (Archiving latest live release)
         run: |
           mkdir older/${{ env.LATEST_DOCS_VERSION }} 
-          mv -f images -- '-lodging--connectivity-java-s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }}
+          mv -f images -- '-lodging--connectivity-java-s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }} 2>/dev/null
 
       - name: Move the "older" and "assets" Directories to a Temporary Workspace
-        run: mv -f older assets ${{ runner.temp }}
+        run: mv -f older assets ${{ runner.temp }} 2>/dev/null
 
       - name: Checkout "main" Branch
         run: git checkout main
