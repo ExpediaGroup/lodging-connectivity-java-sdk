@@ -11,8 +11,8 @@ dokkaHtml {
 
     String dokkaBaseConfiguration = """
     {
-        "customAssets": ["${file("../assets/logo-icon.svg")}"],
-        "customStyleSheets": ["${file("../assets/custom-styles.css")}"]
+        "customAssets": ["${file("assets/logo-icon.svg")}"],
+        "customStyleSheets": ["${file("assets/custom-styles.css")}"]
     }
     """
 
