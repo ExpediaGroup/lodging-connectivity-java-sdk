@@ -75,7 +75,7 @@ jobs:
           done
 
       - name: Move the Newly Generated Docs to a Temporary Workspace
-        run: mv code/target/dokka ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}
+        run: mv code/build/dokka/html ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}
 
       - name: Checkout "gh-pages" Branch
         run: git checkout gh-pages
