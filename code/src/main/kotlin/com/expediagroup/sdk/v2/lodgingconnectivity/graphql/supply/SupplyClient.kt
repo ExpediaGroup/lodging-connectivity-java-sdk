@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.v2.lodgingconnectivity.graphql.supply
 
-import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.GraphQLExecutor

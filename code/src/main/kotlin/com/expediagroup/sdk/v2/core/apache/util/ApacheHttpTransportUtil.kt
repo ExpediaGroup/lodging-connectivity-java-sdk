@@ -7,7 +7,8 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
-fun createApacheHttpTransport(configuration: ClientConfiguration): ApacheHttpTransport = TODO()
+fun createApacheHttpTransport(configuration: ClientConfiguration): ApacheHttpTransport =
+    ApacheHttpTransport(getSingletonHttpClient(configuration))
 
 fun getSingletonApacheHttpTransport(configuration: ClientConfiguration) =
     CreateSingletonApacheHttpTransportLambda.execute(configuration)
