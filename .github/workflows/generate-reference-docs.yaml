@@ -59,7 +59,9 @@ jobs:
           gradle -p code dokkaHtml -Pdokka-old-versions.location=${{ runner.temp }}/older -Pdokka-assets.location=${{ runner.temp }}/assets
 
       - name: Extract and Store Newly Generated Docs Version Number
-        run: echo "NEW_DOCS_VERSION=$(jq -r '.version' code/target/dokka/version.json)" >> $GITHUB_ENV
+        run: |
+          echo "NEW_DOCS_VERSION=$(jq -r '.version' code/target/dokka/version.json)" >> $GITHUB_ENV
+          echo ${{ env.NEW_DOCS_VERSION }}
 
       - name: Check the New Release Version
         run: |
