@@ -9,12 +9,12 @@ dokkaHtml {
     }
     """
 
-//    String dokkaBaseConfiguration = """
-//    {
-//        "customAssets": ["${file("assets/logo-icon.svg")}"],
-//        "customStyleSheets": ["${file("assets/custom-styles.css")}"]
-//    }
-//    """
+    String dokkaBaseConfiguration = """
+    {
+        "customAssets": ["${file("../assets/logo-icon.svg")}"],
+        "customStyleSheets": ["${file("../assets/custom-styles.css")}"]
+    }
+    """
 
     pluginsMapConfiguration.set(
             // fully qualified plugin name to json configuration
