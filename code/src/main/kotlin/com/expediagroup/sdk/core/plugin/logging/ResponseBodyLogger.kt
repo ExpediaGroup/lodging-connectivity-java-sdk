@@ -15,8 +15,8 @@
  */
 package com.expediagroup.sdk.core.plugin.logging
 
-import com.expediagroup.sdk.v2.core.constant.HeaderValue
-import com.expediagroup.sdk.v2.core.constant.LoggerName
+import com.expediagroup.sdk.core.constant.HeaderValue
+import com.expediagroup.sdk.core.constant.LoggerName
 import com.expediagroup.sdk.core.constant.provider.LoggingMessageProvider
 import com.expediagroup.sdk.core.model.getTransactionId
 import com.expediagroup.sdk.core.plugin.logging.GZipEncoder.decode

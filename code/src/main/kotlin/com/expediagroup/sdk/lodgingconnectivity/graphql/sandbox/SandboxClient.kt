@@ -42,7 +42,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class SandboxClient(config: ClientConfiguration)  :
+class SandboxClient(config: ClientConfiguration) :
     GraphQLExecutor by BaseGraphQLClient(
         config.toExpediaGroupClientConfiguration(
             endpointProvider = EndpointProvider::getSandboxClientEndpoint,

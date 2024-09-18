@@ -16,7 +16,7 @@
 package com.expediagroup.sdk.core.model.paging
 
 import com.expediagroup.sdk.core.client.Client
-import com.expediagroup.sdk.v2.core.constant.HeaderValue
+import com.expediagroup.sdk.core.constant.HeaderValue
 import com.expediagroup.sdk.core.model.Response
 import com.expediagroup.sdk.core.plugin.logging.GZipEncoder.decode
 import com.expediagroup.sdk.core.plugin.logging.contentEncoding
