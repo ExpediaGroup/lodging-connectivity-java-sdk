@@ -54,6 +54,7 @@ jobs:
       - name: Generate New Release Reference Docs
         run:  |
           # show all files in the current directory
+          pwd
           ls -la
           gradle -p code dokkaHtml -Ddokka-old-versions.location=${{ runner.temp }}/older -Ddokka-assets.location=${{ runner.temp }}/assets
 
