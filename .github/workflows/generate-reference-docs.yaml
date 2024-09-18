@@ -43,7 +43,7 @@ jobs:
       - name: Move Latest Docs to the "older" Directory (Archiving latest live release)
         run: |
           mkdir -p older/${{ env.LATEST_DOCS_VERSION }} 
-          mv images -- '-lodging--connectivity-java-s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }}
+          mv images -- '-lodging -connectivity -java -s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }}
 
       - name: Move the "older" and "assets" Directories to a Temporary Workspace
         run: mv older assets ${{ runner.temp }}
@@ -77,7 +77,7 @@ jobs:
         run: git checkout gh-pages
 
       - name: Cleanup Old Docs from the Repository's Root
-        run: rm -rf code images older -- '-lodging--connectivity-java-s-d-k' scripts styles index.html navigation.html not-found-version.html version.json
+        run: rm -rf code images older -- '-lodging -connectivity -java -s-d-k' scripts styles index.html navigation.html not-found-version.html version.json
 
       - name: Move Newly Generated Docs to the Repository Root
         run: mv ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}/* .
