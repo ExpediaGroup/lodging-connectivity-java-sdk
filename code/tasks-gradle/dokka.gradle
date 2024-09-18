@@ -1,5 +1,5 @@
 dokkaHtml {
-    moduleName.set("lodging-connectivity-sdk")
+    moduleName.set("Lodging Connectivity SDK")
 
     String versioningConfiguration = """
     {
