@@ -89,8 +89,8 @@ jobs:
 
       - name: Commit the New Release
         run: |
-          ls -la
           git add .
+          git reset .gradle
           git commit -m "chore: publishing docs for version ${{ env.NEW_DOCS_VERSION }}"
 
       - name: Create Pull Request
