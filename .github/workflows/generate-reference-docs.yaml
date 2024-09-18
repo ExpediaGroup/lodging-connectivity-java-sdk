@@ -49,7 +49,7 @@ jobs:
         run: mv older assets ${{ runner.temp }}
 
       - name: Checkout "main" Branch
-        run: git checkout main
+        run: git checkout ${{ inputs.ref }}
 
       - name: Generate New Release Reference Docs
         run:  |
