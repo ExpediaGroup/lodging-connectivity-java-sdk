@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>EndpointProvider</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+<link href="../../../styles/multimodule.css" rel="Stylesheet">
+<link href="../../../images/logo-icon.svg">
+<link href="../../../styles/custom-styles.css" rel="Stylesheet">
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            lodging-connectivity-sdk
+                    </a>
+            </div>
+            <div class="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;lodging-connectivity-sdk/com.expediagroup.sdk.lodgingconnectivity.configuration/-endpoint-provider/index.html&quot;}">1.0.0-SNAPSHOT</dokka-template-command>            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":code:dokkaHtml/main">jvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="lodging-connectivity-sdk::com.expediagroup.sdk.lodgingconnectivity.configuration/EndpointProvider///PointingToDeclaration//1339386068">
+  <div class="breadcrumbs"><a href="../../../index.html">lodging-connectivity-sdk</a><span class="delimiter">/</span><a href="../index.html">com.expediagroup.sdk.lodgingconnectivity.configuration</a><span class="delimiter">/</span><span class="current">EndpointProvider</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Endpoint</span><wbr></wbr><span><span>Provider</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":code:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">EndpointProvider</a></div><p class="paragraph">An internal utility object for providing API endpoints based on the environment.</p><p class="paragraph">This class contains methods to retrieve the correct endpoint for different clients (e.g., Supply, Payment, Sandbox, File Management, and Authentication) based on the provided <code class="lang-kotlin">ClientEnvironment</code>.</p><p class="paragraph">If an unsupported environment is passed, an <code class="lang-kotlin">IllegalArgumentException</code> is thrown.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-58022646%2FFunctions%2F1339386068" anchor-label="getAuthEndpoint" id="-58022646%2FFunctions%2F1339386068" data-filterable-set=":code:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":code:dokkaHtml/main" data-filterable-set=":code:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-auth-endpoint.html"><span>get</span><wbr></wbr><span>Auth</span><wbr></wbr><span><span>Endpoint</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-58022646%2FFunctions%2F1339386068"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":code:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-auth-endpoint.html"><span class="token function">getAuthEndpoint</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">environment<span class="token operator">: </span><a href="../-client-environment/index.html">ClientEnvironment</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-307678360%2FFunctions%2F1339386068" anchor-label="getFileManagementClientEndpoint" id="-307678360%2FFunctions%2F1339386068" data-filterable-set=":code:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":code:dokkaHtml/main" data-filterable-set=":code:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-file-management-client-endpoint.html"><span>get</span><wbr></wbr><span>File</span><wbr></wbr><span>Management</span><wbr></wbr><span>Client</span><wbr></wbr><span><span>Endpoint</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-307678360%2FFunctions%2F1339386068"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":code:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-file-management-client-endpoint.html"><span class="token function">getFileManagementClientEndpoint</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">environment<span class="token operator">: </span><a href="../-client-environment/index.html">ClientEnvironment</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-646222761%2FFunctions%2F1339386068" anchor-label="getPaymentClientEndpoint" id="-646222761%2FFunctions%2F1339386068" data-filterable-set=":code:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":code:dokkaHtml/main" data-filterable-set=":code:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-payment-client-endpoint.html"><span>get</span><wbr></wbr><span>Payment</span><wbr></wbr><span>Client</span><wbr></wbr><span><span>Endpoint</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-646222761%2FFunctions%2F1339386068"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":code:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-payment-client-endpoint.html"><span class="token function">getPaymentClientEndpoint</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">environment<span class="token operator">: </span><a href="../-client-environment/index.html">ClientEnvironment</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-719720074%2FFunctions%2F1339386068" anchor-label="getSandboxClientEndpoint" id="-719720074%2FFunctions%2F1339386068" data-filterable-set=":code:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":code:dokkaHtml/main" data-filterable-set=":code:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-sandbox-client-endpoint.html"><span>get</span><wbr></wbr><span>Sandbox</span><wbr></wbr><span>Client</span><wbr></wbr><span><span>Endpoint</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-719720074%2FFunctions%2F1339386068"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":code:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-sandbox-client-endpoint.html"><span class="token function">getSandboxClientEndpoint</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">environment<span class="token operator">: </span><a href="../-client-environment/index.html">ClientEnvironment</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-386552744%2FFunctions%2F1339386068" anchor-label="getSupplyClientEndpoint" id="-386552744%2FFunctions%2F1339386068" data-filterable-set=":code:dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":code:dokkaHtml/main" data-filterable-set=":code:dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-supply-client-endpoint.html"><span>get</span><wbr></wbr><span>Supply</span><wbr></wbr><span>Client</span><wbr></wbr><span><span>Endpoint</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-386552744%2FFunctions%2F1339386068"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":code:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-supply-client-endpoint.html"><span class="token function">getSupplyClientEndpoint</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">environment<span class="token operator">: </span><a href="../-client-environment/index.html">ClientEnvironment</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
