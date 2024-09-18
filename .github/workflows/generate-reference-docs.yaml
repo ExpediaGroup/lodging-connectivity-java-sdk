@@ -61,9 +61,6 @@ jobs:
       - name: Extract and Store Newly Generated Docs Version Number
         run: |
           echo "NEW_DOCS_VERSION=$(jq -r '.version' code/build/dokka/html/version.json)" >> $GITHUB_ENV
-          echo "----"
-          echo ${{ env.NEW_DOCS_VERSION }}
-          echo "----"
 
       - name: Check the New Release Version
         run: |
