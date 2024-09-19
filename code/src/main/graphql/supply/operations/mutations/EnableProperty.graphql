@@ -1,6 +1,0 @@
-mutation EnableProperty($input: EnablePropertyInput!) {
-    enableProperty(input: $input) {
-        clientMutationId
-        id
-    }
-}

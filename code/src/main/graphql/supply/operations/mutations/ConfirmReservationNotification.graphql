@@ -1,5 +1,0 @@
-mutation ConfirmReservationNotification($input: ConfirmReservationNotificationInput!) {
-    confirmReservationNotification(input: $input) {
-        clientMutationId
-    }
-}

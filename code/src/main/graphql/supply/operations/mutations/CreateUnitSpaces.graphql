@@ -1,5 +1,0 @@
-mutation CreateUnitSpaces($input: CreateUnitSpacesInput!) {
-    createUnitSpaces(input: $input) {
-        clientMutationId
-    }
-}

@@ -1,7 +1,0 @@
-mutation SandboxCreateReservation($input: CreateReservationInput!) {
-    createReservation(input: $input) {
-        reservation {
-            ...SandboxReservationFragment
-        }
-    }
-}

@@ -1,5 +1,0 @@
-mutation SandboxDeletePropertyReservations($input: DeletePropertyReservationsInput!) {
-    deletePropertyReservations(input: $input) {
-        clientMutationId
-    }
-}

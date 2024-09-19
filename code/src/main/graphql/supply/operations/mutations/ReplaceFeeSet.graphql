@@ -1,5 +1,0 @@
-mutation ReplaceFeeSet($input: ReplaceFeeSetInput!) {
-    replaceFeeSet(input: $input) {
-        clientMutationId
-    }
-}
