@@ -1,5 +1,0 @@
-mutation UnsubscribeNotificationEventType($input: UnsubscribeNotificationEventTypeInput!) {
-    unsubscribeNotificationEventType(input: $input) {
-        eventType
-    }
-}

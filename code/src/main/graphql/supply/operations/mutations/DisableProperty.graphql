@@ -1,6 +1,0 @@
-mutation DisableProperty($input: DisablePropertyInput!) {
-    disableProperty(input: $input) {
-        clientMutationId
-        id
-    }
-}

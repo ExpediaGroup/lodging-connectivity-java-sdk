@@ -1,5 +1,0 @@
-mutation AddMessage($messageThreadId: ID!, $message: AddMessageThreadMessageInput!) {
-    addMessage(messageThreadId: $messageThreadId, message: $message) {
-        id
-    }
-}
