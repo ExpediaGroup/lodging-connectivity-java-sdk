@@ -5,9 +5,10 @@ git submodule update --remote --merge
 
 cd .git/modules/code/src/main/graphql || exit
 
-mkdir -p .git/modules/code/src/main/graphql/info
+mkdir info
+cd info || exit
 
-cat > .git/modules/code/src/main/graphql/info/sparse-checkout <<EOL
+cat > sparse-checkout <<EOL
 /*
 !CHANGELOG.md
 !CONTRIBUTING.md
@@ -19,4 +20,6 @@ EOL
 
 git config core.sparseCheckout true
 
+cd "$(git rev-parse --show-toplevel)" || exit
 git read-tree -mu HEAD
+git pull origin "$(git rev-parse --abbrev-ref HEAD)"
