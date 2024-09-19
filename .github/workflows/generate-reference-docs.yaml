@@ -42,20 +42,22 @@ jobs:
 
       - name: Move Latest Docs to the "older" Directory (Archiving latest live release)
         run: |
-          mkdir older/${{ env.LATEST_DOCS_VERSION }} 
-          mv images -lodging--connectivity-java-s-d-k scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }}
+          mkdir -p older/${{ env.LATEST_DOCS_VERSION }}
+          mv images -- '-lodging -connectivity -java -s-d-k' scripts styles index.html navigation.html not-found-version.html version.json older/${{ env.LATEST_DOCS_VERSION }}
 
       - name: Move the "older" and "assets" Directories to a Temporary Workspace
         run: mv older assets ${{ runner.temp }}
 
-      - name: Checkout "main" Branch
-        run: git checkout main
+      - name: Checkout ${{ inputs.ref }} Branch
+        run: git checkout ${{ inputs.ref }}
 
       - name: Generate New Release Reference Docs
-        run: mvn -f code dokka:dokka -Ddokka-old-versions.location=${{ runner.temp }}/older -Ddokka-assets.location=${{ runner.temp }}/assets
+        run:  |
+          gradle -p code dokkaHtml -Pdokka-old-versions.location=${{ runner.temp }}/older -Pdokka-assets.location=${{ runner.temp }}/assets
 
       - name: Extract and Store Newly Generated Docs Version Number
-        run: echo "NEW_DOCS_VERSION=$(jq -r '.version' code/target/dokka/version.json)" >> $GITHUB_ENV
+        run: |
+          echo "NEW_DOCS_VERSION=$(jq -r '.version' code/build/dokka/html/version.json)" >> $GITHUB_ENV
 
       - name: Check the New Release Version
         run: |
@@ -71,16 +73,18 @@ jobs:
           done
 
       - name: Move the Newly Generated Docs to a Temporary Workspace
-        run: mv code/target/dokka ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}
+        run: mv code/build/dokka/html ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}
 
       - name: Checkout "gh-pages" Branch
         run: git checkout gh-pages
 
       - name: Cleanup Old Docs from the Repository's Root
-        run: rm -rf code images older -lodging--connectivity-java-s-d-k scripts styles index.html navigation.html not-found-version.html version.json
+        run: rm -rf code images older -- '-lodging -connectivity -java -s-d-k' scripts styles index.html navigation.html not-found-version.html version.json
 
       - name: Move Newly Generated Docs to the Repository Root
-        run: mv ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}/* .
+        run: |
+          rm -rf .gradle
+          mv ${{ runner.temp }}/${{ env.NEW_DOCS_VERSION }}/* .
 
       - name: Commit the New Release
         run: |
@@ -91,7 +95,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          commit-message: "chore: publishing docs for version ${{ env.NEW_DOCS_VERSION }}"
+          commit-message: "chore: publish docs for version ${{ env.NEW_DOCS_VERSION }}"
           body: "This PR adds the reference documentation for version ${{ env.NEW_DOCS_VERSION }}."
-          title: "chore: reference docs update for version ${{ env.NEW_DOCS_VERSION }}"
+          title: "chore: publish docs for version ${{ env.NEW_DOCS_VERSION }}"
           branch: "docs-update-${{ env.NEW_DOCS_VERSION }}"
