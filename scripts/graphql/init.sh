@@ -1,5 +1,8 @@
 #!/bin/sh
 
+git submodule init
+git submodule update --remote --merge
+
 cd .git/modules/code/src/main/graphql || exit
 
 mkdir -p .git/modules/code/src/main/graphql/info
