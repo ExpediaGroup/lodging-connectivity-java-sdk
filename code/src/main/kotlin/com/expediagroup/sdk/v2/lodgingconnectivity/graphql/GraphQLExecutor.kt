@@ -18,8 +18,9 @@ package com.expediagroup.sdk.v2.lodgingconnectivity.graphql
 
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
+import java.util.concurrent.CompletableFuture
 
 interface GraphQLExecutor {
-    fun <T : Query.Data> execute(query: Query<T>): T
-    fun <T : Mutation.Data> execute(mutation: Mutation<T>): T
+    fun <T : Query.Data> execute(query: Query<T>): CompletableFuture<T>
+    fun <T : Mutation.Data> execute(mutation: Mutation<T>): CompletableFuture<T>
 }

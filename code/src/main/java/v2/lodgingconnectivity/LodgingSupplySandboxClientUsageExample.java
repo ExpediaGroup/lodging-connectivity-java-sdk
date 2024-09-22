@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package lodgingconnectivity;
+package v2.lodgingconnectivity;
 
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.*;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.*;
@@ -25,6 +25,7 @@ import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.sandbox.SandboxClient
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Example class to demonstrate different operations supported by the LodgingSupplySandboxClient
@@ -52,7 +53,7 @@ public class LodgingSupplySandboxClientUsageExample {
     private static final String PROPERTY_NAME = "Lodging SDK Test Property";
     private static final String UPDATED_PROPERTY_NAME = "New Lodging SDK Test Property";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         // Delete any old property if it has the same name used in the test run
         deletePropertyIfExists();
 
@@ -61,7 +62,7 @@ public class LodgingSupplySandboxClientUsageExample {
         var createPropertyResponse = client.execute(new SandboxCreatePropertyMutation(createPropertyInput));
 
 
-        var propertyId = createPropertyResponse.createProperty.property.id;
+        var propertyId = createPropertyResponse.get().createProperty.property.id;
 
         // ******* Update Property Name *******
         var updatePropertyInput = UpdatePropertyInput.builder().id(propertyId).name(Optional.of(UPDATED_PROPERTY_NAME)).build();
@@ -72,7 +73,7 @@ public class LodgingSupplySandboxClientUsageExample {
         var createReservationResponse = client.execute(new SandboxCreateReservationMutation(createReservationInput));
 
 
-        var reservationId = createReservationResponse.createReservation.reservation.sandboxReservationFragment.id;
+        var reservationId = createReservationResponse.get().createReservation.reservation.sandboxReservationFragment.id;
 
         // ******* Update Reservation *******
         var updateReservationInput = UpdateReservationInput.builder().id(reservationId).childAges(Optional.of(List.of(3, 5, 7))).build();
@@ -103,11 +104,11 @@ public class LodgingSupplySandboxClientUsageExample {
         System.exit(0);
     }
 
-    private static void deletePropertyIfExists() {
+    private static void deletePropertyIfExists() throws ExecutionException, InterruptedException {
         var propertiesQuery = SandboxPropertiesQuery.builder().skipReservations(true).build();
         var propertiesResponse = client.execute(propertiesQuery);
 
-        propertiesResponse.properties.elements.forEach(property -> {
+        propertiesResponse.get().properties.elements.forEach(property -> {
             if (property.name.equals(PROPERTY_NAME) || property.name.equals(UPDATED_PROPERTY_NAME)) {
                 var deletePropertyInput = DeletePropertyInput.builder().id(property.id).build();
                 client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));

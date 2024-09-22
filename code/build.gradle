@@ -33,6 +33,9 @@ dependencies {
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
     implementation 'com.apollographql.ktor:apollo-engine-ktor:0.0.2'
 
+    /* Apollo Java */
+    implementation("com.apollographql.java:client:0.0.2")
+
     /* EG SDK Core */
     implementation("org.apache.tika:tika-core:2.9.2")
     implementation("com.google.api-client:google-api-client:2.7.0")

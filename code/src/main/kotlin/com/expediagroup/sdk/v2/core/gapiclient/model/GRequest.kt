@@ -11,6 +11,8 @@ import com.google.api.client.http.InputStreamContent
 import okio.Buffer
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Executor
 
 class GRequest<ResponseType : Any>(
     private val client: AbstractGoogleClient,
@@ -78,22 +80,48 @@ class GRequest<ResponseType : Any>(
     }
 
     inline fun <reified T> executeAndParseAs(responseTypeReference: TypeReference<T>): T {
-        return deserialize(executeUnparsed().apply {  }.parseAsString(), responseTypeReference)
+        return deserialize(executeUnparsed().parseAsString(), responseTypeReference)
+    }
+
+    inline fun <reified T> executeAndParseAsAsync(responseTypeReference: TypeReference<T>): CompletableFuture<T> {
+        return CompletableFuture.supplyAsync({ executeAndParseAs(responseTypeReference) })
+    }
+
+    inline fun <reified T> executeAndParseAsAsync(
+        responseTypeReference: TypeReference<T>,
+        executor: Executor
+    ): CompletableFuture<T> {
+        return CompletableFuture.supplyAsync({ executeAndParseAs(responseTypeReference) }, executor)
     }
 
     public override fun executeMediaAsInputStream(): InputStream? {
         return super.executeMediaAsInputStream()
     }
 
-    override fun executeAndDownloadTo(outputStream: OutputStream?) {
-        super.executeAndDownloadTo(outputStream)
-    }
+    fun executeMediaAsInputStreamAsync(): CompletableFuture<InputStream?> =
+        CompletableFuture.supplyAsync(::executeMediaAsInputStream)
+
+    fun executeMediaAsInputStreamAsync(executor: Executor): CompletableFuture<InputStream?> =
+        CompletableFuture.supplyAsync(::executeMediaAsInputStream, executor)
+
+    fun executeUnparsedAsync(executor: Executor): CompletableFuture<HttpResponse> =
+        CompletableFuture.supplyAsync(::executeUnparsed, executor)
+
+    fun executeUnparsedAsync(): CompletableFuture<HttpResponse> =
+        CompletableFuture.supplyAsync(::executeUnparsed)
+
+    fun executeAndDownloadToAsync(outputStream: OutputStream?) =
+        CompletableFuture.supplyAsync { super.executeAndDownloadTo(outputStream) }
+
+    fun executeAndDownloadToAsync(outputStream: OutputStream?, executor: Executor) =
+        CompletableFuture.supplyAsync({ super.executeAndDownloadTo(outputStream) }, executor)
 
     override fun executeUnparsed(): HttpResponse {
         try {
-            return super.executeUnparsed()
+            return super.executeUnparsed().also {
+                throwOnError(it)
+            }
         } catch (e: Exception) {
-            e.printStackTrace()
             throw com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException(
                 message = e.message
             )

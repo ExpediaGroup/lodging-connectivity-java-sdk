@@ -16,15 +16,16 @@
 
 package com.expediagroup.sdk.v2.lodgingconnectivity.graphql
 
-import com.apollographql.apollo.ApolloClient
+//import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
+import com.apollographql.java.client.ApolloClient
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.v2.core.configuration.DefaultClientBuilder
 import com.expediagroup.sdk.v2.core.configuration.FullClientConfiguration
 import com.expediagroup.sdk.v2.core.gapiclient.GClientHttpEngine
 import com.expediagroup.sdk.v2.core.gapiclient.util.createGClientHttpEngine
-import kotlinx.coroutines.runBlocking
+import java.util.concurrent.CompletableFuture
 
 
 class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: String) : GraphQLExecutor {
@@ -56,18 +57,30 @@ class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: Strin
      * @return The result of the query execution, with errors handled.
      * @throws ExpediaGroupServiceException If the query execution returns errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): T {
-        return runBlocking {
-            apolloClient.query(query).execute().apply {
-                if (exception != null) {
-                    throw ExpediaGroupServiceException(exception?.message)
+    override fun <T : Query.Data> execute(query: Query<T>): CompletableFuture<T> {
+        val promise: CompletableFuture<T> = CompletableFuture()
+
+        apolloClient.query(query).enqueue { response ->
+            try {
+                if (response.hasErrors()) {
+                    // Complete exceptionally if there are GraphQL errors
+                    promise.completeExceptionally(ExpediaGroupServiceException(response.errors.toString()))
+                } else if (response.exception != null) {
+                    // Complete exceptionally if there is a network or other exception
+                    promise.completeExceptionally(ExpediaGroupServiceException(response.exception?.message))
+                } else {
+                    // Complete normally with the response data if no errors or exceptions
+                    promise.complete(response.dataAssertNoErrors)
                 }
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
-                }
-            }.dataAssertNoErrors
+            } catch (e: Exception) {
+                // Handle unexpected exceptions during callback execution
+                promise.completeExceptionally(ExpediaGroupServiceException(e.message))
+            }
         }
+
+        return promise
     }
+
 
     /**
      * Executes a GraphQL mutation and returns the result.
@@ -76,16 +89,27 @@ class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: Strin
      * @return The result of the mutation execution, with errors handled.
      * @throws ExpediaGroupServiceException If the mutation execution returns errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T {
-        return runBlocking {
-            apolloClient.mutation(mutation).execute().apply {
-                if (exception != null) {
-                    throw ExpediaGroupServiceException(exception?.message)
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): CompletableFuture<T> {
+        val promise: CompletableFuture<T> = CompletableFuture()
+
+        apolloClient.mutation(mutation).enqueue { response ->
+            try {
+                if (response.hasErrors()) {
+                    // Complete exceptionally if there are GraphQL errors
+                    promise.completeExceptionally(ExpediaGroupServiceException(response.errors.toString()))
+                } else if (response.exception != null) {
+                    // Complete exceptionally if there is a network or other exception
+                    promise.completeExceptionally(ExpediaGroupServiceException(response.exception?.message))
+                } else {
+                    // Complete normally with the response data if no errors or exceptions
+                    promise.complete(response.dataAssertNoErrors)
                 }
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
-                }
-            }.dataAssertNoErrors
+            } catch (e: Exception) {
+                // Handle unexpected exceptions during callback execution
+                promise.completeExceptionally(ExpediaGroupServiceException(e.message))
+            }
         }
+
+        return promise
     }
 }
