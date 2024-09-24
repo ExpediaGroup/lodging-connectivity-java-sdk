@@ -6,6 +6,8 @@ apollo {
 
         srcDir("src/main/graphql/supply")
 
+        excludes.add("experimental/**/*.graphql")
+
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.supply")
 
         /**** Custom Scalars Mappings ****/
@@ -36,6 +38,8 @@ apollo {
 
         srcDir("src/main/graphql/payment")
 
+        excludes.add("experimental/**/*.graphql")
+
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.payment")
 
         /**** Custom Scalars Mappings ****/
@@ -48,6 +52,8 @@ apollo {
         generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/sandbox")
+
+        excludes.add("experimental/**/*.graphql")
 
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox")
 
