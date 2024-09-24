@@ -74,7 +74,7 @@ Follow these three simple steps to start using any client in the SDK:
 1. Build the client configuration object.
 
    ```java
-   ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
+   ClientConfiguration config = ClientConfiguration
            .builder()
            .key("KEY")
            .secret("SECRET")
