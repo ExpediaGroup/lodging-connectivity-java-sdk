@@ -8,7 +8,7 @@
 ### API Endpoint
 This client is connected with https://api.expediagroup.com/supply/lodging/graphql endpoint by default. 
 
-You can refer to the [configuration]() document to explore the full configuration options.
+You can refer to the [configuration](configuration.md) document to explore the full configuration options.
 
 ### Initialize the Client
 ```java
