@@ -45,7 +45,7 @@ dependencies {
 > }
 > ```
 > 
-> **Gradle**
+> **Maven**
 > ```xml
 > <repositories>
 >    <repository>
@@ -61,12 +61,11 @@ dependencies {
 > </repositories>
 > ```
 ## Quick Start
-Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains four different clients, each linked to a separate endpoint
+Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains three different clients, each linked to a separate endpoint
 
 1. Supply Client
 2. Payment Client
 3. Sandbox  Client
-4. File Management Client
 
 ### Typical Usage Flow
 Follow these three simple steps to start using any client in the SDK:
@@ -74,7 +73,7 @@ Follow these three simple steps to start using any client in the SDK:
 1. Build the client configuration object.
 
    ```java
-   ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
+   ClientConfiguration config = ClientConfiguration
            .builder()
            .key("KEY")
            .secret("SECRET")
@@ -96,10 +95,9 @@ The list below lists detailed documentation files for some components of the SDK
 1. [Supply Client Documentation](docs/supply-client.md)
 2. [Payment Client Documentation](docs/payment-client.md)
 3. [Sandbox Client Documentation](docs/sandbox-client.md)
-4. [File Managements Documentation](docs/file-management-client.md)
-5. [Configuration](docs/configuration.md)
-6. [Logging](docs/logging.md)
-7. [Exception Handling](docs/exception-handling.md)
+4. [Configuration](docs/configuration.md)
+5. [Logging](docs/logging.md)
+6. [Exception Handling](docs/exception-handling.md)
 
 ## Related Resources
 - [EG Connectivity Hub](https://developers.expediagroup.com/supply/lodging)
