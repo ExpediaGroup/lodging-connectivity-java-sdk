@@ -15,7 +15,7 @@
  */
 package com.expediagroup.sdk.core.model.exception.service
 
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 
 /**
  * An exception that is thrown when an authentication error occurs.

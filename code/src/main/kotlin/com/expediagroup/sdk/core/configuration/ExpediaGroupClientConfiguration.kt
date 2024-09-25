@@ -15,7 +15,7 @@
  */
 package com.expediagroup.sdk.core.configuration
 
-import com.expediagroup.sdk.core.client.ExpediaGroupClient
+//import com.expediagroup.sdk.core.client.ExpediaGroupClient
 import com.expediagroup.sdk.core.configuration.provider.RuntimeConfigurationProvider
 
 /**
@@ -35,13 +35,61 @@ data class ExpediaGroupClientConfiguration(
     override val key: String? = null,
     override val secret: String? = null,
     override val endpoint: String? = null,
+    override val authEndpoint: String? = null,
     override val requestTimeout: Long? = null,
     override val connectionTimeout: Long? = null,
     override val socketTimeout: Long? = null,
     override val maskedLoggingHeaders: Set<String>? = null,
     override val maskedLoggingBodyFields: Set<String>? = null,
-    val authEndpoint: String? = null
+    override val maxConnTotal: Int? = null,
+    override val maxConnPerRoute: Int? = null,
 ) : ClientConfiguration {
     /** Build a [RuntimeConfigurationProvider] from an [ExpediaGroupClientConfiguration]. */
     override fun toProvider(): RuntimeConfigurationProvider = super.toProvider().copy(authEndpoint = authEndpoint)
+
+    companion object {
+        @JvmStatic
+        fun builder(): Builder = Builder()
+
+        @JvmStatic
+        fun from(configuration: ClientConfiguration): ExpediaGroupClientConfiguration {
+            return ExpediaGroupClientConfiguration(
+                key = configuration.key,
+                secret = configuration.secret,
+                endpoint = configuration.endpoint,
+                authEndpoint = configuration.authEndpoint,
+                requestTimeout = configuration.requestTimeout,
+                connectionTimeout = configuration.connectionTimeout,
+                socketTimeout = configuration.socketTimeout,
+                maskedLoggingHeaders = configuration.maskedLoggingHeaders,
+                maskedLoggingBodyFields = configuration.maskedLoggingBodyFields,
+                maxConnTotal = configuration.maxConnTotal,
+                maxConnPerRoute = configuration.maxConnPerRoute
+            )
+        }
+    }
+
+    class Builder : ClientConfiguration.Builder() {
+        override fun key(key: String): Builder = apply { super.key(key) }
+        override fun secret(secret: String): Builder = apply { super.secret(secret) }
+        override fun endpoint(endpoint: String): Builder = apply { super.endpoint(endpoint) }
+        override fun authEndpoint(authEndpoint: String): Builder = apply { super.authEndpoint(authEndpoint) }
+        override fun requestTimeout(requestTimeout: Long): Builder = apply { super.requestTimeout(requestTimeout) }
+        override fun connectionTimeout(connectionTimeout: Long): Builder =
+            apply { super.connectionTimeout(connectionTimeout) }
+
+        override fun socketTimeout(socketTimeout: Long): Builder = apply { super.socketTimeout(socketTimeout) }
+        override fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>): Builder =
+            apply { super.maskedLoggingHeaders(maskedLoggingHeaders) }
+
+        override fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>): Builder =
+            apply { super.maskedLoggingBodyFields(maskedLoggingBodyFields) }
+
+        override fun maxConnTotal(maxConnTotal: Int): Builder = apply { super.maxConnTotal(maxConnTotal) }
+        override fun maxConnPerRoute(maxConnPerRoute: Int): Builder = apply { super.maxConnPerRoute(maxConnPerRoute) }
+
+
+        override fun build(): ExpediaGroupClientConfiguration =
+            from(super.build())
+    }
 }
