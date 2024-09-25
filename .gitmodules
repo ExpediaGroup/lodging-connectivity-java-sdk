@@ -1,0 +1,3 @@
+[submodule "code/src/main/graphql"]
+	path = code/src/main/graphql
+	url = https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations
