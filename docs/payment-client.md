@@ -17,6 +17,24 @@ ClientConfiguration config = ClientConfiguration
 PaymentClient paymentClient = new PaymentClient(config);
 ```
 
+### Set the Environment (Optional)
+`PaymentClient` can be configured to work in different environments, below is a list of the supported environments by this client:
+
+| Environment              | Corresponding API Endpoint                                |
+|--------------------------|-----------------------------------------------------------|
+| `ClientEnvironment.PROD` | https://api.expediagroup.com/supply/payments/graphql      |
+| `ClientEnvironment.TEST` | https://test-api.expediagroup.com/supply/payments/graphql |
+
+**Configuration with Environment Example**
+```java
+ClientConfiguration config = ClientConfiguration
+        .builder()
+        .key("KEY")
+        .secret("SECRET")
+        .environment(ClientEnvironment.TEST)
+        .build();
+```
+
 ### Initialize GraphQL Operation
 ```java
 PaymentInstrumentQuery paymentInstrumentQuery = PaymentInstrumentQuery

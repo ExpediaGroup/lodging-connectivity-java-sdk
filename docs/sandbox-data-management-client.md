@@ -1,5 +1,5 @@
-# Sandbox Client
-`SandboxClient` contains sandbox-specific API operations useful to manage sandbox datasets for testing purposes.
+# Sandbox Data Management Client
+`SandboxDataManagementClient` contains sandbox-specific API operations useful to manage sandbox datasets for testing purposes.
 
 ### API Endpoint
 This client is connected with https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql endpoint by default.
@@ -14,7 +14,25 @@ ClientConfiguration config = ClientConfiguration
         .secret("SECRET")
         .build();
 
-SandboxClient sandboxClient = new SandboxClient(config);
+SandboxDataManagementClient client = new SandboxDataManagementClient(config);
+```
+
+### Set the Environment (Optional)
+`SandboxDataManagementClient` can be configured to work in different environments, below is a list of the supported environments by this client:
+
+| Environment                      | Corresponding API Endpoint                                               |
+|----------------------------------|--------------------------------------------------------------------------|
+| `ClientEnvironment.SANDBOX_PROD` | https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql      |
+| `ClientEnvironment.SANDBOX_TEST` | https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql |
+
+**Configuration with Environment Example**
+```java
+ClientConfiguration config = ClientConfiguration
+        .builder()
+        .key("KEY")
+        .secret("SECRET")
+        .environment(ClientEnvironement.SANDBOX_TEST)
+        .build();
 ```
 
 ### Initialize GraphQL Operation
@@ -25,7 +43,7 @@ SandboxPropertiesQuery propertiesQuery = SandboxPropertiesQuery.builder().build(
 ### Execute the operation
 ```java
 try {
-    SandboxPropertiesQuery.Data propertiesData = sandboxClient.execute(propertiesQuery);
+    SandboxPropertiesQuery.Data propertiesData = client.execute(propertiesQuery);
 }
 catch(ExpediaGroupServiceException e) {
     e.printStackTrace();
@@ -33,11 +51,11 @@ catch(ExpediaGroupServiceException e) {
 ```
 
 ## Available Operations
-The SDK offers a set of queries & mutations you can execute using the `SandboxClient`. Below is a list of the available operations.
+The SDK offers a set of queries & mutations you can execute using the `SandboxDataManagementClient`. Below is a list of the available operations.
 
 <br />
 
-### SandboxClient - Queries
+### SandboxDataManagementClient - Queries
 
 <hr />
 
@@ -122,7 +140,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxCl
 
 <br /><br />
 
-### SandboxClient - Mutations
+### SandboxDataManagementClient - Mutations
 
 <hr />
 

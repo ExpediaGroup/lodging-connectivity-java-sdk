@@ -132,9 +132,10 @@ data class ClientConfiguration(
 
     internal fun toExpediaGroupClientConfiguration(
         endpointProvider: (ClientEnvironment) -> String,
-        authEndpointProvider: (ClientEnvironment) -> String
+        authEndpointProvider: (ClientEnvironment) -> String,
+        defaultEnvironment: ClientEnvironment = ClientEnvironment.PROD
     ): ExpediaGroupClientConfiguration {
-        val environment = this.environment ?: ClientEnvironment.PROD
+        val environment = this.environment ?: defaultEnvironment
 
         return ExpediaGroupClientConfiguration(
             key = this.key,
