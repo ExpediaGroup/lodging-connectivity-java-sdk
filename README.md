@@ -29,7 +29,7 @@ dependencies {
 <dependency>
     <groupId>com.expediagroup</groupId>
     <artifactId>lodging-connectivity-sdk</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
