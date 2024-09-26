@@ -94,7 +94,7 @@ The list below lists detailed documentation files for some components of the SDK
 
 1. [Supply Client Documentation](docs/supply-client.md)
 2. [Payment Client Documentation](docs/payment-client.md)
-3. [Sandbox Data Management Client Documentation](docs/sandbox-data-management-client)
+3. [Sandbox Data Management Client Documentation](docs/sandbox-data-management-client.md)
 4. [Configuration](docs/configuration.md)
 5. [Logging](docs/logging.md)
 6. [Exception Handling](docs/exception-handling.md)
