@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Pull GraphQL Operations Submodule
+        run: ./scripts/graphql/init.sh
+
       - uses: actions/setup-java@v4
         with:
           java-version: 21
