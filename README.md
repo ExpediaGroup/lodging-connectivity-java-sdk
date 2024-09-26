@@ -19,7 +19,7 @@ Make sure you have **Java 8** or higher.
 ```groovy
 // gradle.build
 dependencies {
-    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.0-SNAPSHOT'
+    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.1-SNAPSHOT'
 }
 ```
 
