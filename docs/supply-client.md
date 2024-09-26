@@ -21,6 +21,26 @@ ClientConfiguration config = ClientConfiguration
 SupplyClient supplyClient = new SupplyClient(config);
 ```
 
+### Set the Environment (Optional)
+`SupplyClient` can be configured to work in different environments, below is a list of the supported environments by this client:
+
+| Environment                      | Corresponding API Endpoint                                       |
+|----------------------------------|------------------------------------------------------------------|
+| `ClientEnvironment.PROD`         | https://api.expediagroup.com/supply/lodging/graphql              |
+| `ClientEnvironment.TEST`         | https://test-api.expediagroup.com/supply/lodging/graphql         |
+| `ClientEnvironment.SANDBOX_PROD` | https://api.sandbox.expediagroup.com/supply/lodging/graphql      |
+| `ClientEnvironment.SANDBOX_TEST` | https://test-api.sandbox.expediagroup.com/supply/lodging/graphql |
+
+**Configuration with Environment Example**
+```java
+ClientConfiguration config = ClientConfiguration
+        .builder()
+        .key("KEY")
+        .secret("SECRET")
+        .environment(ClientEnvironement.SANDBOX_PROD)
+        .build();
+```
+
 ### Initialize GraphQL Operation 
 ```java
 PropertyReservationsQuery reservationsQuery = PropertyReservationsQuery

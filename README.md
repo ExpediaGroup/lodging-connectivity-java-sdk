@@ -19,7 +19,7 @@ Make sure you have **Java 8** or higher.
 ```groovy
 // gradle.build
 dependencies {
-    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.1-SNAPSHOT'
+    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.2-SNAPSHOT'
 }
 ```
 
@@ -29,7 +29,7 @@ dependencies {
 <dependency>
     <groupId>com.expediagroup</groupId>
     <artifactId>lodging-connectivity-sdk</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -65,7 +65,7 @@ Once you have the SDK dependency installed, you can start using its capabilities
 
 1. Supply Client
 2. Payment Client
-3. Sandbox  Client
+3. Sandbox Data Management Client
 
 ### Typical Usage Flow
 Follow these three simple steps to start using any client in the SDK:
@@ -94,7 +94,7 @@ The list below lists detailed documentation files for some components of the SDK
 
 1. [Supply Client Documentation](docs/supply-client.md)
 2. [Payment Client Documentation](docs/payment-client.md)
-3. [Sandbox Client Documentation](docs/sandbox-client.md)
+3. [Sandbox Data Management Client Documentation](docs/sandbox-data-management-client.md)
 4. [Configuration](docs/configuration.md)
 5. [Logging](docs/logging.md)
 6. [Exception Handling](docs/exception-handling.md)

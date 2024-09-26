@@ -19,7 +19,7 @@ package com.expediagroup.sdk.lodgingconnectivity;
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCancelReservationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxChangeReservationStayDatesMutation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxClient;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDataManagementClient;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreatePropertyMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreateReservationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDeletePropertyMutation;
@@ -41,7 +41,7 @@ import java.util.Optional;
 import java.util.List;
 
 /**
- * Example class to demonstrate different operations supported by the LodgingSupplySandboxClient
+ * Example class to demonstrate different operations supported by the SandboxDataManagementClient
  * Run the main method to see these operations in action:
  * 1. Create a Property
  * 2. Update Property Name
@@ -52,9 +52,9 @@ import java.util.List;
  * 7. Delete the Reservation
  * 8. Delete the Property
  **/
-public class LodgingSupplySandboxClientUsageExample {
+public class SandboxDataManagementClientUsageExample {
 
-    private static final SandboxClient client = new SandboxClient(
+    private static final SandboxDataManagementClient client = new SandboxDataManagementClient(
             ClientConfiguration
                     .builder()
                     .key("KEY")

@@ -17,6 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
@@ -27,13 +28,13 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * This client is configured with a `ClientConfiguration` that includes authentication details,
  * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
  *
- * @constructor Creates a new instance of `SandboxClient` using the provided configuration.
+ * @constructor Creates a new instance of `SandboxDataManagementClient` using the provided configuration.
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
  * timeouts, and logging masking options.
  *
  * Example usage:
  * ```
- * SandboxClient(
+ * SandboxDataManagementClient(
  *     ClientConfiguration
  *         .builder()
  *         .key("API_KEY")
@@ -42,10 +43,11 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class SandboxClient(config: ClientConfiguration)  :
+class SandboxDataManagementClient(config: ClientConfiguration)  :
     GraphQLExecutor by BaseGraphQLClient(
         config.toExpediaGroupClientConfiguration(
-            endpointProvider = EndpointProvider::getSandboxClientEndpoint,
-            authEndpointProvider = EndpointProvider::getAuthEndpoint
+            endpointProvider = EndpointProvider::getSandboxDataManagementClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint,
+            defaultEnvironment = ClientEnvironment.SANDBOX_PROD
         )
     )
