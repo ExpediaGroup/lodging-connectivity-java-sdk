@@ -1,5 +1,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
+import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
+
 enum class SupplyClientEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/supply/lodging/graphql"),
     TEST("https://test-api.expediagroup.com/supply/lodging/graphql"),
@@ -38,7 +40,7 @@ object EndpointProvider {
         return try {
             SupplyClientEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException(
+            throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for SupplyClient. 
                 Supported environments are [${SupplyClientEndpoint.entries.joinToString(", ") }]
@@ -51,7 +53,7 @@ object EndpointProvider {
         return try {
             PaymentClientEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException(
+            throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for PaymentClient. 
                 Supported environments are [${PaymentClientEndpoint.entries.joinToString(", ") }]
@@ -64,7 +66,7 @@ object EndpointProvider {
         return try {
             SandboxDataManagementClientEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException(
+            throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for SandboxDataManagementClient. 
                 Supported environments are [${SandboxDataManagementClientEndpoint.entries.joinToString(", ") }]
@@ -77,7 +79,7 @@ object EndpointProvider {
         return try {
             AuthEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException(
+            throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for Authentication. 
                 Supported environments are [${AuthEndpoint.entries.joinToString(", ") }]
