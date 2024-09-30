@@ -1,3 +1,0 @@
-mutation WithdrawNewListingDiscount($withdrawNewListingDiscountId: String!, $idSource: IdSource!) {
-    withdrawNewListingDiscount(id: $withdrawNewListingDiscountId, idSource: $idSource)
-}

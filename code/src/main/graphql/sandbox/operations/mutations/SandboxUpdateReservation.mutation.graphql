@@ -1,8 +1,0 @@
-mutation SandboxUpdateReservation($input: UpdateReservationInput!) {
-    updateReservation(input: $input) {
-        clientMutationId
-        reservation {
-            ...SandboxReservationFragment
-        }
-    }
-}

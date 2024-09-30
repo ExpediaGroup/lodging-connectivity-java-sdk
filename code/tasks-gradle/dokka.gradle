@@ -1,18 +1,18 @@
 dokkaHtml {
-    moduleName.set("Lodging Connectivity Java SDK")
+    moduleName.set("Lodging Connectivity SDK")
 
     String versioningConfiguration = """
     {
       "version": "${project.version}",
-      "olderVersionsDir": "${project.properties["dokka-old-versions-dir"]}",
+      "olderVersionsDir": "${project.properties["dokka-old-versions.location"]}",
       "renderVersionsNavigationOnAllPages": true
     }
     """
 
     String dokkaBaseConfiguration = """
     {
-        "customAssets": ["${file("assets/logo-icon.svg")}"],
-        "customStyleSheets": ["${file("assets/custom-styles.css")}"]
+        "customAssets": ["${file("${project.properties["dokka-assets.location"]}/logo-icon.svg")}"],
+        "customStyleSheets": ["${file("${project.properties["dokka-assets.location"]}/custom-styles.css")}"]
     }
     """
 
