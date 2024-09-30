@@ -1,6 +1,0 @@
-mutation DeleteImage($input: DeleteImageInput!) {
-    deleteImage(input: $input) {
-        clientMutationId
-        id
-    }
-}

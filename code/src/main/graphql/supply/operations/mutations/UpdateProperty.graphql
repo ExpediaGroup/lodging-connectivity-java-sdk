@@ -1,8 +1,0 @@
-mutation UpdateProperty($input: UpdatePropertyInput!) {
-    updateProperty(input: $input) {
-        clientMutationId
-        property {
-            id
-        }
-    }
-}

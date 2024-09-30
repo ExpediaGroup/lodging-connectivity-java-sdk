@@ -1,8 +1,0 @@
-mutation CancelVrboReservation($input: CancelVrboReservationInput!) {
-    cancelVrboReservation(input: $input) {
-        clientMutationId
-        reservation {
-            id
-        }
-    }
-}
