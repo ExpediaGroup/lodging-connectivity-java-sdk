@@ -1,5 +1,0 @@
-mutation DeleteUnitSpace($input: DeleteUnitSpaceInput!) {
-    deleteUnitSpace(input: $input) {
-        clientMutationId
-    }
-}

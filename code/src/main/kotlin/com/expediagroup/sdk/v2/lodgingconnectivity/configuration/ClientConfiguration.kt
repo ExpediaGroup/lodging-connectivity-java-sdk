@@ -4,7 +4,6 @@ import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfiguratio
 import com.expediagroup.sdk.v2.core.authentication.strategy.AuthenticationStrategy
 import com.expediagroup.sdk.v2.core.configuration.ExpediaGroupDefaultClientConfiguration
 import com.expediagroup.sdk.v2.core.configuration.FullClientConfiguration
-import java.util.*
 
 /**
  * A configuration class that holds the necessary credentials and settings for API clients.
@@ -148,16 +147,16 @@ data class ClientConfiguration(
         fun builder(): Builder = Builder()
     }
 
-    internal fun toExpediaGroupClientConfiguration(
+    internal fun toFullClientConfiguration(
         endpointProvider: (ClientEnvironment) -> String,
-        authEndpointProvider: (ClientEnvironment) -> String
+        authEndpointProvider: (ClientEnvironment) -> String,
+        defaultEnvironment: ClientEnvironment = ClientEnvironment.PROD
     ): FullClientConfiguration {
-        val environment = this.environment ?: ClientEnvironment.PROD
+        val environment = this.environment ?: defaultEnvironment
 
         return object : FullClientConfiguration {
             override fun getKey(): String =
                 key ?: throw ExpediaGroupConfigurationException("API key is required for authentication.")
-
 
             override fun getSecret(): String =
                 secret ?: throw ExpediaGroupConfigurationException("API secret is required for authentication.")

@@ -6,11 +6,11 @@ focus on their core business needs.
 With robust features and seamless integration, it enhances developer productivity, providing all necessary tools to efficiently query and mutate data from GraphQL APIs.
 
 ## Key Features
-1. **Pre-Built Operations for Lodging Connectivity GraphQL APIs**
-2. **Strongly Typed Responses**
-3. **Authentication & Automatic Token Renewal**
-4. **Logging & Sensitive Data Masking**
-5. **Error Handling**
+1. Pre-Built Operations for Lodging Connectivity GraphQL APIs
+2. Strongly Typed Responses
+3. Authentication & Automatic Token Renewal
+4. Logging & Sensitive Data Masking
+5. Error Handling
 
 ## Installation
 Make sure you have **Java 8** or higher.
@@ -19,7 +19,7 @@ Make sure you have **Java 8** or higher.
 ```groovy
 // gradle.build
 dependencies {
-    implementation 'com.expediagroup:lodging-connectivity-java-sdk:1.0.0'
+    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.2-SNAPSHOT'
 }
 ```
 
@@ -28,18 +28,44 @@ dependencies {
 <!-- pom.xml -->
 <dependency>
     <groupId>com.expediagroup</groupId>
-    <artifactId>lodging-connectivity-java-sdk</artifactId>
-    <version>1.0.0</version>
+    <artifactId>lodging-connectivity-sdk</artifactId>
+    <version>1.0.2-SNAPSHOT</version>
 </dependency>
 ```
 
+>[!NOTE]
+> The SDK is currently published as SNAPSHOT versions, so you will need to configure your build tool to pull packages from the Maven snapshots repository
+> 
+> **Gradle**
+> ```groovy
+> repositories {
+>   maven {
+>      url "https://oss.sonatype.org/content/repositories/snapshots/"
+>    }
+> }
+> ```
+> 
+> **Maven**
+> ```xml
+> <repositories>
+>    <repository>
+>        <id>sonatype-snapshots</id>
+>        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+>        <releases>
+>            <enabled>false</enabled>
+>        </releases>
+>        <snapshots>
+>            <enabled>true</enabled>
+>        </snapshots>
+>    </repository>
+> </repositories>
+> ```
 ## Quick Start
-Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains four different clients, each linked to a separate endpoint
+Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains three different clients, each linked to a separate endpoint
 
-1. **Supply Client**
-2. **Payment Client**
-3. **Sandbox  Client**
-4. **File Management Client**
+1. Supply Client
+2. Payment Client
+3. Sandbox Data Management Client
 
 ### Typical Usage Flow
 Follow these three simple steps to start using any client in the SDK:
@@ -47,11 +73,11 @@ Follow these three simple steps to start using any client in the SDK:
 1. Build the client configuration object.
 
    ```java
-   ExpediaGroupClientConfiguration config = ExpediaGroupClientConfiguration
-     .builder()
-     .key("KEY")
-     .secret("SECRET")
-     .build();
+   ClientConfiguration config = ClientConfiguration
+           .builder()
+           .key("KEY")
+           .secret("SECRET")
+           .build();
    ```
 
 2. Initialize a client.
@@ -62,3 +88,18 @@ Follow these three simple steps to start using any client in the SDK:
    ```java
    supplyClient.execute(/* GraphQL Operation */);
    ```
+
+## Documentation
+The list below lists detailed documentation files for some components of the SDK. Whether you're looking to configure the SDK, explore the pre-built GraphQL operations, or learn how to use specific clients, the following resources will guide you through all the necessary steps.
+
+1. [Supply Client Documentation](docs/supply-client.md)
+2. [Payment Client Documentation](docs/payment-client.md)
+3. [Sandbox Data Management Client Documentation](docs/sandbox-data-management-client.md)
+4. [Configuration](docs/configuration.md)
+5. [Logging](docs/logging.md)
+6. [Exception Handling](docs/exception-handling.md)
+
+## Related Resources
+- [EG Connectivity Hub](https://developers.expediagroup.com/supply/lodging)
+- [EG Lodging Connectivity SDK GraphQL Operations Definitions](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations)
+- [EG Lodging Connectivity Node.JS SDK](https://github.com/ExpediaGroup/lodging-connectivity-nodejs-sdk)

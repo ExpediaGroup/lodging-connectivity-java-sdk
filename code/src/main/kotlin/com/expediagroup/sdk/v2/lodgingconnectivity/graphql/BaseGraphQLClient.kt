@@ -26,7 +26,6 @@ import com.expediagroup.sdk.v2.core.gapiclient.GClientHttpEngine
 import com.expediagroup.sdk.v2.core.gapiclient.util.createGClientHttpEngine
 import kotlinx.coroutines.runBlocking
 
-
 class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: String) : GraphQLExecutor {
     private val engine: GClientHttpEngine = createGClientHttpEngine(
         namespace = namespace,

@@ -1,9 +1,0 @@
-mutation SandboxCancelReservation($input: CancelReservationInput!) {
-    cancelReservation(input: $input) {
-        clientMutationId
-        reservation {
-            id
-            status
-        }
-    }
-}
