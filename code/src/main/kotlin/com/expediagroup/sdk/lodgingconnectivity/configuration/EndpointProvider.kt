@@ -1,5 +1,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
+import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
+
 enum class SupplyClientEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/supply/lodging/graphql"),
     TEST("https://test-api.expediagroup.com/supply/lodging/graphql"),
@@ -12,14 +14,9 @@ enum class PaymentClientEndpoint(val url: String) {
     TEST("https://test-api.expediagroup.com/supply/payments/graphql")
 }
 
-enum class SandboxClientEndpoint(val url: String) {
-    PROD("https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql"),
-    TEST("https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql")
-}
-
-enum class FileManagementClientEndpoint(val url: String) {
-    PROD("https://api.expediagroup.com/supply-lodging/v1/files"),
-    TEST("https://test-api.expediagroup.com/supply-lodging/v1/files")
+enum class SandboxDataManagementClientEndpoint(val url: String) {
+    SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql"),
+    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql")
 }
 
 enum class AuthEndpoint(val url: String) {
@@ -43,7 +40,12 @@ object EndpointProvider {
         return try {
             SupplyClientEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("Unsupported environment [$environment] for SupplyClient")
+            throw ExpediaGroupConfigurationException(
+                """
+                Unsupported environment [$environment] for SupplyClient. 
+                Supported environments are [${SupplyClientEndpoint.entries.joinToString(", ") }]
+                """
+            )
         }
     }
 
@@ -51,23 +53,25 @@ object EndpointProvider {
         return try {
             PaymentClientEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("Unsupported environment [$environment] for PaymentClient")
+            throw ExpediaGroupConfigurationException(
+                """
+                Unsupported environment [$environment] for PaymentClient. 
+                Supported environments are [${PaymentClientEndpoint.entries.joinToString(", ") }]
+                """
+            )
         }
     }
 
-    fun getSandboxClientEndpoint(environment: ClientEnvironment): String {
+    fun getSandboxDataManagementClientEndpoint(environment: ClientEnvironment): String {
         return try {
-            SandboxClientEndpoint.valueOf(environment.name).url
+            SandboxDataManagementClientEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("Unsupported environment [$environment] for SandboxClient")
-        }
-    }
-
-    fun getFileManagementClientEndpoint(environment: ClientEnvironment): String {
-        return try {
-            FileManagementClientEndpoint.valueOf(environment.name).url
-        } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("Unsupported environment [$environment] for FileManagementClient")
+            throw ExpediaGroupConfigurationException(
+                """
+                Unsupported environment [$environment] for SandboxDataManagementClient. 
+                Supported environments are [${SandboxDataManagementClientEndpoint.entries.joinToString(", ") }]
+                """
+            )
         }
     }
 
@@ -75,7 +79,12 @@ object EndpointProvider {
         return try {
             AuthEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("Unsupported environment [$environment] for Authentication")
+            throw ExpediaGroupConfigurationException(
+                """
+                Unsupported environment [$environment] for Authentication. 
+                Supported environments are [${AuthEndpoint.entries.joinToString(", ") }]
+                """
+            )
         }
     }
 }

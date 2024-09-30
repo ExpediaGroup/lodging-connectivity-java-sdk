@@ -16,8 +16,8 @@ class FileManagementClient(
     configuration: ClientConfiguration
 ) {
     private val client = ExpediaGroupClient(
-        namespace = "filemanagement",
-        configuration = configuration.toExpediaGroupClientConfiguration(
+        namespace = "lodging-connectivity-file-management-client",
+        configuration = configuration.toFullClientConfiguration(
             endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
         )

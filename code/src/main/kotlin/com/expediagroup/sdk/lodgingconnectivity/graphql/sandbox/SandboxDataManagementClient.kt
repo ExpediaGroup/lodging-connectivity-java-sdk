@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.v2.lodgingconnectivity.graphql.payment
+package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox
 
-import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.EndpointProvider
-import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration
-import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.BaseGraphQLClient
-import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
+import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 
 /**
- * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
+ * A client for interacting with EG Lodging Connectivity Sandbox GraphQL API.
  *
  * This client is configured with a `ClientConfiguration` that includes authentication details,
  * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
  *
- * @constructor Creates a new instance of `PaymentClient` using the provided configuration.
+ * @constructor Creates a new instance of `SandboxDataManagementClient` using the provided configuration.
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
  * timeouts, and logging masking options.
  *
  * Example usage:
  * ```
- * PaymentClient(
+ * SandboxDataManagementClient(
  *     ClientConfiguration
  *         .builder()
  *         .key("API_KEY")
@@ -42,11 +43,11 @@ import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class PaymentClient(config: ClientConfiguration):
+class SandboxDataManagementClient(config: ClientConfiguration)  :
     GraphQLExecutor by BaseGraphQLClient(
-        config.toFullClientConfiguration(
-            endpointProvider = EndpointProvider::getPaymentClientEndpoint,
-            authEndpointProvider = EndpointProvider::getAuthEndpoint
-        ),
-        "lodging-connectivity-payment-client"
+        config.toExpediaGroupClientConfiguration(
+            endpointProvider = EndpointProvider::getSandboxDataManagementClientEndpoint,
+            authEndpointProvider = EndpointProvider::getAuthEndpoint,
+            defaultEnvironment = ClientEnvironment.SANDBOX_PROD
+        )
     )
