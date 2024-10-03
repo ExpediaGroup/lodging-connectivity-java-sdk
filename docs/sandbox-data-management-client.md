@@ -1,5 +1,8 @@
 # Sandbox Data Management Client
-`SandboxDataManagementClient` contains sandbox-specific API operations useful to manage sandbox datasets for testing purposes.
+
+`SandboxDataManagementClient` allows communication with sandbox-specific API operations. Sandbox is a controlled environment used for testing and managing mocked data without impacting the live systems. It's worth noting that the sandbox APIs have more lax constraints in the data than the live APIs; for example, creating a property with the live APIs requires an address whereas the sandbox API does not.
+
+View the examples package for specific usages of the `SandboxDataManagementClient`.
 
 ### API Endpoint
 This client is connected with https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql endpoint by default.
