@@ -3,42 +3,38 @@ package com.expediagroup.sdk.v2.core.gapiclient
 import com.apollographql.apollo.api.http.HttpRequest
 import com.apollographql.apollo.api.http.HttpResponse
 import com.apollographql.apollo.exception.ApolloNetworkException
-import com.apollographql.apollo.network.http.HttpEngine
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.apollographql.java.client.ApolloDisposable
+import com.apollographql.java.client.network.http.HttpCallback
+import com.apollographql.java.client.network.http.HttpEngine
 import com.expediagroup.sdk.v2.core.gapiclient.model.GRequest
 import com.expediagroup.sdk.v2.core.gapiclient.util.toApolloHeaders
-import okio.Buffer
-import kotlin.coroutines.cancellation.CancellationException
+import okio.buffer
+import okio.source
 
 
 class GClientHttpEngine(
     private val gClient: GClient
 ) : HttpEngine {
-    override fun close() {
-        super.close()
-    }
-
-    override suspend fun execute(request: HttpRequest): HttpResponse =
+    override fun execute(request: HttpRequest, callback: HttpCallback, disposable: ApolloDisposable) {
         try {
             GRequest(
                 gClient,
                 graphQLRequest = request,
                 responseType = Any::class.java
             ).executeUnparsed().let { response ->
-                if (!response.isSuccessStatusCode) {
-                    throw ExpediaGroupServiceException(
-                        message = response.statusMessage
-                    )
-                }
-
                 HttpResponse.Builder(statusCode = response.statusCode).apply {
-                    body(Buffer().readFrom(response.content))
+                    body(response.content.source().buffer())
                     headers(response.headers.toApolloHeaders())
-                }.build()
+                }.also {
+                    callback.onResponse(it.build())
+                }
             }
-        } catch (e: CancellationException) {
-            throw e
-        } catch (t: Throwable) {
-            throw ApolloNetworkException(t.message, t)
+        } catch (e: Exception) {
+            callback.onFailure(ApolloNetworkException(e.message, e))
         }
+    }
+
+    override fun dispose() {
+        // no-op
+    }
 }
