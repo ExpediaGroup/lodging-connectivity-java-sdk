@@ -10,18 +10,17 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
-fun getHttpCredentialsAdapter(configuration: ClientConfigurationTrait): HttpCredentialsAdapter {
+fun getHttpCredentialsAdapter(configuration: ClientConfiguration): HttpCredentialsAdapter {
     require(configuration is KeyTrait) { "Configuration must implement KeyTrait!" }
     require(configuration is SecretTrait) { "Configuration must implement SecretTrait!" }
     require(configuration is AuthEndpointTrait) { "Configuration must implement AuthEndpointTrait!" }
-    require(configuration is IdTrait) { "Configuration must implement IdTrait!" }
     require(configuration is AuthenticationStrategyTrait) { "Configuration must implement ClientConfigurationTrait!" }
 
     return CreateSingletonHttpCredentialsAdapter.execute(configuration)
 }
 
 private class CreateSingletonHttpCredentialsAdapter private constructor() :
-        (ClientConfigurationTrait) -> HttpCredentialsAdapter {
+        (ClientConfiguration) -> HttpCredentialsAdapter {
     companion object {
         @JvmStatic
         private val INSTANCE = CreateSingletonHttpCredentialsAdapter()
@@ -30,11 +29,11 @@ private class CreateSingletonHttpCredentialsAdapter private constructor() :
         private val adapters: ConcurrentMap<UUID, HttpCredentialsAdapter> = ConcurrentHashMap()
 
         @JvmStatic
-        fun execute(configuration: ClientConfigurationTrait): HttpCredentialsAdapter =
+        fun execute(configuration: ClientConfiguration): HttpCredentialsAdapter =
             INSTANCE(configuration)
     }
 
-    override fun invoke(configuration: ClientConfigurationTrait): HttpCredentialsAdapter {
+    override fun invoke(configuration: ClientConfiguration): HttpCredentialsAdapter {
         require(configuration is KeyTrait) { "Configuration must implement KeyTrait!" }
 
         val strategy = (configuration as AuthenticationStrategyTrait).getAuthenticationStrategy()

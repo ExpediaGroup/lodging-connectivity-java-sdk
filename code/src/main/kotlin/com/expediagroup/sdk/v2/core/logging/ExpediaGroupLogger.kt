@@ -15,9 +15,9 @@
  */
 package com.expediagroup.sdk.v2.core.logging
 
-import com.expediagroup.sdk.core.constant.Constant
-import com.expediagroup.sdk.core.constant.LoggingMessage.LOGGING_PREFIX
-import com.expediagroup.sdk.core.logging.mask.maskLogs
+import com.expediagroup.sdk.v2.core.constant.Constant
+import com.expediagroup.sdk.v2.core.constant.LoggingMessage.LOGGING_PREFIX
+import com.expediagroup.sdk.v2.core.logging.mask.maskLogs
 import org.slf4j.Logger
 
 internal class ExpediaGroupLogger(private val logger: Logger) : Logger by logger {

@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.logging.mask
+package com.expediagroup.sdk.v2.core.logging.mask
 
 import com.ebay.ejmask.core.BaseFilter
 

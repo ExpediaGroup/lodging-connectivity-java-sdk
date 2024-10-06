@@ -1,12 +1,12 @@
 package com.expediagroup.sdk.v2.core.trait.authentication
 
 import com.expediagroup.sdk.v2.core.trait.Trait
-import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfigurationTrait
+import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
 import com.google.api.client.http.HttpTransport
 
 interface CreateAuthenticationHandlerTrait : Trait {
     fun createAuthenticationHandler(
-        config: ClientConfigurationTrait,
+        config: ClientConfiguration,
         transport: HttpTransport,
     ): RefreshAccessTokenTrait
 }
