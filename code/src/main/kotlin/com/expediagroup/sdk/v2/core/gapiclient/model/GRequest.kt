@@ -94,7 +94,7 @@ class GRequest<ResponseType : Any>(
             return super.executeUnparsed()
         } catch (e: Exception) {
             e.printStackTrace()
-            throw com.expediagroup.sdk.v2.core.model.exception.service.ExpediaGroupServiceException(
+            throw com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException(
                 message = e.message
             )
         }
@@ -102,7 +102,7 @@ class GRequest<ResponseType : Any>(
 
     private fun throwOnError(response: HttpResponse) {
         if (!response.isSuccessStatusCode) {
-            throw com.expediagroup.sdk.v2.core.model.exception.service.ExpediaGroupServiceException(
+            throw com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException(
                 message = response.statusMessage
             )
         }

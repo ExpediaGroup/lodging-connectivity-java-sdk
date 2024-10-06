@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.sdk.v2.core.model
+package com.expediagroup.sdk.core.model
 
-import com.google.api.client.http.HttpContent
-import com.expediagroup.sdk.core.model.TransactionId
+import java.util.UUID
 
-abstract class Operation<T>(
-    val url: String,
-    val method: String,
-    val operationId: String,
-    val requestBody: T?,
-    val params: OperationParams?,
-    val isUpload: Boolean = false,
-) {
-    var transactionId: TransactionId = TransactionId()
-        private set
+class TransactionId {
+    private var transactionId: UUID = UUID.randomUUID()
 
-    open fun getHttpContent(): HttpContent? = null
+    fun peek(): UUID {
+        return transactionId
+    }
+
+    fun dequeue(): UUID {
+        return transactionId.also { transactionId = UUID.randomUUID() }
+    }
 }

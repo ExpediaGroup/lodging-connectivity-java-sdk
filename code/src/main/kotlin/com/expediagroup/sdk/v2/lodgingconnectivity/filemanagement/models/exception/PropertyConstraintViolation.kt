@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expediagroup.sdk.v2.core.model
 
-import com.google.api.client.http.HttpContent
-import com.expediagroup.sdk.core.model.TransactionId
 
-abstract class Operation<T>(
-    val url: String,
-    val method: String,
-    val operationId: String,
-    val requestBody: T?,
-    val params: OperationParams?,
-    val isUpload: Boolean = false,
-) {
-    var transactionId: TransactionId = TransactionId()
-        private set
+package com.expediagroup.sdk.v2.lodgingconnectivity.filemanagement.models.exception
 
-    open fun getHttpContent(): HttpContent? = null
-}
+/**
+ * An entity to represent a constraint violation of a property.
+ *
+ * @property name The name of the constraint-violated field
+ * @property path The path of the constraint-violated field
+ * @property message The constraint violation message
+ */
+data class PropertyConstraintViolation(
+    val name: String,
+    val path: String,
+    val message: String
+)

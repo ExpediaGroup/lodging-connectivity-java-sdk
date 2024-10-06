@@ -2,13 +2,9 @@ package com.expediagroup.sdk.v2.core.configuration
 
 import com.expediagroup.sdk.v2.core.constant.Constant
 import com.expediagroup.sdk.v2.core.authentication.strategy.AuthenticationStrategy
-import com.expediagroup.sdk.v2.core.trait.configuration.*
-import java.util.*
 
 object ExpediaGroupDefaultClientConfiguration :
-    FullConfigurationTrait {
-
-    override val id: UUID = UUID.randomUUID()
+    FullClientConfiguration {
 
     override fun getKey(): String {
         throw NotImplementedError("Not implemented")
