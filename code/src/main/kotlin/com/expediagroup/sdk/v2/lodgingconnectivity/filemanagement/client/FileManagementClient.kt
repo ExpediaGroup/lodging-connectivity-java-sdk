@@ -1,6 +1,7 @@
 package com.expediagroup.sdk.v2.lodgingconnectivity.filemanagement.client
 
 import com.expediagroup.sdk.v2.core.client.ExpediaGroupClient
+import com.expediagroup.sdk.v2.core.configuration.DefaultClientBuilder
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.v2.lodgingconnectivity.filemanagement.models.FileUploadRequest
@@ -123,33 +124,10 @@ class FileManagementClient(
         @JvmStatic
         fun builder(): Builder = Builder()
 
-        class Builder {
+        class Builder: DefaultClientBuilder<FileManagementClient>() {
             private val configurationBuilder = ClientConfiguration.builder()
 
-            fun key(key: String): Builder = apply { configurationBuilder.key(key) }
-            fun secret(secret: String): Builder = apply { configurationBuilder.secret(secret) }
-            fun requestTimeout(requestTimeout: Long): Builder =
-                apply { configurationBuilder.requestTimeout(requestTimeout) }
-
-            fun connectionTimeout(connectionTimeout: Long): Builder =
-                apply { configurationBuilder.connectionTimeout(connectionTimeout) }
-
-            fun socketTimeout(socketTimeout: Long): Builder =
-                apply { configurationBuilder.socketTimeout(socketTimeout) }
-
-            fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>): Builder =
-                apply { configurationBuilder.maskedLoggingHeaders(maskedLoggingHeaders) }
-
-            fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>): Builder =
-                apply { configurationBuilder.maskedLoggingBodyFields(maskedLoggingBodyFields) }
-
-            fun maxConnTotal(maxConnTotal: Int): Builder = apply {
-                configurationBuilder.maxConnTotal(maxConnTotal) }
-            fun maxConnPerRoute(maxConnPerRoute: Int): Builder =
-                apply { configurationBuilder.maxConnPerRoute(maxConnPerRoute)
-                }
-
-            fun build(): FileManagementClient =
+            override fun build(): FileManagementClient =
                 FileManagementClient(configurationBuilder.build())
         }
     }

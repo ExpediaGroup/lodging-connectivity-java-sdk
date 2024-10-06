@@ -40,11 +40,11 @@ abstract class DefaultClientBuilder<out T> {
         configurationBuilder = configurationBuilder.maskedLoggingBodyFields(maskedLoggingBodyFields)
     }
 
-    fun maxConnTotal(maxConnectionTotal: Int) = apply {
+    fun maxConnectionTotal(maxConnectionTotal: Int) = apply {
         configurationBuilder = configurationBuilder.maxConnectionsTotal(maxConnectionTotal)
     }
 
-    fun maxConnPerRoute(maxConnectionPerRoute: Int) = apply {
+    fun maxConnectionPerRoute(maxConnectionPerRoute: Int) = apply {
         configurationBuilder = configurationBuilder.maxConnectionsPerRoute(maxConnectionPerRoute)
     }
 

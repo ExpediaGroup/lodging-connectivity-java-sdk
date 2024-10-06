@@ -17,8 +17,6 @@ fun createHttpClient(configuration: ClientConfiguration): HttpClient {
     require(configuration is MaxConnectionsTotalTrait) { "Configuration must implement MaxConnectionsTotalTrait" }
     require(configuration is MaxConnectionsPerRouteTrait) { "Configuration must implement MaxConnectionsPerRouteTrait" }
 
-
-    // TODO: Consume configuration
     return ApacheHttpTransport.newDefaultHttpClientBuilder()
         .setDefaultRequestConfig(createRequestConfig(configuration))
         .setMaxConnTotal((configuration as MaxConnectionsTotalTrait).getMaxConnectionsTotal())
