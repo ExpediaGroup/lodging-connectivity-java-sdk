@@ -1,5 +1,5 @@
 # Logging
-Expedia Group<sup>TM</sup> Lodging Connectivity SDK for Java does not impose a logging framework on clients, and instead supports logging via the `SLF4J` interface. `SLF4J` provides an abstraction for various logging frameworks, allowing clients to plug in their desired implementation when building their projects.
+Expedia Group Lodging Connectivity SDK for Java does not impose a logging framework on clients, and instead supports logging via the `SLF4J` interface. `SLF4J` provides an abstraction for various logging frameworks, allowing clients to plug in their desired implementation when building their projects.
 
 Without a logging framework plugged in, the SDK (SLF4J) defaults to a no-operation, discarding all log requests with a single warning message.
 
