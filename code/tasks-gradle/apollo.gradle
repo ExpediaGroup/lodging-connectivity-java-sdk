@@ -2,7 +2,6 @@ apollo {
     service("supply") {
         generateKotlinModels.set(false)
         nullableFieldStyle.set("javaOptional")
-        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/supply")
 
@@ -34,7 +33,6 @@ apollo {
     service("payment") {
         generateKotlinModels.set(false)
         nullableFieldStyle.set("javaOptional")
-        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/payment")
 
@@ -49,7 +47,6 @@ apollo {
     service("sandbox") {
         generateKotlinModels.set(false)
         nullableFieldStyle.set("javaOptional")
-        generateOptionalOperationVariables.set(false)
 
         srcDir("src/main/graphql/sandbox")
 
