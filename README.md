@@ -19,7 +19,7 @@ Make sure you have **Java 8** or higher.
 ```groovy
 // gradle.build
 dependencies {
-    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.2-SNAPSHOT'
+    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.3-SNAPSHOT'
 }
 ```
 
@@ -29,7 +29,7 @@ dependencies {
 <dependency>
     <groupId>com.expediagroup</groupId>
     <artifactId>lodging-connectivity-sdk</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
 </dependency>
 ```
 
