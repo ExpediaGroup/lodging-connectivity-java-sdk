@@ -7,6 +7,9 @@
 # Action
 <!-- Summarize the key steps or decisions taken to accomplish the task. Include what changes were made in the codebase, architecture, or process. What actions were implemented to address the task? -->
 
+# Testing
+<!-- Describe the testing strategy or approach used to validate the changes. Include any relevant test cases, scenarios, or data used to verify the work. How was the work tested? -->
+
 # Results
 <!-- Detail the outcomes of the actions. What improvements or changes have been achieved? Include performance gains, bug fixes, or other tangible outcomes. How will you measure or verify success? -->
 
