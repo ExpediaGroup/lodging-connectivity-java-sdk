@@ -11,4 +11,4 @@
 <!-- Detail the outcomes of the actions. What improvements or changes have been achieved? Include performance gains, bug fixes, or other tangible outcomes. How will you measure or verify success? -->
 
 # Notes
-<!-- Add any additional context or information. This could include things like links to documentation, follow-up tasks, edge cases considered, or potential risks. Any relevant thoughts or clarifications can go here. -->
+<!-- Add any additional context or information. This could include things like links to documentation, related issues, related PRs, follow-up tasks, edge cases considered, or potential risks. Any relevant thoughts or clarifications can go here. -->
