@@ -1,9 +1,5 @@
-# Supply Client
-`SupplyClient` gives you access to the reservations capabilities in lodging connectivity APIs.
-
-> [!NOTE]
-> Supporting more capabilities like Promotions, Messaging, Reviews, etc... is work-in-progress at the moment and will be added soon to this client.
-
+# Reservation Client
+`ReservationnClient` gives you access to the reservations capabilities in lodging connectivity APIs.
 
 ### API Endpoint
 This client is connected with https://api.expediagroup.com/supply/lodging/graphql endpoint by default. 
@@ -18,11 +14,11 @@ ClientConfiguration config = ClientConfiguration
         .secret("SECRET")
         .build();
 
-SupplyClient supplyClient = new SupplyClient(config);
+ReservationClient reservationClient = new ReservationClient(config);
 ```
 
 ### Set the Environment (Optional)
-`SupplyClient` can be configured to work in different environments, below is a list of the supported environments by this client:
+`ReservationClient` can be configured to work in different environments, below is a list of the supported environments by this client:
 
 | Environment                      | Corresponding API Endpoint                                       |
 |----------------------------------|------------------------------------------------------------------|
@@ -43,7 +39,8 @@ ClientConfiguration config = ClientConfiguration
 
 ### Initialize GraphQL Operation 
 ```java
-PropertyReservationsQuery reservationsQuery = PropertyReservationsQuery
+
+PropertyReservationsQuery propertyReservationsQuery = PropertyReservationsQuery
         .builder()
         .propertyId("your_property_id")
         .pageSize(10)
@@ -53,7 +50,7 @@ PropertyReservationsQuery reservationsQuery = PropertyReservationsQuery
 ### Execute the operation
 ```java
 try {
-    PropertyReservationsQuery.Data reservationsData = supplyClient.execute(reservationsQuery);
+    PropertyReservationsQuery.Data reservationsData = reservationClient.execute(propertyReservationsQuery);
 }
 catch(ExpediaGroupServiceException e) {
     e.printStackTrace();
@@ -61,11 +58,11 @@ catch(ExpediaGroupServiceException e) {
 ```
 
 ## Available Operations
-The SDK offers a set of queries & mutations you can execute using the `SupplyClient`. Below is an overview list of the available operations.
+The SDK offers a set of queries & mutations you can execute using the `ReservationClient`. Below is an overview list of the available operations.
 
 <br />
 
-### SupplyClient - Queries
+### ReservationClient - Queries
 
 <hr />
 
@@ -131,7 +128,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br /><br />
 
-### SupplyClient - Mutations
+### ReservationClient - Mutations
 
 <hr />
 
@@ -145,14 +142,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name                            | Type                                   | Required            |
-|---------------------------------|----------------------------------------|---------------------|
-| `propertyId`                    | `ID!`                                  | Yes                 |
-| `reservationId`                 | `ID!`                                  | Yes                 |
-| `reason`                        | `ReservationPreStayCancellationReason` | No                  |
-| `skipReservation`               | `Boolean! = false`                     | No (default: false) |
-| `includePaymentInstrumentToken` | `Boolean! = false`                     | No (default: false) |
-| `includeSupplierAmount`         | `Boolean! = false`                     | No (default: false) |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `CancelReservationInput!` | Yes      |
 
 <br />
 
@@ -174,16 +166,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name                            | Type                             | Required            |
-|---------------------------------|----------------------------------|---------------------|
-| `propertyId`                    | `ID!`                            | Yes                 |
-| `reservationId`                 | `ID!`                            | Yes                 |
-| `reason`                        | `ReservationCancellationReason!` | Yes                 |
-| `currencyCode`                  | `String`                         | No                  |
-| `penaltyAmount`                 | `Float`                          | No                  |
-| `skipReservation`               | `Boolean! = false`               | No (default: false) |
-| `includePaymentInstrumentToken` | `Boolean! = false`               | No (default: false) |
-| `includeSupplierAmount`         | `Boolean! = false`               | No (default: false) |
+| Name    | Type                                    | Required |
+|---------|-----------------------------------------|----------|
+| `input` | `CancelReservationReconciliationInput!` | Yes      |
 
 <br />
 
@@ -205,17 +190,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name                            | Type                              | Required            |
-|---------------------------------|-----------------------------------|---------------------|
-| `propertyId`                    | `ID!`                             | Yes                 |
-| `reservationId`                 | `ID!`                             | Yes                 |
-| `primaryReason`                 | `VrboCancellationReason!`         | Yes                 |
-| `secondaryReason`               | `VrboCancellationSecondaryReason` | No                  |
-| `clientMutationId`              | `String`                          | No                  |
-| `cancellationPolicyOverride`    | `VrboCancellationPolicyOverride`  | No                  |
-| `skipReservation`               | `Boolean! = false`                | No (default: false) |
-| `includePaymentInstrumentToken` | `Boolean! = false`                | No (default: false) |
-| `includeSupplierAmount`         | `Boolean! = false`                | No (default: false) |
+| Name    | Type                          | Required |
+|---------|-------------------------------|----------|
+| `input` | `CancelVrboReservationInput!` | Yes      |
 
 <br />
 
@@ -237,17 +214,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name                            | Type                      | Required            |
-|---------------------------------|---------------------------|---------------------|
-| `propertyId`                    | `ID!`                     | Yes                 |
-| `reservationId`                 | `ID!`                     | Yes                 |
-| `checkInDate`                   | `LocalDate!`              | Yes                 |
-| `checkOutDate`                  | `LocalDate!`              | Yes                 |
-| `reason`                        | `ReservationChangeReason` | No                  |
-| `supplierAmount`                | `SupplierAmountInput`     | No                  |
-| `skipReservation`               | `Boolean! = false`        | No (default: false) |
-| `includePaymentInstrumentToken` | `Boolean! = false`        | No (default: false) |
-| `includeSupplierAmount`         | `Boolean! = false`        | No (default: false) |
+| Name    | Type                                    | Required |
+|---------|-----------------------------------------|----------|
+| `input` | `ChangeReservationReconciliationInput!` | Yes      |
 
 <br />
 
@@ -269,17 +238,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name                            | Type               | Required            |
-|---------------------------------|--------------------|---------------------|
-| `propertyId`                    | `ID!`              | Yes                 |
-| `reservationId`                 | `ID!`              | Yes                 |
-| `confirmationToken`             | `String!`          | Yes                 |
-| `actionType`                    | `String!`          | Yes                 |
-| `confirmationCode`              | `String!`          | Yes                 |
-| `clientMutationId`              | `String`           | No                  |
-| `skipReservation`               | `Boolean! = false` | No (default: false) |
-| `includePaymentInstrumentToken` | `Boolean! = false` | No (default: false) |
-| `includeSupplierAmount`         | `Boolean! = false` | No (default: false) |
+| Name    | Type                                   | Required |
+|---------|----------------------------------------|----------|
+| `input` | `ConfirmReservationNotificationInput!` | Yes      |
 
 <br />
 
@@ -301,15 +262,9 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Operation Inputs:**
 
-| Name                            | Type                       | Required            |
-|---------------------------------|----------------------------|---------------------|
-| `propertyId`                    | `ID!`                      | Yes                 |
-| `reservationId`                 | `ID!`                      | Yes                 |
-| `reason`                        | `ReservationRefundReason!` | Yes                 |
-| `refund`                        | `MoneyInput!`              | Yes                 |
-| `skipReservation`               | `Boolean! = false`         | No (default: false) |
-| `includePaymentInstrumentToken` | `Boolean! = false`         | No (default: false) |
-| `includeSupplierAmount`         | `Boolean! = false`         | No (default: false) |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `RefundReservationInput!` | Yes      |
 
 <br />
 
