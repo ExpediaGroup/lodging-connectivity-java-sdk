@@ -32,7 +32,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 class ReservationClient(config: ClientConfiguration) :
     GraphQLExecutor by BaseGraphQLClient(
         config.toExpediaGroupClientConfiguration(
-            endpointProvider = EndpointProvider::getSandboxDataManagementClientEndpoint,
+            endpointProvider = EndpointProvider::getReservationClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
         )
     )

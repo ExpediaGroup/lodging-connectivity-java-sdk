@@ -24,14 +24,14 @@ enum class ClientEnvironment {
     /**
      * Represents the sandbox version of the production environment.
      *
-     * This environment is only available for `SupplyClient`
+     * This environment is only available for `ReservationClient`
      */
     SANDBOX_PROD,
 
     /**
      * Represents the sandbox version of the EG internal test/lab environment.
      *
-     * This environment is only available for `SupplyClient`
+     * This environment is only available for `ReservationClient`
      */
     SANDBOX_TEST
 }

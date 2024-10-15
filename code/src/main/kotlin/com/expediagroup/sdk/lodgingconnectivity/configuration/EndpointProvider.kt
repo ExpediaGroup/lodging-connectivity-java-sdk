@@ -2,7 +2,7 @@ package com.expediagroup.sdk.lodgingconnectivity.configuration
 
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
 
-enum class SupplyClientEndpoint(val url: String) {
+enum class ReservationClientEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/supply/lodging/graphql"),
     TEST("https://test-api.expediagroup.com/supply/lodging/graphql"),
     SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/lodging/graphql"),
@@ -36,14 +36,14 @@ enum class AuthEndpoint(val url: String) {
  * If an unsupported environment is passed, an `IllegalArgumentException` is thrown.
  */
 object EndpointProvider {
-    fun getSupplyClientEndpoint(environment: ClientEnvironment): String {
+    fun getReservationClientEndpoint(environment: ClientEnvironment): String {
         return try {
-            SupplyClientEndpoint.valueOf(environment.name).url
+            ReservationClientEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
-                Unsupported environment [$environment] for SupplyClient. 
-                Supported environments are [${SupplyClientEndpoint.entries.joinToString(", ") }]
+                Unsupported environment [$environment] for ReservationClient. 
+                Supported environments are [${ReservationClientEndpoint.entries.joinToString(", ") }]
                 """
             )
         }
