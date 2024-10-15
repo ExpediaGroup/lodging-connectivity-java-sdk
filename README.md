@@ -92,7 +92,7 @@ Follow these three simple steps to start using any client in the SDK:
 ## Documentation
 The list below lists detailed documentation files for some components of the SDK. Whether you're looking to configure the SDK, explore the pre-built GraphQL operations, or learn how to use specific clients, the following resources will guide you through all the necessary steps.
 
-1. [Reservation Client Documentation](docs/supply-client.md)
+1. [Reservation Client Documentation](docs/reservation-client.md)
 2. [Payment Client Documentation](docs/payment-client.md)
 3. [Sandbox Data Management Client Documentation](docs/sandbox-data-management-client.md)
 4. [Configuration](docs/configuration.md)
