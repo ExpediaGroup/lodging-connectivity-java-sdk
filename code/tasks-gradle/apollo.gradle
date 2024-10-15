@@ -5,6 +5,8 @@ apollo {
 
         srcDir("src/main/graphql/supply")
 
+        schemaFiles.from('src/main/graphql/supply/schema.graphqls', 'src/main/graphql/supply/reservations/extension/schema-extensions.graphqls')
+
         excludes.add("experimental/**/*.graphql")
 
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.supply")
@@ -49,6 +51,8 @@ apollo {
         nullableFieldStyle.set("javaOptional")
 
         srcDir("src/main/graphql/sandbox")
+
+        schemaFiles.from('src/main/graphql/sandbox/schema.graphqls', 'src/main/graphql/sandbox/reservations/extension/schema-extensions.graphqls')
 
         excludes.add("experimental/**/*.graphql")
 
