@@ -17,7 +17,6 @@
 package com.expediagroup.sdk.lodgingconnectivity;
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCancelReservationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxChangeReservationStayDatesMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreatePropertyMutation;
