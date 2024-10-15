@@ -77,7 +77,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 |--------------------|--------------------|---------------------|
 | `cursor`           | `String`           | No                  |
 | `pageSize`         | `Int`              | No                  |
-| `skipReservations` | `Boolean! = false` | No (defaults false) |
+| `skipReservations` | `Boolean! = false` | No (default: false) |
 
 <br />
 
@@ -102,7 +102,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 | Name                 | Type               | Required            |
 |----------------------|--------------------|---------------------|
 | `id`                 | `ID!`              | Yes                 |
-| `skipReservations`   | `Boolean! = false` | No (defaults false) |
+| `skipReservations`   | `Boolean! = false` | No (default: false) |
 
 <br />
 
@@ -156,11 +156,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type      | Required |
-|--------------------|-----------|----------|
-| `id`               | `ID!`     | Yes      |
-| `sendNotification` | `Boolean` | No       |
-| `clientMutationId` | `String`  | No       |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `CancelReservationInput!` | Yes      |
 
 <br />
 
@@ -182,13 +180,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type      | Required |
-|--------------------|-----------|----------|
-| `id`               | `ID!`     | Yes      |
-| `checkInDate`      | `Date!`   | Yes      |
-| `checkOutDate`     | `Date!`   | Yes      |
-| `sendNotification` | `Boolean` | No       |
-| `clientMutationId` | `String`  | No       |
+| Name    | Type                               | Required |
+|---------|------------------------------------|----------|
+| `input` | `ChangeReservationStayDatesInput!` | Yes      |
 
 <br />
 
@@ -210,10 +204,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type     | Required |
-|--------------------|----------|----------|
-| `name`             | `String` | No       |
-| `clientMutationId` | `String` | No       |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `CreatePropertyInput!` | Yes      |
 
 <br />
 
@@ -235,28 +228,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name                     | Type                                     | Required |
-|--------------------------|------------------------------------------|----------|
-| `$propertyId`            | `ID!`                                    | Yes      |
-| `$checkInDate`           | `Date`                                   | No       |
-| `$checkOutDate`          | `Date`                                   | No       |
-| `$primaryGuest`          | `PrimaryGuestInput`                      | No       |
-| `$status`                | `ReservationStatusInput`                 | No       |
-| `$accessibilityText`     | `[String!]`                              | No       |
-| `$adultCount`            | `Int`                                    | No       |
-| `$bedTypes`              | `String`                                 | No       |
-| `$businessModel`         | `BusinessModelInput`                     | No       |
-| `$childAges`             | `[Int!]`                                 | No       |
-| `$childCount`            | `Int`                                    | No       |
-| `$clientMutationId`      | `String`                                 | No       |
-| `$multiRoomText`         | `String`                                 | No       |
-| `$paymentInstrumentType` | `PaymentInstrumentTypeInput`             | No       |
-| `$reconciliationType`    | `ReconciliationTypeInput`                | No       |
-| `$remittanceType`        | `RemittanceTypeInput`                    | No       |
-| `$sendNotification`      | `Boolean`                                | No       |
-| `$smokingType`           | `String`                                 | No       |
-| `$specialRequest`        | `String`                                 | No       |
-| `$valueAddedPromotions`  | `[ReservationValueAddedPromotionInput!]` | No       |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `CreateReservationInput!` | Yes      |
 
 <br />
 
@@ -278,10 +252,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type     | Required |
-|--------------------|----------|----------|
-| `id`               | `ID!`    | Yes      |
-| `clientMutationId` | `String` | No       |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `DeletePropertyInput!` | Yes      |
 
 <br />
 
@@ -303,10 +276,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type     | Required |
-|--------------------|----------|----------|
-| `propertyId`       | `ID!`    | Yes      |
-| `clientMutationId` | `String` | No       |
+| Name    | Type                               | Required |
+|---------|------------------------------------|----------|
+| `input` | `DeletePropertyReservationsInput!` | Yes      |
 
 <br />
 
@@ -328,10 +300,10 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type     | Required |
-|--------------------|----------|----------|
-| `id`               | `ID!`    | Yes      |
-| `clientMutationId` | `String` | No       |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `DeleteReservationInput!` | Yes      |
+
 
 <br />
 
@@ -353,11 +325,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type     | Required |
-|--------------------|----------|----------|
-| `id`               | `ID!`    | Yes      |
-| `name`             | `String` | No       |
-| `clientMutationId` | `String` | No       |
+| Name    | Type                   | Required |
+|---------|------------------------|----------|
+| `input` | `UpdatePropertyInput!` | Yes      |
 
 <br />
 
@@ -379,18 +349,9 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Operation Inputs:**
 
-| Name               | Type                     | Required |
-|--------------------|--------------------------|----------|
-| `id`               | `ID!`                    | Yes      |
-| `checkInDate`      | `Date`                   | No       |
-| `checkOutDate`     | `Date`                   | No       |
-| `status`           | `ReservationStatusInput` | No       |
-| `adultCount`       | `Int`                    | No       |
-| `childCount`       | `Int`                    | No       |
-| `childAges`        | `[Int!]`                 | No       |
-| `sendNotification` | `Boolean`                | No       |
-| `specialRequest`   | `String`                 | No       |
-| `clientMutationId` | `String`                 | No       |
+| Name    | Type                      | Required |
+|---------|---------------------------|----------|
+| `input` | `UpdateReservationInput!` | Yes      |
 
 <br />
 

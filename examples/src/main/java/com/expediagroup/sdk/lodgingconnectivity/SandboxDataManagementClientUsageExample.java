@@ -28,6 +28,14 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertie
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxUpdatePropertyMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxUpdateReservationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CancelReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeleteReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -63,12 +71,12 @@ public class SandboxDataManagementClientUsageExample {
         deletePropertyIfExists();
 
         //  ******* Create Property *******
-        SandboxCreatePropertyMutation createProperty = SandboxCreatePropertyMutation
+        CreatePropertyInput createPropertyInput = CreatePropertyInput
                 .builder()
                 .name(Optional.of(PROPERTY_NAME))
                 .build();
 
-        SandboxCreatePropertyMutation.Data createPropertyResponse = client.execute(createProperty);
+        SandboxCreatePropertyMutation.Data createPropertyResponse = client.execute(new SandboxCreatePropertyMutation(createPropertyInput));
 
         String propertyId = createPropertyResponse.createProperty.property.id;
 
@@ -77,27 +85,27 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Update Property Name *******
-        SandboxUpdatePropertyMutation updateProperty = SandboxUpdatePropertyMutation
+        UpdatePropertyInput updatePropertyInput = UpdatePropertyInput
                 .builder()
                 .id(propertyId)
                 .name(Optional.of(UPDATED_PROPERTY_NAME))
                 .build();
 
-        SandboxUpdatePropertyMutation.Data updatePropertyResponse = client.execute(updateProperty);
+        SandboxUpdatePropertyMutation.Data updatePropertyResponse = client.execute(new SandboxUpdatePropertyMutation(updatePropertyInput));
 
         System.out.println("Property Updated: " + propertyId);
         System.out.println(updatePropertyResponse);
 
 
         // ******* Create Reservation *******
-        SandboxCreateReservationMutation createReservation = SandboxCreateReservationMutation
+        CreateReservationInput createReservationInput = CreateReservationInput
                 .builder()
                 .propertyId(propertyId)
                 .childCount(Optional.of(4))
                 .adultCount(Optional.of(2))
                 .build();
 
-        SandboxCreateReservationMutation.Data createReservationResponse = client.execute(createReservation);
+        SandboxCreateReservationMutation.Data createReservationResponse = client.execute(new SandboxCreateReservationMutation(createReservationInput));
 
         SandboxReservationData reservationData = createReservationResponse.createReservation.reservation.sandboxReservationData;
 
@@ -106,13 +114,13 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Update Reservation *******
-        SandboxUpdateReservationMutation updateReservation = SandboxUpdateReservationMutation
+        UpdateReservationInput updateReservationInput = UpdateReservationInput
                 .builder()
                 .id(reservationData.id)
                 .childAges(Optional.of(Arrays.asList(3, 5, 7)))
                 .build();
 
-        SandboxUpdateReservationMutation.Data updateReservationResponse = client.execute(updateReservation);
+        SandboxUpdateReservationMutation.Data updateReservationResponse = client.execute(new SandboxUpdateReservationMutation(updateReservationInput));
 
         reservationData = updateReservationResponse.updateReservation.reservation.sandboxReservationData;
 
@@ -121,14 +129,14 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Update Reservation Stay Dates *******
-        SandboxChangeReservationStayDatesMutation changeReservationStayDates = SandboxChangeReservationStayDatesMutation
+        ChangeReservationStayDatesInput changeReservationStayDatesInput = ChangeReservationStayDatesInput
                 .builder()
                 .id(reservationData.id)
                 .checkInDate(LocalDate.of(2024, 6, 5))
                 .checkOutDate(LocalDate.of(2024, 6, 10))
                 .build();
 
-        SandboxChangeReservationStayDatesMutation.Data changeStayDatesResponse = client.execute(changeReservationStayDates);
+        SandboxChangeReservationStayDatesMutation.Data changeStayDatesResponse = client.execute(new SandboxChangeReservationStayDatesMutation(changeReservationStayDatesInput));
 
         reservationData = changeStayDatesResponse.changeReservationStayDates.reservation.sandboxReservationData;
 
@@ -136,13 +144,13 @@ public class SandboxDataManagementClientUsageExample {
         System.out.println(changeStayDatesResponse);
 
         // ******* Cancel Reservation *******
-        SandboxCancelReservationMutation cancelReservation = SandboxCancelReservationMutation
+        CancelReservationInput cancelReservationInput = CancelReservationInput
                 .builder()
                 .id(reservationData.id)
                 .sendNotification(Optional.of(false))
                 .build();
 
-        SandboxCancelReservationMutation.Data cancelReservationResponse = client.execute(cancelReservation);
+        SandboxCancelReservationMutation.Data cancelReservationResponse = client.execute(new SandboxCancelReservationMutation(cancelReservationInput));
 
         reservationData = cancelReservationResponse.cancelReservation.reservation.sandboxReservationData;
 
@@ -151,24 +159,24 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Delete Reservation *******
-        SandboxDeleteReservationMutation deleteReservation = SandboxDeleteReservationMutation
+        DeleteReservationInput deleteReservationInput = DeleteReservationInput
                 .builder()
                 .id(reservationData.id)
                 .build();
 
-        SandboxDeleteReservationMutation.Data deleteReservationResponse = client.execute(deleteReservation);
+        SandboxDeleteReservationMutation.Data deleteReservationResponse = client.execute(new SandboxDeleteReservationMutation(deleteReservationInput));
 
         System.out.println("Reservation Was Deleted: " + reservationData.id);
         System.out.println(deleteReservationResponse);
 
 
         // ******* Delete Property *******
-        SandboxDeletePropertyMutation deleteProperty = SandboxDeletePropertyMutation
+        DeletePropertyInput deletePropertyInput = DeletePropertyInput
                 .builder()
                 .id(propertyId)
                 .build();
 
-        SandboxDeletePropertyMutation.Data deletePropertyResponse = client.execute(deleteProperty);
+        SandboxDeletePropertyMutation.Data deletePropertyResponse = client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));
 
         System.out.println("Property Was Deleted: " + propertyId);
         System.out.println(deletePropertyResponse);
@@ -183,8 +191,13 @@ public class SandboxDataManagementClientUsageExample {
         propertiesResponse.properties.elements.forEach(property -> {
             if (property.name.equals(PROPERTY_NAME) || property.name.equals(UPDATED_PROPERTY_NAME)) {
                 System.out.println("Deleting existing property: ID: " + property.id + ", Name: " + property.name);
-                SandboxDeletePropertyMutation deleteProperty = SandboxDeletePropertyMutation.builder().id(property.id).build();
-                client.execute(deleteProperty);
+
+                DeletePropertyInput deletePropertyInput = DeletePropertyInput
+                        .builder()
+                        .id(property.id)
+                        .build();
+
+                client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));
             }
         });
     }

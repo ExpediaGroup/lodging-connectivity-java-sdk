@@ -22,8 +22,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 
 /**
- * A client for interacting with EG Lodging Connectivity Supply GraphQL API that exposes various lodging capabilities
- * such as reservations, promotions, reviews, notifications, messaging, etc...
+ * A client for interacting with EG Lodging Connectivity Reservations GraphQL API
  *
  * This client is configured with a `ClientConfiguration` that includes authentication details,
  * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
@@ -31,13 +30,13 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * In addition, this client can be configured to target the sandbox environment by passing `ClientEnvironment.SANDBOX_PROD` or
  * `ClientEnvironment.SANDBOX_TEST` to the `environment` configuration option.
  *
- * @constructor Creates a new instance of `SupplyClient` using the provided configuration.
+ * @constructor Creates a new instance of `ReservationClient` using the provided configuration.
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
  * timeouts, and logging masking options.
  *
  * Example usage:
  * ```
- * SupplyClient(
+ * ReservationClient(
  *     ClientConfiguration
  *         .builder()
  *         .key("API_KEY")
@@ -46,10 +45,10 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class SupplyClient(config: ClientConfiguration) :
+class ReservationClient(config: ClientConfiguration) :
     GraphQLExecutor by BaseGraphQLClient(
         config.toExpediaGroupClientConfiguration(
-            endpointProvider = EndpointProvider::getSupplyClientEndpoint,
+            endpointProvider = EndpointProvider::getReservationClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
         )
     )
