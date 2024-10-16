@@ -1,6 +1,7 @@
-package com.expediagroup.sdk.v2.core.gapiclient.model
+package com.expediagroup.sdk.v2.core.request
 
 import com.expediagroup.sdk.v2.core.jackson.deserialize
+import com.expediagroup.sdk.v2.core.model.Operation
 import com.fasterxml.jackson.core.type.TypeReference
 import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest
@@ -14,7 +15,7 @@ import java.io.OutputStream
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 
-class GRequest<ResponseType : Any>(
+class Request<ResponseType : Any>(
     private val client: AbstractGoogleClient,
     method: String,
     url: String,
@@ -32,7 +33,7 @@ class GRequest<ResponseType : Any>(
 ) {
     constructor(
         client: AbstractGoogleClient,
-        operation: com.expediagroup.sdk.v2.core.model.Operation<*>,
+        operation: Operation<*>,
         responseType: Class<ResponseType>
     ) : this(
         client = client,

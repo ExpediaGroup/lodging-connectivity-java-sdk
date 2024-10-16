@@ -1,13 +1,13 @@
-package com.expediagroup.sdk.v2.core.gapiclient.util
+package com.expediagroup.sdk.v2.core.client.util
 
-import com.expediagroup.sdk.v2.core.gapiclient.GClientHttpEngine
+import com.expediagroup.sdk.v2.core.client.ApiClientApolloHttpEngine
 import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
 
-fun createGClientHttpEngine(
+fun createApiClientHttpEngine(
     namespace: String,
     configuration: ClientConfiguration,
-) = GClientHttpEngine(
-    createGClient(
+) = ApiClientApolloHttpEngine(
+    createApiClient(
         namespace = namespace,
         configuration = configuration
     )

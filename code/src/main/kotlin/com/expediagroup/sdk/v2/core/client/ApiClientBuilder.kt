@@ -1,13 +1,13 @@
-package com.expediagroup.sdk.v2.core.gapiclient
+package com.expediagroup.sdk.v2.core.client
 
-import com.expediagroup.sdk.v2.core.gapiclient.initializer.DefaultGClientRequestInitializer
+import com.expediagroup.sdk.v2.core.request.extended.DefaultApiClientRequestInitializer
 import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
 
-class GClientBuilder(
+class ApiClientBuilder(
     transport: HttpTransport,
     jsonFactory: JsonFactory,
     rootUrl: GenericUrl,
@@ -22,11 +22,11 @@ class GClientBuilder(
     requestInitializer,
 ) {
     override fun build(): AbstractGoogleClient {
-        return GClient(this)
+        return ApiClient(this)
     }
 
     init {
         applicationName = namespace
-        googleClientRequestInitializer = DefaultGClientRequestInitializer.getDefaultInstance()
+        googleClientRequestInitializer = DefaultApiClientRequestInitializer.getDefaultInstance()
     }
 }

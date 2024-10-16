@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.v2.core.gapiclient
+package com.expediagroup.sdk.v2.core.client
 
 import com.expediagroup.sdk.v2.core.configuration.ExpediaGroupDefaultClientConfiguration
 import com.expediagroup.sdk.v2.core.logging.mask.configureLogMasking
@@ -9,8 +9,8 @@ import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest
 
 
-class GClient(
-    builder: GClientBuilder,
+class ApiClient(
+    builder: ApiClientBuilder,
     configuration: ClientConfiguration = ExpediaGroupDefaultClientConfiguration
 ) : AbstractGoogleClient(builder) {
     init {

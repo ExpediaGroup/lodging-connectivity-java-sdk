@@ -21,8 +21,8 @@ fun createHttpClient(configuration: ClientConfiguration): HttpClient {
         .setDefaultRequestConfig(createRequestConfig(configuration))
         .setMaxConnTotal((configuration as MaxConnectionsTotalTrait).getMaxConnectionsTotal())
         .setMaxConnPerRoute((configuration as MaxConnectionsPerRouteTrait).getMaxConnectionsPerRoute())
-        .addInterceptorLast(ExpediaGroupRequestInterceptor())
-        .addInterceptorLast(ExpediaGroupResponseInterceptor())
+//        .addInterceptorLast(ExpediaGroupRequestInterceptor())
+//        .addInterceptorLast(ExpediaGroupResponseInterceptor())
         .build()
 }
 

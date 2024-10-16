@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.v2.core.gapiclient.util
+package com.expediagroup.sdk.v2.core.client.util
 
 import com.apollographql.apollo.api.http.HttpHeader
 import com.google.api.client.http.HttpHeaders

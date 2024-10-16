@@ -12,7 +12,7 @@ fun HttpResponse.getHeadersLogMessage(): String =
 
 fun HttpResponse.getBodyLogMessage(): String {
     if (!hasBody()) {
-        return LogMessageConstant.EMPTY_RESPONSE_BODY
+        return LogMessageConstant.EMPTY_OR_UNKNOWN_RESPONSE_BODY
     }
 
     if (entity.contentLength < 0L) {

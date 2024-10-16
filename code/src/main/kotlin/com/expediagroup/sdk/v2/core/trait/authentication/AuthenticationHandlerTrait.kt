@@ -4,7 +4,7 @@ import com.expediagroup.sdk.v2.core.trait.Trait
 import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
 import com.google.api.client.http.HttpTransport
 
-interface CreateAuthenticationHandlerTrait : Trait {
+interface AuthenticationHandlerTrait : Trait {
     fun createAuthenticationHandler(
         config: ClientConfiguration,
         transport: HttpTransport,

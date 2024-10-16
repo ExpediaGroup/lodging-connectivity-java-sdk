@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.v2.core.gapiclient.extension
+package com.expediagroup.sdk.v2.core.authentication.extension
 
 import com.expediagroup.sdk.v2.core.constant.Authentication
 import com.google.auth.oauth2.OAuth2CredentialsWithRefresh
