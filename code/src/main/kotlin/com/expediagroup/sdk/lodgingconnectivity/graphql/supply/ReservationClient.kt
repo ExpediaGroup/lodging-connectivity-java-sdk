@@ -19,7 +19,14 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationData
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationReconciliationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelVrboReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ChangeReservationReconciliationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ConfirmReservationNotificationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RefundReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
 
 /**
  * A client for interacting with EG Lodging Connectivity Reservations GraphQL API
@@ -45,10 +52,107 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class ReservationClient(config: ClientConfiguration) :
-    GraphQLExecutor by BaseGraphQLClient(
+class ReservationClient(config: ClientConfiguration) {
+    private val baseGraphQlClient: BaseGraphQLClient = BaseGraphQLClient(
         config.toExpediaGroupClientConfiguration(
             endpointProvider = EndpointProvider::getReservationClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
         )
     )
+
+    @JvmOverloads
+    fun cancelReservation(input: CancelReservationInput, selections: ReservationSelections? = null): ReservationData {
+        val operation = CancelReservationMutation
+            .builder()
+            .input(input)
+            .includeSupplierAmount(selections?.includeSupplierAmount)
+            .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
+            .build()
+
+        val response = baseGraphQlClient.execute(operation)
+
+        return response.cancelReservation.reservation.get().reservationData
+    }
+
+    @JvmOverloads
+    fun cancelReservationReconciliation(
+        input: CancelReservationReconciliationInput,
+        selections: ReservationSelections? = null
+    ): ReservationData {
+        val operation = CancelReservationReconciliationMutation
+            .builder()
+            .input(input)
+            .includeSupplierAmount(selections?.includeSupplierAmount)
+            .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
+            .build()
+
+        val response = baseGraphQlClient.execute(operation)
+
+        return response.cancelReservationReconciliation.reservation.get().reservationData
+    }
+
+    @JvmOverloads
+    fun cancelVrboReservation(
+        input: CancelVrboReservationInput,
+        selections: ReservationSelections? = null
+    ): ReservationData {
+        val operation = CancelVrboReservationMutation
+            .builder()
+            .input(input)
+            .includeSupplierAmount(selections?.includeSupplierAmount)
+            .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
+            .build()
+
+        val response = baseGraphQlClient.execute(operation)
+
+        return response.cancelVrboReservation.reservation.get().reservationData
+    }
+
+    @JvmOverloads
+    fun changeReservationReconciliation(
+        input: ChangeReservationReconciliationInput,
+        selections: ReservationSelections? = null
+    ): ReservationData {
+        val operation = ChangeReservationReconciliationMutation
+            .builder()
+            .input(input)
+            .includeSupplierAmount(selections?.includeSupplierAmount)
+            .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
+            .build()
+
+        val response = baseGraphQlClient.execute(operation)
+
+        return response.changeReservationReconciliation.reservation.get().reservationData
+    }
+
+    @JvmOverloads
+    fun confirmReservationNotification(
+        input: ConfirmReservationNotificationInput,
+        selections: ReservationSelections? = null
+    ): ReservationData {
+        val operation = ConfirmReservationNotificationMutation
+            .builder()
+            .input(input)
+            .includeSupplierAmount(selections?.includeSupplierAmount)
+            .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
+            .build()
+
+        val response = baseGraphQlClient.execute(operation)
+
+        return response.confirmReservationNotification.reservation.get().reservationData
+    }
+
+    @JvmOverloads
+    fun refundReservation(input: RefundReservationInput, selections: ReservationSelections? = null): ReservationData {
+        val operation = RefundReservationMutation
+            .builder()
+            .input(input)
+            .includeSupplierAmount(selections?.includeSupplierAmount)
+            .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
+            .build()
+
+        val response = baseGraphQlClient.execute(operation)
+
+        return response.refundReservation.reservation.get().reservationData
+    }
+}
