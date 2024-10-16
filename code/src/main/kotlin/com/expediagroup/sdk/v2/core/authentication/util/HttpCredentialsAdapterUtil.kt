@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.v2.core.authentication.util
 
 import com.expediagroup.sdk.v2.core.apache.util.createApacheHttpTransport
-import com.expediagroup.sdk.v2.core.gapiclient.extension.withDefaultConfigurations
+import com.expediagroup.sdk.v2.core.authentication.extension.withDefaultConfigurations
 import com.expediagroup.sdk.v2.core.trait.common.IdTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.*
 import com.google.auth.http.HttpCredentialsAdapter

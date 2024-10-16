@@ -14,9 +14,11 @@ object LogMessageConstant {
 
     const val EMPTY_REQUEST_BODY: String = "Empty request body"
 
-    const val EMPTY_RESPONSE_BODY: String = "Empty response body"
+    const val EMPTY_OR_UNKNOWN_RESPONSE_BODY: String = "Empty response body or unknown content length"
 
     const val BODY_CONTENT_LENGTH_NOT_PROVIDED = "Content length not provided for logging"
 
     const val BODY_CONTENT_TYPE_NOT_SUPPORTED = "Content type %s not supported for logging"
+
+    const val RESPONSE_TOO_LARGE_TO_BE_LOGGED = "Response too large to logged."
 }

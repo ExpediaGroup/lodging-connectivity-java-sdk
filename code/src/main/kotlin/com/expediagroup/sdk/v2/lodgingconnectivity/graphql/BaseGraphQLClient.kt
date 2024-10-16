@@ -16,19 +16,18 @@
 
 package com.expediagroup.sdk.v2.lodgingconnectivity.graphql
 
-//import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
 import com.apollographql.java.client.ApolloClient
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.v2.core.configuration.DefaultClientBuilder
 import com.expediagroup.sdk.v2.core.configuration.FullClientConfiguration
-import com.expediagroup.sdk.v2.core.gapiclient.GClientHttpEngine
-import com.expediagroup.sdk.v2.core.gapiclient.util.createGClientHttpEngine
+import com.expediagroup.sdk.v2.core.client.ApiClientApolloHttpEngine
+import com.expediagroup.sdk.v2.core.client.util.createApiClientHttpEngine
 import java.util.concurrent.CompletableFuture
 
 class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: String) : GraphQLExecutor {
-    private val engine: GClientHttpEngine = createGClientHttpEngine(
+    private val engine: ApiClientApolloHttpEngine = createApiClientHttpEngine(
         namespace = namespace,
         configuration = configuration
     )

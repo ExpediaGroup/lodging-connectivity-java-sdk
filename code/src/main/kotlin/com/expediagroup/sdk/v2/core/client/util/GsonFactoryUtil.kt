@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.v2.core.gapiclient.util
+package com.expediagroup.sdk.v2.core.client.util
 
 import com.google.api.client.json.gson.GsonFactory
 

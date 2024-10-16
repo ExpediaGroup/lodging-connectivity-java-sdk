@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.v2.core.authentication.strategy
 
-import com.expediagroup.sdk.v2.core.trait.authentication.CreateAuthenticationHandlerTrait
+import com.expediagroup.sdk.v2.core.trait.authentication.AuthenticationHandlerTrait
 
-enum class AuthenticationStrategy(val handlerFactory: CreateAuthenticationHandlerTrait) {
+enum class AuthenticationStrategy(val handlerFactory: AuthenticationHandlerTrait) {
     BEARER(BearerAuthenticationHandlerFactory),
 }

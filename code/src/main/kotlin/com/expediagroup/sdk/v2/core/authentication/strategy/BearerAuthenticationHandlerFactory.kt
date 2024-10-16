@@ -4,7 +4,8 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthExcepti
 import com.expediagroup.sdk.v2.core.constant.LoggingMessage
 import com.expediagroup.sdk.v2.core.logging.ExpediaGroupLoggerFactory
 import com.expediagroup.sdk.v2.core.logging.LogMessageTag
-import com.expediagroup.sdk.v2.core.trait.authentication.CreateAuthenticationHandlerTrait
+import com.expediagroup.sdk.v2.core.request.extended.ChainedHttpRequestInitializer
+import com.expediagroup.sdk.v2.core.trait.authentication.AuthenticationHandlerTrait
 import com.expediagroup.sdk.v2.core.trait.authentication.RefreshAccessTokenTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.AuthEndpointTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
@@ -13,13 +14,14 @@ import com.expediagroup.sdk.v2.core.trait.configuration.SecretTrait
 import com.google.api.client.auth.oauth2.ClientCredentialsTokenRequest
 import com.google.api.client.http.BasicAuthentication
 import com.google.api.client.http.GenericUrl
+import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.gson.GsonFactory
 import com.google.auth.oauth2.AccessToken
 import java.time.Instant
 import java.util.*
 
-object BearerAuthenticationHandlerFactory: CreateAuthenticationHandlerTrait {
+object BearerAuthenticationHandlerFactory: AuthenticationHandlerTrait {
 
     override fun createAuthenticationHandler(
         config: ClientConfiguration,
@@ -44,15 +46,27 @@ object BearerAuthenticationHandlerFactory: CreateAuthenticationHandlerTrait {
                     GenericUrl(authEndpoint),
                 ).setClientAuthentication(
                     BasicAuthentication(key, secret)
-                ).also {
+                ).also attachDefaultInitializer@ { request ->
+                    request.requestInitializer = when(request.requestInitializer) {
+                        is ChainedHttpRequestInitializer ->
+                            (request.requestInitializer as ChainedHttpRequestInitializer).extend(
+                                ChainedHttpRequestInitializer.default()
+                            )
+
+                        is HttpRequestInitializer ->
+                            ChainedHttpRequestInitializer.default().extend(request.requestInitializer)
+
+                        else -> ChainedHttpRequestInitializer.default()
+                    }
+                }.also logTokenRenewalInProgress@ {
                     logger.info(LoggingMessage.TOKEN_RENEWAL_IN_PROGRESS, tags = setOf(LogMessageTag.PROGRESSING))
-                }.let {
+                }.let executeRequest@ { request ->
                     try {
-                        it.execute().let {
-                            return@let AccessToken.newBuilder()
-                                .setTokenValue(it.accessToken)
-                                .setExpirationTime(Date.from(Instant.now().plusSeconds(it.expiresInSeconds.toLong())))
-                                .setScopes(it.scope)
+                        request.execute().let buildAccessToken@ { response ->
+                            return@buildAccessToken AccessToken.newBuilder()
+                                .setTokenValue(response.accessToken)
+                                .setExpirationTime(Date.from(Instant.now().plusSeconds(response.expiresInSeconds.toLong())))
+                                .setScopes(response.scope)
                                 .build().also {
                                     logger.info(
                                         LoggingMessage.TOKEN_RENEWAL_SUCCESSFUL,
@@ -64,6 +78,7 @@ object BearerAuthenticationHandlerFactory: CreateAuthenticationHandlerTrait {
                         logger.error(LoggingMessage.TOKEN_RENEWAL_FAILURE, tags = setOf(LogMessageTag.ERROR))
                         throw ExpediaGroupAuthException(
                             message = "Token renewal failed!",
+                            cause = e
                         )
                     }
                 }

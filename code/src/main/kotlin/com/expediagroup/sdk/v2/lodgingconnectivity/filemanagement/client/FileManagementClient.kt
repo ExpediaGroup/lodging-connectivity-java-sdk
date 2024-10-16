@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.v2.lodgingconnectivity.filemanagement.client
 
-import com.expediagroup.sdk.v2.core.client.ExpediaGroupClient
+import com.expediagroup.sdk.v2.core.client.SdkClient
 import com.expediagroup.sdk.v2.core.configuration.DefaultClientBuilder
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.EndpointProvider
@@ -15,7 +15,7 @@ import java.io.*
 class FileManagementClient(
     configuration: ClientConfiguration
 ) {
-    private val client = ExpediaGroupClient(
+    private val client = SdkClient(
         namespace = "lodging-connectivity-file-management-client",
         configuration = configuration.toFullClientConfiguration(
             endpointProvider = EndpointProvider::getFileManagementClientEndpoint,

@@ -15,5 +15,7 @@
  */
 package com.expediagroup.sdk.v2.core.model.exception.service
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupApiException
+
 class ExpediaGroupServiceDefaultErrorException(code: Int, override val errorObject: String, transactionId: String?) :
     ExpediaGroupApiException(code, errorObject, transactionId)

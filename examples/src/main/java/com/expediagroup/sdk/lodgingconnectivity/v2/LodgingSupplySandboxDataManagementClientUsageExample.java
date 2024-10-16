@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package v2.lodgingconnectivity;
+package com.expediagroup.sdk.lodgingconnectivity.v2;
 
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.*;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.*;
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration;
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientEnvironment;
-import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.sandbox.SandboxClient;
+import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.sandbox.SandboxDataManagementClient;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Example class to demonstrate different operations supported by the LodgingSupplySandboxClient
+ * Example class to demonstrate different operations supported by the LodgingSupplySandboxDataManagementClient
  * Run the main method to see these operations in action:
  * 1. Create a Property
  * 2. Update Property Name
@@ -39,9 +39,9 @@ import java.util.concurrent.ExecutionException;
  * 7. Delete the Reservation
  * 8. Delete the Property
  **/
-public class LodgingSupplySandboxClientUsageExample {
+public class LodgingSupplySandboxDataManagementClientUsageExample {
 
-    private static final SandboxClient client = new SandboxClient(
+    private static final SandboxDataManagementClient client = new SandboxDataManagementClient(
             ClientConfiguration
                     .builder()
                     .key("KEY")
@@ -58,7 +58,7 @@ public class LodgingSupplySandboxClientUsageExample {
         deletePropertyIfExists();
 
         //  ******* Create Property *******
-        var createPropertyInput = CreatePropertyInput.builder().name(Optional.of(PROPERTY_NAME)).build();
+        CreatePropertyInput createPropertyInput = CreatePropertyInput.builder().name(Optional.of(PROPERTY_NAME)).build();
         var createPropertyResponse = client.execute(new SandboxCreatePropertyMutation(createPropertyInput));
 
 
@@ -101,7 +101,7 @@ public class LodgingSupplySandboxClientUsageExample {
         var deletePropertyInput = DeletePropertyInput.builder().id(propertyId).build();
         var deletePropertyResponse = client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));
 
-        System.exit(0);
+//        System.exit(0);
     }
 
     private static void deletePropertyIfExists() throws ExecutionException, InterruptedException {

@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.v2.core.gapiclient
+package com.expediagroup.sdk.v2.core.client
 
 import com.apollographql.apollo.api.http.HttpRequest
 import com.apollographql.apollo.api.http.HttpResponse
@@ -6,19 +6,19 @@ import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.java.client.ApolloDisposable
 import com.apollographql.java.client.network.http.HttpCallback
 import com.apollographql.java.client.network.http.HttpEngine
-import com.expediagroup.sdk.v2.core.gapiclient.model.GRequest
-import com.expediagroup.sdk.v2.core.gapiclient.util.toApolloHeaders
+import com.expediagroup.sdk.v2.core.request.Request
+import com.expediagroup.sdk.v2.core.client.util.toApolloHeaders
 import okio.buffer
 import okio.source
 
 
-class GClientHttpEngine(
-    private val gClient: GClient
+class ApiClientApolloHttpEngine(
+    private val client: ApiClient
 ) : HttpEngine {
     override fun execute(request: HttpRequest, callback: HttpCallback, disposable: ApolloDisposable) {
         try {
-            GRequest(
-                gClient,
+            Request(
+                client,
                 graphQLRequest = request,
                 responseType = Any::class.java
             ).executeUnparsed().let { response ->
