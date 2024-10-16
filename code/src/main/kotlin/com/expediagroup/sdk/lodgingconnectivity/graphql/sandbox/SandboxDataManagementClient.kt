@@ -20,7 +20,16 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguratio
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CancelReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyReservationsInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeleteReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput
 
 /**
  * A client for interacting with EG Lodging Connectivity Sandbox GraphQL API.
@@ -43,11 +52,66 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class SandboxDataManagementClient(config: ClientConfiguration) :
-    GraphQLExecutor by BaseGraphQLClient(
+class SandboxDataManagementClient(config: ClientConfiguration) {
+    private val baseGraphQLClient: BaseGraphQLClient = BaseGraphQLClient(
         config.toExpediaGroupClientConfiguration(
             endpointProvider = EndpointProvider::getSandboxDataManagementClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint,
             defaultEnvironment = ClientEnvironment.SANDBOX_PROD
         )
     )
+
+    fun createProperty(input: CreatePropertyInput): SandboxCreatePropertyMutation.Property {
+        val operation = SandboxCreatePropertyMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.createProperty.property
+    }
+
+    fun updateProperty(input: UpdatePropertyInput): SandboxUpdatePropertyMutation.Property {
+        val operation = SandboxUpdatePropertyMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.updateProperty.property
+    }
+
+    fun deleteProperty(input: DeletePropertyInput): SandboxDeletePropertyMutation.DeleteProperty {
+        val operation = SandboxDeletePropertyMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.deleteProperty
+    }
+
+    fun createReservation(input: CreateReservationInput): SandboxReservationData {
+        val operation = SandboxCreateReservationMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.createReservation.reservation.sandboxReservationData
+    }
+
+    fun updateReservation(input: UpdateReservationInput): SandboxReservationData {
+        val operation = SandboxUpdateReservationMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.updateReservation.reservation.sandboxReservationData
+    }
+
+    fun changeReservationStayDates(input: ChangeReservationStayDatesInput): SandboxReservationData {
+        val operation = SandboxChangeReservationStayDatesMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.changeReservationStayDates.reservation.sandboxReservationData
+    }
+
+    fun cancelReservation(input: CancelReservationInput): SandboxReservationData {
+        val operation = SandboxCancelReservationMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.cancelReservation.reservation.sandboxReservationData
+    }
+
+    fun deleteReservation(input: DeleteReservationInput): SandboxDeleteReservationMutation.DeleteReservation {
+        val operation = SandboxDeleteReservationMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.deleteReservation
+    }
+
+    fun deletePropertyReservations(input: DeletePropertyReservationsInput): SandboxDeletePropertyReservationsMutation.DeletePropertyReservations {
+        val operation = SandboxDeletePropertyReservationsMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        return response.deletePropertyReservations
+    }
+}
