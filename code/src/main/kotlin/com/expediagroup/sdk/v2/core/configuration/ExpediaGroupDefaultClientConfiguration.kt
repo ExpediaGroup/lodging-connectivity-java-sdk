@@ -3,6 +3,12 @@ package com.expediagroup.sdk.v2.core.configuration
 import com.expediagroup.sdk.v2.core.constant.Constant
 import com.expediagroup.sdk.v2.core.authentication.strategy.AuthenticationStrategy
 
+/**
+ * Implementation of `FullClientConfiguration` that provides default configuration values for the Expedia Group API client.
+ *
+ * This object acts as the default configuration and returns preset values for various configuration traits needed
+ * to interact with the Expedia Group API.
+ */
 object ExpediaGroupDefaultClientConfiguration :
     FullClientConfiguration {
 
