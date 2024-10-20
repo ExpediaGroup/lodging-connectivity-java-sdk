@@ -7,6 +7,19 @@ import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
 
+
+/**
+ * Builder for constructing an instance of `ApiClient`. This class extends
+ * `AbstractGoogleClient.Builder` and provides the necessary configurations
+ * for the API client.
+ *
+ * @param transport The HTTP transport to be used for the API client.
+ * @param jsonFactory Factory for JSON parsing and serialization.
+ * @param rootUrl The root URL for the API service.
+ * @param requestInitializer Optional request initializer for HTTP requests.
+ * @param servicePath The path to the service endpoint.
+ * @param namespace The namespace for the API client, also used as the application name.
+ */
 class ApiClientBuilder(
     transport: HttpTransport,
     jsonFactory: JsonFactory,
@@ -21,12 +34,17 @@ class ApiClientBuilder(
     jsonFactory.createJsonObjectParser(), // TODO: Configure value
     requestInitializer,
 ) {
+    /**
+     * Builds an instance of `ApiClient` using the current configuration of `ApiClientBuilder`.
+     *
+     * @return An instance of `ApiClient` configured with the properties set in this builder.
+     */
     override fun build(): AbstractGoogleClient {
         return ApiClient(this)
     }
 
     init {
         applicationName = namespace
-        googleClientRequestInitializer = DefaultApiClientRequestInitializer.getDefaultInstance()
+        googleClientRequestInitializer = DefaultApiClientRequestInitializer.default()
     }
 }

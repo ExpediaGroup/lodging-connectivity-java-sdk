@@ -21,8 +21,18 @@ import com.google.auth.oauth2.AccessToken
 import java.time.Instant
 import java.util.*
 
+/**
+ * Factory object for creating Bearer Authentication handlers.
+ */
 object BearerAuthenticationHandlerFactory: AuthenticationHandlerTrait {
 
+    /**
+     * Creates an authentication handler to refresh access tokens using client credentials.
+     *
+     * @param config The client configuration that must implement KeyTrait, SecretTrait, and AuthEndpointTrait.
+     * @param transport The HTTP transport to be used for token refresh requests.
+     * @return An instance of RefreshAccessTokenTrait which can be used to refresh access tokens.
+     */
     override fun createAuthenticationHandler(
         config: ClientConfiguration,
         transport: HttpTransport,

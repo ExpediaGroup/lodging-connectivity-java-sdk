@@ -3,16 +3,41 @@ package com.expediagroup.sdk.v2.core.request.extended
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest
 import com.google.api.client.googleapis.services.CommonGoogleClientRequestInitializer
 
+/**
+ * Initializes API client requests with default settings.
+ *
+ * This class extends `CommonGoogleClientRequestInitializer` and provides
+ * a mechanism for setting up default initialization parameters for API client requests.
+ *
+ * @constructor Creates an instance of `DefaultApiClientRequestInitializer` with a provided builder.
+ *
+ * @param builder The builder used to construct the `DefaultApiClientRequestInitializer` instance.
+ */
 class DefaultApiClientRequestInitializer(
     builder: Builder
 ) : CommonGoogleClientRequestInitializer(builder) {
     companion object {
+        /**
+         * Provides a default instance of `DefaultApiClientRequestInitializer` using the internal builder.
+         *
+         * This method creates a new instance of `Builder` and uses it to construct and return a
+         * `DefaultApiClientRequestInitializer` object. It serves as the standard way to obtain
+         * a pre-configured request initializer for API client requests.
+         *
+         * @return A default instance of `DefaultApiClientRequestInitializer` configured with the default builder settings.
+         */
         @JvmStatic
-        fun getDefaultInstance(): DefaultApiClientRequestInitializer {
+        fun default(): DefaultApiClientRequestInitializer {
             val builder = Builder()
             return DefaultApiClientRequestInitializer(builder)
         }
 
+        /**
+         * A builder class for creating instances of `DefaultApiClientRequestInitializer`.
+         *
+         * This class extends `CommonGoogleClientRequestInitializer.Builder` and overrides the `build` method
+         * to return a `DefaultApiClientRequestInitializer` with the current builder instance as a parameter.
+         */
         class Builder : CommonGoogleClientRequestInitializer.Builder() {
             override fun build(): DefaultApiClientRequestInitializer {
                 return DefaultApiClientRequestInitializer(this)
@@ -20,6 +45,11 @@ class DefaultApiClientRequestInitializer(
         }
     }
 
+    /**
+     * Initializes the provided Google client request.
+     *
+     *@param request The Google client request to be initialized.
+     */
     override fun initialize(request: AbstractGoogleClientRequest<*>) {
         super.initialize(request)
     }

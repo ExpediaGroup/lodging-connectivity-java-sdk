@@ -9,6 +9,12 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import java.io.InputStream
 
+/**
+ * SdkClient is a wrapper for creating and executing API requests.
+ *
+ * @param namespace The namespace to be used for creating the API client.
+ * @param configuration The client configuration implementing `FullClientConfiguration`.
+ */
 class SdkClient(
     namespace: String,
     configuration: FullClientConfiguration,
@@ -18,6 +24,15 @@ class SdkClient(
         configuration = configuration,
     )
 
+    /**
+     * Executes a given operation and deserializes the response into the specified type.
+     *
+     * @param T The type into which the response will be deserialized.
+     * @param operation The operation to be executed.
+     * @param enableGzipContent Flag to enable or disable GZip content.
+     * @param typeReference A reference to the type into which the response should be deserialized.
+     * @return The deserialized response of the operation, or null if the deserialization fails.
+     */
     inline fun <reified T : Any> execute(
         operation: Operation<*>,
         enableGzipContent: Boolean = false,
@@ -33,6 +48,13 @@ class SdkClient(
             deserialize(it.parseAsString(), typeReference)
         }
 
+    /**
+     * Executes a given operation and returns the response as an InputStream.
+     *
+     * @param operation The operation to be executed.
+     * @param enableGzipContent Flag to enable or disable GZip content.
+     * @return The InputStream representing the response of the operation, or null if the operation fails.
+     */
     fun executeAsInputStream(operation: Operation<*>, enableGzipContent: Boolean = false): InputStream? =
         Request(
             apiClient,
@@ -42,6 +64,13 @@ class SdkClient(
             setDisableGZipContent(enableGzipContent.not())
         }.executeAsInputStream()
 
+    /**
+     * Executes a given operation without parsing the response and returns the raw result.
+     *
+     * @param operation The operation to be executed.
+     * @param enableGzipContent Flag to enable or disable GZip content.
+     * @return The raw response of the operation.
+     */
     fun executeUnparsed(operation: Operation<*>, enableGzipContent: Boolean = false): Any =
         Request(
             apiClient,
@@ -51,6 +80,13 @@ class SdkClient(
             setDisableGZipContent(enableGzipContent.not())
         }.executeUnparsed()
 
+    /**
+     * Executes a given operation and downloads the response to an OutputStream.
+     *
+     * @param operation The operation to be executed.
+     * @param outputStream The OutputStream to which the response will be written.
+     * @param enableGzipContent Flag to enable or disable GZip content compression.
+     */
     fun executeAndDownloadTo(
         operation: Operation<*>,
         outputStream: java.io.OutputStream?,
