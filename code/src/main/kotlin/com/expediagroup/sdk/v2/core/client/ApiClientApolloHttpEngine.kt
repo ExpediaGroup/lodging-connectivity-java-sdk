@@ -47,7 +47,7 @@ class ApiClientApolloHttpEngine(
                 }
             }
         } catch (e: Exception) {
-            callback.onFailure(ApolloNetworkException(e.message, e))
+            callback.onFailure(ApolloNetworkException(platformCause = e))
         }
     }
 

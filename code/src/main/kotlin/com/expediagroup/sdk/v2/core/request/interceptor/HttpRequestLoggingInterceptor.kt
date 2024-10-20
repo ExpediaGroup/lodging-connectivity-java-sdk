@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.v2.core.request.interceptor
 
 import com.expediagroup.sdk.v2.core.constant.LoggingMessage.OMITTED
-import com.expediagroup.sdk.v2.core.io.SafeHttpContentReader
+import com.expediagroup.sdk.v2.core.extension.client.getContentBuffer
 import com.expediagroup.sdk.v2.core.logging.*
 import com.expediagroup.sdk.v2.core.logging.ExpediaGroupLogger
 import com.expediagroup.sdk.v2.core.logging.ExpediaGroupLoggerFactory
@@ -32,7 +32,7 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
                 appendLine("${key}: ${if (isMaskedField(key)) OMITTED else value}")
             }
 
-            logger.info(this.toString(), setOf(LogMessageTag.OUTGOING))
+            logger.info(this.toString(), LogMessageTag.OUTGOING)
         }
     }
 
@@ -55,13 +55,13 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
 
             if (!canLogBody(request)) {
                 appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
-                logger.debug(this.toString(), setOf(LogMessageTag.OUTGOING))
+                logger.debug(this.toString(), LogMessageTag.OUTGOING)
                 return
             }
 
-            appendLine(SafeHttpContentReader(request).readUtf8())
+            appendLine(request.getContentBuffer(resetContent = true).readUtf8())
 
-            logger.info(this.toString(), setOf(LogMessageTag.OUTGOING))
+            logger.info(this.toString(), LogMessageTag.OUTGOING)
         }
     }
 

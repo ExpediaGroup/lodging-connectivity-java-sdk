@@ -29,19 +29,19 @@ import org.slf4j.Logger
 internal class ExpediaGroupLogger(private val logger: Logger) : Logger by logger {
     override fun info(msg: String) = logger.info(decorate(msg))
 
-    fun info(msg: String, tags: Set<LogMessageTag> = emptySet()) = logger.info(decorate(msg, tags))
+    fun info(msg: String, vararg tags: LogMessageTag) = logger.info(decorate(msg, tags.toSet()))
 
     override fun warn(msg: String) = logger.warn(decorate(msg))
 
-    fun warn(msg: String, tags: Set<LogMessageTag> = emptySet()) = logger.warn(decorate(msg, tags))
+    fun warn(msg: String, vararg tags: LogMessageTag) = logger.warn(decorate(msg, tags.toSet()))
 
     override fun debug(msg: String) = logger.debug(decorate(msg))
 
-    fun debug(msg: String, tags: Set<LogMessageTag> = emptySet()) = logger.debug(decorate(msg, tags))
+    fun debug(msg: String, vararg tags: LogMessageTag) = logger.debug(decorate(msg, tags.toSet()))
 
     override fun error(msg: String) = logger.error(decorate(msg))
 
-    fun error(msg: String, tags: Set<LogMessageTag> = emptySet()) = logger.error(decorate(msg, tags))
+    fun error(msg: String, vararg tags: LogMessageTag) = logger.error(decorate(msg, tags.toSet()))
 
     /**
      * Normalizes a log message by applying specific formatting and tagging.

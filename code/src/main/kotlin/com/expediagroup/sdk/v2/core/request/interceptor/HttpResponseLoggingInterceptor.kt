@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.v2.core.request.interceptor
 
 import com.expediagroup.sdk.v2.core.constant.LoggingMessage.OMITTED
-import com.expediagroup.sdk.v2.core.io.SafeInputStreamReader
+import com.expediagroup.sdk.v2.core.extension.io.toBuffer
 import com.expediagroup.sdk.v2.core.logging.LogMessageConstant
 import com.expediagroup.sdk.v2.core.logging.LOGGABLE_CONTENT_TYPES
 import com.expediagroup.sdk.v2.core.logging.LogMessageTag
@@ -42,50 +42,46 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
                 appendLine("${key}: ${if (isMaskedField(key)) OMITTED else value}")
             }
 
-            logger.info(this.toString(), setOf(LogMessageTag.INCOMING))
+            logger.info(this.toString(), LogMessageTag.INCOMING)
         }
     }
 
     /**
-     * Logs the body of the HTTP response, provided the content length is known and the content type is loggable.
+     * Logs the body of an HTTP response if it is safe to log based on its content type and length.
      *
      * @param response The HTTP response object containing the body to be logged.
+     * @throws IOException If an I/O error occurs during reading the response content.
      */
+    @Throws(IOException::class)
     private fun logResponseBody(response: HttpResponse) {
         StringBuilder().apply {
             appendLine(LogMessageConstant.RESPONSE_BODY)
 
             if (setOf<Any?>(null, 0).contains(response.headers.contentLength)) {
-                logger.info(LogMessageConstant.EMPTY_OR_UNKNOWN_RESPONSE_BODY, setOf(LogMessageTag.INCOMING))
+                logger.info(LogMessageConstant.EMPTY_OR_UNKNOWN_RESPONSE_BODY, LogMessageTag.INCOMING)
                 return
             }
 
-            try {
-                val contentLength = response.headers.contentLength.toInt()
-                if (contentLength == 0) {
-                    return
-                }
+            val contentLength = response.headers.contentLength.toInt()
 
-                if (!canLogBody(response)) {
-                    appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
-                    logger.debug(this.toString(), setOf(LogMessageTag.INCOMING))
-                    return
-                }
-
-                val safeInputStreamReader = SafeInputStreamReader(response.content, contentLength)
-
-                appendLine(safeInputStreamReader.readUtf8())
-
-                if (contentLength == Int.MAX_VALUE) {
-                    appendLine(LogMessageConstant.RESPONSE_TOO_LARGE_TO_BE_LOGGED)
-                }
-
-                logger.info(this.toString(), setOf(LogMessageTag.INCOMING))
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-                throw e
+            if (!canLogBody(response)) {
+                appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
+                logger.debug(this.toString(), LogMessageTag.INCOMING)
+                return
             }
+
+            appendLine(
+                response.content.toBuffer(
+                    contentLength = contentLength,
+                    exhaustStream = false
+                ).readUtf8()
+            )
+
+            if (contentLength == Int.MAX_VALUE) {
+                appendLine(LogMessageConstant.RESPONSE_TOO_LARGE_TO_BE_LOGGED)
+            }
+
+            logger.info(this.toString(), LogMessageTag.INCOMING)
         }
     }
 

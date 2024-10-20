@@ -18,12 +18,14 @@ package com.expediagroup.sdk.v2.lodgingconnectivity.graphql
 
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
+import com.apollographql.apollo.api.http.HttpResponse
 import com.apollographql.java.client.ApolloClient
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.v2.core.configuration.DefaultClientBuilder
 import com.expediagroup.sdk.v2.core.configuration.FullClientConfiguration
 import com.expediagroup.sdk.v2.core.client.ApiClientApolloHttpEngine
 import com.expediagroup.sdk.v2.core.client.util.createApiClientHttpEngine
+import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration
 import java.util.concurrent.CompletableFuture
 
 class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: String) : GraphQLExecutor {
@@ -34,7 +36,7 @@ class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: Strin
 
     companion object {
         @JvmStatic
-        fun builder() = com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration.builder()
+        fun builder() = ClientConfiguration.builder()
     }
 
     private val apolloClient: ApolloClient = ApolloClient.Builder()
@@ -62,17 +64,17 @@ class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: Strin
             try {
                 if (response.hasErrors()) {
                     // Complete exceptionally if there are GraphQL errors
-                    promise.completeExceptionally(ExpediaGroupServiceException(response.errors.toString()))
+                    promise.completeExceptionally(ExpediaGroupServiceException(message = response.errors.toString()))
                 } else if (response.exception != null) {
                     // Complete exceptionally if there is a network or other exception
-                    promise.completeExceptionally(ExpediaGroupServiceException(response.exception?.message))
+                    promise.completeExceptionally(ExpediaGroupServiceException(cause = response.exception))
                 } else {
                     // Complete normally with the response data if no errors or exceptions
                     promise.complete(response.dataAssertNoErrors)
                 }
             } catch (e: Exception) {
                 // Handle unexpected exceptions during callback execution
-                promise.completeExceptionally(ExpediaGroupServiceException(e.message))
+                promise.completeExceptionally(ExpediaGroupServiceException(cause = e))
             }
         }
 
@@ -97,14 +99,14 @@ class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: Strin
                     promise.completeExceptionally(ExpediaGroupServiceException(response.errors.toString()))
                 } else if (response.exception != null) {
                     // Complete exceptionally if there is a network or other exception
-                    promise.completeExceptionally(ExpediaGroupServiceException(response.exception?.message))
+                    promise.completeExceptionally(ExpediaGroupServiceException(cause = response.exception))
                 } else {
                     // Complete normally with the response data if no errors or exceptions
                     promise.complete(response.dataAssertNoErrors)
                 }
             } catch (e: Exception) {
                 // Handle unexpected exceptions during callback execution
-                promise.completeExceptionally(ExpediaGroupServiceException(e.message))
+                promise.completeExceptionally(ExpediaGroupServiceException(cause = e))
             }
         }
 

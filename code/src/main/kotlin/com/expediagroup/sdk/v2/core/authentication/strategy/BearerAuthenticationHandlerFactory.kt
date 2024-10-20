@@ -69,7 +69,7 @@ object BearerAuthenticationHandlerFactory: AuthenticationHandlerTrait {
                         else -> ChainedHttpRequestInitializer.default()
                     }
                 }.also logTokenRenewalInProgress@ {
-                    logger.info(LoggingMessage.TOKEN_RENEWAL_IN_PROGRESS, tags = setOf(LogMessageTag.PROGRESSING))
+                    logger.info(LoggingMessage.TOKEN_RENEWAL_IN_PROGRESS, LogMessageTag.PROGRESSING)
                 }.let executeRequest@ { request ->
                     try {
                         request.execute().let buildAccessToken@ { response ->
@@ -80,12 +80,12 @@ object BearerAuthenticationHandlerFactory: AuthenticationHandlerTrait {
                                 .build().also {
                                     logger.info(
                                         LoggingMessage.TOKEN_RENEWAL_SUCCESSFUL,
-                                        tags = setOf(LogMessageTag.SUCCESS)
+                                        LogMessageTag.SUCCESS
                                     )
                                 }
                         }
                     } catch (e: Exception) {
-                        logger.error(LoggingMessage.TOKEN_RENEWAL_FAILURE, tags = setOf(LogMessageTag.ERROR))
+                        logger.error(LoggingMessage.TOKEN_RENEWAL_FAILURE, LogMessageTag.ERROR)
                         throw ExpediaGroupAuthException(
                             message = "Token renewal failed!",
                             cause = e

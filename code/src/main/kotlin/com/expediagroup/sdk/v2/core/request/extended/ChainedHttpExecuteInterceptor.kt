@@ -22,7 +22,6 @@ class ChainedHttpExecuteInterceptor(
      */
     override fun intercept(request: HttpRequest?) {
         interceptors.forEach { it.intercept(request) }
-        this.extend(ChainedHttpExecuteInterceptor(), ChainedHttpExecuteInterceptor(), ChainedHttpExecuteInterceptor())
     }
 
     /**
