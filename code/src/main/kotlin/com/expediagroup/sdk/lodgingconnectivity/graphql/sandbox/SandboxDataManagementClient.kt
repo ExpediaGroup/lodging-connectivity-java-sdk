@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox
 
+import com.expediagroup.sdk.core.model.paging.Paginator
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
@@ -28,8 +29,14 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReser
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyReservationsInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeleteReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.SandboxPropertiesInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
+import java.util.Optional
+import kotlin.jvm.optionals.getOrElse
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * A client for interacting with EG Lodging Connectivity Sandbox GraphQL API.
@@ -60,6 +67,42 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
             defaultEnvironment = ClientEnvironment.SANDBOX_PROD
         )
     )
+
+    fun getProperties(input: SandboxPropertiesInput): List<SandboxPropertiesQuery.Element> {
+        val operation = SandboxPropertiesQuery
+            .builder()
+            .skipReservations(input.skipReservations.getOrElse { false })
+            .cursor(input.cursor.getOrElse { Optional.empty() })
+            .pageSize(input.pageSize.getOrElse { Optional.empty() })
+            .build()
+
+        val response = baseGraphQLClient.execute(operation)
+
+        return response.properties.elements
+    }
+
+    fun getPropertiesPaginated(pageSize: Int): Iterator<SandboxPropertiesQuery.Properties> {
+        return object : Iterator<SandboxPropertiesQuery.Properties> {
+            var hasEnded = false
+            var cursor: String? = null
+
+            override fun hasNext(): Boolean = !hasEnded
+
+            override fun next(): SandboxPropertiesQuery.Properties {
+                val operation = SandboxPropertiesQuery
+                    .builder()
+                    .pageSize(Optional.of(pageSize))
+                    .cursor(Optional.ofNullable(cursor))
+                    .skipReservations(true)
+                    .build()
+
+                val response = baseGraphQLClient.execute(operation)
+                cursor = response.properties.cursor.getOrNull()
+                hasEnded = response.properties.cursor.get().isBlank()
+                return response.properties
+            }
+        }
+    }
 
     fun createProperty(input: CreatePropertyInput): SandboxCreatePropertyMutation.Property {
         val operation = SandboxCreatePropertyMutation(input)
