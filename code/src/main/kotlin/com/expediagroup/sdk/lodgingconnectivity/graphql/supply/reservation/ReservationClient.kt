@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.lodgingconnectivity.graphql.supply
+package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.PaginatedReservationsData
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.PaginatedReservationsSummariesData
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.GraphQLResponse
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator.PropertyReservationsPaginator
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator.PropertyReservationsSummariesPaginator
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.CancelReservationMutation
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.CancelReservationReconciliationMutation
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.CancelVrboReservationMutation
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ChangeReservationReconciliationMutation
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ConfirmReservationNotificationMutation
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.RefundReservationMutation
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationReconciliationInput
@@ -33,8 +39,6 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyRese
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RefundReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
 import java.util.Optional
-import kotlin.jvm.optionals.getOrDefault
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * A client for interacting with EG Lodging Connectivity Reservations GraphQL API
@@ -72,184 +76,128 @@ class ReservationClient(config: ClientConfiguration) {
     fun getPropertyReservations(
         input: PropertyReservationsInput,
         selections: ReservationSelections? = null
-    ): Iterator<PaginatedReservationsData> {
-        return object : Iterator<PaginatedReservationsData> {
-            var hasEnded = false
-            var cursor: Optional<String> = input.cursor.getOrDefault(Optional.empty())
+    ): PropertyReservationsPaginator = PropertyReservationsPaginator(baseGraphQlClient, input, selections)
 
-            override fun hasNext(): Boolean = !hasEnded
-
-            override fun next(): PaginatedReservationsData {
-                val operation = PropertyReservationsQuery
-                    .builder()
-                    .propertyId(input.propertyId)
-                    .idSource(input.idSource.orElse(Optional.empty()))
-                    .pageSize(input.pageSize.orElse(10))
-                    .cursor(input.cursor.orElse(Optional.empty()))
-                    .filter(input.filter.orElse(Optional.empty()))
-                    .checkOutDate(input.checkOutDate.orElse(Optional.empty()))
-                    .includeSupplierAmount(selections?.includeSupplierAmount)
-                    .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
-                    .build()
-
-                val response = baseGraphQlClient.execute(operation)
-
-                if (!response.property.isPresent) {
-                    throw ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
-                }
-
-                val paginatedReservationsData = response.property.get().reservations.paginatedReservationsData
-
-                if (paginatedReservationsData.pageInfo.isPresent) {
-                    throw ExpediaGroupServiceException("Failed to fetch reservations next page info for property ${input.propertyId}")
-                }
-
-                cursor = paginatedReservationsData.pageInfo.get().endCursor
-                hasEnded = cursor.getOrNull()?.isBlank() ?: true
-
-                return paginatedReservationsData
-            }
-        }
-    }
-
-    fun getPropertyReservationsSummaries(input: PropertyReservationsSummaryInput): Iterator<PaginatedReservationsSummariesData> {
-        return object : Iterator<PaginatedReservationsSummariesData> {
-            var hasEnded = false
-            var cursor: Optional<String> = input.cursor.getOrDefault(Optional.empty())
-
-            override fun hasNext(): Boolean = !hasEnded
-
-            override fun next(): PaginatedReservationsSummariesData {
-                val operation = PropertyReservationsSummaryQuery
-                    .builder()
-                    .propertyId(input.propertyId)
-                    .idSource(input.idSource.orElse(Optional.empty()))
-                    .pageSize(input.pageSize.orElse(10))
-                    .cursor(input.cursor.orElse(Optional.empty()))
-                    .filter(input.filter.orElse(Optional.empty()))
-                    .checkOutDate(input.checkOutDate.orElse(Optional.empty()))
-                    .build()
-
-                val response = baseGraphQlClient.execute(operation)
-
-                if (!response.property.isPresent) {
-                    throw ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
-                }
-
-                val paginatedReservationsSummaries =
-                    response.property.get().reservations.paginatedReservationsSummariesData
-
-                if (paginatedReservationsSummaries.pageInfo.isPresent) {
-                    throw ExpediaGroupServiceException("Failed to fetch reservations next page info for property ${input.propertyId}")
-                }
-
-                cursor = paginatedReservationsSummaries.pageInfo.get().endCursor
-                hasEnded = cursor.getOrNull()?.isBlank() ?: true
-
-                return paginatedReservationsSummaries
-            }
-        }
-    }
+    fun getPropertyReservationsSummaries(input: PropertyReservationsSummaryInput):
+            PropertyReservationsSummariesPaginator = PropertyReservationsSummariesPaginator(baseGraphQlClient, input)
 
     @JvmOverloads
     fun cancelReservation(
         input: CancelReservationInput,
         selections: ReservationSelections? = null
-    ): Optional<ReservationData> {
-        val operation = CancelReservationMutation
-            .builder()
+    ): GraphQLResponse<Optional<ReservationData>> {
+        val operation = CancelReservationMutation.builder()
             .input(input)
             .includeSupplierAmount(selections?.includeSupplierAmount)
             .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
             .build()
 
         val response = baseGraphQlClient.execute(operation)
+        val responseData = response.dataOrThrow()
 
-        return response.cancelReservation.reservation.map { it.reservationData }
+        return GraphQLResponse(
+            data = responseData.cancelReservation.reservation.map { it.reservationData },
+            errors = response.errors
+        )
     }
 
     @JvmOverloads
     fun cancelReservationReconciliation(
         input: CancelReservationReconciliationInput,
         selections: ReservationSelections? = null
-    ): Optional<ReservationData> {
-        val operation = CancelReservationReconciliationMutation
-            .builder()
+    ): GraphQLResponse<Optional<ReservationData>> {
+        val operation = CancelReservationReconciliationMutation.builder()
             .input(input)
             .includeSupplierAmount(selections?.includeSupplierAmount)
             .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
             .build()
 
         val response = baseGraphQlClient.execute(operation)
+        val responseData = response.dataOrThrow()
 
-        return response.cancelReservationReconciliation.reservation.map { it.reservationData }
+        return GraphQLResponse(
+            data = responseData.cancelReservationReconciliation.reservation.map { it.reservationData },
+            errors = response.errors
+        )
     }
 
     @JvmOverloads
     fun cancelVrboReservation(
         input: CancelVrboReservationInput,
         selections: ReservationSelections? = null
-    ): Optional<ReservationData> {
-        val operation = CancelVrboReservationMutation
-            .builder()
+    ): GraphQLResponse<Optional<ReservationData>> {
+        val operation = CancelVrboReservationMutation.builder()
             .input(input)
             .includeSupplierAmount(selections?.includeSupplierAmount)
             .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
             .build()
 
         val response = baseGraphQlClient.execute(operation)
+        val responseData = response.dataOrThrow()
 
-        return response.cancelVrboReservation.reservation.map { it.reservationData }
+        return GraphQLResponse(
+            data = responseData.cancelVrboReservation.reservation.map { it.reservationData },
+            errors = response.errors
+        )
     }
 
     @JvmOverloads
     fun changeReservationReconciliation(
         input: ChangeReservationReconciliationInput,
         selections: ReservationSelections? = null
-    ): Optional<ReservationData> {
-        val operation = ChangeReservationReconciliationMutation
-            .builder()
+    ): GraphQLResponse<Optional<ReservationData>> {
+        val operation = ChangeReservationReconciliationMutation.builder()
             .input(input)
             .includeSupplierAmount(selections?.includeSupplierAmount)
             .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
             .build()
 
         val response = baseGraphQlClient.execute(operation)
+        val responseData = response.dataOrThrow()
 
-        return response.changeReservationReconciliation.reservation.map { it.reservationData }
+        return GraphQLResponse(
+            data = responseData.changeReservationReconciliation.reservation.map { it.reservationData },
+            errors = response.errors
+        )
     }
 
     @JvmOverloads
     fun confirmReservationNotification(
         input: ConfirmReservationNotificationInput,
         selections: ReservationSelections? = null
-    ): Optional<ReservationData> {
-        val operation = ConfirmReservationNotificationMutation
-            .builder()
+    ): GraphQLResponse<Optional<ReservationData>> {
+        val operation = ConfirmReservationNotificationMutation.builder()
             .input(input)
             .includeSupplierAmount(selections?.includeSupplierAmount)
             .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
             .build()
 
         val response = baseGraphQlClient.execute(operation)
+        val responseData = response.dataOrThrow()
 
-        return response.confirmReservationNotification.reservation.map { it.reservationData }
+        return GraphQLResponse(
+            data = responseData.confirmReservationNotification.reservation.map { it.reservationData },
+            errors = response.errors
+        )
     }
 
     @JvmOverloads
     fun refundReservation(
         input: RefundReservationInput,
         selections: ReservationSelections? = null
-    ): Optional<ReservationData> {
-        val operation = RefundReservationMutation
-            .builder()
+    ): GraphQLResponse<Optional<ReservationData>> {
+        val operation = RefundReservationMutation.builder()
             .input(input)
             .includeSupplierAmount(selections?.includeSupplierAmount)
             .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
             .build()
 
         val response = baseGraphQlClient.execute(operation)
+        val responseData = response.dataOrThrow()
 
-        return response.refundReservation.reservation.map { it.reservationData }
+        return GraphQLResponse(
+            data = responseData.refundReservation.reservation.map { it.reservationData },
+            errors = response.errors
+        )
     }
 }

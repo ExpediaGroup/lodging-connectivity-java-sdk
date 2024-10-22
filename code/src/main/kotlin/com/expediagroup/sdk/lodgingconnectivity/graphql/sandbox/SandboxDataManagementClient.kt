@@ -20,10 +20,11 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguratio
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxPaginatedProperties
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxPaginatedReservationsData
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxProperty
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.GraphQLResponse
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxPropertyData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.paginator.SandboxPropertiesPaginator
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.paginator.SandboxPropertyReservationsPaginator
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput
@@ -36,8 +37,6 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.SandboxProp
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput
 import java.util.Optional
-import kotlin.jvm.optionals.getOrDefault
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * A client for interacting with EG Lodging Connectivity Sandbox GraphQL API.
@@ -69,33 +68,20 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         )
     )
 
-    fun getProperties(): List<SandboxProperty> {
+    fun getProperties(): GraphQLResponse<List<SandboxPropertyData>> {
         val operation = SandboxPropertiesQuery.builder().build()
+
         val response = baseGraphQLClient.execute(operation)
-        return response.properties.sandboxPaginatedProperties.elements.map { it.sandboxProperty }
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.properties.sandboxPaginatedPropertiesData.elements.map { it.sandboxPropertyData },
+            errors = response.errors
+        )
     }
 
-    fun getProperties(input: SandboxPropertiesInput): Iterator<SandboxPaginatedProperties> {
-        return object : Iterator<SandboxPaginatedProperties> {
-            var hasEnded = false
-            var cursor: Optional<String> = input.cursor.getOrDefault(Optional.empty())
-
-            override fun hasNext(): Boolean = !hasEnded
-
-            override fun next(): SandboxPaginatedProperties {
-                val operation = SandboxPropertiesQuery
-                    .builder()
-                    .pageSize(input.pageSize.getOrDefault(Optional.empty()))
-                    .cursor(cursor)
-                    .build()
-
-                val response = baseGraphQLClient.execute(operation)
-                cursor = response.properties.sandboxPaginatedProperties.cursor
-                hasEnded = cursor.getOrNull()?.isBlank() ?: true
-                return response.properties.sandboxPaginatedProperties
-            }
-        }
-    }
+    fun getProperties(input: SandboxPropertiesInput): SandboxPropertiesPaginator =
+        SandboxPropertiesPaginator(baseGraphQLClient, input)
 
     fun getPropertyReservations(propertyId: String): List<SandboxReservationData> {
         val operation = SandboxPropertyReservationsQuery
@@ -104,56 +90,36 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
             .build()
 
         val response = baseGraphQLClient.execute(operation)
+        val responseData = response.dataOrThrow()
 
-        return response.property.reservations.sandboxPaginatedReservationsData.elements.map { it.sandboxReservationData }
+        return responseData.property.reservations.sandboxPaginatedReservationsData.elements.map { it.sandboxReservationData }
     }
 
-    fun getPropertyReservations(input: SandboxPropertyReservationsInput): Iterator<SandboxPaginatedReservationsData> {
-        return object : Iterator<SandboxPaginatedReservationsData> {
-            var hasEnded = false
-            var cursor: Optional<String> = input.cursor.getOrDefault(Optional.empty())
+    fun getPropertyReservations(input: SandboxPropertyReservationsInput): SandboxPropertyReservationsPaginator =
+        SandboxPropertyReservationsPaginator(baseGraphQLClient, input)
 
-            override fun hasNext(): Boolean = !hasEnded
-
-            override fun next(): SandboxPaginatedReservationsData {
-                val operation = SandboxPropertyReservationsQuery
-                    .builder()
-                    .propertyId(input.propertyId)
-                    .pageSize(input.pageSize.getOrDefault(Optional.empty()))
-                    .cursor(cursor)
-                    .build()
-
-                val response = baseGraphQLClient.execute(operation)
-                val paginatedReservations = response.property.reservations.sandboxPaginatedReservationsData
-                cursor = paginatedReservations.cursor
-                hasEnded = cursor.getOrNull()?.isBlank() ?: true
-                return paginatedReservations
-            }
-        }
-    }
-
-    fun getProperty(id: String): SandboxProperty {
+    fun getProperty(id: String): SandboxPropertyData {
         val operation = SandboxPropertyQuery(id, Optional.empty())
         val response = baseGraphQLClient.execute(operation)
-        return response.property.sandboxProperty
+        return response.dataOrThrow().property.sandboxPropertyData
     }
 
     fun getReservation(id: String): SandboxReservationData {
         val operation = SandboxReservationQuery(id)
         val response = baseGraphQLClient.execute(operation)
-        return response.reservation.sandboxReservationData
+        return response.dataOrThrow().reservation.sandboxReservationData
     }
 
-    fun createProperty(input: CreatePropertyInput): SandboxProperty {
+    fun createProperty(input: CreatePropertyInput): SandboxPropertyData {
         val operation = SandboxCreatePropertyMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.createProperty.property.sandboxProperty
+        return response.dataOrThrow().createProperty.property.sandboxPropertyData
     }
 
-    fun updateProperty(input: UpdatePropertyInput): SandboxProperty {
+    fun updateProperty(input: UpdatePropertyInput): SandboxPropertyData {
         val operation = SandboxUpdatePropertyMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.updateProperty.property.sandboxProperty
+        return response.dataOrThrow().updateProperty.property.sandboxPropertyData
     }
 
     fun deleteProperty(id: String) {
@@ -164,25 +130,25 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     fun createReservation(input: CreateReservationInput): SandboxReservationData {
         val operation = SandboxCreateReservationMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.createReservation.reservation.sandboxReservationData
+        return response.dataOrThrow().createReservation.reservation.sandboxReservationData
     }
 
     fun updateReservation(input: UpdateReservationInput): SandboxReservationData {
         val operation = SandboxUpdateReservationMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.updateReservation.reservation.sandboxReservationData
+        return response.dataOrThrow().updateReservation.reservation.sandboxReservationData
     }
 
     fun changeReservationStayDates(input: ChangeReservationStayDatesInput): SandboxReservationData {
         val operation = SandboxChangeReservationStayDatesMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.changeReservationStayDates.reservation.sandboxReservationData
+        return response.dataOrThrow().changeReservationStayDates.reservation.sandboxReservationData
     }
 
     fun cancelReservation(input: CancelReservationInput): SandboxReservationData {
         val operation = SandboxCancelReservationMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.cancelReservation.reservation.sandboxReservationData
+        return response.dataOrThrow().cancelReservation.reservation.sandboxReservationData
     }
 
     fun deleteReservation(id: String) {

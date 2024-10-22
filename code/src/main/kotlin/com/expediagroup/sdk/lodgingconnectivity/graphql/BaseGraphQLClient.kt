@@ -17,6 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
 import com.apollographql.ktor.http.KtorHttpEngine
@@ -57,16 +58,13 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
      * @return The result of the query execution, with errors handled.
      * @throws ExpediaGroupServiceException If the query execution returns errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): T {
+    override fun <T : Query.Data> execute(query: Query<T>): ApolloResponse<T> {
         return runBlocking {
             apolloClient.query(query).execute().apply {
                 if (exception != null) {
                     throw ExpediaGroupServiceException(exception?.message)
                 }
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
-                }
-            }.dataAssertNoErrors
+            }
         }
     }
 
@@ -77,16 +75,13 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
      * @return The result of the mutation execution, with errors handled.
      * @throws ExpediaGroupServiceException If the mutation execution returns errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T {
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): ApolloResponse<T> {
         return runBlocking {
             apolloClient.mutation(mutation).execute().apply {
                 if (exception != null) {
                     throw ExpediaGroupServiceException(exception?.message)
                 }
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
-                }
-            }.dataAssertNoErrors
+            }
         }
     }
 }
