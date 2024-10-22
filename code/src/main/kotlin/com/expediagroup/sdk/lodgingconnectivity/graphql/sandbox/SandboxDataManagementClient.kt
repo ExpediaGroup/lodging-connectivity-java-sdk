@@ -38,7 +38,6 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReser
 import java.util.Optional
 import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
-import okhttp3.internal.toImmutableList
 
 /**
  * A client for interacting with EG Lodging Connectivity Sandbox GraphQL API.
@@ -76,7 +75,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         return response.properties.sandboxPaginatedProperties.elements.map { it.sandboxProperty }
     }
 
-    fun getPropertiesPaginated(input: SandboxPropertiesInput): Iterator<SandboxPaginatedProperties> {
+    fun getProperties(input: SandboxPropertiesInput): Iterator<SandboxPaginatedProperties> {
         return object : Iterator<SandboxPaginatedProperties> {
             var hasEnded = false
             var cursor: Optional<String> = input.cursor.getOrDefault(Optional.empty())
@@ -109,7 +108,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         return response.property.reservations.sandboxPaginatedReservationsData.elements.map { it.sandboxReservationData }
     }
 
-    fun getPropertyReservationsPaginated(input: SandboxPropertyReservationsInput): Iterator<SandboxPaginatedReservationsData> {
+    fun getPropertyReservations(input: SandboxPropertyReservationsInput): Iterator<SandboxPaginatedReservationsData> {
         return object : Iterator<SandboxPaginatedReservationsData> {
             var hasEnded = false
             var cursor: Optional<String> = input.cursor.getOrDefault(Optional.empty())
