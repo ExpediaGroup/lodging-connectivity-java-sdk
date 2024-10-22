@@ -12,6 +12,8 @@ import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
 import com.expediagroup.sdk.v2.core.trait.configuration.KeyTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.SecretTrait
 import com.google.api.client.auth.oauth2.ClientCredentialsTokenRequest
+import com.google.api.client.auth.oauth2.TokenRequest
+import com.google.api.client.auth.oauth2.TokenResponse
 import com.google.api.client.http.BasicAuthentication
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpRequestInitializer
@@ -24,7 +26,7 @@ import java.util.*
 /**
  * Factory object for creating Bearer Authentication handlers.
  */
-object BearerAuthenticationHandlerFactory: AuthenticationHandlerTrait {
+object BearerAuthenticationHandlerFactory : AuthenticationHandlerTrait {
 
     /**
      * Creates an authentication handler to refresh access tokens using client credentials.
@@ -45,7 +47,26 @@ object BearerAuthenticationHandlerFactory: AuthenticationHandlerTrait {
         return object : RefreshAccessTokenTrait {
             private val logger = ExpediaGroupLoggerFactory.getLogger(javaClass)
 
-            override fun refreshAccessToken(): AccessToken {
+            override fun refreshAccessToken(): AccessToken =
+                buildTokenRequest()
+                    .also attachDefaultInitializer@{ request ->
+                        request.requestInitializer = extendDefaultRequestInitializer(request)
+                    }.also logTokenRenewalInProgress@{
+                        logger.info(LoggingMessage.TOKEN_RENEWAL_IN_PROGRESS, LogMessageTag.PROGRESSING)
+                    }.let executeRequest@{ request ->
+                        try {
+                            return@executeRequest buildAccessToken(request.execute())
+                        } catch (e: Exception) {
+                            logger.error(LoggingMessage.TOKEN_RENEWAL_FAILURE, LogMessageTag.ERROR)
+                            throw ExpediaGroupAuthException(
+                                message = "Token renewal failed!",
+                                cause = e
+                            )
+                        }
+                    }
+
+
+            private fun buildTokenRequest(): ClientCredentialsTokenRequest {
                 val key = (config as KeyTrait).getKey()
                 val secret = (config as SecretTrait).getSecret()
                 val authEndpoint = (config as AuthEndpointTrait).getAuthEndpoint()
@@ -56,43 +77,37 @@ object BearerAuthenticationHandlerFactory: AuthenticationHandlerTrait {
                     GenericUrl(authEndpoint),
                 ).setClientAuthentication(
                     BasicAuthentication(key, secret)
-                ).also attachDefaultInitializer@ { request ->
-                    request.requestInitializer = when(request.requestInitializer) {
-                        is ChainedHttpRequestInitializer ->
-                            (request.requestInitializer as ChainedHttpRequestInitializer).extend(
-                                ChainedHttpRequestInitializer.default()
-                            )
+                )
+            }
 
-                        is HttpRequestInitializer ->
-                            ChainedHttpRequestInitializer.default().extend(request.requestInitializer)
+            private fun calculateTokenExpirationTime(response: TokenResponse): Date =
+                Date.from(Instant.now().plusSeconds(response.expiresInSeconds.toLong()))
 
-                        else -> ChainedHttpRequestInitializer.default()
-                    }
-                }.also logTokenRenewalInProgress@ {
-                    logger.info(LoggingMessage.TOKEN_RENEWAL_IN_PROGRESS, LogMessageTag.PROGRESSING)
-                }.let executeRequest@ { request ->
-                    try {
-                        request.execute().let buildAccessToken@ { response ->
-                            return@buildAccessToken AccessToken.newBuilder()
-                                .setTokenValue(response.accessToken)
-                                .setExpirationTime(Date.from(Instant.now().plusSeconds(response.expiresInSeconds.toLong())))
-                                .setScopes(response.scope)
-                                .build().also {
-                                    logger.info(
-                                        LoggingMessage.TOKEN_RENEWAL_SUCCESSFUL,
-                                        LogMessageTag.SUCCESS
-                                    )
-                                }
-                        }
-                    } catch (e: Exception) {
-                        logger.error(LoggingMessage.TOKEN_RENEWAL_FAILURE, LogMessageTag.ERROR)
-                        throw ExpediaGroupAuthException(
-                            message = "Token renewal failed!",
-                            cause = e
+            private fun buildAccessToken(response: TokenResponse): AccessToken =
+                AccessToken.newBuilder()
+                    .setTokenValue(response.accessToken)
+                    .setExpirationTime(calculateTokenExpirationTime(response))
+                    .setScopes(response.scope)
+                    .build().also {
+                        logger.info(
+                            LoggingMessage.TOKEN_RENEWAL_SUCCESSFUL,
+                            LogMessageTag.SUCCESS
                         )
                     }
+
+            private fun extendDefaultRequestInitializer(request: TokenRequest) =
+                when (request.requestInitializer) {
+                    is ChainedHttpRequestInitializer ->
+                        (request.requestInitializer as ChainedHttpRequestInitializer).extend(
+                            ChainedHttpRequestInitializer.default()
+                        )
+
+                    is HttpRequestInitializer ->
+                        ChainedHttpRequestInitializer.default().extend(request.requestInitializer)
+
+                    else -> ChainedHttpRequestInitializer.default()
                 }
-            }
         }
+
     }
 }

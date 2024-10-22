@@ -16,5 +16,8 @@ object LogMessageConstant {
 
     const val BODY_CONTENT_TYPE_NOT_SUPPORTED = "Content type %s not supported for logging"
 
-    const val RESPONSE_TOO_LARGE_TO_BE_LOGGED = "Response too large to logged."
+    const val RESPONSE_TOO_LARGE_TO_BE_LOGGED_WHOLE = "Response too large to be logged whole..."
+
+    const val RESPONSE_CONTENT_INPUT_STREAM_DOES_NOT_SUPPORT_MARK =
+        "Response content input stream does not support mark"
 }

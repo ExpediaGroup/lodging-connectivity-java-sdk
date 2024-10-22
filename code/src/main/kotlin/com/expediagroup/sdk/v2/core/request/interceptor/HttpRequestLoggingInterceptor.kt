@@ -1,13 +1,17 @@
 package com.expediagroup.sdk.v2.core.request.interceptor
 
 import com.expediagroup.sdk.v2.core.constant.LoggingMessage.OMITTED
-import com.expediagroup.sdk.v2.core.extension.client.getContentBuffer
-import com.expediagroup.sdk.v2.core.logging.*
 import com.expediagroup.sdk.v2.core.logging.ExpediaGroupLogger
 import com.expediagroup.sdk.v2.core.logging.ExpediaGroupLoggerFactory
+import com.expediagroup.sdk.v2.core.logging.LogMessageConstant
+import com.expediagroup.sdk.v2.core.logging.LogMessageTag
+import com.expediagroup.sdk.v2.core.logging.LOGGABLE_CONTENT_TYPES
 import com.expediagroup.sdk.v2.core.logging.mask.isMaskedField
 import com.google.api.client.http.HttpExecuteInterceptor
 import com.google.api.client.http.HttpRequest
+import com.google.api.client.http.InputStreamContent
+import okio.Buffer
+import okio.IOException
 
 /**
  * HttpRequestLoggingInterceptor is an implementation of HttpExecuteInterceptor that logs HTTP request details,
@@ -29,7 +33,14 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
             appendLine(LogMessageConstant.REQUEST_HEADERS)
 
             request.headers.forEach { (key, value) ->
-                appendLine("${key}: ${if (isMaskedField(key)) OMITTED else value}")
+                val keyCases = listOf(
+                    key,
+                    key.capitalize(),
+                    key.uppercase(),
+                    key.lowercase(),
+                )
+
+                appendLine("${key}: ${if (keyCases.any(::isMaskedField)) OMITTED else value}")
             }
 
             logger.info(this.toString(), LogMessageTag.OUTGOING)
@@ -37,14 +48,16 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
     }
 
     /**
-     * Logs the HTTP request body.
+     * Logs the body of an HTTP request if it meets certain criteria.
      *
-     * If the request content length is 0 or the content type is not loggable, respective messages
-     * are logged at the debug level. Otherwise, the content of the request body is read safely
-     * and logged at the info level.
+     * If the request body is empty, it skips logging the body.
+     * If the body content type is not supported for logging, it logs a message indicating this.
+     * Otherwise, it logs the content of the request.
      *
      * @param request The HTTP request object containing the body to be logged.
+     * @throws IOException if an I/O error occurs while reading the request body.
      */
+    @Throws(IOException::class)
     private fun logRequestBody(request: HttpRequest) {
         StringBuilder().apply {
             appendLine(LogMessageConstant.REQUEST_BODY)
@@ -54,14 +67,14 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
             }
 
             if (!canLogBody(request)) {
-                appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
+                appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED.format(request.content.type))
                 logger.debug(this.toString(), LogMessageTag.OUTGOING)
                 return
             }
 
-            appendLine(request.getContentBuffer(resetContent = true).readUtf8())
+            appendLine(readAndResetContent(request))
 
-            logger.info(this.toString(), LogMessageTag.OUTGOING)
+            logger.debug(this.toString(), LogMessageTag.OUTGOING)
         }
     }
 
@@ -73,18 +86,38 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
      */
     private fun canLogBody(request: HttpRequest): Boolean {
         val hasContent = request.content.length != 0L
-        val isLoggableContentType = request.headers.contentType in LOGGABLE_CONTENT_TYPES
+
+        val contentType = request.content.type.split(";").firstOrNull()
+        val isLoggableContentType = contentType in LOGGABLE_CONTENT_TYPES
 
         return hasContent.and(isLoggableContentType)
     }
 
     /**
-     * Intercepts the HTTP request and logs its details.
+     * Reads the content of the provided HTTP request's body and returns it as a string.
+     * Resets the content of the request to allow it to be read again.
      *
-     * It logs the HTTP request method, URL, headers, and body.
-     *
-     * @param request The HTTP request object containing the details to be logged.
+     * @param request The HTTP request whose content will be read and reset.
+     * @return The content of the HTTP request as a string.
+     * @throws IOException If an I/O error occurs while reading the request body.
      */
+    @Throws(IOException::class)
+    private fun readAndResetContent(request: HttpRequest): String = Buffer().apply {
+        request.content.writeTo(outputStream())
+        request.content = InputStreamContent(request.content.type, clone().inputStream())
+    }.readUtf8()
+
+    /**
+     * Intercepts an HTTP request to log its details.
+     *
+     * This method logs both the headers and the body of the HTTP request.
+     * It first logs the request method, URL, and headers by calling `logRequestEventAndHeaders`.
+     * Next, it logs the body of the request by calling `logRequestBody`.
+     *
+     * @param request The HTTP request object containing the details to be intercepted and logged.
+     * @throws IOException if an I/O error occurs while reading the request body.
+     */
+    @Throws(IOException::class)
     override fun intercept(request: HttpRequest) {
         logRequestEventAndHeaders(request)
         logRequestBody(request)

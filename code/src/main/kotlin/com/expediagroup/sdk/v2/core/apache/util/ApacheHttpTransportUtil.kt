@@ -1,66 +1,93 @@
 package com.expediagroup.sdk.v2.core.apache.util
 
 import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
+import com.expediagroup.sdk.v2.core.trait.configuration.MaxConnectionsPerRouteTrait
+import com.expediagroup.sdk.v2.core.trait.configuration.MaxConnectionsTotalTrait
+import com.expediagroup.sdk.v2.core.trait.configuration.SocketTimeoutTrait
 import com.google.api.client.http.apache.v2.ApacheHttpTransport
+import org.apache.http.client.HttpClient
+import org.apache.http.client.config.RequestConfig
+import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
-/**
- * Creates an `ApacheHttpTransport` instance based on the provided `ClientConfiguration`.
- *
- * @param configuration The `ClientConfiguration` used to configure the `ApacheHttpTransport` instance.
- * @return A new instance of `ApacheHttpTransport` configured according to the provided `ClientConfiguration`.
- */
+
 fun createApacheHttpTransport(configuration: ClientConfiguration): ApacheHttpTransport =
     ApacheHttpTransport(createHttpClient(configuration))
 
-/**
- * Retrieves a singleton instance of `ApacheHttpTransport` based on the provided `ClientConfiguration`.
- *
- * @param configuration The `ClientConfiguration` used to configure the `ApacheHttpTransport` instance.
- * @return An instance of `ApacheHttpTransport`.
- */
-fun getSingletonApacheHttpTransport(configuration: ClientConfiguration) =
-    CreateSingletonApacheHttpTransportLambda.execute(configuration)
+fun getSingletonApacheHttpTransport(configuration: ClientConfiguration): ApacheHttpTransport =
+    ApacheHttpTransportSingleton.getTransport(configuration)
+
 
 /**
- * A lambda class responsible for creating a singleton instance of `ApacheHttpTransport`.
- * This class implements the function type `(ClientConfiguration) -> ApacheHttpTransport`,
- * and provides thread-safe creation of a singleton `ApacheHttpTransport` instance based on
- * the provided `ClientConfiguration`.
+ * Singleton object for managing Apache HTTP transports.
  *
- * The `execute` method can be used to obtain the singleton instance of `ApacheHttpTransport`.
+ * This singleton object provides a thread-safe way to manage a collection of `ApacheHttpTransport`
+ * instances identified by a `ClientConfiguration`'s UUID. The transport instances are stored
+ * in a `ConcurrentMap` to prevent duplicate creation and ensure efficient reuse.
+ *
+ * Functions:
+ * - getTransport(configuration: ClientConfiguration): Retrieves an existing `ApacheHttpTransport`
+ *   instance if available, or creates a new one based on the given `ClientConfiguration`.
  */
-private class CreateSingletonApacheHttpTransportLambda : (ClientConfiguration) -> ApacheHttpTransport {
-    companion object {
-        @JvmStatic
-        private var transport: ApacheHttpTransport? = null
+private object ApacheHttpTransportSingleton {
+    private val transports: ConcurrentMap<UUID, ApacheHttpTransport> = ConcurrentHashMap()
 
-        @JvmStatic
-        val INSTANCE = CreateSingletonApacheHttpTransportLambda()
-
-        /**
-         * Executes the lambda to create or return a singleton instance of `ApacheHttpTransport`
-         * based on the provided `ClientConfiguration`. If the singleton instance does not exist,
-         * it will be created using `createApacheHttpTransport`.
-         *
-         * @param configuration The `ClientConfiguration` used to configure the `ApacheHttpTransport` instance.
-         */
-        @JvmStatic
-        fun execute(configuration: ClientConfiguration) = INSTANCE(configuration)
-    }
 
     /**
-     * Invokes the lambda to create or return a singleton instance of `ApacheHttpTransport`
-     * based on the provided `ClientConfiguration`. If the transport instance is null, it
-     * will be created using the `createApacheHttpTransport` method.
+     * Retrieves or creates an `ApacheHttpTransport` instance based on the provided `ClientConfiguration`.
      *
-     * @param configuration The `ClientConfiguration` used to configure the `ApacheHttpTransport` instance.
-     * @return A singleton instance of `ApacheHttpTransport`.
+     * If an `ApacheHttpTransport` associated with the given configuration ID already exists, it is returned.
+     * Otherwise, a new `ApacheHttpTransport` is created using the provided configuration.
+     *
+     * @param configuration The `ClientConfiguration` instance containing the necessary traits and configurations
+     *                      for initializing or retrieving the `ApacheHttpTransport`.
+     * @return An `ApacheHttpTransport` instance associated with the given `ClientConfiguration`.
      */
-    override fun invoke(configuration: ClientConfiguration): ApacheHttpTransport {
-        if (transport == null) {
-            transport = createApacheHttpTransport(configuration)
+    fun getTransport(configuration: ClientConfiguration): ApacheHttpTransport =
+        transports.getOrPut(configuration.id) {
+            createApacheHttpTransport(configuration)
         }
+}
 
-        return transport!!
-    }
+/**
+ * Creates an `HttpClient` instance configured according to the specified `ClientConfiguration`.
+ *
+ * The method ensures that the provided `configuration` implements the necessary traits
+ * (`MaxConnectionsTotalTrait` and `MaxConnectionsPerRouteTrait`) required for setting up
+ * the `HttpClient`.
+ *
+ * @param configuration The `ClientConfiguration` instance containing the necessary traits
+ *                      and configurations for initializing the `HttpClient`.
+ * @return An `HttpClient` instance configured based on the provided `configuration`.
+ */
+fun createHttpClient(configuration: ClientConfiguration): HttpClient {
+    require(configuration is MaxConnectionsTotalTrait) { "Configuration must implement MaxConnectionsTotalTrait" }
+    require(configuration is MaxConnectionsPerRouteTrait) { "Configuration must implement MaxConnectionsPerRouteTrait" }
+
+    return ApacheHttpTransport.newDefaultHttpClientBuilder()
+        .setDefaultRequestConfig(createRequestConfig(configuration))
+        .setMaxConnTotal((configuration as MaxConnectionsTotalTrait).getMaxConnectionsTotal())
+        .setMaxConnPerRoute((configuration as MaxConnectionsPerRouteTrait).getMaxConnectionsPerRoute())
+        .build()
+}
+
+/**
+ * Creates a `RequestConfig` instance based on the specified `ClientConfiguration`.
+ *
+ * This method ensures that the provided `configuration` implements the necessary
+ * `SocketTimeoutTrait` required for configuring the socket timeout settings in
+ * the `RequestConfig`.
+ *
+ * @param configuration The `ClientConfiguration` instance providing the socket timeout settings.
+ *                      The configuration must implement `SocketTimeoutTrait`.
+ * @return A `RequestConfig` instance configured with the socket timeout properties from the specified configuration.
+ */
+internal fun createRequestConfig(configuration: ClientConfiguration): RequestConfig {
+    require(configuration is SocketTimeoutTrait) { "Configuration must implement SocketTimeoutTrait" }
+
+    return RequestConfig.copy(RequestConfig.DEFAULT)
+        .setConnectTimeout(configuration.getSocketTimeout().toInt())
+        .setSocketTimeout(configuration.getSocketTimeout().toInt())
+        .build()
 }

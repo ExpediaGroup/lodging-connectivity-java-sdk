@@ -1,7 +1,6 @@
 package com.expediagroup.sdk.v2.core.request.interceptor
 
 import com.expediagroup.sdk.v2.core.constant.LoggingMessage.OMITTED
-import com.expediagroup.sdk.v2.core.extension.io.toBuffer
 import com.expediagroup.sdk.v2.core.logging.LogMessageConstant
 import com.expediagroup.sdk.v2.core.logging.LOGGABLE_CONTENT_TYPES
 import com.expediagroup.sdk.v2.core.logging.LogMessageTag
@@ -11,6 +10,8 @@ import com.expediagroup.sdk.v2.core.logging.mask.isMaskedField
 import com.google.api.client.http.HttpResponse
 import com.google.api.client.http.HttpResponseInterceptor
 import okio.IOException
+import okio.buffer
+import okio.source
 
 
 /**
@@ -39,7 +40,14 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
             appendLine(LogMessageConstant.RESPONSE_HEADERS)
 
             response.headers.forEach { (key, value) ->
-                appendLine("${key}: ${if (isMaskedField(key)) OMITTED else value}")
+                val keyCases = listOf(
+                    key,
+                    key.capitalize(),
+                    key.uppercase(),
+                    key.lowercase(),
+                )
+
+                appendLine("${key}: ${if (keyCases.any(::isMaskedField)) OMITTED else value}")
             }
 
             logger.info(this.toString(), LogMessageTag.INCOMING)
@@ -54,31 +62,37 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
      */
     @Throws(IOException::class)
     private fun logResponseBody(response: HttpResponse) {
-        StringBuilder().apply {
-            appendLine(LogMessageConstant.RESPONSE_BODY)
-
+        StringBuilder().apply stringBuilder@ {
             if (setOf<Any?>(null, 0).contains(response.headers.contentLength)) {
                 logger.info(LogMessageConstant.EMPTY_OR_UNKNOWN_RESPONSE_BODY, LogMessageTag.INCOMING)
                 return
             }
 
-            val contentLength = response.headers.contentLength.toInt()
-
             if (!canLogBody(response)) {
-                appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
+                this@stringBuilder.appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
                 logger.debug(this.toString(), LogMessageTag.INCOMING)
                 return
             }
 
-            appendLine(
-                response.content.toBuffer(
-                    contentLength = contentLength,
-                    exhaustStream = false
-                ).readUtf8()
-            )
+            val contentLength = response.headers.contentLength
+            val contentLengthExceedsThreshold = (contentLength > Int.MAX_VALUE.toLong())
 
-            if (contentLength == Int.MAX_VALUE) {
-                appendLine(LogMessageConstant.RESPONSE_TOO_LARGE_TO_BE_LOGGED)
+            this@stringBuilder.appendLine(LogMessageConstant.RESPONSE_BODY)
+
+            if (!response.content.markSupported()) {
+                logger.error(LogMessageConstant.RESPONSE_CONTENT_INPUT_STREAM_DOES_NOT_SUPPORT_MARK, LogMessageTag.INCOMING)
+                return
+            }
+
+            response.content.apply stream@ {
+                this@stream.mark(contentLength.toInt() + 1)
+
+                this@stringBuilder.appendLine(response.content.source().buffer().readUtf8())
+                if (contentLengthExceedsThreshold) {
+                    this@stringBuilder.appendLine(LogMessageConstant.RESPONSE_TOO_LARGE_TO_BE_LOGGED_WHOLE)
+                }
+
+                this@stream.reset()
             }
 
             logger.info(this.toString(), LogMessageTag.INCOMING)
@@ -99,10 +113,12 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
     }
 
     /**
-     * Intercepts the HTTP response to log relevant details such as headers and body.
+     * Intercepts the given HTTP response to log its event, headers, and body.
      *
-     * @param response The HTTP response object containing the data to be logged.
+     * @param response The HTTP response to be intercepted and logged.
+     * @throws IOException If an I/O error occurs during logging the response content.
      */
+    @Throws(IOException::class)
     override fun interceptResponse(response: HttpResponse) {
         logResponseEventAndHeaders(response)
         logResponseBody(response)

@@ -1,5 +1,6 @@
 package com.expediagroup.sdk.v2.core.client
 
+import com.apollographql.apollo.api.http.HttpHeader
 import com.apollographql.apollo.api.http.HttpRequest
 import com.apollographql.apollo.api.http.HttpResponse
 import com.apollographql.apollo.exception.ApolloNetworkException
@@ -7,16 +8,13 @@ import com.apollographql.java.client.ApolloDisposable
 import com.apollographql.java.client.network.http.HttpCallback
 import com.apollographql.java.client.network.http.HttpEngine
 import com.expediagroup.sdk.v2.core.request.Request
-import com.expediagroup.sdk.v2.core.client.util.toApolloHeaders
+import com.google.api.client.http.HttpHeaders
 import okio.buffer
 import okio.source
 
 
 /**
  * Implementation of the `HttpEngine` interface that uses an `ApiClient` instance to execute HTTP requests.
- *
- * This class provides a method to execute HTTP requests and handle the response or any exceptions that
- * might occur during the request lifecycle. It leverages the `ApiClient` to configure and send the requests.
  *
  * @constructor Creates an `ApiClientApolloHttpEngine` with the specified `ApiClient`.
  *
@@ -26,11 +24,11 @@ class ApiClientApolloHttpEngine(
     private val client: ApiClient
 ) : HttpEngine {
     /**
-     * Executes the provided HTTP request using the given `HttpClient` instance and handles the response or exceptions.
+     * Executes an HTTP request using the provided `ApiClient` and handles the response or failure via the specified callback.
      *
-     * @param request The HTTP request to be executed.
-     * @param callback The callback to handle the response or errors.
-     * @param disposable The disposable to be used for request cleanup.
+     * @param request The GraphQL HTTP request containing method, URL, body, and headers.
+     * @param callback The callback to handle the HTTP response or failure.
+     * @param disposable The disposable resource associated with the request, allowing cancellation if necessary.
      */
     override fun execute(request: HttpRequest, callback: HttpCallback, disposable: ApolloDisposable) {
         try {
@@ -52,13 +50,35 @@ class ApiClientApolloHttpEngine(
     }
 
     /**
-     * Disposes of any resources associated with the `ApiClientApolloHttpEngine`.
+     * Disposes of any resources held by the `ApiClientApolloHttpEngine`.
      *
-     * This method is currently a no-op, but it can be overridden by subclasses to
-     * release any resources or perform other cleanup operations when the engine
-     * is no longer needed.
+     * This implementation is a no-op as there are no resources to be disposed of in this class.
+     * Typically, this method would be used to clean up resources, such as closing network connections.
      */
     override fun dispose() {
         // no-op
+    }
+
+    /**
+     * Converts `HttpHeaders` into a list of `HttpHeader` objects.
+     *
+     * This method iterates through the key-value pairs in the `HttpHeaders`, converting each key-value pair
+     * into `HttpHeader` instances.
+     * If the value is an `Iterable`, each item is used to create an `HttpHeader`.
+     * Otherwise, a single `HttpHeader` with the value is created.
+     *
+     * @return A list of `HttpHeader` objects.
+     */
+    private fun HttpHeaders.toApolloHeaders(): List<HttpHeader> {
+        val self = this@toApolloHeaders
+
+        return buildList {
+            self.forEach { key, value ->
+                when (value) {
+                    is Iterable<*> -> this.addAll(value.map { HttpHeader(key, value.toString()) })
+                    else -> this.add(HttpHeader(key, value.toString()))
+                }
+            }
+        }
     }
 }
