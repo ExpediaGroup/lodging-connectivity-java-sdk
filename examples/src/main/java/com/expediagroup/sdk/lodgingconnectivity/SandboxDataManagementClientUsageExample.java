@@ -17,28 +17,19 @@
 package com.expediagroup.sdk.lodgingconnectivity;
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCancelReservationMutation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxChangeReservationStayDatesMutation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreatePropertyMutation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxCreateReservationMutation;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDataManagementClient;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDeletePropertyMutation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDeleteReservationMutation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertiesQuery;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxUpdatePropertyMutation;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxUpdateReservationMutation;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxProperty;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CancelReservationInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReservationInput;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyInput;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeleteReservationInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -76,128 +67,98 @@ public class SandboxDataManagementClientUsageExample {
                 .name(Optional.of(PROPERTY_NAME))
                 .build();
 
-        SandboxCreatePropertyMutation.Data createPropertyResponse = client.execute(new SandboxCreatePropertyMutation(createPropertyInput));
+        SandboxProperty sandboxProperty = client.createProperty(createPropertyInput);
 
-        String propertyId = createPropertyResponse.createProperty.property.id;
-
-        System.out.println("Property Created: " + propertyId);
-        System.out.println(createPropertyResponse);
+        System.out.println("Property Created: " + sandboxProperty.id);
+        System.out.println(sandboxProperty);
 
 
         // ******* Update Property Name *******
         UpdatePropertyInput updatePropertyInput = UpdatePropertyInput
                 .builder()
-                .id(propertyId)
+                .id(sandboxProperty.id)
                 .name(Optional.of(UPDATED_PROPERTY_NAME))
                 .build();
 
-        SandboxUpdatePropertyMutation.Data updatePropertyResponse = client.execute(new SandboxUpdatePropertyMutation(updatePropertyInput));
+        sandboxProperty = client.updateProperty(updatePropertyInput);
 
-        System.out.println("Property Updated: " + propertyId);
-        System.out.println(updatePropertyResponse);
+        System.out.println("Property Updated: " + sandboxProperty.id);
+        System.out.println(sandboxProperty);
 
 
         // ******* Create Reservation *******
         CreateReservationInput createReservationInput = CreateReservationInput
                 .builder()
-                .propertyId(propertyId)
+                .propertyId(sandboxProperty.id)
                 .childCount(Optional.of(4))
                 .adultCount(Optional.of(2))
                 .build();
 
-        SandboxCreateReservationMutation.Data createReservationResponse = client.execute(new SandboxCreateReservationMutation(createReservationInput));
+        SandboxReservationData sandboxPropertyReservation = client.createReservation(createReservationInput);
 
-        SandboxReservationData reservationData = createReservationResponse.createReservation.reservation.sandboxReservationData;
-
-        System.out.println("Reservation Created: " + reservationData.id);
-        System.out.println(createReservationResponse);
+        System.out.println("Reservation Created: " + sandboxPropertyReservation.id);
+        System.out.println(sandboxPropertyReservation);
 
 
         // ******* Update Reservation *******
         UpdateReservationInput updateReservationInput = UpdateReservationInput
                 .builder()
-                .id(reservationData.id)
+                .id(sandboxPropertyReservation.id)
                 .childAges(Optional.of(Arrays.asList(3, 5, 7)))
                 .build();
 
-        SandboxUpdateReservationMutation.Data updateReservationResponse = client.execute(new SandboxUpdateReservationMutation(updateReservationInput));
+        sandboxPropertyReservation = client.updateReservation(updateReservationInput);
 
-        reservationData = updateReservationResponse.updateReservation.reservation.sandboxReservationData;
-
-        System.out.println("Reservation Updated: " + reservationData.id);
-        System.out.println(updateReservationResponse);
+        System.out.println("Reservation Updated: " + sandboxPropertyReservation.id);
+        System.out.println(sandboxPropertyReservation);
 
 
         // ******* Update Reservation Stay Dates *******
         ChangeReservationStayDatesInput changeReservationStayDatesInput = ChangeReservationStayDatesInput
                 .builder()
-                .id(reservationData.id)
+                .id(sandboxPropertyReservation.id)
                 .checkInDate(LocalDate.of(2024, 6, 5))
                 .checkOutDate(LocalDate.of(2024, 6, 10))
                 .build();
 
-        SandboxChangeReservationStayDatesMutation.Data changeStayDatesResponse = client.execute(new SandboxChangeReservationStayDatesMutation(changeReservationStayDatesInput));
+        sandboxPropertyReservation = client.changeReservationStayDates(changeReservationStayDatesInput);
 
-        reservationData = changeStayDatesResponse.changeReservationStayDates.reservation.sandboxReservationData;
-
-        System.out.println("Reservation Stay Dates Updated: " + reservationData.id);
-        System.out.println(changeStayDatesResponse);
+        System.out.println("Reservation Stay Dates Updated: " + sandboxPropertyReservation.id);
+        System.out.println(sandboxPropertyReservation);
 
         // ******* Cancel Reservation *******
         CancelReservationInput cancelReservationInput = CancelReservationInput
                 .builder()
-                .id(reservationData.id)
+                .id(sandboxPropertyReservation.id)
                 .sendNotification(Optional.of(false))
                 .build();
 
-        SandboxCancelReservationMutation.Data cancelReservationResponse = client.execute(new SandboxCancelReservationMutation(cancelReservationInput));
+        sandboxPropertyReservation = client.cancelReservation(cancelReservationInput);
 
-        reservationData = cancelReservationResponse.cancelReservation.reservation.sandboxReservationData;
-
-        System.out.println("Reservation Was Canceled: " + reservationData.id);
-        System.out.println(cancelReservationResponse);
+        System.out.println("Reservation Was Canceled: " + sandboxPropertyReservation.id);
+        System.out.println(sandboxPropertyReservation);
 
 
         // ******* Delete Reservation *******
-        DeleteReservationInput deleteReservationInput = DeleteReservationInput
-                .builder()
-                .id(reservationData.id)
-                .build();
+        client.deleteReservation(sandboxPropertyReservation.id);
 
-        SandboxDeleteReservationMutation.Data deleteReservationResponse = client.execute(new SandboxDeleteReservationMutation(deleteReservationInput));
-
-        System.out.println("Reservation Was Deleted: " + reservationData.id);
-        System.out.println(deleteReservationResponse);
-
+        System.out.println("Reservation Was Deleted: " + sandboxPropertyReservation.id);
 
         // ******* Delete Property *******
-        DeletePropertyInput deletePropertyInput = DeletePropertyInput
-                .builder()
-                .id(propertyId)
-                .build();
+        client.deleteProperty(sandboxProperty.id);
 
-        SandboxDeletePropertyMutation.Data deletePropertyResponse = client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));
-
-        System.out.println("Property Was Deleted: " + propertyId);
-        System.out.println(deletePropertyResponse);
+        System.out.println("Property Was Deleted: " + sandboxProperty.id);
 
         System.exit(0);
     }
 
     private static void deletePropertyIfExists() {
-        SandboxPropertiesQuery propertiesQuery = SandboxPropertiesQuery.builder().skipReservations(true).build();
-        SandboxPropertiesQuery.Data propertiesResponse = client.execute(propertiesQuery);
+        List<SandboxProperty> properties = client.getProperties();
 
-        propertiesResponse.properties.elements.forEach(property -> {
+        properties.forEach(property -> {
             if (property.name.equals(PROPERTY_NAME) || property.name.equals(UPDATED_PROPERTY_NAME)) {
                 System.out.println("Deleting existing property: ID: " + property.id + ", Name: " + property.name);
-
-                DeletePropertyInput deletePropertyInput = DeletePropertyInput
-                        .builder()
-                        .id(property.id)
-                        .build();
-
-                client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));
+                client.deleteProperty(property.id);
             }
         });
     }

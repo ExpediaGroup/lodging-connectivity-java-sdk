@@ -16,11 +16,13 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.payment
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.fragment.PaymentInstrumentData
 
 /**
  * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
@@ -51,9 +53,14 @@ class PaymentClient(config: ClientConfiguration) {
         )
     )
 
-    fun getPaymentInstrument(token: String): PaymentInstrumentQuery.PaymentInstrument {
+    fun getPaymentInstrument(token: String): PaymentInstrumentData {
         val operation = PaymentInstrumentQuery(token)
         val response = baseGraphQLClient.execute(operation)
-        return response.paymentInstrument.get()
+
+        if (!response.paymentInstrument.isPresent) {
+            throw ExpediaGroupServiceException("Couldn't fetch payment instrument.")
+        }
+
+        return response.paymentInstrument.get().paymentInstrumentData
     }
 }
