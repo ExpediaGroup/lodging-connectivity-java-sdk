@@ -21,7 +21,7 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguratio
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.PaginatedReservationsData
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.PaginatedReservationsSummaries
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.PaginatedReservationsSummariesData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationReconciliationInput
@@ -35,7 +35,6 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationS
 import java.util.Optional
 import kotlin.jvm.optionals.getOrDefault
 import kotlin.jvm.optionals.getOrNull
-import org.graalvm.compiler.nodes.calc.IntegerDivRemNode.Op
 
 /**
  * A client for interacting with EG Lodging Connectivity Reservations GraphQL API
@@ -113,14 +112,14 @@ class ReservationClient(config: ClientConfiguration) {
         }
     }
 
-    fun getPropertyReservationsSummaries(input: PropertyReservationsSummaryInput): Iterator<PaginatedReservationsSummaries> {
-        return object : Iterator<PaginatedReservationsSummaries> {
+    fun getPropertyReservationsSummaries(input: PropertyReservationsSummaryInput): Iterator<PaginatedReservationsSummariesData> {
+        return object : Iterator<PaginatedReservationsSummariesData> {
             var hasEnded = false
             var cursor: Optional<String> = input.cursor.getOrDefault(Optional.empty())
 
             override fun hasNext(): Boolean = !hasEnded
 
-            override fun next(): PaginatedReservationsSummaries {
+            override fun next(): PaginatedReservationsSummariesData {
                 val operation = PropertyReservationsSummaryQuery
                     .builder()
                     .propertyId(input.propertyId)
@@ -137,7 +136,8 @@ class ReservationClient(config: ClientConfiguration) {
                     throw ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
                 }
 
-                val paginatedReservationsSummaries = response.property.get().reservations.paginatedReservationsSummaries
+                val paginatedReservationsSummaries =
+                    response.property.get().reservations.paginatedReservationsSummariesData
 
                 if (paginatedReservationsSummaries.pageInfo.isPresent) {
                     throw ExpediaGroupServiceException("Failed to fetch reservations next page info for property ${input.propertyId}")
