@@ -75,7 +75,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         val responseData = response.dataOrThrow()
 
         return GraphQLResponse(
-            data = responseData.properties.sandboxPaginatedPropertiesData.elements.map { it.sandboxPropertyData },
+            data = responseData.properties.elements.map { it.sandboxPropertyData },
             errors = response.errors
         )
     }
@@ -92,7 +92,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         val response = baseGraphQLClient.execute(operation)
         val responseData = response.dataOrThrow()
 
-        return responseData.property.reservations.sandboxPaginatedReservationsData.elements.map { it.sandboxReservationData }
+        return responseData.property.reservations.elements.map { it.sandboxReservationData }
     }
 
     fun getPropertyReservations(input: SandboxPropertyReservationsInput): SandboxPropertyReservationsPaginator =

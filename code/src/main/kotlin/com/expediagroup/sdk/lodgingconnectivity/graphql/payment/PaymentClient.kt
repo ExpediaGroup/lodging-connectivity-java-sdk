@@ -56,11 +56,10 @@ class PaymentClient(config: ClientConfiguration) {
     fun getPaymentInstrument(token: String): PaymentInstrumentData {
         val operation = PaymentInstrumentQuery(token)
         val response = baseGraphQLClient.execute(operation)
+        val paymentInstrument = response.dataOrThrow().paymentInstrument
 
-        if (!response.paymentInstrument.isPresent) {
-            throw ExpediaGroupServiceException("Couldn't fetch payment instrument.")
-        }
-
-        return response.paymentInstrument.get().paymentInstrumentData
+        return paymentInstrument.orElseThrow {
+            ExpediaGroupServiceException("Couldn't fetch payment instrument")
+        }.paymentInstrumentData
     }
 }
