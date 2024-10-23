@@ -32,13 +32,13 @@ class SandboxPropertyReservationsPaginator(
             cursor = cursor,
             pageSize = pageSize.get(),
             hasNext = hasNext(),
-            totalCount = responseData.property.reservations.sandboxPaginatedReservationsData.totalCount
+            totalCount = responseData.property.reservations.totalCount
         )
 
-        cursor = getCursorOrNull(responseData.property.reservations.sandboxPaginatedReservationsData.cursor)
+        cursor = getCursorOrNull(responseData.property.reservations.cursor)
 
         return PaginatedGraphQLResponse(
-            data = responseData.property.reservations.sandboxPaginatedReservationsData.elements.map { it.sandboxReservationData },
+            data = responseData.property.reservations.elements.map { it.sandboxReservationData },
             pageInfo = currentPageInfo,
             errors = response.errors
         )

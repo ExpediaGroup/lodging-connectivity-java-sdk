@@ -42,7 +42,7 @@ class PropertyReservationsPaginator(
             ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
         }
 
-        val reservationsPage = property.reservations.paginatedReservationsData
+        val reservationsPage = property.reservations
 
         val nextPageInfo = reservationsPage.pageInfo.orElseThrow {
             ExpediaGroupServiceException("Failed to fetch reservations next page info for property ${input.propertyId}")
