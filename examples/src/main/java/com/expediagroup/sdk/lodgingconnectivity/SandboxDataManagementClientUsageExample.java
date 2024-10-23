@@ -17,8 +17,10 @@
 package com.expediagroup.sdk.lodgingconnectivity;
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.GraphQLResponse;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDataManagementClient;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxProperty;
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxPropertyData;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CancelReservationInput;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput;
@@ -67,7 +69,7 @@ public class SandboxDataManagementClientUsageExample {
                 .name(Optional.of(PROPERTY_NAME))
                 .build();
 
-        SandboxProperty sandboxProperty = client.createProperty(createPropertyInput);
+        SandboxPropertyData sandboxProperty = client.createProperty(createPropertyInput);
 
         System.out.println("Property Created: " + sandboxProperty.id);
         System.out.println(sandboxProperty);
@@ -153,9 +155,9 @@ public class SandboxDataManagementClientUsageExample {
     }
 
     private static void deletePropertyIfExists() {
-        List<SandboxProperty> properties = client.getProperties();
+        GraphQLResponse<List<SandboxPropertyData>> properties = client.getProperties();
 
-        properties.forEach(property -> {
+        properties.getData().forEach(property -> {
             if (property.name.equals(PROPERTY_NAME) || property.name.equals(UPDATED_PROPERTY_NAME)) {
                 System.out.println("Deleting existing property: ID: " + property.id + ", Name: " + property.name);
                 client.deleteProperty(property.id);
