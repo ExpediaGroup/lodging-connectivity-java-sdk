@@ -31,13 +31,13 @@ class SandboxPropertiesPaginator(
             cursor = cursor,
             hasNext = hasNext(),
             pageSize = pageSize.get(),
-            totalCount = responseData.properties.sandboxPaginatedPropertiesData.totalCount
+            totalCount = responseData.properties.totalCount
         )
 
-        cursor = getCursorOrNull(responseData.properties.sandboxPaginatedPropertiesData.cursor)
+        cursor = getCursorOrNull(responseData.properties.cursor)
 
         return PaginatedGraphQLResponse(
-            data = responseData.properties.sandboxPaginatedPropertiesData.elements.map { it.sandboxPropertyData },
+            data = responseData.properties.elements.map { it.sandboxPropertyData },
             pageInfo = currentPageInfo,
             errors = response.errors
         )
