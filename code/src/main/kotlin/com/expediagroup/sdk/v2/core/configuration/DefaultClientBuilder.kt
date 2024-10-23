@@ -1,6 +1,13 @@
 package com.expediagroup.sdk.v2.core.configuration
 
 
+/**
+ * A builder class for constructing instances of FullClientConfiguration with customizable parameters.
+ * This builder pattern allows you to configure various settings for the client, such as authentication details,
+ * endpoints, and timeout settings.
+ *
+ * @param T The type of the client that will be built.
+ */
 abstract class DefaultClientBuilder<out T> {
     private var configurationBuilder = FullClientConfiguration.Builder()
 
@@ -48,10 +55,20 @@ abstract class DefaultClientBuilder<out T> {
         configurationBuilder = configurationBuilder.maxConnectionsPerRoute(maxConnectionPerRoute)
     }
 
+    /**
+     * Builds and returns a fully configured client instance.
+     *
+     * @return a fully configured instance of the client.
+     */
     fun buildConfiguration(): FullClientConfiguration {
         return configurationBuilder.build()
     }
 
+    /**
+     * Builds and returns a fully configured client instance.
+     *
+     * @return a fully configured instance of the client.
+     */
     open fun build(): T {
         throw NotImplementedError("Not yet implemented")
     }

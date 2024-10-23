@@ -6,6 +6,11 @@ import com.expediagroup.sdk.v2.core.trait.common.BuilderTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.*
 import java.util.*
 
+/**
+ * Interface representing the full configuration required for a client setup.
+ * Combines various traits that offer specific configuration aspects such as key, secret, endpoints,
+ * timeout settings, logging preferences, and connection limitations.
+ */
 interface FullClientConfiguration :
     KeyTrait,
     SecretTrait,
@@ -81,6 +86,12 @@ interface FullClientConfiguration :
             this.authenticationStrategy = authenticationStrategy
         }
 
+        /**
+         * Builds and returns a fully configured instance of `FullClientConfiguration`.
+         *
+         * @return A `FullClientConfiguration` object with all required settings and defaults applied.
+         * @throws ExpediaGroupConfigurationException if required settings like key or secret are missing.
+         */
         override fun build(): FullClientConfiguration =
             object : FullClientConfiguration {
                 override val id: UUID = UUID.randomUUID()
