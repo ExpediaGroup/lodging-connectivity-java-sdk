@@ -4,7 +4,7 @@ import com.expediagroup.sdk.v2.core.apache.util.getSingletonApacheHttpTransport
 import com.expediagroup.sdk.v2.core.authentication.util.getHttpCredentialsAdapter
 import com.expediagroup.sdk.v2.core.client.ApiClient
 import com.expediagroup.sdk.v2.core.client.ApiClientBuilder
-import com.expediagroup.sdk.v2.core.request.extended.ChainedHttpRequestInitializer
+import com.expediagroup.sdk.v2.core.request.initializer.SdkRequestInitializer
 import com.expediagroup.sdk.v2.core.trait.configuration.ClientConfiguration
 import com.expediagroup.sdk.v2.core.trait.configuration.EndpointTrait
 import com.google.api.client.http.GenericUrl
@@ -27,8 +27,8 @@ fun createApiClient(
     val jsonFactory = createGsonFactory()
     require(configuration is EndpointTrait) { "Configuration must implement EndpointTrait" }
 
-    val requestInitializer = ChainedHttpRequestInitializer.default()
-        .extend(getHttpCredentialsAdapter(configuration))
+    val requestInitializer = SdkRequestInitializer.default()
+        .add(getHttpCredentialsAdapter(configuration))
 
     val builder = ApiClientBuilder(
         namespace = namespace,

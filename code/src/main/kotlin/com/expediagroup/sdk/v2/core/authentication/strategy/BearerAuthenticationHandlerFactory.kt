@@ -4,7 +4,7 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthExcepti
 import com.expediagroup.sdk.v2.core.constant.LoggingMessage
 import com.expediagroup.sdk.v2.core.logging.ExpediaGroupLoggerFactory
 import com.expediagroup.sdk.v2.core.logging.LogMessageTag
-import com.expediagroup.sdk.v2.core.request.extended.ChainedHttpRequestInitializer
+import com.expediagroup.sdk.v2.core.request.initializer.SdkRequestInitializer
 import com.expediagroup.sdk.v2.core.trait.authentication.AuthenticationHandlerTrait
 import com.expediagroup.sdk.v2.core.trait.authentication.RefreshAccessTokenTrait
 import com.expediagroup.sdk.v2.core.trait.configuration.AuthEndpointTrait
@@ -47,10 +47,18 @@ object BearerAuthenticationHandlerFactory : AuthenticationHandlerTrait {
         return object : RefreshAccessTokenTrait {
             private val logger = ExpediaGroupLoggerFactory.getLogger(javaClass)
 
+            /**
+             * Refreshes and returns a new `AccessToken` by making a token request.
+             * This method builds the token request, initializes it, logs the token renewal progress,
+             * executes the request, and handles any exceptions that occur.
+             *
+             * @return A newly generated `AccessToken` instance if the token request is successful.
+             * @throws ExpediaGroupAuthException if the token renewal process fails.
+             */
             override fun refreshAccessToken(): AccessToken =
                 buildTokenRequest()
                     .also attachDefaultInitializer@{ request ->
-                        request.requestInitializer = extendDefaultRequestInitializer(request)
+                        request.requestInitializer = attachSdkRequestInitializer(request)
                     }.also logTokenRenewalInProgress@{
                         logger.info(LoggingMessage.TOKEN_RENEWAL_IN_PROGRESS, LogMessageTag.PROGRESSING)
                     }.let executeRequest@{ request ->
@@ -66,6 +74,12 @@ object BearerAuthenticationHandlerFactory : AuthenticationHandlerTrait {
                     }
 
 
+            /**
+             * Builds a `ClientCredentialsTokenRequest` using the configuration traits available in the `config` property.
+             * Key, secret, and authentication endpoint are retrieved from the configuration.
+             *
+             * @return An instance of `ClientCredentialsTokenRequest` configured with client authentication and other necessary parameters.
+             */
             private fun buildTokenRequest(): ClientCredentialsTokenRequest {
                 val key = (config as KeyTrait).getKey()
                 val secret = (config as SecretTrait).getSecret()
@@ -80,9 +94,23 @@ object BearerAuthenticationHandlerFactory : AuthenticationHandlerTrait {
                 )
             }
 
+            /**
+             * Calculates the token expiration time based on the current time and the duration specified in the token response.
+             *
+             * @param response The `TokenResponse` object containing the `expiresInSeconds` property, which indicates the time in seconds
+             *                 for which the token is valid from the current time.
+             * @return A `Date` object representing the calculated expiration time of the token.
+             */
             private fun calculateTokenExpirationTime(response: TokenResponse): Date =
                 Date.from(Instant.now().plusSeconds(response.expiresInSeconds.toLong()))
 
+            /**
+             * Builds an `AccessToken` object from the given `TokenResponse`.
+             * Logs a success message upon successful token renewal.
+             *
+             * @param response The `TokenResponse` from which the access token is created.
+             * @return An instance of `AccessToken` containing the token value, expiration time, and scopes.
+             */
             private fun buildAccessToken(response: TokenResponse): AccessToken =
                 AccessToken.newBuilder()
                     .setTokenValue(response.accessToken)
@@ -95,17 +123,25 @@ object BearerAuthenticationHandlerFactory : AuthenticationHandlerTrait {
                         )
                     }
 
-            private fun extendDefaultRequestInitializer(request: TokenRequest) =
+            /**
+             * Attaches an appropriate SDK request initializer to the given `TokenRequest` instance based on the type of
+             * `requestInitializer` present in the `TokenRequest`.
+             *
+             * @param request The `TokenRequest` object that requires an initializer. The function checks the type of
+             *                `requestInitializer` within this request and attaches an appropriate `SdkRequestInitializer`.
+             *                If no suitable initializer is found, a default `SdkRequestInitializer` is used.
+             */
+            private fun attachSdkRequestInitializer(request: TokenRequest) =
                 when (request.requestInitializer) {
-                    is ChainedHttpRequestInitializer ->
-                        (request.requestInitializer as ChainedHttpRequestInitializer).extend(
-                            ChainedHttpRequestInitializer.default()
+                    is SdkRequestInitializer ->
+                        (request.requestInitializer as SdkRequestInitializer).add(
+                            SdkRequestInitializer.default()
                         )
 
                     is HttpRequestInitializer ->
-                        ChainedHttpRequestInitializer.default().extend(request.requestInitializer)
+                        SdkRequestInitializer.default().add(request.requestInitializer)
 
-                    else -> ChainedHttpRequestInitializer.default()
+                    else -> SdkRequestInitializer.default()
                 }
         }
 
