@@ -17,7 +17,6 @@
 package com.expediagroup.sdk.lodgingconnectivity;
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.GraphQLResponse;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDataManagementClient;
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxPropertyData;
