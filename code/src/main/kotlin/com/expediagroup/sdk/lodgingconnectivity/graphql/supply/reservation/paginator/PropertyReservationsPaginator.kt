@@ -2,6 +2,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.pagi
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PaginatedGraphQLResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsQuery
@@ -9,20 +10,20 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.Reservat
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
 import java.util.Optional
-import kotlin.jvm.optionals.getOrElse
 import kotlin.jvm.optionals.getOrNull
 
 class PropertyReservationsPaginator(
-    val client: GraphQLExecutor,
-    val input: PropertyReservationsInput,
-    val selections: ReservationSelections? = null
-) : Iterator<PaginatedGraphQLResponse<List<Optional<ReservationData>>>> {
-    var cursor: String? = getCursorOrNull(input.cursor.getOrElse { Optional.empty() })
-    val pageSize: Int = input.pageSize.orElse(10)
+    private val client: GraphQLExecutor,
+    private val input: PropertyReservationsInput,
+    private val selections: ReservationSelections? = null
+) : Iterator<PaginatedGraphQLResponse<Optional<ReservationData>>> {
+    private var cursor: String? = input.cursor.orElse(Optional.empty()).nullIfBlank()
+    private val pageSize: Int = input.pageSize.orElse(10)
+    private var hasEnded: Boolean = false
 
-    override fun hasNext(): Boolean = cursor != null
+    override fun hasNext(): Boolean = !hasEnded
 
-    override fun next(): PaginatedGraphQLResponse<List<Optional<ReservationData>>> {
+    override fun next(): PaginatedGraphQLResponse<Optional<ReservationData>> {
         val operation = PropertyReservationsQuery
             .builder()
             .propertyId(input.propertyId)
@@ -50,31 +51,18 @@ class PropertyReservationsPaginator(
 
         val currentPageInfo = PageInfo(
             cursor = cursor,
-            hasNext = hasNext(),
+            hasNext = nextPageInfo.hasNextPage,
             pageSize = pageSize,
             totalCount = reservationsPage.totalCount.getOrNull()
         )
 
-        cursor = getCursorOrNull(nextPageInfo.endCursor)
+        cursor = nextPageInfo.endCursor.nullIfBlank()
+        hasEnded = !nextPageInfo.hasNextPage
 
         return PaginatedGraphQLResponse(
             data = reservationsPage.edges.map { edgeOptional -> edgeOptional.map { it.node.reservationData } },
             errors = response.errors,
             pageInfo = currentPageInfo
         )
-    }
-
-    private fun getCursorOrNull(cursor: Optional<String>): String? {
-        if (cursor.isPresent) {
-            val cursorValue = cursor.get()
-
-            if (cursorValue.isBlank()) {
-                return null
-            }
-
-            return cursorValue
-        }
-
-        return null
     }
 }

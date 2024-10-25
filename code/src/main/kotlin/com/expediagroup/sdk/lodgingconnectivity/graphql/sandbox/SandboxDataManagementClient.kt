@@ -83,7 +83,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     fun getProperties(input: SandboxPropertiesInput): SandboxPropertiesPaginator =
         SandboxPropertiesPaginator(baseGraphQLClient, input)
 
-    fun getPropertyReservations(propertyId: String): List<SandboxReservationData> {
+    fun getPropertyReservations(propertyId: String): GraphQLResponse<List<SandboxReservationData>> {
         val operation = SandboxPropertyReservationsQuery
             .builder()
             .propertyId(propertyId)
@@ -92,67 +92,110 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         val response = baseGraphQLClient.execute(operation)
         val responseData = response.dataOrThrow()
 
-        return responseData.property.reservations.elements.map { it.sandboxReservationData }
+        return GraphQLResponse(
+            data = responseData.property.reservations.elements.map { it.sandboxReservationData },
+            errors = response.errors
+        )
     }
 
     fun getPropertyReservations(input: SandboxPropertyReservationsInput): SandboxPropertyReservationsPaginator =
         SandboxPropertyReservationsPaginator(baseGraphQLClient, input)
 
-    fun getProperty(id: String): SandboxPropertyData {
-        val operation = SandboxPropertyQuery(id, Optional.empty())
+    fun getProperty(propertyId: String): GraphQLResponse<SandboxPropertyData> {
+        val operation = SandboxPropertyQuery(propertyId)
         val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().property.sandboxPropertyData
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.property.sandboxPropertyData,
+            errors = response.errors
+        )
     }
 
-    fun getReservation(id: String): SandboxReservationData {
-        val operation = SandboxReservationQuery(id)
+    fun getReservation(reservationId: String): GraphQLResponse<SandboxReservationData> {
+        val operation = SandboxReservationQuery(reservationId)
         val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().reservation.sandboxReservationData
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.reservation.sandboxReservationData,
+            errors = response.errors
+        )
     }
 
-    fun createProperty(input: CreatePropertyInput): SandboxPropertyData {
+    fun createProperty(input: CreatePropertyInput): GraphQLResponse<SandboxPropertyData> {
         val operation = SandboxCreatePropertyMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().createProperty.property.sandboxPropertyData
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.createProperty.property.sandboxPropertyData,
+            errors = response.errors
+        )
     }
 
-    fun updateProperty(input: UpdatePropertyInput): SandboxPropertyData {
+    fun updateProperty(input: UpdatePropertyInput): GraphQLResponse<SandboxPropertyData> {
         val operation = SandboxUpdatePropertyMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().updateProperty.property.sandboxPropertyData
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.updateProperty.property.sandboxPropertyData,
+            errors = response.errors
+        )
     }
 
-    fun deleteProperty(id: String) {
-        val operation = SandboxDeletePropertyMutation(DeletePropertyInput.builder().id(id).build())
+    fun deleteProperty(propertyId: String): GraphQLResponse<Optional<String>> {
+        val operation = SandboxDeletePropertyMutation(DeletePropertyInput.builder().id(propertyId).build())
+        val response = baseGraphQLClient.execute(operation)
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.deleteProperty.clientMutationId,
+            errors = response.errors
+        )
+    }
+
+    fun createReservation(input: CreateReservationInput): GraphQLResponse<SandboxReservationData> {
+        val operation = SandboxCreateReservationMutation(input)
+        val response = baseGraphQLClient.execute(operation)
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.createReservation.reservation.sandboxReservationData,
+            errors = response.errors
+        )
+    }
+
+    fun updateReservation(input: UpdateReservationInput) {
+        val operation = SandboxUpdateReservationMutation(input)
         baseGraphQLClient.execute(operation)
     }
 
-    fun createReservation(input: CreateReservationInput): SandboxReservationData {
-        val operation = SandboxCreateReservationMutation(input)
-        val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().createReservation.reservation.sandboxReservationData
-    }
-
-    fun updateReservation(input: UpdateReservationInput): SandboxReservationData {
-        val operation = SandboxUpdateReservationMutation(input)
-        val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().updateReservation.reservation.sandboxReservationData
-    }
-
-    fun changeReservationStayDates(input: ChangeReservationStayDatesInput): SandboxReservationData {
+    fun changeReservationStayDates(input: ChangeReservationStayDatesInput): GraphQLResponse<SandboxReservationData> {
         val operation = SandboxChangeReservationStayDatesMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().changeReservationStayDates.reservation.sandboxReservationData
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.changeReservationStayDates.reservation.sandboxReservationData,
+            errors = response.errors
+        )
     }
 
-    fun cancelReservation(input: CancelReservationInput): SandboxReservationData {
+    fun cancelReservation(input: CancelReservationInput): GraphQLResponse<SandboxReservationData> {
         val operation = SandboxCancelReservationMutation(input)
         val response = baseGraphQLClient.execute(operation)
-        return response.dataOrThrow().cancelReservation.reservation.sandboxReservationData
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.cancelReservation.reservation.sandboxReservationData,
+            errors = response.errors
+        )
     }
 
-    fun deleteReservation(id: String) {
-        val operation = SandboxDeleteReservationMutation(DeleteReservationInput.builder().id(id).build())
+    fun deleteReservation(reservationId: String) {
+        val operation = SandboxDeleteReservationMutation(DeleteReservationInput.builder().id(reservationId).build())
         baseGraphQLClient.execute(operation)
     }
 
