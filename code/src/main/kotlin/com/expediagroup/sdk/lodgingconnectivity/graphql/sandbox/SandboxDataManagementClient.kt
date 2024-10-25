@@ -167,9 +167,15 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         )
     }
 
-    fun updateReservation(input: UpdateReservationInput) {
+    fun updateReservation(input: UpdateReservationInput): GraphQLResponse<SandboxReservationData> {
         val operation = SandboxUpdateReservationMutation(input)
-        baseGraphQLClient.execute(operation)
+        val response = baseGraphQLClient.execute(operation)
+        val responseData = response.dataOrThrow()
+
+        return GraphQLResponse(
+            data = responseData.updateReservation.reservation.sandboxReservationData,
+            errors = response.errors
+        )
     }
 
     fun changeReservationStayDates(input: ChangeReservationStayDatesInput): GraphQLResponse<SandboxReservationData> {
