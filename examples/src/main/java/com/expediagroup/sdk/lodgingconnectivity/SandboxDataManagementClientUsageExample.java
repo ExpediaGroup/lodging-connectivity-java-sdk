@@ -68,7 +68,7 @@ public class SandboxDataManagementClientUsageExample {
                 .name(Optional.of(PROPERTY_NAME))
                 .build();
 
-        SandboxPropertyData sandboxProperty = client.createProperty(createPropertyInput);
+        SandboxPropertyData sandboxProperty = client.createProperty(createPropertyInput).getData();
 
         System.out.println("Property Created: " + sandboxProperty.id);
         System.out.println(sandboxProperty);
@@ -81,7 +81,7 @@ public class SandboxDataManagementClientUsageExample {
                 .name(Optional.of(UPDATED_PROPERTY_NAME))
                 .build();
 
-        sandboxProperty = client.updateProperty(updatePropertyInput);
+        sandboxProperty = client.updateProperty(updatePropertyInput).getData();
 
         System.out.println("Property Updated: " + sandboxProperty.id);
         System.out.println(sandboxProperty);
@@ -95,7 +95,7 @@ public class SandboxDataManagementClientUsageExample {
                 .adultCount(Optional.of(2))
                 .build();
 
-        SandboxReservationData sandboxPropertyReservation = client.createReservation(createReservationInput);
+        SandboxReservationData sandboxPropertyReservation = client.createReservation(createReservationInput).getData();
 
         System.out.println("Reservation Created: " + sandboxPropertyReservation.id);
         System.out.println(sandboxPropertyReservation);
@@ -108,7 +108,7 @@ public class SandboxDataManagementClientUsageExample {
                 .childAges(Optional.of(Arrays.asList(3, 5, 7)))
                 .build();
 
-        sandboxPropertyReservation = client.updateReservation(updateReservationInput);
+        sandboxPropertyReservation = client.updateReservation(updateReservationInput).getData();
 
         System.out.println("Reservation Updated: " + sandboxPropertyReservation.id);
         System.out.println(sandboxPropertyReservation);
@@ -122,7 +122,7 @@ public class SandboxDataManagementClientUsageExample {
                 .checkOutDate(LocalDate.of(2024, 6, 10))
                 .build();
 
-        sandboxPropertyReservation = client.changeReservationStayDates(changeReservationStayDatesInput);
+        sandboxPropertyReservation = client.changeReservationStayDates(changeReservationStayDatesInput).getData();
 
         System.out.println("Reservation Stay Dates Updated: " + sandboxPropertyReservation.id);
         System.out.println(sandboxPropertyReservation);
@@ -134,7 +134,7 @@ public class SandboxDataManagementClientUsageExample {
                 .sendNotification(Optional.of(false))
                 .build();
 
-        sandboxPropertyReservation = client.cancelReservation(cancelReservationInput);
+        sandboxPropertyReservation = client.cancelReservation(cancelReservationInput).getData();
 
         System.out.println("Reservation Was Canceled: " + sandboxPropertyReservation.id);
         System.out.println(sandboxPropertyReservation);
