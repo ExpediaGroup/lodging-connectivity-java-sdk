@@ -1,6 +1,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.paginator
 
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PaginatedGraphQLResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertiesQuery
@@ -9,15 +10,16 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.SandboxProp
 import java.util.Optional
 
 class SandboxPropertiesPaginator(
-    val client: GraphQLExecutor,
-    val input: SandboxPropertiesInput
-) : Iterator<PaginatedGraphQLResponse<List<SandboxPropertyData>>> {
-    var cursor: String? = getCursorOrNull(input.cursor.orElse(Optional.empty()))
-    val pageSize: Optional<Int> = input.pageSize.orElse(Optional.of(10))
+    private val client: GraphQLExecutor,
+    private val input: SandboxPropertiesInput
+) : Iterator<PaginatedGraphQLResponse<SandboxPropertyData>> {
+    private var cursor: String? = input.cursor.orElse(Optional.empty()).nullIfBlank()
+    private val pageSize: Optional<Int> = input.pageSize.orElse(Optional.of(10))
+    private var hasEnded: Boolean = false
 
-    override fun hasNext(): Boolean = cursor != null
+    override fun hasNext(): Boolean = !hasEnded
 
-    override fun next(): PaginatedGraphQLResponse<List<SandboxPropertyData>> {
+    override fun next(): PaginatedGraphQLResponse<SandboxPropertyData> {
         val operation = SandboxPropertiesQuery
             .builder()
             .pageSize(pageSize)
@@ -29,31 +31,18 @@ class SandboxPropertiesPaginator(
 
         val currentPageInfo = PageInfo(
             cursor = cursor,
-            hasNext = hasNext(),
+            hasNext = responseData.properties.cursor.nullIfBlank() != null,
             pageSize = pageSize.get(),
             totalCount = responseData.properties.totalCount
         )
 
-        cursor = getCursorOrNull(responseData.properties.cursor)
+        cursor = responseData.properties.cursor.nullIfBlank()
+        hasEnded = cursor == null
 
         return PaginatedGraphQLResponse(
             data = responseData.properties.elements.map { it.sandboxPropertyData },
             pageInfo = currentPageInfo,
             errors = response.errors
         )
-    }
-
-    private fun getCursorOrNull(cursor: Optional<String>): String? {
-        if (cursor.isPresent) {
-            val cursorValue = cursor.get()
-
-            if (cursorValue.isBlank()) {
-                return null
-            }
-
-            return cursorValue
-        }
-
-        return null
     }
 }
