@@ -1,9 +1,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.model.exception
 
-import com.apollographql.apollo.api.Error
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponseError
 
 class NoDataException(
     message: String? = null,
     cause: Throwable? = null,
-    val errors: List<Error>,
+    val errors: List<RawResponseError>,
 ) : RuntimeException(message, cause)

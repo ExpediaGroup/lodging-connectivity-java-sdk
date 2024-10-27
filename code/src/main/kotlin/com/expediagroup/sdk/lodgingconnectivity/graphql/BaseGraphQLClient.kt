@@ -68,7 +68,7 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
                     throw ExpediaGroupServiceException(exception?.message)
                 }
                 if (data == null && hasErrors()) {
-                    throw NoDataException(message = "No data received from the server", errors = errors!!)
+                    throw NoDataException(message = "No data received from the server", errors = errors!!.map { it.toRawResponseError() })
                 }
             }.let {
                 RawResponse(
@@ -93,7 +93,7 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
                     throw ExpediaGroupServiceException(exception?.message)
                 }
                 if (data == null && hasErrors()) {
-                    throw NoDataException(message = "No data received from the server", errors = errors!!)
+                    throw NoDataException(message = "No data received from the server", errors = errors!!.map { it.toRawResponseError() })
                 }
             }.let {
                 RawResponse(
