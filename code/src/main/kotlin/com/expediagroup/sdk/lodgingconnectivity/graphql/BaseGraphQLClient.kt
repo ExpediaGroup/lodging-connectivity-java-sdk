@@ -17,13 +17,15 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
-import com.apollographql.ktor.http.KtorHttpEngine
+import com.apollographql.ktor.ktorClient
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
 import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.toRawResponseError
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.exception.NoDataException
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.runBlocking
 
@@ -48,7 +50,8 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
 
     private val apolloClient: ApolloClient = ApolloClient.Builder()
         .serverUrl(config.endpoint!!)
-        .httpEngine(KtorHttpEngine(expediaGroupClient.httpClient))
+        .ktorClient(expediaGroupClient.httpClient)
+
         .build()
 
     /**
@@ -58,12 +61,20 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
      * @return The result of the query execution, with errors handled.
      * @throws ExpediaGroupServiceException If the query execution returns errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): ApolloResponse<T> {
+    override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> {
         return runBlocking {
             apolloClient.query(query).execute().apply {
                 if (exception != null) {
                     throw ExpediaGroupServiceException(exception?.message)
                 }
+                if (data == null && hasErrors()) {
+                    throw NoDataException(message = "No data received from the server", errors = errors!!)
+                }
+            }.let {
+                RawResponse(
+                    data = it.data!!,
+                    errors = it.errors?.map { apolloError -> apolloError.toRawResponseError() }
+                )
             }
         }
     }
@@ -75,12 +86,20 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
      * @return The result of the mutation execution, with errors handled.
      * @throws ExpediaGroupServiceException If the mutation execution returns errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): ApolloResponse<T> {
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> {
         return runBlocking {
             apolloClient.mutation(mutation).execute().apply {
                 if (exception != null) {
                     throw ExpediaGroupServiceException(exception?.message)
                 }
+                if (data == null && hasErrors()) {
+                    throw NoDataException(message = "No data received from the server", errors = errors!!)
+                }
+            }.let {
+                RawResponse(
+                    data = it.data!!,
+                    errors = it.errors?.map { apolloError -> apolloError.toRawResponseError() }
+                )
             }
         }
     }
