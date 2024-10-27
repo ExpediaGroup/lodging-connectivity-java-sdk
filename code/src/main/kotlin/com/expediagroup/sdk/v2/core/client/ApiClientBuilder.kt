@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.v2.core.client
 
-import com.expediagroup.sdk.v2.core.request.extended.DefaultApiClientRequestInitializer
+import com.expediagroup.sdk.v2.core.request.initializer.ApiClientRequestInitializer
 import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpRequestInitializer
@@ -45,6 +45,6 @@ class ApiClientBuilder(
 
     init {
         applicationName = namespace
-        googleClientRequestInitializer = DefaultApiClientRequestInitializer.default()
+        googleClientRequestInitializer = ApiClientRequestInitializer.default()
     }
 }

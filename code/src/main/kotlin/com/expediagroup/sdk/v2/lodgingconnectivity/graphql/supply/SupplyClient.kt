@@ -52,5 +52,5 @@ class SupplyClient(config: ClientConfiguration) :
            endpointProvider = EndpointProvider::getSupplyClientEndpoint,
            authEndpointProvider = EndpointProvider::getAuthEndpoint
        ),
-       namespace = "lodging-connectivity-supply-client"
+       namespace = "lodging-connectivity-sdk"
    )

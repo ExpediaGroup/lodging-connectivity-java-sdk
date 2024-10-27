@@ -1,5 +1,6 @@
-package com.expediagroup.sdk.v2.core.request.extended
+package com.expediagroup.sdk.v2.core.request.initializer
 
+import com.expediagroup.sdk.v2.core.model.UserAgent
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest
 import com.google.api.client.googleapis.services.CommonGoogleClientRequestInitializer
 
@@ -13,7 +14,7 @@ import com.google.api.client.googleapis.services.CommonGoogleClientRequestInitia
  *
  * @param builder The builder used to construct the `DefaultApiClientRequestInitializer` instance.
  */
-class DefaultApiClientRequestInitializer(
+class ApiClientRequestInitializer(
     builder: Builder
 ) : CommonGoogleClientRequestInitializer(builder) {
     companion object {
@@ -27,9 +28,9 @@ class DefaultApiClientRequestInitializer(
          * @return A default instance of `DefaultApiClientRequestInitializer` configured with the default builder settings.
          */
         @JvmStatic
-        fun default(): DefaultApiClientRequestInitializer {
+        fun default(): ApiClientRequestInitializer {
             val builder = Builder()
-            return DefaultApiClientRequestInitializer(builder)
+            return ApiClientRequestInitializer(builder)
         }
 
         /**
@@ -39,8 +40,8 @@ class DefaultApiClientRequestInitializer(
          * to return a `DefaultApiClientRequestInitializer` with the current builder instance as a parameter.
          */
         class Builder : CommonGoogleClientRequestInitializer.Builder() {
-            override fun build(): DefaultApiClientRequestInitializer {
-                return DefaultApiClientRequestInitializer(this)
+            override fun build(): ApiClientRequestInitializer {
+                return ApiClientRequestInitializer(this)
             }
         }
     }
@@ -52,5 +53,21 @@ class DefaultApiClientRequestInitializer(
      */
     override fun initialize(request: AbstractGoogleClientRequest<*>) {
         super.initialize(request)
+        overrideUserAgent(request)
+    }
+
+    /**
+     * Overrides the user agent in the provided Google client request with a custom user agent string.
+     *
+     * @param request The Google client request whose user agent will be overridden.
+     */
+    private fun overrideUserAgent(request: AbstractGoogleClientRequest<*>) {
+        val (jdk, _, os) = request.requestHeaders.getFirstHeaderStringValue("x-goog-api-client")
+            .split(" ")
+
+        request.requestHeaders.userAgent = UserAgent(
+            jdkVersion = jdk,
+            operatingSystem = os
+        ).toString()
     }
 }

@@ -50,5 +50,5 @@ class SandboxDataManagementClient(config: ClientConfiguration) :
             authEndpointProvider = EndpointProvider::getAuthEndpoint,
             defaultEnvironment = ClientEnvironment.SANDBOX_PROD
         ),
-        namespace = "lodging-connectivity-sandbox-client"
+        namespace = "lodging-connectivity-sdk"
     )

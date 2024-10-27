@@ -16,7 +16,7 @@ class FileManagementClient(
     configuration: ClientConfiguration
 ) {
     private val client = SdkClient(
-        namespace = "lodging-connectivity-file-management-client",
+        namespace = "lodging-connectivity-sdk",
         configuration = configuration.toFullClientConfiguration(
             endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
