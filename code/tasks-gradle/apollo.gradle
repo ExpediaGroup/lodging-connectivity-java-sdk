@@ -52,8 +52,6 @@ apollo {
 
         srcDir("src/main/graphql/sandbox")
 
-        schemaFiles.from('src/main/graphql/sandbox/schema.graphqls', 'src/main/graphql/sandbox/reservations/extension/schema-extensions.graphqls')
-
         excludes.add("experimental/**/*.graphql")
 
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox")

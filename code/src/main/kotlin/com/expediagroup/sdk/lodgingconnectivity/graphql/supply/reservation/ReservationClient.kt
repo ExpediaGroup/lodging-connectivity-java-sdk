@@ -33,7 +33,6 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelVrboRe
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ChangeReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ConfirmReservationNotificationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsInput
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsSummaryInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RefundReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
 
@@ -78,7 +77,7 @@ class ReservationClient(config: ClientConfiguration) {
     }
 
     fun getPropertyReservationsSummaries(
-        input: PropertyReservationsSummaryInput
+        input: PropertyReservationsInput
     ) = run {
         PropertyReservationsSummariesPaginator(baseGraphQlClient, input)
     }

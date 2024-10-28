@@ -9,7 +9,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Paginated
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsSummaryQuery
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationSummaryData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function.getPropertyReservationsSummaryFun
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsSummaryInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsInput
 import java.util.Optional
 
 data class ReservationsSummaryPaginatedResponse(
@@ -20,7 +20,7 @@ data class ReservationsSummaryPaginatedResponse(
 
 class PropertyReservationsSummariesPaginator(
     private val client: GraphQLExecutor,
-    private val input: PropertyReservationsSummaryInput,
+    private val input: PropertyReservationsInput,
     initialPaginationControl: PaginationControl? = null
 ) : Iterator<ReservationsSummaryPaginatedResponse> {
     private var paginationControl = initialPaginationControl
