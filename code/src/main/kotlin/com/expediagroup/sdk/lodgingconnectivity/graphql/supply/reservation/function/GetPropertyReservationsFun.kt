@@ -2,7 +2,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.func
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orNullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PaginationControl
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
@@ -63,7 +63,7 @@ fun getPropertyReservationsFun(
     val nextPagePaginationControl = if (nextPageInfo != null) {
         PaginationControl(
             pageSize = pageSize,
-            cursor = nextPageInfo.endCursor.nullIfBlank()
+            cursor = nextPageInfo.endCursor.orNullIfBlank()
         )
     } else null
 
