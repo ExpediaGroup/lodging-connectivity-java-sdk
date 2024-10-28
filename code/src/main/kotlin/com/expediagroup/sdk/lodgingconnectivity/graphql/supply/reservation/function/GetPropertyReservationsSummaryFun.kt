@@ -10,7 +10,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsSummaryQuery
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationSummaryData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.constant.Constant
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsSummaryInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsInput
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
@@ -24,7 +24,7 @@ data class ReservationsSummaryResponse(
 @JvmOverloads
 fun getPropertyReservationsSummaryFun(
     client: GraphQLExecutor,
-    input: PropertyReservationsSummaryInput,
+    input: PropertyReservationsInput,
     paginationControl: PaginationControl? = null,
 ): ReservationsSummaryResponse {
     val pageSize: Int = paginationControl?.pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE
