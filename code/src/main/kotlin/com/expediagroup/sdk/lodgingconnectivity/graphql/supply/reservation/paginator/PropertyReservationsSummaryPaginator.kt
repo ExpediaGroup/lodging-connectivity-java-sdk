@@ -15,7 +15,8 @@ import java.util.Optional
 data class ReservationsSummaryPaginatedResponse(
     override val data: List<Optional<ReservationSummaryData>>,
     override val rawResponse: RawResponse<PropertyReservationsSummaryQuery.Data>,
-    override val pageInfo: PageInfo
+    override val pageInfo: PageInfo,
+    override val nextPagePaginationControl: PaginationControl?
 ) : PaginatedResponse<List<Optional<ReservationSummaryData>>, PropertyReservationsSummaryQuery.Data>
 
 class PropertyReservationsSummariesPaginator(
@@ -41,7 +42,8 @@ class PropertyReservationsSummariesPaginator(
         return ReservationsSummaryPaginatedResponse(
             data = response.data,
             pageInfo = response.currentPageInfo,
-            rawResponse = response.rawResponse
+            rawResponse = response.rawResponse,
+            nextPagePaginationControl = response.nextPagePaginationControl
         )
     }
 }
