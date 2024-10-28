@@ -15,7 +15,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationS
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-data class GetPropertyReservationsResponse(
+data class PropertyReservationsResponse(
     override val data: List<Optional<ReservationData>>,
     override val rawResponse: RawResponse<PropertyReservationsQuery.Data>,
     val currentPageInfo: PageInfo,
@@ -28,7 +28,7 @@ fun getPropertyReservationsFun(
     input: PropertyReservationsInput,
     paginationControl: PaginationControl? = null,
     selections: ReservationSelections? = null
-): GetPropertyReservationsResponse {
+): PropertyReservationsResponse {
     val pageSize: Int = paginationControl?.pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE
 
     val operation = PropertyReservationsQuery
@@ -67,7 +67,7 @@ fun getPropertyReservationsFun(
         )
     } else null
 
-    return GetPropertyReservationsResponse(
+    return PropertyReservationsResponse(
         data = reservationsPage.edges.map { edgeOptional -> edgeOptional.map { it.node.reservationData } },
         rawResponse = response,
         currentPageInfo = currentPageInfo,
