@@ -4,8 +4,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orNullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PaginationControl
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
-import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertyReservationsQuery
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData
 import java.util.Optional
@@ -13,9 +13,9 @@ import java.util.Optional
 data class SandboxPropertyReservationsResponse(
     override val data: List<SandboxReservationData>,
     override val rawResponse: RawResponse<SandboxPropertyReservationsQuery.Data>,
-    val currentPageInfo: PageInfo,
-    val nextPagePaginationControl: PaginationControl? = null
-) : Response<List<SandboxReservationData>, SandboxPropertyReservationsQuery.Data>
+    override val pageInfo: PageInfo,
+    override val nextPagePaginationControl: PaginationControl?
+) : PaginatedResponse<List<SandboxReservationData>, SandboxPropertyReservationsQuery.Data>
 
 @JvmOverloads
 fun getSandboxPropertyReservations(
@@ -47,7 +47,7 @@ fun getSandboxPropertyReservations(
     return SandboxPropertyReservationsResponse(
         data = response.data.property.reservations.elements.map { it.sandboxReservationData },
         rawResponse = response,
-        currentPageInfo = currentPageInfo,
+        pageInfo = currentPageInfo,
         nextPagePaginationControl = nextPagePaginationControl
     )
 }

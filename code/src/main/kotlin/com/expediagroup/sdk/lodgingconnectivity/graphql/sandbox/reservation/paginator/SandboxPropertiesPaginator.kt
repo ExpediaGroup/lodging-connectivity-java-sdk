@@ -13,7 +13,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.func
 data class SandboxPropertiesPaginatedResponse(
     override val data: List<SandboxPropertyData>,
     override val rawResponse: RawResponse<SandboxPropertiesQuery.Data>,
-    override val pageInfo: PageInfo
+    override val pageInfo: PageInfo,
+    override val nextPagePaginationControl: PaginationControl?
 ) : PaginatedResponse<List<SandboxPropertyData>, SandboxPropertiesQuery.Data>
 
 class SandboxPropertiesPaginator(
@@ -33,12 +34,13 @@ class SandboxPropertiesPaginator(
         }
 
         paginationControl = response.nextPagePaginationControl
-        hasEnded = !response.currentPageInfo.hasNext
+        hasEnded = !response.pageInfo.hasNext
 
         return SandboxPropertiesPaginatedResponse(
             data = response.data,
             rawResponse = response.rawResponse,
-            pageInfo = response.currentPageInfo
+            pageInfo = response.pageInfo,
+            nextPagePaginationControl = response.nextPagePaginationControl
         )
     }
 }
