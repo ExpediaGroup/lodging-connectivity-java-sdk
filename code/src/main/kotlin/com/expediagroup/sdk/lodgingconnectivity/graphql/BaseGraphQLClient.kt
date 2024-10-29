@@ -23,7 +23,7 @@ import com.apollographql.ktor.ktorClient
 import com.expediagroup.sdk.core.client.ExpediaGroupClient
 import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.toRawResponseError
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.toSDKError
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import io.ktor.client.statement.HttpResponse
@@ -68,12 +68,14 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
                     throw ExpediaGroupServiceException(cause = exception?.cause)
                 }
                 if (data == null && hasErrors()) {
-                    throw NoDataException(message = "No data received from the server", errors = errors!!.map { it.toRawResponseError() })
+                    throw NoDataException(
+                        message = "No data received from the server",
+                        errors = errors!!.map { it.toSDKError() })
                 }
             }.let {
                 RawResponse(
                     data = it.data!!,
-                    errors = it.errors?.map { apolloError -> apolloError.toRawResponseError() }
+                    errors = it.errors?.map { apolloError -> apolloError.toSDKError() }
                 )
             }
         }
@@ -93,12 +95,14 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
                     throw ExpediaGroupServiceException(cause = exception?.cause)
                 }
                 if (data == null && hasErrors()) {
-                    throw NoDataException(message = "No data received from the server", errors = errors!!.map { it.toRawResponseError() })
+                    throw NoDataException(
+                        message = "No data received from the server",
+                        errors = errors!!.map { it.toSDKError() })
                 }
             }.let {
                 RawResponse(
                     data = it.data!!,
-                    errors = it.errors?.map { apolloError -> apolloError.toRawResponseError() }
+                    errors = it.errors?.map { apolloError -> apolloError.toSDKError() }
                 )
             }
         }
