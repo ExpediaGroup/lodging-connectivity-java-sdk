@@ -1,11 +1,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.paginator
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
-import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PaginationControl
-import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertyReservationsQuery
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.getSandboxPropertyReservations
@@ -13,36 +11,36 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.func
 data class SandboxReservationsPaginatedResponse(
     override val data: List<SandboxReservationData>,
     override val rawResponse: RawResponse<SandboxPropertyReservationsQuery.Data>,
-    override val pageInfo: PageInfo,
-    override val nextPagePaginationControl: PaginationControl?
+    override val pageInfo: PageInfo
 ) : PaginatedResponse<List<SandboxReservationData>, SandboxPropertyReservationsQuery.Data>
 
 
 class SandboxPropertyReservationsPaginator(
     private val client: GraphQLExecutor,
     private val propertyId: String,
-    initialPaginationControl: PaginationControl
+    private val pageSize: Int? = null,
+    initialCursor: String? = null
 ) : Iterator<SandboxReservationsPaginatedResponse> {
-    private var paginationControl = initialPaginationControl
-    private var hasEnded: Boolean = false
+    private var cursor = initialCursor
+    private var hasNext: Boolean = true
 
-    override fun hasNext(): Boolean = !hasEnded
+    override fun hasNext(): Boolean = hasNext
 
     override fun next(): SandboxReservationsPaginatedResponse {
-        val response = getSandboxPropertyReservations(client, propertyId)
+        val response = getSandboxPropertyReservations(
+            client = client,
+            propertyId = propertyId,
+            cursor = cursor,
+            pageSize = pageSize
+        )
 
-        if (response.nextPagePaginationControl == null) {
-            throw ExpediaGroupServiceException("Failed to fetch reservations next page info for sandbox property $propertyId")
-        }
-
-        paginationControl = response.nextPagePaginationControl
-        hasEnded = !response.pageInfo.hasNext
+        cursor = response.pageInfo.nextPageCursor
+        hasNext = response.pageInfo.hasNext
 
         return SandboxReservationsPaginatedResponse(
             data = response.data,
             pageInfo = response.pageInfo,
-            rawResponse = response.rawResponse,
-            nextPagePaginationControl = response.nextPagePaginationControl
+            rawResponse = response.rawResponse
         )
     }
 }

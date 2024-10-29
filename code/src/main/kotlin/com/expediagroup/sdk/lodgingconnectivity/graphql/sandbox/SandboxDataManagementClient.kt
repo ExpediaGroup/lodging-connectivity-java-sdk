@@ -20,7 +20,6 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguratio
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PaginationControl
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.cancelSandboxReservationFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.changeSandboxReservationStayDatesFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.createSandboxPropertyFun
@@ -78,16 +77,18 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         getSandboxPropertiesFun(baseGraphQLClient)
     }
 
-    fun getProperties(paginationControl: PaginationControl) = run {
-        SandboxPropertiesPaginator(baseGraphQLClient, paginationControl)
+    @JvmOverloads
+    fun getProperties(pageSize: Int, initialCursor: String? = null) = run {
+        SandboxPropertiesPaginator(baseGraphQLClient, pageSize, initialCursor)
     }
 
     fun getPropertyReservations(propertyId: String) = run {
         getSandboxPropertyReservations(baseGraphQLClient, propertyId)
     }
 
-    fun getPropertyReservations(propertyId: String, paginationControl: PaginationControl) = run {
-        SandboxPropertyReservationsPaginator(baseGraphQLClient, propertyId, paginationControl)
+    @JvmOverloads
+    fun getPropertyReservations(propertyId: String, pageSize: Int, initialCursor: String? = null) = run {
+        SandboxPropertyReservationsPaginator(baseGraphQLClient, propertyId, pageSize, initialCursor)
     }
 
     fun getProperty(propertyId: String) = run {

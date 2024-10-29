@@ -70,16 +70,93 @@ class ReservationClient(config: ClientConfiguration) {
 
     @JvmOverloads
     fun getPropertyReservations(
-        input: PropertyReservationsInput,
-        selections: ReservationSelections? = null
+        propertyId: String,
+        selections: ReservationSelections? = null,
+        pageSize: Int? = null,
+        initialCursor: String? = null
     ) = run {
-        PropertyReservationsPaginator(baseGraphQlClient, input, selections)
+        val input = PropertyReservationsInput.builder().propertyId(propertyId).build()
+        PropertyReservationsPaginator(
+            client = baseGraphQlClient,
+            input = input,
+            selections = selections,
+            pageSize = pageSize,
+            initialCursor = initialCursor
+        )
     }
 
-    fun getPropertyReservationsSummaries(
-        input: PropertyReservationsInput
+    @JvmOverloads
+    fun getPropertyReservations(
+        propertyId: String,
+        pageSize: Int,
+        initialCursor: String? = null
     ) = run {
-        PropertyReservationsSummariesPaginator(baseGraphQlClient, input)
+        val input = PropertyReservationsInput.builder().propertyId(propertyId).build()
+        PropertyReservationsPaginator(
+            client = baseGraphQlClient,
+            input = input,
+            pageSize = pageSize,
+            initialCursor = initialCursor
+        )
+    }
+
+    @JvmOverloads
+    fun getPropertyReservations(
+        input: PropertyReservationsInput,
+        selections: ReservationSelections? = null,
+        pageSize: Int? = null,
+        initialCursor: String? = null
+    ) = run {
+        PropertyReservationsPaginator(
+            client = baseGraphQlClient,
+            input = input,
+            selections = selections,
+            pageSize = pageSize,
+            initialCursor = initialCursor
+        )
+    }
+
+    @JvmOverloads
+    fun getPropertyReservations(
+        input: PropertyReservationsInput,
+        pageSize: Int,
+        initialCursor: String? = null
+    ) = run {
+        PropertyReservationsPaginator(
+            client = baseGraphQlClient,
+            input = input,
+            pageSize = pageSize,
+            initialCursor = initialCursor
+        )
+    }
+
+    @JvmOverloads
+    fun getPropertyReservationsSummary(
+        propertyId: String,
+        pageSize: Int? = null,
+        initialCursor: String? = null
+    ) = run {
+        val input = PropertyReservationsInput.builder().propertyId(propertyId).build()
+        PropertyReservationsSummariesPaginator(
+            client = baseGraphQlClient,
+            input = input,
+            pageSize = pageSize,
+            initialCursor = initialCursor
+        )
+    }
+
+    @JvmOverloads
+    fun getPropertyReservationsSummary(
+        input: PropertyReservationsInput,
+        pageSize: Int? = null,
+        initialCursor: String? = null
+    ) = run {
+        PropertyReservationsSummariesPaginator(
+            client = baseGraphQlClient,
+            input = input,
+            pageSize = pageSize,
+            initialCursor = initialCursor
+        )
     }
 
     @JvmOverloads
