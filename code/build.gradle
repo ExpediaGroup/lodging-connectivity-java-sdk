@@ -57,31 +57,9 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
 }
 
+apply from: "tasks-gradle/generateProperties.gradle"
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"
 apply from: "tasks-gradle/dokka.gradle"
 
-// Task to generate sdk.properties file in resources directory
-tasks.register('generateSdkProperties') {
-    def resourcesDir = "$projectDir/src/main/resources"
-    def propertiesFile = file("$resourcesDir/sdk.properties")
 
-    doLast {
-        if (!file(resourcesDir).exists()) {
-            file(resourcesDir).mkdirs()
-        }
-
-        propertiesFile.withWriter('UTF-8') { writer ->
-            writer.writeLine("version=${version}")
-            writer.writeLine("artifactId=${rootProject.name}")
-            writer.writeLine("userAgentPrefix=expediagroup-sdk-java" +
-                    "-${rootProject.name.replaceFirst("-sdk", "")}")
-        }
-
-        println "Generated sdk.properties in $resourcesDir"
-    }
-}
-
-// Ensure generateSdkProperties runs before compilation
-compileKotlin.dependsOn generateSdkProperties
-compileJava.dependsOn generateSdkProperties
