@@ -39,7 +39,9 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CancelReser
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeletePropertyReservationsInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.DeleteReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput
 
@@ -99,6 +101,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         getSandboxReservationFun(baseGraphQLClient, reservationId)
     }
 
+    fun createProperty() = run {
+        createSandboxPropertyFun(baseGraphQLClient, CreatePropertyInput.builder().build())
+    }
+
     fun createProperty(input: CreatePropertyInput) = run {
         createSandboxPropertyFun(baseGraphQLClient, input)
     }
@@ -108,7 +114,11 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     }
 
     fun deleteProperty(propertyId: String) = run {
-        deleteSandboxPropertyFun(baseGraphQLClient, propertyId)
+        deleteSandboxPropertyFun(baseGraphQLClient, DeletePropertyInput.builder().id(propertyId).build())
+    }
+
+    fun createReservation(propertyId: String) = run {
+        createSandboxReservationFun(baseGraphQLClient, CreateReservationInput.builder().build())
     }
 
     fun createReservation(input: CreateReservationInput) = run {
@@ -123,12 +133,27 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         changeSandboxReservationStayDatesFun(baseGraphQLClient, input)
     }
 
+    fun cancelReservation(reservationId: String) {
+        cancelSandboxReservationFun(baseGraphQLClient, CancelReservationInput.builder().id(reservationId).build())
+    }
+
     fun cancelReservation(input: CancelReservationInput) = run {
         cancelSandboxReservationFun(baseGraphQLClient, input)
     }
 
     fun deleteReservation(reservationId: String) = run {
-        deleteSandboxReservationFun(baseGraphQLClient, reservationId)
+        deleteSandboxReservationFun(baseGraphQLClient, DeleteReservationInput.builder().id(reservationId).build())
+    }
+
+    fun deleteReservation(input: DeleteReservationInput) = run {
+        deleteSandboxReservationFun(baseGraphQLClient, input)
+    }
+
+    fun deletePropertyReservations(propertyId: String) = run {
+        deleteSandboxPropertyReservationsFun(
+            baseGraphQLClient,
+            DeletePropertyReservationsInput.builder().propertyId(propertyId).build()
+        )
     }
 
     fun deletePropertyReservations(input: DeletePropertyReservationsInput) = run {

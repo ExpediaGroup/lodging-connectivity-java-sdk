@@ -11,8 +11,8 @@ data class DeleteSandboxPropertyResponse(
     override val rawResponse: RawResponse<SandboxDeletePropertyMutation.Data>,
 ) : Response<SandboxDeletePropertyMutation.DeleteProperty, SandboxDeletePropertyMutation.Data>
 
-fun deleteSandboxPropertyFun(client: GraphQLExecutor, propertyId: String): DeleteSandboxPropertyResponse {
-    val operation = SandboxDeletePropertyMutation(DeletePropertyInput.builder().id(propertyId).build())
+fun deleteSandboxPropertyFun(client: GraphQLExecutor, input: DeletePropertyInput): DeleteSandboxPropertyResponse {
+    val operation = SandboxDeletePropertyMutation(input)
     val response = client.execute(operation)
 
     return DeleteSandboxPropertyResponse(

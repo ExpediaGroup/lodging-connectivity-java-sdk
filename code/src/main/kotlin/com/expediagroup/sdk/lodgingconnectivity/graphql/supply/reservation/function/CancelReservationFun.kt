@@ -22,8 +22,8 @@ fun cancelReservationFun(
 ): CancelReservationResponse {
     val operation = CancelReservationMutation.builder()
         .input(input)
-        .includeSupplierAmount(selections?.includeSupplierAmount)
-        .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken)
+        .includeSupplierAmount(selections?.includeSupplierAmount ?: false)
+        .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken ?: false)
         .build()
 
     val response = client.execute(operation)

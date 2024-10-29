@@ -11,8 +11,8 @@ data class DeleteSandboxReservationResponse(
     override val rawResponse: RawResponse<SandboxDeleteReservationMutation.Data>,
 ) : Response<SandboxDeleteReservationMutation.DeleteReservation, SandboxDeleteReservationMutation.Data>
 
-fun deleteSandboxReservationFun(client: GraphQLExecutor, reservationId: String): DeleteSandboxReservationResponse {
-    val operation = SandboxDeleteReservationMutation(DeleteReservationInput.builder().id(reservationId).build())
+fun deleteSandboxReservationFun(client: GraphQLExecutor, input: DeleteReservationInput): DeleteSandboxReservationResponse {
+    val operation = SandboxDeleteReservationMutation(input)
     val response = client.execute(operation)
 
     return DeleteSandboxReservationResponse(
