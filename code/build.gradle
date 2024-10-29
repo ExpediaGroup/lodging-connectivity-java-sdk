@@ -34,7 +34,6 @@ dependencies {
     implementation 'com.apollographql.ktor:apollo-engine-ktor:0.0.2'
 
     /* EG SDK Core */
-    implementation 'org.slf4j:slf4j-simple:2.0.16'
     implementation 'io.ktor:ktor-client-core:2.3.12'
     implementation 'io.ktor:ktor-client-auth-jvm:2.3.12'
     implementation 'io.ktor:ktor-http:2.3.12'
