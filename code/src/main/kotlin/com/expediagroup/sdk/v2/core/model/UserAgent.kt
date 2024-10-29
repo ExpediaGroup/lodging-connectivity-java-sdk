@@ -1,6 +1,8 @@
 package com.expediagroup.sdk.v2.core.model
 
-import com.expediagroup.sdk.v2.core.configuration.SdkMetadata
+import com.google.common.io.Resources
+import java.io.FileInputStream
+import java.util.Properties
 
 /**
  * Data class representing a user agent which contains information about the Java Development Kit (JDK) version,
@@ -8,30 +10,23 @@ import com.expediagroup.sdk.v2.core.configuration.SdkMetadata
  *
  * @param jdkVersion the version of the Java Development Kit (JDK) being used.
  * @param operatingSystem the operating system on which the application is running.
- * @param sdkNamespace the namespace of the SDK being used.
- * @param sdkVersion the version of the SDK being used.
  */
 data class UserAgent(
     val jdkVersion: String,
     val operatingSystem: String,
-    val sdkNamespace: String,
-    val sdkVersion: String,
 ) {
-    constructor(
-        jdkVersion: String,
-        operatingSystem: String,
-    ) : this(
-        jdkVersion,
-        operatingSystem,
-        SdkMetadata.artifactId.removeSuffix("-sdk"),
-        SdkMetadata.version
-    )
+    private lateinit var userAgentPrefix: String
 
-    /**
-     * Returns a string representation of the user agent.
-     *
-     * @return a formatted string containing the SDK namespace and version, along with the JDK version and operating system.
-     */
+    init {
+        Resources.getResource("sdk.properties").file?.let { path ->
+            Properties().apply {
+                load(FileInputStream(path))
+            }.also { properties ->
+                userAgentPrefix = properties.getProperty("userAgentPrefix")
+            }
+        }
+    }
+
     override fun toString(): String =
-        "expediagroup-sdk-java-$sdkNamespace/$sdkVersion ($jdkVersion; $operatingSystem)"
+        "$userAgentPrefix ($jdkVersion; $operatingSystem)"
 }
