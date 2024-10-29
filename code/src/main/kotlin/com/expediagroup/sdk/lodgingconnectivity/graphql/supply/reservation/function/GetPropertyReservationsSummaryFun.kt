@@ -24,13 +24,13 @@ fun getPropertyReservationsSummaryFun(
     client: GraphQLExecutor,
     input: PropertyReservationsInput,
     cursor: String? = null,
-    pageSize: Int? = Constant.RESERVATIONS_DEFAULT_PAGE_SIZE
+    pageSize: Int? = null
 ): ReservationsSummaryResponse {
     val operation = PropertyReservationsSummaryQuery
         .builder()
         .propertyId(input.propertyId)
         .idSource(input.idSource.orElse(Optional.empty()))
-        .pageSize(pageSize)
+        .pageSize(pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE)
         .cursor(Optional.ofNullable(cursor))
         .filter(input.filter.orElse(Optional.empty()))
         .checkOutDate(input.checkOutDate.orElse(Optional.empty()))
