@@ -4,5 +4,3 @@ open class RawResponse<T>(
     val data: T,
     val errors: List<Error>?
 )
-
-
