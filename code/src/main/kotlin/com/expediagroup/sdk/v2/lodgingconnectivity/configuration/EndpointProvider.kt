@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.configuration
+package com.expediagroup.sdk.v2.lodgingconnectivity.configuration
 
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
 
@@ -17,6 +17,11 @@ enum class PaymentClientEndpoint(val url: String) {
 enum class SandboxDataManagementClientEndpoint(val url: String) {
     SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql"),
     SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql")
+}
+
+enum class FileManagementClientEndpoint(val url: String) {
+    PROD("https://api.expediagroup.com/supply-lodging/v1/files"),
+    TEST("https://test-api.expediagroup.com/supply-lodging/v1/files")
 }
 
 enum class AuthEndpoint(val url: String) {
@@ -72,6 +77,14 @@ object EndpointProvider {
                 Supported environments are [${SandboxDataManagementClientEndpoint.entries.joinToString(", ") }]
                 """
             )
+        }
+    }
+
+    fun getFileManagementClientEndpoint(environment: ClientEnvironment): String {
+        return try {
+            FileManagementClientEndpoint.valueOf(environment.name).url
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Unsupported environment [$environment] for FileManagementClient")
         }
     }
 
