@@ -28,12 +28,11 @@ import java.net.URL
 /**
  * Converts the custom scalar `Url` to and from `java.net.URL`.
  */
-object URLAdapter : Adapter<URL?> {
-
-    override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): URL? {
-        val urlString = reader.nextString() ?: return null
+class URLAdapter : Adapter<URL> {
+    override fun fromJson(reader: JsonReader, customScalarAdapters: CustomScalarAdapters): URL {
+        val urlString = reader.nextString()
         return try {
-            URI(urlString).toURL()
+            URI(urlString!!).toURL()
         } catch (e: URISyntaxException) {
             throw IllegalStateException("Invalid URI format: $urlString", e)
         } catch (e: MalformedURLException) {
@@ -41,11 +40,7 @@ object URLAdapter : Adapter<URL?> {
         }
     }
 
-    override fun toJson(writer: JsonWriter, customScalarAdapters: CustomScalarAdapters, value: URL?) {
-        if (value != null) {
-            writer.value(value.toString())
-        } else {
-            writer.nullValue()
-        }
+    override fun toJson(writer: JsonWriter, customScalarAdapters: CustomScalarAdapters, value: URL) {
+        writer.value(value.toString())
     }
 }
