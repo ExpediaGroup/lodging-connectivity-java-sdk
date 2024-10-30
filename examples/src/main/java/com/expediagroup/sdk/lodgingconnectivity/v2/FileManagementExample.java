@@ -1,4 +1,4 @@
-package v2.lodgingconnectivity;
+package com.expediagroup.sdk.lodgingconnectivity.v2;
 
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration;
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientEnvironment;

@@ -57,6 +57,7 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
 }
 
+apply from: "tasks-gradle/generateProperties.gradle"
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"
 apply from: "tasks-gradle/dokka.gradle"

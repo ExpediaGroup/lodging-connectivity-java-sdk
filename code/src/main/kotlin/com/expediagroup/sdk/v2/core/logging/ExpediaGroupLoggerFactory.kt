@@ -17,6 +17,9 @@ package com.expediagroup.sdk.v2.core.logging
 
 import org.slf4j.LoggerFactory
 
+/**
+ * Factory object for creating instances of ExpediaGroupLogger.
+ */
 internal object ExpediaGroupLoggerFactory {
     fun getLogger(clazz: Class<*>) = ExpediaGroupLogger(LoggerFactory.getLogger(clazz))
 
