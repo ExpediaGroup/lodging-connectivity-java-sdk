@@ -48,5 +48,4 @@ class PaymentClient(config: ClientConfiguration):
             endpointProvider = EndpointProvider::getPaymentClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
         ),
-        "lodging-connectivity-payment-client"
     )

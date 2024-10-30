@@ -12,15 +12,12 @@ import java.io.InputStream
 /**
  * SdkClient is a wrapper for creating and executing API requests.
  *
- * @param namespace The namespace to be used for creating the API client.
  * @param configuration The client configuration implementing `FullClientConfiguration`.
  */
 class SdkClient(
-    namespace: String,
     configuration: FullClientConfiguration,
 ) {
     val apiClient: ApiClient = createApiClient(
-        namespace = namespace,
         configuration = configuration,
     )
 

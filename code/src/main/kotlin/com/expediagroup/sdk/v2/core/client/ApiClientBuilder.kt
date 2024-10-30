@@ -1,12 +1,12 @@
 package com.expediagroup.sdk.v2.core.client
 
-import com.expediagroup.sdk.v2.core.request.extended.DefaultApiClientRequestInitializer
+import com.expediagroup.sdk.v2.core.configuration.SdkMetadata
+import com.expediagroup.sdk.v2.core.request.initializer.ApiClientRequestInitializer
 import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
-
 
 /**
  * Builder for constructing an instance of `ApiClient`. This class extends
@@ -18,7 +18,6 @@ import com.google.api.client.json.JsonFactory
  * @param rootUrl The root URL for the API service.
  * @param requestInitializer Optional request initializer for HTTP requests.
  * @param servicePath The path to the service endpoint.
- * @param namespace The namespace for the API client, also used as the application name.
  */
 class ApiClientBuilder(
     transport: HttpTransport,
@@ -26,7 +25,6 @@ class ApiClientBuilder(
     rootUrl: GenericUrl,
     requestInitializer: HttpRequestInitializer? = null,
     servicePath: String = "",
-    namespace: String,
 ) : AbstractGoogleClient.Builder(
     transport,
     rootUrl.build(),
@@ -44,7 +42,7 @@ class ApiClientBuilder(
     }
 
     init {
-        applicationName = namespace
-        googleClientRequestInitializer = DefaultApiClientRequestInitializer.default()
+        applicationName = SdkMetadata.getArtifactId()
+        googleClientRequestInitializer = ApiClientRequestInitializer.default()
     }
 }

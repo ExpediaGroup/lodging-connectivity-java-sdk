@@ -27,10 +27,9 @@ import com.expediagroup.sdk.v2.core.client.util.createApiClient
 import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration
 import java.util.concurrent.CompletableFuture
 
-class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: String) : GraphQLExecutor {
+class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecutor {
     private val engine: ApiClientApolloHttpEngine = ApiClientApolloHttpEngine(
         createApiClient(
-            namespace = namespace,
             configuration = configuration
         )
     )
@@ -47,7 +46,7 @@ class BaseGraphQLClient(configuration: FullClientConfiguration, namespace: Strin
 
     class Builder(private val namespace: String) : DefaultClientBuilder<BaseGraphQLClient>() {
         override fun build(): BaseGraphQLClient {
-            return BaseGraphQLClient(this.buildConfiguration(), namespace)
+            return BaseGraphQLClient(this.buildConfiguration())
         }
     }
 
