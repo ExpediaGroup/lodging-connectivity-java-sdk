@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.lodgingconnectivity.graphql
+package com.expediagroup.sdk.lodgingconnectivity.graphql.common
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Mutation
@@ -38,7 +38,7 @@ import kotlinx.coroutines.runBlocking
  *
  * @param config The configuration for the `ExpediaGroupClient`
  */
-internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : GraphQLExecutor {
+internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) : GraphQLExecutor() {
 
     // Custom client for handling HTTP requests and responses.
     private val expediaGroupClient =
@@ -48,10 +48,10 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
             }
         }
 
-    private val apolloClient: ApolloClient = ApolloClient.Builder()
+    override val apolloClient: ApolloClient = ApolloClient
+        .Builder()
         .serverUrl(config.endpoint!!)
         .ktorClient(expediaGroupClient.httpClient)
-
         .build()
 
     /**

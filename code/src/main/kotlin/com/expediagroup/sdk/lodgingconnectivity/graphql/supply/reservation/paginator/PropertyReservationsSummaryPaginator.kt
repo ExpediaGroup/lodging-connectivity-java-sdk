@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
@@ -15,8 +15,8 @@ data class ReservationsSummaryPaginatedResponse(
     override val pageInfo: PageInfo,
 ) : PaginatedResponse<List<ReservationSummaryData?>, PropertyReservationsSummaryQuery.Data>
 
-class PropertyReservationsSummariesPaginator(
-    private val client: GraphQLExecutor,
+class PropertyReservationsSummariesPaginator @JvmOverloads constructor(
+    private val graphQLExecutor: GraphQLExecutor,
     private val input: PropertyReservationsInput,
     private val pageSize: Int? = null,
     initialCursor: String? = null
@@ -28,7 +28,7 @@ class PropertyReservationsSummariesPaginator(
 
     override fun next(): ReservationsSummaryPaginatedResponse {
         val response = getPropertyReservationsSummaryFun(
-            client = client,
+            graphQLExecutor = graphQLExecutor,
             input = input,
             cursor = cursor,
             pageSize = pageSize

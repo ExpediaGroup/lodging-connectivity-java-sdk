@@ -2,19 +2,19 @@ package com.expediagroup.sdk.lodgingconnectivity.configuration
 
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
 
-enum class ReservationClientEndpoint(val url: String) {
+enum class SupplyApiEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/supply/lodging/graphql"),
     TEST("https://test-api.expediagroup.com/supply/lodging/graphql"),
     SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/lodging/graphql"),
     SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging/graphql")
 }
 
-enum class PaymentClientEndpoint(val url: String) {
+enum class PaymentApiEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/supply/payments/graphql"),
     TEST("https://test-api.expediagroup.com/supply/payments/graphql")
 }
 
-enum class SandboxDataManagementClientEndpoint(val url: String) {
+enum class SandboxApiEndpoint(val url: String) {
     SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql"),
     SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql")
 }
@@ -35,41 +35,41 @@ enum class AuthEndpoint(val url: String) {
  *
  * If an unsupported environment is passed, an `IllegalArgumentException` is thrown.
  */
-object EndpointProvider {
-    fun getReservationClientEndpoint(environment: ClientEnvironment): String {
+internal object EndpointProvider {
+    fun getSupplyApiEndpoint(environment: ClientEnvironment): String {
         return try {
-            ReservationClientEndpoint.valueOf(environment.name).url
+            SupplyApiEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for ReservationClient. 
-                Supported environments are [${ReservationClientEndpoint.entries.joinToString(", ") }]
+                Supported environments are [${SupplyApiEndpoint.entries.joinToString(", ") }]
                 """
             )
         }
     }
 
-    fun getPaymentClientEndpoint(environment: ClientEnvironment): String {
+    fun getPaymentApiEndpoint(environment: ClientEnvironment): String {
         return try {
-            PaymentClientEndpoint.valueOf(environment.name).url
+            PaymentApiEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for PaymentClient. 
-                Supported environments are [${PaymentClientEndpoint.entries.joinToString(", ") }]
+                Supported environments are [${PaymentApiEndpoint.entries.joinToString(", ") }]
                 """
             )
         }
     }
 
-    fun getSandboxDataManagementClientEndpoint(environment: ClientEnvironment): String {
+    fun getSandboxApiEndpoint(environment: ClientEnvironment): String {
         return try {
-            SandboxDataManagementClientEndpoint.valueOf(environment.name).url
+            SandboxApiEndpoint.valueOf(environment.name).url
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for SandboxDataManagementClient. 
-                Supported environments are [${SandboxDataManagementClientEndpoint.entries.joinToString(", ") }]
+                Supported environments are [${SandboxApiEndpoint.entries.joinToString(", ") }]
                 """
             )
         }

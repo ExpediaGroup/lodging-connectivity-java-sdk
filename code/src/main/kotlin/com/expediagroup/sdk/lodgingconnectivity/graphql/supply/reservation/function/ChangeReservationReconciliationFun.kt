@@ -1,6 +1,8 @@
+@file:JvmName("ChangeReservationReconciliationRequest")
+
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ChangeReservationReconciliationMutation
@@ -14,8 +16,9 @@ data class ChangeReservationReconciliationResponse(
 ) : Response<ReservationData?, ChangeReservationReconciliationMutation.Data>
 
 @JvmOverloads
+@JvmName("execute")
 fun changeReservationReconciliationFun(
-    client: GraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: ChangeReservationReconciliationInput,
     selections: ReservationSelections? = null
 ): ChangeReservationReconciliationResponse {
@@ -26,7 +29,7 @@ fun changeReservationReconciliationFun(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken ?: false)
         .build()
 
-    val response = client.execute(operation)
+    val response = graphQLExecutor.execute(operation)
 
     return ChangeReservationReconciliationResponse(
         data = response.data.changeReservationReconciliation.reservation?.reservationData,

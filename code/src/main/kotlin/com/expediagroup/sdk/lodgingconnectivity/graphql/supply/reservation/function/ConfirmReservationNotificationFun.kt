@@ -1,6 +1,8 @@
+@file:JvmName("ConfirmReservationNotificationRequest")
+
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ConfirmReservationNotificationMutation
@@ -14,8 +16,9 @@ data class ConfirmReservationNotificationResponse(
 ) : Response<ReservationData?, ConfirmReservationNotificationMutation.Data>
 
 @JvmOverloads
+@JvmName("execute")
 fun confirmReservationNotificationFun(
-    client: GraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: ConfirmReservationNotificationInput,
     selections: ReservationSelections? = null
 ): ConfirmReservationNotificationResponse {
@@ -26,7 +29,7 @@ fun confirmReservationNotificationFun(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken ?: false)
         .build()
 
-    val response = client.execute(operation)
+    val response = graphQLExecutor.execute(operation)
 
     return ConfirmReservationNotificationResponse(
         data = response.data.confirmReservationNotification.reservation?.reservationData,

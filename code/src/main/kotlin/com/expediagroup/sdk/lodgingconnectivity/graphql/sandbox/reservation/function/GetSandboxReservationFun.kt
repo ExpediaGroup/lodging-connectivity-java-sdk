@@ -1,6 +1,8 @@
+@file:JvmName("SandboxReservationRequest")
+
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxReservationQuery
@@ -11,9 +13,10 @@ data class SandboxReservationResponse(
     override val rawResponse: RawResponse<SandboxReservationQuery.Data>,
 ) : Response<SandboxReservationData, SandboxReservationQuery.Data>
 
-fun getSandboxReservationFun(client: GraphQLExecutor, reservationId: String): SandboxReservationResponse {
+@JvmName("execute")
+fun getSandboxReservationFun(graphQLExecutor: GraphQLExecutor, reservationId: String): SandboxReservationResponse {
     val operation = SandboxReservationQuery(reservationId)
-    val response = client.execute(operation)
+    val response = graphQLExecutor.execute(operation)
 
     return SandboxReservationResponse(
         data = response.data.reservation.sandboxReservationData,

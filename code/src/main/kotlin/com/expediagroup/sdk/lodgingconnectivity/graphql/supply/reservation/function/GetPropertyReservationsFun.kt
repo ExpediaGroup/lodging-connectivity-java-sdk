@@ -1,7 +1,9 @@
+@file:JvmName("PropertyReservationsRequest")
+
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.getOrThrow
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
@@ -20,8 +22,9 @@ data class PropertyReservationsResponse(
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
 @JvmOverloads
+@JvmName("execute")
 fun getPropertyReservationsFun(
-    client: GraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: PropertyReservationsInput,
     cursor: String? = null,
     pageSize: Int? = null,
@@ -39,7 +42,7 @@ fun getPropertyReservationsFun(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken ?: false)
         .build()
 
-    val response = client.execute(operation)
+    val response = graphQLExecutor.execute(operation)
 
     val property = response.data.property.getOrThrow {
         ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")

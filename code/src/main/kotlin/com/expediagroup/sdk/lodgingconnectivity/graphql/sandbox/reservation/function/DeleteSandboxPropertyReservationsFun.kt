@@ -1,6 +1,8 @@
+@file:JvmName("DeleteSandboxPropertyReservationsRequest")
+
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDeletePropertyReservationsMutation
@@ -11,13 +13,13 @@ data class DeleteSandboxPropertyReservationsResponse(
     override val rawResponse: RawResponse<SandboxDeletePropertyReservationsMutation.Data>,
 ) : Response<SandboxDeletePropertyReservationsMutation.DeletePropertyReservations, SandboxDeletePropertyReservationsMutation.Data>
 
-
+@JvmName("execute")
 fun deleteSandboxPropertyReservationsFun(
-    client: GraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: DeletePropertyReservationsInput
 ): DeleteSandboxPropertyReservationsResponse {
     val operation = SandboxDeletePropertyReservationsMutation(input)
-    val response = client.execute(operation)
+    val response = graphQLExecutor.execute(operation)
 
     return DeleteSandboxPropertyReservationsResponse(
         data = response.data.deletePropertyReservations,

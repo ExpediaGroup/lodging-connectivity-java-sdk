@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.paginator
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
@@ -14,8 +14,8 @@ data class SandboxPropertiesPaginatedResponse(
     override val pageInfo: PageInfo
 ) : PaginatedResponse<List<SandboxPropertyData>, SandboxPropertiesQuery.Data>
 
-class SandboxPropertiesPaginator(
-    private val client: GraphQLExecutor,
+class SandboxPropertiesPaginator @JvmOverloads constructor(
+    private val graphQLExecutor: GraphQLExecutor,
     private val pageSize: Int? = null,
     initialCursor: String? = null
 ) : Iterator<SandboxPropertiesPaginatedResponse> {
@@ -26,7 +26,7 @@ class SandboxPropertiesPaginator(
 
     override fun next(): SandboxPropertiesPaginatedResponse {
         val response = getSandboxPropertiesFun(
-            client = client,
+            graphQLExecutor = graphQLExecutor,
             cursor = cursor,
             pageSize = pageSize
         )
