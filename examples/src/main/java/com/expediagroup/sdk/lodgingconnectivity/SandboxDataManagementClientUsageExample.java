@@ -119,7 +119,6 @@ public class SandboxDataManagementClientUsageExample {
                 .childAges(Arrays.asList(3, 5, 7))
                 .build();
 
-//        new UpdateReservationInput()
         SandboxUpdateReservationMutation.Data updateReservationResponse = client.execute(new SandboxUpdateReservationMutation(updateReservationInput));
 
         reservationData = updateReservationResponse.getUpdateReservation().getReservation().getSandboxReservationData();
