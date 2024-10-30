@@ -1,3 +1,5 @@
+@file:JvmName("PropertyReservationsRequest")
+
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
@@ -21,6 +23,7 @@ data class PropertyReservationsResponse(
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
 @JvmOverloads
+@JvmName("execute")
 fun getPropertyReservationsFun(
     graphQLExecutor: GraphQLExecutor,
     input: PropertyReservationsInput,
