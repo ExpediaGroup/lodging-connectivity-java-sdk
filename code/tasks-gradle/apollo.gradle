@@ -1,18 +1,16 @@
 apollo {
     service("supply") {
-        generateKotlinModels.set(false)
-        nullableFieldStyle.set("javaOptional")
-
+        /* Schema & operations files configurations */
         srcDir("src/main/graphql/supply")
-
         schemaFiles.from('src/main/graphql/supply/schema.graphqls', 'src/main/graphql/supply/reservations/extension/schema-extensions.graphqls')
-
         excludes.add("experimental/**/*.graphql")
-
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.supply")
 
-        /**** Custom Scalars Mappings ****/
+        /* Generated models configurations */
+        generateInputBuilders.set(true)
+        generateMethods.set(List.of("equalsHashCode", "toString"))
 
+        /**** Custom Scalars Mappings ****/
         // Deserialized as Strings without explicit adapters
         mapScalar("JSON", "java.lang.String")
         mapScalar("Decimal", "java.lang.String")
@@ -22,43 +20,43 @@ apollo {
         mapScalar("CountryCode", "java.lang.String")
 
         // Mapped Using Apollo Provided Adapters
-        mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.adapter.core.JavaLocalDateTimeAdapter.INSTANCE")
-        mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
-        mapScalar("LocalTime", "java.time.LocalTime", "com.apollographql.adapter.core.JavaLocalTimeAdapter.INSTANCE")
-        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("LocalDateTime", "java.time.LocalDateTime", "com.apollographql.adapter.core.JavaLocalDateTimeAdapter")
+        mapScalar("LocalDate", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter")
+        mapScalar("LocalTime", "java.time.LocalTime", "com.apollographql.adapter.core.JavaLocalTimeAdapter")
+        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter")
+        mapScalar("DateTime", "java.time.OffsetDateTime", "com.apollographql.adapter.core.JavaOffsetDateTimeAdapter")
+        mapScalar("ZoneDateTime", "java.time.ZonedDateTime", "com.apollographql.adapter.core.JavaZonedDateTimeAdapter")
 
         // Mapped Using Custom Adapters
-        mapScalar("Url", "java.net.URL", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter.INSTANCE")
-        mapScalar("ZoneDateTime", "java.time.ZonedDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.ZoneDateTimeAdapter.INSTANCE")
-        mapScalar("DateTime", "java.time.OffsetDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE")
+        mapScalar("Url", "java.net.URL", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter()")
     }
     service("payment") {
-        generateKotlinModels.set(false)
-        nullableFieldStyle.set("javaOptional")
-
+        /* Schema & operations files configurations */
         srcDir("src/main/graphql/payment")
-
         excludes.add("experimental/**/*.graphql")
-
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.payment")
+
+        /* Generated models configurations */
+        generateInputBuilders.set(true)
+        generateMethods.set(List.of("equalsHashCode", "toString"))
 
         /**** Custom Scalars Mappings ****/
         mapScalar("CountryCode", "java.lang.String")
-        mapScalar("DateTime", "java.time.OffsetDateTime", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.DateTimeAdapter.INSTANCE")
+        mapScalar("DateTime", "java.time.OffsetDateTime", "com.apollographql.adapter.core.JavaOffsetDateTimeAdapter")
+
     }
     service("sandbox") {
-        generateKotlinModels.set(false)
-        nullableFieldStyle.set("javaOptional")
-
+        /* Schema & operations files configurations */
         srcDir("src/main/graphql/sandbox")
-
         schemaFiles.from('src/main/graphql/sandbox/schema.graphqls', 'src/main/graphql/sandbox/reservations/extension/schema-extensions.graphqls')
-
         excludes.add("experimental/**/*.graphql")
-
         packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox")
 
+        /* Generated models configurations */
+        generateInputBuilders.set(true)
+        generateMethods.set(List.of("equalsHashCode", "toString"))
+
         /**** Custom Scalars Mappings ****/
-        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter.INSTANCE")
+        mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter")
     }
 }
