@@ -8,13 +8,12 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservati
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationSummaryData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function.getPropertyReservationsSummaryFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsInput
-import java.util.Optional
 
 data class ReservationsSummaryPaginatedResponse(
-    override val data: List<Optional<ReservationSummaryData>>,
+    override val data: List<ReservationSummaryData?>,
     override val rawResponse: RawResponse<PropertyReservationsSummaryQuery.Data>,
     override val pageInfo: PageInfo,
-) : PaginatedResponse<List<Optional<ReservationSummaryData>>, PropertyReservationsSummaryQuery.Data>
+) : PaginatedResponse<List<ReservationSummaryData?>, PropertyReservationsSummaryQuery.Data>
 
 class PropertyReservationsSummariesPaginator(
     private val client: GraphQLExecutor,
