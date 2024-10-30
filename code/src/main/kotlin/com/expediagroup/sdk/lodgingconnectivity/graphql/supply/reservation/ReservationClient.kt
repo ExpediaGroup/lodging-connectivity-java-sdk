@@ -75,10 +75,9 @@ class ReservationClient(config: ClientConfiguration) {
         pageSize: Int? = null,
         initialCursor: String? = null
     ) = run {
-        val input = PropertyReservationsInput.builder().propertyId(propertyId).build()
         PropertyReservationsPaginator(
             client = baseGraphQlClient,
-            input = input,
+            input = PropertyReservationsInput(propertyId),
             selections = selections,
             pageSize = pageSize,
             initialCursor = initialCursor
@@ -91,10 +90,9 @@ class ReservationClient(config: ClientConfiguration) {
         pageSize: Int,
         initialCursor: String? = null
     ) = run {
-        val input = PropertyReservationsInput.builder().propertyId(propertyId).build()
         PropertyReservationsPaginator(
             client = baseGraphQlClient,
-            input = input,
+            input = PropertyReservationsInput(propertyId),
             pageSize = pageSize,
             initialCursor = initialCursor
         )
@@ -136,10 +134,9 @@ class ReservationClient(config: ClientConfiguration) {
         pageSize: Int? = null,
         initialCursor: String? = null
     ) = run {
-        val input = PropertyReservationsInput.builder().propertyId(propertyId).build()
         PropertyReservationsSummariesPaginator(
             client = baseGraphQlClient,
-            input = input,
+            input = PropertyReservationsInput(propertyId),
             pageSize = pageSize,
             initialCursor = initialCursor
         )

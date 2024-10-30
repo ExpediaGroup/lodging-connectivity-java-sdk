@@ -65,7 +65,7 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
         return runBlocking {
             apolloClient.query(query).execute().apply {
                 if (exception != null) {
-                    throw ExpediaGroupServiceException(cause = exception)
+                    throw ExpediaGroupServiceException(message = exception?.message, cause = exception)
                 }
                 if (data == null && hasErrors()) {
                     throw NoDataException(
@@ -92,7 +92,7 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
         return runBlocking {
             apolloClient.mutation(mutation).execute().apply {
                 if (exception != null) {
-                    throw ExpediaGroupServiceException(cause = exception)
+                    throw ExpediaGroupServiceException(message = exception?.message, cause = exception)
                 }
                 if (data == null && hasErrors()) {
                     throw NoDataException(

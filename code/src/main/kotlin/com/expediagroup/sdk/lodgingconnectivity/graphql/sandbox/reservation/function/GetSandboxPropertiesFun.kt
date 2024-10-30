@@ -1,13 +1,12 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function
 
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orNullIfBlank
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertiesQuery
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxPropertyData
-import java.util.Optional
 
 data class SandboxPropertiesResponse(
     override val data: List<SandboxPropertyData>,
@@ -22,14 +21,14 @@ fun getSandboxPropertiesFun(
     pageSize: Int? = null
 ): SandboxPropertiesResponse {
     val operation = SandboxPropertiesQuery
-        .builder()
-        .pageSize(Optional.ofNullable(pageSize))
-        .cursor(Optional.ofNullable(cursor))
+        .Builder()
+        .pageSize(pageSize)
+        .cursor(cursor)
         .build()
 
     val response = client.execute(operation)
 
-    val nextPageCursor = response.data.properties.cursor.orNullIfBlank()
+    val nextPageCursor = response.data.properties.cursor.nullIfBlank()
 
     val currentPageInfo = PageInfo(
         cursor = cursor,

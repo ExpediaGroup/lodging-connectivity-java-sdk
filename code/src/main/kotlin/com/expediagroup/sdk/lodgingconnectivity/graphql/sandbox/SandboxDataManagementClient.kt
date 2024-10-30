@@ -102,7 +102,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     }
 
     fun createProperty() = run {
-        createSandboxPropertyFun(baseGraphQLClient, CreatePropertyInput.builder().build())
+        createSandboxPropertyFun(baseGraphQLClient, CreatePropertyInput())
     }
 
     fun createProperty(input: CreatePropertyInput) = run {
@@ -114,11 +114,11 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     }
 
     fun deleteProperty(propertyId: String) = run {
-        deleteSandboxPropertyFun(baseGraphQLClient, DeletePropertyInput.builder().id(propertyId).build())
+        deleteSandboxPropertyFun(baseGraphQLClient, DeletePropertyInput(id = propertyId))
     }
 
     fun createReservation(propertyId: String) = run {
-        createSandboxReservationFun(baseGraphQLClient, CreateReservationInput.builder().build())
+        createSandboxReservationFun(baseGraphQLClient, CreateReservationInput(propertyId = propertyId))
     }
 
     fun createReservation(input: CreateReservationInput) = run {
@@ -133,8 +133,8 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
         changeSandboxReservationStayDatesFun(baseGraphQLClient, input)
     }
 
-    fun cancelReservation(reservationId: String) {
-        cancelSandboxReservationFun(baseGraphQLClient, CancelReservationInput.builder().id(reservationId).build())
+    fun cancelReservation(reservationId: String) = run {
+        cancelSandboxReservationFun(baseGraphQLClient, CancelReservationInput(id = reservationId))
     }
 
     fun cancelReservation(input: CancelReservationInput) = run {
@@ -142,7 +142,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     }
 
     fun deleteReservation(reservationId: String) = run {
-        deleteSandboxReservationFun(baseGraphQLClient, DeleteReservationInput.builder().id(reservationId).build())
+        deleteSandboxReservationFun(baseGraphQLClient, DeleteReservationInput(id = reservationId))
     }
 
     fun deleteReservation(input: DeleteReservationInput) = run {
@@ -152,7 +152,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     fun deletePropertyReservations(propertyId: String) = run {
         deleteSandboxPropertyReservationsFun(
             baseGraphQLClient,
-            DeletePropertyReservationsInput.builder().propertyId(propertyId).build()
+            DeletePropertyReservationsInput(propertyId = propertyId)
         )
     }
 

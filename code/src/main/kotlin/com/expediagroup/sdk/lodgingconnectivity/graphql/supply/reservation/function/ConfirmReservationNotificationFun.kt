@@ -7,12 +7,11 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.ConfirmReservatio
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ConfirmReservationNotificationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
-import java.util.Optional
 
 data class ConfirmReservationNotificationResponse(
-    override val data: Optional<ReservationData>,
+    override val data: ReservationData?,
     override val rawResponse: RawResponse<ConfirmReservationNotificationMutation.Data>,
-) : Response<Optional<ReservationData>, ConfirmReservationNotificationMutation.Data>
+) : Response<ReservationData?, ConfirmReservationNotificationMutation.Data>
 
 @JvmOverloads
 fun confirmReservationNotificationFun(
@@ -20,7 +19,8 @@ fun confirmReservationNotificationFun(
     input: ConfirmReservationNotificationInput,
     selections: ReservationSelections? = null
 ): ConfirmReservationNotificationResponse {
-    val operation = ConfirmReservationNotificationMutation.builder()
+    val operation = ConfirmReservationNotificationMutation
+        .Builder()
         .input(input)
         .includeSupplierAmount(selections?.includeSupplierAmount ?: false)
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken ?: false)
@@ -29,7 +29,7 @@ fun confirmReservationNotificationFun(
     val response = client.execute(operation)
 
     return ConfirmReservationNotificationResponse(
-        data = response.data.confirmReservationNotification.reservation.map { it.reservationData },
+        data = response.data.confirmReservationNotification.reservation?.reservationData,
         rawResponse = response
     )
 }
