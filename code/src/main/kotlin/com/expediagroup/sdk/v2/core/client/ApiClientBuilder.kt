@@ -7,10 +7,6 @@ import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
-import com.google.common.io.Resources
-import java.io.FileInputStream
-import java.util.*
-
 
 /**
  * Builder for constructing an instance of `ApiClient`. This class extends
@@ -22,7 +18,6 @@ import java.util.*
  * @param rootUrl The root URL for the API service.
  * @param requestInitializer Optional request initializer for HTTP requests.
  * @param servicePath The path to the service endpoint.
- * @param namespace The namespace for the API client, also used as the application name.
  */
 class ApiClientBuilder(
     transport: HttpTransport,
