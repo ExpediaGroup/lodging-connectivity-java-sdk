@@ -20,7 +20,6 @@ import com.google.api.client.http.HttpTransport
  */
 @JvmOverloads
 fun createApiClient(
-    namespace: String,
     configuration: ClientConfiguration,
     transport: HttpTransport? = null
 ): ApiClient {
@@ -31,7 +30,6 @@ fun createApiClient(
         .add(getHttpCredentialsAdapter(configuration))
 
     val builder = ApiClientBuilder(
-        namespace = namespace,
         transport = transport ?: getSingletonApacheHttpTransport(configuration),
         jsonFactory = jsonFactory,
         rootUrl = GenericUrl((configuration as EndpointTrait).getEndpoint()),

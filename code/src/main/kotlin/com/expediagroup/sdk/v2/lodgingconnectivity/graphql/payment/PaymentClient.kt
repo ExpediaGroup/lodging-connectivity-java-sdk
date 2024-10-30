@@ -48,5 +48,4 @@ class PaymentClient(config: ClientConfiguration):
             endpointProvider = EndpointProvider::getPaymentClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
         ),
-        namespace = "lodging-connectivity-sdk"
     )

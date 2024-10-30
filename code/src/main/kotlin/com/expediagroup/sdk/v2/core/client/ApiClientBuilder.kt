@@ -1,11 +1,15 @@
 package com.expediagroup.sdk.v2.core.client
 
+import com.expediagroup.sdk.v2.core.configuration.SdkMetadata
 import com.expediagroup.sdk.v2.core.request.initializer.ApiClientRequestInitializer
 import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
+import com.google.common.io.Resources
+import java.io.FileInputStream
+import java.util.*
 
 
 /**
@@ -26,7 +30,6 @@ class ApiClientBuilder(
     rootUrl: GenericUrl,
     requestInitializer: HttpRequestInitializer? = null,
     servicePath: String = "",
-    namespace: String,
 ) : AbstractGoogleClient.Builder(
     transport,
     rootUrl.build(),
@@ -44,7 +47,7 @@ class ApiClientBuilder(
     }
 
     init {
-        applicationName = namespace
+        applicationName = SdkMetadata.getArtifactId()
         googleClientRequestInitializer = ApiClientRequestInitializer.default()
     }
 }

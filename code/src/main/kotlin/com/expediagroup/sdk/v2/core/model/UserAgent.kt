@@ -1,8 +1,6 @@
 package com.expediagroup.sdk.v2.core.model
 
-import com.google.common.io.Resources
-import java.io.FileInputStream
-import java.util.Properties
+import com.expediagroup.sdk.v2.core.configuration.SdkMetadata
 
 /**
  * Data class representing a user agent which contains information about the Java Development Kit (JDK) version,
@@ -15,17 +13,7 @@ data class UserAgent(
     val jdkVersion: String,
     val operatingSystem: String,
 ) {
-    private lateinit var userAgentPrefix: String
-
-    init {
-        Resources.getResource("sdk.properties").file?.let { path ->
-            Properties().apply {
-                load(FileInputStream(path))
-            }.also { properties ->
-                userAgentPrefix = properties.getProperty("userAgentPrefix")
-            }
-        }
-    }
+    private val userAgentPrefix: String = SdkMetadata.getUserAgentPrefix()
 
     override fun toString(): String =
         "$userAgentPrefix ($jdkVersion; $operatingSystem)"
