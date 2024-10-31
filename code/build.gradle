@@ -21,6 +21,16 @@ sourceSets {
     }
 }
 
+jar {
+    manifest {
+        attributes(
+                "version": version,
+                "artifactId": rootProject.name,
+                "userAgentPrefix": "expediagroup-sdk-java-${rootProject.name.replaceFirst("-sdk", "")}"
+        )
+    }
+}
+
 dependencies {
     /* Kotlin */
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.20'
@@ -57,9 +67,6 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
 }
 
-apply from: "tasks-gradle/generateProperties.gradle"
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"
 apply from: "tasks-gradle/dokka.gradle"
-
-
