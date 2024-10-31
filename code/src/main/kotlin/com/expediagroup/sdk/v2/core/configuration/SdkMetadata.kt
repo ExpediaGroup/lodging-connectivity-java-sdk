@@ -1,8 +1,6 @@
 package com.expediagroup.sdk.v2.core.configuration
 
-import com.google.common.io.Resources
-import java.io.FileInputStream
-import java.util.Properties
+import java.util.jar.Manifest
 
 internal object SdkMetadata {
     private lateinit var artifactId: String
@@ -14,13 +12,11 @@ internal object SdkMetadata {
     fun getUserAgentPrefix(): String = userAgentPrefix
 
     init {
-        Resources.getResource("sdk.properties").file?.let { path ->
-            Properties().apply {
-                load(FileInputStream(path))
-            }.also { properties ->
-                artifactId = properties.getProperty("artifactId")
-                version = properties.getProperty("version")
-                userAgentPrefix = properties.getProperty("userAgentPrefix")
+        this::class.java.classLoader.getResourceAsStream("META-INF/MANIFEST.MF").use {
+            Manifest(it).apply {
+                artifactId = mainAttributes.getValue("artifactId")
+                version = mainAttributes.getValue("version")
+                userAgentPrefix = mainAttributes.getValue("userAgentPrefix")
             }
         }
     }

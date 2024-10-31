@@ -14,7 +14,8 @@ data class UserAgent(
     val operatingSystem: String,
 ) {
     private val userAgentPrefix: String = SdkMetadata.getUserAgentPrefix()
+    private val version: String = SdkMetadata.getVersion()
 
     override fun toString(): String =
-        "$userAgentPrefix ($jdkVersion; $operatingSystem)"
+        "$userAgentPrefix/$version ($jdkVersion; $operatingSystem)"
 }
