@@ -23,7 +23,8 @@ import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientEnvironme
 import com.expediagroup.sdk.v2.lodgingconnectivity.graphql.sandbox.SandboxDataManagementClient;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -59,59 +60,57 @@ public class LodgingSupplySandboxDataManagementClientUsageExample {
 
         //  ******* Create Property *******
         CreatePropertyInput createPropertyInput = CreatePropertyInput.builder().name(Optional.of(PROPERTY_NAME)).build();
-        var createPropertyResponse = client.execute(new SandboxCreatePropertyMutation(createPropertyInput));
+        SandboxCreatePropertyMutation.Data createPropertyResponse = client.executeAsync(new SandboxCreatePropertyMutation(createPropertyInput)).get();
 
 
-        var propertyId = createPropertyResponse.get().createProperty.property.id;
+        String propertyId = createPropertyResponse.createProperty.property.id;
 
         // ******* Update Property Name *******
-        var updatePropertyInput = UpdatePropertyInput.builder().id(propertyId).name(Optional.of(UPDATED_PROPERTY_NAME)).build();
-        var updatePropertyResponse = client.execute(new SandboxUpdatePropertyMutation(updatePropertyInput));
+        UpdatePropertyInput updatePropertyInput = UpdatePropertyInput.builder().id(propertyId).name(Optional.of(UPDATED_PROPERTY_NAME)).build();
+        SandboxUpdatePropertyMutation.Data updatePropertyResponse = client.executeAsync(new SandboxUpdatePropertyMutation(updatePropertyInput)).get();
 
         // ******* Create Reservation *******
-        var createReservationInput = CreateReservationInput.builder().propertyId(propertyId).childCount(Optional.of(4)).adultCount(Optional.of(2)).build();
-        var createReservationResponse = client.execute(new SandboxCreateReservationMutation(createReservationInput));
+        CreateReservationInput createReservationInput = CreateReservationInput.builder().propertyId(propertyId).childCount(Optional.of(4)).adultCount(Optional.of(2)).build();
+        SandboxCreateReservationMutation.Data createReservationResponse = client.executeAsync(new SandboxCreateReservationMutation(createReservationInput)).get();
 
 
-        var reservationId = createReservationResponse.get().createReservation.reservation.sandboxReservationFragment.id;
+        String reservationId = createReservationResponse.createReservation.reservation.sandboxReservationFragment.id;
 
         // ******* Update Reservation *******
-        var updateReservationInput = UpdateReservationInput.builder().id(reservationId).childAges(Optional.of(List.of(3, 5, 7))).build();
-        var updateReservationResponse = client.execute(new SandboxUpdateReservationMutation(updateReservationInput));
+        UpdateReservationInput updateReservationInput = UpdateReservationInput.builder().id(reservationId).childAges(Optional.of(new ArrayList<>(Arrays.asList(3, 5, 7)))).build();
+        SandboxUpdateReservationMutation.Data updateReservationResponse = client.executeAsync(new SandboxUpdateReservationMutation(updateReservationInput)).get();
 
         // ******* Update Reservation Stay Dates *******
-        var changeStayDatesInput = ChangeReservationStayDatesInput
+        ChangeReservationStayDatesInput changeStayDatesInput = ChangeReservationStayDatesInput
                 .builder()
                 .id(reservationId)
                 .checkInDate(LocalDate.of(2024, 6, 5))
                 .checkOutDate(LocalDate.of(2024, 6, 10))
                 .build();
 
-        var changeStayDatesResponse = client.execute(new SandboxChangeReservationStayDatesMutation(changeStayDatesInput));
+        SandboxChangeReservationStayDatesMutation.Data changeStayDatesResponse = client.executeAsync(new SandboxChangeReservationStayDatesMutation(changeStayDatesInput)).get();
 
         // ******* Cancel Reservation *******
-        var cancelReservationInput = CancelReservationInput.builder().id(reservationId).sendNotification(Optional.of(false)).build();
-        var cancelReservationResponse = client.execute(new SandboxCancelReservationMutation(cancelReservationInput));
+        CancelReservationInput cancelReservationInput = CancelReservationInput.builder().id(reservationId).sendNotification(Optional.of(false)).build();
+        SandboxCancelReservationMutation.Data cancelReservationResponse = client.executeAsync(new SandboxCancelReservationMutation(cancelReservationInput)).get();
 
         // ******* Delete Reservation *******
-        var deleteReservationInput = DeleteReservationInput.builder().id(reservationId).build();
-        var deleteReservationResponse = client.execute(new SandboxDeleteReservationMutation(deleteReservationInput));
+        DeleteReservationInput deleteReservationInput = DeleteReservationInput.builder().id(reservationId).build();
+        SandboxDeleteReservationMutation.Data deleteReservationResponse = client.executeAsync(new SandboxDeleteReservationMutation(deleteReservationInput)).get();
 
         // ******* Delete Property *******
-        var deletePropertyInput = DeletePropertyInput.builder().id(propertyId).build();
-        var deletePropertyResponse = client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));
-
-//        System.exit(0);
+        DeletePropertyInput deletePropertyInput = DeletePropertyInput.builder().id(propertyId).build();
+        SandboxDeletePropertyMutation.Data deletePropertyResponse = client.executeAsync(new SandboxDeletePropertyMutation(deletePropertyInput)).get();
     }
 
     private static void deletePropertyIfExists() throws ExecutionException, InterruptedException {
-        var propertiesQuery = SandboxPropertiesQuery.builder().skipReservations(true).build();
-        var propertiesResponse = client.execute(propertiesQuery);
+        SandboxPropertiesQuery propertiesQuery = SandboxPropertiesQuery.builder().skipReservations(true).build();
+        SandboxPropertiesQuery.Data propertiesResponse = client.executeAsync(propertiesQuery).get();
 
-        propertiesResponse.get().properties.elements.forEach(property -> {
+        propertiesResponse.properties.elements.forEach(property -> {
             if (property.name.equals(PROPERTY_NAME) || property.name.equals(UPDATED_PROPERTY_NAME)) {
-                var deletePropertyInput = DeletePropertyInput.builder().id(property.id).build();
-                client.execute(new SandboxDeletePropertyMutation(deletePropertyInput));
+                DeletePropertyInput deletePropertyInput = DeletePropertyInput.builder().id(property.id).build();
+                client.executeAsync(new SandboxDeletePropertyMutation(deletePropertyInput));
             }
         });
     }
