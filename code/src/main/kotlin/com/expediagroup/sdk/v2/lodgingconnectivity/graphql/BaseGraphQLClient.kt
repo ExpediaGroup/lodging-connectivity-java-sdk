@@ -44,7 +44,7 @@ class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecuto
         .httpEngine(engine)
         .build()
 
-    class Builder(private val namespace: String) : DefaultClientBuilder<BaseGraphQLClient>() {
+    class Builder() : DefaultClientBuilder<BaseGraphQLClient>() {
         override fun build(): BaseGraphQLClient {
             return BaseGraphQLClient(this.buildConfiguration())
         }
@@ -57,7 +57,7 @@ class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecuto
      * @return The result of the query execution, with errors handled.
      * @throws ExpediaGroupServiceException If the query execution returns errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): CompletableFuture<T> {
+    override fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<T> {
         val promise: CompletableFuture<T> = CompletableFuture()
 
         apolloClient.query(query).enqueue { response ->
@@ -81,6 +81,9 @@ class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecuto
         return promise
     }
 
+    override fun <T : Query.Data> execute(query: Query<T>): T =
+        executeAsync(query).get()
+
 
     /**
      * Executes a GraphQL mutation and returns the result.
@@ -89,7 +92,7 @@ class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecuto
      * @return The result of the mutation execution, with errors handled.
      * @throws ExpediaGroupServiceException If the mutation execution returns errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): CompletableFuture<T> {
+    override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<T> {
         val promise: CompletableFuture<T> = CompletableFuture()
 
         apolloClient.mutation(mutation).enqueue { response ->
@@ -112,4 +115,7 @@ class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecuto
 
         return promise
     }
+
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T =
+        executeAsync(mutation).get()
 }

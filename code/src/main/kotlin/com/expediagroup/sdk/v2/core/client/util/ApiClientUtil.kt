@@ -11,9 +11,8 @@ import com.google.api.client.http.GenericUrl
 import com.google.api.client.http.HttpTransport
 
 /**
- * Creates an instance of `ApiClient` using the provided namespace, client configuration, and optional HTTP transport.
+ * Creates an instance of `ApiClient` using the provided client configuration, and optional HTTP transport.
  *
- * @param namespace The namespace to be used for creating the API client.
  * @param configuration The client configuration implementing `ClientConfiguration` interface. Must also implement `EndpointTrait`.
  * @param transport An optional `HttpTransport` object. If not provided, a default transport will be used.
  * @return An instance of `ApiClient`.
