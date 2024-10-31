@@ -40,5 +40,3 @@ object DateTimeAdapter : Adapter<OffsetDateTime?> {
         }
     }
 }
-
-

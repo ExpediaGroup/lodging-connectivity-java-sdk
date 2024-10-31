@@ -19,6 +19,11 @@ enum class SandboxDataManagementClientEndpoint(val url: String) {
     SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql")
 }
 
+enum class FileManagementClientEndpoint(val url: String) {
+    PROD("https://api.expediagroup.com/supply-lodging/v1/files"),
+    TEST("https://test-api.expediagroup.com/supply-lodging/v1/files")
+}
+
 enum class AuthEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/identity/oauth2/v3/token/"),
     TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token/"),
@@ -72,6 +77,14 @@ object EndpointProvider {
                 Supported environments are [${SandboxDataManagementClientEndpoint.entries.joinToString(", ") }]
                 """
             )
+        }
+    }
+
+    fun getFileManagementClientEndpoint(environment: ClientEnvironment): String {
+        return try {
+            FileManagementClientEndpoint.valueOf(environment.name).url
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Unsupported environment [$environment] for FileManagementClient")
         }
     }
 

@@ -15,13 +15,12 @@
  */
 package com.expediagroup.sdk.core.constant.provider
 
-import io.ktor.http.HttpStatusCode
 
 internal object LoggingMessageProvider {
     fun getTokenExpiresInMessage(expiresIn: Int) = "New token expires in $expiresIn seconds"
 
     fun getResponseUnsuccessfulMessage(
-        httpStatusCode: HttpStatusCode,
+        httpStatusCode: Int,
         transactionId: String?
     ) = "Unsuccessful response [$httpStatusCode]${getTransactionIdMessage(transactionId)}"
 

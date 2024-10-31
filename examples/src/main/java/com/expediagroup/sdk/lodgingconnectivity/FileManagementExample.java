@@ -1,8 +1,8 @@
 package com.expediagroup.sdk.lodgingconnectivity;
 
-import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientConfiguration;
-import com.expediagroup.sdk.v2.lodgingconnectivity.configuration.ClientEnvironment;
-import com.expediagroup.sdk.v2.lodgingconnectivity.filemanagement.client.FileManagementClient;
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment;
+import com.expediagroup.sdk.lodgingconnectivity.filemanagement.client.FileManagementClient;
 
 import java.io.File;
 import java.io.IOException;

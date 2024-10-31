@@ -16,8 +16,8 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.payment
 
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 
@@ -42,10 +42,10 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class PaymentClient(config: ClientConfiguration) :
+class PaymentClient(config: ClientConfiguration):
     GraphQLExecutor by BaseGraphQLClient(
-        config.toExpediaGroupClientConfiguration(
+        config.toFullClientConfiguration(
             endpointProvider = EndpointProvider::getPaymentClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
-        )
+        ),
     )
