@@ -3,7 +3,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.func
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.getOrThrow
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orNullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
@@ -47,7 +47,7 @@ fun getPropertyReservationsSummaryFun(
 
     val currentPageInfo = PageInfo(
         cursor = cursor,
-        nextPageCursor = nextPageInfo?.endCursor?.nullIfBlank(),
+        nextPageCursor = nextPageInfo?.endCursor?.orNullIfBlank(),
         hasNext = nextPageInfo?.hasNextPage ?: false,
         pageSize = reservationsPage.edges.size,
         totalCount = reservationsPage.totalCount

@@ -4,6 +4,6 @@ inline fun <T> T?.getOrThrow(exceptionProvider: () -> Throwable): T {
     return this ?: throw exceptionProvider()
 }
 
-fun Boolean?.falseIfNull(): Boolean = this ?: false
+fun Boolean?.orFalseIfNull(): Boolean = this ?: false
 
-fun String?.nullIfBlank(): String? = this?.takeUnless { it.isBlank() }
+fun String?.orNullIfBlank(): String? = this?.takeUnless { it.isBlank() }
