@@ -51,7 +51,6 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
     private val apolloClient: ApolloClient = ApolloClient.Builder()
         .serverUrl(config.endpoint!!)
         .ktorClient(expediaGroupClient.httpClient)
-
         .build()
 
     /**
