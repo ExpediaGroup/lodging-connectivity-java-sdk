@@ -19,7 +19,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.payment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.function.getPaymentInstrumentFun
 
 /**
  * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
@@ -42,10 +42,15 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class PaymentClient(config: ClientConfiguration) :
-    GraphQLExecutor by BaseGraphQLClient(
+class PaymentClient(config: ClientConfiguration) {
+    private val baseGraphQLClient: BaseGraphQLClient = BaseGraphQLClient(
         config.toExpediaGroupClientConfiguration(
             endpointProvider = EndpointProvider::getPaymentClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint
         )
     )
+
+    fun getPaymentInstrument(token: String) = run {
+        getPaymentInstrumentFun(baseGraphQLClient, token)
+    }
+}

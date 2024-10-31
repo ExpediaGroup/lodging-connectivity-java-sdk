@@ -1,0 +1,36 @@
+package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
+
+import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orFalseIfNull
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
+import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.RefundReservationMutation
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationData
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.RefundReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
+
+data class RefundReservationResponse(
+    override val data: ReservationData?,
+    override val rawResponse: RawResponse<RefundReservationMutation.Data>,
+) : Response<ReservationData?, RefundReservationMutation.Data>
+
+@JvmOverloads
+fun refundReservationFun(
+    client: GraphQLExecutor,
+    input: RefundReservationInput,
+    selections: ReservationSelections? = null
+): RefundReservationResponse {
+    val operation = RefundReservationMutation
+        .Builder()
+        .input(input)
+        .includeSupplierAmount(selections?.includeSupplierAmount.orFalseIfNull())
+        .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())
+        .build()
+
+    val response = client.execute(operation)
+
+    return RefundReservationResponse(
+        data = response.data.refundReservation.reservation?.reservationData,
+        rawResponse = response
+    )
+}
