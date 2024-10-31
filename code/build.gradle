@@ -41,7 +41,6 @@ dependencies {
     /* Apollo Kotlin */
     api 'com.apollographql.apollo:apollo-runtime:4.0.0'
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
-    implementation 'com.apollographql.ktor:apollo-engine-ktor:0.0.2'
 
     /* Apollo Java */
     implementation("com.apollographql.java:client:0.0.2")
