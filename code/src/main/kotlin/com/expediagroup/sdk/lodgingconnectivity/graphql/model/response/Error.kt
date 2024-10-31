@@ -4,5 +4,3 @@ data class Error(
     val message: String,
     val path: List<String>?,
 )
-
-internal typealias SDKApolloError = Error
