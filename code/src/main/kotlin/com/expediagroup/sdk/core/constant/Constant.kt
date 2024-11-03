@@ -15,16 +15,12 @@
  */
 package com.expediagroup.sdk.core.constant
 
-import io.ktor.client.plugins.HttpTimeout
-
 internal object Constant {
-    const val EMPTY_STRING = ""
     const val NEWLINE = "\n"
     const val COMMA_SPACE = ", "
     const val DOUBLE_RIGHT_ANGLE_BRACKETS: String = ">>"
     const val TEN_SECONDS_IN_MILLIS = 10_0000L
     const val FIFTEEN_SECONDS_IN_MILLIS = 150_000L
-    const val INFINITE_TIMEOUT = HttpTimeout.INFINITE_TIMEOUT_MS
 
     private const val SUCCESSFUL_STATUS_CODES_RANGE_START = 200
     private const val SUCCESSFUL_STATUS_CODES_RANGE_END = 299
