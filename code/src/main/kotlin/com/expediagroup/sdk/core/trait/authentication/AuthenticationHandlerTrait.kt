@@ -15,5 +15,5 @@ interface AuthenticationHandlerTrait : Trait {
     fun createAuthenticationHandler(
         config: ClientConfiguration,
         transport: HttpTransport,
-    ): com.expediagroup.sdk.core.trait.authentication.RefreshAccessTokenTrait
+    ): RefreshAccessTokenTrait
 }

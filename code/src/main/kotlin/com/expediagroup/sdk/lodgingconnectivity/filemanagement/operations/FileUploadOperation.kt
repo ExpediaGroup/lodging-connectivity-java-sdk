@@ -4,12 +4,17 @@ import com.expediagroup.sdk.core.http.BlobTypeDetector
 import com.expediagroup.sdk.core.model.OperationParams
 import com.expediagroup.sdk.core.model.Operation
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.FileUploadRequest
-import com.google.api.client.http.*
+import com.google.api.client.http.FileContent
+import com.google.api.client.http.HttpContent
+import com.google.api.client.http.HttpHeaders
+import com.google.api.client.http.HttpMediaType
+import com.google.api.client.http.InputStreamContent
+import com.google.api.client.http.MultipartContent
 import com.google.api.client.http.MultipartContent.Part
 import org.apache.tika.mime.MimeTypes
 import java.io.File
 import java.io.InputStream
-import java.util.*
+import java.util.UUID
 
 
 class FileUploadOperation(

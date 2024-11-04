@@ -21,6 +21,7 @@ internal object Constant {
     const val DOUBLE_RIGHT_ANGLE_BRACKETS: String = ">>"
     const val TEN_SECONDS_IN_MILLIS = 10_0000L
     const val FIFTEEN_SECONDS_IN_MILLIS = 150_000L
+    const val ONE_HOUR_IN_MILLIS = 3_600_000L
 
     private const val SUCCESSFUL_STATUS_CODES_RANGE_START = 200
     private const val SUCCESSFUL_STATUS_CODES_RANGE_END = 299

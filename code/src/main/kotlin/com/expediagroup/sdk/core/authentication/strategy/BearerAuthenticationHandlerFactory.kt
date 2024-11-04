@@ -21,12 +21,12 @@ import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.gson.GsonFactory
 import com.google.auth.oauth2.AccessToken
 import java.time.Instant
-import java.util.*
+import java.util.Date
 
 /**
  * Factory object for creating Bearer Authentication handlers.
  */
-object BearerAuthenticationHandlerFactory : com.expediagroup.sdk.core.trait.authentication.AuthenticationHandlerTrait {
+object BearerAuthenticationHandlerFactory : AuthenticationHandlerTrait {
 
     /**
      * Creates an authentication handler to refresh access tokens using client credentials.

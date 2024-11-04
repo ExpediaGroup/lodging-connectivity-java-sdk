@@ -11,7 +11,7 @@ object InitializerFunctions {
     }
 
     val attachDefaultRequestLoggingInterceptor = fun (request: HttpRequest) {
-        request.interceptor = com.expediagroup.sdk.core.request.interceptor.HttpRequestLoggingInterceptor()
+        request.interceptor = HttpRequestLoggingInterceptor()
     }
 
     val attachDefaultResponseLoggingInterceptor = fun (request: HttpRequest) {

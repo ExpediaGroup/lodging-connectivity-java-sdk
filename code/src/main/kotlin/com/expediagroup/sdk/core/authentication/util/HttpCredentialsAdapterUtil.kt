@@ -3,11 +3,15 @@ package com.expediagroup.sdk.core.authentication.util
 import com.expediagroup.sdk.core.apache.util.createApacheHttpTransport
 import com.expediagroup.sdk.core.authentication.extension.withDefaultConfigurations
 import com.expediagroup.sdk.core.trait.common.IdTrait
-import com.expediagroup.sdk.core.trait.configuration.*
+import com.expediagroup.sdk.core.trait.configuration.ClientConfiguration
+import com.expediagroup.sdk.core.trait.configuration.KeyTrait
+import com.expediagroup.sdk.core.trait.configuration.SecretTrait
+import com.expediagroup.sdk.core.trait.configuration.AuthEndpointTrait
+import com.expediagroup.sdk.core.trait.configuration.AuthenticationStrategyTrait
 import com.google.auth.http.HttpCredentialsAdapter
 import com.google.auth.oauth2.AccessToken
 import com.google.auth.oauth2.OAuth2CredentialsWithRefresh
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 

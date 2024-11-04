@@ -3,7 +3,18 @@ package com.expediagroup.sdk.core.configuration
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
 import com.expediagroup.sdk.core.authentication.strategy.AuthenticationStrategy
 import com.expediagroup.sdk.core.trait.common.BuilderTrait
-import com.expediagroup.sdk.core.trait.configuration.*
+import com.expediagroup.sdk.core.trait.configuration.KeyTrait
+import com.expediagroup.sdk.core.trait.configuration.SecretTrait
+import com.expediagroup.sdk.core.trait.configuration.EndpointTrait
+import com.expediagroup.sdk.core.trait.configuration.AuthEndpointTrait
+import com.expediagroup.sdk.core.trait.configuration.MaskedLoggingHeadersTrait
+import com.expediagroup.sdk.core.trait.configuration.MaskedLoggingBodyFieldsTrait
+import com.expediagroup.sdk.core.trait.configuration.RequestTimeoutTrait
+import com.expediagroup.sdk.core.trait.configuration.SocketTimeoutTrait
+import com.expediagroup.sdk.core.trait.configuration.ConnectionTimeoutTrait
+import com.expediagroup.sdk.core.trait.configuration.AuthenticationStrategyTrait
+import com.expediagroup.sdk.core.trait.configuration.MaxConnectionsTotalTrait
+import com.expediagroup.sdk.core.trait.configuration.MaxConnectionsPerRouteTrait
 import java.util.UUID
 
 /**

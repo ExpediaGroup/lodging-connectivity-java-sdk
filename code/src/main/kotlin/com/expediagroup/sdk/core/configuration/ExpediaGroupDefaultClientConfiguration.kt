@@ -23,7 +23,7 @@ object ExpediaGroupDefaultClientConfiguration :
     override fun getEndpoint(): String = "https://api.expediagroup.com/"
     override fun getAuthEndpoint(): String = "${getEndpoint()}identity/oauth2/v3/token/"
     override fun getAuthenticationStrategy(): AuthenticationStrategy = AuthenticationStrategy.BEARER
-    override fun getRequestTimeout(): Long = -1
+    override fun getRequestTimeout(): Long = Constant.ONE_HOUR_IN_MILLIS
     override fun getConnectionTimeout(): Long = Constant.TEN_SECONDS_IN_MILLIS
     override fun getSocketTimeout(): Long = Constant.FIFTEEN_SECONDS_IN_MILLIS
     override fun getMaxConnectionsTotal(): Int = Constant.MAX_CONNECTIONS_TOTAL

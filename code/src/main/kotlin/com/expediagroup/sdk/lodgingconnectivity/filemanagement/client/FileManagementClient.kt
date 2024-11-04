@@ -10,7 +10,10 @@ import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileDo
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileDownloadOperationParams
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileUploadOperation
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileUploadOperationParams
-import java.io.*
+import java.io.IOException
+import java.io.OutputStream
+import java.io.InputStream
+import java.io.File
 
 class FileManagementClient(
     configuration: ClientConfiguration
@@ -123,7 +126,7 @@ class FileManagementClient(
         @JvmStatic
         fun builder(): Builder = Builder()
 
-        class Builder: DefaultClientBuilder<FileManagementClient>() {
+        class Builder : DefaultClientBuilder<FileManagementClient>() {
             private val configurationBuilder = ClientConfiguration.builder()
 
             override fun build(): FileManagementClient =

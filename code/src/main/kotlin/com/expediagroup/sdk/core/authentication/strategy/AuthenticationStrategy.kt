@@ -8,6 +8,6 @@ import com.expediagroup.sdk.core.trait.authentication.AuthenticationHandlerTrait
  * @property handlerFactory A factory that creates an instance of the authentication handler
  *                          trait for the specific strategy.
  */
-enum class AuthenticationStrategy(val handlerFactory: com.expediagroup.sdk.core.trait.authentication.AuthenticationHandlerTrait) {
+enum class AuthenticationStrategy(val handlerFactory: AuthenticationHandlerTrait) {
     BEARER(BearerAuthenticationHandlerFactory),
 }
