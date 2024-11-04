@@ -16,7 +16,7 @@ ext.dependencyVersion = [
 ]
 
 ext.testDependencyVersion = [
-        'junit5': '5.10.3',
+        'junit5': '5.11.3',
         'assertj': '3.26.3',
         'mockk': '1.13.13'
 ]
@@ -59,10 +59,9 @@ dependencies {
     implementation(group: 'com.ebay.ejmask', name: 'ejmask-extensions', version: dependencyVersion['ejmask'])
 
     /* Tests */
-    testImplementation(group: 'org.junit', name: 'junit-bom', version: testDependencyVersion['junit5'], ext: 'pom')
-    testImplementation(group: 'org.junit', name: 'junit-jupiter-api', version: testDependencyVersion['junit5'])
-    testImplementation(group: 'org.junit', name: 'junit-jupiter-engine', version: testDependencyVersion['junit5'])
-    testImplementation(group: 'org.junit', name: 'junit-jupiter-params', version: testDependencyVersion['junit5'])
+    testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: testDependencyVersion['junit5'])
+    testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: testDependencyVersion['junit5'])
+    testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: testDependencyVersion['junit5'])
     testImplementation(group: 'org.assertj', name: 'assertj-core', version: testDependencyVersion['assertj'])
     testImplementation(group: 'io.mockk', name: 'mockk-dsl-jvm', version: testDependencyVersion['mockk'])
     testImplementation(group: 'io.mockk', name: 'mockk-jvm', version: testDependencyVersion['mockk'])
