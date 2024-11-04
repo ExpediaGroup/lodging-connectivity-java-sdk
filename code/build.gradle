@@ -32,7 +32,7 @@ jar {
 }
 
 ext.dependencyVersion = [
-        'kotlin-stdlib'      : '2.0.20',
+        'kotlin'      : '2.0.20',
         'google-api-client'  : '2.7.0',
         'ejmask'             : '1.0.3',
         'jackson'            : '2.18.1',
@@ -40,7 +40,6 @@ ext.dependencyVersion = [
         'apollo-adapters'    : '0.0.4',
         'apollo-java'        : '0.0.2',
         'apache-tika'        : '2.9.2',
-        'junit5'             : '5.10.3',
         'jakarta-validation' : '2.0.2',
         'hibernate-validator': '6.2.5.Final',
         'javax-validation'   : '2.0.1.Final',
@@ -49,9 +48,13 @@ ext.dependencyVersion = [
         'dokka'              : '1.9.20'
 ]
 
+ext.testDependencyVersion = [
+        'junit5': '5.10.3'
+]
+
 dependencies {
     /* Kotlin */
-    implementation(group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: dependencyVersion['kotlin-stdlib'])
+    implementation(group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: dependencyVersion['kotlin'])
     implementation(group: 'org.jetbrains.kotlinx', name: 'atomicfu', version: dependencyVersion['atomicfu'])
 
     /* Dokka */
@@ -88,7 +91,7 @@ dependencies {
     implementation(group: 'com.ebay.ejmask', name: 'ejmask-extensions', version: dependencyVersion['ejmask'])
 
     /* Tests */
-    testImplementation(group: 'org.junit', name: 'junit-bom', version: dependencyVersion['junit5'], ext: 'pom')
+    testImplementation(group: 'org.junit', name: 'junit-bom', version: testDependencyVersion['junit5'], ext: 'pom')
 }
 
 apply from: "tasks-gradle/apollo.gradle"
