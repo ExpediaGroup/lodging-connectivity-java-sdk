@@ -55,7 +55,6 @@ dependencies {
 
     /* Logging */
     implementation(group: 'org.slf4j', name: 'slf4j-api', version: dependencyVersion['slf4j'])
-    implementation(group: 'org.slf4j', name: 'slf4j-simple', version: dependencyVersion['slf4j'])
     implementation(group: 'com.ebay.ejmask', name: 'ejmask-api', version: dependencyVersion['ejmask'])
     implementation(group: 'com.ebay.ejmask', name: 'ejmask-extensions', version: dependencyVersion['ejmask'])
 
