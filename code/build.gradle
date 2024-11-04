@@ -32,7 +32,7 @@ jar {
 }
 
 ext.dependencyVersion = [
-        'kotlin'      : '2.0.20',
+        'kotlin'             : '2.0.20',
         'google-api-client'  : '2.7.0',
         'ejmask'             : '1.0.3',
         'jackson'            : '2.18.1',
@@ -70,11 +70,11 @@ dependencies {
     /* Client */
     implementation(group: 'org.apache.tika', name: 'tika-core', version: dependencyVersion['apache-tika'])
     implementation(group: 'com.google.api-client', name: 'google-api-client', version: dependencyVersion['google-api-client']) {
-        exclude group: 'io.grpc', module: 'grpc-api'
-        exclude group: 'io.grpc', module: 'grpc-context'
+        exclude(group: 'io.grpc', module: 'grpc-api')
+        exclude(group: 'io.grpc', module: 'grpc-context')
 
-        exclude group: 'io.opencensus', module: 'opencensus-api'
-        exclude group: 'io.opencensus', module: 'opencensus-contrib-http-util'
+        exclude(group: 'io.opencensus', module: 'opencensus-api')
+        exclude(group: 'io.opencensus', module: 'opencensus-contrib-http-util')
     }
 
     /* Serialization */
