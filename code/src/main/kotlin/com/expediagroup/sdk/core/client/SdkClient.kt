@@ -7,6 +7,7 @@ import com.expediagroup.sdk.core.jackson.deserialize
 import com.expediagroup.sdk.core.model.Operation
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.google.api.client.http.HttpTransport
 import java.io.InputStream
 
 /**
@@ -16,9 +17,11 @@ import java.io.InputStream
  */
 class SdkClient(
     configuration: FullClientConfiguration,
+    transport: HttpTransport? = null
 ) {
     val apiClient: ApiClient = createApiClient(
         configuration = configuration,
+        transport = transport
     )
 
     /**

@@ -25,12 +25,17 @@ import com.expediagroup.sdk.core.configuration.FullClientConfiguration
 import com.expediagroup.sdk.core.client.ApiClientApolloHttpEngine
 import com.expediagroup.sdk.core.client.util.createApiClient
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.google.api.client.http.HttpTransport
 import java.util.concurrent.CompletableFuture
 
-class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecutor {
+class BaseGraphQLClient(
+    configuration: FullClientConfiguration,
+    transport: HttpTransport? = null
+) : GraphQLExecutor {
     private val engine: ApiClientApolloHttpEngine = ApiClientApolloHttpEngine(
         createApiClient(
-            configuration = configuration
+            configuration = configuration,
+            transport = transport
         )
     )
 
