@@ -1,0 +1,9 @@
+jar {
+    manifest {
+        attributes(
+                "version": version,
+                "artifactId": rootProject.name,
+                "userAgentPrefix": "expediagroup-sdk-java-${rootProject.name.replaceFirst("-sdk", "")}"
+        )
+    }
+}

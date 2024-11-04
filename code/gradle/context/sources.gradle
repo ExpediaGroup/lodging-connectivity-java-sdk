@@ -1,0 +1,8 @@
+sourceSets {
+    main {
+        java {
+            /** Include apollo generated sources in the final JAR **/
+            srcDirs += 'build/generated/source/apollo'
+        }
+    }
+}

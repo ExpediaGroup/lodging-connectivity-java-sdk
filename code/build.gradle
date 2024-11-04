@@ -12,88 +12,11 @@ kotlin {
     jvmToolchain(8)
 }
 
-sourceSets {
-    main {
-        java {
-            /** Include apollo generated sources in the final JAR **/
-            srcDirs += 'build/generated/source/apollo'
-        }
-    }
-}
+apply from: "gradle/context/dependencies.gradle"
+apply from: "gradle/context/jar.gradle"
+apply from: "gradle/context/sources.gradle"
 
-jar {
-    manifest {
-        attributes(
-                "version": version,
-                "artifactId": rootProject.name,
-                "userAgentPrefix": "expediagroup-sdk-java-${rootProject.name.replaceFirst("-sdk", "")}"
-        )
-    }
-}
-
-ext.dependencyVersion = [
-        'kotlin'             : '2.0.20',
-        'google-api-client'  : '2.7.0',
-        'ejmask'             : '1.0.3',
-        'jackson'            : '2.18.1',
-        'apollo-kotlin'      : '4.0.0',
-        'apollo-adapters'    : '0.0.4',
-        'apollo-java'        : '0.0.2',
-        'apache-tika'        : '2.9.2',
-        'jakarta-validation' : '2.0.2',
-        'hibernate-validator': '6.2.5.Final',
-        'javax-validation'   : '2.0.1.Final',
-        'slf4j'              : '2.0.13',
-        'atomicfu'           : '0.24.0',
-        'dokka'              : '1.9.20'
-]
-
-ext.testDependencyVersion = [
-        'junit5': '5.10.3'
-]
-
-dependencies {
-    /* Kotlin */
-    implementation(group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: dependencyVersion['kotlin'])
-    implementation(group: 'org.jetbrains.kotlinx', name: 'atomicfu', version: dependencyVersion['atomicfu'])
-
-    /* Dokka */
-    implementation(group: 'org.jetbrains.dokka', name: 'versioning-plugin', version: dependencyVersion['dokka'])
-
-    /* Apollo Kotlin */
-    api(group: 'com.apollographql.apollo', name: 'apollo-runtime', version: dependencyVersion['apollo-kotlin'])
-    implementation(group: 'com.apollographql.adapters', name: 'apollo-adapters-core', version: dependencyVersion['apollo-adapters'])
-
-    /* Apollo Java */
-    implementation(group: 'com.apollographql.java', name: 'client', version: dependencyVersion['apollo-java'])
-
-    /* Client */
-    implementation(group: 'org.apache.tika', name: 'tika-core', version: dependencyVersion['apache-tika'])
-    implementation(group: 'com.google.api-client', name: 'google-api-client', version: dependencyVersion['google-api-client']) {
-        exclude(group: 'io.grpc', module: 'grpc-api')
-        exclude(group: 'io.grpc', module: 'grpc-context')
-
-        exclude(group: 'io.opencensus', module: 'opencensus-api')
-        exclude(group: 'io.opencensus', module: 'opencensus-contrib-http-util')
-    }
-
-    /* Serialization */
-    implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: dependencyVersion['jackson'])
-    implementation(group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: dependencyVersion['jackson'])
-    implementation(group: 'javax.validation', name: 'validation-api', version: dependencyVersion['javax-validation'])
-    implementation(group: 'org.hibernate.validator', name: 'hibernate-validator', version: dependencyVersion['hibernate-validator'])
-    implementation(group: 'jakarta.validation', name: 'jakarta.validation-api', version: dependencyVersion['jakarta-validation'])
-
-    /* Logging */
-    implementation(group: 'org.slf4j', name: 'slf4j-api', version: dependencyVersion['slf4j'])
-    implementation(group: 'org.slf4j', name: 'slf4j-simple', version: dependencyVersion['slf4j'])
-    implementation(group: 'com.ebay.ejmask', name: 'ejmask-api', version: dependencyVersion['ejmask'])
-    implementation(group: 'com.ebay.ejmask', name: 'ejmask-extensions', version: dependencyVersion['ejmask'])
-
-    /* Tests */
-    testImplementation(group: 'org.junit', name: 'junit-bom', version: testDependencyVersion['junit5'], ext: 'pom')
-}
-
-apply from: "tasks-gradle/apollo.gradle"
-apply from: "tasks-gradle/publishing.gradle"
-apply from: "tasks-gradle/dokka.gradle"
+apply from: "gradle/tasks/apollo.gradle"
+apply from: "gradle/tasks/dokka.gradle"
+apply from: "gradle/tasks/publishing.gradle"
+apply from: "gradle/tasks/tests.gradle"

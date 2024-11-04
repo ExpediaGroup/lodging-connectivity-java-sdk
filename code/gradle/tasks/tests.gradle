@@ -1,0 +1,10 @@
+test {
+    useJUnitPlatform() // Configure the test task to use JUnit Platform
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED'
+    }
+}
+
+build {
+    dependsOn test
+}
