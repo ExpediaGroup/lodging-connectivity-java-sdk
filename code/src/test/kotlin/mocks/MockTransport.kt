@@ -17,7 +17,7 @@ class MockTransport(
         val request: MockLowLevelHttpRequest = super.buildRequest(method, url) as MockLowLevelHttpRequest
 
         request.response = if (request.url.equals(Endpoint.AUTHENTICATION_ENDPOINT)) {
-            apiResponse
+            authResponse
         } else {
             apiResponse
         }
