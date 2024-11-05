@@ -37,7 +37,7 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
             val status = "[${response.statusCode} ${response.statusMessage}]"
 
             appendLine("Response from: $method $url $status")
-            appendLine(com.expediagroup.sdk.core.logging.LogMessageConstant.RESPONSE_HEADERS)
+            appendLine(LogMessageConstant.RESPONSE_HEADERS)
 
             response.headers.forEach { (key, value) ->
                 val keyCases = listOf(
@@ -64,12 +64,12 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
     private fun logResponseBody(response: HttpResponse) {
         StringBuilder().apply stringBuilder@ {
             if (setOf<Any?>(null, 0).contains(response.headers.contentLength)) {
-                logger.info(com.expediagroup.sdk.core.logging.LogMessageConstant.EMPTY_OR_UNKNOWN_RESPONSE_BODY, LogMessageTag.INCOMING)
+                logger.info(LogMessageConstant.EMPTY_OR_UNKNOWN_RESPONSE_BODY, LogMessageTag.INCOMING)
                 return
             }
 
             if (!canLogBody(response)) {
-                this@stringBuilder.appendLine(com.expediagroup.sdk.core.logging.LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
+                this@stringBuilder.appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED)
                 logger.debug(this.toString(), LogMessageTag.INCOMING)
                 return
             }
@@ -77,10 +77,10 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
             val contentLength = response.headers.contentLength
             val contentLengthExceedsThreshold = (contentLength > Int.MAX_VALUE.toLong())
 
-            this@stringBuilder.appendLine(com.expediagroup.sdk.core.logging.LogMessageConstant.RESPONSE_BODY)
+            this@stringBuilder.appendLine(LogMessageConstant.RESPONSE_BODY)
 
             if (!response.content.markSupported()) {
-                logger.error(com.expediagroup.sdk.core.logging.LogMessageConstant.RESPONSE_CONTENT_INPUT_STREAM_DOES_NOT_SUPPORT_MARK, LogMessageTag.INCOMING)
+                logger.error(LogMessageConstant.RESPONSE_CONTENT_INPUT_STREAM_DOES_NOT_SUPPORT_MARK, LogMessageTag.INCOMING)
                 return
             }
 
@@ -89,7 +89,7 @@ class HttpResponseLoggingInterceptor : HttpResponseInterceptor {
 
                 this@stringBuilder.appendLine(response.content.source().buffer().readUtf8())
                 if (contentLengthExceedsThreshold) {
-                    this@stringBuilder.appendLine(com.expediagroup.sdk.core.logging.LogMessageConstant.RESPONSE_TOO_LARGE_TO_BE_LOGGED_WHOLE)
+                    this@stringBuilder.appendLine(LogMessageConstant.RESPONSE_TOO_LARGE_TO_BE_LOGGED_WHOLE)
                 }
 
                 this@stream.reset()

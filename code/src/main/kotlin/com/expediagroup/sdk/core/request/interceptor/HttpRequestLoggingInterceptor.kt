@@ -19,7 +19,7 @@ import okio.IOException
  */
 class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
     private val logger: ExpediaGroupLogger =
-        ExpediaGroupLoggerFactory.getLogger(com.expediagroup.sdk.core.request.interceptor.HttpRequestLoggingInterceptor::class.java)
+        ExpediaGroupLoggerFactory.getLogger(HttpRequestLoggingInterceptor::class.java)
 
     /**
      * Logs the HTTP request method, URL, and headers.
@@ -30,7 +30,7 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
     private fun logRequestEventAndHeaders(request: HttpRequest) {
         StringBuilder().apply {
             appendLine("${request.requestMethod} ${request.url.clone().build()}")
-            appendLine(com.expediagroup.sdk.core.logging.LogMessageConstant.REQUEST_HEADERS)
+            appendLine(LogMessageConstant.REQUEST_HEADERS)
 
             request.headers.forEach { (key, value) ->
                 val keyCases = listOf(
@@ -60,14 +60,14 @@ class HttpRequestLoggingInterceptor : HttpExecuteInterceptor {
     @Throws(IOException::class)
     private fun logRequestBody(request: HttpRequest) {
         StringBuilder().apply {
-            appendLine(com.expediagroup.sdk.core.logging.LogMessageConstant.REQUEST_BODY)
+            appendLine(LogMessageConstant.REQUEST_BODY)
 
             if (request.content.length == 0L) {
                 return
             }
 
             if (!canLogBody(request)) {
-                appendLine(com.expediagroup.sdk.core.logging.LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED.format(request.content.type))
+                appendLine(LogMessageConstant.BODY_CONTENT_TYPE_NOT_SUPPORTED.format(request.content.type))
                 logger.debug(this.toString(), LogMessageTag.OUTGOING)
                 return
             }

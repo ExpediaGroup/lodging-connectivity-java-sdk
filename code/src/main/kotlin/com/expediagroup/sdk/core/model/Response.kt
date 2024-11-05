@@ -24,13 +24,13 @@ import kotlin.collections.Map.Entry
  * A Generic Response to represent the response from a service call.
  *
  * @property statusCode The HTTP status code of the response
- * @property data The body of the response
+ * @property body The body of the response
  * @property headers The headers of the response
  */
-@Suppress("MemberVisibilityCanBePrivate")
+
 open class Response<T>(
     val statusCode: Int,
-    val data: T,
+    val body: T,
     val headers: Map<String, List<String>>
 ) {
     constructor(statusCode: Int, data: T, headers: Set<Entry<String, List<String>>>) : this(
@@ -50,10 +50,7 @@ open class Response<T>(
             )
     }
 
-    override fun toString() = "Response(statusCode=$statusCode, data=$data, headers=$headers)"
-
-    @Deprecated("Use getData() instead", replaceWith = ReplaceWith("getData()"))
-    fun getBody() = data
+    override fun toString() = "Response(statusCode=$statusCode, data=$body, headers=$headers)"
 }
 
 class EmptyResponse(
