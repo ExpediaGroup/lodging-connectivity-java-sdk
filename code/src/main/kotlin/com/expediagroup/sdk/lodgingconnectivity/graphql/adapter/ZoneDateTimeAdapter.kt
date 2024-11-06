@@ -40,4 +40,3 @@ object ZoneDateTimeAdapter : Adapter<ZonedDateTime?> {
         }
     }
 }
-

@@ -27,13 +27,17 @@ import kotlin.collections.Map.Entry
  * @property body The body of the response
  * @property headers The headers of the response
  */
-@Suppress("MemberVisibilityCanBePrivate")
+
 open class Response<T>(
     val statusCode: Int,
     val body: T,
     val headers: Map<String, List<String>>
 ) {
-    constructor(statusCode: Int, body: T, headers: Set<Entry<String, List<String>>>) : this(statusCode, body, toHeadersMap(headers))
+    constructor(statusCode: Int, data: T, headers: Set<Entry<String, List<String>>>) : this(
+        statusCode,
+        data,
+        toHeadersMap(headers)
+    )
 
     companion object {
         @JvmStatic
@@ -46,7 +50,7 @@ open class Response<T>(
             )
     }
 
-    override fun toString(): String = "Response(statusCode=$statusCode, body=$body, headers=$headers)"
+    override fun toString() = "Response(statusCode=$statusCode, data=$body, headers=$headers)"
 }
 
 class EmptyResponse(

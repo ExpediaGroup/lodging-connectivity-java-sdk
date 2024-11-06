@@ -15,7 +15,7 @@
  */
 package com.expediagroup.sdk.core.model.exception.service
 
-import io.ktor.http.HttpStatusCode
+import com.expediagroup.sdk.core.http.HttpStatus
 
 /**
  * An exception that is thrown when an authentication error occurs.
@@ -32,12 +32,12 @@ class ExpediaGroupAuthException(
     /**
      * An exception that is thrown when an authentication error occurs.
      *
-     * @param errorCode The HTTP status code of the error.
+     * @param status The HTTP status of the error.
      * @param message The error message.
      */
     constructor(
-        errorCode: HttpStatusCode,
+        status: HttpStatus,
         message: String,
         transactionId: String?
-    ) : this(message = "[${errorCode.value}] $message", transactionId = transactionId)
+    ) : this(message = "[${status.code}] $message", transactionId = transactionId)
 }

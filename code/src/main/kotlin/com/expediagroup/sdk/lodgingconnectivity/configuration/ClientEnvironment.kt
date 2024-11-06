@@ -35,4 +35,3 @@ enum class ClientEnvironment {
      */
     SANDBOX_TEST
 }
-

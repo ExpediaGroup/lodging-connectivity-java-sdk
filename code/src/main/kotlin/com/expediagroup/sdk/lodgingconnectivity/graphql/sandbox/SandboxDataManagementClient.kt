@@ -16,9 +16,9 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox
 
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
-import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 
@@ -43,11 +43,11 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
  * )
  * ```
  */
-class SandboxDataManagementClient(config: ClientConfiguration)  :
+class SandboxDataManagementClient(config: ClientConfiguration) :
     GraphQLExecutor by BaseGraphQLClient(
-        config.toExpediaGroupClientConfiguration(
+        config.toFullClientConfiguration(
             endpointProvider = EndpointProvider::getSandboxDataManagementClientEndpoint,
             authEndpointProvider = EndpointProvider::getAuthEndpoint,
             defaultEnvironment = ClientEnvironment.SANDBOX_PROD
-        )
+        ),
     )

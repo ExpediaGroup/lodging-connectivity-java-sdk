@@ -16,39 +16,39 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.graphql
 
-import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
-import com.apollographql.ktor.http.KtorHttpEngine
-import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
+import com.apollographql.java.client.ApolloClient
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import io.ktor.client.statement.HttpResponse
-import kotlinx.coroutines.runBlocking
+import com.expediagroup.sdk.core.configuration.DefaultClientBuilder
+import com.expediagroup.sdk.core.configuration.FullClientConfiguration
+import com.expediagroup.sdk.core.client.ApiClientApolloHttpEngine
+import com.expediagroup.sdk.core.client.util.createApiClient
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import java.util.concurrent.CompletableFuture
 
-/**
- * An internal base implementation of a GraphQL client for executing GraphQL queries, mutations, and subscriptions.
- *
- * This class integrates the Apollo GraphQL client with a custom `ExpediaGroupClient` for handling HTTP communication
- * and error management. It provides a foundation for more specific client implementations by executing operations
- * with error handling.
- *
- * @param config The configuration for the `ExpediaGroupClient`
- */
-internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : GraphQLExecutor {
+class BaseGraphQLClient(configuration: FullClientConfiguration) : GraphQLExecutor {
+    private val engine: ApiClientApolloHttpEngine = ApiClientApolloHttpEngine(
+        createApiClient(
+            configuration = configuration
+        )
+    )
 
-    // Custom client for handling HTTP requests and responses.
-    private val expediaGroupClient =
-        object : ExpediaGroupClient(clientConfiguration = config, namespace = "lodging-connectivity-sdk") {
-            override suspend fun throwServiceException(response: HttpResponse, operationId: String) {
-                throw ExpediaGroupServiceException("Service error occurred for operation $operationId.\nResponse: $response")
-            }
-        }
+    companion object {
+        @JvmStatic
+        fun builder() = ClientConfiguration.builder()
+    }
 
     private val apolloClient: ApolloClient = ApolloClient.Builder()
-        .serverUrl(config.endpoint!!)
-        .httpEngine(KtorHttpEngine(expediaGroupClient.httpClient))
+        .serverUrl(configuration.getEndpoint())
+        .httpEngine(engine)
         .build()
+
+    class Builder() : DefaultClientBuilder<BaseGraphQLClient>() {
+        override fun build(): BaseGraphQLClient {
+            return BaseGraphQLClient(this.buildConfiguration())
+        }
+    }
 
     /**
      * Executes a GraphQL query and returns the result.
@@ -57,18 +57,33 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
      * @return The result of the query execution, with errors handled.
      * @throws ExpediaGroupServiceException If the query execution returns errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): T {
-        return runBlocking {
-            apolloClient.query(query).execute().apply {
-                if (exception != null) {
-                    throw ExpediaGroupServiceException(exception?.message)
+    override fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<T> {
+        val promise: CompletableFuture<T> = CompletableFuture()
+
+        apolloClient.query(query).enqueue { response ->
+            try {
+                if (response.hasErrors()) {
+                    // Complete exceptionally if there are GraphQL errors
+                    promise.completeExceptionally(ExpediaGroupServiceException(message = response.errors.toString()))
+                } else if (response.exception != null) {
+                    // Complete exceptionally if there is a network or other exception
+                    promise.completeExceptionally(ExpediaGroupServiceException(cause = response.exception))
+                } else {
+                    // Complete normally with the response data if no errors or exceptions
+                    promise.complete(response.dataAssertNoErrors)
                 }
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
-                }
-            }.dataAssertNoErrors
+            } catch (e: Exception) {
+                // Handle unexpected exceptions during callback execution
+                promise.completeExceptionally(ExpediaGroupServiceException(cause = e))
+            }
         }
+
+        return promise
     }
+
+    override fun <T : Query.Data> execute(query: Query<T>): T =
+        executeAsync(query).get()
+
 
     /**
      * Executes a GraphQL mutation and returns the result.
@@ -77,17 +92,30 @@ internal class BaseGraphQLClient(config: ExpediaGroupClientConfiguration) : Grap
      * @return The result of the mutation execution, with errors handled.
      * @throws ExpediaGroupServiceException If the mutation execution returns errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T {
-        return runBlocking {
-            apolloClient.mutation(mutation).execute().apply {
-                if (exception != null) {
-                    throw ExpediaGroupServiceException(exception?.message)
-                }
-                if (hasErrors()) {
-                    throw ExpediaGroupServiceException(errors.toString())
-                }
-            }.dataAssertNoErrors
-        }
-    }
-}
+    override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<T> {
+        val promise: CompletableFuture<T> = CompletableFuture()
 
+        apolloClient.mutation(mutation).enqueue { response ->
+            try {
+                if (response.hasErrors()) {
+                    // Complete exceptionally if there are GraphQL errors
+                    promise.completeExceptionally(ExpediaGroupServiceException(response.errors.toString()))
+                } else if (response.exception != null) {
+                    // Complete exceptionally if there is a network or other exception
+                    promise.completeExceptionally(ExpediaGroupServiceException(cause = response.exception))
+                } else {
+                    // Complete normally with the response data if no errors or exceptions
+                    promise.complete(response.dataAssertNoErrors)
+                }
+            } catch (e: Exception) {
+                // Handle unexpected exceptions during callback execution
+                promise.completeExceptionally(ExpediaGroupServiceException(cause = e))
+            }
+        }
+
+        return promise
+    }
+
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): T =
+        executeAsync(mutation).get()
+}

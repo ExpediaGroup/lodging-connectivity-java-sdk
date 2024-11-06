@@ -15,10 +15,10 @@
  */
 package com.expediagroup.sdk.core.constant
 
-import io.ktor.http.HttpHeaders
+import com.google.auth.http.AuthHttpConstants
 
 internal data object LogMaskingFields {
-    val DEFAULT_MASKED_HEADER_FIELDS: Set<String> = setOf(HttpHeaders.Authorization)
+    val DEFAULT_MASKED_HEADER_FIELDS: Set<String> = setOf(AuthHttpConstants.AUTHORIZATION)
     val DEFAULT_MASKED_BODY_FIELDS: Set<String> =
         setOf(
             "cvv",

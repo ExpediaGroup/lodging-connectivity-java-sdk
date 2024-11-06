@@ -18,34 +18,11 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql
 
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import java.util.concurrent.CompletableFuture
 
-/**
- * An interface for executing GraphQL operations, including queries, mutations, and subscriptions.
- *
- * Implementers of this interface are responsible for executing GraphQL operations and returning the results,
- * while handling any errors that may occur during the execution.
- */
 interface GraphQLExecutor {
-
-    /**
-     * Executes a GraphQL query and returns the result.
-     *
-     * @param query The GraphQL query to execute.
-     * @return The result of the query execution.
-     * @param <T> The type of data returned by the query, extending `Query.Data`.
-     * @throws ExpediaGroupServiceException If the query execution returns errors.
-     */
+    fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<T>
+    fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<T>
     fun <T : Query.Data> execute(query: Query<T>): T
-
-    /**
-     * Executes a GraphQL mutation and returns the result.
-     *
-     * @param mutation The GraphQL mutation to execute.
-     * @return The result of the mutation execution.
-     * @param <T> The type of data returned by the mutation, extending `Mutation.Data`.
-     * @throws ExpediaGroupServiceException If the mutation execution returns errors.
-     */
     fun <T : Mutation.Data> execute(mutation: Mutation<T>): T
 }
-
