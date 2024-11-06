@@ -26,7 +26,6 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.funct
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function.confirmReservationNotificationFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function.refundReservationFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator.PropertyReservationsPaginator
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator.PropertyReservationsSummariesPaginator
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelVrboReservationInput
@@ -121,34 +120,6 @@ class ReservationClient(config: ClientConfiguration) {
         initialCursor: String? = null
     ) = run {
         PropertyReservationsPaginator(
-            client = baseGraphQlClient,
-            input = input,
-            pageSize = pageSize,
-            initialCursor = initialCursor
-        )
-    }
-
-    @JvmOverloads
-    fun getPropertyReservationsSummary(
-        propertyId: String,
-        pageSize: Int? = null,
-        initialCursor: String? = null
-    ) = run {
-        PropertyReservationsSummariesPaginator(
-            client = baseGraphQlClient,
-            input = PropertyReservationsInput(propertyId),
-            pageSize = pageSize,
-            initialCursor = initialCursor
-        )
-    }
-
-    @JvmOverloads
-    fun getPropertyReservationsSummary(
-        input: PropertyReservationsInput,
-        pageSize: Int? = null,
-        initialCursor: String? = null
-    ) = run {
-        PropertyReservationsSummariesPaginator(
             client = baseGraphQlClient,
             input = input,
             pageSize = pageSize,
