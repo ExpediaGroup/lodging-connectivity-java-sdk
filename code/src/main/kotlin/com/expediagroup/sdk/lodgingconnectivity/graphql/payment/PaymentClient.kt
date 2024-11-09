@@ -54,8 +54,6 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
         )
     )
 
-    override fun getInternalGraphQLExecutor(): GraphQLExecutor = this.graphqlExecutor
-
     fun getPaymentInstrument(token: String) = run {
         getPaymentInstrumentFun(graphqlExecutor, token)
     }

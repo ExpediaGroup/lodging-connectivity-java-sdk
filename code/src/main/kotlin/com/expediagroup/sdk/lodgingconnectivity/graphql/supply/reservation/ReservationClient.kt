@@ -71,8 +71,6 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         )
     )
 
-    override fun getInternalGraphQLExecutor(): GraphQLExecutor = this.graphqlExecutor
-
     @JvmOverloads
     fun getPropertyReservations(
         propertyId: String,

@@ -77,8 +77,6 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
         )
     )
 
-    override fun getInternalGraphQLExecutor(): GraphQLExecutor = this.graphqlExecutor
-
     fun getProperties() = run {
         getSandboxPropertiesFun(graphqlExecutor)
     }
