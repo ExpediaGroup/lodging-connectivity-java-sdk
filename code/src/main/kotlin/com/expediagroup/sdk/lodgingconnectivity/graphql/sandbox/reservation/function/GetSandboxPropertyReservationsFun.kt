@@ -1,9 +1,7 @@
-@file:JvmName("SandboxPropertyReservationsRequest")
-
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function
 
 import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orNullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
@@ -17,7 +15,6 @@ data class SandboxPropertyReservationsResponse(
 ) : PaginatedResponse<List<SandboxReservationData>, SandboxPropertyReservationsQuery.Data>
 
 @JvmOverloads
-@JvmName("execute")
 fun getSandboxPropertyReservations(
     graphQLExecutor: GraphQLExecutor,
     propertyId: String,
@@ -33,7 +30,7 @@ fun getSandboxPropertyReservations(
 
     val response = graphQLExecutor.execute(operation)
 
-    val nextPageCursor = response.data.property.reservations.cursor.nullIfBlank()
+    val nextPageCursor = response.data.property.reservations.cursor.orNullIfBlank()
 
     val currentPageInfo = PageInfo(
         cursor = cursor,

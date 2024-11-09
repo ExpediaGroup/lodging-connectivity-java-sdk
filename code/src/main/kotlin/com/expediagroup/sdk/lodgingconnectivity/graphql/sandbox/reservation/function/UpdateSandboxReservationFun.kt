@@ -1,5 +1,3 @@
-@file:JvmName("UpdateSandboxReservationRequest")
-
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function
 
 import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
@@ -14,7 +12,6 @@ data class UpdateSandboxReservationResponse(
     override val rawResponse: RawResponse<SandboxUpdateReservationMutation.Data>,
 ) : Response<SandboxReservationData, SandboxUpdateReservationMutation.Data>
 
-@JvmName("execute")
 fun updateSandboxReservationFun(graphQLExecutor: GraphQLExecutor, input: UpdateReservationInput): UpdateSandboxReservationResponse {
     val operation = SandboxUpdateReservationMutation(input)
     val response = graphQLExecutor.execute(operation)

@@ -1,5 +1,3 @@
-@file:JvmName("PaymentInstrumentRequest")
-
 package com.expediagroup.sdk.lodgingconnectivity.graphql.payment.function
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
@@ -15,7 +13,6 @@ data class PaymentInstrumentResponse(
     override val rawResponse: RawResponse<PaymentInstrumentQuery.Data>,
 ) : Response<PaymentInstrumentData, PaymentInstrumentQuery.Data>
 
-@JvmName("execute")
 fun getPaymentInstrumentFun(graphQLExecutor: GraphQLExecutor, token: String): PaymentInstrumentResponse {
     val operation = PaymentInstrumentQuery(token)
     val response = graphQLExecutor.execute(operation)

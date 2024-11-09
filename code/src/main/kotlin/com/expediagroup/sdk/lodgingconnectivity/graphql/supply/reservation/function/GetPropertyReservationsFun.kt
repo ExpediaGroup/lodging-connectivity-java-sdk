@@ -1,11 +1,10 @@
-@file:JvmName("PropertyReservationsRequest")
-
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.getOrThrow
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.nullIfBlank
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orFalseIfNull
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orNullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
@@ -22,7 +21,6 @@ data class PropertyReservationsResponse(
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
 @JvmOverloads
-@JvmName("execute")
 fun getPropertyReservationsFun(
     graphQLExecutor: GraphQLExecutor,
     input: PropertyReservationsInput,
@@ -38,8 +36,8 @@ fun getPropertyReservationsFun(
         .cursor(cursor)
         .filter(input.filter.getOrNull())
         .checkOutDate(input.checkOutDate.getOrNull())
-        .includeSupplierAmount(selections?.includeSupplierAmount ?: false)
-        .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken ?: false)
+        .includeSupplierAmount(selections?.includeSupplierAmount.orFalseIfNull())
+        .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())
         .build()
 
     val response = graphQLExecutor.execute(operation)
@@ -54,7 +52,7 @@ fun getPropertyReservationsFun(
 
     val currentPageInfo = PageInfo(
         cursor = cursor,
-        nextPageCursor = nextPageInfo?.endCursor?.nullIfBlank(),
+        nextPageCursor = nextPageInfo?.endCursor?.orNullIfBlank(),
         hasNext = nextPageInfo?.hasNextPage ?: false,
         pageSize = reservationsPage.edges.size,
         totalCount = reservationsPage.totalCount
