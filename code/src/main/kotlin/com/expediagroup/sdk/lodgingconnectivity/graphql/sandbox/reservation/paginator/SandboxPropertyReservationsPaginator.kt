@@ -57,7 +57,7 @@ class SandboxPropertyReservationsPaginator @JvmOverloads constructor(
     }
 
     private fun hasReservationsToFetch(): Boolean = run {
-        client.execute(
+        graphQLExecutor.execute(
             SandboxPropertyReservationsTotalCountQuery(propertyId)
         ).let {
             it.data.property.reservations.totalCount > 0

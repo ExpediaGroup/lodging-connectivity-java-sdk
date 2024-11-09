@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.getOrThrow
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
@@ -22,7 +22,7 @@ data class ReservationsPaginatedResponse(
 
 
 class PropertyReservationsPaginator(
-    private val client: GraphQLExecutor,
+    private val graphQLExecutor: GraphQLExecutor,
     private val input: PropertyReservationsInput,
     private val selections: ReservationSelections? = null,
     private val pageSize: Int? = null,
@@ -47,7 +47,7 @@ class PropertyReservationsPaginator(
         }
 
         val response = getPropertyReservationsFun(
-            client = client,
+            graphQLExecutor = graphQLExecutor,
             input = input,
             selections = selections,
             cursor = cursor,
@@ -65,7 +65,7 @@ class PropertyReservationsPaginator(
     }
 
     private fun hasReservationsToFetch(): Boolean = run {
-        client.execute(
+        graphQLExecutor.execute(
             PropertyReservationsTotalCountQuery
                 .Builder()
                 .propertyId(input.propertyId)
