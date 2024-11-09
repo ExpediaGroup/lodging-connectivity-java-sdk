@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orNullIfBlank
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
@@ -16,7 +16,7 @@ data class SandboxPropertiesResponse(
 
 @JvmOverloads
 fun getSandboxPropertiesFun(
-    client: GraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     cursor: String? = null,
     pageSize: Int? = null
 ): SandboxPropertiesResponse {
@@ -26,7 +26,7 @@ fun getSandboxPropertiesFun(
         .cursor(cursor)
         .build()
 
-    val response = client.execute(operation)
+    val response = graphQLExecutor.execute(operation)
 
     val nextPageCursor = response.data.properties.cursor.orNullIfBlank()
 

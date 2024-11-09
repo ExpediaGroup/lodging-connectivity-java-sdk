@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.lodgingconnectivity.graphql
+package com.expediagroup.sdk.lodgingconnectivity.graphql.common
 
+import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
@@ -27,7 +28,8 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawRespon
  * Implementers of this interface are responsible for executing GraphQL operations and returning the results,
  * while handling any errors that may occur during the execution.
  */
-interface GraphQLExecutor {
+abstract class GraphQLExecutor {
+    protected abstract val apolloClient: ApolloClient
 
     /**
      * Executes a GraphQL query and returns the result.
@@ -37,7 +39,7 @@ interface GraphQLExecutor {
      * @param <T> The type of data returned by the query, extending `Query.Data`.
      * @throws ExpediaGroupServiceException If the query execution returns errors.
      */
-    fun <T : Query.Data> execute(query: Query<T>): RawResponse<T>
+    abstract fun <T : Query.Data> execute(query: Query<T>): RawResponse<T>
 
     /**
      * Executes a GraphQL mutation and returns the result.
@@ -47,6 +49,6 @@ interface GraphQLExecutor {
      * @param <T> The type of data returned by the mutation, extending `Mutation.Data`.
      * @throws ExpediaGroupServiceException If the mutation execution returns errors.
      */
-    fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T>
+    abstract fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T>
 }
 
