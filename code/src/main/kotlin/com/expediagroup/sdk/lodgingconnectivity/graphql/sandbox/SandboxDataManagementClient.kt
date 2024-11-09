@@ -71,7 +71,9 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReser
 class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
     override val graphqlExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         config.toExpediaGroupClientConfiguration(
-            clientEndpoint = SandboxApiEndpointProvider.forEnvironment(environment = config.environment ?: ClientEnvironment.SANDBOX_PROD),
+            clientEndpoint = SandboxApiEndpointProvider.forEnvironment(
+                environment = config.environment ?: ClientEnvironment.SANDBOX_PROD
+            ),
         )
     )
 

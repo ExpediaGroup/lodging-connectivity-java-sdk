@@ -45,10 +45,12 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.function.getPaym
  * )
  * ```
  */
-class PaymentClient(config: ClientConfiguration): GraphQLClient() {
+class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
     override val graphqlExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         config.toExpediaGroupClientConfiguration(
-            clientEndpoint = PaymentApiEndpointProvider.forEnvironment(environment = config.environment ?: ClientEnvironment.PROD),
+            clientEndpoint = PaymentApiEndpointProvider.forEnvironment(
+                environment = config.environment ?: ClientEnvironment.PROD
+            ),
         )
     )
 

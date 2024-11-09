@@ -62,10 +62,12 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationS
  * )
  * ```
  */
-class ReservationClient(config: ClientConfiguration): GraphQLClient() {
+class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     override val graphqlExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         config.toExpediaGroupClientConfiguration(
-            clientEndpoint = SupplyApiEndpointProvider.forEnvironment(environment = config.environment ?: ClientEnvironment.PROD),
+            clientEndpoint = SupplyApiEndpointProvider.forEnvironment(
+                environment = config.environment ?: ClientEnvironment.PROD
+            ),
         )
     )
 
