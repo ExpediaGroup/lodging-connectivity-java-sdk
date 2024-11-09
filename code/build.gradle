@@ -1,7 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.0.21'
     id 'org.jetbrains.dokka' version '1.9.20'
-    id 'com.apollographql.apollo' version '4.0.1'
+    id 'com.apollographql.apollo' version '4.1.0'
 
     /* Publishing Plugins */
     id 'maven-publish'
@@ -20,7 +20,7 @@ dependencies {
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
 
     /* Apollo Kotlin */
-    api 'com.apollographql.apollo:apollo-runtime:4.0.1'
+    api 'com.apollographql.apollo:apollo-runtime:4.1.0'
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
     implementation 'com.apollographql.ktor:apollo-engine-ktor:0.0.2'
 

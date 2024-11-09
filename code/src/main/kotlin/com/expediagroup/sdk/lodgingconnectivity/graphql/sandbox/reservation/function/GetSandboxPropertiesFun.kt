@@ -21,7 +21,7 @@ fun getSandboxPropertiesFun(
     pageSize: Int? = null
 ): SandboxPropertiesResponse {
     val operation = SandboxPropertiesQuery
-        .Builder()
+        .builder()
         .pageSize(pageSize)
         .cursor(cursor)
         .build()

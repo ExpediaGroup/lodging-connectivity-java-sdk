@@ -67,7 +67,7 @@ class PropertyReservationsPaginator(
     private fun hasReservationsToFetch(): Boolean = run {
         graphQLExecutor.execute(
             PropertyReservationsTotalCountQuery
-                .Builder()
+                .builder()
                 .propertyId(input.propertyId)
                 .idSource(input.idSource.getOrNull())
                 .pageSize(pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE)

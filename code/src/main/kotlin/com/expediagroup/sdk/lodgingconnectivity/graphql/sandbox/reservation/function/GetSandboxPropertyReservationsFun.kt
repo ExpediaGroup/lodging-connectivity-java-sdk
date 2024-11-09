@@ -22,7 +22,7 @@ fun getSandboxPropertyReservations(
     pageSize: Int? = null
 ): SandboxPropertyReservationsResponse {
     val operation = SandboxPropertyReservationsQuery
-        .Builder()
+        .builder()
         .propertyId(propertyId)
         .cursor(cursor)
         .pageSize(pageSize)
