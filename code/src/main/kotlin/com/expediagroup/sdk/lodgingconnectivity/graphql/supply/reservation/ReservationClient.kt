@@ -26,6 +26,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.funct
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function.confirmReservationNotificationFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function.refundReservationFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator.PropertyReservationsPaginator
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.stream.PropertyReservationStream
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.CancelVrboReservationInput
@@ -68,7 +69,7 @@ class ReservationClient(config: ClientConfiguration) {
     )
 
     @JvmOverloads
-    fun getPropertyReservations(
+    fun getPropertyReservationsPaginator(
         propertyId: String,
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
@@ -84,7 +85,7 @@ class ReservationClient(config: ClientConfiguration) {
     }
 
     @JvmOverloads
-    fun getPropertyReservations(
+    fun getPropertyReservationsPaginator(
         propertyId: String,
         pageSize: Int,
         initialCursor: String? = null
@@ -98,7 +99,7 @@ class ReservationClient(config: ClientConfiguration) {
     }
 
     @JvmOverloads
-    fun getPropertyReservations(
+    fun getPropertyReservationsPaginator(
         input: PropertyReservationsInput,
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
@@ -114,7 +115,7 @@ class ReservationClient(config: ClientConfiguration) {
     }
 
     @JvmOverloads
-    fun getPropertyReservations(
+    fun getPropertyReservationsPaginator(
         input: PropertyReservationsInput,
         pageSize: Int,
         initialCursor: String? = null
@@ -125,6 +126,14 @@ class ReservationClient(config: ClientConfiguration) {
             pageSize = pageSize,
             initialCursor = initialCursor
         )
+    }
+
+    fun getPropertyReservationsStream(propertyId: String) = run {
+        PropertyReservationStream(getPropertyReservationsPaginator(propertyId))
+    }
+
+    fun getPropertyReservationsStream(input: PropertyReservationsInput) = run {
+        PropertyReservationStream(getPropertyReservationsPaginator(input))
     }
 
     @JvmOverloads
