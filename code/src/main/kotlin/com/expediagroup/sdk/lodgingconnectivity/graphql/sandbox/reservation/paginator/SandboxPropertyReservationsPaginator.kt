@@ -5,6 +5,7 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertyReservationsQuery
+import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxPropertyReservationsTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.getSandboxPropertyReservations
 
@@ -23,10 +24,22 @@ class SandboxPropertyReservationsPaginator(
 ) : Iterator<SandboxReservationsPaginatedResponse> {
     private var cursor = initialCursor
     private var hasNext: Boolean = true
+    private var initialized: Boolean = false
 
-    override fun hasNext(): Boolean = hasNext
+    override fun hasNext(): Boolean {
+        if (!initialized) {
+            initialized = true
+            return hasReservationsToFetch()
+        }
+
+        return hasNext
+    }
 
     override fun next(): SandboxReservationsPaginatedResponse {
+        if (!hasNext()) {
+            throw NoSuchElementException("No more pages to fetch")
+        }
+
         val response = getSandboxPropertyReservations(
             client = client,
             propertyId = propertyId,
@@ -42,5 +55,13 @@ class SandboxPropertyReservationsPaginator(
             pageInfo = response.pageInfo,
             rawResponse = response.rawResponse
         )
+    }
+
+    private fun hasReservationsToFetch(): Boolean = run {
+        client.execute(
+            SandboxPropertyReservationsTotalCountQuery(propertyId)
+        ).let {
+            it.data.property.reservations.totalCount > 0
+        }
     }
 }

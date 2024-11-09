@@ -80,7 +80,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) {
     }
 
     @JvmOverloads
-    fun getProperties(pageSize: Int, initialCursor: String? = null) = run {
+    fun getPropertiesPaginator(pageSize: Int, initialCursor: String? = null) = run {
         SandboxPropertiesPaginator(baseGraphQLClient, pageSize, initialCursor)
     }
 
