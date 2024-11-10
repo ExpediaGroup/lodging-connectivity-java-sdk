@@ -2,12 +2,9 @@ package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream
 
 import com.expediagroup.sdk.graphql.model.paging.PaginatedStream
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.PropertyReservationsPaginator
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.ReservationsPaginator
 
-
-class PropertyReservationStream(
-    private val paginator: PropertyReservationsPaginator
-) : PaginatedStream<ReservationData?>() {
+class ReservationsStream(private val paginator: ReservationsPaginator) : PaginatedStream<ReservationData?>() {
     override fun nextItem(): ReservationData? {
         if (isCurrentPageEmpty()) {
             if (!paginator.hasNext()) {
