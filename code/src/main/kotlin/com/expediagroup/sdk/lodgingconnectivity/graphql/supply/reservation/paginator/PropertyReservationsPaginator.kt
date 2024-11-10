@@ -2,7 +2,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.pagi
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.getOrThrow
+import com.expediagroup.sdk.lodgingconnectivity.extension.getOrThrow
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
