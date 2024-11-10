@@ -20,7 +20,7 @@ data class ReservationsPaginatedResponse(
     override val pageInfo: PageInfo
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
-class PropertyReservationsPaginator(
+class ReservationsPaginator(
     private val graphQLExecutor: GraphQLExecutor,
     private val input: PropertyReservationsInput,
     private val selections: ReservationSelections? = null,

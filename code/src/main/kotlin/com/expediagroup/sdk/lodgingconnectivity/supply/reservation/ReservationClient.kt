@@ -36,8 +36,8 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.canc
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.changeReservationReconciliationFun
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.confirmReservationNotificationFun
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.refundReservationFun
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.PropertyReservationsPaginator
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.PropertyReservationStream
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.ReservationsPaginator
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.ReservationsStream
 
 /**
  * A client for interacting with EG Lodging Connectivity Reservations GraphQL API
@@ -79,7 +79,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         pageSize: Int? = null,
         initialCursor: String? = null
     ) = run {
-        PropertyReservationsPaginator(
+        ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = PropertyReservationsInput(propertyId),
             selections = selections,
@@ -94,7 +94,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         pageSize: Int,
         initialCursor: String? = null
     ) = run {
-        PropertyReservationsPaginator(
+        ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = PropertyReservationsInput(propertyId),
             pageSize = pageSize,
@@ -109,7 +109,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         pageSize: Int? = null,
         initialCursor: String? = null
     ) = run {
-        PropertyReservationsPaginator(
+        ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = input,
             selections = selections,
@@ -124,7 +124,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         pageSize: Int,
         initialCursor: String? = null
     ) = run {
-        PropertyReservationsPaginator(
+        ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = input,
             pageSize = pageSize,
@@ -133,11 +133,11 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     }
 
     fun getReservationsStream(propertyId: String) = run {
-        PropertyReservationStream(getReservationsPaginator(propertyId))
+        ReservationsStream(getReservationsPaginator(propertyId))
     }
 
     fun getReservationsStream(input: PropertyReservationsInput) = run {
-        PropertyReservationStream(getReservationsPaginator(input))
+        ReservationsStream(getReservationsPaginator(input))
     }
 
     @JvmOverloads
