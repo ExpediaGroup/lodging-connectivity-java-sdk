@@ -63,9 +63,9 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationS
  * ```
  */
 class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
-    override val graphqlExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
+    override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         config.toExpediaGroupClientConfiguration(
-            clientEndpoint = SupplyApiEndpointProvider.forEnvironment(
+            apiEndpoint = SupplyApiEndpointProvider.forEnvironment(
                 environment = config.environment ?: ClientEnvironment.PROD
             ),
         )
@@ -79,7 +79,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         initialCursor: String? = null
     ) = run {
         PropertyReservationsPaginator(
-            graphQLExecutor = graphqlExecutor,
+            graphQLExecutor = graphQLExecutor,
             input = PropertyReservationsInput(propertyId),
             selections = selections,
             pageSize = pageSize,
@@ -94,7 +94,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         initialCursor: String? = null
     ) = run {
         PropertyReservationsPaginator(
-            graphQLExecutor = graphqlExecutor,
+            graphQLExecutor = graphQLExecutor,
             input = PropertyReservationsInput(propertyId),
             pageSize = pageSize,
             initialCursor = initialCursor
@@ -109,7 +109,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         initialCursor: String? = null
     ) = run {
         PropertyReservationsPaginator(
-            graphQLExecutor = graphqlExecutor,
+            graphQLExecutor = graphQLExecutor,
             input = input,
             selections = selections,
             pageSize = pageSize,
@@ -124,7 +124,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         initialCursor: String? = null
     ) = run {
         PropertyReservationsPaginator(
-            graphQLExecutor = graphqlExecutor,
+            graphQLExecutor = graphQLExecutor,
             input = input,
             pageSize = pageSize,
             initialCursor = initialCursor
@@ -136,7 +136,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelReservationInput,
         selections: ReservationSelections? = null
     ) = run {
-        cancelReservationFun(graphqlExecutor, input, selections)
+        cancelReservationFun(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -144,7 +144,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelReservationReconciliationInput,
         selections: ReservationSelections? = null
     ) = run {
-        cancelReservationReconciliationFun(graphqlExecutor, input, selections)
+        cancelReservationReconciliationFun(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -152,7 +152,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelVrboReservationInput,
         selections: ReservationSelections? = null
     ) = run {
-        cancelVrboReservationFun(graphqlExecutor, input, selections)
+        cancelVrboReservationFun(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -160,7 +160,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: ChangeReservationReconciliationInput,
         selections: ReservationSelections? = null
     ) = run {
-        changeReservationReconciliationFun(graphqlExecutor, input, selections)
+        changeReservationReconciliationFun(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -168,7 +168,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: ConfirmReservationNotificationInput,
         selections: ReservationSelections? = null
     ) = run {
-        confirmReservationNotificationFun(graphqlExecutor, input, selections)
+        confirmReservationNotificationFun(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -176,6 +176,6 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: RefundReservationInput,
         selections: ReservationSelections? = null
     ) = run {
-        refundReservationFun(graphqlExecutor, input, selections)
+        refundReservationFun(graphQLExecutor, input, selections)
     }
 }
