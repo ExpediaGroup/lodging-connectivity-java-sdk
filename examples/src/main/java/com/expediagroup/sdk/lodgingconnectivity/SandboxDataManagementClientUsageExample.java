@@ -24,15 +24,15 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePro
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreateReservationInput;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdatePropertyInput;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdateReservationInput;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.model.CreateSandboxPropertyResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.model.DeleteSandboxPropertyResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.model.SandboxPropertiesResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.model.UpdateSandboxPropertyResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.model.CancelSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.model.ChangeSandboxReservationStayDatesResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.model.CreateSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.model.DeleteSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.model.UpdateSandboxReservationResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.function.CreateSandboxPropertyResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.function.DeleteSandboxPropertyResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.function.GetSandboxPropertiesResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.function.UpdateSandboxPropertyResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.CancelSandboxReservationResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.ChangeSandboxReservationStayDatesResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.CreateSandboxReservationResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.DeleteSandboxReservationResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.UpdateSandboxReservationResponse;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -165,7 +165,7 @@ public class SandboxDataManagementClientUsageExample {
     }
 
     private static void deletePropertyIfExists() {
-        SandboxPropertiesResponse propertiesResponse = client.getProperties();
+        GetSandboxPropertiesResponse propertiesResponse = client.getProperties();
 
         propertiesResponse.getData().forEach(property -> {
             if (property.getName().equals(PROPERTY_NAME) || property.getName().equals(UPDATED_PROPERTY_NAME)) {
