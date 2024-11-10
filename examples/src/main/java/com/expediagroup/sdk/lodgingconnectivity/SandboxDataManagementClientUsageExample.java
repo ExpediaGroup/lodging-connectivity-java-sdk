@@ -67,8 +67,8 @@ public class SandboxDataManagementClientUsageExample {
         deletePropertyIfExists();
 
         //  ******* Create Property *******
-        CreatePropertyInput createPropertyInput = new CreatePropertyInput
-                .Builder()
+        CreatePropertyInput createPropertyInput = CreatePropertyInput
+                .builder()
                 .name(PROPERTY_NAME)
                 .build();
 
@@ -81,8 +81,8 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Update Property Name *******
-        UpdatePropertyInput updatePropertyInput = new UpdatePropertyInput
-                .Builder()
+        UpdatePropertyInput updatePropertyInput = UpdatePropertyInput
+                .builder()
                 .id(propertyId)
                 .name(UPDATED_PROPERTY_NAME)
                 .build();
@@ -94,8 +94,8 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Create Reservation *******
-        CreateReservationInput createReservationInput = new CreateReservationInput
-                .Builder()
+        CreateReservationInput createReservationInput = CreateReservationInput
+                .builder()
                 .propertyId(propertyId)
                 .childCount(4)
                 .adultCount(2)
@@ -110,8 +110,8 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Update Reservation *******
-        UpdateReservationInput updateReservationInput = new UpdateReservationInput
-                .Builder()
+        UpdateReservationInput updateReservationInput = UpdateReservationInput
+                .builder()
                 .id(reservationData.getId())
                 .childAges(Arrays.asList(3, 5, 7))
                 .build();
@@ -125,8 +125,8 @@ public class SandboxDataManagementClientUsageExample {
 
 
         // ******* Update Reservation Stay Dates *******
-        ChangeReservationStayDatesInput changeReservationStayDatesInput = new ChangeReservationStayDatesInput
-                .Builder()
+        ChangeReservationStayDatesInput changeReservationStayDatesInput = ChangeReservationStayDatesInput
+                .builder()
                 .id(reservationData.getId())
                 .checkInDate(LocalDate.of(2024, 6, 5))
                 .checkOutDate(LocalDate.of(2024, 6, 10))
