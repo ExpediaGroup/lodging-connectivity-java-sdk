@@ -25,12 +25,12 @@ import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.cancelSandboxReservationFun
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.changeSandboxReservationStayDatesFun
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.createSandboxReservationFun
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.deleteSandboxPropertyReservationsFun
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.deleteSandboxReservationsFun
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.deleteSandboxReservationFun
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.getSandboxPropertyReservations
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.getSandboxReservations
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.getSandboxReservationFun
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.updateSandboxReservationFun
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.SandboxPropertyReservationsPaginator
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.SandboxReservationsPaginator
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
@@ -86,13 +86,13 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
         SandboxPropertiesPaginator(graphQLExecutor, pageSize, initialCursor)
     }
 
-    fun getPropertyReservations(propertyId: String) = run {
-        getSandboxPropertyReservations(graphQLExecutor, propertyId)
+    fun getReservations(propertyId: String) = run {
+        getSandboxReservations(graphQLExecutor, propertyId)
     }
 
     @JvmOverloads
-    fun getPropertyReservations(propertyId: String, pageSize: Int, initialCursor: String? = null) = run {
-        SandboxPropertyReservationsPaginator(graphQLExecutor, propertyId, pageSize, initialCursor)
+    fun getReservationsPaginator(propertyId: String, pageSize: Int, initialCursor: String? = null) = run {
+        SandboxReservationsPaginator(graphQLExecutor, propertyId, pageSize, initialCursor)
     }
 
     fun getProperty(propertyId: String) = run {
@@ -151,14 +151,14 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
         deleteSandboxReservationFun(graphQLExecutor, input)
     }
 
-    fun deletePropertyReservations(propertyId: String) = run {
-        deleteSandboxPropertyReservationsFun(
+    fun deleteReservations(propertyId: String) = run {
+        deleteSandboxReservationsFun(
             graphQLExecutor,
             DeletePropertyReservationsInput(propertyId = propertyId)
         )
     }
 
-    fun deletePropertyReservations(input: DeletePropertyReservationsInput) = run {
-        deleteSandboxPropertyReservationsFun(graphQLExecutor, input)
+    fun deleteReservations(input: DeletePropertyReservationsInput) = run {
+        deleteSandboxReservationsFun(graphQLExecutor, input)
     }
 }

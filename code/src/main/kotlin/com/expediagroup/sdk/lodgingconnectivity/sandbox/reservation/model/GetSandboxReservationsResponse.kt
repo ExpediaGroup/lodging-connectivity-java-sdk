@@ -6,7 +6,7 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 
-data class SandboxPropertyReservationsResponse(
+data class GetSandboxReservationsResponse(
     override val data: List<SandboxReservationData>,
     override val rawResponse: RawResponse<SandboxPropertyReservationsQuery.Data>,
     override val pageInfo: PageInfo
