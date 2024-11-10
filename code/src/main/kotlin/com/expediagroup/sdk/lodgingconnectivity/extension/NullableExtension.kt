@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.graphql.extension
+package com.expediagroup.sdk.lodgingconnectivity.extension
 
 inline fun <T> T?.getOrThrow(exceptionProvider: () -> Throwable): T {
     return this ?: throw exceptionProvider()

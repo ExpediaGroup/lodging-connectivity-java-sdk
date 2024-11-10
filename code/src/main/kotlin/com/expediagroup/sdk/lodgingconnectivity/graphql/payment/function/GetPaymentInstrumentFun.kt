@@ -2,7 +2,7 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.payment.function
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.getOrThrow
+import com.expediagroup.sdk.lodgingconnectivity.extension.getOrThrow
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.PaymentInstrumentQuery
