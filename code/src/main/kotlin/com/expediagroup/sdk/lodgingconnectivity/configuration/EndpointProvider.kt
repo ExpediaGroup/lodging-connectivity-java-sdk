@@ -42,7 +42,7 @@ internal object EndpointProvider {
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
-                Unsupported environment [$environment] for ReservationClient. 
+                Unsupported environment [$environment] for Supply API. 
                 Supported environments are [${SupplyApiEndpoint.entries.joinToString(", ") }]
                 """
             )
@@ -55,7 +55,7 @@ internal object EndpointProvider {
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
-                Unsupported environment [$environment] for PaymentClient. 
+                Unsupported environment [$environment] for Payment API. 
                 Supported environments are [${PaymentApiEndpoint.entries.joinToString(", ") }]
                 """
             )
@@ -68,7 +68,7 @@ internal object EndpointProvider {
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
-                Unsupported environment [$environment] for SandboxDataManagementClient. 
+                Unsupported environment [$environment] for Sandbox API. 
                 Supported environments are [${SandboxApiEndpoint.entries.joinToString(", ") }]
                 """
             )
@@ -81,7 +81,7 @@ internal object EndpointProvider {
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
-                Unsupported environment [$environment] for Authentication. 
+                Unsupported environment [$environment] for Authentication API. 
                 Supported environments are [${AuthEndpoint.entries.joinToString(", ") }]
                 """
             )
