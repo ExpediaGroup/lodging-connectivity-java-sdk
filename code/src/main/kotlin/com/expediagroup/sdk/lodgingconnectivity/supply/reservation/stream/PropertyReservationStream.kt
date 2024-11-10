@@ -8,7 +8,6 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.Pro
 class PropertyReservationStream(
     private val paginator: PropertyReservationsPaginator
 ) : PaginatedStream<ReservationData?>() {
-
     override fun nextItem(): ReservationData? {
         while (true) {
             if (index < page.size) {

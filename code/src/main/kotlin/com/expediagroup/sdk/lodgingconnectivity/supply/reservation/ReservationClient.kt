@@ -73,7 +73,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     )
 
     @JvmOverloads
-    fun getPropertyReservationsPaginator(
+    fun getReservationsPaginator(
         propertyId: String,
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
@@ -89,7 +89,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     }
 
     @JvmOverloads
-    fun getPropertyReservationsPaginator(
+    fun getReservationsPaginator(
         propertyId: String,
         pageSize: Int,
         initialCursor: String? = null
@@ -103,7 +103,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     }
 
     @JvmOverloads
-    fun getPropertyReservationsPaginator(
+    fun getReservationsPaginator(
         input: PropertyReservationsInput,
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
@@ -119,7 +119,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     }
 
     @JvmOverloads
-    fun getPropertyReservationsPaginator(
+    fun getReservationsPaginator(
         input: PropertyReservationsInput,
         pageSize: Int,
         initialCursor: String? = null
@@ -132,12 +132,12 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         )
     }
 
-    fun getPropertyReservationsStream(propertyId: String) = run {
-        PropertyReservationStream(getPropertyReservationsPaginator(propertyId))
+    fun getReservationsStream(propertyId: String) = run {
+        PropertyReservationStream(getReservationsPaginator(propertyId))
     }
 
-    fun getPropertyReservationsStream(input: PropertyReservationsInput) = run {
-        PropertyReservationStream(getPropertyReservationsPaginator(input))
+    fun getReservationsStream(input: PropertyReservationsInput) = run {
+        PropertyReservationStream(getReservationsPaginator(input))
     }
 
     @JvmOverloads

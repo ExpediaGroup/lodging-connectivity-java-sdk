@@ -14,20 +14,20 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.PropertyRe
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.constant.Constant
 
-data class PropertyReservationsResponse(
+data class GetReservationsResponse(
     override val data: List<ReservationData?>,
     override val rawResponse: RawResponse<PropertyReservationsQuery.Data>,
     override val pageInfo: PageInfo
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
 @JvmOverloads
-fun getPropertyReservationsFun(
+fun getReservationsFun(
     graphQLExecutor: GraphQLExecutor,
     input: PropertyReservationsInput,
     cursor: String? = null,
     pageSize: Int? = null,
     selections: ReservationSelections? = null
-): PropertyReservationsResponse {
+): GetReservationsResponse {
     val operation = PropertyReservationsQuery
         .builder()
         .propertyId(input.propertyId)
@@ -58,7 +58,7 @@ fun getPropertyReservationsFun(
         totalCount = reservationsPage.totalCount
     )
 
-    return PropertyReservationsResponse(
+    return GetReservationsResponse(
         data = reservationsPage.edges.map { edgeOptional -> edgeOptional?.node?.reservationData },
         rawResponse = response,
         pageInfo = currentPageInfo
