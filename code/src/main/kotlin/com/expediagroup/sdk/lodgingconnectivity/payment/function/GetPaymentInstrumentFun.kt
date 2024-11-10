@@ -4,9 +4,9 @@ import com.expediagroup.sdk.core.extension.getOrThrow
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.PaymentInstrumentQuery
-import com.expediagroup.sdk.lodgingconnectivity.payment.model.PaymentInstrumentResponse
+import com.expediagroup.sdk.lodgingconnectivity.payment.model.GetPaymentInstrumentResponse
 
-fun getPaymentInstrumentFun(graphQLExecutor: GraphQLExecutor, token: String): PaymentInstrumentResponse {
+fun getPaymentInstrumentFun(graphQLExecutor: GraphQLExecutor, token: String): GetPaymentInstrumentResponse {
     val operation = PaymentInstrumentQuery(token)
     val response = graphQLExecutor.execute(operation)
 
@@ -14,7 +14,7 @@ fun getPaymentInstrumentFun(graphQLExecutor: GraphQLExecutor, token: String): Pa
         ExpediaGroupServiceException("Couldn't fetch payment instrument")
     }
 
-    return PaymentInstrumentResponse(
+    return GetPaymentInstrumentResponse(
         data = paymentInstrument.paymentInstrumentData,
         rawResponse = response
     )
