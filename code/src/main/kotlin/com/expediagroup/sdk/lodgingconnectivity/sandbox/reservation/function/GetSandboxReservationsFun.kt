@@ -4,15 +4,15 @@ import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsQuery
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.model.SandboxPropertyReservationsResponse
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.model.GetSandboxReservationsResponse
 
 @JvmOverloads
-fun getSandboxPropertyReservations(
+fun getSandboxReservations(
     graphQLExecutor: GraphQLExecutor,
     propertyId: String,
     cursor: String? = null,
     pageSize: Int? = null
-): SandboxPropertyReservationsResponse {
+): GetSandboxReservationsResponse {
     val operation = SandboxPropertyReservationsQuery
         .builder()
         .propertyId(propertyId)
@@ -32,7 +32,7 @@ fun getSandboxPropertyReservations(
         totalCount = response.data.property.reservations.totalCount
     )
 
-    return SandboxPropertyReservationsResponse(
+    return GetSandboxReservationsResponse(
         data = response.data.property.reservations.elements.map { it.sandboxReservationData },
         rawResponse = response,
         pageInfo = currentPageInfo
