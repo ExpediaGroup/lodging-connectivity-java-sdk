@@ -130,12 +130,12 @@ data class ClientConfiguration(
         fun builder(): Builder = Builder()
     }
 
-    internal fun toExpediaGroupClientConfiguration(clientEndpoint: ClientEndpoint) =
+    internal fun toExpediaGroupClientConfiguration(apiEndpoint: ApiEndpoint) =
         ExpediaGroupClientConfiguration(
             key = this.key,
             secret = this.secret,
-            endpoint = clientEndpoint.endpoint,
-            authEndpoint = clientEndpoint.authEndpoint,
+            endpoint = apiEndpoint.endpoint,
+            authEndpoint = apiEndpoint.authEndpoint,
             requestTimeout = this.requestTimeout,
             connectionTimeout = this.connectionTimeout,
             socketTimeout = this.socketTimeout,
