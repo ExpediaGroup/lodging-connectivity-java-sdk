@@ -22,7 +22,7 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.PaymentApiEndpoint
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.payment.function.getPaymentInstrumentFun
+import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInstrumentOperation
 
 /**
  * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
@@ -55,6 +55,6 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
     )
 
     fun getPaymentInstrument(token: String) = run {
-        getPaymentInstrumentFun(graphQLExecutor, token)
+        getPaymentInstrumentOperation(graphQLExecutor, token)
     }
 }

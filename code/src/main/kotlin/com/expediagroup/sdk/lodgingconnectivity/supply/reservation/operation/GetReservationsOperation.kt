@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function
+package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
@@ -21,7 +21,7 @@ data class GetReservationsResponse(
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
 @JvmOverloads
-fun getReservationsFun(
+fun getReservationsOperation(
     graphQLExecutor: GraphQLExecutor,
     input: PropertyReservationsInput,
     cursor: String? = null,

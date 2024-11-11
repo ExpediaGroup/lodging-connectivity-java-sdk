@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function
+package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -12,7 +12,7 @@ data class CancelSandboxReservationResponse(
     override val rawResponse: RawResponse<SandboxCancelReservationMutation.Data>,
 ) : Response<SandboxReservationData, SandboxCancelReservationMutation.Data>
 
-fun cancelSandboxReservationFun(graphQLExecutor: GraphQLExecutor, input: CancelReservationInput): CancelSandboxReservationResponse {
+fun cancelSandboxReservationOperation(graphQLExecutor: GraphQLExecutor, input: CancelReservationInput): CancelSandboxReservationResponse {
     val operation = SandboxCancelReservationMutation(input)
     val response = graphQLExecutor.execute(operation)
 

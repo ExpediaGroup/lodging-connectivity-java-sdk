@@ -12,7 +12,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.Reserv
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.PropertyReservationsInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.constant.Constant
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.getReservationsFun
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.getReservationsOperation
 
 data class ReservationsPaginatedResponse(
     override val data: List<ReservationData?>,
@@ -45,7 +45,7 @@ class ReservationsPaginator(
             throw NoSuchElementException("No more pages to fetch")
         }
 
-        val response = getReservationsFun(
+        val response = getReservationsOperation(
             graphQLExecutor = graphQLExecutor,
             input = input,
             selections = selections,

@@ -1,26 +1,26 @@
-package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function
+package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.core.extension.orFalseIfNull
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
-import com.expediagroup.sdk.lodgingconnectivity.supply.operation.CancelReservationMutation
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.CancelVrboReservationMutation
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
-import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationInput
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelVrboReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
 
-data class CancelReservationResponse(
+data class CancelVrboReservationResponse(
     override val data: ReservationData?,
-    override val rawResponse: RawResponse<CancelReservationMutation.Data>,
-) : Response<ReservationData?, CancelReservationMutation.Data>
+    override val rawResponse: RawResponse<CancelVrboReservationMutation.Data>,
+) : Response<ReservationData?, CancelVrboReservationMutation.Data>
 
 @JvmOverloads
-fun cancelReservationFun(
+fun cancelVrboReservationOperation(
     graphQLExecutor: GraphQLExecutor,
-    input: CancelReservationInput,
+    input: CancelVrboReservationInput,
     selections: ReservationSelections? = null
-): CancelReservationResponse {
-    val operation = CancelReservationMutation
+): CancelVrboReservationResponse {
+    val operation = CancelVrboReservationMutation
         .builder()
         .input(input)
         .includeSupplierAmount(selections?.includeSupplierAmount.orFalseIfNull())
@@ -29,8 +29,8 @@ fun cancelReservationFun(
 
     val response = graphQLExecutor.execute(operation)
 
-    return CancelReservationResponse(
-        data = response.data.cancelReservation.reservation?.reservationData,
+    return CancelVrboReservationResponse(
+        data = response.data.cancelVrboReservation.reservation?.reservationData,
         rawResponse = response
     )
 }
