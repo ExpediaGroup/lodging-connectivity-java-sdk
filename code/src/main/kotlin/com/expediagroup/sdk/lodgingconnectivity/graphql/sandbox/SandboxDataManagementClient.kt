@@ -18,8 +18,10 @@ package com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
-import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
-import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
+import com.expediagroup.sdk.lodgingconnectivity.configuration.SandboxApiEndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.DefaultGraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLClient
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.cancelSandboxReservationFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.changeSandboxReservationStayDatesFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.createSandboxPropertyFun
@@ -66,97 +68,97 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReser
  * )
  * ```
  */
-class SandboxDataManagementClient(config: ClientConfiguration) {
-    private val baseGraphQLClient: BaseGraphQLClient = BaseGraphQLClient(
+class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
+    override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         config.toExpediaGroupClientConfiguration(
-            endpointProvider = EndpointProvider::getSandboxDataManagementClientEndpoint,
-            authEndpointProvider = EndpointProvider::getAuthEndpoint,
-            defaultEnvironment = ClientEnvironment.SANDBOX_PROD
+            apiEndpoint = SandboxApiEndpointProvider.forEnvironment(
+                environment = config.environment ?: ClientEnvironment.SANDBOX_PROD
+            ),
         )
     )
 
     fun getProperties() = run {
-        getSandboxPropertiesFun(baseGraphQLClient)
+        getSandboxPropertiesFun(graphQLExecutor)
     }
 
     @JvmOverloads
     fun getProperties(pageSize: Int, initialCursor: String? = null) = run {
-        SandboxPropertiesPaginator(baseGraphQLClient, pageSize, initialCursor)
+        SandboxPropertiesPaginator(graphQLExecutor, pageSize, initialCursor)
     }
 
     fun getPropertyReservations(propertyId: String) = run {
-        getSandboxPropertyReservations(baseGraphQLClient, propertyId)
+        getSandboxPropertyReservations(graphQLExecutor, propertyId)
     }
 
     @JvmOverloads
     fun getPropertyReservations(propertyId: String, pageSize: Int, initialCursor: String? = null) = run {
-        SandboxPropertyReservationsPaginator(baseGraphQLClient, propertyId, pageSize, initialCursor)
+        SandboxPropertyReservationsPaginator(graphQLExecutor, propertyId, pageSize, initialCursor)
     }
 
     fun getProperty(propertyId: String) = run {
-        getSandboxPropertyFun(baseGraphQLClient, propertyId)
+        getSandboxPropertyFun(graphQLExecutor, propertyId)
     }
 
     fun getReservation(reservationId: String) = run {
-        getSandboxReservationFun(baseGraphQLClient, reservationId)
+        getSandboxReservationFun(graphQLExecutor, reservationId)
     }
 
     fun createProperty() = run {
-        createSandboxPropertyFun(baseGraphQLClient, CreatePropertyInput())
+        createSandboxPropertyFun(graphQLExecutor, CreatePropertyInput())
     }
 
     fun createProperty(input: CreatePropertyInput) = run {
-        createSandboxPropertyFun(baseGraphQLClient, input)
+        createSandboxPropertyFun(graphQLExecutor, input)
     }
 
     fun updateProperty(input: UpdatePropertyInput) = run {
-        updateSandboxPropertyFun(baseGraphQLClient, input)
+        updateSandboxPropertyFun(graphQLExecutor, input)
     }
 
     fun deleteProperty(propertyId: String) = run {
-        deleteSandboxPropertyFun(baseGraphQLClient, DeletePropertyInput(id = propertyId))
+        deleteSandboxPropertyFun(graphQLExecutor, DeletePropertyInput(id = propertyId))
     }
 
     fun createReservation(propertyId: String) = run {
-        createSandboxReservationFun(baseGraphQLClient, CreateReservationInput(propertyId = propertyId))
+        createSandboxReservationFun(graphQLExecutor, CreateReservationInput(propertyId = propertyId))
     }
 
     fun createReservation(input: CreateReservationInput) = run {
-        createSandboxReservationFun(baseGraphQLClient, input)
+        createSandboxReservationFun(graphQLExecutor, input)
     }
 
     fun updateReservation(input: UpdateReservationInput) = run {
-        updateSandboxReservationFun(baseGraphQLClient, input)
+        updateSandboxReservationFun(graphQLExecutor, input)
     }
 
     fun changeReservationStayDates(input: ChangeReservationStayDatesInput) = run {
-        changeSandboxReservationStayDatesFun(baseGraphQLClient, input)
+        changeSandboxReservationStayDatesFun(graphQLExecutor, input)
     }
 
     fun cancelReservation(reservationId: String) = run {
-        cancelSandboxReservationFun(baseGraphQLClient, CancelReservationInput(id = reservationId))
+        cancelSandboxReservationFun(graphQLExecutor, CancelReservationInput(id = reservationId))
     }
 
     fun cancelReservation(input: CancelReservationInput) = run {
-        cancelSandboxReservationFun(baseGraphQLClient, input)
+        cancelSandboxReservationFun(graphQLExecutor, input)
     }
 
     fun deleteReservation(reservationId: String) = run {
-        deleteSandboxReservationFun(baseGraphQLClient, DeleteReservationInput(id = reservationId))
+        deleteSandboxReservationFun(graphQLExecutor, DeleteReservationInput(id = reservationId))
     }
 
     fun deleteReservation(input: DeleteReservationInput) = run {
-        deleteSandboxReservationFun(baseGraphQLClient, input)
+        deleteSandboxReservationFun(graphQLExecutor, input)
     }
 
     fun deletePropertyReservations(propertyId: String) = run {
         deleteSandboxPropertyReservationsFun(
-            baseGraphQLClient,
+            graphQLExecutor,
             DeletePropertyReservationsInput(propertyId = propertyId)
         )
     }
 
     fun deletePropertyReservations(input: DeletePropertyReservationsInput) = run {
-        deleteSandboxPropertyReservationsFun(baseGraphQLClient, input)
+        deleteSandboxPropertyReservationsFun(graphQLExecutor, input)
     }
 }

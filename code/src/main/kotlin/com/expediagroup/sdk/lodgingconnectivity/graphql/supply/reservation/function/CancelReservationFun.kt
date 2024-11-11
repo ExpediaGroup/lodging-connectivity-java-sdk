@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
 
-import com.expediagroup.sdk.lodgingconnectivity.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.orFalseIfNull
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.Response
@@ -16,7 +16,7 @@ data class CancelReservationResponse(
 
 @JvmOverloads
 fun cancelReservationFun(
-    client: GraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: CancelReservationInput,
     selections: ReservationSelections? = null
 ): CancelReservationResponse {
@@ -27,7 +27,7 @@ fun cancelReservationFun(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())
         .build()
 
-    val response = client.execute(operation)
+    val response = graphQLExecutor.execute(operation)
 
     return CancelReservationResponse(
         data = response.data.cancelReservation.reservation?.reservationData,

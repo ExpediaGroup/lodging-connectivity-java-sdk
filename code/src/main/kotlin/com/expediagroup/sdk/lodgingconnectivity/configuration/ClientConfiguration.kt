@@ -130,24 +130,17 @@ data class ClientConfiguration(
         fun builder(): Builder = Builder()
     }
 
-    internal fun toExpediaGroupClientConfiguration(
-        endpointProvider: (ClientEnvironment) -> String,
-        authEndpointProvider: (ClientEnvironment) -> String,
-        defaultEnvironment: ClientEnvironment = ClientEnvironment.PROD
-    ): ExpediaGroupClientConfiguration {
-        val environment = this.environment ?: defaultEnvironment
-
-        return ExpediaGroupClientConfiguration(
+    internal fun toExpediaGroupClientConfiguration(apiEndpoint: ApiEndpoint) =
+        ExpediaGroupClientConfiguration(
             key = this.key,
             secret = this.secret,
-            endpoint = endpointProvider(environment),
-            authEndpoint = authEndpointProvider(environment),
+            endpoint = apiEndpoint.endpoint,
+            authEndpoint = apiEndpoint.authEndpoint,
             requestTimeout = this.requestTimeout,
             connectionTimeout = this.connectionTimeout,
             socketTimeout = this.socketTimeout,
             maskedLoggingHeaders = this.maskedLoggingHeaders,
             maskedLoggingBodyFields = this.maskedLoggingBodyFields
         )
-    }
 }
 

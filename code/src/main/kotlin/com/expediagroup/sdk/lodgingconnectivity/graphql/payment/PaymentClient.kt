@@ -17,8 +17,11 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.payment
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
-import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
-import com.expediagroup.sdk.lodgingconnectivity.graphql.BaseGraphQLClient
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
+import com.expediagroup.sdk.lodgingconnectivity.configuration.PaymentApiEndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.DefaultGraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLClient
+import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.function.getPaymentInstrumentFun
 
 /**
@@ -42,15 +45,16 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.payment.function.getPaym
  * )
  * ```
  */
-class PaymentClient(config: ClientConfiguration) {
-    private val baseGraphQLClient: BaseGraphQLClient = BaseGraphQLClient(
+class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
+    override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         config.toExpediaGroupClientConfiguration(
-            endpointProvider = EndpointProvider::getPaymentClientEndpoint,
-            authEndpointProvider = EndpointProvider::getAuthEndpoint
+            apiEndpoint = PaymentApiEndpointProvider.forEnvironment(
+                environment = config.environment ?: ClientEnvironment.PROD
+            ),
         )
     )
 
     fun getPaymentInstrument(token: String) = run {
-        getPaymentInstrumentFun(baseGraphQLClient, token)
+        getPaymentInstrumentFun(graphQLExecutor, token)
     }
 }
