@@ -4,7 +4,7 @@ apollo {
         srcDir("src/main/graphql/supply")
         schemaFiles.from('src/main/graphql/supply/schema.graphqls', 'src/main/graphql/supply/reservations/extension/schema-extensions.graphqls')
         excludes.add("experimental/**/*.graphql")
-        packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.supply")
+        packageName.set("com.expediagroup.sdk.lodgingconnectivity.supply.operation")
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
@@ -36,7 +36,7 @@ apollo {
         /* Schema & operations files configurations */
         srcDir("src/main/graphql/payment")
         excludes.add("experimental/**/*.graphql")
-        packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.payment")
+        packageName.set("com.expediagroup.sdk.lodgingconnectivity.payment.operation")
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
@@ -53,7 +53,7 @@ apollo {
         srcDir("src/main/graphql/sandbox")
         schemaFiles.from('src/main/graphql/sandbox/schema.graphqls', 'src/main/graphql/sandbox/reservations/extension/schema-extensions.graphqls')
         excludes.add("experimental/**/*.graphql")
-        packageName.set("com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox")
+        packageName.set("com.expediagroup.sdk.lodgingconnectivity.sandbox.operation")
 
         /* Generated models configurations */
         generateInputBuilders.set(true)

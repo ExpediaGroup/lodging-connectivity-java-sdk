@@ -17,22 +17,22 @@
 package com.expediagroup.sdk.lodgingconnectivity;
 
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.SandboxDataManagementClient;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.fragment.SandboxReservationData;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.CancelSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.ChangeSandboxReservationStayDatesResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.CreateSandboxPropertyResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.CreateSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.DeleteSandboxPropertyResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.DeleteSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.SandboxPropertiesResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.UpdateSandboxPropertyResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.reservation.function.UpdateSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.ChangeReservationStayDatesInput;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreatePropertyInput;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.CreateReservationInput;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdatePropertyInput;
-import com.expediagroup.sdk.lodgingconnectivity.graphql.sandbox.type.UpdateReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.SandboxDataManagementClient;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreateReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdatePropertyInput;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdateReservationInput;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.CreateSandboxPropertyResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.DeleteSandboxPropertyResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.GetSandboxPropertiesResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.UpdateSandboxPropertyResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.CancelSandboxReservationResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.ChangeSandboxReservationStayDatesResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.CreateSandboxReservationResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.DeleteSandboxReservationResponse;
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.UpdateSandboxReservationResponse;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -165,7 +165,7 @@ public class SandboxDataManagementClientUsageExample {
     }
 
     private static void deletePropertyIfExists() {
-        SandboxPropertiesResponse propertiesResponse = client.getProperties();
+        GetSandboxPropertiesResponse propertiesResponse = client.getProperties();
 
         propertiesResponse.getData().forEach(property -> {
             if (property.getName().equals(PROPERTY_NAME) || property.getName().equals(UPDATED_PROPERTY_NAME)) {
