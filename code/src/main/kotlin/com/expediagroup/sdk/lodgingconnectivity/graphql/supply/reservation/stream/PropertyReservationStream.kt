@@ -8,21 +8,16 @@ import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.pagin
 class PropertyReservationStream(
     private val paginator: PropertyReservationsPaginator
 ) : PaginatedStream<ReservationData?>() {
-
     override fun nextItem(): ReservationData? {
-        while (true) {
-            if (index < page.size) {
-                return page[index++]
-            }
-
-            if (paginator.hasNext()) {
-                resetIndex()
-                fetchNextPage {
-                    paginator.next().data
-                }
-            } else {
+        if (isCurrentPageEmpty()) {
+            if (!paginator.hasNext()) {
                 return null
             }
+
+            fetchNextPage {
+                paginator.next().data
+            }
         }
+        return pollCurrentPage()
     }
 }
