@@ -82,7 +82,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
     }
 
     @JvmOverloads
-    fun getProperties(pageSize: Int, initialCursor: String? = null) = run {
+    fun getPropertiesPaginator(pageSize: Int, initialCursor: String? = null) = run {
         SandboxPropertiesPaginator(graphQLExecutor, pageSize, initialCursor)
     }
 

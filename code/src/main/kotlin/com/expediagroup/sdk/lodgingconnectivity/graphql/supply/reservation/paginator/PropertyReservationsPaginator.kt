@@ -1,11 +1,15 @@
 package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.paginator
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.graphql.extension.getOrThrow
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsQuery
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationData
+import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.constant.Constant
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function.getPropertyReservationsFun
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsInput
 import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
@@ -26,10 +30,22 @@ class PropertyReservationsPaginator @JvmOverloads constructor(
 ) : Iterator<ReservationsPaginatedResponse> {
     private var cursor: String? = initialCursor
     private var hasNext: Boolean = true
+    private var initialized: Boolean = false
 
-    override fun hasNext(): Boolean = hasNext
+    override fun hasNext(): Boolean {
+        if (!initialized) {
+            initialized = true
+            return hasReservationsToFetch()
+        }
+
+        return hasNext
+    }
 
     override fun next(): ReservationsPaginatedResponse {
+        if (!hasNext()) {
+            throw NoSuchElementException("No more pages to fetch")
+        }
+
         val response = getPropertyReservationsFun(
             graphQLExecutor = graphQLExecutor,
             input = input,
@@ -46,5 +62,24 @@ class PropertyReservationsPaginator @JvmOverloads constructor(
             pageInfo = response.pageInfo,
             rawResponse = response.rawResponse,
         )
+    }
+
+    private fun hasReservationsToFetch(): Boolean = run {
+        graphQLExecutor.execute(
+            PropertyReservationsTotalCountQuery
+                .Builder()
+                .propertyId(input.propertyId)
+                .idSource(input.idSource.getOrNull())
+                .pageSize(pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE)
+                .cursor(cursor)
+                .build()
+        ).let {
+            it.data.property.getOrThrow {
+                ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
+            }
+        }.let {
+            val totalCount = it.reservations.totalCount ?: 0
+            totalCount > 0
+        }
     }
 }
