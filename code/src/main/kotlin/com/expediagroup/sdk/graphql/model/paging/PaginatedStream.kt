@@ -14,7 +14,11 @@ abstract class PaginatedStream<T> {
         currentPage = ArrayDeque(pageSupplier())
     }
 
-    protected fun pollCurrentPage(): T? = currentPage.removeFirst()
+    protected fun pollCurrentPage(): T? = try {
+        currentPage.removeFirst()
+    } catch (e: NoSuchElementException) {
+        null
+    }
 
     protected fun isCurrentPageEmpty(): Boolean = currentPage.isEmpty()
 }
