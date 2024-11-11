@@ -21,7 +21,7 @@ data class ReservationsPaginatedResponse(
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
 
-class PropertyReservationsPaginator(
+class PropertyReservationsPaginator @JvmOverloads constructor(
     private val graphQLExecutor: GraphQLExecutor,
     private val input: PropertyReservationsInput,
     private val selections: ReservationSelections? = null,
