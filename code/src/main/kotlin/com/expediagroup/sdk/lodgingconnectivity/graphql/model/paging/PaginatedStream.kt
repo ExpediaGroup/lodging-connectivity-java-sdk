@@ -4,18 +4,17 @@ import java.util.stream.Stream
 import kotlin.streams.asStream
 
 abstract class PaginatedStream<T> {
-    protected var page: List<T?> = emptyList()
-    protected var index = 0
+    private var currentPage: ArrayDeque<T?> = ArrayDeque()
 
     fun stream(): Stream<T> = generateSequence { nextItem() }.asStream()
 
     protected abstract fun nextItem(): T?
 
-    protected fun fetchNextPage(cb: () -> List<T?>) {
-        page = cb()
+    protected fun fetchNextPage(pageSupplier: () -> List<T?>) {
+        currentPage = ArrayDeque(pageSupplier())
     }
 
-    protected fun resetIndex() {
-        index = 0
-    }
+    protected fun pollCurrentPage(): T? = currentPage.removeFirst()
+
+    protected fun isCurrentPageEmpty(): Boolean = currentPage.isEmpty()
 }
