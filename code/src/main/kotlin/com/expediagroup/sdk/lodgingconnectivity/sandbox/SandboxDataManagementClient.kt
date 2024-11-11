@@ -16,21 +16,12 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox
 
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
-import com.expediagroup.sdk.lodgingconnectivity.configuration.SandboxApiEndpointProvider
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.cancelSandboxReservationOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.changeSandboxReservationStayDatesOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.createSandboxReservationOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.deleteSandboxReservationsOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.deleteSandboxReservationOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationsOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.updateSandboxReservationOperation
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.SandboxReservationsPaginator
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
+import com.expediagroup.sdk.lodgingconnectivity.configuration.SandboxApiEndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
@@ -46,6 +37,15 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.getSa
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.getSandboxPropertyOperation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.updateSandboxPropertyOperation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.paginator.SandboxPropertiesPaginator
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.cancelSandboxReservationOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.changeSandboxReservationStayDatesOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.createSandboxReservationOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.deleteSandboxReservationOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.deleteSandboxReservationsOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationsOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.updateSandboxReservationOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.SandboxReservationsPaginator
 
 /**
  * A client for interacting with EG Lodging Connectivity Sandbox GraphQL API.

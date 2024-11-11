@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.core.extension.orFalseIfNull
+import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.CancelReservationMutation

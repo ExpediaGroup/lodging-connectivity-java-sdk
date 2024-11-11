@@ -1,20 +1,18 @@
-@file:JvmName("PropertyReservationsRequest")
+package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
-package com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.function
-
+import com.expediagroup.sdk.core.extension.getOrThrow
+import com.expediagroup.sdk.core.extension.orFalseIfNull
+import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.lodgingconnectivity.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.extension.getOrThrow
-import com.expediagroup.sdk.lodgingconnectivity.extension.orFalseIfNull
-import com.expediagroup.sdk.lodgingconnectivity.extension.orNullIfBlank
-import com.expediagroup.sdk.lodgingconnectivity.graphql.model.paging.PageInfo
-import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.PaginatedResponse
-import com.expediagroup.sdk.lodgingconnectivity.graphql.model.response.RawResponse
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.PropertyReservationsQuery
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.fragment.ReservationData
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.reservation.constant.Constant
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.PropertyReservationsInput
-import com.expediagroup.sdk.lodgingconnectivity.graphql.supply.type.ReservationSelections
+import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.model.paging.PageInfo
+import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
+import com.expediagroup.sdk.graphql.model.response.RawResponse
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.PropertyReservationsQuery
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.PropertyReservationsInput
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.constant.Constant
 
 data class PropertyReservationsResponse(
     override val data: List<ReservationData?>,
@@ -23,8 +21,7 @@ data class PropertyReservationsResponse(
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
 
 @JvmOverloads
-@JvmName("execute")
-fun getPropertyReservationsFun(
+fun getReservationsOperation(
     graphQLExecutor: GraphQLExecutor,
     input: PropertyReservationsInput,
     cursor: String? = null,
