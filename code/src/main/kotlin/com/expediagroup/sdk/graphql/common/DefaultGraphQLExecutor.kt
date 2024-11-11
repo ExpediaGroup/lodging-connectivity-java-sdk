@@ -29,14 +29,12 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.runBlocking
 
+
 /**
- * An internal base implementation of a GraphQL client for executing GraphQL queries, mutations, and subscriptions.
+ * Default implementation of a GraphQLExecutor that handles executing GraphQL queries and mutations.
+ * It uses ApolloClient for communication with the GraphQL server.
  *
- * This class integrates the Apollo GraphQL client with a custom `ExpediaGroupClient` for handling HTTP communication
- * and error management. It provides a foundation for more specific client implementations by executing operations
- * with error handling.
- *
- * @param config The configuration for the `ExpediaGroupClient`
+ * @param config The configuration for the ExpediaGroupClient.
  */
 internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) : GraphQLExecutor() {
 
@@ -58,7 +56,8 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
      * Executes a GraphQL query and returns the result.
      *
      * @param query The GraphQL query to execute.
-     * @return The result of the query execution, with errors handled.
+     * @return The raw response containing the fetched data and potential errors.
+     * @param T The type of data returned by the query, extending `Query.Data`.
      * @throws ExpediaGroupServiceException If the query execution returns errors.
      */
     override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> {
@@ -82,11 +81,10 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
     }
 
     /**
-     * Executes a GraphQL mutation and returns the result.
+     * Executes a GraphQL mutation and returns the raw response containing the fetched data and potential errors.
      *
-     * @param mutation The GraphQL mutation to execute.
-     * @return The result of the mutation execution, with errors handled.
-     * @throws ExpediaGroupServiceException If the mutation execution returns errors.
+     * @param mutation The mutation to execute.
+     * @return RawResponse containing the data and errors, if any.
      */
     override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> {
         return runBlocking {

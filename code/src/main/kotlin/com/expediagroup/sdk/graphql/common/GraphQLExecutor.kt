@@ -23,9 +23,10 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceExce
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 
 /**
- * An interface for executing GraphQL operations, including queries, mutations, and subscriptions.
+ * An abstract class represents the contract for executing GraphQL operations using ApolloClient.
+ * Implementers of this class have to provide ApolloClient instance for GraphQL client-server communications
  *
- * Implementers of this interface are responsible for executing GraphQL operations and returning the results,
+ * Implementers of this class are responsible for executing GraphQL operations and returning the results,
  * while handling any errors that may occur during the execution.
  */
 abstract class GraphQLExecutor {
