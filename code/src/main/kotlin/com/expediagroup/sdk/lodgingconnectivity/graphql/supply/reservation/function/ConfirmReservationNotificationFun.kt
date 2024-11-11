@@ -21,7 +21,7 @@ fun confirmReservationNotificationFun(
     selections: ReservationSelections? = null
 ): ConfirmReservationNotificationResponse {
     val operation = ConfirmReservationNotificationMutation
-        .Builder()
+        .builder()
         .input(input)
         .includeSupplierAmount(selections?.includeSupplierAmount.orFalseIfNull())
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())

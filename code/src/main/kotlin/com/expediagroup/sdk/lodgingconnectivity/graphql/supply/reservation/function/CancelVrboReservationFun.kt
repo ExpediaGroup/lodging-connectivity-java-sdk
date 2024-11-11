@@ -21,7 +21,7 @@ fun cancelVrboReservationFun(
     selections: ReservationSelections? = null
 ): CancelVrboReservationResponse {
     val operation = CancelVrboReservationMutation
-        .Builder()
+        .builder()
         .input(input)
         .includeSupplierAmount(selections?.includeSupplierAmount.orFalseIfNull())
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())

@@ -29,7 +29,7 @@ fun getPropertyReservationsFun(
     selections: ReservationSelections? = null
 ): PropertyReservationsResponse {
     val operation = PropertyReservationsQuery
-        .Builder()
+        .builder()
         .propertyId(input.propertyId)
         .idSource(input.idSource.getOrNull())
         .pageSize(pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE)

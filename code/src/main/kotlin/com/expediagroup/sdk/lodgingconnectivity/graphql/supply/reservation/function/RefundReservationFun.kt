@@ -21,7 +21,7 @@ fun refundReservationFun(
     selections: ReservationSelections? = null
 ): RefundReservationResponse {
     val operation = RefundReservationMutation
-        .Builder()
+        .builder()
         .input(input)
         .includeSupplierAmount(selections?.includeSupplierAmount.orFalseIfNull())
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())

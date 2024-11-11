@@ -29,6 +29,8 @@ apollo {
 
         // Mapped Using Custom Adapters
         mapScalar("Url", "java.net.URL", "com.expediagroup.sdk.lodgingconnectivity.graphql.adapter.URLAdapter()")
+
+        plugin(project(":apollo-compiler-plugin"))
     }
     service("payment") {
         /* Schema & operations files configurations */
@@ -44,6 +46,7 @@ apollo {
         mapScalar("CountryCode", "java.lang.String")
         mapScalar("DateTime", "java.time.OffsetDateTime", "com.apollographql.adapter.core.JavaOffsetDateTimeAdapter")
 
+        plugin(project(":apollo-compiler-plugin"))
     }
     service("sandbox") {
         /* Schema & operations files configurations */
@@ -58,5 +61,7 @@ apollo {
 
         /**** Custom Scalars Mappings ****/
         mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter")
+
+        plugin(project(":apollo-compiler-plugin"))
     }
 }
