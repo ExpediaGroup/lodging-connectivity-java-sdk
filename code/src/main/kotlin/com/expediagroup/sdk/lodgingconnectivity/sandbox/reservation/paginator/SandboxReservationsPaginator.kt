@@ -7,7 +7,7 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function.getSandboxReservations
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationsOperation
 
 data class SandboxReservationsPaginatedResponse(
     override val data: List<SandboxReservationData>,
@@ -39,7 +39,7 @@ class SandboxReservationsPaginator @JvmOverloads constructor(
             throw NoSuchElementException("No more pages to fetch")
         }
 
-        val response = getSandboxReservations(
+        val response = getSandboxReservationsOperation(
             graphQLExecutor = graphQLExecutor,
             propertyId = propertyId,
             cursor = cursor,

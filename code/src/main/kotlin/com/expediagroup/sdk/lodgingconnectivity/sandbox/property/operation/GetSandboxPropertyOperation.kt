@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.function
+package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -11,7 +11,7 @@ data class GetSandboxPropertyResponse(
     override val rawResponse: RawResponse<SandboxPropertyQuery.Data>,
 ) : Response<SandboxPropertyData, SandboxPropertyQuery.Data>
 
-fun getSandboxPropertyFun(graphQLExecutor: GraphQLExecutor, propertyId: String): GetSandboxPropertyResponse {
+fun getSandboxPropertyOperation(graphQLExecutor: GraphQLExecutor, propertyId: String): GetSandboxPropertyResponse {
     val operation = SandboxPropertyQuery(propertyId)
     val response = graphQLExecutor.execute(operation)
 

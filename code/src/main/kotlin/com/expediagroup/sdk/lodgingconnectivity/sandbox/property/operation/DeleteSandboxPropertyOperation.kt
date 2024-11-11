@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.function
+package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -11,7 +11,10 @@ data class DeleteSandboxPropertyResponse(
     override val rawResponse: RawResponse<SandboxDeletePropertyMutation.Data>,
 ) : Response<SandboxDeletePropertyMutation.DeleteProperty, SandboxDeletePropertyMutation.Data>
 
-fun deleteSandboxPropertyFun(graphQLExecutor: GraphQLExecutor, input: DeletePropertyInput): DeleteSandboxPropertyResponse {
+fun deleteSandboxPropertyOperation(
+    graphQLExecutor: GraphQLExecutor,
+    input: DeletePropertyInput
+): DeleteSandboxPropertyResponse {
     val operation = SandboxDeletePropertyMutation(input)
     val response = graphQLExecutor.execute(operation)
 

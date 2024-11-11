@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function
+package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
@@ -15,7 +15,7 @@ data class GetSandboxReservationsResponse(
 ) : PaginatedResponse<List<SandboxReservationData>, SandboxPropertyReservationsQuery.Data>
 
 @JvmOverloads
-fun getSandboxReservations(
+fun getSandboxReservationsOperation(
     graphQLExecutor: GraphQLExecutor,
     propertyId: String,
     cursor: String? = null,

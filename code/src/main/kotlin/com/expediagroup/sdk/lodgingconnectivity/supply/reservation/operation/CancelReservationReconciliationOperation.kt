@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function
+package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.core.extension.orFalseIfNull
@@ -15,7 +15,7 @@ data class CancelReservationReconciliationResponse(
 ) : Response<ReservationData?, CancelReservationReconciliationMutation.Data>
 
 @JvmOverloads
-fun cancelReservationReconciliationFun(
+fun cancelReservationReconciliationOperation(
     graphQLExecutor: GraphQLExecutor,
     input: CancelReservationReconciliationInput,
     selections: ReservationSelections? = null

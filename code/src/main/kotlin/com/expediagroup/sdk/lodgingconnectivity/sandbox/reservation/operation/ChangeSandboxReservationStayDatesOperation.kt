@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.function
+package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -12,7 +12,7 @@ data class ChangeSandboxReservationStayDatesResponse(
     override val rawResponse: RawResponse<SandboxChangeReservationStayDatesMutation.Data>,
 ) : Response<SandboxReservationData, SandboxChangeReservationStayDatesMutation.Data>
 
-fun changeSandboxReservationStayDatesFun(
+fun changeSandboxReservationStayDatesOperation(
     graphQLExecutor: GraphQLExecutor,
     input: ChangeReservationStayDatesInput
 ): ChangeSandboxReservationStayDatesResponse {

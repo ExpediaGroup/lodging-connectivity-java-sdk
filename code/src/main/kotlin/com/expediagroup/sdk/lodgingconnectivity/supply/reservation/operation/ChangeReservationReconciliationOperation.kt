@@ -1,26 +1,26 @@
-package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function
+package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.core.extension.orFalseIfNull
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
-import com.expediagroup.sdk.lodgingconnectivity.supply.operation.ConfirmReservationNotificationMutation
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.ChangeReservationReconciliationMutation
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
-import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ConfirmReservationNotificationInput
+import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ChangeReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
 
-data class ConfirmReservationNotificationResponse(
+data class ChangeReservationReconciliationResponse(
     override val data: ReservationData?,
-    override val rawResponse: RawResponse<ConfirmReservationNotificationMutation.Data>,
-) : Response<ReservationData?, ConfirmReservationNotificationMutation.Data>
+    override val rawResponse: RawResponse<ChangeReservationReconciliationMutation.Data>,
+) : Response<ReservationData?, ChangeReservationReconciliationMutation.Data>
 
 @JvmOverloads
-fun confirmReservationNotificationFun(
+fun changeReservationReconciliationOperation(
     graphQLExecutor: GraphQLExecutor,
-    input: ConfirmReservationNotificationInput,
+    input: ChangeReservationReconciliationInput,
     selections: ReservationSelections? = null
-): ConfirmReservationNotificationResponse {
-    val operation = ConfirmReservationNotificationMutation
+): ChangeReservationReconciliationResponse {
+    val operation = ChangeReservationReconciliationMutation
         .builder()
         .input(input)
         .includeSupplierAmount(selections?.includeSupplierAmount.orFalseIfNull())
@@ -29,8 +29,8 @@ fun confirmReservationNotificationFun(
 
     val response = graphQLExecutor.execute(operation)
 
-    return ConfirmReservationNotificationResponse(
-        data = response.data.confirmReservationNotification.reservation?.reservationData,
+    return ChangeReservationReconciliationResponse(
+        data = response.data.changeReservationReconciliation.reservation?.reservationData,
         rawResponse = response
     )
 }

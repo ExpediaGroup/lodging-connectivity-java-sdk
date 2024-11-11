@@ -30,12 +30,12 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ConfirmRes
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.PropertyReservationsInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.RefundReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.cancelReservationFun
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.cancelReservationReconciliationFun
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.cancelVrboReservationFun
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.changeReservationReconciliationFun
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.confirmReservationNotificationFun
-import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.function.refundReservationFun
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.cancelReservationOperation
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.cancelReservationReconciliationOperation
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.cancelVrboReservationOperation
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.changeReservationReconciliationOperation
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.confirmReservationNotificationOperation
+import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.refundReservationOperation
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.ReservationsPaginator
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.ReservationsStream
 
@@ -145,7 +145,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelReservationInput,
         selections: ReservationSelections? = null
     ) = run {
-        cancelReservationFun(graphQLExecutor, input, selections)
+        cancelReservationOperation(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -153,7 +153,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelReservationReconciliationInput,
         selections: ReservationSelections? = null
     ) = run {
-        cancelReservationReconciliationFun(graphQLExecutor, input, selections)
+        cancelReservationReconciliationOperation(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -161,7 +161,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelVrboReservationInput,
         selections: ReservationSelections? = null
     ) = run {
-        cancelVrboReservationFun(graphQLExecutor, input, selections)
+        cancelVrboReservationOperation(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -169,7 +169,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: ChangeReservationReconciliationInput,
         selections: ReservationSelections? = null
     ) = run {
-        changeReservationReconciliationFun(graphQLExecutor, input, selections)
+        changeReservationReconciliationOperation(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -177,7 +177,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: ConfirmReservationNotificationInput,
         selections: ReservationSelections? = null
     ) = run {
-        confirmReservationNotificationFun(graphQLExecutor, input, selections)
+        confirmReservationNotificationOperation(graphQLExecutor, input, selections)
     }
 
     @JvmOverloads
@@ -185,6 +185,6 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: RefundReservationInput,
         selections: ReservationSelections? = null
     ) = run {
-        refundReservationFun(graphQLExecutor, input, selections)
+        refundReservationOperation(graphQLExecutor, input, selections)
     }
 }
