@@ -66,7 +66,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.Sa
  * The `SandboxDataManagementClient` provides a comprehensive API for creating, retrieving, updating, and deleting
  * sandbox properties and reservations.
  *
- * Endpoint are automatically determined based on the environment configuration (e.g., [ClientEnvironment.SANDBOX_PROD] or [ClientEnvironment.SANDBOX_TEST])
+ * Endpoint is automatically determined based on the environment configuration (e.g., [ClientEnvironment.SANDBOX_PROD] or [ClientEnvironment.SANDBOX_TEST])
  *
  * @constructor Creates a new instance of `SandboxDataManagementClient` using the provided configuration.
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment

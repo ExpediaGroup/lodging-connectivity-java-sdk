@@ -28,7 +28,7 @@ import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInst
 /**
  * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
  *
- * Endpoint are automatically determined based on the environment configuration (e.g., [ClientEnvironment.PROD] or [ClientEnvironment.TEST])
+ * Endpoint is automatically determined based on the environment configuration (e.g., [ClientEnvironment.PROD] or [ClientEnvironment.TEST])
  *
  * @constructor Creates a new instance of `PaymentClient` using the provided configuration.
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
