@@ -23,32 +23,35 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceExce
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 
 /**
- * An interface for executing GraphQL operations, including queries, mutations, and subscriptions.
+ * Abstract base class for executing GraphQL operations.
+ * Defines the core structure for executing queries and mutations using an [ApolloClient].
  *
- * Implementers of this interface are responsible for executing GraphQL operations and returning the results,
- * while handling any errors that may occur during the execution.
+ * Classes extending `GraphQLExecutor` are expected to provide an implementation of `apolloClient`
+ * and define the behavior of the `execute` methods for handling GraphQL queries and mutations.
  */
 abstract class GraphQLExecutor {
+
+    /**
+     * The Apollo Client instance used to perform GraphQL requests.
+     * Subclasses must initialize this property with a configured [ApolloClient] instance.
+     */
     protected abstract val apolloClient: ApolloClient
 
     /**
-     * Executes a GraphQL query and returns the result.
+     * Executes a GraphQL query and returns the raw response.
      *
-     * @param query The GraphQL query to execute.
-     * @return The result of the query execution.
-     * @param <T> The type of data returned by the query, extending `Query.Data`.
-     * @throws ExpediaGroupServiceException If the query execution returns errors.
+     * @param query The GraphQL query to be executed.
+     * @return A [RawResponse] containing the data or errors from the query response.
      */
     abstract fun <T : Query.Data> execute(query: Query<T>): RawResponse<T>
 
     /**
-     * Executes a GraphQL mutation and returns the result.
+     * Executes a GraphQL mutation and returns the raw response.
      *
-     * @param mutation The GraphQL mutation to execute.
-     * @return The result of the mutation execution.
-     * @param <T> The type of data returned by the mutation, extending `Mutation.Data`.
-     * @throws ExpediaGroupServiceException If the mutation execution returns errors.
+     * @param mutation The GraphQL mutation to be executed.
+     * @return A [RawResponse] containing the data or errors from the mutation response.
      */
     abstract fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T>
 }
+
 
