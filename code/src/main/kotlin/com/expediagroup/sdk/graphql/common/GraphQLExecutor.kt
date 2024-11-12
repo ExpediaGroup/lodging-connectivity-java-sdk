@@ -23,11 +23,12 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceExce
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 
 /**
- * Abstract base class for executing GraphQL operations.
- * Defines the core structure for executing queries and mutations using an [ApolloClient].
+ * Abstract base class for executing GraphQL operations, providing a structure for executing queries and mutations
+ * and returning the full response data along with any errors.
  *
- * Classes extending `GraphQLExecutor` are expected to provide an implementation of `apolloClient`
- * and define the behavior of the `execute` methods for handling GraphQL queries and mutations.
+ * This class is designed to handle the execution of GraphQL operations and return a [RawResponse] containing
+ * the complete, unprocessed data and error details. Subclasses should implement specific behaviors for how
+ * requests are sent and processed.
  */
 abstract class GraphQLExecutor {
 
@@ -38,18 +39,22 @@ abstract class GraphQLExecutor {
     protected abstract val apolloClient: ApolloClient
 
     /**
-     * Executes a GraphQL query and returns the raw response.
+     * Executes a GraphQL query and returns the complete raw response.
      *
      * @param query The GraphQL query to be executed.
-     * @return A [RawResponse] containing the data or errors from the query response.
+     * @return A [RawResponse] containing the full data and any errors from the query response.
+     * @throws ExpediaGroupServiceException If an exception occurs during the execution of the query.
+     * @throws NoDataException If the query completes without data but includes errors.
      */
     abstract fun <T : Query.Data> execute(query: Query<T>): RawResponse<T>
 
     /**
-     * Executes a GraphQL mutation and returns the raw response.
+     * Executes a GraphQL mutation and returns the complete raw response.
      *
      * @param mutation The GraphQL mutation to be executed.
-     * @return A [RawResponse] containing the data or errors from the mutation response.
+     * @return A [RawResponse] containing the full data and any errors from the mutation response.
+     * @throws ExpediaGroupServiceException If an exception occurs during the execution of the mutation.
+     * @throws NoDataException If the mutation completes without data but includes errors.
      */
     abstract fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T>
 }
