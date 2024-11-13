@@ -22,28 +22,17 @@ import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.PaymentApiEndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.payment.operation.PaymentInstrumentQuery
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInstrumentOperation
 
 /**
  * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
  *
- * This client is configured with a `ClientConfiguration` that includes authentication details,
- * and it automatically determines the appropriate API endpoints based on the environment (e.g., production or test).
+ * Endpoint is automatically determined based on the environment configuration (e.g., [ClientEnvironment.PROD] or [ClientEnvironment.TEST])
  *
  * @constructor Creates a new instance of `PaymentClient` using the provided configuration.
- * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment,
- * timeouts, and logging masking options.
- *
- * Example usage:
- * ```
- * PaymentClient(
- *     ClientConfiguration
- *         .builder()
- *         .key("API_KEY")
- *         .secret("API_SECRET")
- *         .build()
- * )
- * ```
+ * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
+ * or timeouts.
  */
 class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
@@ -54,6 +43,17 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
         )
     )
 
+    /**
+     * Retrieves the payment instrument details associated with the specified token.
+     *
+     * This function executes a [PaymentInstrumentQuery] GraphQL operation using the client’s configured
+     * [GraphQLExecutor]. It returns a [GetPaymentInstrumentResponse] containing both the targeted payment
+     * instrument data and the full raw response.
+     *
+     * @param token The token identifying the payment instrument to be retrieved.
+     * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
+     * @throws ExpediaGroupServiceException If the payment instrument data is not found in the response.
+     */
     fun getPaymentInstrument(token: String) = run {
         getPaymentInstrumentOperation(graphQLExecutor, token)
     }

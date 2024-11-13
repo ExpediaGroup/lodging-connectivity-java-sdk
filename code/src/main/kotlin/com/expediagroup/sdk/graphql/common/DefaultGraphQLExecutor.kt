@@ -30,13 +30,16 @@ import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.runBlocking
 
 /**
- * An internal base implementation of a GraphQL client for executing GraphQL queries, mutations, and subscriptions.
+ * Default implementation of [GraphQLExecutor], responsible for executing GraphQL queries and mutations
+ * using Apollo Kotlin with a custom HTTP client.
  *
- * This class integrates the Apollo GraphQL client with a custom `ExpediaGroupClient` for handling HTTP communication
- * and error management. It provides a foundation for more specific client implementations by executing operations
- * with error handling.
+ * This executor leverages the Apollo Client to perform requests and processes responses by capturing
+ * the entire data structure and any errors in a [RawResponse], which can then be further processed or
+ * filtered by higher-level components in the SDK.
  *
- * @param config The configuration for the `ExpediaGroupClient`
+ * By default - this implementation is used internally in all higher-level clients that extend [GraphQLClient] abstract class
+ *
+ * @param config Configuration details required to set up the custom client and Apollo Client.
  */
 internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) : GraphQLExecutor() {
 
@@ -48,6 +51,9 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
             }
         }
 
+    /**
+     * The Apollo Client used to execute GraphQL requests, configured with a custom HTTP client.
+     */
     override val apolloClient: ApolloClient = ApolloClient
         .Builder()
         .serverUrl(config.endpoint!!)
@@ -55,11 +61,12 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
         .build()
 
     /**
-     * Executes a GraphQL query and returns the result.
+     * Executes a GraphQL query and returns a [RawResponse] containing the complete data and any errors.
      *
-     * @param query The GraphQL query to execute.
-     * @return The result of the query execution, with errors handled.
-     * @throws ExpediaGroupServiceException If the query execution returns errors.
+     * @param query The GraphQL query to be executed.
+     * @return A [RawResponse] with the full data structure and any errors from the server.
+     * @throws ExpediaGroupServiceException If an exception occurs during query execution.
+     * @throws NoDataException If the query completes without data but includes errors.
      */
     override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> {
         return runBlocking {
@@ -82,11 +89,12 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
     }
 
     /**
-     * Executes a GraphQL mutation and returns the result.
+     * Executes a GraphQL mutation and returns a [RawResponse] containing the complete data and any errors.
      *
-     * @param mutation The GraphQL mutation to execute.
-     * @return The result of the mutation execution, with errors handled.
-     * @throws ExpediaGroupServiceException If the mutation execution returns errors.
+     * @param mutation The GraphQL mutation to be executed.
+     * @return A [RawResponse] with the full data structure and any errors from the server.
+     * @throws ExpediaGroupServiceException If an exception occurs during mutation execution.
+     * @throws NoDataException If the mutation completes without data but includes errors.
      */
     override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> {
         return runBlocking {
@@ -108,4 +116,3 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
         }
     }
 }
-
