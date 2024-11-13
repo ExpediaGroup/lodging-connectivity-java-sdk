@@ -11,7 +11,9 @@ enum class SupplyApiEndpoint(val url: String) {
 
 enum class PaymentApiEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/supply/payments/graphql"),
-    TEST("https://test-api.expediagroup.com/supply/payments/graphql")
+    TEST("https://test-api.expediagroup.com/supply/payments/graphql"),
+    SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/payments/graphql"),
+    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/payments/graphql")
 }
 
 enum class SandboxApiEndpoint(val url: String) {
