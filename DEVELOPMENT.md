@@ -17,7 +17,7 @@ git clone https://github.com/ExpediaGroup/lodging-connectivity-java-sdk.git
 cd lodging-connectivity-java-sdk
 ```
 
-### 2. Initialize GraphQL Schema
+### 2. Initialize GraphQL Module
 
 ```bash
 ./scripts/graphql/init.sh
