@@ -19,7 +19,7 @@ Make sure you have **Java 8** or higher.
 ```groovy
 // gradle.build
 dependencies {
-    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.2-SNAPSHOT'
+    implementation 'com.expediagroup:lodging-connectivity-sdk:1.0.6-SNAPSHOT'
 }
 ```
 
@@ -29,7 +29,7 @@ dependencies {
 <dependency>
     <groupId>com.expediagroup</groupId>
     <artifactId>lodging-connectivity-sdk</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -61,9 +61,9 @@ dependencies {
 > </repositories>
 > ```
 ## Quick Start
-Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains three different clients, each linked to a separate endpoint
+Once you have the SDK dependency installed, you can start using its capabilities. The SDK contains three different clients, each used to interact with a specific capability in Lodging Connectivity APIs.
 
-1. Supply Client
+1. Reservation Client
 2. Payment Client
 3. Sandbox Data Management Client
 
@@ -82,17 +82,17 @@ Follow these three simple steps to start using any client in the SDK:
 
 2. Initialize a client.
    ```java
-   SupplyClient supplyClient = new SupplyClient(config); // Taking SupplyClient as an example
+   ReservationClient reservationClient = new ReservationClient(config); // Taking ReservationClient as an example
    ```
 3. Execute operations
    ```java
-   supplyClient.execute(/* GraphQL Operation */);
+   reservationClient.execute(/* GraphQL Operation */);
    ```
 
 ## Documentation
 The list below lists detailed documentation files for some components of the SDK. Whether you're looking to configure the SDK, explore the pre-built GraphQL operations, or learn how to use specific clients, the following resources will guide you through all the necessary steps.
 
-1. [Supply Client Documentation](docs/supply-client.md)
+1. [Reservation Client Documentation](docs/reservation-client.md)
 2. [Payment Client Documentation](docs/payment-client.md)
 3. [Sandbox Data Management Client Documentation](docs/sandbox-data-management-client.md)
 4. [Configuration](docs/configuration.md)

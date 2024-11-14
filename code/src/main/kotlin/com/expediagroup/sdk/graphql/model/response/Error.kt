@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.lodgingconnectivity.graphql
+package com.expediagroup.sdk.graphql.model.response
 
-import com.apollographql.apollo.api.Mutation
-import com.apollographql.apollo.api.Query
-import java.util.concurrent.CompletableFuture
-
-interface GraphQLExecutor {
-    fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<T>
-    fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<T>
-    fun <T : Query.Data> execute(query: Query<T>): T
-    fun <T : Mutation.Data> execute(mutation: Mutation<T>): T
-}
+/**
+ * Represents an error returned from a GraphQL operation.
+ *
+ * @param message A message detailing the nature of the error.
+ * @param path The path in the GraphQL query where the error occurred, represented as a list of field names.
+ * This may be `null` if the error is not tied to a specific query path.
+ */
+data class Error(
+    val message: String,
+    val path: List<String>?,
+)

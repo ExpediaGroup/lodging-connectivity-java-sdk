@@ -76,14 +76,14 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 | Name               | Type               | Required            |
 |--------------------|--------------------|---------------------|
 | `cursor`           | `String`           | No                  |
-| `limit`            | `Int`              | No                  |
-| `skipReservations` | `Boolean! = false` | No (defaults false) |
+| `pageSize`         | `Int`              | No                  |
+| `skipReservations` | `Boolean! = false` | No (default: false) |
 
 <br />
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/queries/SandboxProperties.query.graphql) 
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/queries/SandboxProperties.graphql) 
 - [Reference]()
 
 </details>
@@ -102,15 +102,13 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 | Name                 | Type               | Required            |
 |----------------------|--------------------|---------------------|
 | `id`                 | `ID!`              | Yes                 |
-| `reservationsCursor` | `String`           | No                  |
-| `reservationsLimit`  | `Int`              | No                  |
-| `skipReservations`   | `Boolean! = false` | No (defaults false) |
+| `skipReservations`   | `Boolean! = false` | No (default: false) |
 
 <br />
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/queries/SandboxProperty.query.graphql)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/queries/SandboxProperty.graphql)
 - [Reference]()
 
 </details>
@@ -134,7 +132,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment 
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/queries/SandboxReservation.query.graphql) 
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/queries/SandboxReservation.graphql) 
 - [Reference]()
 
 </details>
@@ -166,7 +164,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment 
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxCancelReservation.mutation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxCancelReservation.graphql)
 - [Reference]()
 
 </details>
@@ -190,7 +188,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment 
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxChangeReservationStayDates.mutation.graphql) 
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxChangeReservationStayDates.graphql) 
 - [Reference]()
 
 </details>
@@ -214,7 +212,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment 
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxCreateProperty.mutation.graphql)  
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxCreateProperty.graphql)  
 - [Reference]()
 
 </details>
@@ -238,7 +236,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxCreateReservation.mutation.graphql) 
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxCreateReservation.graphql) 
 - [Reference]()
 
 </details>
@@ -262,7 +260,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment 
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxDeleteProperty.mutation.graphql) 
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxDeleteProperty.graphql) 
 - [Reference]()
 
 </details>
@@ -286,7 +284,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment 
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxDeletePropertyReservations.mutation.graphql) 
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxDeletePropertyReservations.graphql) 
 - [Reference]()
 
 </details>
@@ -306,11 +304,12 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 |---------|---------------------------|----------|
 | `input` | `DeleteReservationInput!` | Yes      |
 
+
 <br />
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxDeleteReservation.mutation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxDeleteReservation.graphql)
 - [Reference]()
 
 </details>
@@ -334,7 +333,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxUpdateProperty.mutation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxUpdateProperty.graphql)
 - [Reference]()
 
 </details>
@@ -358,7 +357,7 @@ The SDK offers a set of queries & mutations you can execute using the `SandboxDa
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/operations/mutations/SandboxUpdateReservation.mutation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/sandbox/reservations/mutations/SandboxUpdateReservation.graphql)
 - [Reference]()
 
 </details>
