@@ -16,18 +16,19 @@
 
 package com.expediagroup.sdk.graphql.common
 
-import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Mutation
+import com.apollographql.apollo.api.Operation
 import com.apollographql.apollo.api.Query
-import com.apollographql.ktor.ktorClient
-import com.expediagroup.sdk.core.client.ExpediaGroupClient
-import com.expediagroup.sdk.core.configuration.ExpediaGroupClientConfiguration
+import com.apollographql.java.client.ApolloClient
+import com.expediagroup.sdk.core.client.ApiClientApolloHttpEngine
+import com.expediagroup.sdk.core.client.util.createApiClient
+import com.expediagroup.sdk.core.configuration.FullClientConfiguration
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.extension.toSDKError
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
-import io.ktor.client.statement.HttpResponse
-import kotlinx.coroutines.runBlocking
+import java.util.concurrent.CompletableFuture
 
 /**
  * Default implementation of [GraphQLExecutor], responsible for executing GraphQL queries and mutations
@@ -39,26 +40,35 @@ import kotlinx.coroutines.runBlocking
  *
  * By default - this implementation is used internally in all higher-level clients that extend [GraphQLClient] abstract class
  *
- * @param config Configuration details required to set up the custom client and Apollo Client.
+ * @param configuration Configuration details required to set up the custom client and Apollo Client.
  */
-internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) : GraphQLExecutor() {
+internal class DefaultGraphQLExecutor(configuration: FullClientConfiguration) : GraphQLExecutor() {
 
-    // Custom client for handling HTTP requests and responses.
-    private val expediaGroupClient =
-        object : ExpediaGroupClient(clientConfiguration = config, namespace = "lodging-connectivity-sdk") {
-            override suspend fun throwServiceException(response: HttpResponse, operationId: String) {
-                throw ExpediaGroupServiceException("Service error occurred for operation $operationId.\nResponse: $response")
-            }
-        }
+    private val engine = ApiClientApolloHttpEngine(createApiClient(configuration = configuration))
 
     /**
      * The Apollo Client used to execute GraphQL requests, configured with a custom HTTP client.
      */
-    override val apolloClient: ApolloClient = ApolloClient
-        .Builder()
-        .serverUrl(config.endpoint!!)
-        .ktorClient(expediaGroupClient.httpClient)
+    override val apolloClient: ApolloClient = ApolloClient.Builder()
+        .serverUrl(configuration.getEndpoint())
+        .httpEngine(engine)
         .build()
+
+
+    /**
+     * Asynchronously executes a GraphQL query and returns a [CompletableFuture] containing the complete
+     * data and any errors wrapped in [RawResponse].
+     *
+     * @param query The GraphQL query to be executed.
+     * @return A [CompletableFuture] with the full data structure and any errors from the server.
+     * @throws ExpediaGroupServiceException If an exception occurs during query execution.
+     * @throws NoDataException If the query completes without data but includes errors.
+     */
+    override fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>> {
+        return CompletableFuture<RawResponse<T>>().also {
+            apolloClient.query(query).enqueue { response -> processOperationResponse(response, it) }
+        }
+    }
 
     /**
      * Executes a GraphQL query and returns a [RawResponse] containing the complete data and any errors.
@@ -68,23 +78,20 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
      * @throws ExpediaGroupServiceException If an exception occurs during query execution.
      * @throws NoDataException If the query completes without data but includes errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> {
-        return runBlocking {
-            apolloClient.query(query).execute().apply {
-                if (exception != null) {
-                    throw ExpediaGroupServiceException(message = exception?.message, cause = exception)
-                }
-                if (data == null && hasErrors()) {
-                    throw NoDataException(
-                        message = "No data received from the server",
-                        errors = errors!!.map { it.toSDKError() })
-                }
-            }.let {
-                RawResponse(
-                    data = it.data!!,
-                    errors = it.errors?.map { apolloError -> apolloError.toSDKError() }
-                )
-            }
+    override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> = executeAsync(query).get()
+
+    /**
+     * Asynchronously executes a GraphQL mutation and returns a [CompletableFuture] containing the complete
+     * data and any errors wrapped in [RawResponse].
+     *
+     * @param mutation The GraphQL mutation to be executed.
+     * @return A [CompletableFuture] with the full data structure and any errors from the server.
+     * @throws ExpediaGroupServiceException If an exception occurs during mutation execution.
+     * @throws NoDataException If the mutation completes without data but includes errors.
+     */
+    override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>> {
+        return CompletableFuture<RawResponse<T>>().also {
+            apolloClient.mutation(mutation).enqueue { response -> processOperationResponse(response, it) }
         }
     }
 
@@ -96,23 +103,55 @@ internal class DefaultGraphQLExecutor(config: ExpediaGroupClientConfiguration) :
      * @throws ExpediaGroupServiceException If an exception occurs during mutation execution.
      * @throws NoDataException If the mutation completes without data but includes errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> {
-        return runBlocking {
-            apolloClient.mutation(mutation).execute().apply {
-                if (exception != null) {
-                    throw ExpediaGroupServiceException(message = exception?.message, cause = exception)
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> = executeAsync(mutation).get()
+
+
+    /**
+     * Handles the response from a GraphQL operation, determining whether to complete the provided CompletableFuture
+     * with either success or an exception based on the response data and errors.
+     *
+     * @param response The ApolloResponse containing the data and errors from the GraphQL operation.
+     * @param future A CompletableFuture that will be completed based on the response handling logic.
+     */
+    private fun <T : Operation.Data> processOperationResponse(
+        response: ApolloResponse<T>,
+        future: CompletableFuture<RawResponse<T>>
+    ) {
+        try {
+            when {
+                response.exception != null -> {
+                    future.completeExceptionally(
+                        ExpediaGroupServiceException(
+                            message = response.exception?.message,
+                            cause = response.exception
+                        )
+                    )
                 }
-                if (data == null && hasErrors()) {
-                    throw NoDataException(
-                        message = "No data received from the server",
-                        errors = errors!!.map { it.toSDKError() })
+
+                response.data != null && response.hasErrors() -> {
+                    future.completeExceptionally(
+                        NoDataException(
+                            message = "No data received from the server",
+                            errors = response.errors!!.map { it.toSDKError() })
+                    )
                 }
-            }.let {
-                RawResponse(
-                    data = it.data!!,
-                    errors = it.errors?.map { apolloError -> apolloError.toSDKError() }
-                )
+
+                else -> {
+                    future.complete(
+                        RawResponse(
+                            data = response.data!!,
+                            errors = response.errors?.map { it.toSDKError() }
+                        )
+                    )
+                }
             }
+        } catch (e: Exception) {
+            future.completeExceptionally(
+                ExpediaGroupServiceException(
+                    message = e.message,
+                    cause = e
+                )
+            )
         }
     }
 }

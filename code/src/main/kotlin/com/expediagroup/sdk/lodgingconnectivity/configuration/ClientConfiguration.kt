@@ -163,13 +163,7 @@ data class ClientConfiguration(
         fun builder(): Builder = Builder()
     }
 
-    internal fun toFullClientConfiguration(
-        endpointProvider: (ClientEnvironment) -> String,
-        authEndpointProvider: (ClientEnvironment) -> String,
-        defaultEnvironment: ClientEnvironment = ClientEnvironment.PROD
-    ): FullClientConfiguration {
-        val environment = this.environment ?: defaultEnvironment
-
+    internal fun toFullClientConfiguration(apiEndpoint: ApiEndpoint): FullClientConfiguration {
         return object : FullClientConfiguration {
             override fun getKey(): String =
                 key ?: throw ExpediaGroupConfigurationException("API key is required for authentication.")
@@ -177,11 +171,9 @@ data class ClientConfiguration(
             override fun getSecret(): String =
                 secret ?: throw ExpediaGroupConfigurationException("API secret is required for authentication.")
 
-            override fun getEndpoint(): String =
-                endpointProvider(environment)
+            override fun getEndpoint(): String = apiEndpoint.endpoint
 
-            override fun getAuthEndpoint(): String =
-                authEndpointProvider(environment)
+            override fun getAuthEndpoint(): String = apiEndpoint.authEndpoint
 
             override fun getMaskedLoggingHeaders(): Set<String> =
                 maskedLoggingHeaders ?: ExpediaGroupDefaultClientConfiguration.getMaskedLoggingHeaders()

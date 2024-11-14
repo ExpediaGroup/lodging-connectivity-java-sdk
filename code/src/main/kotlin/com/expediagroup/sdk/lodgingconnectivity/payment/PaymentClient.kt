@@ -36,7 +36,7 @@ import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInst
  */
 class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
-        config.toExpediaGroupClientConfiguration(
+        config.toFullClientConfiguration(
             apiEndpoint = PaymentApiEndpointProvider.forEnvironment(
                 environment = config.environment ?: ClientEnvironment.PROD
             ),

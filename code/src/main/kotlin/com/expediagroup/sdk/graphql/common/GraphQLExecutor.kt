@@ -16,11 +16,12 @@
 
 package com.expediagroup.sdk.graphql.common
 
-import com.apollographql.apollo.ApolloClient
+import com.apollographql.java.client.ApolloClient
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
+import java.util.concurrent.CompletableFuture
 
 /**
  * Abstract base class for executing GraphQL operations, providing a structure for executing queries and mutations
@@ -57,6 +58,26 @@ abstract class GraphQLExecutor {
      * @throws NoDataException If the mutation completes without data but includes errors.
      */
     abstract fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T>
+
+    /**
+     * Asynchronously executes a GraphQL query and returns the complete raw response in a [CompletableFuture].
+     *
+     * @param query The GraphQL query to be executed.
+     * @return A [CompletableFuture] containing the full data and any errors from the query response wrapped in [RawResponse].
+     * @throws ExpediaGroupServiceException If an exception occurs during the execution of the query.
+     * @throws NoDataException If the query completes without data but includes errors.
+     */
+    abstract fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>>
+
+    /**
+     * Asynchronously executes a GraphQL mutation and returns the complete raw response in a [CompletableFuture].
+     *
+     * @param query The GraphQL mutation to be executed.
+     * @return A [CompletableFuture] containing the full data and any errors from the mutation response wrapped in [RawResponse].
+     * @throws ExpediaGroupServiceException If an exception occurs during the execution of the mutation.
+     * @throws NoDataException If the mutation completes without data but includes errors.
+     */
+    abstract fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>>
 }
 
 

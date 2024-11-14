@@ -3,9 +3,9 @@ package com.expediagroup.sdk.core.configuration
 import java.util.jar.Manifest
 
 internal object SdkMetadata {
-    private lateinit var artifactId: String
-    private lateinit var version: String
-    private lateinit var userAgentPrefix: String
+    private var artifactId: String
+    private var version: String
+    private var userAgentPrefix: String
 
     fun getArtifactId(): String = artifactId
     fun getVersion(): String = version

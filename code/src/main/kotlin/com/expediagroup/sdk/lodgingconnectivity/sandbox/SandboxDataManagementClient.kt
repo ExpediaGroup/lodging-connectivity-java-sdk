@@ -74,7 +74,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.Sa
  */
 class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
-        config.toExpediaGroupClientConfiguration(
+        config.toFullClientConfiguration(
             apiEndpoint = SandboxApiEndpointProvider.forEnvironment(
                 environment = config.environment ?: ClientEnvironment.SANDBOX_PROD
             ),

@@ -38,13 +38,7 @@ dependencies {
 
     /* EG SDK Core */
     implementation("org.apache.tika:tika-core:2.9.2")
-    implementation("com.google.api-client:google-api-client:2.7.0") {
-        exclude group: 'io.grpc', module: 'grpc-api'
-        exclude group: 'io.grpc', module: 'grpc-context'
-
-        exclude group: 'io.opencensus', module: 'opencensus-api'
-        exclude group: 'io.opencensus', module: 'opencensus-contrib-http-util'
-    }
+    implementation("com.google.api-client:google-api-client:2.7.0")
     implementation("com.ebay.ejmask:ejmask-api:1.0.3")
     implementation("com.ebay.ejmask:ejmask-extensions:1.0.3")
     implementation 'org.slf4j:slf4j-simple:2.0.13'

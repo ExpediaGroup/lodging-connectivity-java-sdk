@@ -22,7 +22,6 @@ import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.SupplyApiEndpointProvider
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelVrboReservationInput
@@ -60,7 +59,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.Reserv
  */
 class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
-        config.toExpediaGroupClientConfiguration(
+        config.toFullClientConfiguration(
             apiEndpoint = SupplyApiEndpointProvider.forEnvironment(
                 environment = config.environment ?: ClientEnvironment.PROD
             ),
