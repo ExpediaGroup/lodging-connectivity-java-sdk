@@ -53,9 +53,9 @@ lodging-connectivity-java-sdk/
 │   └── graphql/         # GraphQL setup scripts
 ├── apollo-compiler-plugin/
 │   └── src/main/        # Apollo compiler plugin source code
-├── build.gradle.kts     # Gradle build configuration
+├── build.gradle         # Gradle build configuration
 ├── gradle.properties    # Gradle properties
-├── settings.gradle.kts  # Gradle settings
+├── settings.gradle      # Gradle settings
 └── ...
 ```
 
@@ -65,13 +65,13 @@ lodging-connectivity-java-sdk/
 
 If Gradle fails to detect your JDK installation, try either:
 
-Option 1: Add this line to the root `gradle.properties`:
+**Option 1**: Add this line to the root `gradle.properties`:
 
 ```properties
 org.gradle.java.installations.fromEnv=true
 ```
 
-Option 2: Set JAVA_HOME explicitly:
+**Option 2**: Set JAVA_HOME explicitly:
 
 ```bash
 export JAVA_HOME=$(/usr/libexec/java_home -v 11)
