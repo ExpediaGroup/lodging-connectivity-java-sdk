@@ -1,5 +1,3 @@
-# DEVELOPMENT.md
-
 ## Development Requirements
 
 - Java 11 (for development/compilation)
