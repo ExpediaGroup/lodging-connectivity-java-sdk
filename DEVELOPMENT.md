@@ -65,7 +65,7 @@ lodging-connectivity-java-sdk/
 
 If Gradle fails to detect your JDK installation, try either:
 
-Option 1: Add this line to your `gradle.properties`:
+Option 1: Add this line to the root `gradle.properties`:
 
 ```properties
 org.gradle.java.installations.fromEnv=true
