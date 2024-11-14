@@ -1,3 +1,5 @@
+# Development Guide
+
 ## Development Requirements
 
 - Java 11 (for development/compilation)
@@ -38,6 +40,7 @@ Alternatively, for local development you can use:
 ```
 
 ## Project Structure
+
 ```
 lodging-connectivity-java-sdk/
 ├── code/src/main/
