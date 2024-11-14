@@ -3,7 +3,9 @@ package com.expediagroup.sdk.lodgingconnectivity.filemanagement.client
 import com.expediagroup.sdk.core.client.SdkClient
 import com.expediagroup.sdk.core.configuration.DefaultClientBuilder
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.configuration.FileManagementApiEndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.FileUploadRequest
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.models.Upload201Response
 import com.expediagroup.sdk.lodgingconnectivity.filemanagement.operations.FileDownloadOperation
@@ -20,8 +22,9 @@ class FileManagementClient(
 ) {
     private val client = SdkClient(
         configuration = configuration.toFullClientConfiguration(
-            endpointProvider = EndpointProvider::getFileManagementClientEndpoint,
-            authEndpointProvider = EndpointProvider::getAuthEndpoint
+            FileManagementApiEndpointProvider.forEnvironment(
+                environment = configuration.environment ?: ClientEnvironment.PROD
+            )
         )
     )
 

@@ -1,9 +1,5 @@
-# Supply Client
-`SupplyClient` gives you access to the reservations capabilities in lodging connectivity APIs.
-
-> [!NOTE]
-> Supporting more capabilities like Promotions, Messaging, Reviews, etc... is work-in-progress at the moment and will be added soon to this client.
-
+# Reservation Client
+`ReservationnClient` gives you access to the reservations capabilities in lodging connectivity APIs.
 
 ### API Endpoint
 This client is connected with https://api.expediagroup.com/supply/lodging/graphql endpoint by default. 
@@ -18,11 +14,11 @@ ClientConfiguration config = ClientConfiguration
         .secret("SECRET")
         .build();
 
-SupplyClient supplyClient = new SupplyClient(config);
+ReservationClient reservationClient = new ReservationClient(config);
 ```
 
 ### Set the Environment (Optional)
-`SupplyClient` can be configured to work in different environments, below is a list of the supported environments by this client:
+`ReservationClient` can be configured to work in different environments, below is a list of the supported environments by this client:
 
 | Environment                      | Corresponding API Endpoint                                       |
 |----------------------------------|------------------------------------------------------------------|
@@ -43,7 +39,8 @@ ClientConfiguration config = ClientConfiguration
 
 ### Initialize GraphQL Operation 
 ```java
-PropertyReservationsQuery reservationsQuery = PropertyReservationsQuery
+
+PropertyReservationsQuery propertyReservationsQuery = PropertyReservationsQuery
         .builder()
         .propertyId("your_property_id")
         .pageSize(10)
@@ -53,7 +50,7 @@ PropertyReservationsQuery reservationsQuery = PropertyReservationsQuery
 ### Execute the operation
 ```java
 try {
-    PropertyReservationsQuery.Data reservationsData = supplyClient.execute(reservationsQuery);
+    PropertyReservationsQuery.Data reservationsData = reservationClient.execute(propertyReservationsQuery);
 }
 catch(ExpediaGroupServiceException e) {
     e.printStackTrace();
@@ -61,11 +58,11 @@ catch(ExpediaGroupServiceException e) {
 ```
 
 ## Available Operations
-The SDK offers a set of queries & mutations you can execute using the `SupplyClient`. Below is an overview list of the available operations.
+The SDK offers a set of queries & mutations you can execute using the `ReservationClient`. Below is an overview list of the available operations.
 
 <br />
 
-### SupplyClient - Queries
+### ReservationClient - Queries
 
 <hr />
 
@@ -82,7 +79,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 |---------------------------------|--------------------------|-----------------------|
 | `propertyId`                    | `String!`                | Yes                   |
 | `idSource`                      | `IdSource`               | No (default: EXPEDIA) |
-| `pageSize`                      | `Int!`                   | Yes                   |
+| `pageSize`                      | `Int!`                   | No (default: 10)      |
 | `cursor`                        | `String`                 | No                    |
 | `filter`                        | `ReservationFilterInput` | No                    |
 | `checkOutDate`                  | `CheckOutDateFilter`     | No                    |
@@ -93,7 +90,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/reservations_query/) 
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReservations.graphql) 
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/queries/PropertyReservations.graphql) 
 - [Reference]()
 
 </details>
@@ -113,7 +110,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 |----------------|--------------------------|-----------------------|
 | `propertyId`   | `String!`                | Yes                   |
 | `idSource`     | `IdSource`               | No (default: EXPEDIA) |
-| `pageSize`     | `Int!`                   | Yes                   |
+| `pageSize`     | `Int!`                   | No (default: 10)      |
 | `cursor`       | `String`                 | No                    |
 | `filter`       | `ReservationFilterInput` | No                    |
 | `checkOutDate` | `CheckOutDateFilter`     | No                    |
@@ -122,7 +119,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/reservations_query/)
-- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/queries/PropertyReservationsSummary.graphql)
+- [Query Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/queries/PropertyReservationsSummary.graphql)
 - [Reference]()
 
 </details>
@@ -131,7 +128,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 <br /><br />
 
-### SupplyClient - Mutations
+### ReservationClient - Mutations
 
 <hr />
 
@@ -153,7 +150,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/cancelReservation/)
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CancelReservation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/mutations/CancelReservation.graphql)
 - [Reference]()
 
 </details>
@@ -177,7 +174,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/cancelReservationReconciliation/)
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CancelReservationReconciliation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/mutations/CancelReservationReconciliation.graphql)
 - [Reference]()
 
 </details>
@@ -201,7 +198,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/CancelVrboReservation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/mutations/CancelVrboReservation.graphql)
 - [Reference]()
 
 </details>
@@ -225,7 +222,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - [Documentation](https://developers.expediagroup.com/supply/lodging/docs/booking_apis/reservations/reference/changeReservationReconciliation/)
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/ChangeReservationReconciliation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/mutations/ChangeReservationReconciliation.graphql)
 - [Reference]()
 
 </details>
@@ -249,7 +246,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment 
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/ConfirmReservationNotification.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/mutations/ConfirmReservationNotification.graphql)
 - [Reference]()
 
 </details>
@@ -273,7 +270,7 @@ The SDK offers a set of queries & mutations you can execute using the `SupplyCli
 
 **Resources**
 - ⚠️ Documentation is unavailable at the moment
-- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/operations/mutations/RefundReservation.graphql)
+- [Mutation Definition](https://github.com/ExpediaGroup/lodging-connectivity-graphql-operations/blob/main/supply/reservations/mutations/RefundReservation.graphql)
 - [Reference]()
 
 </details>

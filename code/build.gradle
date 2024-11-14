@@ -1,7 +1,7 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
     id 'org.jetbrains.dokka' version '1.9.20'
-    id 'com.apollographql.apollo' version '4.0.0'
+    id 'com.apollographql.apollo' version '4.1.0'
 
     /* Publishing Plugins */
     id 'maven-publish'
@@ -10,15 +10,6 @@ plugins {
 
 kotlin {
     jvmToolchain(8)
-}
-
-sourceSets {
-    main {
-        java {
-            /** Include apollo generated sources in the final JAR **/
-            srcDirs += 'build/generated/source/apollo'
-        }
-    }
 }
 
 jar {
@@ -33,13 +24,13 @@ jar {
 
 dependencies {
     /* Kotlin */
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.20'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.21'
 
     /* Dokka */
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
 
     /* Apollo Kotlin */
-    api 'com.apollographql.apollo:apollo-runtime:4.0.0'
+    api 'com.apollographql.apollo:apollo-runtime:4.1.0'
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
 
     /* Apollo Java */
@@ -47,13 +38,7 @@ dependencies {
 
     /* EG SDK Core */
     implementation("org.apache.tika:tika-core:2.9.2")
-    implementation("com.google.api-client:google-api-client:2.7.0") {
-        exclude group: 'io.grpc', module: 'grpc-api'
-        exclude group: 'io.grpc', module: 'grpc-context'
-
-        exclude group: 'io.opencensus', module: 'opencensus-api'
-        exclude group: 'io.opencensus', module: 'opencensus-contrib-http-util'
-    }
+    implementation("com.google.api-client:google-api-client:2.7.0")
     implementation("com.ebay.ejmask:ejmask-api:1.0.3")
     implementation("com.ebay.ejmask:ejmask-extensions:1.0.3")
     implementation 'org.slf4j:slf4j-simple:2.0.13'

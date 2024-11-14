@@ -31,6 +31,8 @@ internal data object LogMaskingFields {
             "account_number",
             "card_avs_response",
             "card_cvv_response",
-            "card_cvv2_response"
+            "card_cvv2_response",
+            "verificationNumber",
+            "vatNumber"
         )
 }
