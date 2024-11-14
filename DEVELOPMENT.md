@@ -81,7 +81,7 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 11)
 
 - Ensure Java 11 is installed and configured as your development JDK
 - Check your Java version: `java -version`
-- Make sure you've run the GraphQL schema initialization script
+- Make sure you've run the GraphQL module initialization script
 - Run with `--stacktrace` flag for detailed error information:
   ```bash
   ./gradlew build --stacktrace
