@@ -1,6 +1,9 @@
 package com.expediagroup.sdk.core2.http
 
-import java.io.*
+import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.net.URLEncoder
 import java.nio.charset.Charset
 
@@ -130,37 +133,37 @@ abstract class HttpRequestBody {
                 }
             }
         }
-    }
 
-    /**
-     * Creates a new request body for form data with content type "application/x-www-form-urlencoded".
-     *
-     * @param formData The form data as a map of parameter names and values.
-     * @param charset The character set to use; defaults to UTF-8.
-     * @return A new [HttpRequestBody] instance.
-     * @throws IllegalArgumentException If [formData] is null.
-     */
-    fun create(
-        formData: Map<String, String>,
-        charset: Charset = Charsets.UTF_8
-    ): HttpRequestBody {
+        /**
+         * Creates a new request body for form data with content type "application/x-www-form-urlencoded".
+         *
+         * @param formData The form data as a map of parameter names and values.
+         * @param charset The character set to use; defaults to UTF-8.
+         * @return A new [HttpRequestBody] instance.
+         * @throws IllegalArgumentException If [formData] is null.
+         */
+        fun create(
+            formData: Map<String, String>,
+            charset: Charset = Charsets.UTF_8
+        ): HttpRequestBody {
 
-        val mediaType = MediaType.parse(ContentType.APPLICATION_FORM_URLENCODED.mimeType)?.withCharset(charset)
-            ?: throw IllegalStateException("Failed to parse media type")
+            val mediaType = MediaType.parse(ContentType.APPLICATION_FORM_URLENCODED.mimeType)?.withCharset(charset)
+                ?: throw IllegalStateException("Failed to parse media type")
 
-        val encodedForm = formData.map { (key, value) ->
-            "${encode(key, charset)}=${encode(value, charset)}"
-        }.joinToString("&")
+            val encodedForm = formData.map { (key, value) ->
+                "${encode(key, charset)}=${encode(value, charset)}"
+            }.joinToString("&")
 
-        val contentBytes = encodedForm.toByteArray(charset)
+            val contentBytes = encodedForm.toByteArray(charset)
 
-        return create(mediaType, contentBytes)
-    }
+            return create(mediaType, contentBytes)
+        }
 
-    private fun encode(value: String, charset: Charset): String {
-        return URLEncoder.encode(value, charset.name())
-            .replace("+", "%20")
-            .replace("*", "%2A")
-            .replace("%7E", "~")
+        private fun encode(value: String, charset: Charset): String {
+            return URLEncoder.encode(value, charset.name())
+                .replace("+", "%20")
+                .replace("*", "%2A")
+                .replace("%7E", "~")
+        }
     }
 }
