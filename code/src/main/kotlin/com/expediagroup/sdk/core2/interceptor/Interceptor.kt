@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.core2.interceptor.common
+package com.expediagroup.sdk.core2.interceptor
 
 import com.expediagroup.sdk.core2.http.HttpRequest
 import com.expediagroup.sdk.core2.http.HttpResponse
@@ -23,11 +23,11 @@ import java.io.IOException
 /**
  * Represents an interceptor for modifying or augmenting HTTP requests and responses within the SDK.
  *
- * An `SDKInterceptor` allows pre-processing of requests and post-processing of responses as they pass
+ * An `Interceptor` allows pre-processing of requests and post-processing of responses as they pass
  * through the HTTP execution pipeline. This can be used for various purposes such as logging, authentication,
  * retry logic, or adding custom headers.
  */
-interface SDKInterceptor {
+interface Interceptor {
     /**
      * Intercepts an HTTP request and optionally modifies it or processes its corresponding response.
      *
