@@ -18,7 +18,7 @@ package com.expediagroup.sdk.core2.client
 
 import com.expediagroup.sdk.core2.http.HttpRequest
 import com.expediagroup.sdk.core2.http.HttpResponse
-import com.expediagroup.sdk.core2.interceptor.common.SDKInterceptor
+import com.expediagroup.sdk.core2.interceptor.Interceptor
 import java.io.IOException
 
 /**
@@ -32,13 +32,13 @@ import java.io.IOException
  *
  * @param httpClient The user-implemented [HttpClient] responsible for executing HTTP requests.
  */
-abstract class HttpRequestExecutor(val httpClient: HttpClient) {
+abstract class HttpClientExecutor(val httpClient: HttpClient) {
     /**
      * The list of SDK-specific interceptors to apply during request execution.
      *
      * Interceptors can be used to modify requests, log information, handle retries, or enforce governance rules.
      */
-    protected abstract val interceptors: List<SDKInterceptor>
+    protected abstract val interceptors: List<Interceptor>
 
     /**
      * Executes the given HTTP request, applying SDK-specific logic and governance.
