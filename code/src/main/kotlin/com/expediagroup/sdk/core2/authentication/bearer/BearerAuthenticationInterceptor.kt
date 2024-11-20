@@ -19,7 +19,7 @@ package com.expediagroup.sdk.core2.authentication.bearer
 import com.expediagroup.sdk.core2.authentication.common.Credentials
 import com.expediagroup.sdk.core2.client.HttpClient
 import com.expediagroup.sdk.core2.http.HttpResponse
-import com.expediagroup.sdk.core2.interceptor.common.SDKInterceptor
+import com.expediagroup.sdk.core2.interceptor.Interceptor
 import java.io.IOException
 
 /**
@@ -39,7 +39,7 @@ class BearerAuthenticationInterceptor(
     httpClient: HttpClient,
     private val authUrl: String,
     credentials: Credentials
-) : SDKInterceptor {
+) : Interceptor {
     private val bearerAuthenticationManager = BearerAuthenticationManager(httpClient, authUrl, credentials)
     private val lock = Any()
 
@@ -49,11 +49,11 @@ class BearerAuthenticationInterceptor(
      * This method checks if the token is about to expire and refreshes it if necessary. It excludes
      * requests targeting the `authUrl` from this behavior to avoid recursive authentication requests.
      *
-     * @param chain The [SDKInterceptor.Chain] responsible for managing the request and its progression.
+     * @param chain The [Interceptor.Chain] responsible for managing the request and its progression.
      * @return The [HttpResponse] resulting from the executed request.
      * @throws IOException If an error occurs during token retrieval or request execution.
      */
-    override fun intercept(chain: SDKInterceptor.Chain): HttpResponse {
+    override fun intercept(chain: Interceptor.Chain): HttpResponse {
         val request = chain.request()
 
         if (request.url.toString() == authUrl) {
