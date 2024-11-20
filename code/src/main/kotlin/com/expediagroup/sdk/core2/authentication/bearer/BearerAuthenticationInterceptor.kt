@@ -17,7 +17,7 @@
 package com.expediagroup.sdk.core2.authentication.bearer
 
 import com.expediagroup.sdk.core2.authentication.common.Credentials
-import com.expediagroup.sdk.core2.client.HttpClient
+import com.expediagroup.sdk.core2.client.HttpClientAdapter
 import com.expediagroup.sdk.core2.http.HttpResponse
 import com.expediagroup.sdk.core2.interceptor.Interceptor
 import java.io.IOException
@@ -31,16 +31,16 @@ import java.io.IOException
  *
  * Requests to the `authUrl` (authentication endpoint) are excluded from this behavior to prevent recursive authentication loops.
  *
- * @param httpClient The [HttpClient] used for making authentication requests.
+ * @param httpClientAdapter The [HttpClientAdapter] used for making authentication requests.
  * @param authUrl The URL of the authentication endpoint used to retrieve bearer tokens.
  * @param credentials The [Credentials] required for authentication.
  */
 class BearerAuthenticationInterceptor(
-    httpClient: HttpClient,
+    httpClientAdapter: HttpClientAdapter,
     private val authUrl: String,
     credentials: Credentials
 ) : Interceptor {
-    private val bearerAuthenticationManager = BearerAuthenticationManager(httpClient, authUrl, credentials)
+    private val bearerAuthenticationManager = BearerAuthenticationManager(httpClientAdapter, authUrl, credentials)
     private val lock = Any()
 
     /**

@@ -24,15 +24,15 @@ import java.io.IOException
 /**
  * Abstract class responsible for managing HTTP request execution within the SDK.
  *
- * This class acts as a wrapper around a user-provided [HttpClient], applying SDK-specific logic and governance
+ * This class acts as a wrapper around a user-provided [HttpClientAdapter], applying SDK-specific logic and governance
  * during request execution, such as handling interceptors and enforcing additional rules or transformations.
  *
  * Each SDK should implement its own version of this class to define specific behavior, such as request preprocessing,
  * applying interceptors, or handling governance rules.
  *
- * @param httpClient The user-implemented [HttpClient] responsible for executing HTTP requests.
+ * @param httpClientAdapter The user-implemented [HttpClientAdapter] responsible for executing HTTP requests.
  */
-abstract class HttpClientExecutor(val httpClient: HttpClient) {
+abstract class HttpClientExecutor(val httpClientAdapter: HttpClientAdapter) {
     /**
      * The list of SDK-specific interceptors to apply during request execution.
      *
@@ -43,7 +43,7 @@ abstract class HttpClientExecutor(val httpClient: HttpClient) {
     /**
      * Executes the given HTTP request, applying SDK-specific logic and governance.
      *
-     * This method wraps the [HttpClient.execute] call, applying interceptors and other custom logic
+     * This method wraps the [HttpClientAdapter.execute] call, applying interceptors and other custom logic
      * before and after the actual request execution.
      *
      * @param request The [HttpRequest] to be executed.
