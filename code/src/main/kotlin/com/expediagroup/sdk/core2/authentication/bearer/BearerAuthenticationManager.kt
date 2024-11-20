@@ -19,7 +19,7 @@ package com.expediagroup.sdk.core2.authentication.bearer
 import com.expediagroup.sdk.core.extension.getOrThrow
 import com.expediagroup.sdk.core2.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core2.authentication.common.Credentials
-import com.expediagroup.sdk.core2.client.HttpClient
+import com.expediagroup.sdk.core2.client.HttpClientAdapter
 import com.expediagroup.sdk.core2.http.ContentType
 import com.expediagroup.sdk.core2.http.HttpRequest
 import com.expediagroup.sdk.core2.http.HttpRequestBody
@@ -36,12 +36,12 @@ import java.nio.charset.StandardCharsets
  * and validation. It interacts with an authentication server to fetch tokens using client credentials,
  * ensures tokens are refreshed when necessary, and provides them in the required format for authorization headers.
  *
- * @param httpClient The [HttpClient] used to execute authentication requests.
+ * @param httpClientAdapter The [HttpClientAdapter] used to execute authentication requests.
  * @param authUrl The URL of the authentication server's endpoint to obtain bearer tokens.
  * @param credentials The [Credentials] containing the client key and secret used for authentication.
  */
 class BearerAuthenticationManager(
-    private val httpClient: HttpClient,
+    private val httpClientAdapter: HttpClientAdapter,
     private val authUrl: String,
     private val credentials: Credentials
 ) : AuthenticationManager {
@@ -77,7 +77,7 @@ class BearerAuthenticationManager(
             .header("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.mimeType)
             .build()
 
-        val response = httpClient.execute(request)
+        val response = httpClientAdapter.execute(request)
 
         if (!response.isSuccessful) {
             throw IOException("Authentication failure: ${response.code}")
