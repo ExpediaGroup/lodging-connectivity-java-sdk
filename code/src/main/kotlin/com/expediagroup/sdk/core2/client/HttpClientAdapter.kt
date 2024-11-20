@@ -21,14 +21,13 @@ import com.expediagroup.sdk.core2.http.HttpResponse
 import java.io.IOException
 
 /**
- * Interface representing an HTTP client wrapper that can be implemented to integrate custom HTTP client libraries
+ * Interface representing an HTTP client adapter that can be implemented to integrate custom HTTP client libraries
  * with the SDK.
  *
  * This interface allows users to plug in their own HTTP client implementation by providing a method to execute HTTP
- * requests and return responses in a format compatible with the SDK. It abstracts away the specifics of the HTTP
- * client being used, enabling flexibility and customization.
+ * requests and return responses in a format compatible with the SDK.
  */
-interface HttpClient {
+interface HttpClientAdapter {
     /**
      * Executes the given HTTP request and returns the corresponding HTTP response.
      *

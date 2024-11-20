@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.core2.interceptor
 
-import com.expediagroup.sdk.core2.client.HttpClient
+import com.expediagroup.sdk.core2.client.HttpClientAdapter
 import com.expediagroup.sdk.core2.http.HttpRequest
 import com.expediagroup.sdk.core2.http.HttpResponse
 import java.io.IOException
@@ -25,7 +25,7 @@ import java.io.IOException
  * Executes a chain of [Interceptor] instances, ensuring sequential processing of HTTP requests and responses.
  *
  * The `InterceptorChainExecutor` is responsible for managing the flow of a request through a list of
- * interceptors, ultimately delegating to the [HttpClient] for request execution when all interceptors
+ * interceptors, ultimately delegating to the [HttpClientAdapter] for request execution when all interceptors
  * have been processed.
  *
  * This class implements the [Interceptor.Chain] interface, providing methods for accessing the current
@@ -34,10 +34,10 @@ import java.io.IOException
  * @param interceptors The list of [Interceptor] instances to process.
  * @param index The current position in the interceptor chain. Defaults to `0` for the first interceptor.
  * @param request The [HttpRequest] being processed.
- * @param httpClient The [HttpClient] responsible for executing the final HTTP request after all interceptors.
+ * @param httpClientAdapter The [HttpClientAdapter] responsible for executing the final HTTP request after all interceptors.
  */
 class InterceptorsChainExecutor(
-    private val httpClient: HttpClient,
+    private val httpClientAdapter: HttpClientAdapter,
     private val interceptors: List<Interceptor>,
     private var index: Int = 0,
     private var request: HttpRequest
@@ -52,10 +52,10 @@ class InterceptorsChainExecutor(
 
     /**
      * Proceeds with the HTTP request by invoking the next [Interceptor] in the chain or
-     * executing the final request through the [HttpClient] if all interceptors have been processed.
+     * executing the final request through the [HttpClientAdapter] if all interceptors have been processed.
      *
      * Each interceptor in the chain can modify the request or response as needed. If this is the last
-     * interceptor, the request is passed to the [HttpClient] for actual execution.
+     * interceptor, the request is passed to the [HttpClientAdapter] for actual execution.
      *
      * @param request The [HttpRequest] to proceed with.
      * @return The [HttpResponse] resulting from the next interceptor or the final HTTP client execution.
@@ -66,7 +66,7 @@ class InterceptorsChainExecutor(
         this.request = request
 
         if (index >= interceptors.size) {
-            return httpClient.execute(request)
+            return httpClientAdapter.execute(request)
         }
 
         val interceptor = interceptors[index++]
