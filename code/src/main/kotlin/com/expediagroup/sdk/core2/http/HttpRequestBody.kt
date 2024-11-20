@@ -16,12 +16,13 @@
 
 package com.expediagroup.sdk.core2.http
 
-import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.io.OutputStream
 import java.net.URLEncoder
 import java.nio.charset.Charset
+import okio.BufferedSink
+import okio.Source
+import okio.source
 
 /**
  * Represents an HTTP request body.
@@ -41,88 +42,15 @@ abstract class HttpRequestBody {
     open fun contentLength(): Long = -1
 
     /**
-     * Writes the request body to the given [outputStream].
+     * Writes the request body to the given [sink].
      *
-     * @param outputStream the output stream to write to.
+     * @param sink the sink to write to.
      * @throws IOException if an I/O error occurs.
      */
     @Throws(IOException::class)
-    abstract fun writeTo(outputStream: OutputStream)
+    abstract fun writeTo(sink: BufferedSink)
 
     companion object {
-        /**
-         * Creates a new request body from [content] and [mediaType].
-         *
-         * @param mediaType the media type, or null if unknown.
-         * @param content the content as a byte array.
-         * @return a new [HttpRequestBody] instance.
-         * @throws IllegalArgumentException if [content] is null.
-         */
-        fun create(mediaType: MediaType?, content: ByteArray): HttpRequestBody {
-            return object : HttpRequestBody() {
-                override fun contentType(): MediaType? = mediaType
-
-                override fun contentLength(): Long = content.size.toLong()
-
-                @Throws(IOException::class)
-                override fun writeTo(outputStream: OutputStream) {
-                    outputStream.use { out ->
-                        out.write(content)
-                    }
-                }
-            }
-        }
-
-        /**
-         * Creates a new request body from [content] and [mediaType].
-         *
-         * @param mediaType the media type, or null if unknown.
-         * @param content the content as a string.
-         * @param charset the character set to use; defaults to UTF-8.
-         * @return a new [HttpRequestBody] instance.
-         * @throws IllegalArgumentException if [content] is null.
-         */
-        fun create(
-            mediaType: MediaType?,
-            content: String,
-            charset: Charset = Charsets.UTF_8
-        ): HttpRequestBody {
-
-            val finalMediaType = if (mediaType != null && mediaType.charset == null) {
-                mediaType.withCharset(charset)
-            } else {
-                mediaType
-            }
-
-            val bytes = content.toByteArray(charset)
-            return create(finalMediaType, bytes)
-        }
-
-        /**
-         * Creates a new request body that reads from the given [file].
-         *
-         * @param mediaType the media type, or null if unknown.
-         * @param file the file to read from.
-         * @return a new [HttpRequestBody] instance.
-         * @throws IllegalArgumentException if [file] does not exist.
-         */
-        fun create(mediaType: MediaType?, file: File): HttpRequestBody {
-            require(file.exists()) { "file does not exist: ${file.path}" }
-
-            return object : HttpRequestBody() {
-                override fun contentType(): MediaType? = mediaType
-
-                override fun contentLength(): Long = file.length()
-
-                @Throws(IOException::class)
-                override fun writeTo(outputStream: OutputStream) {
-                    file.inputStream().use { input ->
-                        input.copyTo(outputStream)
-                    }
-                }
-            }
-        }
-
         /**
          * Creates a new request body that reads from the given [inputStream].
          *
@@ -132,9 +60,9 @@ abstract class HttpRequestBody {
          * @return a new [HttpRequestBody] instance.
          */
         fun create(
+            inputStream: InputStream,
             mediaType: MediaType?,
-            contentLength: Long = -1,
-            inputStream: InputStream
+            contentLength: Long = -1
         ): HttpRequestBody {
             return object : HttpRequestBody() {
                 override fun contentType(): MediaType? = mediaType
@@ -142,9 +70,36 @@ abstract class HttpRequestBody {
                 override fun contentLength(): Long = contentLength
 
                 @Throws(IOException::class)
-                override fun writeTo(outputStream: OutputStream) {
-                    inputStream.use { input ->
-                        input.copyTo(outputStream)
+                override fun writeTo(sink: BufferedSink) {
+                    inputStream.use {
+                        sink.writeAll(it.source())
+                    }
+                }
+            }
+        }
+
+        /**
+         * Creates a new request body that reads from the given [source].
+         *
+         * @param mediaType the media type, or null if unknown.
+         * @param contentLength the length of the content, or -1 if unknown.
+         * @param source the source to read from.
+         * @return a new [HttpRequestBody] instance.
+         */
+        fun create(
+            source: Source,
+            mediaType: MediaType?,
+            contentLength: Long = -1
+        ): HttpRequestBody {
+            return object : HttpRequestBody() {
+                override fun contentType(): MediaType? = mediaType
+
+                override fun contentLength(): Long = contentLength
+
+                @Throws(IOException::class)
+                override fun writeTo(sink: BufferedSink) {
+                    source.use { src ->
+                        sink.writeAll(src)
                     }
                 }
             }
@@ -172,7 +127,7 @@ abstract class HttpRequestBody {
 
             val contentBytes = encodedForm.toByteArray(charset)
 
-            return create(mediaType, contentBytes)
+            return create(contentBytes.inputStream(), mediaType)
         }
 
         private fun encode(value: String, charset: Charset): String {
