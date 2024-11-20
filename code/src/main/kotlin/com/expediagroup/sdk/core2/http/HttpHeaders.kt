@@ -119,8 +119,7 @@ class HttpHeaders private constructor(private val headersMap: Map<String, List<S
          */
         @Throws(IllegalArgumentException::class)
         fun add(name: String, values: List<String>): Builder {
-            val (processedName, processedValues) = processNameAndValues(name, values)
-            headersMap.computeIfAbsent(processedName) { mutableListOf() }.addAll(processedValues)
+            headersMap.computeIfAbsent(processHeaderName(name)) { mutableListOf() }.addAll(processHeaderValues(values))
             return this
         }
 
@@ -135,10 +134,7 @@ class HttpHeaders private constructor(private val headersMap: Map<String, List<S
          */
         @Throws(IllegalArgumentException::class)
         fun set(name: String, value: String): Builder {
-            val (processedName, processedValues) = processNameAndValues(name, listOf(value))
-            remove(processedName)
-            add(name, value)
-            return this
+            return set(name, listOf(value))
         }
 
         /**
@@ -152,9 +148,11 @@ class HttpHeaders private constructor(private val headersMap: Map<String, List<S
          */
         @Throws(IllegalArgumentException::class)
         fun set(name: String, values: List<String>): Builder {
-            val (processedName, processedValues) = processNameAndValues(name, values)
+            val processedName = processHeaderName(name)
+
             remove(processedName)
-            add(name, processedValues)
+            add(processedName, processHeaderValues(values))
+
             return this
         }
 
@@ -178,32 +176,34 @@ class HttpHeaders private constructor(private val headersMap: Map<String, List<S
             return HttpHeaders(headersMap)
         }
 
-        private fun processNameAndValues(name: String, values: List<String>): Pair<String, List<String>> {
-            val processedName = name.lowercase(Locale.US).trim()
-            val processedValues = values.map { it.trim() }
-
-            processedValues.forEach {
-                checkNameAndValue(processedName, it)
+        private fun processHeaderName(name: String): String = name
+            .lowercase(Locale.US)
+            .trim()
+            .let {
+                validateHeaderName(it)
+                return@let it
             }
 
-            return Pair(processedName, processedValues)
-        }
+        private fun processHeaderValues(values: List<String>): List<String> = values
+            .map {
+                it.trim()
+            }
+            .let {
+                it.forEach { value -> validateHeaderValue(value) }
+                return@let it
+            }
 
-        /**
-         * Validates the header name and value.
-         *
-         * @param name the header name
-         * @param value the header value
-         * @throws IllegalArgumentException if [name] or [value] is invalid
-         */
-        @Throws(IllegalArgumentException::class)
-        private fun checkNameAndValue(name: String, value: String) {
+        private fun validateHeaderName(name: String) {
             require(name.isNotBlank()) { "Header name must not be blank" }
+
             for (char in name) {
                 require(char in '!'..'\u007E') {
                     String.format("Invalid character %#04x in header name: %s", char.code, name)
                 }
             }
+        }
+
+        private fun validateHeaderValue(value: String) {
             for (char in value) {
                 require(char == '\t' || (char in '\u0020'..'\u007E')) {
                     String.format("Invalid character %#04x in header value: %s", char.code, value)
