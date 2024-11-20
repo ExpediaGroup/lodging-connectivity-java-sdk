@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.core2.okhttp
 
-import com.expediagroup.sdk.core2.client.HttpClient
+import com.expediagroup.sdk.core2.client.HttpClientAdapter
 import com.expediagroup.sdk.core2.http.HttpHeaders
 import com.expediagroup.sdk.core2.http.HttpRequest
 import com.expediagroup.sdk.core2.http.HttpResponse
@@ -16,7 +16,7 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import okio.BufferedSink
 
-class OkHttpClientAdapter(private val okHttpClient: OkHttpClient) : HttpClient {
+class OkHttpClientAdapter(private val okHttpClient: OkHttpClient) : HttpClientAdapter {
     override fun execute(request: HttpRequest): HttpResponse {
         val okHttpRequest = toOkHttpRequest(request)
         val okHttpResponse = okHttpClient.newCall(okHttpRequest).execute()
