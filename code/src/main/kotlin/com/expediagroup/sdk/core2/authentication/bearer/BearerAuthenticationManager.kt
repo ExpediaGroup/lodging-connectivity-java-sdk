@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.core2.authentication.bearer
 
+import com.expediagroup.sdk.core.extension.getOrThrow
 import com.expediagroup.sdk.core2.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core2.authentication.common.Credentials
 import com.expediagroup.sdk.core2.client.HttpClient
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.IOException
+import java.nio.charset.StandardCharsets
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -81,14 +83,17 @@ class BearerAuthenticationManager(
             throw IOException("Authentication failure: ${response.code}")
         }
 
-        val responseBody = response.body?.string()
-
-        if (responseBody != null) {
-            val tokenResponse = parseTokenResponse(responseBody)
-            bearerTokenStorage = BearerTokenStorage(tokenResponse.accessToken, tokenResponse.expiresIn)
-        } else {
-            throw IOException("Failed to get token")
+        val responseBody = response.body.getOrThrow {
+            IOException("Failed to get token")
         }
+
+        responseBody.source().buffer
+            .readString(responseBody.contentType()?.charset ?: StandardCharsets.UTF_8)
+            .let { stringResponseBody ->
+                parseTokenResponse(stringResponseBody)
+            }.also { parsedTokenResponse ->
+                bearerTokenStorage = BearerTokenStorage(parsedTokenResponse.accessToken, parsedTokenResponse.expiresIn)
+            }
     }
 
     /**

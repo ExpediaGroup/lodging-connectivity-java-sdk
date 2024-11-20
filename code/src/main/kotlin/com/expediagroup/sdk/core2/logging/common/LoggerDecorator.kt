@@ -25,7 +25,7 @@ import org.slf4j.Logger
  *
  * @param logger The underlying Logger instance to delegate logging actions to.
  */
-internal class SDKLogger(private val logger: Logger) : Logger by logger {
+internal class LoggerDecorator(private val logger: Logger) : Logger by logger {
     override fun info(msg: String) = logger.info(decorate(msg))
 
     fun info(msg: String, vararg tags: LogMessageTag) = logger.info(decorate(msg, tags.toSet()))

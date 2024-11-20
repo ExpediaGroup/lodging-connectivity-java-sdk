@@ -78,7 +78,6 @@ class HttpResponse private constructor(
      * Builder class for [HttpResponse].
      */
     class Builder {
-
         private var request: HttpRequest? = null
         private var protocol: Protocol? = null
         private var code: Int = -1
