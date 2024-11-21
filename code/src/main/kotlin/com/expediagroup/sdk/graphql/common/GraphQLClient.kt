@@ -16,6 +16,8 @@
 
 package com.expediagroup.sdk.graphql.common
 
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
+
 /**
  * Abstract base class for GraphQL clients that defines the core structure for executing GraphQL operations.
  * Classes extending `GraphQLClient` are expected to provide an implementation of the [GraphQLExecutor].
@@ -24,6 +26,9 @@ package com.expediagroup.sdk.graphql.common
  * while relying on the `graphQLExecutor` to perform the actual request handling.
  */
 abstract class GraphQLClient {
+
+    protected abstract val apiEndpoint: ApiEndpoint
+
     /**
      * The executor responsible for handling GraphQL operations.
      * Subclasses must provide a concrete implementation of this executor to define
