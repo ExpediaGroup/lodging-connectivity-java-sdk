@@ -1,16 +1,16 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
-import com.expediagroup.sdk.core2.authentication.bearer.BearerAuthenticationInterceptor
-import com.expediagroup.sdk.core2.authentication.common.Credentials
-import com.expediagroup.sdk.core2.client.HttpClientAdapter
-import com.expediagroup.sdk.core2.client.HttpClientExecutor
-import com.expediagroup.sdk.core2.http.HttpRequest
-import com.expediagroup.sdk.core2.http.HttpResponse
-import com.expediagroup.sdk.core2.interceptor.Interceptor
-import com.expediagroup.sdk.core2.interceptor.InterceptorsChainExecutor
-import com.expediagroup.sdk.core2.logging.LoggingInterceptor
-import com.expediagroup.sdk.core2.okhttp.BaseOkHttpClient
-import com.expediagroup.sdk.core2.okhttp.OkHttpClientAdapter
+import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
+import com.expediagroup.sdk.core.authentication.common.Credentials
+import com.expediagroup.sdk.core.client.HttpClientAdapter
+import com.expediagroup.sdk.core.client.HttpClientExecutor
+import com.expediagroup.sdk.core.http.HttpRequest
+import com.expediagroup.sdk.core.http.HttpResponse
+import com.expediagroup.sdk.core.interceptor.Interceptor
+import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
+import com.expediagroup.sdk.core.logging.LoggingInterceptor
+import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
+import com.expediagroup.sdk.core.okhttp.OkHttpClientAdapter
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomHttpClientConfiguration

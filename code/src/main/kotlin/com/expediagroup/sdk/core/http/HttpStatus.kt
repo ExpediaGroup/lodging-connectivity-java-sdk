@@ -1,6 +1,23 @@
+/*
+ * Copyright (C) 2024 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.expediagroup.sdk.core.http
 
-import com.google.api.client.http.HttpStatusCodes
+import com.expediagroup.sdk.core.http.HttpStatus.entries
+
 
 enum class HttpStatus(val code: Int) {
     // Informational responses (100–199)
@@ -78,10 +95,9 @@ enum class HttpStatus(val code: Int) {
     // Non-standard status codes (e.g., Apache)
     THIS_IS_FINE(218); // Non-standard code, used by some Apache modules
 
-    fun isSuccess(): Boolean =
-        HttpStatusCodes.isSuccess(code)
-
     companion object {
+
+        @Throws(IllegalArgumentException::class)
         fun fromCode(code: Int): HttpStatus {
             entries.find { it.code == code }?.let {
                 return it

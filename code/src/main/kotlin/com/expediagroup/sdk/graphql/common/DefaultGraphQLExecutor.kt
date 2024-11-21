@@ -22,7 +22,7 @@ import com.apollographql.apollo.api.Operation
 import com.apollographql.apollo.api.Query
 import com.apollographql.java.client.ApolloClient
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.core2.client.HttpClientExecutor
+import com.expediagroup.sdk.core.client.HttpClientExecutor
 import com.expediagroup.sdk.graphql.extension.toSDKError
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
