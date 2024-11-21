@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.IOException
-import java.nio.charset.StandardCharsets
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -87,13 +86,13 @@ class BearerAuthenticationManager(
             IOException("Failed to get token")
         }
 
-        responseBody.source().buffer
-            .readString(responseBody.contentType()?.charset ?: StandardCharsets.UTF_8)
-            .let { stringResponseBody ->
-                parseTokenResponse(stringResponseBody)
-            }.also { parsedTokenResponse ->
-                bearerTokenStorage = BearerTokenStorage(parsedTokenResponse.accessToken, parsedTokenResponse.expiresIn)
-            }
+        responseBody.source().use {
+            it.readString(responseBody.contentType()?.charset ?: Charsets.UTF_8)
+        }.let {
+            parseTokenResponse(it)
+        }.also { parsedTokenResponse ->
+            bearerTokenStorage = BearerTokenStorage(parsedTokenResponse.accessToken, parsedTokenResponse.expiresIn)
+        }
     }
 
     /**

@@ -16,16 +16,16 @@ internal object BaseOkHttpClient {
     fun getConfiguredInstance(configuration: OkHttpClientConfiguration): OkHttpClient = getInstance()
         .newBuilder()
         .apply {
-            configuration.callTimeoutMillis?.let {
+            configuration.callTimeout?.let {
                 callTimeout(Duration.ofMillis(it.toLong()))
             }
-            configuration.connectTimeoutMillis?.let {
+            configuration.connectTimeout?.let {
                 connectTimeout(Duration.ofMillis(it.toLong()))
             }
-            configuration.readTimeoutMillis?.let {
+            configuration.readTimeout?.let {
                 readTimeout(Duration.ofMillis(it.toLong()))
             }
-            configuration.writeTimeoutMillis?.let {
+            configuration.writeTimeout?.let {
                 writeTimeout(Duration.ofMillis(it.toLong()))
             }
             configuration.connectionPool?.let {

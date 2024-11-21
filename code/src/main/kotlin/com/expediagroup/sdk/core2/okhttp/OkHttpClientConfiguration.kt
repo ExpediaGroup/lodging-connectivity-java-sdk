@@ -8,10 +8,10 @@ data class OkHttpClientConfiguration(
     val networkInterceptors: List<Interceptor>? = null,
     val connectionPool: ConnectionPool? = null,
     val retryOnConnectionFailure: Boolean? = null,
-    val callTimeoutMillis: Int? = null,
-    val connectTimeoutMillis: Int? = null,
-    val readTimeoutMillis: Int? = null,
-    val writeTimeoutMillis: Int? = null,
+    val callTimeout: Int? = null,
+    val connectTimeout: Int? = null,
+    val readTimeout: Int? = null,
+    val writeTimeout: Int? = null,
 ) {
     open class Builder {
         private var interceptors: List<Interceptor>? = null
