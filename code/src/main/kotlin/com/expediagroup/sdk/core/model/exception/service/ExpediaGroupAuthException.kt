@@ -38,6 +38,16 @@ class ExpediaGroupAuthException(
     constructor(
         status: HttpStatus,
         message: String,
-        transactionId: String?
-    ) : this(message = "[${status.code}] $message", transactionId = transactionId)
+    ) : this(message = "[${status.code}] $message")
+
+    /**
+     * An exception that is thrown when an authentication error occurs.
+     *
+     * @param status The HTTP status of the error (as an integer).
+     * @param message The error message.
+     */
+    constructor(
+        status: Int,
+        message: String,
+    ) : this(HttpStatus.fromCode(status), message)
 }

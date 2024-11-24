@@ -16,8 +16,8 @@
 
 package com.expediagroup.sdk.core2.interceptor
 
-import com.expediagroup.sdk.core2.http.HttpRequest
-import com.expediagroup.sdk.core2.http.HttpResponse
+import com.expediagroup.sdk.core2.http.Request
+import com.expediagroup.sdk.core2.http.Response
 import java.io.IOException
 
 /**
@@ -36,11 +36,11 @@ interface Interceptor {
      * by calling [Chain.proceed].
      *
      * @param chain The [Chain] containing the request to process and the logic to continue the chain.
-     * @return The [HttpResponse] resulting from the processed request.
+     * @return The [Response] resulting from the processed request.
      * @throws IOException If an I/O error occurs during request execution or interception.
      */
     @Throws(IOException::class)
-    fun intercept(chain: Chain): HttpResponse
+    fun intercept(chain: Chain): Response
 
     /**
      * Represents a chain of interceptors and the ability to proceed with an HTTP request.
@@ -52,9 +52,9 @@ interface Interceptor {
         /**
          * Retrieves the current HTTP request.
          *
-         * @return The [HttpRequest] that is currently being processed.
+         * @return The [Request] that is currently being processed.
          */
-        fun request(): HttpRequest
+        fun request(): Request
 
         /**
          * Proceeds with the HTTP request, invoking the next interceptor in the chain or the final request execution.
@@ -62,11 +62,11 @@ interface Interceptor {
          * Interceptors use this method to pass the request down the chain. The returned response
          * is the result of either the next interceptor or the HTTP client execution.
          *
-         * @param request The [HttpRequest] to proceed with.
-         * @return The [HttpResponse] resulting from the request execution.
+         * @param request The [Request] to proceed with.
+         * @return The [Response] resulting from the request execution.
          * @throws IOException If an I/O error occurs during request execution.
          */
         @Throws(IOException::class)
-        fun proceed(request: HttpRequest): HttpResponse
+        fun proceed(request: Request): Response
     }
 }
