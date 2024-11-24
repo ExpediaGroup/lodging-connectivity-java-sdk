@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.core2.authentication.bearer
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @param accessToken The bearer token issued by the authentication server.
  * @param expiresIn The time in seconds until the token expires, starting from when it was issued.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class TokenResponse(
     @JsonProperty("access_token") val accessToken: String,
     @JsonProperty("expires_in") val expiresIn: Long
