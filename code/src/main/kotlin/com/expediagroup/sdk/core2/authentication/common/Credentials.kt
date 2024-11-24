@@ -30,8 +30,8 @@ import java.util.Base64
  * @param secret The client secret or password for authentication.
  */
 data class Credentials(
-    val key: String,
-    val secret: String
+    private val key: String,
+    private val secret: String
 ) {
     /**
      * Encodes the credentials into a `Basic` authentication header value.
@@ -49,4 +49,6 @@ data class Credentials(
         val encoded = Base64.getEncoder().encodeToString(bytes)
         return "Basic $encoded"
     }
+
+    override fun toString(): String = "Credentials(key=$key)"
 }
