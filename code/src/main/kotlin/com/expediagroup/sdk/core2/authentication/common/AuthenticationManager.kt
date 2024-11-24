@@ -16,13 +16,16 @@
 
 package com.expediagroup.sdk.core2.authentication.common
 
-import java.io.IOException
+import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
 
 /**
  * Defines the contract for managing authentication within the SDK.
  *
  * An `AuthenticationManager` is responsible for handling the process of authenticating with an external
- * service or API. Implementations of this interface manage the lifecycle of authentication
+ * service or API and maintaining the authentication state. Implementations should handle token lifecycle,
+ * including acquisition, storage, and renewal.
  */
 interface AuthenticationManager {
     /**
@@ -30,11 +33,27 @@ interface AuthenticationManager {
      *
      * This method is responsible for executing the authentication logic, such as sending requests to an
      * authentication server, handling the response, and storing the retrieved credentials or tokens for future use.
-     * If the authentication process fails, an [IOException] is thrown.
      *
-     * @throws IOException If an error occurs during the authentication process, such as network failures
-     * or invalid server responses.
+     * @throws ExpediaGroupAuthException If authentication fails due to invalid credentials or server errors
+     * @throws ExpediaGroupResponseParsingException If the authentication response cannot be parsed
+     * @throws ExpediaGroupNetworkException If a network error occurs during authentication
      */
-    @Throws(IOException::class)
+    @Throws(
+        ExpediaGroupAuthException::class,
+        ExpediaGroupResponseParsingException::class,
+        ExpediaGroupNetworkException::class
+    )
     fun authenticate()
+
+    /**
+     * Checks if the current authentication state is valid and not about to expire.
+     *
+     * @return true if new authentication is needed, false otherwise
+     */
+    fun needsAuthentication(): Boolean
+
+    /**
+     * Clears any stored authentication state.
+     */
+    fun clearAuthentication()
 }
