@@ -24,8 +24,8 @@ import java.io.IOException
  *
  * Use [Builder] to create an instance.
  */
-class HttpResponse private constructor(
-    val request: HttpRequest,
+class Response private constructor(
+    val request: Request,
     val protocol: Protocol,
     val code: Int,
     val message: String,
@@ -75,10 +75,10 @@ class HttpResponse private constructor(
     }
 
     /**
-     * Builder class for [HttpResponse].
+     * Builder class for [Response].
      */
     class Builder {
-        private var request: HttpRequest? = null
+        private var request: Request? = null
         private var protocol: Protocol? = null
         private var code: Int = -1
         private var message: String? = null
@@ -95,7 +95,7 @@ class HttpResponse private constructor(
          *
          * @param response The response to copy data from.
          */
-        constructor(response: HttpResponse) {
+        constructor(response: Response) {
             this.request = response.request
             this.protocol = response.protocol
             this.code = response.code
@@ -110,7 +110,7 @@ class HttpResponse private constructor(
          * @param request The originating request.
          * @return This builder.
          */
-        fun request(request: HttpRequest) = apply {
+        fun request(request: Request) = apply {
             this.request = request
         }
 
@@ -225,18 +225,18 @@ class HttpResponse private constructor(
         }
 
         /**
-         * Builds the [HttpResponse].
+         * Builds the [Response].
          *
          * @return The built response.
          * @throws IllegalStateException If required fields are missing.
          */
-        fun build(): HttpResponse {
+        fun build(): Response {
             val request = this.request ?: throw IllegalStateException("request is required")
             val protocol = this.protocol ?: throw IllegalStateException("protocol is required")
             val code = this.code.takeIf { it >= 0 } ?: throw IllegalStateException("code is required")
             val message = this.message ?: throw IllegalStateException("message is required")
 
-            return HttpResponse(
+            return Response(
                 request = request,
                 protocol = protocol,
                 code = code,
