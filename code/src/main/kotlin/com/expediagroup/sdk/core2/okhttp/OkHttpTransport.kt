@@ -32,18 +32,18 @@ import okio.BufferedSink
 
 typealias OkHttpRequest = Request
 typealias OkHttpRequestBuilder = Request.Builder
-typealias OkHttpHeaders = Headers
-typealias OkHttpHeadersBuilder = Headers.Builder
 typealias OkHttpRequestBody = RequestBody
 typealias OkHttpResponse = Response
 typealias OkHttpResponseBody = ResponseBody
+typealias OkHttpHeaders = Headers
+typealias OkHttpHeadersBuilder = Headers.Builder
 
 typealias SdkRequest = com.expediagroup.sdk.core2.http.Request
+typealias SdkRequestBody = com.expediagroup.sdk.core2.http.RequestBody
 typealias SdkResponse = com.expediagroup.sdk.core2.http.Response
 typealias SdkResponseBuilder = com.expediagroup.sdk.core2.http.Response.Builder
 typealias SdkHeaders = com.expediagroup.sdk.core2.http.Headers
 typealias SdkHeadersBuilder = com.expediagroup.sdk.core2.http.Headers.Builder
-typealias SdkRequestBody = com.expediagroup.sdk.core2.http.RequestBody
 
 class OkHttpTransport(
     private val okHttpClient: OkHttpClient
