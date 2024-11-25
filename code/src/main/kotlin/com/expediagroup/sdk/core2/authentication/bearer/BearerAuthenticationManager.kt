@@ -24,7 +24,7 @@ import com.expediagroup.sdk.core2.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core2.authentication.common.Credentials
 import com.expediagroup.sdk.core2.client.Transport
 import com.expediagroup.sdk.core2.http.ContentType
-import com.expediagroup.sdk.core2.http.HttpRequestBody
+import com.expediagroup.sdk.core2.http.RequestBody
 import com.expediagroup.sdk.core2.http.Request
 import com.expediagroup.sdk.core2.http.Response
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -80,7 +80,7 @@ class BearerAuthenticationManager(
     private fun createAuthenticationRequest(): Request =
         Request.Builder()
             .url(authUrl)
-            .method("POST", HttpRequestBody.create(mapOf("grant_type" to "client_credentials")))
+            .method("POST", RequestBody.create(mapOf("grant_type" to "client_credentials")))
             .header("Authorization", credentials.encodeBasic())
             .header("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.mimeType)
             .build()

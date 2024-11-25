@@ -29,7 +29,7 @@ import okio.source
  *
  * This class is immutable and thread-safe.
  */
-abstract class HttpRequestBody {
+abstract class RequestBody {
 
     /**
      * Returns the media type of the request body.
@@ -57,14 +57,14 @@ abstract class HttpRequestBody {
          * @param mediaType the media type, or null if unknown.
          * @param contentLength the length of the content, or -1 if unknown.
          * @param inputStream the input stream to read from.
-         * @return a new [HttpRequestBody] instance.
+         * @return a new [RequestBody] instance.
          */
         fun create(
             inputStream: InputStream,
             mediaType: MediaType?,
             contentLength: Long = -1
-        ): HttpRequestBody {
-            return object : HttpRequestBody() {
+        ): RequestBody {
+            return object : RequestBody() {
                 override fun contentType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
@@ -84,14 +84,14 @@ abstract class HttpRequestBody {
          * @param mediaType the media type, or null if unknown.
          * @param contentLength the length of the content, or -1 if unknown.
          * @param source the source to read from.
-         * @return a new [HttpRequestBody] instance.
+         * @return a new [RequestBody] instance.
          */
         fun create(
             source: Source,
             mediaType: MediaType?,
             contentLength: Long = -1
-        ): HttpRequestBody {
-            return object : HttpRequestBody() {
+        ): RequestBody {
+            return object : RequestBody() {
                 override fun contentType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
@@ -110,13 +110,13 @@ abstract class HttpRequestBody {
          *
          * @param formData The form data as a map of parameter names and values.
          * @param charset The character set to use; defaults to UTF-8.
-         * @return A new [HttpRequestBody] instance.
+         * @return A new [RequestBody] instance.
          * @throws IllegalArgumentException If [formData] is null.
          */
         fun create(
             formData: Map<String, String>,
             charset: Charset = Charsets.UTF_8
-        ): HttpRequestBody {
+        ): RequestBody {
 
             val mediaType = MediaType.parse(ContentType.APPLICATION_FORM_URLENCODED.mimeType)?.withCharset(charset)
                 ?: throw IllegalStateException("Failed to parse media type")

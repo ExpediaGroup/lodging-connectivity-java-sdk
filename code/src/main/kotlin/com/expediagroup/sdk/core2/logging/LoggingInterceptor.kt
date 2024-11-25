@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.core2.logging
 
-import com.expediagroup.sdk.core2.http.HttpRequestBody
+import com.expediagroup.sdk.core2.http.RequestBody
 import com.expediagroup.sdk.core2.http.Request
 import com.expediagroup.sdk.core2.http.Response
 import com.expediagroup.sdk.core2.interceptor.Interceptor
@@ -83,7 +83,7 @@ class LoggingInterceptor(
         }
     }
 
-    private fun HttpRequestBody.peekContent(maxSize: Long, charset: Charset?): String {
+    private fun RequestBody.peekContent(maxSize: Long, charset: Charset?): String {
         val buffer = Buffer()
         writeTo(buffer)
         val bytesToRead = minOf(maxSize, buffer.size)
