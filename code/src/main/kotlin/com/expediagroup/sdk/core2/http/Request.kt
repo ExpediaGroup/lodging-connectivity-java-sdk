@@ -26,8 +26,8 @@ import java.util.Locale
 class Request private constructor(
     val method: String,
     val url: Url,
-    val headers: HttpHeaders,
-    val body: HttpRequestBody?,
+    val headers: Headers,
+    val body: RequestBody?,
     val tags: Map<Class<*>, Any>
 ) {
 
@@ -60,8 +60,8 @@ class Request private constructor(
     class Builder {
         private var method: String? = null
         private var url: Url? = null
-        private var headers: HttpHeaders.Builder = HttpHeaders.Builder()
-        private var body: HttpRequestBody? = null
+        private var headers: Headers.Builder = Headers.Builder()
+        private var body: RequestBody? = null
         private var tags: MutableMap<Class<*>, Any> = mutableMapOf()
 
         /**
@@ -90,7 +90,7 @@ class Request private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [method] is empty.
          */
-        fun method(method: String, body: HttpRequestBody? = null) = apply {
+        fun method(method: String, body: RequestBody? = null) = apply {
             require(method.isNotEmpty()) { "Method cannot be empty" }
             val upperMethod = method.uppercase(Locale.US)
             this.method = upperMethod
@@ -184,7 +184,7 @@ class Request private constructor(
          * @param body The request body.
          * @return This builder.
          */
-        fun body(body: HttpRequestBody) = apply {
+        fun body(body: RequestBody) = apply {
             this.body = body
         }
 

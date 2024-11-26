@@ -1,68 +1,103 @@
 package com.expediagroup.sdk.core2.logging
 
-import com.expediagroup.sdk.core2.extension.orUtf8
-import com.expediagroup.sdk.core2.http.HttpRequest
-import com.expediagroup.sdk.core2.http.HttpResponse
+import com.expediagroup.sdk.core2.http.RequestBody
+import com.expediagroup.sdk.core2.http.Request
+import com.expediagroup.sdk.core2.http.Response
 import com.expediagroup.sdk.core2.interceptor.Interceptor
 import com.expediagroup.sdk.core2.logging.common.LoggerDecorator
+import java.io.IOException
+import java.nio.charset.Charset
 import okio.Buffer
+import okio.BufferedSource
 import org.slf4j.LoggerFactory
 
-class LoggingInterceptor : Interceptor {
+/**
+ * An interceptor that logs HTTP requests and responses.
+ *
+ * @param maxBodyLogSize The maximum size of the request/response body to log. Defaults to 1MB.
+ */
+class LoggingInterceptor(
+    private val maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
+) : Interceptor {
     private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java))
 
-    @Throws(java.io.IOException::class)
-    override fun intercept(chain: Interceptor.Chain): HttpResponse {
+    @Throws(IOException::class)
+    override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        logRequest(request)
+        val startTime = System.currentTimeMillis()
 
+        logRequest(request)
         val response = chain.proceed(request)
-        logResponse(response)
+        logResponse(response, System.currentTimeMillis() - startTime)
 
         return response
     }
 
-    private fun logRequest(request: HttpRequest) {
+    private fun logRequest(request: Request) {
         try {
-            val requestLog = StringBuilder()
-            requestLog.append("Sending request to URL: ${request.url}")
-            requestLog.append("\nMethod: ${request.method}")
-            requestLog.append("\nHeaders:\n${request.headers}")
+            buildLogMessage {
+                append(">>> HTTP ${request.method} ${request.url}\n")
+                append("\nHeaders:\n${request.headers}") // TODO: Mask sensitive headers
 
-            request.body?.let {
-                val buffer = Buffer()
-                it.writeTo(buffer)
-                buffer.readString(it.contentType()?.charset ?: Charsets.UTF_8)
+                request.body?.let {
+                    appendBody(">>>", it.peekContent(maxBodyLogSize, it.contentType()?.charset), it.contentLength())
+                }
             }.also {
-                requestLog.append("\nBody:\n$it")
-                logger.info(requestLog.toString())
+                logger.info(it)
             }
         } catch (e: Exception) {
-            logger.error("Error logging request: ", e)
+            logger.warn("Failed to log request: ${e.message}", e)
         }
     }
 
-    private fun logResponse(response: HttpResponse) {
+    private fun logResponse(response: Response, durationMs: Long) {
         try {
-            val responseLog = StringBuilder()
-            responseLog.append("Received response for URL: ${response.request.url}")
-            responseLog.append("\nStatus Code: ${response.code}")
-            responseLog.append("\nHeaders:\n${response.headers}")
+            buildLogMessage {
+                append("<<< HTTP ${response.code} (${durationMs}ms) ${response.request.url}\n")
+                append("\nHeaders:\n${response.headers}") // TODO: Mask sensitive headers
 
-            response.body?.let {
-                val source = it.source()
-
-                // TODO: Should we set max loggable content size?
-                source.request(Long.MAX_VALUE) // Buffer the entire body.
-
-                val clonedBuffer = source.buffer.clone()
-                clonedBuffer.readString(response.body.contentType()?.charset.orUtf8())
+                response.body?.let {
+                    appendBody(
+                        "<<<",
+                        it.source().peekContent(maxBodyLogSize, it.contentType()?.charset),
+                        it.contentLength()
+                    )
+                }
             }.also {
-                responseLog.append("\nBody:\n$it")
-                logger.info(responseLog.toString())
+                logger.info(it)
             }
         } catch (e: Exception) {
-            logger.error("Error logging response: ", e)
+            logger.warn("Failed to log response: ${e.message}", e)
         }
+    }
+
+    private inline fun buildLogMessage(block: StringBuilder.() -> Unit): String =
+        StringBuilder().apply(block).toString()
+
+    private fun StringBuilder.appendBody(prefix: String, content: String, contentLength: Long) {
+        if (content.isNotEmpty()) {
+            append("\n$prefix Body: $content")
+            if (contentLength > maxBodyLogSize) {
+                append("\n$prefix Body truncated, showing $maxBodyLogSize/$contentLength bytes")
+            }
+        }
+    }
+
+    private fun RequestBody.peekContent(maxSize: Long, charset: Charset?): String {
+        val buffer = Buffer()
+        writeTo(buffer)
+        val bytesToRead = minOf(maxSize, buffer.size)
+        return buffer.copy().readString(bytesToRead, charset ?: Charsets.UTF_8)
+    }
+
+    private fun BufferedSource.peekContent(maxSize: Long, charset: Charset?): String {
+        val buffer = Buffer()
+        val bytesToRead = minOf(maxSize, buffer.size)
+        buffer.write(this.peek(), bytesToRead)
+        return buffer.copy().readString(charset ?: Charsets.UTF_8)
+    }
+
+    companion object {
+        private const val DEFAULT_MAX_BODY_SIZE = 1024L * 1024L // 1MB
     }
 }
