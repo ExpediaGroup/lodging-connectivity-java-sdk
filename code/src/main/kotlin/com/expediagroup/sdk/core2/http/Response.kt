@@ -29,8 +29,8 @@ class Response private constructor(
     val protocol: Protocol,
     val code: Int,
     val message: String,
-    val headers: HttpHeaders,
-    val body: HttpResponseBody?
+    val headers: Headers,
+    val body: ResponseBody?
 ) : Closeable {
 
     /**
@@ -82,8 +82,8 @@ class Response private constructor(
         private var protocol: Protocol? = null
         private var code: Int = -1
         private var message: String? = null
-        private var headers: HttpHeaders.Builder = HttpHeaders.Builder()
-        private var body: HttpResponseBody? = null
+        private var headers: Headers.Builder = Headers.Builder()
+        private var body: ResponseBody? = null
 
         /**
          * Creates an empty builder.
@@ -210,7 +210,7 @@ class Response private constructor(
          * @param headers The response headers.
          * @return This builder.
          */
-        fun headers(headers: HttpHeaders) = apply {
+        fun headers(headers: Headers) = apply {
             this.headers = headers.newBuilder()
         }
 
@@ -220,7 +220,7 @@ class Response private constructor(
          * @param body The response body, or null if none.
          * @return This builder.
          */
-        fun body(body: HttpResponseBody?) = apply {
+        fun body(body: ResponseBody?) = apply {
             this.body = body
         }
 

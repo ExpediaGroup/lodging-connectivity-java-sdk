@@ -22,7 +22,7 @@ import java.util.Locale
  * Represents a collection of HTTP headers.
  * This class is immutable and thread-safe.
  */
-class HttpHeaders private constructor(private val headersMap: Map<String, List<String>>) {
+class Headers private constructor(private val headersMap: Map<String, List<String>>) {
 
     /**
      * Returns the first header value for the given name, or null if none.
@@ -73,7 +73,7 @@ class HttpHeaders private constructor(private val headersMap: Map<String, List<S
     }
 
     /**
-     * Builder for constructing [HttpHeaders] instances.
+     * Builder for constructing [Headers] instances.
      */
     class Builder {
 
@@ -89,7 +89,7 @@ class HttpHeaders private constructor(private val headersMap: Map<String, List<S
          *
          * @param headers the headers to initialize from
          */
-        constructor(headers: HttpHeaders) : this() {
+        constructor(headers: Headers) : this() {
             headers.headersMap.forEach { (key, values) ->
                 headersMap[key] = values.toMutableList()
             }
@@ -168,12 +168,12 @@ class HttpHeaders private constructor(private val headersMap: Map<String, List<S
         }
 
         /**
-         * Builds an immutable [HttpHeaders] instance.
+         * Builds an immutable [Headers] instance.
          *
-         * @return the built [HttpHeaders]
+         * @return the built [Headers]
          */
-        fun build(): HttpHeaders {
-            return HttpHeaders(headersMap)
+        fun build(): Headers {
+            return Headers(headersMap)
         }
 
         private fun processHeaderName(name: String): String = name

@@ -16,188 +16,179 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
-import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
-import com.expediagroup.sdk.core.authentication.strategy.AuthenticationStrategy
-import com.expediagroup.sdk.core.configuration.ExpediaGroupDefaultClientConfiguration
-import com.expediagroup.sdk.core.configuration.FullClientConfiguration
+import com.expediagroup.sdk.core2.client.Transport
+import com.expediagroup.sdk.core2.okhttp.OkHttpClientConfiguration
+import okhttp3.ConnectionPool
+import okhttp3.Interceptor
 
-/**
- * A configuration class that holds the necessary credentials and settings for API clients.
- *
- * This class is used to configure SDK clients by providing essential
- * details such as API keys, environment, timeouts, and logging settings.
- *
- * It also provides a fluent `Builder` pattern for easy creation of configuration instances.
- *
- * @property key The API key used for authentication.
- * @property secret The API secret used for authentication.
- * @property environment The environment in which the API client will operate (e.g., production or test).
- * @property requestTimeout The request timeout duration in milliseconds (optional).
- * @property connectionTimeout The connection timeout duration in milliseconds (optional).
- * @property socketTimeout The socket timeout duration in milliseconds (optional).
- * @property maskedLoggingHeaders A set of HTTP headers whose values should be masked in logs (optional).
- * @property maskedLoggingBodyFields A set of fields in the request body whose values should be masked in logs (optional).
- */
-data class ClientConfiguration(
-    val key: String?,
-    val secret: String?,
-    val environment: ClientEnvironment?,
-    val requestTimeout: Long? = null,
-    val connectionTimeout: Long? = null,
-    val socketTimeout: Long? = null,
-    val maskedLoggingHeaders: Set<String>? = null,
-    val maskedLoggingBodyFields: Set<String>? = null,
-    val maxConnTotal: Int? = null,
-    val maxConnPerRoute: Int? = null
+
+sealed class ClientConfiguration(
+    open val key: String,
+    open val secret: String,
+    open val environment: ClientEnvironment? = null,
 ) {
 
-    /**
-     * A builder for creating `ClientConfiguration` instances.
-     */
+    companion object {
+        @JvmStatic
+        fun builder(): DefaultClientConfiguration.Builder = DefaultClientConfiguration.Builder()
+
+        @JvmStatic
+        fun builder(transport: Transport): CustomClientConfiguration.Builder =
+            CustomClientConfiguration.Builder(transport)
+    }
+}
+
+
+data class DefaultClientConfiguration(
+    override val key: String,
+    override val secret: String,
+    override val environment: ClientEnvironment? = null,
+    val interceptors: List<Interceptor>? = null,
+    val networkInterceptors: List<Interceptor>? = null,
+    val connectionPool: ConnectionPool? = null,
+    val retryOnConnectionFailure: Boolean? = null,
+    val callTimeout: Int? = null,
+    val connectTimeout: Int? = null,
+    val readTimeout: Int? = null,
+    val writeTimeout: Int? = null
+) : ClientConfiguration(key, secret, environment) {
+
+    fun buildOkHttpConfiguration() = OkHttpClientConfiguration(
+        interceptors = interceptors,
+        networkInterceptors = networkInterceptors,
+        connectionPool = connectionPool,
+        retryOnConnectionFailure = retryOnConnectionFailure,
+        callTimeout = callTimeout,
+        connectTimeout = connectTimeout,
+        readTimeout = readTimeout,
+        writeTimeout = writeTimeout
+    )
+
     class Builder {
         private var key: String? = null
         private var secret: String? = null
         private var environment: ClientEnvironment? = null
-        private var requestTimeout: Long? = null
-        private var connectionTimeout: Long? = null
-        private var socketTimeout: Long? = null
-        private var maskedLoggingHeaders: Set<String>? = null
-        private var maskedLoggingBodyFields: Set<String>? = null
-        private var maxConnTotal: Int? = null
-        private var maxConnPerRoute: Int? = null
+        private var interceptors: List<Interceptor>? = null
+        private var networkInterceptors: List<Interceptor>? = null
+        private var connectionPool: ConnectionPool? = null
+        private var retryOnConnectionFailure: Boolean? = null
+        private var callTimeout: Int? = null
+        private var connectTimeout: Int? = null
+        private var readTimeout: Int? = null
+        private var writeTimeout: Int? = null
 
-        /**
-         * Sets the API key.
-         * @param key The API key to use.
-         */
-        fun key(key: String) = apply {
+        fun key(key: String?): Builder {
             this.key = key
+            return this
         }
 
-        /**
-         * Sets the API secret.
-         * @param secret The API secret to use.
-         */
-        fun secret(secret: String) = apply {
+        fun secret(secret: String?): Builder {
             this.secret = secret
+            return this
         }
 
-        /**
-         * Sets the environment (e.g., production, test, or sandbox).
-         * @param environment The `ClientEnvironment` to use.
-         */
         fun environment(environment: ClientEnvironment) = apply {
             this.environment = environment
         }
 
-        /**
-         * Sets the request timeout in milliseconds.
-         * @param requestTimeout The request timeout duration.
-         */
-        fun requestTimeout(requestTimeout: Long) = apply {
-            this.requestTimeout = requestTimeout
+        fun interceptors(interceptors: List<Interceptor>) = apply {
+            this.interceptors = interceptors
         }
 
-        /**
-         * Sets the connection timeout in milliseconds.
-         * @param connectionTimeout The connection timeout duration.
-         */
-        fun connectionTimeout(connectionTimeout: Long) = apply {
-            this.connectionTimeout = connectionTimeout
+        fun networkInterceptors(networkInterceptors: List<Interceptor>) = apply {
+            this.networkInterceptors = networkInterceptors
         }
 
-        /**
-         * Sets the socket timeout in milliseconds.
-         * @param socketTimeout The socket timeout duration.
-         */
-        fun socketTimeout(socketTimeout: Long) = apply {
-            this.socketTimeout = socketTimeout
+        fun connectionPool(connectionPool: ConnectionPool) = apply {
+            this.connectionPool = connectionPool
         }
 
-        /**
-         * Sets the headers whose values should be masked in logs.
-         * @param maskedLoggingHeaders A set of HTTP headers to mask in logs.
-         */
-        fun maskedLoggingHeaders(maskedLoggingHeaders: Set<String>) = apply {
-            this.maskedLoggingHeaders = maskedLoggingHeaders
+        fun retryOnConnectionFailure(retryOnConnectionFailure: Boolean) = apply {
+            this.retryOnConnectionFailure = retryOnConnectionFailure
         }
 
-        /**
-         * Sets the body fields whose values should be masked in logs.
-         * @param maskedLoggingBodyFields A set of fields in the request body to mask in logs.
-         */
-        fun maskedLoggingBodyFields(maskedLoggingBodyFields: Set<String>) = apply {
-            this.maskedLoggingBodyFields = maskedLoggingBodyFields
+        fun callTimeout(callTimeout: Int) = apply {
+            this.callTimeout = callTimeout
         }
 
-        fun maxConnTotal(maxConnTotal: Int) = apply {
-            this.maxConnTotal = maxConnTotal
+        fun connectTimeout(connectTimeout: Int) = apply {
+            this.connectTimeout = connectTimeout
         }
 
-        fun maxConnPerRoute(maxConnPerRoute: Int) = apply {
-            this.maxConnPerRoute = maxConnPerRoute
+        fun readTimeout(readTimeout: Int) = apply {
+            this.readTimeout = readTimeout
         }
 
-        /**
-         * Builds and returns the `ClientConfiguration` instance.
-         * @return The configured `ClientConfiguration`.
-         */
-        fun build(): ClientConfiguration {
-            return ClientConfiguration(
-                key,
-                secret,
-                environment,
-                requestTimeout,
-                connectionTimeout,
-                socketTimeout,
-                maskedLoggingHeaders,
-                maskedLoggingBodyFields,
-                maxConnTotal,
-                maxConnPerRoute,
+        fun writeTimeout(writeTimeout: Int) = apply {
+            this.writeTimeout = writeTimeout
+        }
+
+        fun build(): DefaultClientConfiguration {
+            require(key != null) {
+                "key is required"
+            }
+
+            require(secret != null) {
+                "secret is required"
+            }
+
+            return DefaultClientConfiguration(
+                key = key!!,
+                secret = secret!!,
+                environment = environment,
+                interceptors = interceptors,
+                networkInterceptors = networkInterceptors,
+                connectionPool = connectionPool,
+                retryOnConnectionFailure = retryOnConnectionFailure,
+                callTimeout = callTimeout,
+                connectTimeout = connectTimeout,
+                readTimeout = readTimeout,
+                writeTimeout = writeTimeout
             )
         }
     }
+}
 
-    companion object {
-        @JvmStatic
-        fun builder(): Builder = Builder()
-    }
+data class CustomClientConfiguration(
+    override val key: String,
+    override val secret: String,
+    override val environment: ClientEnvironment,
+    val transport: Transport
+) : ClientConfiguration(key, secret, environment) {
 
-    internal fun toFullClientConfiguration(apiEndpoint: ApiEndpoint): FullClientConfiguration {
-        return object : FullClientConfiguration {
-            override fun getKey(): String =
-                key ?: throw ExpediaGroupConfigurationException("API key is required for authentication.")
+    class Builder(private var transport: Transport) {
+        private var key: String? = null
+        private var secret: String? = null
+        private var environment: ClientEnvironment? = null
 
-            override fun getSecret(): String =
-                secret ?: throw ExpediaGroupConfigurationException("API secret is required for authentication.")
+        fun key(key: String) = apply {
+            this.key = key
+        }
 
-            override fun getEndpoint(): String = apiEndpoint.endpoint
+        fun secret(secret: String) = apply {
+            this.secret = secret
+        }
 
-            override fun getAuthEndpoint(): String = apiEndpoint.authEndpoint
 
-            override fun getMaskedLoggingHeaders(): Set<String> =
-                maskedLoggingHeaders ?: ExpediaGroupDefaultClientConfiguration.getMaskedLoggingHeaders()
+        fun environment(environment: ClientEnvironment) = apply {
+            this.environment = environment
+        }
 
-            override fun getMaskedLoggingBodyFields(): Set<String> =
-                maskedLoggingBodyFields ?: ExpediaGroupDefaultClientConfiguration.getMaskedLoggingBodyFields()
+        fun build(): CustomClientConfiguration {
+            require(key != null) {
+                "key is required"
+            }
 
-            override fun getRequestTimeout(): Long =
-                requestTimeout ?: ExpediaGroupDefaultClientConfiguration.getRequestTimeout()
+            require(secret != null) {
+                "secret is required"
+            }
 
-            override fun getSocketTimeout(): Long =
-                socketTimeout ?: ExpediaGroupDefaultClientConfiguration.getSocketTimeout()
-
-            override fun getConnectionTimeout(): Long =
-                connectionTimeout ?: ExpediaGroupDefaultClientConfiguration.getConnectionTimeout()
-
-            override fun getAuthenticationStrategy(): AuthenticationStrategy =
-                ExpediaGroupDefaultClientConfiguration.getAuthenticationStrategy()
-
-            override fun getMaxConnectionsTotal(): Int =
-                maxConnTotal ?: ExpediaGroupDefaultClientConfiguration.getMaxConnectionsTotal()
-
-            override fun getMaxConnectionsPerRoute(): Int =
-                maxConnPerRoute ?: ExpediaGroupDefaultClientConfiguration.getMaxConnectionsPerRoute()
+            return CustomClientConfiguration(
+                key = key!!,
+                secret = secret!!,
+                environment = environment!!,
+                transport = transport
+            )
         }
     }
 }

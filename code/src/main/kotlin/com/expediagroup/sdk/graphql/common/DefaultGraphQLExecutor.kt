@@ -21,18 +21,18 @@ import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Operation
 import com.apollographql.apollo.api.Query
 import com.apollographql.java.client.ApolloClient
-import com.expediagroup.sdk.core.client.ApiClientApolloHttpEngine
-import com.expediagroup.sdk.core.client.util.createApiClient
-import com.expediagroup.sdk.core.configuration.FullClientConfiguration
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.extension.toSDKError
+import com.expediagroup.sdk.core2.client.RequestExecutor
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
+import com.expediagroup.sdk.graphql.model.response.Error
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import java.util.concurrent.CompletableFuture
 
+
 /**
- * Default implementation of [GraphQLExecutor], responsible for executing GraphQL queries and mutations
- * using Apollo Kotlin with a custom HTTP client.
+ * A streamlined implementation of [GraphQLExecutor] that handles GraphQL operations with robust
+ * error handling and clean response processing. This executor processes both queries and mutations
+ * while providing detailed error information when operations fail.
  *
  * This executor leverages the Apollo Client to perform requests and processes responses by capturing
  * the entire data structure and any errors in a [RawResponse], which can then be further processed or
@@ -40,18 +40,17 @@ import java.util.concurrent.CompletableFuture
  *
  * By default - this implementation is used internally in all higher-level clients that extend [GraphQLClient] abstract class
  *
- * @param configuration Configuration details required to set up the custom client and Apollo Client.
+ * @param requestExecutor used for HTTP request execution within the SDK
+ * @param serverUrl GraphQL server URL
  */
-internal class DefaultGraphQLExecutor(configuration: FullClientConfiguration) : GraphQLExecutor() {
-
-    private val engine = ApiClientApolloHttpEngine(createApiClient(configuration = configuration))
+internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUrl: String) : GraphQLExecutor() {
 
     /**
      * The Apollo Client used to execute GraphQL requests, configured with a custom HTTP client.
      */
     override val apolloClient: ApolloClient = ApolloClient.Builder()
-        .serverUrl(configuration.getEndpoint())
-        .httpEngine(engine)
+        .serverUrl(serverUrl)
+        .httpEngine(ApolloHttpEngine(requestExecutor))
         .build()
 
 
@@ -61,9 +60,10 @@ internal class DefaultGraphQLExecutor(configuration: FullClientConfiguration) : 
      *
      * @param query The GraphQL query to be executed.
      * @return A [CompletableFuture] with the full data structure and any errors from the server.
-     * @throws ExpediaGroupServiceException If an exception occurs during query execution.
-     * @throws NoDataException If the query completes without data but includes errors.
+     * @throws [ExpediaGroupServiceException] If an exception occurs during query execution.
+     * @throws [NoDataException] If the query completes without data but includes errors.
      */
+    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>> {
         return CompletableFuture<RawResponse<T>>().also {
             apolloClient.query(query).enqueue { response -> processOperationResponse(response, it) }
@@ -75,9 +75,10 @@ internal class DefaultGraphQLExecutor(configuration: FullClientConfiguration) : 
      *
      * @param query The GraphQL query to be executed.
      * @return A [RawResponse] with the full data structure and any errors from the server.
-     * @throws ExpediaGroupServiceException If an exception occurs during query execution.
-     * @throws NoDataException If the query completes without data but includes errors.
+     * @throws [ExpediaGroupServiceException] If an exception occurs during query execution.
+     * @throws [NoDataException] If the query completes without data but includes errors.
      */
+    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> = executeAsync(query).get()
 
     /**
@@ -86,9 +87,10 @@ internal class DefaultGraphQLExecutor(configuration: FullClientConfiguration) : 
      *
      * @param mutation The GraphQL mutation to be executed.
      * @return A [CompletableFuture] with the full data structure and any errors from the server.
-     * @throws ExpediaGroupServiceException If an exception occurs during mutation execution.
-     * @throws NoDataException If the mutation completes without data but includes errors.
+     * @throws [ExpediaGroupServiceException] If an exception occurs during mutation execution.
+     * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
+    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>> {
         return CompletableFuture<RawResponse<T>>().also {
             apolloClient.mutation(mutation).enqueue { response -> processOperationResponse(response, it) }
@@ -100,9 +102,10 @@ internal class DefaultGraphQLExecutor(configuration: FullClientConfiguration) : 
      *
      * @param mutation The GraphQL mutation to be executed.
      * @return A [RawResponse] with the full data structure and any errors from the server.
-     * @throws ExpediaGroupServiceException If an exception occurs during mutation execution.
-     * @throws NoDataException If the mutation completes without data but includes errors.
+     * @throws [ExpediaGroupServiceException] If an exception occurs during mutation execution.
+     * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
+    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> = executeAsync(mutation).get()
 
 
@@ -119,31 +122,25 @@ internal class DefaultGraphQLExecutor(configuration: FullClientConfiguration) : 
     ) {
         try {
             when {
-                response.exception != null -> {
-                    future.completeExceptionally(
-                        ExpediaGroupServiceException(
-                            message = response.exception?.message,
-                            cause = response.exception
-                        )
+                response.exception != null -> future.completeExceptionally(
+                    ExpediaGroupServiceException(
+                        message = response.exception?.message,
+                        cause = response.exception
                     )
-                }
+                )
 
-                response.data != null && response.hasErrors() -> {
-                    future.completeExceptionally(
-                        NoDataException(
-                            message = "No data received from the server",
-                            errors = response.errors!!.map { it.toSDKError() })
-                    )
-                }
+                response.data != null && response.hasErrors() -> future.completeExceptionally(
+                    NoDataException(
+                        message = "No data received from the server",
+                        errors = response.errors!!.map { Error.fromApolloError(it) })
+                )
 
-                else -> {
-                    future.complete(
-                        RawResponse(
-                            data = response.data!!,
-                            errors = response.errors?.map { it.toSDKError() }
-                        )
+                else -> future.complete(
+                    RawResponse(
+                        data = response.data!!,
+                        errors = response.errors?.map { Error.fromApolloError(it) }
                     )
-                }
+                )
             }
         } catch (e: Exception) {
             future.completeExceptionally(
