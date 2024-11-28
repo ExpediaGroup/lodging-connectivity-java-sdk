@@ -28,7 +28,7 @@ import okio.source
  *
  * This class is immutable but not thread-safe.
  */
-abstract class HttpResponseBody : Closeable {
+abstract class ResponseBody : Closeable {
 
     /**
      * Returns the media type of the response body, or null if unknown.
@@ -66,14 +66,14 @@ abstract class HttpResponseBody : Closeable {
          * @param inputStream The input stream to read from.
          * @param contentLength The length of the content, or -1 if unknown.
          * @param mediaType The media type, or null if unknown.
-         * @return A new [HttpResponseBody] instance.
+         * @return A new [ResponseBody] instance.
          */
         fun create(
             inputStream: InputStream,
             mediaType: MediaType? = null,
             contentLength: Long = -1L
-        ): HttpResponseBody {
-            return object : HttpResponseBody() {
+        ): ResponseBody {
+            return object : ResponseBody() {
                 private val source = inputStream.source().buffer()
 
                 override fun contentType(): MediaType? = mediaType
@@ -90,10 +90,10 @@ abstract class HttpResponseBody : Closeable {
          * @param source The buffered source to read from.
          * @param contentLength The length of the content, or -1 if unknown.
          * @param mediaType The media type, or null if unknown.
-         * @return A new [HttpResponseBody] instance.
+         * @return A new [ResponseBody] instance.
          */
-        fun create(source: BufferedSource, mediaType: MediaType? = null, contentLength: Long = -1L): HttpResponseBody {
-            return object : HttpResponseBody() {
+        fun create(source: BufferedSource, mediaType: MediaType? = null, contentLength: Long = -1L): ResponseBody {
+            return object : ResponseBody() {
                 override fun contentType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
