@@ -16,6 +16,8 @@
 
 package com.expediagroup.sdk.graphql.model.response
 
+import com.expediagroup.sdk.graphql.common.ApolloError
+
 /**
  * Represents an error returned from a GraphQL operation.
  *
@@ -25,5 +27,14 @@ package com.expediagroup.sdk.graphql.model.response
  */
 data class Error(
     val message: String,
-    val path: List<String>?,
-)
+    val path: List<String>?
+) {
+    companion object {
+        fun fromApolloError(apolloError: ApolloError): Error {
+            return Error(
+                message = apolloError.message,
+                path = apolloError.path?.map { it.toString() }
+            )
+        }
+    }
+}

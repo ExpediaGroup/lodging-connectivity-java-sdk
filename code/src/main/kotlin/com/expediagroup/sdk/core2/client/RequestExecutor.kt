@@ -20,7 +20,6 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
 import com.expediagroup.sdk.core2.http.Request
 import com.expediagroup.sdk.core2.http.Response
 import com.expediagroup.sdk.core2.interceptor.Interceptor
-import java.io.IOException
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.
@@ -53,7 +52,7 @@ import java.io.IOException
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class RequestProcessor(private val transport: Transport) {
+abstract class RequestExecutor(private val transport: Transport) {
     /**
      * List of interceptors to be applied to requests in order.
      *
