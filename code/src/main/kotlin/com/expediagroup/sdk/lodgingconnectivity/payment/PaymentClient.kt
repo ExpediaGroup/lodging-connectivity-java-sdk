@@ -19,6 +19,7 @@ package com.expediagroup.sdk.lodgingconnectivity.payment
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.common.DefaultRequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.PaymentApiEndpointProvider
@@ -35,12 +36,11 @@ import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInst
  * or timeouts.
  */
 class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
+    override val apiEndpoint = PaymentApiEndpointProvider.forEnvironment(config.environment ?: ClientEnvironment.PROD)
+
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
-        config.toFullClientConfiguration(
-            apiEndpoint = PaymentApiEndpointProvider.forEnvironment(
-                environment = config.environment ?: ClientEnvironment.PROD
-            ),
-        )
+        requestExecutor = DefaultRequestExecutor(config, apiEndpoint),
+        serverUrl = apiEndpoint.endpoint
     )
 
     /**

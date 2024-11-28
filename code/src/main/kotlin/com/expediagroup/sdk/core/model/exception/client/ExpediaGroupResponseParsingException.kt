@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.graphql.extension
+package com.expediagroup.sdk.core.model.exception.client
 
-import com.apollographql.apollo.api.Error
-
-fun Error.toSDKError() =
-    com.expediagroup.sdk.graphql.model.response.Error(
-        message = this.message,
-        path = this.path?.map { it.toString() }
-    )
+/**
+ * Exception thrown when the SDK fails to parse a service response.
+ *
+ * This is a client-side exception that indicates the response was received
+ * but could not be properly deserialized into the expected format.
+ *
+ * @param message A description of the parsing failure
+ * @param cause The underlying parsing/mapping exception
+ */
+class ExpediaGroupResponseParsingException(
+    message: String? = null,
+    cause: Throwable? = null,
+) : ExpediaGroupClientException(message, cause)
