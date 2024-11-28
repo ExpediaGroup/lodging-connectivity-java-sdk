@@ -27,6 +27,10 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
  */
 abstract class GraphQLClient {
 
+    /**
+     * The API endpoint that the client is configured to communicate with. Includes the primary API endpoint
+     * and the authentication endpoint.
+     */
     protected abstract val apiEndpoint: ApiEndpoint
 
     /**
