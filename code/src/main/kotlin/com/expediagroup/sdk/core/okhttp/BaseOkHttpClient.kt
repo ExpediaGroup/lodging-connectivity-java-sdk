@@ -19,16 +19,53 @@ package com.expediagroup.sdk.core.okhttp
 import java.time.Duration
 import okhttp3.OkHttpClient
 
+/**
+ * A utility object for managing and configuring a singleton instance of an `OkHttpClient`.
+ *
+ * The `BaseOkHttpClient` object provides methods to retrieve a singleton instance of
+ * `OkHttpClient` and to configure a new instance based on the provided `OkHttpClientConfiguration`.
+ * It ensures thread safety and avoids recreating the client unnecessarily.
+ *
+ * ## Usage
+ * - Use `getInstance()` to retrieve the singleton instance of `OkHttpClient`.
+ * - Use `getConfiguredInstance(configuration)` to create a configured `OkHttpClient` instance
+ *   with specific settings provided via the `OkHttpClientConfiguration` object.
+ *
+ * ## Thread Safety
+ * This class ensures that the singleton instance is initialized in a thread-safe manner using
+ * the double-checked locking pattern.
+ */
 internal object BaseOkHttpClient {
+    /**
+     * Volatile storage for the singleton `OkHttpClient` instance.
+     * Ensures visibility and prevents duplicate initialization in a multithreaded environment.
+     */
     @Volatile
     private var instance: OkHttpClient? = null
 
+    /**
+     * Retrieves the singleton instance of `OkHttpClient`.
+     *
+     * This method ensures that the instance is initialized lazily and safely for concurrent access.
+     * If the instance is not yet initialized, it will create a new instance.
+     *
+     * @return The singleton instance of `OkHttpClient`.
+     */
     fun getInstance(): OkHttpClient {
         return instance ?: synchronized(this) {
             instance ?: OkHttpClient().also { instance = it }
         }
     }
 
+    /**
+     * Creates a new `OkHttpClient` instance configured with the provided settings.
+     *
+     * This method uses the singleton instance as a base and applies the settings specified
+     * in the `OkHttpClientConfiguration` object to create a customized `OkHttpClient`.
+     *
+     * @param configuration The `OkHttpClientConfiguration` containing settings for the client.
+     * @return A new `OkHttpClient` instance configured with the specified settings.
+     */
     fun getConfiguredInstance(configuration: OkHttpClientConfiguration): OkHttpClient = getInstance()
         .newBuilder()
         .apply {

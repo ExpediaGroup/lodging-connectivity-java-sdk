@@ -61,7 +61,7 @@ abstract class RequestBody {
          */
         fun create(
             inputStream: InputStream,
-            mediaType: MediaType?,
+            mediaType: MediaType? = null,
             contentLength: Long = -1
         ): RequestBody {
             return object : RequestBody() {
@@ -88,7 +88,7 @@ abstract class RequestBody {
          */
         fun create(
             source: Source,
-            mediaType: MediaType?,
+            mediaType: MediaType? = null,
             contentLength: Long = -1
         ): RequestBody {
             return object : RequestBody() {

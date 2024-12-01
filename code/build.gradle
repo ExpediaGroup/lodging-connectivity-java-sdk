@@ -29,12 +29,10 @@ dependencies {
     /* Dokka */
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
 
-    /* Apollo Kotlin */
-    api 'com.apollographql.apollo:apollo-runtime:4.1.0'
+    /* Apollo */
+    api 'com.apollographql.java:client:0.0.2'
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
 
-    /* Apollo Java */
-    implementation 'com.apollographql.java:client:0.0.2'
 
     /* EG SDK Core */
     implementation 'com.ebay.ejmask:ejmask-api:1.0.3'
