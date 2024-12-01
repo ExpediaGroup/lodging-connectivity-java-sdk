@@ -16,8 +16,8 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
-import com.expediagroup.sdk.core2.client.Transport
-import com.expediagroup.sdk.core2.okhttp.OkHttpClientConfiguration
+import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.okhttp.OkHttpClientConfiguration
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 

@@ -6,6 +6,8 @@ import com.apollographql.apollo.api.Error
 
 typealias ApolloHttpRequest = HttpRequest
 
+typealias ApolloHttpRequestBuilder = HttpRequest.Builder
+
 typealias ApolloHttpResponse = HttpResponse
 
 typealias ApolloHttpResponseBuilder = HttpResponse.Builder

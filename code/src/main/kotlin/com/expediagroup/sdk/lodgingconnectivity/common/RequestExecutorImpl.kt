@@ -16,22 +16,22 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguratio
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.DefaultClientConfiguration
 
-internal fun getHttpTransport(configuration: ClientConfiguration): Transport = when (configuration) {
+internal fun getHttpClientAdapter(configuration: ClientConfiguration): Transport = when (configuration) {
     is CustomClientConfiguration -> configuration.transport
     is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getConfiguredInstance(configuration.buildOkHttpConfiguration()))
 }
 
-class DefaultRequestExecutor(
+class RequestExecutorImpl(
     configuration: ClientConfiguration,
     apiEndpoint: ApiEndpoint
-) : RequestExecutor(getHttpTransport(configuration)) {
+) : RequestExecutor(getHttpClientAdapter(configuration)) {
 
     override val interceptors: List<Interceptor> = listOf(
         LoggingInterceptor(),
         BearerAuthenticationInterceptor(
             transport = this.transport,
             authUrl = apiEndpoint.authEndpoint,
-            credentials = Credentials(configuration.key, configuration.secret)
+            credentials = Credentials(key = configuration.key, secret = configuration.secret)
         )
     )
 
