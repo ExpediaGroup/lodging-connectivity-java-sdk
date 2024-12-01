@@ -16,8 +16,6 @@
 
 package com.expediagroup.sdk.core.authentication.bearer
 
-import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
@@ -31,18 +29,12 @@ import java.io.IOException
  * It manages token expiration and re-authentication automatically. If the token is about to expire, the interceptor
  * synchronously refreshes it before proceeding with the request.
  *
- * Requests to the `authUrl` (authentication endpoint) are excluded from this behavior to prevent recursive authentication loops.
- *
- * @param transport The [Transport] used for making authentication requests.
- * @param authUrl The URL of the authentication endpoint used to retrieve bearer tokens.
- * @param credentials The [Credentials] required for authentication.
+ * @param authManager The [BearerAuthenticationManager] used for making authentication requests execution and parsing.
  */
 class BearerAuthenticationInterceptor(
-    transport: Transport,
-    private val authUrl: String,
-    credentials: Credentials
+    private val authManager: BearerAuthenticationManager
 ) : Interceptor {
-    private val bearerAuthenticationManager = BearerAuthenticationManager(transport, authUrl, credentials)
+
     private val lock = Any()
 
     /**
@@ -66,7 +58,7 @@ class BearerAuthenticationInterceptor(
         ensureValidAuthentication()
 
         val authorizedRequest = request.newBuilder()
-            .addHeader("Authorization", bearerAuthenticationManager.getAuthorizationHeaderValue())
+            .addHeader("Authorization", authManager.getAuthorizationHeaderValue())
             .build()
 
         return chain.proceed(authorizedRequest)
@@ -75,7 +67,7 @@ class BearerAuthenticationInterceptor(
     /**
      * Checks if the given request is for authentication.
      */
-    private fun isAuthenticationRequest(request: Request): Boolean = request.url.toString() == authUrl
+    private fun isAuthenticationRequest(request: Request): Boolean = request.url.toString() == authManager.authUrl
 
     /**
      * Ensures there is a valid authentication token available.
@@ -83,12 +75,13 @@ class BearerAuthenticationInterceptor(
      *
      * @throws ExpediaGroupAuthException If authentication fails
      */
+    @Throws(ExpediaGroupAuthException::class)
     private fun ensureValidAuthentication() {
         try {
-            if (bearerAuthenticationManager.needsAuthentication()) {
+            if (authManager.isTokenAboutToExpire()) {
                 synchronized(lock) {
-                    if (bearerAuthenticationManager.needsAuthentication()) {
-                        bearerAuthenticationManager.authenticate()
+                    if (authManager.isTokenAboutToExpire()) {
+                        authManager.authenticate()
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
+import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.RequestExecutor
 import com.expediagroup.sdk.core.client.Transport
@@ -29,9 +30,11 @@ class DefaultRequestExecutor(
     override val interceptors: List<Interceptor> = listOf(
         LoggingInterceptor(),
         BearerAuthenticationInterceptor(
-            transport = this.transport,
-            authUrl = apiEndpoint.authEndpoint,
-            credentials = Credentials(configuration.key, configuration.secret)
+            BearerAuthenticationManager(
+                transport = this.transport,
+                authUrl = apiEndpoint.authEndpoint,
+                credentials = Credentials(configuration.key, configuration.secret)
+            )
         )
     )
 

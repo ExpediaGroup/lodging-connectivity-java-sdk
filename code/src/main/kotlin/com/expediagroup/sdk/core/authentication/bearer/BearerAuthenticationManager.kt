@@ -19,17 +19,13 @@ package com.expediagroup.sdk.core.authentication.bearer
 import com.expediagroup.sdk.core.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.Transport
-import com.expediagroup.sdk.core.extension.getOrThrow
 import com.expediagroup.sdk.core.http.ContentType
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.http.Status
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -43,30 +39,52 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  * @param credentials The [Credentials] containing the client key and secret used for authentication.
  */
 class BearerAuthenticationManager(
+    val authUrl: String,
     private val transport: Transport,
-    private val authUrl: String,
     private val credentials: Credentials
 ) : AuthenticationManager {
 
     @Volatile
     private var bearerTokenStorage = BearerTokenStorage.empty
 
-    private val objectMapper = ObjectMapper()
-        .registerKotlinModule()
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
+    /**
+     * Initiates authentication to obtain a new bearer token.
+     *
+     * This method sends a request to the authentication server, parses the response, and
+     * stores the token for future use.
+     *
+     * @throws ExpediaGroupAuthException If the authentication request fails.
+     * @throws ExpediaGroupResponseParsingException If the response cannot be parsed.
+     */
+    @Throws(ExpediaGroupAuthException::class, ExpediaGroupResponseParsingException::class)
     override fun authenticate() {
         clearAuthentication()
-
-        val request = createAuthenticationRequest()
-        val response = executeAuthenticationRequest(request)
-        val tokenResponse = parseAuthenticationResponse(response)
-        storeToken(tokenResponse)
+            .let {
+                buildAuthenticationRequest()
+            }.let {
+                executeAuthenticationRequest(it)
+            }.let {
+                TokenResponse.parse(it)
+            }.also {
+                storeToken(it)
+            }
     }
 
-    override fun needsAuthentication(): Boolean = bearerTokenStorage.isAboutToExpire()
+    /**
+     * Checks if the current bearer token is about to expire and needs renewal.
+     *
+     * @return `true` if the token is near expiration, `false` otherwise.
+     */
+    fun isTokenAboutToExpire(): Boolean = run {
+        bearerTokenStorage.isAboutToExpire()
+    }
 
-    override fun clearAuthentication() {
+    /**
+     * Clears the stored authentication token.
+     *
+     * This method resets the internal token storage, effectively invalidating the current session.
+     */
+    override fun clearAuthentication() = run {
         bearerTokenStorage = BearerTokenStorage.empty
     }
 
@@ -75,41 +93,46 @@ class BearerAuthenticationManager(
      *
      * @return The token in the format `Bearer <token>` for use in HTTP headers.
      */
-    fun getAuthorizationHeaderValue(): String = bearerTokenStorage.getAsAuthorizationHeaderValue()
+    fun getAuthorizationHeaderValue(): String = run {
+        bearerTokenStorage.getAuthorizationHeaderValue()
+    }
 
-    private fun createAuthenticationRequest(): Request =
+    /**
+     * Creates an HTTP request to fetch a new bearer token from the authentication server.
+     *
+     * @return A [Request] object configured with the necessary headers and parameters.
+     */
+    private fun buildAuthenticationRequest(): Request = run {
         Request.Builder()
             .url(authUrl)
             .method("POST", RequestBody.create(mapOf("grant_type" to "client_credentials")))
             .header("Authorization", credentials.encodeBasic())
             .header("Content-Type", ContentType.APPLICATION_FORM_URLENCODED.mimeType)
             .build()
-
-    private fun executeAuthenticationRequest(request: Request): Response {
-        val response = transport.execute(request)
-        if (!response.isSuccessful) {
-            throw ExpediaGroupAuthException(response.code, "Authentication failed")
-        }
-        return response
     }
 
-    private fun parseAuthenticationResponse(response: Response): TokenResponse {
-        val responseBody = response.body.getOrThrow {
-            ExpediaGroupAuthException(Status.INTERNAL_SERVER_ERROR, "Authentication response body is empty")
-        }
-
-        val responseString = responseBody.source().use {
-            it.readString(responseBody.contentType()?.charset ?: Charsets.UTF_8)
-        }
-
-        return try {
-            objectMapper.readValue(responseString, TokenResponse::class.java)
-        } catch (e: Exception) {
-            throw ExpediaGroupResponseParsingException("Failed to parse authentication response", e)
+    /**
+     * Executes the authentication request and validates the response.
+     *
+     * @param request The [Request] object to be executed.
+     * @return The [Response] received from the server.
+     * @throws ExpediaGroupAuthException If the server responds with an error.
+     */
+    @Throws(ExpediaGroupAuthException::class, ExpediaGroupNetworkException::class)
+    private fun executeAuthenticationRequest(request: Request): Response = run {
+        transport.execute(request).apply {
+            if (!this.isSuccessful) {
+                throw ExpediaGroupAuthException(this.code, "Authentication failed")
+            }
         }
     }
 
-    private fun storeToken(tokenResponse: TokenResponse) {
+    /**
+     * Stores the retrieved token in internal storage for subsequent use.
+     *
+     * @param tokenResponse The [TokenResponse] containing the token and its expiration time.
+     */
+    private fun storeToken(tokenResponse: TokenResponse) = run {
         bearerTokenStorage = BearerTokenStorage.create(
             accessToken = tokenResponse.accessToken,
             expiresIn = tokenResponse.expiresIn

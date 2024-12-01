@@ -16,8 +16,14 @@
 
 package com.expediagroup.sdk.core.authentication.bearer
 
+import com.expediagroup.sdk.core.extension.getOrThrow
+import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
 /**
  * Represents the response from an authentication server containing a bearer token and its expiration details.
@@ -32,4 +38,34 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class TokenResponse(
     @JsonProperty("access_token") val accessToken: String,
     @JsonProperty("expires_in") val expiresIn: Long
-)
+) {
+    companion object {
+        private val objectMapper = ObjectMapper()
+            .registerKotlinModule()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+        /**
+         * Parses the response from the authentication server to extract token details.
+         *
+         * @param response The [Response] from the authentication server.
+         * @return A [TokenResponse] object containing the token and its metadata.
+         * @throws ExpediaGroupResponseParsingException If the response cannot be parsed.
+         */
+        @Throws(ExpediaGroupResponseParsingException::class)
+        fun parse(response: Response): TokenResponse {
+            val responseBody = response.body.getOrThrow {
+                ExpediaGroupResponseParsingException("Authenticate response body is empty or cannot be parsed")
+            }
+
+            val responseString = responseBody.source().use {
+                it.readString(responseBody.contentType()?.charset ?: Charsets.UTF_8)
+            }
+
+            return try {
+                objectMapper.readValue(responseString, TokenResponse::class.java)
+            } catch (e: Exception) {
+                throw ExpediaGroupResponseParsingException("Failed to parse authentication response", e)
+            }
+        }
+    }
+}

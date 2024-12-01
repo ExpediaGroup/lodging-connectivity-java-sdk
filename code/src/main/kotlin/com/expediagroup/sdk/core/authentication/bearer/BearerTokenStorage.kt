@@ -47,15 +47,16 @@ class BearerTokenStorage private constructor(
      *
      * @return `true` if the token is about to expire; `false` otherwise.
      */
-    fun isAboutToExpire(): Boolean =
+    fun isAboutToExpire(): Boolean = run {
         Instant.now(clock).isAfter(expiryInstant.minusSeconds(expirationBufferSeconds))
+    }
 
     /**
      * Formats the bearer token as an `Authorization` header value.
      *
      * @return The token in the format `Bearer <accessToken>`.
      */
-    fun getAsAuthorizationHeaderValue(): String = "Bearer $accessToken"
+    fun getAuthorizationHeaderValue(): String = "Bearer $accessToken"
 
     companion object {
         private const val DEFAULT_EXPIRATION_BUFFER_SECONDS = 60L

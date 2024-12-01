@@ -46,13 +46,6 @@ interface AuthenticationManager {
     fun authenticate()
 
     /**
-     * Checks if the current authentication state is valid and not about to expire.
-     *
-     * @return true if new authentication is needed, false otherwise
-     */
-    fun needsAuthentication(): Boolean
-
-    /**
      * Clears any stored authentication state.
      */
     fun clearAuthentication()
