@@ -23,9 +23,12 @@ import com.expediagroup.sdk.core.http.MediaType
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.logging.common.RequestLogger
+import com.expediagroup.sdk.core.logging.common.ResponseLogger
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
+import org.slf4j.LoggerFactory
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -43,6 +46,7 @@ class BearerAuthenticationManager(
     private val transport: Transport,
     private val credentials: Credentials
 ) : AuthenticationManager {
+    private val logger = LoggerFactory.getLogger(BearerAuthenticationInterceptor::class.simpleName)
 
     @Volatile
     private var bearerTokenStorage = BearerTokenStorage.empty
@@ -60,9 +64,13 @@ class BearerAuthenticationManager(
     override fun authenticate() {
         clearAuthentication()
             .let {
-                buildAuthenticationRequest()
+                buildAuthenticationRequest().also {
+                    RequestLogger.log(logger, it)
+                }
             }.let {
-                executeAuthenticationRequest(it)
+                executeAuthenticationRequest(it).also {
+                    ResponseLogger.log(logger, it)
+                }
             }.let {
                 TokenResponse.parse(it)
             }.also {
