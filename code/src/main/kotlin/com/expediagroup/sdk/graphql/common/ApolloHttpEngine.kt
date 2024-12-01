@@ -87,7 +87,7 @@ class ApolloHttpEngine(
 
         request.body?.let { requestBody ->
             sdkRequestBuilder.method("POST", object : RequestBody() {
-                override fun contentType(): MediaType? = MediaType.parse(requestBody.contentType)
+                override fun mediaType(): MediaType? = MediaType.parse(requestBody.contentType)
                 override fun contentLength(): Long = requestBody.contentLength
 
                 @Throws(IOException::class)

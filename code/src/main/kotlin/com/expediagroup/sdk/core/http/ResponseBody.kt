@@ -33,7 +33,7 @@ abstract class ResponseBody : Closeable {
     /**
      * Returns the media type of the response body, or null if unknown.
      */
-    abstract fun contentType(): MediaType?
+    abstract fun mediaType(): MediaType?
 
     /**
      * Returns the content length, or -1 if unknown.
@@ -76,7 +76,7 @@ abstract class ResponseBody : Closeable {
             return object : ResponseBody() {
                 private val source = inputStream.source().buffer()
 
-                override fun contentType(): MediaType? = mediaType
+                override fun mediaType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
 
@@ -94,7 +94,7 @@ abstract class ResponseBody : Closeable {
          */
         fun create(source: BufferedSource, mediaType: MediaType? = null, contentLength: Long = -1L): ResponseBody {
             return object : ResponseBody() {
-                override fun contentType(): MediaType? = mediaType
+                override fun mediaType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
 

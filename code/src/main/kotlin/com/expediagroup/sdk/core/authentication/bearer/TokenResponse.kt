@@ -58,7 +58,7 @@ data class TokenResponse(
             }
 
             val responseString = responseBody.source().use {
-                it.readString(responseBody.contentType()?.charset ?: Charsets.UTF_8)
+                it.readString(responseBody.mediaType()?.charset ?: Charsets.UTF_8)
             }
 
             return try {

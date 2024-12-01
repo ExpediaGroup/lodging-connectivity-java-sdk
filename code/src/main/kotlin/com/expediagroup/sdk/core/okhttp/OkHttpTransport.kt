@@ -76,7 +76,7 @@ class OkHttpTransport(
     private fun createRequestBody(body: SdkRequestBody?): OkHttpRequestBody? {
         return body?.let {
             object : OkHttpRequestBody() {
-                override fun contentType() = it.contentType()?.toString()?.toMediaTypeOrNull()
+                override fun contentType() = it.mediaType()?.toString()?.toMediaTypeOrNull()
                 override fun contentLength() = it.contentLength()
 
                 @Throws(IOException::class)

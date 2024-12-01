@@ -63,14 +63,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
      */
     fun newBuilder(): Builder = Builder(this)
 
-    override fun toString(): String = buildString {
-        headersMap.forEach {
-            append(it.key)
-            append(": ")
-            append(it.value.toString())
-            append("\n")
-        }
-    }
+    override fun toString(): String = headersMap.toString()
 
     /**
      * Builder for constructing [Headers] instances.

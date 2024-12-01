@@ -34,7 +34,7 @@ abstract class RequestBody {
     /**
      * Returns the media type of the request body.
      */
-    abstract fun contentType(): MediaType?
+    abstract fun mediaType(): MediaType?
 
     /**
      * Returns the number of bytes that will be written to [writeTo], or -1 if unknown.
@@ -65,7 +65,7 @@ abstract class RequestBody {
             contentLength: Long = -1
         ): RequestBody {
             return object : RequestBody() {
-                override fun contentType(): MediaType? = mediaType
+                override fun mediaType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
 
@@ -92,7 +92,7 @@ abstract class RequestBody {
             contentLength: Long = -1
         ): RequestBody {
             return object : RequestBody() {
-                override fun contentType(): MediaType? = mediaType
+                override fun mediaType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
 
@@ -118,16 +118,13 @@ abstract class RequestBody {
             charset: Charset = Charsets.UTF_8
         ): RequestBody {
 
-            val mediaType = MediaType.parse(ContentType.APPLICATION_FORM_URLENCODED.mimeType)?.withCharset(charset)
-                ?: throw IllegalStateException("Failed to parse media type")
-
             val encodedForm = formData.map { (key, value) ->
                 "${encode(key, charset)}=${encode(value, charset)}"
             }.joinToString("&")
 
             val contentBytes = encodedForm.toByteArray(charset)
 
-            return create(contentBytes.inputStream(), mediaType)
+            return create(contentBytes.inputStream(), MediaType.APPLICATION_FORM_URLENCODED)
         }
 
         private fun encode(value: String, charset: Charset): String {
