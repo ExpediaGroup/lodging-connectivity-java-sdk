@@ -16,8 +16,8 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
-import com.expediagroup.sdk.core.client.HttpClientAdapter
-import com.expediagroup.sdk.core.okhttp.OkHttpClientConfiguration
+import com.expediagroup.sdk.core2.client.Transport
+import com.expediagroup.sdk.core2.okhttp.OkHttpClientConfiguration
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 
@@ -33,8 +33,8 @@ sealed class ClientConfiguration(
         fun builder(): DefaultClientConfiguration.Builder = DefaultClientConfiguration.Builder()
 
         @JvmStatic
-        fun builder(httpClient: HttpClientAdapter): CustomHttpClientConfiguration.Builder =
-            CustomHttpClientConfiguration.Builder(httpClient)
+        fun builder(transport: Transport): CustomClientConfiguration.Builder =
+            CustomClientConfiguration.Builder(transport)
     }
 }
 
@@ -149,14 +149,14 @@ data class DefaultClientConfiguration(
     }
 }
 
-data class CustomHttpClientConfiguration(
+data class CustomClientConfiguration(
     override val key: String,
     override val secret: String,
     override val environment: ClientEnvironment,
-    val httpClientAdapter: HttpClientAdapter,
+    val transport: Transport
 ) : ClientConfiguration(key, secret, environment) {
 
-    class Builder(private var httpClientAdapter: HttpClientAdapter) {
+    class Builder(private var transport: Transport) {
         private var key: String? = null
         private var secret: String? = null
         private var environment: ClientEnvironment? = null
@@ -174,7 +174,7 @@ data class CustomHttpClientConfiguration(
             this.environment = environment
         }
 
-        fun build(): CustomHttpClientConfiguration {
+        fun build(): CustomClientConfiguration {
             require(key != null) {
                 "key is required"
             }
@@ -183,11 +183,11 @@ data class CustomHttpClientConfiguration(
                 "secret is required"
             }
 
-            return CustomHttpClientConfiguration(
+            return CustomClientConfiguration(
                 key = key!!,
                 secret = secret!!,
                 environment = environment!!,
-                httpClientAdapter = httpClientAdapter
+                transport = transport
             )
         }
     }

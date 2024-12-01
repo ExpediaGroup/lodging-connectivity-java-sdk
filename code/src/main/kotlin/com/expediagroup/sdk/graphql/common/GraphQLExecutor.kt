@@ -84,5 +84,3 @@ abstract class GraphQLExecutor {
     @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     abstract fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>>
 }
-
-
