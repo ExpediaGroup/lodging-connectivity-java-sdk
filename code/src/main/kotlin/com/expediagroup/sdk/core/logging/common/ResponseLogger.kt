@@ -8,11 +8,21 @@ import okio.Buffer
 import org.slf4j.Logger
 
 object ResponseLogger {
-    fun log(logger: Logger, response: Response, maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE) {
+    fun log(
+        logger: Logger,
+        response: Response,
+        tags: List<String>? = null,
+        maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
+    ) {
         try {
             val responseBodyString = response.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
+                tags?.let {
+                    append("[")
+                    append(it.joinToString(", "))
+                    append("] - ")
+                }
                 append("[Incoming] - ")
                 append("[Code=${response.code}, URL=${response.request.url}, Headers=[${response.headers}], Body=[${responseBodyString}]")
             }.also {
