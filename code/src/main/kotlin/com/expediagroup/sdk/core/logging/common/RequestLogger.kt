@@ -14,7 +14,6 @@ object RequestLogger {
             val requestBodyString = request.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
-                append("[timestamp=${System.currentTimeMillis()}] - ")
                 append("[Outgoing] - ")
                 append("[Method=${request.method}, URL=${request.url}, Headers=[${request.headers}], Body=[${requestBodyString}]")
             }.also {

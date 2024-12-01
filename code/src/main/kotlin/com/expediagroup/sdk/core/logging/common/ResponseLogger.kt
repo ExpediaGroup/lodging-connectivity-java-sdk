@@ -13,7 +13,6 @@ object ResponseLogger {
             val responseBodyString = response.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
-                append("[timestamp=${System.currentTimeMillis()}] - ")
                 append("[Incoming] - ")
                 append("[Code=${response.code}, URL=${response.request.url}, Headers=[${response.headers}], Body=[${responseBodyString}]")
             }.also {
