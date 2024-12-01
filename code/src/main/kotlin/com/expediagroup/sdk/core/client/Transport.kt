@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.core2.client
+package com.expediagroup.sdk.core.client
 
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
-import com.expediagroup.sdk.core2.http.Request
-import com.expediagroup.sdk.core2.http.Response
 
 /**
  * A transport layer interface that adapts different HTTP client libraries to work with the SDK.

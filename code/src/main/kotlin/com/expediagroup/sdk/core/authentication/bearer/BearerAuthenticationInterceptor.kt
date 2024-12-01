@@ -17,9 +17,11 @@
 package com.expediagroup.sdk.core.authentication.bearer
 
 import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.HttpClientAdapter
-import com.expediagroup.sdk.core.http.HttpResponse
+import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
 import java.io.IOException
 
 /**
@@ -31,51 +33,67 @@ import java.io.IOException
  *
  * Requests to the `authUrl` (authentication endpoint) are excluded from this behavior to prevent recursive authentication loops.
  *
- * @param httpClientAdapter The [HttpClientAdapter] used for making authentication requests.
+ * @param transport The [Transport] used for making authentication requests.
  * @param authUrl The URL of the authentication endpoint used to retrieve bearer tokens.
  * @param credentials The [Credentials] required for authentication.
  */
 class BearerAuthenticationInterceptor(
-    httpClientAdapter: HttpClientAdapter,
+    transport: Transport,
     private val authUrl: String,
     credentials: Credentials
 ) : Interceptor {
-    private val bearerAuthenticationManager = BearerAuthenticationManager(httpClientAdapter, authUrl, credentials)
+    private val bearerAuthenticationManager = BearerAuthenticationManager(transport, authUrl, credentials)
     private val lock = Any()
 
     /**
      * Intercepts the HTTP request, adding a bearer token to the `Authorization` header.
      *
-     * This method checks if the token is about to expire and refreshes it if necessary. It excludes
+     * This method checks if the token needs to be refreshed and does so if necessary. It excludes
      * requests targeting the `authUrl` from this behavior to avoid recursive authentication requests.
      *
      * @param chain The [Interceptor.Chain] responsible for managing the request and its progression.
-     * @return The [HttpResponse] resulting from the executed request.
-     * @throws IOException If an error occurs during token retrieval or request execution.
+     * @return The [Response] resulting from the executed request.
+     * @throws ExpediaGroupAuthException If authentication fails due to invalid credentials or server errors
      */
-    override fun intercept(chain: Interceptor.Chain): HttpResponse {
+    @Throws(ExpediaGroupAuthException::class)
+    override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        if (request.url.toString() == authUrl) {
+        if (isAuthenticationRequest(request)) {
             return chain.proceed(request)
         }
 
+        ensureValidAuthentication()
+
+        val authorizedRequest = request.newBuilder()
+            .addHeader("Authorization", bearerAuthenticationManager.getAuthorizationHeaderValue())
+            .build()
+
+        return chain.proceed(authorizedRequest)
+    }
+
+    /**
+     * Checks if the given request is for authentication.
+     */
+    private fun isAuthenticationRequest(request: Request): Boolean = request.url.toString() == authUrl
+
+    /**
+     * Ensures there is a valid authentication token available.
+     * If needed, authenticates under a synchronization lock to prevent multiple simultaneous authentications.
+     *
+     * @throws ExpediaGroupAuthException If authentication fails
+     */
+    private fun ensureValidAuthentication() {
         try {
-            if (bearerAuthenticationManager.isTokenAboutToExpire()) {
+            if (bearerAuthenticationManager.needsAuthentication()) {
                 synchronized(lock) {
-                    if (bearerAuthenticationManager.isTokenAboutToExpire()) {
+                    if (bearerAuthenticationManager.needsAuthentication()) {
                         bearerAuthenticationManager.authenticate()
                     }
                 }
             }
         } catch (e: IOException) {
-            throw IOException("Failed to authenticate", e)
+            throw ExpediaGroupAuthException("Failed to authenticate", e)
         }
-
-        val authorizedRequest = request.newBuilder()
-            .addHeader("Authorization", bearerAuthenticationManager.getTokenAsAuthorizationHeaderValue())
-            .build()
-
-        return chain.proceed(authorizedRequest)
     }
 }

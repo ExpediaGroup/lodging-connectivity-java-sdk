@@ -80,12 +80,12 @@ If you are troubleshooting an issue, you can set the log level to DEBUG to get m
 
 Example log messages at the DEBUG level:
 ```text
-17:40:08.490 [DefaultDispatcher-worker-3] DEBUG com.expediagroup.sdk.core.client.OkHttpEventListener - ExpediaSDK: Call start for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
-17:40:08.496 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core.client.OkHttpEventListener - ExpediaSDK: Connect start for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
-17:40:08.508 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core.client.OkHttpEventListener - ExpediaSDK: Connect end for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
-17:40:08.508 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core.client.OkHttpEventListener - ExpediaSDK: Connection acquired for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
-17:40:08.510 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core.client.OkHttpEventListener - ExpediaSDK: Sending request headers start for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
-17:40:08.510 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core.client.OkHttpEventListener - ExpediaSDK: Sending request headers end for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
+17:40:08.490 [DefaultDispatcher-worker-3] DEBUG com.expediagroup.sdk.core3.client.OkHttpEventListener - ExpediaSDK: Call start for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
+17:40:08.496 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core3.client.OkHttpEventListener - ExpediaSDK: Connect start for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
+17:40:08.508 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core3.client.OkHttpEventListener - ExpediaSDK: Connect end for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
+17:40:08.508 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core3.client.OkHttpEventListener - ExpediaSDK: Connection acquired for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
+17:40:08.510 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core3.client.OkHttpEventListener - ExpediaSDK: Sending request headers start for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
+17:40:08.510 [OkHttp https://test.ean.com/...] DEBUG com.expediagroup.sdk.core3.client.OkHttpEventListener - ExpediaSDK: Sending request headers end for transaction-id: [aff4c00d-6f79-4690-8f60-dd1aaccbfaee]
 ```
 
 ## Traceability

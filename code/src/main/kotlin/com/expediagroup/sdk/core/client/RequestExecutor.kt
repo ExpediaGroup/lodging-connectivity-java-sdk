@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.core2.client
+package com.expediagroup.sdk.core.client
 
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
-import com.expediagroup.sdk.core2.http.Request
-import com.expediagroup.sdk.core2.http.Response
-import com.expediagroup.sdk.core2.interceptor.Interceptor
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.
@@ -52,7 +52,7 @@ import com.expediagroup.sdk.core2.interceptor.Interceptor
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class RequestExecutor(private val transport: Transport) {
+abstract class RequestExecutor(protected val transport: Transport) {
     /**
      * List of interceptors to be applied to requests in order.
      *

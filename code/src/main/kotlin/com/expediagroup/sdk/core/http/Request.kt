@@ -23,11 +23,11 @@ import java.util.Locale
  *
  * Use [Builder] to create an instance.
  */
-class HttpRequest private constructor(
+class Request private constructor(
     val method: String,
     val url: Url,
-    val headers: HttpHeaders,
-    val body: HttpRequestBody?,
+    val headers: Headers,
+    val body: RequestBody?,
     val tags: Map<Class<*>, Any>
 ) {
 
@@ -55,13 +55,13 @@ class HttpRequest private constructor(
     fun newBuilder(): Builder = Builder(this)
 
     /**
-     * Builder class for [HttpRequest].
+     * Builder class for [Request].
      */
     class Builder {
         private var method: String? = null
         private var url: Url? = null
-        private var headers: HttpHeaders.Builder = HttpHeaders.Builder()
-        private var body: HttpRequestBody? = null
+        private var headers: Headers.Builder = Headers.Builder()
+        private var body: RequestBody? = null
         private var tags: MutableMap<Class<*>, Any> = mutableMapOf()
 
         /**
@@ -74,7 +74,7 @@ class HttpRequest private constructor(
          *
          * @param request The request to copy data from.
          */
-        constructor(request: HttpRequest) {
+        constructor(request: Request) {
             this.method = request.method
             this.url = request.url
             this.headers = request.headers.newBuilder()
@@ -90,7 +90,7 @@ class HttpRequest private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [method] is empty.
          */
-        fun method(method: String, body: HttpRequestBody? = null) = apply {
+        fun method(method: String, body: RequestBody? = null) = apply {
             require(method.isNotEmpty()) { "Method cannot be empty" }
             val upperMethod = method.uppercase(Locale.US)
             this.method = upperMethod
@@ -184,7 +184,7 @@ class HttpRequest private constructor(
          * @param body The request body.
          * @return This builder.
          */
-        fun body(body: HttpRequestBody) = apply {
+        fun body(body: RequestBody) = apply {
             this.body = body
         }
 
@@ -205,16 +205,16 @@ class HttpRequest private constructor(
         }
 
         /**
-         * Builds the [HttpRequest].
+         * Builds the [Request].
          *
          * @return The built request.
          * @throws IllegalStateException If the request is invalid.
          */
-        fun build(): HttpRequest {
+        fun build(): Request {
             val method = this.method ?: throw IllegalStateException("Method is required.")
             val url = this.url ?: throw IllegalStateException("URL is required.")
 
-            return HttpRequest(
+            return Request(
                 method = method,
                 url = url,
                 headers = headers.build(),

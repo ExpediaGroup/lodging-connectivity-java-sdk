@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.core2.http
+package com.expediagroup.sdk.core.http
 
 import java.util.Locale
 
@@ -173,7 +173,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @return the built [Headers]
          */
         fun build(): Headers {
-            return Headers(headersMap)
+            return Headers(LinkedHashMap(headersMap))
         }
 
         private fun processHeaderName(name: String): String = name

@@ -6,11 +6,11 @@ import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.java.client.ApolloDisposable
 import com.apollographql.java.client.network.http.HttpCallback
 import com.apollographql.java.client.network.http.HttpEngine
-import com.expediagroup.sdk.core2.client.RequestExecutor
-import com.expediagroup.sdk.core2.http.MediaType
-import com.expediagroup.sdk.core2.http.Request
-import com.expediagroup.sdk.core2.http.RequestBody
-import com.expediagroup.sdk.core2.http.Response
+import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.http.MediaType
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.RequestBody
+import com.expediagroup.sdk.core.http.Response
 import java.io.IOException
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap

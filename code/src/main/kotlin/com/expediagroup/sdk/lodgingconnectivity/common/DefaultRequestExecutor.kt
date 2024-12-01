@@ -1,16 +1,16 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
-import com.expediagroup.sdk.core2.authentication.bearer.BearerAuthenticationInterceptor
-import com.expediagroup.sdk.core2.authentication.common.Credentials
-import com.expediagroup.sdk.core2.client.RequestExecutor
-import com.expediagroup.sdk.core2.client.Transport
-import com.expediagroup.sdk.core2.http.Request
-import com.expediagroup.sdk.core2.http.Response
-import com.expediagroup.sdk.core2.interceptor.Interceptor
-import com.expediagroup.sdk.core2.interceptor.InterceptorsChainExecutor
-import com.expediagroup.sdk.core2.logging.LoggingInterceptor
-import com.expediagroup.sdk.core2.okhttp.BaseOkHttpClient
-import com.expediagroup.sdk.core2.okhttp.OkHttpTransport
+import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
+import com.expediagroup.sdk.core.authentication.common.Credentials
+import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.interceptor.Interceptor
+import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
+import com.expediagroup.sdk.core.logging.LoggingInterceptor
+import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
+import com.expediagroup.sdk.core.okhttp.OkHttpTransport
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
@@ -23,9 +23,8 @@ internal fun getHttpTransport(configuration: ClientConfiguration): Transport = w
 
 class DefaultRequestExecutor(
     configuration: ClientConfiguration,
-    apiEndpoint: ApiEndpoint,
-    private val transport: Transport = getHttpTransport(configuration)
-) : RequestExecutor(transport) {
+    apiEndpoint: ApiEndpoint
+) : RequestExecutor(getHttpTransport(configuration)) {
 
     override val interceptors: List<Interceptor> = listOf(
         LoggingInterceptor(),

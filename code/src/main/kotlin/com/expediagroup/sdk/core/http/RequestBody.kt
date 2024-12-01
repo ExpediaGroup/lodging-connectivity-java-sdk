@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.core2.http
+package com.expediagroup.sdk.core.http
 
 import java.io.IOException
 import java.io.InputStream

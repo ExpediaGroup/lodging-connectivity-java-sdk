@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.core2.okhttp
+package com.expediagroup.sdk.core.okhttp
 
-import com.expediagroup.sdk.core2.client.Transport
-import com.expediagroup.sdk.core2.http.ResponseBody.Companion.create
-import com.expediagroup.sdk.core2.http.MediaType.Companion.parse
-import com.expediagroup.sdk.core2.http.Protocol
+import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.http.MediaType.Companion.parse
+import com.expediagroup.sdk.core.http.Protocol
+import com.expediagroup.sdk.core.http.ResponseBody.Companion.create
 import java.io.IOException
 import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,12 +38,12 @@ typealias OkHttpResponseBody = ResponseBody
 typealias OkHttpHeaders = Headers
 typealias OkHttpHeadersBuilder = Headers.Builder
 
-typealias SdkRequest = com.expediagroup.sdk.core2.http.Request
-typealias SdkRequestBody = com.expediagroup.sdk.core2.http.RequestBody
-typealias SdkResponse = com.expediagroup.sdk.core2.http.Response
-typealias SdkResponseBuilder = com.expediagroup.sdk.core2.http.Response.Builder
-typealias SdkHeaders = com.expediagroup.sdk.core2.http.Headers
-typealias SdkHeadersBuilder = com.expediagroup.sdk.core2.http.Headers.Builder
+typealias SdkRequest = com.expediagroup.sdk.core.http.Request
+typealias SdkRequestBody = com.expediagroup.sdk.core.http.RequestBody
+typealias SdkResponse = com.expediagroup.sdk.core.http.Response
+typealias SdkResponseBuilder = com.expediagroup.sdk.core.http.Response.Builder
+typealias SdkHeaders = com.expediagroup.sdk.core.http.Headers
+typealias SdkHeadersBuilder = com.expediagroup.sdk.core.http.Headers.Builder
 
 class OkHttpTransport(
     private val okHttpClient: OkHttpClient
