@@ -37,7 +37,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:atomicfu-jvm:0.26.0'
     implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'org.hibernate.validator:hibernate-validator:6.2.5.Final'
-    implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
 }
 
 apply from: "tasks-gradle/apollo.gradle"
