@@ -6,28 +6,21 @@ import com.expediagroup.sdk.core.logging.common.Constant.DEFAULT_MAX_BODY_SIZE
 import java.io.IOException
 import java.nio.charset.Charset
 import okio.Buffer
-import org.slf4j.Logger
 
 object RequestLogger {
     fun log(
-        logger: Logger,
+        logger: LoggerDecorator,
         request: Request,
-        tags: List<String>? = null,
+        vararg tags: String,
         maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
     ) {
         try {
             val requestBodyString = request.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
-                tags?.let {
-                    append("[")
-                    append(it.joinToString(", "))
-                    append("] - ")
-                }
-                append("[Outgoing] - ")
-                append("[Method=${request.method}, URL=${request.url}, Headers=[${request.headers}], Body=[${requestBodyString}]")
+                append("[URL=${request.url}, Method=${request.method}, Headers=[${request.headers}], Body=[${requestBodyString}]")
             }.also {
-                logger.info(it)
+                logger.info(it, "Outgoing", *tags)
             }
 
         } catch (e: Exception) {

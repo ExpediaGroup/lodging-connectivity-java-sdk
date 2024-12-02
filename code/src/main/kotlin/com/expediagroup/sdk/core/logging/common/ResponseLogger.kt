@@ -5,28 +5,21 @@ import com.expediagroup.sdk.core.http.ResponseBody
 import com.expediagroup.sdk.core.logging.common.Constant.DEFAULT_MAX_BODY_SIZE
 import java.nio.charset.Charset
 import okio.Buffer
-import org.slf4j.Logger
 
 object ResponseLogger {
     fun log(
-        logger: Logger,
+        logger: LoggerDecorator,
         response: Response,
-        tags: List<String>? = null,
+        vararg tags: String,
         maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
     ) {
         try {
             val responseBodyString = response.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
-                tags?.let {
-                    append("[")
-                    append(it.joinToString(", "))
-                    append("] - ")
-                }
-                append("[Incoming] - ")
-                append("[Code=${response.code}, URL=${response.request.url}, Headers=[${response.headers}], Body=[${responseBodyString}]")
+                append("[URL=${response.request.url}, Code=${response.code}, Headers=[${response.headers}], Body=[${responseBodyString}]")
             }.also {
-                logger.info(it)
+                logger.info(it, "Incoming", *tags)
             }
 
         } catch (e: Exception) {

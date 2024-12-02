@@ -10,12 +10,14 @@ import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
 import com.expediagroup.sdk.core.logging.LoggingInterceptor
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.DefaultClientConfiguration
+import org.slf4j.LoggerFactory
 
 internal fun getHttpTransport(configuration: ClientConfiguration): Transport = when (configuration) {
     is CustomClientConfiguration -> configuration.transport
@@ -28,7 +30,7 @@ class DefaultRequestExecutor(
 ) : RequestExecutor(getHttpTransport(configuration)) {
 
     override val interceptors: List<Interceptor> = listOf(
-        LoggingInterceptor(),
+        LoggingInterceptor(logger),
         BearerAuthenticationInterceptor(
             BearerAuthenticationManager(
                 transport = this.transport,
@@ -46,6 +48,10 @@ class DefaultRequestExecutor(
         )
 
         return chainExecutor.proceed(request)
+    }
+
+    companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }
 

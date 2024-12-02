@@ -23,7 +23,7 @@ import com.expediagroup.sdk.core.http.MediaType
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.logging.common.Constant.EXPEDIA_GROUP_SDK
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.logging.common.RequestLogger
 import com.expediagroup.sdk.core.logging.common.ResponseLogger
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
@@ -47,7 +47,6 @@ class BearerAuthenticationManager(
     private val transport: Transport,
     private val credentials: Credentials
 ) : AuthenticationManager {
-    private val logger = LoggerFactory.getLogger(EXPEDIA_GROUP_SDK)
 
     @Volatile
     private var bearerTokenStorage = BearerTokenStorage.empty
@@ -66,11 +65,11 @@ class BearerAuthenticationManager(
         clearAuthentication()
             .let {
                 buildAuthenticationRequest().also {
-                    RequestLogger.log(logger, it, tags = listOf("Authentication"))
+                    RequestLogger.log(logger, it, "Authentication")
                 }
             }.let {
                 executeAuthenticationRequest(it).also {
-                    ResponseLogger.log(logger, it, tags = listOf("Authentication"))
+                    ResponseLogger.log(logger, it, "Authentication")
                 }
             }.let {
                 TokenResponse.parse(it)
@@ -146,5 +145,9 @@ class BearerAuthenticationManager(
             accessToken = tokenResponse.accessToken,
             expiresIn = tokenResponse.expiresIn
         )
+    }
+
+    private companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }
