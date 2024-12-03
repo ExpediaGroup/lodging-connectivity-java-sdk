@@ -122,7 +122,7 @@ abstract class RequestBody {
 
             val contentBytes = encodedForm.toByteArray(charset)
 
-            return create(contentBytes.inputStream(), MediaType.APPLICATION_FORM_URLENCODED)
+            return create(contentBytes.inputStream(), CommonMediaTypes.APPLICATION_FORM_URLENCODED)
         }
 
         private fun encode(value: String, charset: Charset): String {
