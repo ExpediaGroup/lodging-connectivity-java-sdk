@@ -7,7 +7,7 @@ plugins {
     id 'signing'
 
     /* Test Reporting */
-    id 'jacoco'
+    id("org.jetbrains.kotlinx.kover") version "0.8.3"
 }
 
 jar {
@@ -25,18 +25,10 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
-    finalizedBy jacocoTestReport
 }
 
-jacocoTestReport {
-    dependsOn test
-    reports {
-        html.required = true
-    }
-}
-
-jacoco {
-    toolVersion = "0.8.12"
+tasks.named("check") {
+    finalizedBy("koverHtmlReport", "koverXmlReport")
 }
 
 dependencies {

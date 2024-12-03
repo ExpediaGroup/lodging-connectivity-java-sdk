@@ -16,7 +16,6 @@
 
 package com.expediagroup.sdk.core.http
 
-import com.expediagroup.sdk.core.util.ExcludeFromJacocoGeneratedReport
 import java.util.Locale
 
 /**
@@ -162,12 +161,10 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
 
     companion object {
         @JvmStatic
-        @ExcludeFromJacocoGeneratedReport
         fun builder(headers: Headers): Builder = Builder(headers)
 
 
         @JvmStatic
-        @ExcludeFromJacocoGeneratedReport
         fun builder(): Builder = Builder()
 
         private fun sanitizeName(value: String): String {
