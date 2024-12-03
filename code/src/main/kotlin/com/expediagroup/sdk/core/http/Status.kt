@@ -16,10 +16,9 @@
 
 package com.expediagroup.sdk.core.http
 
-import com.expediagroup.sdk.core.http.HttpStatus.entries
+import com.expediagroup.sdk.core.http.Status.entries
 
-
-enum class HttpStatus(val code: Int) {
+enum class Status(val code: Int) {
     // Informational responses (100–199)
     CONTINUE(100),
     SWITCHING_PROTOCOLS(101),
@@ -98,7 +97,7 @@ enum class HttpStatus(val code: Int) {
     companion object {
 
         @Throws(IllegalArgumentException::class)
-        fun fromCode(code: Int): HttpStatus {
+        fun fromCode(code: Int): Status {
             entries.find { it.code == code }?.let {
                 return it
             }

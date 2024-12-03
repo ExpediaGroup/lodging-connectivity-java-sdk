@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.core.authentication.bearer
 
+import java.time.Clock
 import java.time.Instant
 
 /**
@@ -27,29 +28,27 @@ import java.time.Instant
  *
  * @param accessToken The bearer token.
  * @param expiresIn The time in seconds until the token expires, relative to when it was issued.
+ * @param expirationBufferSeconds The number of seconds before the token's expiration time that it is considered "about to expire".
+ * @param clock The clock to use for time-based operations. Defaults to system clock.
  */
-data class BearerTokenStorage(
+class BearerTokenStorage private constructor(
     val accessToken: String,
-    val expiresIn: Long
+    val expiresIn: Long,
+    private val expirationBufferSeconds: Long,
+    private val clock: Clock,
+    private val expiryInstant: Instant
 ) {
-    private val expiryInstant: Instant = calculateExpiryInstant(expiresIn)
 
     /**
      * Checks if the bearer token is about to expire.
      *
-     * A token is considered "about to expire" if the current time is within a predefined margin
-     * (60 seconds) of the token's expiration time, or if the token is invalid.
+     * A token is considered "about to expire" if the current time is within the configured buffer
+     * of the token's expiration time.
      *
-     * @return `true` if the token is invalid or about to expire; `false` otherwise.
+     * @return `true` if the token is about to expire; `false` otherwise.
      */
-    fun isAboutToExpire(): Boolean {
-        if (expiresIn <= 0) {
-            return true // Token is invalid or expired
-        }
-
-        val margin = 60L
-
-        return Instant.now().isAfter(expiryInstant.minusSeconds(margin))
+    fun isAboutToExpire(): Boolean = run {
+        Instant.now(clock).isAfter(expiryInstant.minusSeconds(expirationBufferSeconds))
     }
 
     /**
@@ -57,20 +56,49 @@ data class BearerTokenStorage(
      *
      * @return The token in the format `Bearer <accessToken>`.
      */
-    fun getAsAuthorizationHeaderValue(): String {
-        return "Bearer $accessToken"
-    }
-
-    /**
-     * Calculates the expiration time of the token as an [Instant].
-     *
-     * @param expiresIn The time in seconds until the token expires.
-     * @return The expiration time as an [Instant].
-     */
-    private fun calculateExpiryInstant(expiresIn: Long): Instant =
-        Instant.now().plusSeconds(expiresIn)
+    fun getAuthorizationHeaderValue(): String = "Bearer $accessToken"
 
     companion object {
-        val emptyBearerTokenStorage = BearerTokenStorage("", -1)
+        private const val DEFAULT_EXPIRATION_BUFFER_SECONDS = 60L
+
+        /**
+         * Creates an empty bearer token storage instance.
+         * This instance will always report as expired.
+         */
+        val empty: BearerTokenStorage = create("", -1)
+
+        /**
+         * Creates a new bearer token storage instance with default settings.
+         *
+         * @param accessToken The bearer token
+         * @param expiresIn The time in seconds until the token expires
+         * @param expirationBufferSeconds Optional buffer time before expiration. Defaults to 60 seconds.
+         * @param clock Optional clock for time operations. Defaults to system clock.
+         * @return A new BearerTokenStorage instance
+         */
+        fun create(
+            accessToken: String,
+            expiresIn: Long,
+            expirationBufferSeconds: Long = DEFAULT_EXPIRATION_BUFFER_SECONDS,
+            clock: Clock = Clock.systemUTC()
+        ): BearerTokenStorage {
+            val expiryInstant = if (expiresIn >= 0) {
+                Instant.now(clock).plusSeconds(expiresIn)
+            } else {
+                Instant.EPOCH
+            }
+
+            return BearerTokenStorage(
+                accessToken = accessToken,
+                expiresIn = expiresIn,
+                expirationBufferSeconds = expirationBufferSeconds,
+                clock = clock,
+                expiryInstant = expiryInstant
+            )
+        }
+    }
+
+    override fun toString(): String {
+        return "BearerTokenStorage(expiresIn=$expiresIn, expirationBufferSeconds=$expirationBufferSeconds, expiryInstant=$expiryInstant)"
     }
 }
