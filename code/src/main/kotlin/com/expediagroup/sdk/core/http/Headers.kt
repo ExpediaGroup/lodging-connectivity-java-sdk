@@ -21,7 +21,6 @@ import java.util.Locale
 
 /**
  * Represents a collection of HTTP headers.
- * This class is immutable and thread-safe.
  */
 class Headers private constructor(private val headersMap: Map<String, List<String>>) {
 
