@@ -25,8 +25,6 @@ import okio.source
 
 /**
  * Represents the body of an HTTP response.
- *
- * This class is immutable but not thread-safe.
  */
 abstract class ResponseBody : Closeable {
 

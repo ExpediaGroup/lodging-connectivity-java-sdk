@@ -26,8 +26,6 @@ import okio.source
 
 /**
  * Represents an HTTP request body.
- *
- * This class is immutable and thread-safe.
  */
 abstract class RequestBody {
 
