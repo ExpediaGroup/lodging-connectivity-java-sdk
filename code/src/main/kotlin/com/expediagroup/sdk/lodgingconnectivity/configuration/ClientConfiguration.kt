@@ -21,7 +21,6 @@ import com.expediagroup.sdk.core.okhttp.OkHttpClientConfiguration
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 
-
 sealed class ClientConfiguration(
     open val key: String,
     open val secret: String,
@@ -37,7 +36,6 @@ sealed class ClientConfiguration(
             CustomClientConfiguration.Builder(transport)
     }
 }
-
 
 data class DefaultClientConfiguration(
     override val key: String,
@@ -77,14 +75,12 @@ data class DefaultClientConfiguration(
         private var readTimeout: Int? = null
         private var writeTimeout: Int? = null
 
-        fun key(key: String?): Builder {
+        fun key(key: String?) = apply {
             this.key = key
-            return this
         }
 
-        fun secret(secret: String?): Builder {
+        fun secret(secret: String?) = apply {
             this.secret = secret
-            return this
         }
 
         fun environment(environment: ClientEnvironment) = apply {
