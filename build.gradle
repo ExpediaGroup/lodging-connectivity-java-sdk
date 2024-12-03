@@ -1,10 +1,20 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+}
+
 subprojects {
     /* Shared plugins between all modules */
     apply plugin: 'java'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
 
     /* Shared repositories between all modules */
     repositories {
         mavenCentral()
+    }
+
+    kotlin {
+        jvmToolchain(8)
     }
 
     java {

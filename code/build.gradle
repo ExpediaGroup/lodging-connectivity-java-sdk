@@ -1,5 +1,4 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo' version '4.1.0'
 
@@ -8,8 +7,14 @@ plugins {
     id 'signing'
 }
 
-kotlin {
-    jvmToolchain(8)
+jar {
+    manifest {
+        attributes(
+                "version": version,
+                "artifactId": rootProject.name,
+                "userAgentPrefix": "expediagroup-sdk-java-${rootProject.name.replaceFirst("-sdk", "")}"
+        )
+    }
 }
 
 dependencies {
@@ -19,29 +24,19 @@ dependencies {
     /* Dokka */
     dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
 
-    /* Apollo Kotlin */
-    api 'com.apollographql.apollo:apollo-runtime:4.1.0'
+    /* Apollo */
+    api 'com.apollographql.java:client:0.0.2'
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
-    implementation 'com.apollographql.ktor:apollo-engine-ktor:0.0.2'
+
 
     /* EG SDK Core */
-    implementation 'io.ktor:ktor-client-core:2.3.13'
-    implementation 'io.ktor:ktor-client-auth-jvm:2.3.13'
-    implementation 'io.ktor:ktor-http:2.3.13'
-    implementation 'io.ktor:ktor-client-okhttp:2.3.13'
-    implementation 'io.ktor:ktor-client-content-negotiation-jvm:2.3.13'
-    implementation 'io.ktor:ktor-serialization-jackson-jvm:2.3.13'
-    implementation 'io.ktor:ktor-client-logging-jvm:2.3.13'
-    implementation 'io.ktor:ktor-client-encoding:2.3.13'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
-    implementation 'org.jetbrains.kotlinx:atomicfu-jvm:0.26.0'
-    implementation 'javax.validation:validation-api:2.0.1.Final'
-    implementation 'org.hibernate.validator:hibernate-validator:6.2.5.Final'
-    implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
+    implementation 'com.ebay.ejmask:ejmask-api:1.0.3'
+    implementation 'com.ebay.ejmask:ejmask-extensions:1.0.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.1'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.18.1'
+    implementation 'org.slf4j:slf4j-api:2.0.16'
 }
 
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"
 apply from: "tasks-gradle/dokka.gradle"
-
-

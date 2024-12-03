@@ -19,10 +19,10 @@ package com.expediagroup.sdk.lodgingconnectivity.supply.reservation
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.common.DefaultRequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.SupplyApiEndpointProvider
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelVrboReservationInput
@@ -59,12 +59,12 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.Reserv
  * timeouts
  */
 class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
+
+    override val apiEndpoint = SupplyApiEndpointProvider.forEnvironment(config.environment ?: ClientEnvironment.PROD)
+
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
-        config.toExpediaGroupClientConfiguration(
-            apiEndpoint = SupplyApiEndpointProvider.forEnvironment(
-                environment = config.environment ?: ClientEnvironment.PROD
-            ),
-        )
+        requestExecutor = DefaultRequestExecutor(config, apiEndpoint),
+        serverUrl = apiEndpoint.endpoint
     )
 
     /**
