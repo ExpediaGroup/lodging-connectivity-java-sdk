@@ -98,9 +98,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
         @Throws(IllegalArgumentException::class)
-        fun add(name: String, value: String): Builder {
-            return add(name, listOf(value))
-        }
+        fun add(name: String, value: String): Builder = apply { add(name, listOf(value)) }
 
         /**
          * Adds all header values for the specified name.
@@ -111,9 +109,8 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @throws IllegalArgumentException if [name] or any [values] are invalid
          */
         @Throws(IllegalArgumentException::class)
-        fun add(name: String, values: List<String>): Builder {
-            headersMap.computeIfAbsent(processHeaderName(name)) { mutableListOf() }.addAll(processHeaderValues(values))
-            return this
+        fun add(name: String, values: List<String>): Builder = apply {
+            headersMap.computeIfAbsent(name) { mutableListOf() }.addAll(values)
         }
 
         /**
@@ -126,9 +123,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
         @Throws(IllegalArgumentException::class)
-        fun set(name: String, value: String): Builder {
-            return set(name, listOf(value))
-        }
+        fun set(name: String, value: String): Builder = apply { set(name, listOf(value)) }
 
         /**
          * Sets the header with the specified name to the values list provided.
@@ -140,13 +135,9 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @throws IllegalArgumentException if [name] or [values] are invalid
          */
         @Throws(IllegalArgumentException::class)
-        fun set(name: String, values: List<String>): Builder {
-            val processedName = processHeaderName(name)
-
-            remove(processedName)
-            add(processedName, processHeaderValues(values))
-
-            return this
+        fun set(name: String, values: List<String>): Builder = apply {
+            remove(name)
+            add(name, values)
         }
 
         /**
@@ -155,9 +146,8 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @param name the header name
          * @return this builder
          */
-        fun remove(name: String): Builder {
+        fun remove(name: String): Builder = apply {
             headersMap.remove(name.lowercase(Locale.US))
-            return this
         }
 
         /**
@@ -167,41 +157,6 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          */
         fun build(): Headers {
             return Headers(LinkedHashMap(headersMap))
-        }
-
-        private fun processHeaderName(name: String): String = name
-            .lowercase(Locale.US)
-            .trim()
-            .let {
-                validateHeaderName(it)
-                return@let it
-            }
-
-        private fun processHeaderValues(values: List<String>): List<String> = values
-            .map {
-                it.trim()
-            }
-            .let {
-                it.forEach { value -> validateHeaderValue(value) }
-                return@let it
-            }
-
-        private fun validateHeaderName(name: String) {
-            require(name.isNotBlank()) { "Header name must not be blank" }
-
-            for (char in name) {
-                require(char in '!'..'\u007E') {
-                    String.format("Invalid character %#04x in header name: %s", char.code, name)
-                }
-            }
-        }
-
-        private fun validateHeaderValue(value: String) {
-            for (char in value) {
-                require(char == '\t' || (char in '\u0020'..'\u007E')) {
-                    String.format("Invalid character %#04x in header value: %s", char.code, value)
-                }
-            }
         }
     }
 }
