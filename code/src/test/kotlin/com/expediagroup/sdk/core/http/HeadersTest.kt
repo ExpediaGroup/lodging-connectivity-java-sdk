@@ -4,16 +4,15 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class HttpHeadersTest {
+class HeadersTest {
     @Test
     fun `should return header value when header exists with single value`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("content-type", "application/json")
             .build()
 
@@ -27,7 +26,7 @@ class HttpHeadersTest {
     @Test
     fun `should return first header value when header exists with multiple values`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("accept", listOf("application/json", "text/plain"))
             .build()
 
@@ -41,7 +40,7 @@ class HttpHeadersTest {
     @Test
     fun `should return null value when header does not exist`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("content-Type", "application/json")
             .build()
 
@@ -55,7 +54,7 @@ class HttpHeadersTest {
     @Test
     fun `should return the value for the matched header name case-insensitive`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("content-type", "application/json")
             .build()
 
@@ -71,7 +70,7 @@ class HttpHeadersTest {
     @Test
     fun `should return all values when header exists with multiple values`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("accept", listOf("application/json", "text/plain"))
             .build()
 
@@ -85,7 +84,7 @@ class HttpHeadersTest {
     @Test
     fun `should return empty list if the header does not exist`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("accept", listOf("application/json", "text/plain"))
             .build()
 
@@ -99,7 +98,7 @@ class HttpHeadersTest {
     @Test
     fun `should return all values for the matched header name case-insensitive`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("accept", listOf("application/json", "text/plain"))
             .build()
 
@@ -113,7 +112,7 @@ class HttpHeadersTest {
     @Test
     fun `should return all headers names`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("accept", listOf("application/json", "text/plain"))
             .add("content-type", "application/json")
             .build()
@@ -128,7 +127,7 @@ class HttpHeadersTest {
     @Test
     fun `should return empty set if no headers exist`() {
         // Given
-        val headers = HttpHeaders.Builder().build()
+        val headers = Headers.Builder().build()
 
         // When
         val headersNames = headers.names()
@@ -140,7 +139,7 @@ class HttpHeadersTest {
     @Test
     fun `should return all headers entries`() {
         // Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("accept", listOf("application/json", "text/plain"))
             .add("content-type", "application/json")
             .build()
@@ -160,7 +159,7 @@ class HttpHeadersTest {
     @Test
     fun `should return empty set of entries if no headers exist`() {
         // Given
-        val headers = HttpHeaders.Builder().build()
+        val headers = Headers.Builder().build()
 
         // When
         val headersEntries = headers.entries()
@@ -172,7 +171,7 @@ class HttpHeadersTest {
     @Test
     fun `should create a builder with existing headers`() {
         // Given
-        val originalHeaders = HttpHeaders.Builder()
+        val originalHeaders = Headers.Builder()
             .add("accept", "application/json")
             .add("content-type", "application/xml")
             .build()
@@ -193,7 +192,7 @@ class HttpHeadersTest {
     @Test
     fun `should return the correct string representation`() {
         //  Given
-        val headers = HttpHeaders.Builder()
+        val headers = Headers.Builder()
             .add("accept", "application/json")
             .add("content-type", "application/xml")
             .build()
@@ -202,19 +201,19 @@ class HttpHeadersTest {
         val headersString = headers.toString()
 
         // Expect
-        assertEquals("accept: [application/json]\ncontent-type: [application/xml]\n", headersString)
+        assertEquals("{accept=[application/json], content-type=[application/xml]}", headersString)
     }
 
     @Test
-    fun `should return empty string when no headers exist`() {
+    fun `should return empty brackets when no headers exist`() {
         // Given
-        val headers = HttpHeaders.Builder().build()
+        val headers = Headers.Builder().build()
 
         // When
         val headersString = headers.toString()
 
         // Expect
-        assertEquals("", headersString)
+        assertEquals("{}", headersString)
     }
 
     @Nested
@@ -223,7 +222,7 @@ class HttpHeadersTest {
         @Test
         fun `should add single header with valid name and value as expected`() {
             // Given
-            val headers = HttpHeaders.Builder()
+            val headers = Headers.Builder()
                 .add("content-type", "application/json")
                 .build()
 
@@ -243,7 +242,7 @@ class HttpHeadersTest {
         @Test
         fun `should add multiple values for one header name`() {
             // Given
-            val headers = HttpHeaders.Builder()
+            val headers = Headers.Builder()
                 .add("accept", "application/json")
                 .add("accept", "text/plain")
                 .build()
@@ -267,7 +266,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().add(invalidHeaderName, headerValue)
+                Headers.Builder().add(invalidHeaderName, headerValue)
             }
 
             // Expect
@@ -282,7 +281,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().add(invalidHeaderName, headerValue)
+                Headers.Builder().add(invalidHeaderName, headerValue)
             }
 
             // Expect
@@ -295,7 +294,7 @@ class HttpHeadersTest {
             val invalidHeaderValue = "application/\njson"
 
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().add(headerName, invalidHeaderValue)
+                Headers.Builder().add(headerName, invalidHeaderValue)
             }
 
             assertEquals("Invalid character 0x0a in header value: $invalidHeaderValue", exception.message)
@@ -308,7 +307,7 @@ class HttpHeadersTest {
             val headerValues = listOf("application/json", "text/plain")
 
             // When
-            val headers = HttpHeaders.Builder()
+            val headers = Headers.Builder()
                 .add(headerName, headerValues)
                 .build()
 
@@ -325,7 +324,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().add(invalidName, headerValues)
+                Headers.Builder().add(invalidName, headerValues)
             }
 
             // Expect
@@ -340,7 +339,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().add(headerName, invalidValues)
+                Headers.Builder().add(headerName, invalidValues)
             }
 
             // Expect
@@ -355,7 +354,7 @@ class HttpHeadersTest {
             val headerValue2 = "text/plain"
 
             // When
-            val headers = HttpHeaders.Builder()
+            val headers = Headers.Builder()
                 .add(headerName, headerValue1)
                 .set(headerName, headerValue2)
                 .build()
@@ -373,7 +372,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().set(invalidName, headerValue)
+                Headers.Builder().set(invalidName, headerValue)
             }
 
             // Expect
@@ -388,7 +387,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().set(headerName, invalidHeaderValue)
+                Headers.Builder().set(headerName, invalidHeaderValue)
             }
 
             // Expect
@@ -403,7 +402,7 @@ class HttpHeadersTest {
             val newHeaderValues = listOf("application/xml", "text/html")
 
             // When
-            val headers = HttpHeaders.Builder()
+            val headers = Headers.Builder()
                 .add(headerName, initialHeaderValues)
                 .set(headerName, newHeaderValues)
                 .build()
@@ -421,7 +420,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().set(invalidHeaderName, headerValues)
+                Headers.Builder().set(invalidHeaderName, headerValues)
             }
 
             // Expect
@@ -436,7 +435,7 @@ class HttpHeadersTest {
 
             // When
             val exception = assertThrows<IllegalArgumentException> {
-                HttpHeaders.Builder().set(headerName, invalidValues)
+                Headers.Builder().set(headerName, invalidValues)
             }
 
             // Expect
@@ -450,7 +449,7 @@ class HttpHeadersTest {
             val headerValue = "application/json"
 
             // When
-            val headers = HttpHeaders.Builder()
+            val headers = Headers.Builder()
                 .add(headerName, headerValue)
                 .remove(headerName)
                 .build()
@@ -468,7 +467,7 @@ class HttpHeadersTest {
             val headerValue = "application/json"
 
             // When
-            val headers = HttpHeaders.Builder()
+            val headers = Headers.Builder()
                 .add(headerName, headerValue)
                 .remove("content-type")
                 .build()
@@ -480,9 +479,9 @@ class HttpHeadersTest {
         }
 
         @Test
-        fun `should build HttpHeaders with no headers as expected`() {
+        fun `should build Headers with no headers as expected`() {
             // Given
-            val headersBuilder = HttpHeaders.Builder()
+            val headersBuilder = Headers.Builder()
 
             // When
             val headers = headersBuilder.build()
@@ -493,15 +492,15 @@ class HttpHeadersTest {
         }
 
         @Test
-        fun `should initialize the Builder with existing HttpHeaders`() {
+        fun `should initialize the Builder with existing Headers`() {
             // Given
-            val originalHeaders = HttpHeaders.Builder()
+            val originalHeaders = Headers.Builder()
                 .add("Accept", "application/json")
                 .add("Content-Type", "application/xml")
                 .build()
 
             // When
-            val newHeaders = HttpHeaders.Builder(originalHeaders)
+            val newHeaders = Headers.Builder(originalHeaders)
                 .add("Accept", "text/plain")
                 .remove("Content-Type")
                 .build()
@@ -514,10 +513,9 @@ class HttpHeadersTest {
         }
 
         @Test
-        @Disabled("Should copy the internal headers hashmap when calling build")
-        fun `should maintain original HttpHeaders immutability when instantiating a new builder from it`() {
+        fun `should maintain original Headers immutability when instantiating a new builder from it`() {
             // Given
-            val builder = HttpHeaders.Builder().add("accept", "application/json")
+            val builder = Headers.Builder().add("accept", "application/json")
 
             // When
             val headers = builder.build()
