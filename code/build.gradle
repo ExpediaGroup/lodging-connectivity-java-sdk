@@ -5,6 +5,9 @@ plugins {
     /* Publishing Plugins */
     id 'maven-publish'
     id 'signing'
+
+    /* Test Reporting */
+    id("org.jetbrains.kotlinx.kover") version "0.8.3"
 }
 
 jar {
@@ -15,6 +18,17 @@ jar {
                 "userAgentPrefix": "expediagroup-sdk-java-${rootProject.name.replaceFirst("-sdk", "")}"
         )
     }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.named("check") {
+    finalizedBy("koverHtmlReport", "koverXmlReport")
 }
 
 dependencies {
@@ -35,6 +49,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.1'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.18.1'
     implementation 'org.slf4j:slf4j-api:2.0.16'
+
+    /* Testing */
+    testImplementation platform('org.junit:junit-bom:5.11.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 apply from: "tasks-gradle/apollo.gradle"

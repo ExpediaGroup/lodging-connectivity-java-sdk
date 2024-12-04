@@ -30,7 +30,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
      * @return the first header value, or null if not found
      * @throws IllegalArgumentException if [name] is null
      */
-    fun get(name: String): String? = headersMap[name.lowercase(Locale.US)]?.firstOrNull()
+    fun get(name: String): String? = headersMap[sanitizeName(name)]?.firstOrNull()
 
     /**
      * Returns all header values for the given name.
@@ -39,7 +39,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
      * @return an unmodifiable list of header values, or an empty list if none
      * @throws IllegalArgumentException if [name] is null
      */
-    fun values(name: String): List<String> = headersMap[name.lowercase(Locale.US)] ?: emptyList()
+    fun values(name: String): List<String> = headersMap[sanitizeName(name)] ?: emptyList()
 
     /**
      * Returns an unmodifiable set of all header names.
@@ -97,7 +97,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
         @Throws(IllegalArgumentException::class)
-        fun add(name: String, value: String): Builder = apply { add(name, listOf(value)) }
+        fun add(name: String, value: String): Builder = apply { add(sanitizeName(name), listOf(value)) }
 
         /**
          * Adds all header values for the specified name.
@@ -109,7 +109,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          */
         @Throws(IllegalArgumentException::class)
         fun add(name: String, values: List<String>): Builder = apply {
-            headersMap.computeIfAbsent(name) { mutableListOf() }.addAll(values)
+            headersMap.computeIfAbsent(sanitizeName(name)) { mutableListOf() }.addAll(values)
         }
 
         /**
@@ -122,7 +122,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
         @Throws(IllegalArgumentException::class)
-        fun set(name: String, value: String): Builder = apply { set(name, listOf(value)) }
+        fun set(name: String, value: String): Builder = apply { set(sanitizeName(name), listOf(value)) }
 
         /**
          * Sets the header with the specified name to the values list provided.
@@ -135,8 +135,8 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          */
         @Throws(IllegalArgumentException::class)
         fun set(name: String, values: List<String>): Builder = apply {
-            remove(name)
-            add(name, values)
+            remove(sanitizeName(name))
+            add(sanitizeName(name), values)
         }
 
         /**
@@ -146,7 +146,7 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @return this builder
          */
         fun remove(name: String): Builder = apply {
-            headersMap.remove(name.lowercase(Locale.US))
+            headersMap.remove(sanitizeName(name))
         }
 
         /**
@@ -156,6 +156,19 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          */
         fun build(): Headers {
             return Headers(LinkedHashMap(headersMap))
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        fun builder(headers: Headers): Builder = Builder(headers)
+
+
+        @JvmStatic
+        fun builder(): Builder = Builder()
+
+        private fun sanitizeName(value: String): String {
+            return value.lowercase(Locale.US).trim()
         }
     }
 }
