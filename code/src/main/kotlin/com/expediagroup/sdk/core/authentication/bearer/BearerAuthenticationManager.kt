@@ -115,7 +115,7 @@ class BearerAuthenticationManager(
             .url(authUrl)
             .method("POST", RequestBody.create(mapOf("grant_type" to "client_credentials")))
             .header("Authorization", credentials.encodeBasic())
-            .header("Content-Type", CommonMediaTypes.APPLICATION_FORM_URLENCODED.fullType)
+            .header("Content-Type", CommonMediaTypes.APPLICATION_FORM_URLENCODED.toString())
             .build()
     }
 
