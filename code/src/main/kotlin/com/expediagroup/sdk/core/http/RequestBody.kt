@@ -57,6 +57,8 @@ abstract class RequestBody {
          * @param inputStream the input stream to read from.
          * @return a new [RequestBody] instance.
          */
+        @JvmStatic
+        @JvmOverloads
         fun create(
             inputStream: InputStream,
             mediaType: MediaType? = null,
@@ -84,6 +86,8 @@ abstract class RequestBody {
          * @param source the source to read from.
          * @return a new [RequestBody] instance.
          */
+        @JvmStatic
+        @JvmOverloads
         fun create(
             source: Source,
             mediaType: MediaType? = null,
@@ -111,6 +115,8 @@ abstract class RequestBody {
          * @return A new [RequestBody] instance.
          * @throws IllegalArgumentException If [formData] is null.
          */
+        @JvmStatic
+        @JvmOverloads
         fun create(
             formData: Map<String, String>,
             charset: Charset = Charsets.UTF_8
