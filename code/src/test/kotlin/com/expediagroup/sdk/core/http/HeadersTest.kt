@@ -413,5 +413,17 @@ class HeadersTest {
             assertEquals("application/json", headers.get("accept"))
             assertNull(headers.get("content-type"))
         }
+
+        @Test
+        fun `should lowercase and trim the header name`() {
+            // Given
+            val headers = Headers.builder().add(" Accept ", "application/json").build()
+
+            // When
+            val headerName = headers.names().first()
+
+            // Expect
+            assertEquals("accept", headerName)
+        }
     }
 }
