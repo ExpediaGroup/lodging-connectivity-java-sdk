@@ -105,8 +105,7 @@ class MediaType private constructor(
 
             // Split into MIME type and optional parameters
             val parts = mediaType.split(";").map(String::trim)
-            val mimeString =
-                parts.firstOrNull() ?: throw IllegalArgumentException("Invalid media type format: $mediaType")
+            val mimeString = parts.first()
             val parametersList = parts.drop(1)
 
             // Parse type and subtype
@@ -117,15 +116,21 @@ class MediaType private constructor(
             val type = mimeString.substring(0, slashIndex).trim().lowercase(Locale.getDefault())
             val subtype = mimeString.substring(slashIndex + 1).trim().lowercase(Locale.getDefault())
 
-            // Parse parameters into a map
             val parametersMap = parametersList
-                .filter(String::isNotBlank) // Skip blank parameters
+                .filter(String::isNotBlank)
                 .associate { parameter ->
-                    parameter.split("=")
-                        .map(String::trim)
-                        .takeIf { it.size == 2 && it.all(String::isNotBlank) }
-                        ?.let { it[0].lowercase(Locale.getDefault()) to it[1].lowercase(Locale.getDefault()) }
-                        ?: throw IllegalArgumentException("Invalid parameter format: $parameter")
+                    // Split the parameter into key-value parts
+                    val parts = parameter.split("=").map(String::trim)
+                    val isValid = parts.size == 2 && parts.none { it.isBlank() }
+
+                    if (!isValid) {
+                        throw IllegalArgumentException("Invalid parameter format: $parameter")
+                    }
+
+                    val key = parts[0].lowercase(Locale.getDefault())
+                    val value = parts[1].lowercase(Locale.getDefault())
+
+                    key to value
                 }
 
             return MediaType(type, subtype, parametersMap)
