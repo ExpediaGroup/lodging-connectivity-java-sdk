@@ -10,7 +10,7 @@ public class HeadersJavaTest {
 
     @Test
     @DisplayName("should access default builder static method")
-    public void default_static_builder_IsAccessible_from_Java() {
+    public void defaultStaticBuilderIsAccessibleFromJava() {
         // Given
         Headers headers = Headers
                 .builder()
@@ -26,7 +26,7 @@ public class HeadersJavaTest {
 
     @Test
     @DisplayName("should access parameterized builder static method")
-    public void parameterized_static_builder_IsAccessible_from_Java() {
+    public void parameterizedStaticBuilderIsAccessibleFromJava() {
         // Given
         Headers originalHeaders = Headers
                 .builder()
