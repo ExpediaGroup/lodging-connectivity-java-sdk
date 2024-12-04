@@ -38,6 +38,5 @@ object CommonMediaTypes {
 
     // Other Types
     val APPLICATION_JAVASCRIPT = MediaType.of("application", "javascript")
-    val APPLICATION_VND_MS_EXCEL = MediaType.of("application", "vnd.ms-excel")
 }
 
