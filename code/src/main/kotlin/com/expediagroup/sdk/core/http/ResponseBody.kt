@@ -66,6 +66,8 @@ abstract class ResponseBody : Closeable {
          * @param mediaType The media type, or null if unknown.
          * @return A new [ResponseBody] instance.
          */
+        @JvmStatic
+        @JvmOverloads
         fun create(
             inputStream: InputStream,
             mediaType: MediaType? = null,
@@ -90,6 +92,8 @@ abstract class ResponseBody : Closeable {
          * @param mediaType The media type, or null if unknown.
          * @return A new [ResponseBody] instance.
          */
+        @JvmStatic
+        @JvmOverloads
         fun create(source: BufferedSource, mediaType: MediaType? = null, contentLength: Long = -1L): ResponseBody {
             return object : ResponseBody() {
                 override fun mediaType(): MediaType? = mediaType
