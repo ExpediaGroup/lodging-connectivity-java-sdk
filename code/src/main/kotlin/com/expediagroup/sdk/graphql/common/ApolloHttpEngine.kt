@@ -64,7 +64,7 @@ class ApolloHttpEngine(
     }
 
     private fun buildApolloResponseFromSdkResponse(sdkHttpResponse: Response): ApolloHttpResponse {
-        return ApolloHttpResponseBuilder(sdkHttpResponse.code).apply {
+        return ApolloHttpResponseBuilder(sdkHttpResponse.status.code).apply {
             addApolloResponseHeadersFromSdkResponse(sdkHttpResponse, this)
             addApolloResponseBodyFromSdkResponse(sdkHttpResponse, this)
         }.build()

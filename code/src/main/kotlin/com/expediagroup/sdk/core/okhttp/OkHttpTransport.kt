@@ -20,6 +20,7 @@ import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.http.MediaType.Companion.parse
 import com.expediagroup.sdk.core.http.Protocol
 import com.expediagroup.sdk.core.http.ResponseBody.Companion.create
+import com.expediagroup.sdk.core.http.Status
 import java.io.IOException
 import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -91,7 +92,7 @@ class OkHttpTransport(
             okHttpResponse.body?.let { buildResponseBody(it) }?.let { body(it) }
             request(sdkRequest)
             protocol(Protocol.valueOf(okHttpResponse.protocol.name))
-            code(okHttpResponse.code)
+            status(Status.fromCode(okHttpResponse.code))
             message(okHttpResponse.message)
         }.build()
     }

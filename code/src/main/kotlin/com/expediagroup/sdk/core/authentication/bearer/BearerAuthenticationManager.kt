@@ -130,7 +130,7 @@ class BearerAuthenticationManager(
     private fun executeAuthenticationRequest(request: Request): Response = run {
         transport.execute(request).apply {
             if (!this.isSuccessful) {
-                throw ExpediaGroupAuthException(this.code, "Authentication failed")
+                throw ExpediaGroupAuthException(this.status, "Authentication failed")
             }
         }
     }

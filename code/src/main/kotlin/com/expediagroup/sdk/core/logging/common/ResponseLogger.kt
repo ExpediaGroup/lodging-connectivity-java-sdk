@@ -17,7 +17,7 @@ object ResponseLogger {
             val responseBodyString = response.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
-                append("[URL=${response.request.url}, Code=${response.code}, Headers=[${response.headers}], Body=[${responseBodyString}]")
+                append("[URL=${response.request.url}, Code=${response.status.code}, Headers=[${response.headers}], Body=[${responseBodyString}]")
             }.also {
                 logger.info(it, "Incoming", *tags)
             }

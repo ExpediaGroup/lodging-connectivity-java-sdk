@@ -27,7 +27,7 @@ import java.io.IOException
 class Response private constructor(
     val request: Request,
     val protocol: Protocol,
-    val code: Int,
+    val status: Status,
     val message: String,
     val headers: Headers,
     val body: ResponseBody?
@@ -53,7 +53,7 @@ class Response private constructor(
      * Returns true if the response code is in the 200-299 range.
      */
     val isSuccessful: Boolean
-        get() = code in 200..299
+        get() = status.code in 200..299
 
     /**
      * Returns a new [Builder] initialized with this response's data.
@@ -80,7 +80,7 @@ class Response private constructor(
     class Builder {
         private var request: Request? = null
         private var protocol: Protocol? = null
-        private var code: Int = -1
+        private var status: Status? = null
         private var message: String? = null
         private var headers: Headers.Builder = Headers.Builder()
         private var body: ResponseBody? = null
@@ -98,7 +98,7 @@ class Response private constructor(
         constructor(response: Response) {
             this.request = response.request
             this.protocol = response.protocol
-            this.code = response.code
+            this.status = response.status
             this.message = response.message
             this.headers = response.headers.newBuilder()
             this.body = response.body
@@ -127,13 +127,12 @@ class Response private constructor(
         /**
          * Sets the HTTP status code.
          *
-         * @param code The HTTP status code.
+         * @param status The HTTP status code.
          * @return This builder.
-         * @throws IllegalArgumentException If [code] is negative.
+         * @throws IllegalArgumentException If [status] is negative.
          */
-        fun code(code: Int) = apply {
-            require(code >= 0) { "code must be >= 0" }
-            this.code = code
+        fun status(status: Status) = apply {
+            this.status = status
         }
 
         /**
@@ -233,13 +232,13 @@ class Response private constructor(
         fun build(): Response {
             val request = this.request ?: throw IllegalStateException("request is required")
             val protocol = this.protocol ?: throw IllegalStateException("protocol is required")
-            val code = this.code.takeIf { it >= 0 } ?: throw IllegalStateException("code is required")
+            val code = this.status ?: throw IllegalStateException("status is required")
             val message = this.message ?: throw IllegalStateException("message is required")
 
             return Response(
                 request = request,
                 protocol = protocol,
-                code = code,
+                status = code,
                 message = message,
                 headers = headers.build(),
                 body = body
