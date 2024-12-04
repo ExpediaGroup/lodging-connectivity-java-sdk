@@ -40,7 +40,7 @@ object ResponseLogger {
 
         val buffer = Buffer()
         val bytesToRead = minOf(maxSize, this.contentLength())
-        buffer.write(this.source().peek(), bytesToRead)
-        return buffer.copy().readString(charset ?: Charsets.UTF_8)
+        this.source().peek().read(buffer, bytesToRead)
+        return buffer.readString(charset ?: Charsets.UTF_8)
     }
 }

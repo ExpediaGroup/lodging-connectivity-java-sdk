@@ -43,6 +43,6 @@ object RequestLogger {
         val buffer = Buffer()
         writeTo(buffer)
         val bytesToRead = minOf(maxSize, buffer.size)
-        return buffer.copy().readString(bytesToRead, charset ?: Charsets.UTF_8)
+        return buffer.readString(bytesToRead, charset ?: Charsets.UTF_8)
     }
 }
