@@ -77,32 +77,130 @@ class RequestTest {
     }
 
     @Test
-    fun `should throw an exception if the URL string is invalid`() {
-        val invalidUrl = "invalid_url"
+    fun `should add single header`() {
+        // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName = "content-type"
+        val headerValue = "application/json"
 
-        val exception = assertThrows<MalformedURLException> {
-            Request.builder().method(Method.GET).url(invalidUrl).build()
-        }
+        // When
+        val request = Request
+            .builder()
+            .method(method)
+            .url(url)
+            .addHeader(headerName, headerValue)
+            .build()
 
-        assertEquals("no protocol: invalid_url", exception.message)
+        // When
+        assertEquals(headerValue, request.headers.get(headerName))
     }
 
     @Test
-    fun `should throw an exception if the method is missing`() {
-        val exception = assertThrows<IllegalStateException> {
-            Request.builder().url("https://example.com").build()
-        }
+    fun `should add multiple values for one header`() {
+        // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName = "content-type"
+        val headerValue1 = "application/json"
+        val headerValue2 = "text/plain"
 
-        assertEquals("Method is required.", exception.message)
+        // When
+        val request = Request
+            .builder()
+            .method(method)
+            .url(url)
+            .addHeader(headerName, headerValue1)
+            .addHeader(headerName, headerValue2)
+            .build()
+
+        // When
+        assertEquals(listOf(headerValue1, headerValue2), request.headers.values(headerName))
     }
 
     @Test
-    fun `should throw an exception if the URL is missing`() {
-        val exception = assertThrows<IllegalStateException> {
-            Request.builder().method(Method.GET).build()
-        }
+    fun `should set one single header`() {
+        // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName = "content-type"
+        val headerValue = "application/json"
 
-        assertEquals("URL is required.", exception.message)
+        // When
+        val request = Request
+            .builder()
+            .method(method)
+            .url(url)
+            .setHeader(headerName, headerValue)
+            .build()
+
+        // When
+        assertEquals(headerValue, request.headers.get(headerName))
+    }
+
+    @Test
+    fun `should set multiple values for one header`() {
+        // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName = "content-type"
+        val headerValue1 = "application/json"
+        val headerValue2 = "text/plain"
+
+        // When
+        val request = Request
+            .builder()
+            .method(method)
+            .url(url)
+            .setHeader(headerName, headerValue1)
+            .setHeader(headerName, headerValue2)
+            .build()
+
+        // When
+        assertEquals(listOf(headerValue2), request.headers.values(headerName))
+    }
+
+    @Test
+    fun `should add multiple values for one header as a list`() {
+        // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName = "content-type"
+        val headerValue1 = "application/json"
+        val headerValue2 = "text/plain"
+
+        // When
+        val request = Request
+            .builder()
+            .method(method)
+            .url(url)
+            .addHeader(headerName, listOf(headerValue1, headerValue2))
+            .build()
+
+        // When
+        assertEquals(listOf(headerValue1, headerValue2), request.headers.values(headerName))
+    }
+
+    @Test
+    fun `should set multiple values for one header as a list`() {
+        // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName = "content-type"
+        val headerValue1 = "application/json"
+        val headerValue2 = "text/plain"
+
+        // When
+        val request = Request
+            .builder()
+            .method(method)
+            .url(url)
+            .setHeader(headerName, listOf(headerValue1, headerValue2))
+            .setHeader(headerName, listOf(headerValue2))
+            .build()
+
+        // When
+        assertEquals(listOf(headerValue2), request.headers.values(headerName))
     }
 
     @Test
@@ -114,10 +212,12 @@ class RequestTest {
             .addHeader("Header1", "Value1")
             .setHeader("Header2", "Value2")
             .setHeader("Header1", "NewValue1")
+            .addHeader("Header3", listOf("Value1", "Value2"))
             .build()
 
         assertEquals("NewValue1", request.headers.get("Header1"))
         assertEquals("Value2", request.headers.get("Header2"))
+        assertEquals(listOf("Value1", "Value2"), request.headers.values("Header3"))
     }
 
     @Test
@@ -144,5 +244,45 @@ class RequestTest {
             .build()
 
         assertNull(request.body)
+    }
+
+    @Test
+    fun `should throw an exception if the URL string is invalid`() {
+        // Given
+        val invalidUrl = "invalid_url"
+
+        // When
+        val exception = assertThrows<MalformedURLException> {
+            Request.builder().method(Method.GET).url(invalidUrl).build()
+        }
+
+        // Expect
+        assertEquals("no protocol: invalid_url", exception.message)
+    }
+
+    @Test
+    fun `should throw an exception if the method is missing`() {
+        val exception = assertThrows<IllegalStateException> {
+            Request.builder().url("https://example.com").build()
+        }
+
+        assertEquals("Method is required.", exception.message)
+    }
+
+    @Test
+    fun `should throw an exception if the URL is missing`() {
+        val exception = assertThrows<IllegalStateException> {
+            Request.builder().method(Method.GET).build()
+        }
+
+        assertEquals("URL is required.", exception.message)
+    }
+
+    @Test
+    fun `should throw exception when adding header with empty name`() {
+        val exception = assertThrows<IllegalArgumentException> {
+            Request.builder().method(Method.GET).url("https://example.com").addHeader("", "value").build()
+        }
+        assertEquals("Header name cannot be empty", exception.message)
     }
 }
