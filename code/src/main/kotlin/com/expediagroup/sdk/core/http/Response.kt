@@ -32,23 +32,6 @@ class Response private constructor(
     val headers: Headers,
     val body: ResponseBody?
 ) : Closeable {
-
-    /**
-     * Returns the header value for [name], or null if not present.
-     *
-     * @param name The name of the header.
-     * @return The value of the header, or null if not present.
-     */
-    fun header(name: String): String? = headers.get(name)
-
-    /**
-     * Returns all header values for [name].
-     *
-     * @param name The name of the header.
-     * @return A list of header values.
-     */
-    fun headers(name: String): List<String> = headers.values(name)
-
     /**
      * Returns true if the response code is in the 200-299 range.
      */
@@ -82,7 +65,7 @@ class Response private constructor(
         private var protocol: Protocol? = null
         private var status: Status? = null
         private var message: String? = null
-        private var headers: Headers.Builder = Headers.Builder()
+        private var headersBuilder: Headers.Builder = Headers.Builder()
         private var body: ResponseBody? = null
 
         /**
@@ -100,7 +83,7 @@ class Response private constructor(
             this.protocol = response.protocol
             this.status = response.status
             this.message = response.message
-            this.headers = response.headers.newBuilder()
+            this.headersBuilder = response.headers.newBuilder()
             this.body = response.body
         }
 
@@ -154,7 +137,7 @@ class Response private constructor(
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
         fun addHeader(name: String, value: String) = apply {
-            headers.add(name, value)
+            headersBuilder.add(name, value)
         }
 
         /**
@@ -166,7 +149,7 @@ class Response private constructor(
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
         fun addHeader(name: String, values: List<String>) = apply {
-            headers.add(name, values)
+            headersBuilder.add(name, values)
         }
 
         /**
@@ -177,8 +160,8 @@ class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
-        fun header(name: String, value: String) = apply {
-            headers.set(name, value)
+        fun setHeader(name: String, value: String) = apply {
+            headersBuilder.set(name, value)
         }
 
         /**
@@ -189,8 +172,8 @@ class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
-        fun header(name: String, values: List<String>) = apply {
-            headers.set(name, values)
+        fun setHeader(name: String, values: List<String>) = apply {
+            headersBuilder.set(name, values)
         }
 
         /**
@@ -200,7 +183,7 @@ class Response private constructor(
          * @return This builder.
          */
         fun removeHeader(name: String) = apply {
-            headers.remove(name)
+            headersBuilder.remove(name)
         }
 
         /**
@@ -210,7 +193,7 @@ class Response private constructor(
          * @return This builder.
          */
         fun headers(headers: Headers) = apply {
-            this.headers = headers.newBuilder()
+            this.headersBuilder = headers.newBuilder()
         }
 
         /**
@@ -240,9 +223,14 @@ class Response private constructor(
                 protocol = protocol,
                 status = code,
                 message = message,
-                headers = headers.build(),
+                headers = headersBuilder.build(),
                 body = body
             )
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun builder() = Builder()
     }
 }
