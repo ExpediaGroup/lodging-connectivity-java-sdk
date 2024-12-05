@@ -156,7 +156,7 @@ class RequestTest {
             .setHeader(headerName, headerValue2)
             .build()
 
-        // When
+        // Expect
         assertEquals(listOf(headerValue2), request.headers.values(headerName))
     }
 
@@ -206,49 +206,71 @@ class RequestTest {
     @Test
     fun `should handle adding and setting headers as expected`() {
         // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName1 = "Header1"
+        val headerName2 = "Header2"
+        val headerName3 = "Header3"
+        val headerValue1 = "Value1"
+        val headerValue2 = "Value2"
+        val headerValue3 = "Value3"
+
+        // When
         val request = Request
             .builder()
-            .method(Method.GET)
-            .url("https://example.com")
-            .addHeader("Header1", "Value1")
-            .setHeader("Header2", "Value2")
-            .setHeader("Header1", "NewValue1")
-            .addHeader("Header3", listOf("Value1", "Value2"))
+            .method(method)
+            .url(url)
+            .addHeader(headerName1, headerValue1)
+            .setHeader(headerName2, headerValue2)
+            .setHeader(headerName1, headerValue3)
+            .addHeader(headerName3, listOf(headerValue1, headerValue2))
             .build()
 
-        // When & Expect
-        assertEquals("NewValue1", request.headers.get("Header1"))
-        assertEquals("Value2", request.headers.get("Header2"))
-        assertEquals(listOf("Value1", "Value2"), request.headers.values("Header3"))
+        // Expect
+        assertEquals(headerValue3, request.headers.get(headerName1))
+        assertEquals(headerValue2, request.headers.get(headerName2))
+        assertEquals(listOf(headerValue1, headerValue2), request.headers.values(headerName3))
     }
 
     @Test
     fun `should remove headers as expected`() {
         // Given
+        val method = Method.GET
+        val url = "https://example.com"
+        val headerName1 = "Header1"
+        val headerName2 = "Header2"
+        val headerValue1 = "Value1"
+        val headerValue2 = "Value2"
+
+        // When
         val request = Request
             .builder()
-            .method(Method.GET)
-            .url("https://example.com")
-            .addHeader("Header1", "Value1")
-            .addHeader("Header2", "Value2")
-            .removeHeader("Header1")
+            .method(method)
+            .url(url)
+            .addHeader(headerName1, headerValue1)
+            .addHeader(headerName2, headerValue2)
+            .removeHeader(headerName1)
             .build()
 
-        // When & Expect
-        assertNull(request.headers.get("Header1"))
-        assertEquals("Value2", request.headers.get("Header2"))
+        // Expect
+        assertNull(request.headers.get(headerName1))
+        assertEquals(headerValue2, request.headers.get(headerName2))
     }
 
     @Test
     fun `should build a request without a body`() {
         // Given
+        val method = Method.GET
+        val url = "https://example.com"
+
+        // When
         val request = Request
             .builder()
-            .method(Method.GET)
-            .url("https://example.com")
+            .method(method)
+            .url(url)
             .build()
 
-        // When & Expect
+        // Expect
         assertNull(request.body)
     }
 
