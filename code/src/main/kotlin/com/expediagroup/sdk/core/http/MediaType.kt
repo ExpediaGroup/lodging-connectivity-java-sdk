@@ -85,6 +85,10 @@ class MediaType private constructor(
             require(type.isNotBlank()) { "Type must not be blank" }
             require(subtype.isNotBlank()) { "Subtype must not be blank" }
 
+            if (type == "*" && subtype != "*") {
+                throw IllegalArgumentException("Invalid media type format: type=$type, subtype=$subtype")
+            }
+
             return MediaType(
                 type = type.lowercase(Locale.getDefault()),
                 subtype = subtype.lowercase(Locale.getDefault()),
@@ -115,6 +119,10 @@ class MediaType private constructor(
             }
             val type = mimeString.substring(0, slashIndex).trim().lowercase(Locale.getDefault())
             val subtype = mimeString.substring(slashIndex + 1).trim().lowercase(Locale.getDefault())
+
+            if (type == "*" && subtype != "*") {
+                throw IllegalArgumentException("Invalid media type format: $mediaType")
+            }
 
             val parametersMap = parametersList
                 .filter(String::isNotBlank)

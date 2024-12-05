@@ -136,19 +136,6 @@ class MediaTypeTest {
     }
 
     @Test
-    fun `should include media type with wildcard type`() {
-        // Given
-        val wildcardType = MediaType.of("*", "json")
-        val other = MediaType.of("application", "json")
-
-        // When
-        val includes = wildcardType.includes(other)
-
-        // Expect
-        assertTrue(includes)
-    }
-
-    @Test
     fun `should include media type with wildcard subtype`() {
         // Given
         val wildcardSubtype = MediaType.of("application", "*")
@@ -261,6 +248,21 @@ class MediaTypeTest {
 
         // Expect
         assertEquals("application/json;charset=UTF-8;version=1.0", stringRepresentation)
+    }
+
+    @Test
+    fun `should throw exception if type is wildcard with defined subtype`() {
+        // Given
+        val type = "*"
+        val subtype = "html"
+
+        // When
+        val exception = assertThrows<IllegalArgumentException> {
+            MediaType.of(type, subtype)
+        }
+
+        // Expect
+        assertEquals("Invalid media type format: type=*, subtype=html", exception.message)
     }
 
     @Nested
@@ -540,6 +542,20 @@ class MediaTypeTest {
 
             // Expect
             assertEquals("Invalid parameter format: charset=", exception.message)
+        }
+
+        @Test
+        fun `should throw exception if type is wildcard with defined subtype`() {
+            // Given
+            val mediaType = "*/html"
+
+            // When
+            val exception = assertThrows<IllegalArgumentException> {
+                MediaType.parse(mediaType)
+            }
+
+            // Expect
+            assertEquals("Invalid media type format: */html", exception.message)
         }
     }
 }
