@@ -24,7 +24,7 @@ public class RequestBodyJavaTest {
     public void shouldCreateRequestBodyFromInputStreamAndMediaTypeAndContentLength() {
         String content = "Hello World";
         InputStream inputStream = new ByteArrayInputStream(content.getBytes());
-        RequestBody.create(inputStream, MediaType.Companion.getTEXT_PLAIN(), content.getBytes().length);
+        RequestBody.create(inputStream, CommonMediaTypes.TEXT_PLAIN, content.getBytes().length);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class RequestBodyJavaTest {
     public void shouldCreateRequestBodyFromSourceAndMediaTypeAndContentLength() {
         String content = "Hello World";
         try (Buffer source = new Buffer().writeUtf8(content)) {
-            RequestBody.create(source, MediaType.Companion.getTEXT_PLAIN(), content.getBytes().length);
+            RequestBody.create(source, CommonMediaTypes.TEXT_PLAIN, content.getBytes().length);
         }
     }
 

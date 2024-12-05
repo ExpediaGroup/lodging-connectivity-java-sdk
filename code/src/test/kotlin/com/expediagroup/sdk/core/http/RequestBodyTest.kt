@@ -15,7 +15,7 @@ class RequestBodyTest {
         // Given
         val content = "Hello World"
         val inputStream = ByteArrayInputStream(content.toByteArray(StandardCharsets.UTF_8))
-        val mediaType = MediaType.TEXT_PLAIN
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
         val contentLength = content.toByteArray().size.toLong()
         val requestBody = RequestBody.create(inputStream, mediaType, contentLength)
 
@@ -33,7 +33,7 @@ class RequestBodyTest {
     fun `should create a request body from InputStream with empty data`() {
         // Given
         val inputStream = ByteArrayInputStream(byteArrayOf())
-        val mediaType = MediaType.TEXT_PLAIN
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
         val requestBody = RequestBody.create(inputStream, mediaType, 0L)
 
         // When
@@ -51,7 +51,7 @@ class RequestBodyTest {
         // Given
         val content = "Hello World"
         val source = Buffer().writeUtf8(content)
-        val mediaType = MediaType.TEXT_PLAIN
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
         val contentLength = content.toByteArray().size.toLong()
         val requestBody = RequestBody.create(source, mediaType, contentLength)
 
@@ -69,7 +69,7 @@ class RequestBodyTest {
     fun `should create RequestBody from Source with empty data`() {
         // Given
         val source = Buffer()
-        val mediaType = MediaType.TEXT_PLAIN
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
         val requestBody = RequestBody.create(source, mediaType, 0L)
 
         // When
@@ -87,7 +87,7 @@ class RequestBodyTest {
         val requestBody = object : RequestBody() {
             val source = Buffer()
 
-            override fun mediaType(): MediaType? = MediaType.TEXT_PLAIN
+            override fun mediaType(): MediaType? = CommonMediaTypes.TEXT_PLAIN
 
             override fun writeTo(sink: BufferedSink) {
                 source.use { src ->
@@ -97,6 +97,6 @@ class RequestBodyTest {
         }
 
         assertEquals(requestBody.contentLength(), -1)
-        assertEquals(requestBody.mediaType(), MediaType.TEXT_PLAIN)
+        assertEquals(requestBody.mediaType(), CommonMediaTypes.TEXT_PLAIN)
     }
 }
