@@ -13,13 +13,13 @@ public class MediaTypeJavaTest {
     }
 
     @Test
-    @DisplayName("should be able to access of() static method with typ, subtype, parameters map as params")
+    @DisplayName("should be able to access of() static method with type, subtype, parameters map as params")
     public void ofStaticMethodShouldBeCallableWithParametersMap() {
         MediaType.of("application", "json", new HashMap<>());
     }
 
     @Test
-    @DisplayName("should be able to access of() static method with typ, subtype, parameters map as params")
+    @DisplayName("should be able to access of() static method with type, subtype, parameters map as params")
     public void parseStaticMethodShouldBeAccessible() {
         MediaType.parse("application/json; charset=utf-8");
     }
