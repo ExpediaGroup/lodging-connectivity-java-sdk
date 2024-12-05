@@ -193,7 +193,7 @@ class Response private constructor(
          * @return This builder.
          */
         fun headers(headers: Headers) = apply {
-            this.headersBuilder = headers.newBuilder()
+            headersBuilder = headers.newBuilder()
         }
 
         /**
