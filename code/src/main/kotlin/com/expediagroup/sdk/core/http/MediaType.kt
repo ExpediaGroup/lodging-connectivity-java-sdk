@@ -17,7 +17,6 @@
 package com.expediagroup.sdk.core.http
 
 import java.nio.charset.Charset
-import java.nio.charset.UnsupportedCharsetException
 import java.util.Locale
 
 /**
@@ -27,27 +26,29 @@ import java.util.Locale
  * @property subtype The subtype (e.g., "json", "plain").
  * @property parameters The map of parameters associated with the media type (e.g., charset).
  */
-class MediaType(
+
+class MediaType private constructor(
     val type: String,
     val subtype: String,
     val parameters: Map<String, String> = emptyMap()
 ) {
-
     /**
-     * The full type of the media type, consisting of [type]/[subtype].
+     * The full representation of a standard media type consisting of type/subtype
      */
     val fullType: String
         get() = "$type/$subtype"
 
     /**
-     * Retrieves the character set from the parameters, if present.
-     */
+     * The charset parameter if present, null otherwise
+     * */
     val charset: Charset?
-        get() = parameters["charset"]?.let {
-            try {
-                Charset.forName(it)
-            } catch (_: UnsupportedCharsetException) {
-                null
+        get() {
+            return parameters["charset"]?.let {
+                try {
+                    Charset.forName(it)
+                } catch (_: Exception) {
+                    null
+                }
             }
         }
 
@@ -58,54 +59,43 @@ class MediaType(
      * @return `true` if this media type includes the given media type, `false` otherwise.
      */
     fun includes(other: MediaType): Boolean {
-        if (this.type == "*") {
-            return true
-        } else if (this.type.equals(other.type, ignoreCase = true)) {
-            if (this.subtype == "*" || this.subtype.equals(other.subtype, ignoreCase = true)) {
-                return true
-            }
-        }
-        return false
+        val typeMatches = this.type == "*" || this.type.equals(other.type, ignoreCase = true)
+        val subtypeMatches = this.subtype == "*" || this.subtype.equals(other.subtype, ignoreCase = true)
+
+        return typeMatches && subtypeMatches
     }
 
     /**
-     * Returns a copy of this `MediaType` with the given charset parameter.
-     *
-     * @param charset The charset to set.
-     * @return A new `MediaType` instance with the specified charset.
-     */
-    fun withCharset(charset: Charset): MediaType {
-        val newParameters = parameters.toMutableMap()
-        newParameters["charset"] = charset.name()
-        return MediaType(type, subtype, newParameters)
-    }
-
+     * Returns the full representation of a standard media type consisting of type/subtype followed by all parameters, if any
+     * */
     override fun toString(): String {
-        val params = parameters.entries.joinToString(separator = ";") { (key, value) ->
+        val formattedParams = parameters.entries.joinToString(separator = ";") { (key, value) ->
             "$key=$value"
         }
-        return if (params.isNotEmpty()) "$type/$subtype;$params" else "$type/$subtype"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is MediaType) return false
-
-        return type.equals(other.type, ignoreCase = true) &&
-                subtype.equals(other.subtype, ignoreCase = true) &&
-                parameters.entries.all { (key, value) ->
-                    other.parameters[key]?.equals(value, ignoreCase = true) == true
-                }
-    }
-
-    override fun hashCode(): Int {
-        var result = type.lowercase(Locale.getDefault()).hashCode()
-        result = 31 * result + subtype.lowercase(Locale.getDefault()).hashCode()
-        result = 31 * result + parameters.mapKeys { it.key.lowercase(Locale.getDefault()) }.hashCode()
-        return result
+        return if (formattedParams.isNotEmpty()) "$type/$subtype;$formattedParams" else "$type/$subtype"
     }
 
     companion object {
+        /**
+         * Factory method for creating a MediaType.
+         */
+        @JvmStatic
+        @JvmOverloads
+        fun of(type: String, subtype: String, parameters: Map<String, String> = emptyMap()): MediaType {
+            require(type.isNotBlank()) { "Type must not be blank" }
+            require(subtype.isNotBlank()) { "Subtype must not be blank" }
+
+            if (type == "*" && subtype != "*") {
+                throw IllegalArgumentException("Invalid media type format: type=$type, subtype=$subtype")
+            }
+
+            return MediaType(
+                type = type.lowercase(Locale.getDefault()),
+                subtype = subtype.lowercase(Locale.getDefault()),
+                parameters = parameters.mapKeys { it.key.lowercase(Locale.getDefault()) }
+            )
+        }
+
         /**
          * Parses a media type string into a [MediaType] object.
          *
@@ -113,52 +103,45 @@ class MediaType(
          * @return The parsed [MediaType].
          * @throws IllegalArgumentException If the media type cannot be parsed.
          */
+        @JvmStatic
         fun parse(mediaType: String): MediaType {
             require(mediaType.isNotBlank()) { "Media type must not be blank" }
 
-            val parts = mediaType.split(";").map { it.trim() }
-            val typeSubtype = parts[0].split("/")
+            // Split into MIME type and optional parameters
+            val parts = mediaType.split(";").map(String::trim)
+            val mimeString = parts.first()
+            val parametersList = parts.drop(1)
 
-            if (typeSubtype.size != 2) {
+            // Parse type and subtype
+            val slashIndex = mimeString.indexOf("/")
+            if (slashIndex == -1 || slashIndex == 0 || slashIndex == mimeString.length - 1) {
+                throw IllegalArgumentException("Invalid media type format: $mediaType")
+            }
+            val type = mimeString.substring(0, slashIndex).trim().lowercase(Locale.getDefault())
+            val subtype = mimeString.substring(slashIndex + 1).trim().lowercase(Locale.getDefault())
+
+            if (type == "*" && subtype != "*") {
                 throw IllegalArgumentException("Invalid media type format: $mediaType")
             }
 
-            val type = typeSubtype[0].lowercase(Locale.getDefault())
-            val subtype = typeSubtype[1].lowercase(Locale.getDefault())
+            val parametersMap = parametersList
+                .filter(String::isNotBlank)
+                .associate { parameter ->
+                    // Split the parameter into key-value parts
+                    val parts = parameter.split("=").map(String::trim)
+                    val isValid = parts.size == 2 && parts.none { it.isBlank() }
 
-            val parameters = mutableMapOf<String, String>()
-            for (i in 1 until parts.size) {
-                val parameter = parts[i]
-                val idx = parameter.indexOf('=')
-                if (idx == -1) {
-                    throw IllegalArgumentException("Invalid parameter in media type: $parameter")
+                    if (!isValid) {
+                        throw IllegalArgumentException("Invalid parameter format: $parameter")
+                    }
+
+                    val key = parts[0].lowercase(Locale.getDefault())
+                    val value = parts[1].lowercase(Locale.getDefault())
+
+                    key to value
                 }
-                val name = parameter.substring(0, idx).trim().lowercase(Locale.getDefault())
-                val value = parameter.substring(idx + 1).trim().trim('"')
-                parameters[name] = value
-            }
 
-            return MediaType(type, subtype, parameters)
-        }
-
-        /** Common media type constants **/
-        val ALL = MediaType("*", "*")
-        val APPLICATION_JSON = MediaType("application", "json")
-        val APPLICATION_XML = MediaType("application", "xml")
-        val TEXT_PLAIN = MediaType("text", "plain")
-        val TEXT_HTML = MediaType("text", "html")
-        val APPLICATION_OCTET_STREAM = MediaType("application", "octet-stream")
-        val MULTIPART_FORM_DATA = MediaType("multipart", "form-data")
-        val APPLICATION_FORM_URLENCODED = MediaType("application", "x-www-form-urlencoded")
-
-        /**
-         * Parses multiple media types from a comma-separated string.
-         *
-         * @param mediaTypes The string containing comma-separated media types.
-         * @return A list of parsed [MediaType] objects.
-         */
-        fun parseMediaTypes(mediaTypes: String): List<MediaType> {
-            return mediaTypes.split(",").map { parse(it.trim()) }
+            return MediaType(type, subtype, parametersMap)
         }
     }
 }

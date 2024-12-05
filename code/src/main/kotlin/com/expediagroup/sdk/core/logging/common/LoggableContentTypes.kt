@@ -8,13 +8,17 @@ import com.expediagroup.sdk.core.http.MediaType
  * can be logged based on their MIME types.
  */
 val LOGGABLE_CONTENT_TYPES = listOf(
-    MediaType.APPLICATION_JSON,
-    MediaType.TEXT_PLAIN,
-    MediaType.TEXT_HTML,
-    MediaType.APPLICATION_XML,
-    MediaType.parse("text/*"), // Wildcard to include any text-based types
-    MediaType.parse("application/*+json"), // Matches custom JSON-based media types like application/.api+json
-    MediaType.APPLICATION_FORM_URLENCODED
+    MediaType.of("text", "plain"),
+    MediaType.of("text", "html"),
+    MediaType.of("text", "css"),
+    MediaType.of("text", "javascript"),
+    MediaType.of("text", "csv"),
+    MediaType.of("text", "*"),
+    MediaType.of("application", "json"),
+    MediaType.of("application", "xml"),
+    MediaType.of("application", "x-www-form-urlencoded"),
+    MediaType.of("application", "json+graphql"),
+    MediaType.of("application", "hal+json")
 )
 
 internal fun isLoggable(mediaType: MediaType): Boolean {
