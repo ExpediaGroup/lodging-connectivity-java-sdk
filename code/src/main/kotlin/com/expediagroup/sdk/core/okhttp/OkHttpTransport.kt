@@ -17,96 +17,35 @@
 package com.expediagroup.sdk.core.okhttp
 
 import com.expediagroup.sdk.core.client.Transport
-import com.expediagroup.sdk.core.http.MediaType.Companion.parse
-import com.expediagroup.sdk.core.http.Protocol
-import com.expediagroup.sdk.core.http.ResponseBody.Companion.create
-import com.expediagroup.sdk.core.http.Status
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.Response
 import java.io.IOException
-import okhttp3.Headers
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import okhttp3.Response
-import okhttp3.ResponseBody
-import okio.BufferedSink
 
-typealias OkHttpRequest = Request
-typealias OkHttpRequestBuilder = Request.Builder
-typealias OkHttpRequestBody = RequestBody
-typealias OkHttpResponse = Response
-typealias OkHttpResponseBody = ResponseBody
-typealias OkHttpHeaders = Headers
-typealias OkHttpHeadersBuilder = Headers.Builder
-
-typealias SdkRequest = com.expediagroup.sdk.core.http.Request
-typealias SdkRequestBody = com.expediagroup.sdk.core.http.RequestBody
-typealias SdkResponse = com.expediagroup.sdk.core.http.Response
-typealias SdkResponseBuilder = com.expediagroup.sdk.core.http.Response.Builder
-typealias SdkHeaders = com.expediagroup.sdk.core.http.Headers
-typealias SdkHeadersBuilder = com.expediagroup.sdk.core.http.Headers.Builder
-
+/**
+ * A transport implementation using OkHttp to execute HTTP requests.
+ *
+ * This class adapts the OkHttp client to the SDK [Transport] interface, allowing seamless integration
+ * between OkHttp's request-response mechanism and the SDK transport layer.
+ *
+ * @property okHttpClient The OkHttp client used to execute HTTP requests.
+ */
 class OkHttpTransport(
     private val okHttpClient: OkHttpClient
 ) : Transport {
-
+    /**
+     * Executes the given SDK request using OkHttp and returns the SDK response.
+     *
+     * This method converts the provided SDK [Request] into an OkHttp request,
+     * executes it using the underlying OkHttp client, and converts the OkHttp response
+     * back into an SDK [Response].
+     *
+     * @param request The SDK request to execute.
+     * @return The SDK response resulting from the HTTP request execution.
+     * @throws IOException If an error occurs during the request execution.
+     */
     @Throws(IOException::class)
-    override fun execute(request: SdkRequest): SdkResponse {
-        val okHttpRequest = toOkHttpRequest(request)
-        val okHttpResponse = okHttpClient.newCall(okHttpRequest).execute()
-        return toSdkHttpResponse(okHttpResponse, request)
-    }
-
-    private fun toOkHttpRequest(sdkRequest: SdkRequest): OkHttpRequest {
-        return OkHttpRequestBuilder().apply {
-            url(sdkRequest.url)
-            headers(buildHeaders(sdkRequest.headers))
-            method(sdkRequest.method.toString(), createRequestBody(sdkRequest.body))
-        }.build()
-    }
-
-    private fun buildHeaders(headers: SdkHeaders): OkHttpHeaders {
-        return OkHttpHeadersBuilder().apply {
-            headers.entries().forEach { (name, values) ->
-                values.forEach { value -> add(name, value) }
-            }
-        }.build()
-    }
-
-    private fun createRequestBody(body: SdkRequestBody?): OkHttpRequestBody? {
-        return body?.let {
-            object : OkHttpRequestBody() {
-                override fun contentType() = it.mediaType()?.toString()?.toMediaTypeOrNull()
-                override fun contentLength() = it.contentLength()
-
-                @Throws(IOException::class)
-                override fun writeTo(sink: BufferedSink) = it.writeTo(sink)
-            }
-        }
-    }
-
-    private fun toSdkHttpResponse(okHttpResponse: OkHttpResponse, sdkRequest: SdkRequest): SdkResponse {
-        return SdkResponseBuilder().apply {
-            headers(buildSdkHeaders(okHttpResponse.headers))
-            okHttpResponse.body?.let { buildResponseBody(it) }?.let { body(it) }
-            request(sdkRequest)
-            protocol(Protocol.valueOf(okHttpResponse.protocol.name))
-            status(Status.fromCode(okHttpResponse.code))
-            message(okHttpResponse.message)
-        }.build()
-    }
-
-    private fun buildSdkHeaders(headers: OkHttpHeaders): SdkHeaders {
-        return SdkHeadersBuilder().apply {
-            headers.toMultimap().forEach { (key, values) -> add(key, values) }
-        }.build()
-    }
-
-    private fun buildResponseBody(body: OkHttpResponseBody) = body.run {
-        create(
-            source = source(),
-            contentLength = contentLength(),
-            mediaType = contentType()?.toString()?.let(::parse)
-        )
+    override fun execute(request: Request): Response {
+        return request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
     }
 }

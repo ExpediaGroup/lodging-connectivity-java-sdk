@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory
 
 internal fun getHttpTransport(configuration: ClientConfiguration): Transport = when (configuration) {
     is CustomClientConfiguration -> configuration.transport
-    is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getConfiguredInstance(configuration.buildOkHttpConfiguration()))
+    is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getInstance(configuration.buildOkHttpConfiguration()))
 }
 
 class DefaultRequestExecutor(

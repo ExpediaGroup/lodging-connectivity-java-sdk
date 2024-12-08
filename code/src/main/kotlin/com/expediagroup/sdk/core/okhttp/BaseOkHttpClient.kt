@@ -28,20 +28,12 @@ import okhttp3.OkHttpClient
  *
  * ## Usage
  * - Use `getInstance()` to retrieve the singleton instance of `OkHttpClient`.
- * - Use `getConfiguredInstance(configuration)` to create a configured `OkHttpClient` instance
+ * - Use `getInstance(configuration)` to create a configured `OkHttpClient` instance
  *   with specific settings provided via the `OkHttpClientConfiguration` object.
- *
- * ## Thread Safety
- * This class ensures that the singleton instance is initialized in a thread-safe manner using
- * the double-checked locking pattern.
  */
 internal object BaseOkHttpClient {
-    /**
-     * Volatile storage for the singleton `OkHttpClient` instance.
-     * Ensures visibility and prevents duplicate initialization in a multithreaded environment.
-     */
-    @Volatile
-    private var instance: OkHttpClient? = null
+
+    private val instance: OkHttpClient = OkHttpClient()
 
     /**
      * Retrieves the singleton instance of `OkHttpClient`.
@@ -52,23 +44,21 @@ internal object BaseOkHttpClient {
      * @return The singleton instance of `OkHttpClient`.
      */
     fun getInstance(): OkHttpClient {
-        return instance ?: synchronized(this) {
-            instance ?: OkHttpClient().also { instance = it }
-        }
+        return instance
     }
 
     /**
-     * Creates a new `OkHttpClient` instance configured with the provided settings.
+     * Applies the given configuration to a base OkHttpClient and returns a new instance.
+     * NOTE: The returned instance is not a completely new instance of the OKHttpClient, it shares the same connection pool
+     * and other shared resources with the base instance. Except for some cases where a custom connection pool is passed
+     * through the configuration.
      *
-     * This method uses the singleton instance as a base and applies the settings specified
-     * in the `OkHttpClientConfiguration` object to create a customized `OkHttpClient`.
-     *
-     * @param configuration The `OkHttpClientConfiguration` containing settings for the client.
-     * @return A new `OkHttpClient` instance configured with the specified settings.
+     * @param configuration The configuration to apply.
+     * @return A new OkHttpClient instance that shares resources with the base instance but
+     * configured with the provided configurations.
      */
-    fun getConfiguredInstance(configuration: OkHttpClientConfiguration): OkHttpClient = getInstance()
-        .newBuilder()
-        .apply {
+    fun getInstance(configuration: OkHttpClientConfiguration): OkHttpClient {
+        return instance.newBuilder().apply {
             configuration.callTimeout?.let {
                 callTimeout(Duration.ofMillis(it.toLong()))
             }
@@ -94,4 +84,5 @@ internal object BaseOkHttpClient {
                 addNetworkInterceptor(it)
             }
         }.build()
+    }
 }
