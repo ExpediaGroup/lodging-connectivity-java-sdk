@@ -8,6 +8,7 @@ import com.apollographql.java.client.network.http.HttpCallback
 import com.apollographql.java.client.network.http.HttpEngine
 import com.expediagroup.sdk.core.client.RequestExecutor
 import com.expediagroup.sdk.core.http.MediaType
+import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
@@ -86,13 +87,15 @@ class ApolloHttpEngine(
         }
 
         request.body?.let { requestBody ->
-            sdkRequestBuilder.method("POST", object : RequestBody() {
-                override fun mediaType(): MediaType? = MediaType.parse(requestBody.contentType)
-                override fun contentLength(): Long = requestBody.contentLength
+            sdkRequestBuilder
+                .method(Method.POST)
+                .body(object : RequestBody() {
+                    override fun mediaType(): MediaType? = MediaType.parse(requestBody.contentType)
+                    override fun contentLength(): Long = requestBody.contentLength
 
-                @Throws(IOException::class)
-                override fun writeTo(sink: BufferedSink) = requestBody.writeTo(sink)
-            })
+                    @Throws(IOException::class)
+                    override fun writeTo(sink: BufferedSink) = requestBody.writeTo(sink)
+                })
         }
     }
 

@@ -59,10 +59,9 @@ class OkHttpTransport(
 
     private fun toOkHttpRequest(sdkRequest: SdkRequest): OkHttpRequest {
         return OkHttpRequestBuilder().apply {
-            url(sdkRequest.url.toUrl())
+            url(sdkRequest.url)
             headers(buildHeaders(sdkRequest.headers))
-            method(sdkRequest.method, createRequestBody(sdkRequest.body))
-            tag(sdkRequest.tags)
+            method(sdkRequest.method.toString(), createRequestBody(sdkRequest.body))
         }.build()
     }
 

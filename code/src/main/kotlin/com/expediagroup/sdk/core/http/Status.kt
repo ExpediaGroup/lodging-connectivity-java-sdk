@@ -96,6 +96,7 @@ enum class Status(val code: Int) {
 
     companion object {
 
+        @JvmStatic
         @Throws(IllegalArgumentException::class)
         fun fromCode(code: Int): Status {
             entries.find { it.code == code }?.let {
