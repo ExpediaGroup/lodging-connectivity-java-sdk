@@ -21,7 +21,7 @@ public class ResponseBodyJavaTest {
     public void shouldCreateResponseBodyFromInputStreamAndMediaTypeAndContentLength() {
         String content = "Hello World";
         InputStream inputStream = new ByteArrayInputStream(content.getBytes());
-        ResponseBody.create(inputStream, MediaType.Companion.getTEXT_PLAIN(), content.getBytes().length);
+        ResponseBody.create(inputStream, CommonMediaTypes.TEXT_PLAIN, content.getBytes().length);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ResponseBodyJavaTest {
     public void shouldCreateResponseBodyFromSourceAndMediaTypeAndContentLength() {
         String content = "Hello World";
         try (Buffer source = new Buffer().writeUtf8(content)) {
-            ResponseBody.create(source, MediaType.Companion.getTEXT_PLAIN(), content.getBytes().length);
+            ResponseBody.create(source, CommonMediaTypes.TEXT_PLAIN, content.getBytes().length);
         }
     }
 }

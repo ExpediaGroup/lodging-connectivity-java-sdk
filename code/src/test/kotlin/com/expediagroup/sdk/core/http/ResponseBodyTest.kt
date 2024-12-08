@@ -11,7 +11,7 @@ class ResponseBodyTest {
     @Test
     fun `should return correct media type when using input stream`() {
         // Given
-        val mediaType = MediaType.TEXT_PLAIN
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
         val responseBody = ResponseBody.create(ByteArrayInputStream("content".toByteArray()), mediaType)
 
         // When & Expect
@@ -21,7 +21,7 @@ class ResponseBodyTest {
     @Test
     fun `should return correct media type when using buffered source`() {
         // Given
-        val mediaType = MediaType.TEXT_PLAIN
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
         val responseBody = ResponseBody.create(Buffer().writeUtf8("content"), mediaType)
 
         // When & Expect

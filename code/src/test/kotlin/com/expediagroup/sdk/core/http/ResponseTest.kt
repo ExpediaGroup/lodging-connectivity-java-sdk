@@ -14,7 +14,7 @@ class ResponseTest {
     fun `should build response instance with all properties`() {
         // Given
         val request = Request.Builder()
-            .method("GET")
+            .method(Method.GET)
             .url("https://example.com")
             .build()
 
@@ -47,7 +47,7 @@ class ResponseTest {
     fun `should build a new response based on previous instance`() {
         // Given
         val originalResponse = Response.Builder()
-            .request(Request.Builder().method("GET").url("https://example.com").build())
+            .request(Request.Builder().method(Method.GET).url("https://example.com").build())
             .protocol(Protocol.HTTP_1_1)
             .status(Status.OK)
             .message("OK")
@@ -75,7 +75,7 @@ class ResponseTest {
     @Test
     fun `should add single header`() {
         // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
+        val request = Request.Builder().method(Method.GET).url("https://example.com").build()
         val headerName = "content-type"
         val headerValue = "application/json"
 
@@ -96,7 +96,7 @@ class ResponseTest {
     @Test
     fun `should add multiple values for one header`() {
         // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
+        val request = Request.Builder().method(Method.GET).url("https://example.com").build()
         val headerName = "content-type"
         val headerValue1 = "application/json"
         val headerValue2 = "text/plain"
@@ -119,7 +119,7 @@ class ResponseTest {
     @Test
     fun `should set one single header`() {
         // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
+        val request = Request.Builder().method(Method.GET).url("https://example.com").build()
         val headerName = "content-type"
         val headerValue = "application/json"
 
@@ -140,7 +140,7 @@ class ResponseTest {
     @Test
     fun `should set multiple values for one header`() {
         // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
+        val request = Request.Builder().method(Method.GET).url("https://example.com").build()
         val headerName = "content-type"
         val headerValue1 = "application/json"
         val headerValue2 = "text/plain"
@@ -163,7 +163,7 @@ class ResponseTest {
     @Test
     fun `should add multiple values for one header as a list`() {
         // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
+        val request = Request.Builder().method(Method.GET).url("https://example.com").build()
         val headerName = "content-type"
         val headerValue1 = "application/json"
         val headerValue2 = "text/plain"
@@ -185,7 +185,7 @@ class ResponseTest {
     @Test
     fun `should set multiple values for one header as a list`() {
         // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
+        val request = Request.Builder().method(Method.GET).url("https://example.com").build()
         val headerName = "content-type"
         val headerValue1 = "application/json"
         val headerValue2 = "text/plain"
@@ -208,7 +208,7 @@ class ResponseTest {
     @Test
     fun `should remove headers when removeHeader is called on an existing header`() {
         // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
+        val request = Request.Builder().method(Method.GET).url("https://example.com").build()
         val responseBuilder = Response
             .builder()
             .request(request)
@@ -232,7 +232,7 @@ class ResponseTest {
         // Given
         val responseStatus200 = Response
             .builder()
-            .request(Request.Builder().method("GET").url("https://example.com").build())
+            .request(Request.Builder().method(Method.GET).url("https://example.com").build())
             .protocol(Protocol.HTTP_1_1)
             .status(Status.OK)
             .message("OK")
@@ -240,7 +240,7 @@ class ResponseTest {
 
         val responseStatus100 = Response
             .builder()
-            .request(Request.Builder().method("GET").url("https://example.com").build())
+            .request(Request.Builder().method(Method.GET).url("https://example.com").build())
             .protocol(Protocol.HTTP_1_1)
             .status(Status.CONTINUE)
             .message("OK")
@@ -248,7 +248,7 @@ class ResponseTest {
 
         val responseStatus400 = Response
             .builder()
-            .request(Request.Builder().method("GET").url("https://example.com").build())
+            .request(Request.Builder().method(Method.GET).url("https://example.com").build())
             .protocol(Protocol.HTTP_1_1)
             .status(Status.NOT_FOUND)
             .message("Not Found")
@@ -270,7 +270,7 @@ class ResponseTest {
             assertEquals("request is required", it.message)
         }
 
-        builder.request(Request.Builder().method("GET").url("https://example.com").build())
+        builder.request(Request.Builder().method(Method.GET).url("https://example.com").build())
         assertThrows<IllegalStateException> { builder.build() }.also {
             assertEquals("protocol is required", it.message)
         }
@@ -291,7 +291,7 @@ class ResponseTest {
         // Given
         val body = ResponseBody.create("Test body".byteInputStream())
         val response = Response.Builder()
-            .request(Request.Builder().method("GET").url("https://example.com").build())
+            .request(Request.Builder().method(Method.GET).url("https://example.com").build())
             .protocol(Protocol.HTTP_1_1)
             .status(Status.OK)
             .message("OK")
@@ -309,7 +309,7 @@ class ResponseTest {
     fun `should not throw an exception if attempted to close null response body`() {
         // Given
         val response = Response.Builder()
-            .request(Request.Builder().method("GET").url("https://example.com").build())
+            .request(Request.Builder().method(Method.GET).url("https://example.com").build())
             .protocol(Protocol.HTTP_1_1)
             .status(Status.OK)
             .message("OK")

@@ -12,7 +12,7 @@ public class ResponseJavaTest {
     @DisplayName("should access default builder static method")
     public void defaultStaticBuilderIsAccessibleFromJava() throws IOException {
         try (Response response = Response.builder()
-                .request(new Request.Builder().method("GET", null).url("https://example.com").build())
+                .request(new Request.Builder().method(Method.GET).url("https://example.com").build())
                 .protocol(Protocol.HTTP_1_1)
                 .message("OK")
                 .status(Status.OK)
