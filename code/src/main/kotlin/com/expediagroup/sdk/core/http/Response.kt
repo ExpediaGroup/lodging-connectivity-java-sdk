@@ -27,33 +27,16 @@ import java.io.IOException
 class Response private constructor(
     val request: Request,
     val protocol: Protocol,
-    val code: Int,
+    val status: Status,
     val message: String,
     val headers: Headers,
     val body: ResponseBody?
 ) : Closeable {
-
-    /**
-     * Returns the header value for [name], or null if not present.
-     *
-     * @param name The name of the header.
-     * @return The value of the header, or null if not present.
-     */
-    fun header(name: String): String? = headers.get(name)
-
-    /**
-     * Returns all header values for [name].
-     *
-     * @param name The name of the header.
-     * @return A list of header values.
-     */
-    fun headers(name: String): List<String> = headers.values(name)
-
     /**
      * Returns true if the response code is in the 200-299 range.
      */
     val isSuccessful: Boolean
-        get() = code in 200..299
+        get() = status.code in 200..299
 
     /**
      * Returns a new [Builder] initialized with this response's data.
@@ -80,9 +63,9 @@ class Response private constructor(
     class Builder {
         private var request: Request? = null
         private var protocol: Protocol? = null
-        private var code: Int = -1
+        private var status: Status? = null
         private var message: String? = null
-        private var headers: Headers.Builder = Headers.Builder()
+        private var headersBuilder: Headers.Builder = Headers.Builder()
         private var body: ResponseBody? = null
 
         /**
@@ -98,9 +81,9 @@ class Response private constructor(
         constructor(response: Response) {
             this.request = response.request
             this.protocol = response.protocol
-            this.code = response.code
+            this.status = response.status
             this.message = response.message
-            this.headers = response.headers.newBuilder()
+            this.headersBuilder = response.headers.newBuilder()
             this.body = response.body
         }
 
@@ -127,13 +110,12 @@ class Response private constructor(
         /**
          * Sets the HTTP status code.
          *
-         * @param code The HTTP status code.
+         * @param status The HTTP status code.
          * @return This builder.
-         * @throws IllegalArgumentException If [code] is negative.
+         * @throws IllegalArgumentException If [status] is negative.
          */
-        fun code(code: Int) = apply {
-            require(code >= 0) { "code must be >= 0" }
-            this.code = code
+        fun status(status: Status) = apply {
+            this.status = status
         }
 
         /**
@@ -155,7 +137,7 @@ class Response private constructor(
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
         fun addHeader(name: String, value: String) = apply {
-            headers.add(name, value)
+            headersBuilder.add(name, value)
         }
 
         /**
@@ -167,7 +149,7 @@ class Response private constructor(
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
         fun addHeader(name: String, values: List<String>) = apply {
-            headers.add(name, values)
+            headersBuilder.add(name, values)
         }
 
         /**
@@ -178,8 +160,8 @@ class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
-        fun header(name: String, value: String) = apply {
-            headers.set(name, value)
+        fun setHeader(name: String, value: String) = apply {
+            headersBuilder.set(name, value)
         }
 
         /**
@@ -190,8 +172,8 @@ class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
-        fun header(name: String, values: List<String>) = apply {
-            headers.set(name, values)
+        fun setHeader(name: String, values: List<String>) = apply {
+            headersBuilder.set(name, values)
         }
 
         /**
@@ -201,7 +183,7 @@ class Response private constructor(
          * @return This builder.
          */
         fun removeHeader(name: String) = apply {
-            headers.remove(name)
+            headersBuilder.remove(name)
         }
 
         /**
@@ -211,7 +193,7 @@ class Response private constructor(
          * @return This builder.
          */
         fun headers(headers: Headers) = apply {
-            this.headers = headers.newBuilder()
+            headersBuilder = headers.newBuilder()
         }
 
         /**
@@ -233,17 +215,22 @@ class Response private constructor(
         fun build(): Response {
             val request = this.request ?: throw IllegalStateException("request is required")
             val protocol = this.protocol ?: throw IllegalStateException("protocol is required")
-            val code = this.code.takeIf { it >= 0 } ?: throw IllegalStateException("code is required")
+            val code = this.status ?: throw IllegalStateException("status is required")
             val message = this.message ?: throw IllegalStateException("message is required")
 
             return Response(
                 request = request,
                 protocol = protocol,
-                code = code,
+                status = code,
                 message = message,
-                headers = headers.build(),
+                headers = headersBuilder.build(),
                 body = body
             )
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun builder() = Builder()
     }
 }

@@ -17,7 +17,7 @@ object ResponseLogger {
             val responseBodyString = response.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
-                append("[URL=${response.request.url}, Code=${response.code}, Headers=[${response.headers}], Body=[${responseBodyString}]")
+                append("[URL=${response.request.url}, Code=${response.status.code}, Headers=[${response.headers}], Body=[${responseBodyString}]")
             }.also {
                 logger.info(it, "Incoming", *tags)
             }
@@ -40,7 +40,7 @@ object ResponseLogger {
 
         val buffer = Buffer()
         val bytesToRead = minOf(maxSize, this.contentLength())
-        buffer.write(this.source().peek(), bytesToRead)
-        return buffer.copy().readString(charset ?: Charsets.UTF_8)
+        this.source().peek().read(buffer, bytesToRead)
+        return buffer.readString(charset ?: Charsets.UTF_8)
     }
 }
