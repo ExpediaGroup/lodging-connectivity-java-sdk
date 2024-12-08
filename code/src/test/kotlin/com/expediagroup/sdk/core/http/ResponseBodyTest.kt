@@ -114,7 +114,7 @@ class ResponseBodyTest {
     }
 
     @Test
-    fun `should close response body source as expected`() {
+    fun `should close response body source when close() is called`() {
         // Given
         val content = "Hello, world!"
         val responseBody = ResponseBody.create(ByteArrayInputStream(content.toByteArray()))

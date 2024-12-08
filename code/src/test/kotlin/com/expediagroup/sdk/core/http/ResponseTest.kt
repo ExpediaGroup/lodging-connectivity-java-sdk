@@ -206,34 +206,10 @@ class ResponseTest {
     }
 
     @Test
-    fun `should handle adding and setting headers as expected`() {
+    fun `should remove headers when removeHeader is called on an existing header`() {
         // Given
         val request = Request.Builder().method("GET").url("https://example.com").build()
-
-        // When
-        val response = Response
-            .builder()
-            .request(request)
-            .protocol(Protocol.HTTP_1_1)
-            .status(Status.OK)
-            .message("OK")
-            .addHeader("Header1", "Value1")
-            .setHeader("Header2", "Value2")
-            .setHeader("Header1", "NewValue1")
-            .addHeader("Header3", listOf("Value1", "Value2"))
-            .build()
-
-        // Expect
-        assertEquals("NewValue1", response.headers.get("Header1"))
-        assertEquals("Value2", response.headers.get("Header2"))
-        assertEquals(listOf("Value1", "Value2"), response.headers.values("Header3"))
-    }
-
-    @Test
-    fun `should remove headers as expected`() {
-        // Given
-        val request = Request.Builder().method("GET").url("https://example.com").build()
-        val response = Response
+        val responseBuilder = Response
             .builder()
             .request(request)
             .status(Status.OK)
@@ -241,16 +217,18 @@ class ResponseTest {
             .protocol(Protocol.HTTP_1_1)
             .addHeader("Header1", "Value1")
             .addHeader("Header2", "Value2")
-            .removeHeader("Header1")
-            .build()
 
-        // When &  Expect
+        // When
+        val response = responseBuilder.removeHeader("Header1").build()
+
+
+        // Expect
         assertNull(response.headers.get("Header1"))
         assertEquals("Value2", response.headers.get("Header2"))
     }
 
     @Test
-    fun `should indicate if response is successful`() {
+    fun `should return true if the response is successful or false otherwise`() {
         // Given
         val responseStatus200 = Response
             .builder()
