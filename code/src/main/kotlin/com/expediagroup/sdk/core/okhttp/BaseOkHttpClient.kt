@@ -43,9 +43,7 @@ internal object BaseOkHttpClient {
      *
      * @return The singleton instance of `OkHttpClient`.
      */
-    fun getInstance(): OkHttpClient {
-        return instance
-    }
+    fun getInstance(): OkHttpClient = instance
 
     /**
      * Applies the given configuration to a base OkHttpClient and returns a new instance.
