@@ -1,4 +1,5 @@
 plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo' version '4.1.0'
 
@@ -7,7 +8,11 @@ plugins {
     id 'signing'
 
     /* Test Reporting */
-    id("org.jetbrains.kotlinx.kover") version "0.8.3"
+    id 'org.jetbrains.kotlinx.kover' version "0.8.3"
+}
+
+kotlin {
+    jvmToolchain(8)
 }
 
 jar {
@@ -28,7 +33,7 @@ test {
 }
 
 tasks.named("check") {
-    finalizedBy("koverHtmlReport", "koverXmlReport")
+    finalizedBy("koverHtmlReport")
 }
 
 dependencies {

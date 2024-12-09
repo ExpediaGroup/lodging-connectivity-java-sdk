@@ -1,3 +1,12 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'com.apollographql.apollo' version '4.1.0'
+}
+
+kotlin {
+    jvmToolchain(8)
+}
+
 dependencies {
     implementation 'com.apollographql.apollo:apollo-compiler:4.1.0'
 }
