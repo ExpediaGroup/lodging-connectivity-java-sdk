@@ -29,8 +29,8 @@ import com.expediagroup.sdk.core.http.ResponseBody.Companion.create
 import com.expediagroup.sdk.core.http.Status
 import java.io.IOException
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.asResponseBody
 import okio.BufferedSink
-import okio.BufferedSource
 
 /**
  * Converts an [okhttp3.Request] object to the SDK [Request] object.
@@ -186,15 +186,7 @@ fun Response.toOkHttpResponse(): okhttp3.Response {
  * @return An OkHttp [ResponseBody] object equivalent to the SDK [ResponseBody].
  */
 fun ResponseBody.toOkHttpResponseBody(): okhttp3.ResponseBody {
-    return object : okhttp3.ResponseBody() {
-        override fun contentLength(): Long = this@toOkHttpResponseBody.contentLength()
-
-        override fun contentType(): okhttp3.MediaType? {
-            return this@toOkHttpResponseBody.mediaType().toString().toMediaTypeOrNull()
-        }
-
-        override fun source(): BufferedSource = this@toOkHttpResponseBody.source()
-    }
+    return source().asResponseBody(mediaType().toString().toMediaTypeOrNull(), contentLength())
 }
 
 /**
