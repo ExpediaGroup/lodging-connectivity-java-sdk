@@ -19,6 +19,7 @@ package com.expediagroup.sdk.core.authentication.bearer
 import com.expediagroup.sdk.core.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.common.MetadataLoader
 import com.expediagroup.sdk.core.http.CommonMediaTypes
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
@@ -30,7 +31,6 @@ import com.expediagroup.sdk.core.logging.common.ResponseLogger
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
-import com.expediagroup.sdk.core.util.MetadataLoader
 import org.slf4j.LoggerFactory
 
 /**
