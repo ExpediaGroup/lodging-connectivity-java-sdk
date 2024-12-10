@@ -1,5 +1,6 @@
 package com.expediagroup.sdk.core.util
 
+import java.util.Locale
 import java.util.jar.Manifest
 
 internal object MetadataLoader {
@@ -10,6 +11,8 @@ internal object MetadataLoader {
     val jdkVendor: String
     val osName: String
     val osVersion: String
+    val arch: String
+    val locale: String
 
     init {
         this::class.java.classLoader.getResourceAsStream("META-INF/MANIFEST.MF").use {
@@ -21,9 +24,13 @@ internal object MetadataLoader {
                 jdkVendor = System.getProperty("java.vendor")
                 osName = System.getProperty("os.name")
                 osVersion = System.getProperty("os.version")
+                arch = System.getProperty("os.arch")
+                locale = Locale.getDefault().toString()
             }
         }
     }
 
-    fun asUserAgentString() = "$userAgentPrefix/$version ($artifactId; $jdkVendor; $jdkVersion; $osName - $osVersion)"
+    fun asUserAgentString(): String {
+        return "$userAgentPrefix/$version (SDK/$artifactId; Java/$jdkVersion; Vendor/$jdkVendor; OS/$osName - $osVersion; Arch/$arch; Locale/$locale)"
+    }
 }

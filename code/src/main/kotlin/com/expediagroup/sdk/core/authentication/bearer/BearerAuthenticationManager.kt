@@ -30,6 +30,7 @@ import com.expediagroup.sdk.core.logging.common.ResponseLogger
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
+import com.expediagroup.sdk.core.util.MetadataLoader
 import org.slf4j.LoggerFactory
 
 /**
@@ -118,6 +119,7 @@ class BearerAuthenticationManager(
             .body( RequestBody.create(mapOf("grant_type" to "client_credentials")))
             .setHeader("Authorization", credentials.encodeBasic())
             .setHeader("Content-Type", CommonMediaTypes.APPLICATION_FORM_URLENCODED.toString())
+            .setHeader("User-Agent", MetadataLoader.asUserAgentString())
             .build()
     }
 
