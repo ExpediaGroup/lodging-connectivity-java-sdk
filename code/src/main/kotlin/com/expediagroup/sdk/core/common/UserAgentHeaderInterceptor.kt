@@ -28,7 +28,6 @@ import com.expediagroup.sdk.core.interceptor.Interceptor
  *
  * This interceptor ensures that all requests include a descriptive `User-Agent` string
  * for better tracking, debugging, and analytics purposes.
- *
  */
 class UserAgentHeaderInterceptor : Interceptor {
 
