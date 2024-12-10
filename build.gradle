@@ -9,6 +9,7 @@ subprojects {
     /* Shared repositories between all modules */
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
     java {
