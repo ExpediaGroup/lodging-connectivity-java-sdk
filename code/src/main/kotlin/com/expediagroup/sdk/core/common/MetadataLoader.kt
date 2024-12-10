@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.util
+package com.expediagroup.sdk.core.common
 
 import java.util.Locale
 import java.util.jar.Manifest
