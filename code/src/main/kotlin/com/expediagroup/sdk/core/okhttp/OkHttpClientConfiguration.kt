@@ -108,6 +108,10 @@ data class OkHttpClientConfiguration(
 
         /**
          * Sets the connection pool configuration.
+         *
+         * **WARNING: This configuration will create a new connection pool for the new instance and will not be shared
+         * with the base instance.**
+         *
          * @param connectionPool The connection pool to use.
          * @return The builder instance.
          */
