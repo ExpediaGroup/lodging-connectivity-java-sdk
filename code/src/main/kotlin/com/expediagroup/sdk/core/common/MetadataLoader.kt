@@ -20,95 +20,110 @@ import java.util.Locale
 import java.util.jar.Manifest
 
 /**
- * A utility object for loading and managing application metadata.
+ * A model representing all loaded metadata about the running environment and artifact.
+ */
+data class Metadata(
+    val groupId: String,
+    val artifactId: String,
+    val version: String,
+    val jdkVersion: String,
+    val jdkVendor: String,
+    val osName: String,
+    val osVersion: String,
+    val arch: String,
+    val locale: String
+) {
+    /**
+     * Generates a `User-Agent` string based on the metadata.
+     *
+     * Format:
+     * `artifactId/version (Provider/groupId; Java/jdkVersion; Vendor/jdkVendor; OS/osName - osVersion; Arch/arch; Locale/locale)`
+     */
+    fun asUserAgentString(): String {
+        return "$artifactId/$version (Provider/$groupId; Java/$jdkVersion; Vendor/$jdkVendor; OS/$osName - $osVersion; Arch/$arch; Locale/$locale)"
+    }
+}
+
+/**
+ * A utility object for finding and loading metadata from manifests.
  *
- * The `MetadataLoader` extracts metadata from the `META-INF/MANIFEST.MF` file
- * and system properties to provide detailed runtime information. This metadata
- * is used to generate a consistent and descriptive `User-Agent` string.
+ * The `MetadataLoader` scans the classpath for `META-INF/MANIFEST.MF` files and tries to find a manifest
+ * with an artifactId that matches the given argument. If found, it stores a single [Metadata] instance.
  *
+ * Subsequent calls to [MetadataLoader.load] will return the same [Metadata] instance without reloading.
  */
 internal object MetadataLoader {
 
-    /**
-     * The artifact ID of the application, extracted from the manifest file.
-     */
-    val artifactId: String
+    private const val ARTIFACT_ID = "artifactId"
+    private const val VERSION = "version"
+    private const val GROUP_ID = "groupId"
+    private const val UNKNOWN = "unknown"
+
+    @Volatile
+    private var metadata: Metadata? = null
 
     /**
-     * The version of the application, extracted from the manifest file.
+     * Attempts to find a `META-INF/MANIFEST.MF` on the classpath that has a matching `artifactId`.
+     * If found, sets and returns a [Metadata] instance with loaded values. Otherwise, returns a default [Metadata]
+     * with unknown values.
+     *
+     * If `initialize` has already been called before, it returns the previously stored [Metadata].
+     *
+     * @param targetArtifactId The artifactId to look for in the searched manifests files.
+     * @return A [Metadata] instance representing the found attributes or defaults if none found.
      */
-    val version: String
+    fun load(targetArtifactId: String): Metadata {
+        metadata?.let { return it }
 
-    /**
-     * The prefix used in the `User-Agent` string, extracted from the manifest file.
-     */
-    val userAgentPrefix: String
+        synchronized(this) {
+            val attributes = loadManifestAttributes(targetArtifactId) ?: emptyMap()
 
-    /**
-     * The version of the Java runtime in use.
-     * Retrieved from the `java.version` system property.
-     */
-    val jdkVersion: String
+            val artifactId = attributes[ARTIFACT_ID] ?: UNKNOWN
+            val version = attributes[VERSION] ?: UNKNOWN
+            val groupId = attributes[GROUP_ID] ?: UNKNOWN
 
-    /**
-     * The vendor of the Java runtime in use.
-     * Retrieved from the `java.vendor` system property.
-     */
-    val jdkVendor: String
-
-    /**
-     * The name of the operating system.
-     * Retrieved from the `os.name` system property.
-     */
-    val osName: String
-
-    /**
-     * The version of the operating system.
-     * Retrieved from the `os.version` system property.
-     */
-    val osVersion: String
-
-    /**
-     * The architecture of the operating system.
-     * Retrieved from the `os.arch` system property.
-     */
-    val arch: String
-
-    /**
-     * The default locale of the system in the format `language_COUNTRY`.
-     * Retrieved from the `Locale.getDefault()` method.
-     */
-    val locale: String
-
-    init {
-        this::class.java.classLoader.getResourceAsStream("META-INF/MANIFEST.MF").use {
-            Manifest(it).apply {
-                artifactId = mainAttributes.getValue("artifactId") ?: "UnknownArtifact"
-                version = mainAttributes.getValue("version") ?: "UnknownVersion"
-                userAgentPrefix = mainAttributes.getValue("userAgentPrefix") ?: "SDK"
-                jdkVersion = System.getProperty("java.version", "UnknownJavaVersion")
-                jdkVendor = System.getProperty("java.vendor", "UnknownVendor")
-                osName = System.getProperty("os.name", "UnknownOS")
-                osVersion = System.getProperty("os.version", "UnknownOSVersion")
-                arch = System.getProperty("os.arch", "UnknownArch")
+            return Metadata(
+                groupId = groupId,
+                artifactId = artifactId,
+                version = version,
+                jdkVersion = System.getProperty("java.version", UNKNOWN),
+                jdkVendor = System.getProperty("java.vendor", UNKNOWN),
+                osName = System.getProperty("os.name", UNKNOWN),
+                osVersion = System.getProperty("os.version", UNKNOWN),
+                arch = System.getProperty("os.arch", UNKNOWN),
                 locale = Locale.getDefault().toString()
-            }
+            ).apply { metadata = this }
         }
     }
 
     /**
-     * Generates a `User-Agent` string based on the metadata and system properties.
+     * Loads all `META-INF/MANIFEST.MF` resources and returns attributes from the first one that matches
+     * the requested artifactId.
      *
-     * The `User-Agent` string contains the following information:
-     * - User agent prefix and version
-     * - SDK artifact ID
-     * - Java version and vendor
-     * - Operating system name, version, and architecture
-     * - Locale information
-     *
-     * @return `User-Agent` string.
+     * @param targetArtifactId The artifactId to look for.
+     * @return A map of attributes if a suitable manifest is found, or `null` otherwise.
      */
-    fun asUserAgentString(): String {
-        return "$userAgentPrefix/$version (SDK/$artifactId; Java/$jdkVersion; Vendor/$jdkVendor; OS/$osName - $osVersion; Arch/$arch; Locale/$locale)"
+    private fun loadManifestAttributes(targetArtifactId: String): Map<String, String>? {
+        val resources = Thread.currentThread().contextClassLoader.getResources("META-INF/MANIFEST.MF")
+        return resources.toList().asSequence()
+            .mapNotNull { url ->
+                url.openStream().use { stream ->
+                    val manifest = Manifest(stream)
+                    val foundArtifact = manifest.mainAttributes.getValue(ARTIFACT_ID)
+                    val foundVersion = manifest.mainAttributes.getValue(VERSION)
+                    val foundGroupId = manifest.mainAttributes.getValue(GROUP_ID)
+
+                    if (foundArtifact == targetArtifactId) {
+                        mapOf(
+                            ARTIFACT_ID to foundArtifact,
+                            VERSION to foundVersion,
+                            GROUP_ID to foundGroupId
+                        )
+                    } else {
+                        null
+                    }
+                }
+            }
+            .firstOrNull()
     }
 }

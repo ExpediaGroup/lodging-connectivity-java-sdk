@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo' version '4.1.0'
 
@@ -18,9 +18,9 @@ kotlin {
 jar {
     manifest {
         attributes(
+                "groupId": groupId,
                 "version": version,
                 "artifactId": rootProject.name,
-                "userAgentPrefix": "expediagroup-sdk-java-${rootProject.name.replaceFirst("-sdk", "")}"
         )
     }
 }

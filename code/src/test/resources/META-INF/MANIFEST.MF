@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+version: 1.0.0-SNAPSHOT
+artifactId: expedia-group-test-sdk
+groupId: com.expediagroup
+
