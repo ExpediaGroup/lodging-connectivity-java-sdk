@@ -25,14 +25,14 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreateRes
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdatePropertyInput;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdateReservationInput;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.CreateSandboxPropertyResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.DeleteSandboxPropertyResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.GetSandboxPropertiesResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.UpdateSandboxPropertyResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.CancelSandboxReservationResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.ChangeSandboxReservationStayDatesResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.CreateSandboxReservationResponse;
-import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.DeleteSandboxReservationResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.UpdateSandboxReservationResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -50,6 +50,7 @@ import java.util.Arrays;
  * 8. Delete the Property
  **/
 public class SandboxDataManagementClientUsageExample {
+    private static final Logger logger = LoggerFactory.getLogger(SandboxDataManagementClientUsageExample.class);
 
     private static final SandboxDataManagementClient client = new SandboxDataManagementClient(
             ClientConfiguration
@@ -63,21 +64,19 @@ public class SandboxDataManagementClientUsageExample {
     private static final String UPDATED_PROPERTY_NAME = "New Lodging SDK Test Property";
 
     public static void main(String[] args) {
-        // Delete any old property if it has the same name used in the test run
+        // ******* Delete any old property if it has the same name used in the test run *******
         deletePropertyIfExists();
 
-        //  ******* Create Property *******
+
+        // ******* Create Property *******
         CreatePropertyInput createPropertyInput = CreatePropertyInput
                 .builder()
                 .name(PROPERTY_NAME)
                 .build();
 
         CreateSandboxPropertyResponse createPropertyResponse = client.createProperty(createPropertyInput);
-
         String propertyId = createPropertyResponse.getData().getId();
-
-        System.out.println("Property Created: " + propertyId);
-        System.out.println(createPropertyResponse);
+        logger.info("Property Created: [{}]", propertyId);
 
 
         // ******* Update Property Name *******
@@ -88,10 +87,7 @@ public class SandboxDataManagementClientUsageExample {
                 .build();
 
         UpdateSandboxPropertyResponse updatePropertyResponse = client.updateProperty(updatePropertyInput);
-
-        System.out.println("Property Updated: " + propertyId);
-        System.out.println(updatePropertyResponse);
-
+        logger.info("Property Updated: [{}]", updatePropertyResponse.getData().getId());
 
         // ******* Create Reservation *******
         CreateReservationInput createReservationInput = CreateReservationInput
@@ -102,11 +98,8 @@ public class SandboxDataManagementClientUsageExample {
                 .build();
 
         CreateSandboxReservationResponse createReservationResponse = client.createReservation(createReservationInput);
-
         SandboxReservationData reservationData = createReservationResponse.getData();
-
-        System.out.println("Reservation Created: " + reservationData.getId());
-        System.out.println(createReservationResponse);
+        logger.info("Reservation Created: [{}]", reservationData.getId());
 
 
         // ******* Update Reservation *******
@@ -117,11 +110,8 @@ public class SandboxDataManagementClientUsageExample {
                 .build();
 
         UpdateSandboxReservationResponse updateReservationResponse = client.updateReservation(updateReservationInput);
-
         reservationData = updateReservationResponse.getData();
-
-        System.out.println("Reservation Updated: " + reservationData.getId());
-        System.out.println(updateReservationResponse);
+        logger.info("Reservation Updated: [{}]", reservationData.getId());
 
 
         // ******* Update Reservation Stay Dates *******
@@ -133,33 +123,24 @@ public class SandboxDataManagementClientUsageExample {
                 .build();
 
         ChangeSandboxReservationStayDatesResponse changeStayDatesResponse = client.changeReservationStayDates(changeReservationStayDatesInput);
-
         reservationData = changeStayDatesResponse.getData();
+        logger.info("Reservation Stay Dates Updated: [{}]", reservationData.getId());
 
-        System.out.println("Reservation Stay Dates Updated: " + reservationData.getId());
-        System.out.println(changeStayDatesResponse);
 
         // ******* Cancel Reservation *******
         CancelSandboxReservationResponse cancelReservationResponse = client.cancelReservation(reservationData.getId());
-
         reservationData = cancelReservationResponse.getData();
-
-        System.out.println("Reservation Was Canceled: " + reservationData.getId());
-        System.out.println(cancelReservationResponse);
+        logger.info("Reservation Was Canceled: [{}]", reservationData.getId());
 
 
         // ******* Delete Reservation *******
-        DeleteSandboxReservationResponse deleteReservationResponse = client.deleteReservation(reservationData.getId());
-
-        System.out.println("Reservation Was Deleted: " + reservationData.getId());
-        System.out.println(deleteReservationResponse);
+        client.deleteReservation(reservationData.getId());
+        logger.info("Reservation Was Deleted: [{}]", reservationData.getId());
 
 
         // ******* Delete Property *******
-        DeleteSandboxPropertyResponse deletePropertyResponse = client.deleteProperty(propertyId);
-
-        System.out.println("Property Was Deleted: " + propertyId);
-        System.out.println(deletePropertyResponse);
+        client.deleteProperty(propertyId);
+        logger.info("Property Was Deleted: [{}]", propertyId);
 
         System.exit(0);
     }
@@ -169,7 +150,7 @@ public class SandboxDataManagementClientUsageExample {
 
         propertiesResponse.getData().forEach(property -> {
             if (property.getName().equals(PROPERTY_NAME) || property.getName().equals(UPDATED_PROPERTY_NAME)) {
-                System.out.println("Deleting existing property: ID: " + property.getId() + ", Name: " + property.getName());
+                logger.info("Deleting existing property: ID: [{}], Name: [{}]", property.getId(), property.getName());
                 client.deleteProperty(property.getId());
             }
         });
