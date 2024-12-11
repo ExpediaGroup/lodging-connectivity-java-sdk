@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
     id 'org.jetbrains.dokka' version '1.9.20'
     id 'com.apollographql.apollo' version '4.1.0'
 
@@ -59,6 +59,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.11.3')
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'io.mockk:mockk:1.13.13'
 }
 
 apply from: "tasks-gradle/apollo.gradle"
