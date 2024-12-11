@@ -15,16 +15,6 @@ kotlin {
     jvmToolchain(8)
 }
 
-jar {
-    manifest {
-        attributes(
-                "version": version,
-                "artifactId": rootProject.name,
-                "userAgentPrefix": "expediagroup-sdk-java-${rootProject.name.replaceFirst("-sdk", "")}"
-        )
-    }
-}
-
 test {
     useJUnitPlatform()
     testLogging {
@@ -62,6 +52,7 @@ dependencies {
     testImplementation 'io.mockk:mockk:1.13.13'
 }
 
+apply from: "tasks-gradle/sdk-properties.gradle"
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"
 apply from: "tasks-gradle/dokka.gradle"

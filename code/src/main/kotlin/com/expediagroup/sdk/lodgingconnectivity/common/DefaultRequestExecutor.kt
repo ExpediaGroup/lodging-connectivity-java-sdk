@@ -5,6 +5,7 @@ import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManag
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.RequestExecutor
 import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
@@ -28,6 +29,7 @@ class DefaultRequestExecutor(
 ) : RequestExecutor(getHttpTransport(configuration)) {
 
     override val interceptors: List<Interceptor> = listOf(
+        RequestHeadersInterceptor(),
         LoggingInterceptor(),
         BearerAuthenticationInterceptor(
             BearerAuthenticationManager(
