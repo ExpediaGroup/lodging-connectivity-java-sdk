@@ -5,17 +5,21 @@ import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManag
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.RequestExecutor
 import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.common.MetadataLoader
+import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
 import com.expediagroup.sdk.core.logging.LoggingInterceptor
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.DefaultClientConfiguration
+import org.slf4j.LoggerFactory
 
 internal fun getHttpTransport(configuration: ClientConfiguration): Transport = when (configuration) {
     is CustomClientConfiguration -> configuration.transport
@@ -27,13 +31,15 @@ class DefaultRequestExecutor(
     apiEndpoint: ApiEndpoint
 ) : RequestExecutor(getHttpTransport(configuration)) {
 
+    val metadata = MetadataLoader.load("lodging-connectivity-sdk")
     override val interceptors: List<Interceptor> = listOf(
-        LoggingInterceptor(),
+        RequestHeadersInterceptor(metadata),
+        LoggingInterceptor(logger),
         BearerAuthenticationInterceptor(
             BearerAuthenticationManager(
-                requestExecutor = this,
+                transport = this.transport,
                 authUrl = apiEndpoint.authEndpoint,
-                credentials = Credentials(configuration.key, configuration.secret),
+                credentials = Credentials(configuration.key, configuration.secret)
             )
         )
     )
@@ -46,6 +52,10 @@ class DefaultRequestExecutor(
         )
 
         return chainExecutor.proceed(request)
+    }
+
+    companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }
 

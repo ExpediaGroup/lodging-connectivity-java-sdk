@@ -18,15 +18,19 @@ package com.expediagroup.sdk.core.authentication.bearer
 
 import com.expediagroup.sdk.core.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.http.CommonMediaTypes
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
+import com.expediagroup.sdk.core.logging.common.RequestLogger
+import com.expediagroup.sdk.core.logging.common.ResponseLogger
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
+import org.slf4j.LoggerFactory
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -35,14 +39,14 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  * and validation. It interacts with an authentication server to fetch tokens using client credentials,
  * ensures tokens are refreshed when necessary, and provides them in the required format for authorization headers.
  *
- * @param requestExecutor The [RequestExecutor] used to execute authentication requests.
+ * @param transport The [Transport] used to execute authentication requests.
  * @param authUrl The URL of the authentication server's endpoint to obtain bearer tokens.
  * @param credentials The [Credentials] containing the client key and secret used for authentication.
  */
 class BearerAuthenticationManager(
     val authUrl: String,
-    private val requestExecutor: RequestExecutor,
-    private val credentials: Credentials,
+    private val transport: Transport,
+    private val credentials: Credentials
 ) : AuthenticationManager {
 
     @Volatile
@@ -61,9 +65,13 @@ class BearerAuthenticationManager(
     override fun authenticate() {
         clearAuthentication()
             .let {
-                buildAuthenticationRequest()
+                buildAuthenticationRequest().also {
+                    RequestLogger.log(logger, it, "Authentication")
+                }
             }.let {
-                executeAuthenticationRequest(it)
+                executeAuthenticationRequest(it).also {
+                    ResponseLogger.log(logger, it, "Authentication")
+                }
             }.let {
                 TokenResponse.parse(it)
             }.also {
@@ -122,7 +130,7 @@ class BearerAuthenticationManager(
      */
     @Throws(ExpediaGroupAuthException::class, ExpediaGroupNetworkException::class)
     private fun executeAuthenticationRequest(request: Request): Response = run {
-        requestExecutor.execute(request).apply {
+        transport.execute(request).apply {
             if (!this.isSuccessful) {
                 throw ExpediaGroupAuthException(this.status, "Authentication failed")
             }
@@ -139,5 +147,9 @@ class BearerAuthenticationManager(
             accessToken = tokenResponse.accessToken,
             expiresIn = tokenResponse.expiresIn
         )
+    }
+
+    private companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }

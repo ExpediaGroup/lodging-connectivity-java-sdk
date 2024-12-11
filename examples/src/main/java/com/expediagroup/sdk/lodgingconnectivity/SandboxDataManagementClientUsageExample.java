@@ -76,7 +76,7 @@ public class SandboxDataManagementClientUsageExample {
 
         CreateSandboxPropertyResponse createPropertyResponse = client.createProperty(createPropertyInput);
         String propertyId = createPropertyResponse.getData().getId();
-        logger.info("Property Created: [{}]", propertyId);
+        logger.info("Property Created: {}", propertyId);
 
 
         // ******* Update Property Name *******
@@ -87,7 +87,7 @@ public class SandboxDataManagementClientUsageExample {
                 .build();
 
         UpdateSandboxPropertyResponse updatePropertyResponse = client.updateProperty(updatePropertyInput);
-        logger.info("Property Updated: [{}]", updatePropertyResponse.getData().getId());
+        logger.info("Property Updated: {}", updatePropertyResponse.getData().getId());
 
         // ******* Create Reservation *******
         CreateReservationInput createReservationInput = CreateReservationInput
@@ -99,7 +99,7 @@ public class SandboxDataManagementClientUsageExample {
 
         CreateSandboxReservationResponse createReservationResponse = client.createReservation(createReservationInput);
         SandboxReservationData reservationData = createReservationResponse.getData();
-        logger.info("Reservation Created: [{}]", reservationData.getId());
+        logger.info("Reservation Created: {}", reservationData.getId());
 
 
         // ******* Update Reservation *******
@@ -111,7 +111,7 @@ public class SandboxDataManagementClientUsageExample {
 
         UpdateSandboxReservationResponse updateReservationResponse = client.updateReservation(updateReservationInput);
         reservationData = updateReservationResponse.getData();
-        logger.info("Reservation Updated: [{}]", reservationData.getId());
+        logger.info("Reservation Updated: {}", reservationData.getId());
 
 
         // ******* Update Reservation Stay Dates *******
@@ -124,23 +124,23 @@ public class SandboxDataManagementClientUsageExample {
 
         ChangeSandboxReservationStayDatesResponse changeStayDatesResponse = client.changeReservationStayDates(changeReservationStayDatesInput);
         reservationData = changeStayDatesResponse.getData();
-        logger.info("Reservation Stay Dates Updated: [{}]", reservationData.getId());
+        logger.info("Reservation Stay Dates Updated: {}", reservationData.getId());
 
 
         // ******* Cancel Reservation *******
         CancelSandboxReservationResponse cancelReservationResponse = client.cancelReservation(reservationData.getId());
         reservationData = cancelReservationResponse.getData();
-        logger.info("Reservation Was Canceled: [{}]", reservationData.getId());
+        logger.info("Reservation Was Canceled: {}", reservationData.getId());
 
 
         // ******* Delete Reservation *******
         client.deleteReservation(reservationData.getId());
-        logger.info("Reservation Was Deleted: [{}]", reservationData.getId());
+        logger.info("Reservation Was Deleted: {}", reservationData.getId());
 
 
         // ******* Delete Property *******
         client.deleteProperty(propertyId);
-        logger.info("Property Was Deleted: [{}]", propertyId);
+        logger.info("Property Was Deleted: {}", propertyId);
 
         System.exit(0);
     }
@@ -150,7 +150,7 @@ public class SandboxDataManagementClientUsageExample {
 
         propertiesResponse.getData().forEach(property -> {
             if (property.getName().equals(PROPERTY_NAME) || property.getName().equals(UPDATED_PROPERTY_NAME)) {
-                logger.info("Deleting existing property: ID: [{}], Name: [{}]", property.getId(), property.getName());
+                logger.info("Deleting existing property: ID: {}, Name: {}", property.getId(), property.getName());
                 client.deleteProperty(property.getId());
             }
         });
