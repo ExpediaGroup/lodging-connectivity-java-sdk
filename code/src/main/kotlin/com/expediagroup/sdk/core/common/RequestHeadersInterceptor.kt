@@ -25,8 +25,10 @@ import com.expediagroup.sdk.core.interceptor.Interceptor
 class RequestHeadersInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
+        val metadata = MetadataLoader.load()
+
         val request = chain.request().newBuilder()
-            .setHeader("User-Agent", MetadataLoader.asUserAgentString())
+            .setHeader("User-Agent", metadata.asUserAgentString())
             .build()
 
         return chain.proceed(request)

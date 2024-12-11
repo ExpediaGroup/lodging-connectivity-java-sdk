@@ -19,46 +19,74 @@ package com.expediagroup.sdk.core.common
 import java.util.Locale
 import java.util.Properties
 
-/**
- * A utility object that scans the classpath for `sdk.properties` file.
- */
 internal object MetadataLoader {
-    val artifactName: String
-    val groupId: String
-    val version: String
-    val jdkVersion: String
-    val jdkVendor: String
-    val osName: String
-    val osVersion: String
-    val arch: String
-    val locale: String
+    private const val UNKNOWN = "unknown"
 
-    const val UNKNOWN = "unknown"
+    @Volatile
+    private var cachedMetadata: Metadata? = null
 
-    init {
-        val props = Properties()
-
-        this::class.java.classLoader.getResourceAsStream("sdk.properties")?.use {
-            props.load(it)
+    /**
+     * Loads the SDK metadata from sdk.properties file and caches the results for future calls.
+     *
+     * Call [MetadataLoader.reload()] to clear the cache and read the metadata again
+     *
+     * @see [MetadataLoader.reload]
+     */
+    fun load(): Metadata {
+        return cachedMetadata ?: synchronized(this) {
+            readPropertiesFile().also { cachedMetadata = it }
         }
-
-        artifactName = props.getProperty("artifactName", UNKNOWN)
-        groupId = props.getProperty("groupId", UNKNOWN)
-        version = props.getProperty("version", UNKNOWN)
-        jdkVersion = System.getProperty("java.version", UNKNOWN)
-        jdkVendor = System.getProperty("java.vendor", UNKNOWN)
-        osName = System.getProperty("os.name", UNKNOWN)
-        osVersion = System.getProperty("os.version", UNKNOWN)
-        arch = System.getProperty("os.arch", UNKNOWN)
-        locale = Locale.getDefault().toString()
     }
 
     /**
-     * Builds a `User-Agent` string from the loaded metadata.
-     *
-     * Format:
-     * `userAgentPrefix/version (Provider/artifactId; Java/jdkVersion; Vendor/jdkVendor; OS/osName - osVersion; Arch/arch; Locale/locale)`
+     * Clears the cached metadata and attempts to reload
      */
+    @Synchronized
+    fun reload(): Metadata {
+        cachedMetadata = null
+        return load()
+    }
+
+    /**
+     * Clears the cached metadata
+     */
+    @Synchronized
+    fun clear() {
+        cachedMetadata = null
+    }
+
+    private fun readPropertiesFile(): Metadata {
+        val props = Properties()
+
+        Thread.currentThread().contextClassLoader?.getResourceAsStream("sdk.properties")?.use {
+            props.load(it)
+        }
+
+        return Metadata(
+            artifactName = props.getProperty("artifactName", UNKNOWN),
+            groupId = props.getProperty("groupId", UNKNOWN),
+            version = props.getProperty("version", UNKNOWN),
+            jdkVersion = System.getProperty("java.version", UNKNOWN),
+            jdkVendor = System.getProperty("java.vendor", UNKNOWN),
+            osName = System.getProperty("os.name", UNKNOWN),
+            osVersion = System.getProperty("os.version", UNKNOWN),
+            arch = System.getProperty("os.arch", UNKNOWN),
+            locale = Locale.getDefault().toString()
+        )
+    }
+}
+
+data class Metadata(
+    val artifactName: String,
+    val groupId: String,
+    val version: String,
+    val jdkVersion: String,
+    val jdkVendor: String,
+    val osName: String,
+    val osVersion: String,
+    val arch: String,
+    val locale: String
+) {
     fun asUserAgentString(): String {
         return "$artifactName/$version (Provider/$groupId; Java/$jdkVersion; Vendor/$jdkVendor; OS/$osName - $osVersion; Arch/$arch; Locale/$locale)"
     }

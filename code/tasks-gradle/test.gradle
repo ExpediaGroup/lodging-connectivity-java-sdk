@@ -1,0 +1,14 @@
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+    classpath = classpath.filter {
+        // Prevents the tests from being aware of any resources files that are NOT related to the tests
+        !it.absolutePath.contains("build/resources/main/sdk.properties")
+    }
+}
+
+tasks.named("check") {
+    finalizedBy("koverHtmlReport")
+}

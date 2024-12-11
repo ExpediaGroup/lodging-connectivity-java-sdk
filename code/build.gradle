@@ -15,17 +15,6 @@ kotlin {
     jvmToolchain(8)
 }
 
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
-
-tasks.named("check") {
-    finalizedBy("koverHtmlReport")
-}
-
 dependencies {
     /* Kotlin */
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.0'
@@ -52,6 +41,7 @@ dependencies {
     testImplementation 'io.mockk:mockk:1.13.13'
 }
 
+apply from: "tasks-gradle/test.gradle"
 apply from: "tasks-gradle/sdk-properties.gradle"
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"
