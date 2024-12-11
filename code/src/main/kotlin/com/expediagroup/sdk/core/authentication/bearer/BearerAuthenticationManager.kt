@@ -19,7 +19,6 @@ package com.expediagroup.sdk.core.authentication.bearer
 import com.expediagroup.sdk.core.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.Transport
-import com.expediagroup.sdk.core.common.MetadataLoader
 import com.expediagroup.sdk.core.http.CommonMediaTypes
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
@@ -119,7 +118,6 @@ class BearerAuthenticationManager(
             .body( RequestBody.create(mapOf("grant_type" to "client_credentials")))
             .setHeader("Authorization", credentials.encodeBasic())
             .setHeader("Content-Type", CommonMediaTypes.APPLICATION_FORM_URLENCODED.toString())
-            .setHeader("User-Agent", MetadataLoader.asUserAgentString())
             .build()
     }
 

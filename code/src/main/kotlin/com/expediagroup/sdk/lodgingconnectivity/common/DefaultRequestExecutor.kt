@@ -5,7 +5,8 @@ import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManag
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.RequestExecutor
 import com.expediagroup.sdk.core.client.Transport
-import com.expediagroup.sdk.core.common.UserAgentHeaderInterceptor
+import com.expediagroup.sdk.core.common.MetadataLoader
+import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
@@ -30,8 +31,9 @@ class DefaultRequestExecutor(
     apiEndpoint: ApiEndpoint
 ) : RequestExecutor(getHttpTransport(configuration)) {
 
+    val metadata = MetadataLoader.load("lodging-connectivity-sdk")
     override val interceptors: List<Interceptor> = listOf(
-        UserAgentHeaderInterceptor(),
+        RequestHeadersInterceptor(metadata),
         LoggingInterceptor(logger),
         BearerAuthenticationInterceptor(
             BearerAuthenticationManager(
