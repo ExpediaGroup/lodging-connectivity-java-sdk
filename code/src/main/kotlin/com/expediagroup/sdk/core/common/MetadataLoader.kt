@@ -19,6 +19,10 @@ package com.expediagroup.sdk.core.common
 import java.util.Locale
 import java.util.Properties
 
+/**
+ * Utility object for loading SDK metadata from the generated `sdk.properties` file along with other
+ * system properties like JVM info and host OS info.
+ */
 internal object MetadataLoader {
     private const val UNKNOWN = "unknown"
 
