@@ -1,6 +1,9 @@
 package com.expediagroup.sdk.core.common
 
 import java.io.InputStream
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -82,5 +85,26 @@ class MetadataLoaderTest {
     @Test
     fun `should return the same metadata instance if called multiple times`() {
         assertSame(MetadataLoader.load(), MetadataLoader.load())
+    }
+
+    @Test
+    fun `should return the same metadata instance if called multiple times by concurrent threads`() {
+        // Given
+        val threadsCount = 5
+        val executor = Executors.newFixedThreadPool(threadsCount)
+        val tasks = List(threadsCount) { Callable { MetadataLoader.load() } }
+
+        // When
+        val results = executor.invokeAll(tasks).map { it.get() }
+        executor.shutdown()
+        executor.awaitTermination(5, TimeUnit.SECONDS)
+
+        val firstInstance = results.first()
+
+        // Expect
+        results.forEach { instance ->
+            assertNotNull(instance)
+            assertSame(firstInstance, instance)
+        }
     }
 }

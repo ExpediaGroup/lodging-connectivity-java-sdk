@@ -27,14 +27,15 @@ internal object MetadataLoader {
     private const val UNKNOWN = "unknown"
 
     @Volatile
-    @set:Synchronized
     private var cachedMetadata: Metadata? = null
 
     /**
      * Loads the SDK metadata from sdk.properties file and caches the results for future calls.
      */
     fun load(): Metadata {
-        return cachedMetadata ?: readPropertiesFile().also { cachedMetadata = it }
+        return cachedMetadata ?: synchronized(this) {
+            cachedMetadata ?: readPropertiesFile().also { cachedMetadata = it }
+        }
     }
 
     /**
