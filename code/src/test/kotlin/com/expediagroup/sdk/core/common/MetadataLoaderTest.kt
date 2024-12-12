@@ -45,6 +45,12 @@ class MetadataLoaderTest {
             assertEquals("unknown", metadata.artifactName)
             assertEquals("unknown", metadata.groupId)
             assertEquals("unknown", metadata.version)
+            assertNotNull(metadata.jdkVersion)
+            assertNotNull(metadata.jdkVendor)
+            assertNotNull(metadata.osName)
+            assertNotNull(metadata.osVersion)
+            assertNotNull(metadata.arch)
+            assertNotNull(metadata.locale)
         } finally {
             Thread.currentThread().contextClassLoader = originalClassLoader
         }
@@ -62,6 +68,12 @@ class MetadataLoaderTest {
             assertEquals("unknown", metadata.artifactName)
             assertEquals("unknown", metadata.groupId)
             assertEquals("unknown", metadata.version)
+            assertNotNull(metadata.jdkVersion)
+            assertNotNull(metadata.jdkVendor)
+            assertNotNull(metadata.osName)
+            assertNotNull(metadata.osVersion)
+            assertNotNull(metadata.arch)
+            assertNotNull(metadata.locale)
         } finally {
             Thread.currentThread().contextClassLoader = originalClassLoader
         }
