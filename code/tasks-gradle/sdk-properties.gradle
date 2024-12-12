@@ -1,0 +1,11 @@
+def artifactName = project.findProperty("artifactName") ?: "unknown"
+def version = project.findProperty("version") ?: "unknown"
+def groupId = project.findProperty("groupId") ?: "unknown"
+
+def sdkPropertiesContent = "artifactName=${artifactName}\nversion=${version}\ngroupId=${groupId}".stripIndent()
+
+processResources {
+    from(project.resources.text.fromString(sdkPropertiesContent)) {
+        rename { "sdk.properties" }
+    }
+}
