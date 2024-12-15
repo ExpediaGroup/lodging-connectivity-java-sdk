@@ -43,10 +43,10 @@ enum class FileManagementClientEndpoint(val url: String) {
 }
 
 enum class AuthEndpoint(val url: String) {
-    PROD("https://api.expediagroup.com/identity/oauth2/v3/token/"),
-    TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token/"),
-    SANDBOX_PROD("https://api.expediagroup.com/identity/oauth2/v3/token/"),
-    SANDBOX_TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token/")
+    PROD("https://api.expediagroup.com/identity/oauth2/v3/token"),
+    TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token"),
+    SANDBOX_PROD("https://api.expediagroup.com/identity/oauth2/v3/token"),
+    SANDBOX_TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token")
 }
 
 /**
