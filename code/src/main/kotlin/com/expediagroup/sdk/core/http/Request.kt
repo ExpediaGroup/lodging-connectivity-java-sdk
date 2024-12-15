@@ -17,7 +17,6 @@
 package com.expediagroup.sdk.core.http
 
 import java.net.MalformedURLException
-import java.net.URL
 
 /**
  * Represents an immutable HTTP request.
@@ -26,7 +25,7 @@ import java.net.URL
  */
 class Request private constructor(
     val method: Method,
-    val url: URL,
+    val url: String,
     val headers: Headers,
     val body: RequestBody?
 ) {
@@ -42,7 +41,7 @@ class Request private constructor(
      */
     class Builder {
         private var method: Method? = null
-        private var url: URL? = null
+        private var url: String? = null
         private var headersBuilder: Headers.Builder = Headers.Builder()
         private var body: RequestBody? = null
 
@@ -92,17 +91,6 @@ class Request private constructor(
          */
         @Throws(MalformedURLException::class)
         fun url(url: String) = apply {
-            val parsedUrl = URL(url)
-            this.url = parsedUrl
-        }
-
-        /**
-         * Sets the URL.
-         *
-         * @param url The URL as an [URL] object.
-         * @return This builder.
-         */
-        fun url(url: URL) = apply {
             this.url = url
         }
 

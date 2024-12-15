@@ -1,7 +1,5 @@
 package com.expediagroup.sdk.core.http
 
-import java.net.MalformedURLException
-import java.net.URL
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -13,7 +11,7 @@ class RequestTest {
     fun `should build request instance with all properties`() {
         // Given
         val method = Method.POST
-        val url = URL("https://example.com")
+        val url = "https://example.com"
         val headers = Headers.Builder().add("Authorization", "Bearer token").build()
         val body = RequestBody.create("Sample body".byteInputStream())
 
@@ -73,7 +71,7 @@ class RequestTest {
             .build()
 
         // Expect
-        assertEquals(URL(urlString), request.url)
+        assertEquals(urlString, request.url)
     }
 
     @Test
@@ -272,20 +270,6 @@ class RequestTest {
 
         // Expect
         assertNull(request.body)
-    }
-
-    @Test
-    fun `should throw an exception if the URL string is invalid`() {
-        // Given
-        val invalidUrl = "invalid_url"
-
-        // When
-        val exception = assertThrows<MalformedURLException> {
-            Request.builder().method(Method.GET).url(invalidUrl).build()
-        }
-
-        // Expect
-        assertEquals("no protocol: invalid_url", exception.message)
     }
 
     @Test

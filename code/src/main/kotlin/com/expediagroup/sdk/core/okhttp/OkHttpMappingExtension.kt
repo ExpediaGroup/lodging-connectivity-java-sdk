@@ -42,7 +42,7 @@ import okio.BufferedSink
  * @return A new [Request] object representing the same HTTP request in the SDK format.
  */
 fun okhttp3.Request.toSDKRequest(): Request {
-    val url = url.toUrl()
+    val url = url.toString()
     val method = Method.valueOf(method)
     val headers = headers.toSDKHeaders()
     val body = body?.toSDKRequestBody()

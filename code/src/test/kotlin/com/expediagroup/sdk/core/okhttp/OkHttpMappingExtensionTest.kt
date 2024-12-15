@@ -40,7 +40,7 @@ class OkHttpMappingExtensionTest {
                 val sdkRequest = okHttpRequest.toSDKRequest()
 
                 // Expect
-                assertEquals("https://example.com/", sdkRequest.url.toString())
+                assertEquals("https://example.com/", sdkRequest.url)
                 assertEquals("Bearer token", sdkRequest.headers.get("Authorization"))
                 assertNull(sdkRequest.body)
             }
@@ -76,7 +76,7 @@ class OkHttpMappingExtensionTest {
                 val sdkRequestBodyString = sdkRequestBodyBuffer.readUtf8()
 
                 // Then
-                assertEquals("https://example.com/", sdkRequest.url.toString())
+                assertEquals("https://example.com/", sdkRequest.url)
                 assertEquals("Bearer token", sdkRequest.headers.get("Authorization"))
                 assertEquals(okHttpRequestBodyString, sdkRequestBodyString)
                 assertNotEquals("", sdkRequestBodyString)
