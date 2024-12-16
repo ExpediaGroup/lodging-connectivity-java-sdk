@@ -172,10 +172,11 @@ fun RequestBody.toOkHttpRequestBody(): okhttp3.RequestBody {
 fun Response.toOkHttpResponse(): okhttp3.Response {
     return okhttp3.Response.Builder()
         .request(request.toOkHttpRequest())
-        .message(message)
         .headers(headers.toOkHttpHeaders())
         .code(status.code)
         .protocol(okhttp3.Protocol.valueOf(protocol.name))
+        .message(message ?: "")
+        .body(body?.toOkHttpResponseBody())
         .build()
 }
 

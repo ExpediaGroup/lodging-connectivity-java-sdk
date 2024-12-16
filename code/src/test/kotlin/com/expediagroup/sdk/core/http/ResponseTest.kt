@@ -209,8 +209,7 @@ class ResponseTest {
     fun `should remove headers when removeHeader is called on an existing header`() {
         // Given
         val request = Request.Builder().method(Method.GET).url("https://example.com").build()
-        val responseBuilder = Response
-            .builder()
+        val responseBuilder = Response.builder()
             .request(request)
             .status(Status.OK)
             .message("OK")
@@ -220,7 +219,6 @@ class ResponseTest {
 
         // When
         val response = responseBuilder.removeHeader("Header1").build()
-
 
         // Expect
         assertNull(response.headers.get("Header1"))
@@ -281,9 +279,7 @@ class ResponseTest {
         }
 
         builder.status(Status.OK)
-        assertThrows<IllegalStateException> { builder.build() }.also {
-            assertEquals("message is required", it.message)
-        }
+        assertDoesNotThrow { builder.build() }
     }
 
     @Test
