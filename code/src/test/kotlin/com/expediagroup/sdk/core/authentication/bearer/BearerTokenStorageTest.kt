@@ -17,24 +17,9 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-/**
- * Comprehensive test suite for BearerTokenStorage.
- *
- * This test class covers various scenarios including:
- * - Token creation
- * - Expiration checks
- * - Authorization header generation
- * - Edge case handling
- * - Concurrency considerations
- *
- * @since 1.0.0
- * @author Expedia Group SDK Team
- */
-@DisplayName("BearerTokenStorage Test")
-class BearerTokenStorageEnterpriseTest {
+class BearerTokenStorageTest {
 
     @Nested
-    @DisplayName("Token Creation Scenarios")
     inner class TokenCreationTests {
         @Test
         fun `create token with standard parameters`() {
@@ -58,7 +43,6 @@ class BearerTokenStorageEnterpriseTest {
         }
 
         @ParameterizedTest
-        @DisplayName("Create token with various expiration times")
         @ValueSource(longs = [0, 1, 59, 60, 61, 3600, 3600 * 24 * 365]) // Use a more reasonable large value
         fun `create token with varied expiration times`(expiresIn: Long) {
             val tokenStorage = try {
