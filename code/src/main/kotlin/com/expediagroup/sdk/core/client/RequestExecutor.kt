@@ -73,6 +73,5 @@ abstract class RequestExecutor(protected val transport: Transport) {
      * @return The response from the server after passing through interceptors
      * @throws ExpediaGroupNetworkException If any network-related error occurs
      */
-    @Throws(ExpediaGroupNetworkException::class)
     abstract fun execute(request: Request): Response
 }

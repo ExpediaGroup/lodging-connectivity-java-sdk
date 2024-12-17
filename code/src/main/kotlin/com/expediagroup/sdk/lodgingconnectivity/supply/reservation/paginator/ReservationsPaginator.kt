@@ -97,7 +97,7 @@ class ReservationsPaginator @JvmOverloads constructor(
      *
      * @return A [ReservationsPaginatedResponse] containing the property reservations, raw response, and pagination details.
      * @throws NoSuchElementException If no more pages are available to fetch.
-     * @throws ExpediaGroupServiceException If an error occurs during the query execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
      */
     override fun next(): ReservationsPaginatedResponse {
         if (!hasNext()) {
@@ -126,7 +126,7 @@ class ReservationsPaginator @JvmOverloads constructor(
      * Checks if there are any reservations available to fetch, initializing the paginator if necessary.
      *
      * @return `true` if there are reservations available, `false` otherwise.
-     * @throws ExpediaGroupServiceException If an error occurs during the query execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
      */
     private fun hasReservationsToFetch(): Boolean = run {
         graphQLExecutor.execute(

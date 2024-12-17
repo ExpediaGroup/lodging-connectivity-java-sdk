@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
@@ -43,7 +44,7 @@ data class GetSandboxReservationResponse(
  * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
  * @param reservationId The unique identifier of the sandbox reservation to retrieve.
  * @return A [GetSandboxReservationResponse] containing the requested reservation data and the full raw response.
- * @throws ExpediaGroupServiceException If an error occurs during the query execution.
+ * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
 fun getSandboxReservationOperation(graphQLExecutor: GraphQLExecutor, reservationId: String): GetSandboxReservationResponse {
     val operation = SandboxReservationQuery(reservationId)

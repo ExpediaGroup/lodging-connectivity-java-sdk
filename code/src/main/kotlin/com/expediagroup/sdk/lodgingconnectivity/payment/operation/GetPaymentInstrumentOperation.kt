@@ -47,7 +47,7 @@ data class GetPaymentInstrumentResponse(
  * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
  * @param token The token identifying the payment instrument to be retrieved.
  * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
- * @throws ExpediaGroupServiceException If the payment instrument data is not found in the response.
+ * @throws [ExpediaGroupServiceException] If the payment instrument data is not found in the response.
  */
 fun getPaymentInstrumentOperation(graphQLExecutor: GraphQLExecutor, token: String): GetPaymentInstrumentResponse {
     val operation = PaymentInstrumentQuery(token)

@@ -51,7 +51,6 @@ data class TokenResponse(
          * @return A [TokenResponse] object containing the token and its metadata.
          * @throws ExpediaGroupResponseParsingException If the response cannot be parsed.
          */
-        @Throws(ExpediaGroupResponseParsingException::class)
         fun parse(response: Response): TokenResponse {
             val responseBody = response.body.getOrThrow {
                 ExpediaGroupResponseParsingException("Authenticate response body is empty or cannot be parsed")

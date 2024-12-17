@@ -24,7 +24,8 @@ import java.io.IOException
  *
  * Use [Builder] to create an instance.
  */
-class Response private constructor(
+@ConsistentCopyVisibility
+data class Response private constructor(
     val request: Request,
     val protocol: Protocol,
     val status: Status,

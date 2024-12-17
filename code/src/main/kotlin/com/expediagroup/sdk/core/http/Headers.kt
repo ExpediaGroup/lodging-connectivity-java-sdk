@@ -21,7 +21,8 @@ import java.util.Locale
 /**
  * Represents a collection of HTTP headers.
  */
-class Headers private constructor(private val headersMap: Map<String, List<String>>) {
+@ConsistentCopyVisibility
+data class Headers private constructor(private val headersMap: Map<String, List<String>>) {
 
     /**
      * Returns the first header value for the given name, or null if none.
@@ -96,7 +97,6 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @return this builder
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
-        @Throws(IllegalArgumentException::class)
         fun add(name: String, value: String): Builder = apply { add(sanitizeName(name), listOf(value)) }
 
         /**
@@ -107,7 +107,6 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @return this builder
          * @throws IllegalArgumentException if [name] or any [values] are invalid
          */
-        @Throws(IllegalArgumentException::class)
         fun add(name: String, values: List<String>): Builder = apply {
             headersMap.computeIfAbsent(sanitizeName(name)) { mutableListOf() }.addAll(values)
         }
@@ -121,7 +120,6 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @return this builder
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
-        @Throws(IllegalArgumentException::class)
         fun set(name: String, value: String): Builder = apply { set(sanitizeName(name), listOf(value)) }
 
         /**
@@ -133,7 +131,6 @@ class Headers private constructor(private val headersMap: Map<String, List<Strin
          * @return this builder
          * @throws IllegalArgumentException if [name] or [values] are invalid
          */
-        @Throws(IllegalArgumentException::class)
         fun set(name: String, values: List<String>): Builder = apply {
             remove(sanitizeName(name))
             add(sanitizeName(name), values)

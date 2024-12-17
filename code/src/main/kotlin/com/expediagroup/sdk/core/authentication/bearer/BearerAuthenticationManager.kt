@@ -26,7 +26,6 @@ import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -57,7 +56,6 @@ class BearerAuthenticationManager(
      * @throws ExpediaGroupAuthException If the authentication request fails.
      * @throws ExpediaGroupResponseParsingException If the response cannot be parsed.
      */
-    @Throws(ExpediaGroupAuthException::class, ExpediaGroupResponseParsingException::class)
     override fun authenticate() {
         clearAuthentication()
             .let {
@@ -120,7 +118,6 @@ class BearerAuthenticationManager(
      * @return The [Response] received from the server.
      * @throws ExpediaGroupAuthException If the server responds with an error.
      */
-    @Throws(ExpediaGroupAuthException::class, ExpediaGroupNetworkException::class)
     private fun executeAuthenticationRequest(request: Request): Response = run {
         requestExecutor.execute(request).apply {
             if (!this.isSuccessful) {
