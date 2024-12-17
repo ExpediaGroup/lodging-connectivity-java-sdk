@@ -17,6 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
 import com.expediagroup.sdk.core.extension.orFalseIfNull
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
@@ -50,7 +51,7 @@ data class RefundReservationResponse(
  * @param selections An optional [ReservationSelections] specifying additional fields to include in the response, such as
  * supplier amount and payment instrument token; defaults to `null`.
  * @return A [RefundReservationResponse] containing the refunded reservation data (if available) and the full raw response.
- * @throws ExpediaGroupServiceException If an error occurs during the mutation execution.
+ * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
 @JvmOverloads
 fun refundReservationOperation(

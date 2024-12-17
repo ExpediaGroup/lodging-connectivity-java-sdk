@@ -63,7 +63,6 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
      * @throws [ExpediaGroupServiceException] If an exception occurs during query execution.
      * @throws [NoDataException] If the query completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>> {
         return CompletableFuture<RawResponse<T>>().also {
             apolloClient.query(query).enqueue { response -> processOperationResponse(response, it) }
@@ -78,7 +77,6 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
      * @throws [ExpediaGroupServiceException] If an exception occurs during query execution.
      * @throws [NoDataException] If the query completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> = executeAsync(query).get()
 
     /**
@@ -90,7 +88,6 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
      * @throws [ExpediaGroupServiceException] If an exception occurs during mutation execution.
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>> {
         return CompletableFuture<RawResponse<T>>().also {
             apolloClient.mutation(mutation).enqueue { response -> processOperationResponse(response, it) }
@@ -105,7 +102,6 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
      * @throws [ExpediaGroupServiceException] If an exception occurs during mutation execution.
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> = executeAsync(mutation).get()
 
 

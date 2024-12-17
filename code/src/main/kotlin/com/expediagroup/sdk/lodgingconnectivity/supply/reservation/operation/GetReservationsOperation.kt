@@ -59,7 +59,7 @@ data class PropertyReservationsResponse(
  * @param selections An optional [ReservationSelections] specifying additional fields to include in the response,
  * such as supplier amount and payment instrument token; defaults to `null`.
  * @return A [PropertyReservationsResponse] containing the reservation data, pagination information, and the full raw response.
- * @throws ExpediaGroupServiceException If the property data is not available in the response.
+ * @throws [ExpediaGroupServiceException] If the property data is not available in the response.
  */
 @JvmOverloads
 fun getReservationsOperation(

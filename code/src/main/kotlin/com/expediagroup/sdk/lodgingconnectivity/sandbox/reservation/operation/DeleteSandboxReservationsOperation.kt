@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
@@ -44,7 +45,7 @@ data class DeleteSandboxReservationsResponse(
  * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [DeletePropertyReservationsInput] containing the details of the reservations to be deleted.
  * @return A [DeleteSandboxReservationsResponse] containing data for the deleted reservations and the full raw response.
- * @throws ExpediaGroupServiceException If an error occurs during the mutation execution.
+ * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
 fun deleteSandboxReservationsOperation(
     graphQLExecutor: GraphQLExecutor,
