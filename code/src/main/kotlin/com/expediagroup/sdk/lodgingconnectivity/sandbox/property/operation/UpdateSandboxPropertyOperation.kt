@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
@@ -46,7 +47,7 @@ data class UpdateSandboxPropertyResponse(
  * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [UpdatePropertyInput] containing the details of the property update.
  * @return An [UpdateSandboxPropertyResponse] containing the updated sandbox property data and the full raw response.
- * @throws ExpediaGroupServiceException If an error occurs during the mutation execution.
+ * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
 fun updateSandboxPropertyOperation(
     graphQLExecutor: GraphQLExecutor,

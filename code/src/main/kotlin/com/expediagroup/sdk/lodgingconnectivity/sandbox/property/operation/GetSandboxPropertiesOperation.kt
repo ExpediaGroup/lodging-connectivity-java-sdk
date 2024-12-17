@@ -17,6 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.core.extension.orNullIfBlank
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
@@ -51,7 +52,7 @@ data class GetSandboxPropertiesResponse(
  * @param cursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @param pageSize The number of properties to retrieve per page; defaults to `null` to use the server's default page size.
  * @return A [GetSandboxPropertiesResponse] containing the sandbox properties data, pagination information, and the full raw response.
- * @throws ExpediaGroupServiceException If an error occurs during the query execution.
+ * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
 @JvmOverloads
 fun getSandboxPropertiesOperation(

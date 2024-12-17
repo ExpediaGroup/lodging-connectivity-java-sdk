@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
@@ -74,7 +75,8 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.Sa
  * or timeouts.
  */
 class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
-    override val apiEndpoint = SandboxApiEndpointProvider.forEnvironment(config.environment ?: ClientEnvironment.SANDBOX_PROD)
+    override val apiEndpoint =
+        SandboxApiEndpointProvider.forEnvironment(config.environment ?: ClientEnvironment.SANDBOX_PROD)
 
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         requestExecutor = DefaultRequestExecutor(config, apiEndpoint),
@@ -85,9 +87,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * Retrieves all sandbox properties in one page.
      *
      * @return A [GetSandboxPropertiesResponse] containing the sandbox properties data, pagination information, and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getProperties() = run {
+    fun getProperties(): GetSandboxPropertiesResponse = run {
         getSandboxPropertiesOperation(graphQLExecutor)
     }
 
@@ -99,7 +101,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [SandboxPropertiesPaginator] for iterating through properties.
      */
     @JvmOverloads
-    fun getPropertiesPaginator(pageSize: Int, initialCursor: String? = null) = run {
+    fun getPropertiesPaginator(pageSize: Int, initialCursor: String? = null): SandboxPropertiesPaginator = run {
         SandboxPropertiesPaginator(graphQLExecutor, pageSize, initialCursor)
     }
 
@@ -108,9 +110,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param propertyId The unique identifier of the property.
      * @return A [GetSandboxReservationsResponse] containing the sandbox reservations data, pagination information, and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getReservations(propertyId: String) = run {
+    fun getReservations(propertyId: String): GetSandboxReservationsResponse = run {
         getSandboxReservationsOperation(graphQLExecutor, propertyId)
     }
 
@@ -123,7 +125,11 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [SandboxReservationsPaginator] for iterating through reservations.
      */
     @JvmOverloads
-    fun getReservationsPaginator(propertyId: String, pageSize: Int, initialCursor: String? = null) = run {
+    fun getReservationsPaginator(
+        propertyId: String,
+        pageSize: Int,
+        initialCursor: String? = null
+    ): SandboxReservationsPaginator = run {
         SandboxReservationsPaginator(graphQLExecutor, propertyId, pageSize, initialCursor)
     }
 
@@ -132,9 +138,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param propertyId The unique identifier of the property.
      * @return A [GetSandboxPropertyResponse] containing the requested sandbox property data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getProperty(propertyId: String) = run {
+    fun getProperty(propertyId: String): GetSandboxPropertyResponse = run {
         getSandboxPropertyOperation(graphQLExecutor, propertyId)
     }
 
@@ -143,9 +149,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param reservationId The unique identifier of the reservation.
      * @return A [GetSandboxReservationResponse] containing the requested reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getReservation(reservationId: String) = run {
+    fun getReservation(reservationId: String): GetSandboxReservationResponse = run {
         getSandboxReservationOperation(graphQLExecutor, reservationId)
     }
 
@@ -153,9 +159,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * Creates a new sandbox property with default name.
      *
      * @return A [CreateSandboxPropertyResponse] containing the created sandbox property data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createProperty() = run {
+    fun createProperty(): CreateSandboxPropertyResponse = run {
         createSandboxPropertyOperation(graphQLExecutor, CreatePropertyInput())
     }
 
@@ -164,9 +170,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [CreatePropertyInput] specifying the details of the property to be created.
      * @return A [CreateSandboxPropertyResponse] containing the created sandbox property data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createProperty(input: CreatePropertyInput) = run {
+    fun createProperty(input: CreatePropertyInput): CreateSandboxPropertyResponse = run {
         createSandboxPropertyOperation(graphQLExecutor, input)
     }
 
@@ -175,9 +181,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [UpdatePropertyInput] containing the updated property details.
      * @return An [UpdateSandboxPropertyResponse] containing the updated sandbox property data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun updateProperty(input: UpdatePropertyInput) = run {
+    fun updateProperty(input: UpdatePropertyInput): UpdateSandboxPropertyResponse = run {
         updateSandboxPropertyOperation(graphQLExecutor, input)
     }
 
@@ -186,9 +192,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param propertyId The unique identifier of the property to be deleted.
      * @return A [DeleteSandboxPropertyResponse] containing the deleted property data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteProperty(propertyId: String) = run {
+    fun deleteProperty(propertyId: String): DeleteSandboxPropertyResponse = run {
         deleteSandboxPropertyOperation(graphQLExecutor, DeletePropertyInput(id = propertyId))
     }
 
@@ -197,9 +203,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param propertyId The unique identifier of the property.
      * @return A [CreateSandboxReservationResponse] containing the created reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createReservation(propertyId: String) = run {
+    fun createReservation(propertyId: String): CreateSandboxReservationResponse = run {
         createSandboxReservationOperation(graphQLExecutor, CreateReservationInput(propertyId = propertyId))
     }
 
@@ -208,9 +214,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [CreateReservationInput] containing the reservation details.
      * @return A [CreateSandboxReservationResponse] containing the created reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createReservation(input: CreateReservationInput) = run {
+    fun createReservation(input: CreateReservationInput): CreateSandboxReservationResponse = run {
         createSandboxReservationOperation(graphQLExecutor, input)
     }
 
@@ -219,9 +225,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [UpdateReservationInput] with the updated reservation details.
      * @return An [UpdateSandboxReservationResponse] containing the updated reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun updateReservation(input: UpdateReservationInput) = run {
+    fun updateReservation(input: UpdateReservationInput): UpdateSandboxReservationResponse = run {
         updateSandboxReservationOperation(graphQLExecutor, input)
     }
 
@@ -230,9 +236,11 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [ChangeReservationStayDatesInput] specifying the new stay dates.
      * @return A [ChangeSandboxReservationStayDatesResponse] containing the updated reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun changeReservationStayDates(input: ChangeReservationStayDatesInput) = run {
+    fun changeReservationStayDates(
+        input: ChangeReservationStayDatesInput
+    ): ChangeSandboxReservationStayDatesResponse = run {
         changeSandboxReservationStayDatesOperation(graphQLExecutor, input)
     }
 
@@ -241,9 +249,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param reservationId The unique identifier of the reservation to be canceled.
      * @return A [CancelSandboxReservationResponse] containing the canceled reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun cancelReservation(reservationId: String) = run {
+    fun cancelReservation(reservationId: String): CancelSandboxReservationResponse = run {
         cancelSandboxReservationOperation(graphQLExecutor, CancelReservationInput(id = reservationId))
     }
 
@@ -252,9 +260,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [CancelReservationInput] containing reservation details for cancellation.
      * @return A [CancelSandboxReservationResponse] containing the canceled reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun cancelReservation(input: CancelReservationInput) = run {
+    fun cancelReservation(input: CancelReservationInput): CancelSandboxReservationResponse = run {
         cancelSandboxReservationOperation(graphQLExecutor, input)
     }
 
@@ -263,9 +271,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param reservationId The unique identifier of the reservation to be deleted.
      * @return A [DeleteSandboxReservationResponse] containing the deleted reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservation(reservationId: String) = run {
+    fun deleteReservation(reservationId: String): DeleteSandboxReservationResponse = run {
         deleteSandboxReservationOperation(graphQLExecutor, DeleteReservationInput(id = reservationId))
     }
 
@@ -274,9 +282,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [DeleteReservationInput] specifying the reservation to delete.
      * @return A [DeleteSandboxReservationResponse] containing the deleted reservation data and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservation(input: DeleteReservationInput) = run {
+    fun deleteReservation(input: DeleteReservationInput): DeleteSandboxReservationResponse = run {
         deleteSandboxReservationOperation(graphQLExecutor, input)
     }
 
@@ -285,9 +293,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param propertyId The unique identifier of the property.
      * @return A [DeleteSandboxReservationsResponse] containing data for the deleted reservations and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservations(propertyId: String) = run {
+    fun deleteReservations(propertyId: String): DeleteSandboxReservationsResponse = run {
         deleteSandboxReservationsOperation(
             graphQLExecutor,
             DeletePropertyReservationsInput(propertyId = propertyId)
@@ -299,9 +307,9 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      *
      * @param input The [DeletePropertyReservationsInput] specifying the reservations to delete.
      * @return A [DeleteSandboxReservationsResponse] containing data for the deleted reservations and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservations(input: DeletePropertyReservationsInput) = run {
+    fun deleteReservations(input: DeletePropertyReservationsInput): DeleteSandboxReservationsResponse = run {
         deleteSandboxReservationsOperation(graphQLExecutor, input)
     }
 }

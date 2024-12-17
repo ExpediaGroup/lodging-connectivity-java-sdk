@@ -26,8 +26,8 @@ import java.util.Locale
  * @property subtype The subtype (e.g., "json", "plain").
  * @property parameters The map of parameters associated with the media type (e.g., charset).
  */
-
-class MediaType private constructor(
+@ConsistentCopyVisibility
+data class MediaType private constructor(
     val type: String,
     val subtype: String,
     val parameters: Map<String, String> = emptyMap()

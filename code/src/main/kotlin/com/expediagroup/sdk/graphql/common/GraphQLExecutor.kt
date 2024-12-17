@@ -48,7 +48,6 @@ abstract class GraphQLExecutor {
      * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the query.
      * @throws [NoDataException] If the query completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     abstract fun <T : Query.Data> execute(query: Query<T>): RawResponse<T>
 
     /**
@@ -59,7 +58,6 @@ abstract class GraphQLExecutor {
      * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the mutation.
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     abstract fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T>
 
     /**
@@ -70,7 +68,6 @@ abstract class GraphQLExecutor {
      * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the query.
      * @throws [NoDataException] If the query completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     abstract fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>>
 
     /**
@@ -81,6 +78,5 @@ abstract class GraphQLExecutor {
      * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the mutation.
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
-    @Throws(NoDataException::class, ExpediaGroupServiceException::class)
     abstract fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>>
 }

@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.payment
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
@@ -23,6 +24,7 @@ import com.expediagroup.sdk.lodgingconnectivity.common.DefaultRequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.PaymentApiEndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.payment.operation.GetPaymentInstrumentResponse
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.PaymentInstrumentQuery
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInstrumentOperation
 
@@ -54,7 +56,7 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
      * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
      * @throws ExpediaGroupServiceException If the payment instrument data is not found in the response.
      */
-    fun getPaymentInstrument(token: String) = run {
+    fun getPaymentInstrument(token: String): GetPaymentInstrumentResponse = run {
         getPaymentInstrumentOperation(graphQLExecutor, token)
     }
 }

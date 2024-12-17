@@ -24,7 +24,8 @@ import java.net.URL
  *
  * Use [Request.builder()] to create an instance.
  */
-class Request private constructor(
+@ConsistentCopyVisibility
+data class Request private constructor(
     val method: Method,
     val url: URL,
     val headers: Headers,

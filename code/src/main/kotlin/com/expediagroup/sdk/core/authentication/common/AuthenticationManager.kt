@@ -38,11 +38,6 @@ interface AuthenticationManager {
      * @throws ExpediaGroupResponseParsingException If the authentication response cannot be parsed
      * @throws ExpediaGroupNetworkException If a network error occurs during authentication
      */
-    @Throws(
-        ExpediaGroupAuthException::class,
-        ExpediaGroupResponseParsingException::class,
-        ExpediaGroupNetworkException::class
-    )
     fun authenticate()
 
     /**
