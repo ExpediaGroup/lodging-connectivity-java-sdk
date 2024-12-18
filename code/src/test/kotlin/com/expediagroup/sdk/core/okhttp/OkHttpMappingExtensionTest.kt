@@ -7,7 +7,9 @@ import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Protocol
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
+import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.http.ResponseBody
+import com.expediagroup.sdk.core.http.Status
 import io.mockk.mockk
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -16,6 +18,7 @@ import okio.BufferedSink
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -394,6 +397,40 @@ class OkHttpMappingExtensionTest {
                 assertDoesNotThrow {
                     okHttpRequestBody.writeTo(mockk(relaxed = true))
                 }
+            }
+        }
+
+        @Nested
+        inner class ToOkHttpResponseExtensionFunction {
+            @Test
+            fun `should correctly map SDK Response to OkHttp Response`() {
+                // Given
+                val content = "Response Body"
+
+                val sdkResponseBody = ResponseBody.create(
+                    inputStream = content.byteInputStream(),
+                    mediaType = CommonMediaTypes.TEXT_PLAIN,
+                    contentLength = content.length.toLong()
+                )
+
+                val sdkResponse = Response.builder()
+                    .body(sdkResponseBody)
+                    .protocol(Protocol.HTTP_1_1)
+                    .status(Status.OK)
+                    .request(Request.Builder().url("https://example.com").method(Method.GET).build())
+                    .build()
+
+                // When
+                val okHttpResponse = sdkResponse.toOkHttpResponse()
+
+                // Expect
+                assertNotNull(okHttpResponse.body)
+                assertEquals(sdkResponse.protocol.name, okHttpResponse.protocol.name)
+                assertEquals(sdkResponse.status.code, okHttpResponse.code)
+                assertEquals(CommonMediaTypes.TEXT_PLAIN.toString(), okHttpResponse.body?.contentType().toString())
+                assertEquals(content.length.toLong(), okHttpResponse.body?.contentLength())
+                assertEquals(content, sdkResponseBody.source().use { source -> source.readUtf8() })
+                assertEquals(sdkResponseBody.source(), okHttpResponse.body?.source())
             }
         }
 

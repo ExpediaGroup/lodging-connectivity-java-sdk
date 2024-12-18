@@ -30,8 +30,8 @@ import java.util.concurrent.CompletableFuture
 
 
 /**
- * A streamlined implementation of [GraphQLExecutor] that handles GraphQL operations with robust
- * error handling and clean response processing. This executor processes both queries and mutations
+ * A streamlined implementation of [GraphQLExecutor] that handles GraphQL operations with
+ * error handling and response processing. This executor processes both queries and mutations
  * while providing detailed error information when operations fail.
  *
  * This executor leverages the Apollo Client to perform requests and processes responses by capturing

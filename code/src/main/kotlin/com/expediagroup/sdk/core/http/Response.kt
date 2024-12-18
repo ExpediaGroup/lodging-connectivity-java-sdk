@@ -29,7 +29,7 @@ data class Response private constructor(
     val request: Request,
     val protocol: Protocol,
     val status: Status,
-    val message: String,
+    val message: String?,
     val headers: Headers,
     val body: ResponseBody?
 ) : Closeable {
@@ -217,7 +217,6 @@ data class Response private constructor(
             val request = this.request ?: throw IllegalStateException("request is required")
             val protocol = this.protocol ?: throw IllegalStateException("protocol is required")
             val code = this.status ?: throw IllegalStateException("status is required")
-            val message = this.message ?: throw IllegalStateException("message is required")
 
             return Response(
                 request = request,
