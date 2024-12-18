@@ -8,6 +8,7 @@ apollo {
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
+        generateDataBuilders.set(true)
         generateMethods.set(List.of("equalsHashCode", "toString"))
 
         /**** Custom Scalars Mappings ****/
@@ -40,6 +41,7 @@ apollo {
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
+        generateDataBuilders.set(true)
         generateMethods.set(List.of("equalsHashCode", "toString"))
 
         /**** Custom Scalars Mappings ****/
@@ -57,6 +59,7 @@ apollo {
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
+        generateDataBuilders.set(true)
         generateMethods.set(List.of("equalsHashCode", "toString"))
 
         /**** Custom Scalars Mappings ****/
