@@ -4,11 +4,25 @@ test {
         events "passed", "skipped", "failed"
     }
     classpath = classpath.filter {
-        // Prevents the tests from being aware of any resources files that are NOT related to the tests
+        // exclude original sdk.properties file during testing
         !it.absolutePath.contains("build/resources/main/sdk.properties")
     }
 }
 
 tasks.named("check") {
     finalizedBy("koverHtmlReport")
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                packages(
+                        "com.expediagroup.sdk.lodgingconnectivity.supply.operation",
+                        "com.expediagroup.sdk.lodgingconnectivity.sandbox.operation",
+                        "com.expediagroup.sdk.lodgingconnectivity.payment.operation"
+                )
+            }
+        }
+    }
 }
