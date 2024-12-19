@@ -27,6 +27,7 @@ import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.Error
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
 
 
 /**
@@ -77,7 +78,9 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
      * @throws [ExpediaGroupServiceException] If an exception occurs during query execution.
      * @throws [NoDataException] If the query completes without data but includes errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> = executeAsync(query).get()
+    override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> {
+        return executeAsync(query).getOrThrowDomainException()
+    }
 
     /**
      * Asynchronously executes a GraphQL mutation and returns a [CompletableFuture] containing the complete
@@ -102,7 +105,9 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
      * @throws [ExpediaGroupServiceException] If an exception occurs during mutation execution.
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> = executeAsync(mutation).get()
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> {
+        return executeAsync(mutation).getOrThrowDomainException()
+    }
 
 
     /**
@@ -120,15 +125,15 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
             when {
                 response.exception != null -> future.completeExceptionally(
                     ExpediaGroupServiceException(
-                        message = response.exception?.message,
                         cause = response.exception
                     )
                 )
 
-                response.data != null && response.hasErrors() -> future.completeExceptionally(
+                response.data == null && response.hasErrors() -> future.completeExceptionally(
                     NoDataException(
                         message = "No data received from the server",
-                        errors = response.errors!!.map { Error.fromApolloError(it) })
+                        errors = response.errors!!.map { Error.fromApolloError(it) }
+                    )
                 )
 
                 else -> future.complete(
@@ -145,6 +150,21 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
                     cause = e
                 )
             )
+        }
+    }
+
+    private fun <T> CompletableFuture<T>.getOrThrowDomainException(): T {
+        return try {
+            this.get()
+        } catch (e: ExecutionException) {
+            when (e.cause) {
+                is NoDataException -> throw e.cause as NoDataException
+                is ExpediaGroupServiceException -> throw e.cause as ExpediaGroupServiceException
+                else -> throw e
+            }
+        } catch (e: InterruptedException) {
+            Thread.currentThread().interrupt()
+            throw ExpediaGroupServiceException("Interrupted while waiting for response", e)
         }
     }
 }
