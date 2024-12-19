@@ -33,7 +33,7 @@ import okhttp3.Interceptor
  * - **Required Fields**: `key` and `secret` for secure authentication.
  * - **Custom Transport Integration**: Allows replacing the default `OkHttpClient` with a custom HTTP client by implementing
  *   the `Transport` interface.
- * - **Environment Support**: Enables specifying the target `ClientEnvironment` (e.g., `PROD` or `TEST`).
+ * - **Environment Support**: Enables specifying the target `ClientEnvironment` (e.g., `PROD` or `SANDBOX_PROD`).
  * - **Reusability**: Can be shared across multiple lodging connectivity clients.
  *
  * ### Custom Transport Capability
