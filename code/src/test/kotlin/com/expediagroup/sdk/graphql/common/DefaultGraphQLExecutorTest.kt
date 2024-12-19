@@ -20,6 +20,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -94,7 +95,7 @@ class DefaultGraphQLExecutorTest {
         }
 
         @Test
-        fun `should throw an ExpediaGroupServiceException if failed to resolve a valid response`() {
+        fun `should throw an ExpediaGroupServiceException if failed to get a successful response`() {
             // Given
             mockWebServer.enqueue(MockResponse().setResponseCode(500))
 
@@ -197,6 +198,36 @@ class DefaultGraphQLExecutorTest {
             // Expect
             assertFalse(future.isDone) // Asserts that the execution isn't blocking
             assertEquals("Hello, world!", future.get().data.testMutation.id)
+        }
+
+        @Test
+        fun `should throw ExecutionException with ExpediaGroupServiceException as a cause if failed to get successful response`() {
+            // Given
+            mockWebServer.enqueue(MockResponse().setResponseCode(500))
+
+            // When & Expect
+            val exception = assertThrows<ExecutionException> {
+                executor.executeAsync(TestQuery()).get()
+            }
+
+            assertInstanceOf(ExpediaGroupServiceException::class.java, exception.cause)
+            assertEquals(ExpediaGroupServiceException::class.java, exception.cause!!::class.java)
+        }
+
+        @Test
+        fun `should throw ExecutionException with NoDataException as a cause if no data received from the server`() {
+            // Given
+            val errorResponse = """{"errors": [{ "message": "Some error occurred" }]}"""
+
+            mockWebServer.enqueue(MockResponse().setBody(errorResponse).setResponseCode(200))
+
+            // When & Expect
+            val exception = assertThrows<ExecutionException> {
+                executor.executeAsync(TestQuery()).get()
+            }
+
+            assertInstanceOf(NoDataException::class.java, exception.cause)
+            assertEquals(NoDataException::class.java, exception.cause!!::class.java)
         }
     }
 
