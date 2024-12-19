@@ -2,6 +2,10 @@ type Query {
     testQuery: TestData!
 }
 
+type Mutation {
+    testMutation: TestData!
+}
+
 type TestData {
     id: String!
 }

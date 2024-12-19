@@ -20,7 +20,8 @@ kover {
                 packages(
                         "com.expediagroup.sdk.lodgingconnectivity.supply.operation",
                         "com.expediagroup.sdk.lodgingconnectivity.sandbox.operation",
-                        "com.expediagroup.sdk.lodgingconnectivity.payment.operation"
+                        "com.expediagroup.sdk.lodgingconnectivity.payment.operation",
+                        "testservice"
                 )
             }
         }

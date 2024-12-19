@@ -14,7 +14,7 @@ import kotlin.collections.List
  */
 public object __Schema {
   public val all: List<CompiledNamedType> = listOf(
-        testservice.type.Query.type, testservice.type.TestData.type)
+        testservice.type.Mutation.type, testservice.type.Query.type, testservice.type.TestData.type)
 
   public fun possibleTypes(type: CompiledNamedType): List<ObjectType> = com.apollographql.apollo.api.possibleTypes(all, type)
 }
