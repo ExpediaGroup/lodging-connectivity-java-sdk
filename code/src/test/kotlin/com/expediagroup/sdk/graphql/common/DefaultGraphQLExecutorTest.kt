@@ -95,7 +95,7 @@ class DefaultGraphQLExecutorTest {
         }
 
         @Test
-        fun `should throw an ExpediaGroupServiceException if failed to get a successful response`() {
+        fun `should throw ExpediaGroupServiceException if failed to get a successful response`() {
             // Given
             mockWebServer.enqueue(MockResponse().setResponseCode(500))
 
