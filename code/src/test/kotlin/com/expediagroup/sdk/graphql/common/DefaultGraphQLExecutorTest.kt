@@ -201,9 +201,9 @@ class DefaultGraphQLExecutorTest {
     }
 
     @Nested
-    inner class ReflectionTestsForGetOrThrowDomainExceptionExtensionFunction {
+    inner class ReflectionTests {
         @Test
-        fun `should throw ExecutionException if the underlying cause is not NoDataException or ExpediaGroupServiceException`() {
+        fun `getOrThrowDomainException throws ExecutionException if the underlying cause is not NoDataException or ExpediaGroupServiceException`() {
             // Given
             val future = CompletableFuture<String>()
             val underlyingCause = RuntimeException("something went wrong")
@@ -226,7 +226,7 @@ class DefaultGraphQLExecutorTest {
         }
 
         @Test
-        fun `should wrap InterruptedException with ExpediaGroupServiceException when thread interruption occurs`() {
+        fun `getOrThrowDomainException wraps InterruptedException with ExpediaGroupServiceException when thread interruption occurs`() {
             val future = CompletableFuture<String>()
             val mockExecutor = DefaultGraphQLExecutor(mockk(), "https://example.com/graphql")
 
