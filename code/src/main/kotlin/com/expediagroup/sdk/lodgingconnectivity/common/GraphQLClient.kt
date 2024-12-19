@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.graphql.common
+package com.expediagroup.sdk.lodgingconnectivity.common
 
+import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 
 /**
