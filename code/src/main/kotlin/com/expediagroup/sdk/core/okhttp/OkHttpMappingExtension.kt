@@ -30,6 +30,7 @@ import com.expediagroup.sdk.core.http.Status
 import java.io.IOException
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.asResponseBody
+import okio.Buffer
 import okio.BufferedSink
 
 /**
@@ -181,13 +182,16 @@ fun Response.toOkHttpResponse(): okhttp3.Response {
 }
 
 /**
- * Converts SDK [ResponseBody] to OkHttp [ResponseBody].
+ * Converts SDK [ResponseBody] to OkHttp [okhttp3.ResponseBody].
  *
+ * The original [ResponseBody] is **closed** after mapping.
  * @receiver The SDK [ResponseBody] to convert.
  * @return An OkHttp [ResponseBody] object equivalent to the SDK [ResponseBody].
  */
-fun ResponseBody.toOkHttpResponseBody(): okhttp3.ResponseBody {
-    return source().asResponseBody(mediaType().toString().toMediaTypeOrNull(), contentLength())
+fun ResponseBody.toOkHttpResponseBody(): okhttp3.ResponseBody = use {
+    Buffer().apply {
+        source().readAll(this)
+    }.asResponseBody(mediaType().toString().toMediaTypeOrNull(), contentLength())
 }
 
 /**
@@ -215,12 +219,14 @@ fun okhttp3.Response.toSDKResponse(request: Request): Response = Response.builde
  * This adapter replicates the content of the original response body, including its source,
  * content length, and media type, for use within the SDK.
  *
+ * The original [okhttp3.ResponseBody] is **closed** after mapping.
+ *
  * @receiver The [okhttp3.ResponseBody] to convert.
  * @return A new [ResponseBody] compatible with the SDK.
  */
-fun okhttp3.ResponseBody.toSDKResponseBody(): ResponseBody = run {
+fun okhttp3.ResponseBody.toSDKResponseBody(): ResponseBody = use {
     create(
-        source = source(),
+        source = Buffer().apply { source().readAll(this) },
         contentLength = contentLength(),
         mediaType = contentType().toSDKMediaType()
     )

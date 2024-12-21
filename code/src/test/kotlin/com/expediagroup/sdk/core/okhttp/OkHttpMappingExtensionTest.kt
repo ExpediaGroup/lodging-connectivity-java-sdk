@@ -10,7 +10,9 @@ import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.http.ResponseBody
 import com.expediagroup.sdk.core.http.Status
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
@@ -242,6 +244,24 @@ class OkHttpMappingExtensionTest {
                 assertEquals("Response body", sdkResponseBody.source().use { source -> source.readUtf8() })
                 assertNull(sdkResponseBody.mediaType())
             }
+
+            @Test
+            fun `should close the original OkHttp response body after mapping to SDK response body`() {
+                // Given
+                val okHttpResponseBody = mockk<okhttp3.ResponseBody>(relaxed = true)
+                val mockContent = "Test content"
+
+                every { okHttpResponseBody.contentType() } returns "text/plain".toMediaTypeOrNull()
+                every { okHttpResponseBody.contentLength() } returns mockContent.length.toLong()
+                every { okHttpResponseBody.source() } returns Buffer().writeUtf8(mockContent)
+
+                // When
+                val sdkResponseBody = okHttpResponseBody.toSDKResponseBody()
+
+                // Expect
+                verify { okHttpResponseBody.close() }
+                assertEquals(mockContent, sdkResponseBody.source().readUtf8())
+            }
         }
     }
 
@@ -454,6 +474,24 @@ class OkHttpMappingExtensionTest {
                 assertEquals(content.length.toLong(), okHttpResponseBody.contentLength())
                 assertEquals(content, sdkResponseBody.source().use { source -> source.readUtf8() })
                 assertEquals(sdkResponseBody.source(), okHttpResponseBody.source())
+            }
+
+            @Test
+            fun `should close the original SDK response body after mapping to OkHttp response body`() {
+                // Given
+                val sdkResponseBody = mockk<ResponseBody>(relaxed = true)
+                val mockContent = "Test content"
+
+                every { sdkResponseBody.mediaType() } returns MediaType.parse("text/plain")
+                every { sdkResponseBody.contentLength() } returns mockContent.length.toLong()
+                every { sdkResponseBody.source() } returns Buffer().writeUtf8(mockContent)
+
+                // When
+                val okHttpResponseBody = sdkResponseBody.toOkHttpResponseBody()
+
+                // Expect
+                verify { sdkResponseBody.close() }
+                assertEquals(mockContent, okHttpResponseBody.source().readUtf8())
             }
         }
     }
