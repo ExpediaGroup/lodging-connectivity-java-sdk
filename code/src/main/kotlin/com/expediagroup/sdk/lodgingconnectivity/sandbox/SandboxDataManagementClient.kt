@@ -23,7 +23,7 @@ import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.DefaultRequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
-import com.expediagroup.sdk.lodgingconnectivity.configuration.SandboxApiEndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
@@ -75,9 +75,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.Sa
  * or timeouts.
  */
 class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
-    override val apiEndpoint = SandboxApiEndpointProvider.forEnvironment(
-        config.environment ?: ClientEnvironment.SANDBOX_PROD
-    )
+    override val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
 
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         requestExecutor = DefaultRequestExecutor(config, apiEndpoint),
