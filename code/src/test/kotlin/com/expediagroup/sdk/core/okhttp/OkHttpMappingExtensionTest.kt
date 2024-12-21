@@ -13,10 +13,12 @@ import com.expediagroup.sdk.core.http.Status
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import java.net.URI
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
 import okio.BufferedSink
+import okio.BufferedSource
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
@@ -121,7 +123,9 @@ class OkHttpMappingExtensionTest {
                 val okHttpRequestBody = object : okhttp3.RequestBody() {
                     override fun contentLength(): Long = contentLength
                     override fun contentType(): okhttp3.MediaType? = mediaTypeString.toMediaTypeOrNull()
-                    override fun writeTo(sink: BufferedSink) { sink.writeUtf8(content) }
+                    override fun writeTo(sink: BufferedSink) {
+                        sink.writeUtf8(content)
+                    }
                 }
 
                 // When
@@ -144,7 +148,9 @@ class OkHttpMappingExtensionTest {
                 val okHttpRequestBody = object : okhttp3.RequestBody() {
                     override fun contentType(): okhttp3.MediaType? = null
                     override fun contentLength(): Long = contentLength
-                    override fun writeTo(sink: BufferedSink) { sink.writeUtf8("Hello World") }
+                    override fun writeTo(sink: BufferedSink) {
+                        sink.writeUtf8("Hello World")
+                    }
                 }
 
                 // When
@@ -215,6 +221,25 @@ class OkHttpMappingExtensionTest {
                 assertEquals("application/json", sdkResponse.headers.get("Content-Type"))
                 assertNull(sdkResponse.body)
             }
+
+            @Test
+            fun `should close the original response body after mapping`() {
+                // Given
+                val okHttpResponse = mockk<okhttp3.Response>(relaxed = true)
+                val okHttpResponseBody = mockk<okhttp3.ResponseBody>(relaxed = true)
+                val sdkRequest = mockk<Request>(relaxed = true)
+
+                every { okHttpResponse.body } returns okHttpResponseBody
+                every { okHttpResponse.protocol } returns okhttp3.Protocol.HTTP_1_1
+                every { okHttpResponse.code } returns 200
+                every { okHttpResponseBody.contentType() } returns "text/plain".toMediaTypeOrNull()
+
+                // When
+                okHttpResponse.toSDKResponse(sdkRequest)
+
+                // Expect
+                verify { okHttpResponseBody.close() }
+            }
         }
 
         @Nested
@@ -246,7 +271,7 @@ class OkHttpMappingExtensionTest {
             }
 
             @Test
-            fun `should close the original OkHttp response body after mapping to SDK response body`() {
+            fun `should close the original response body after mapping`() {
                 // Given
                 val okHttpResponseBody = mockk<okhttp3.ResponseBody>(relaxed = true)
                 val mockContent = "Test content"
@@ -449,8 +474,28 @@ class OkHttpMappingExtensionTest {
                 assertEquals(sdkResponse.status.code, okHttpResponse.code)
                 assertEquals(CommonMediaTypes.TEXT_PLAIN.toString(), okHttpResponse.body?.contentType().toString())
                 assertEquals(content.length.toLong(), okHttpResponse.body?.contentLength())
-                assertEquals(content, sdkResponseBody.source().use { source -> source.readUtf8() })
-                assertEquals(sdkResponseBody.source(), okHttpResponse.body?.source())
+                assertEquals(content, okHttpResponse.body?.source().use { source -> source?.readUtf8() })
+            }
+
+            @Test
+            fun `should close the original response body after mapping`() {
+                // Given
+                val sdkResponse = mockk<Response>(relaxed = true)
+                val sdkResponseBody = mockk<ResponseBody>(relaxed = true)
+
+                every { sdkResponse.body } returns sdkResponseBody
+                every { sdkResponse.body?.source() } returns mockk<BufferedSource>(relaxed = true)
+                every { sdkResponse.request } returns mockk<Request>(relaxed = true)
+                every { sdkResponse.request.url } returns URI("https://example.com").toURL()
+                every { sdkResponse.request.method } returns Method.POST
+                every { sdkResponse.protocol } returns Protocol.HTTP_1_1
+                every { sdkResponse.status } returns Status.OK
+
+                // When
+                sdkResponse.toOkHttpResponse()
+
+                // Expect
+                verify { sdkResponse.body?.close() }
             }
         }
 
@@ -472,12 +517,11 @@ class OkHttpMappingExtensionTest {
                 // Expect
                 assertEquals(CommonMediaTypes.TEXT_PLAIN.toString(), okHttpResponseBody.contentType().toString())
                 assertEquals(content.length.toLong(), okHttpResponseBody.contentLength())
-                assertEquals(content, sdkResponseBody.source().use { source -> source.readUtf8() })
-                assertEquals(sdkResponseBody.source(), okHttpResponseBody.source())
+                assertEquals(content, okHttpResponseBody.source().use { source -> source.readUtf8() })
             }
 
             @Test
-            fun `should close the original SDK response body after mapping to OkHttp response body`() {
+            fun `should close the original response body after mapping`() {
                 // Given
                 val sdkResponseBody = mockk<ResponseBody>(relaxed = true)
                 val mockContent = "Test content"

@@ -170,21 +170,20 @@ fun RequestBody.toOkHttpRequestBody(): okhttp3.RequestBody {
  * @receiver The SDK [Response] to convert.
  * @return An OkHttp [Response] object equivalent to the SDK [Response].
  */
-fun Response.toOkHttpResponse(): okhttp3.Response {
-    return okhttp3.Response.Builder()
-        .request(request.toOkHttpRequest())
-        .headers(headers.toOkHttpHeaders())
-        .code(status.code)
-        .protocol(okhttp3.Protocol.valueOf(protocol.name))
-        .message(message ?: "")
-        .body(body?.toOkHttpResponseBody())
-        .build()
-}
+fun Response.toOkHttpResponse(): okhttp3.Response = okhttp3.Response.Builder()
+    .request(request.toOkHttpRequest())
+    .headers(headers.toOkHttpHeaders())
+    .code(status.code)
+    .protocol(okhttp3.Protocol.valueOf(protocol.name))
+    .message(message ?: "")
+    .body(body?.toOkHttpResponseBody())
+    .build()
 
 /**
  * Converts SDK [ResponseBody] to OkHttp [okhttp3.ResponseBody].
  *
  * The original [ResponseBody] is **closed** after mapping.
+ *
  * @receiver The SDK [ResponseBody] to convert.
  * @return An OkHttp [ResponseBody] object equivalent to the SDK [ResponseBody].
  */
