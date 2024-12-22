@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity
+package com.expediagroup.sdk.lodgingconnectivity.common
 
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManager

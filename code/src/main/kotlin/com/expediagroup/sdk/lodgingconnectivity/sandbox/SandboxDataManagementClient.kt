@@ -20,7 +20,7 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceExce
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.RequestExecutorImpl
+import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutorImpl
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
