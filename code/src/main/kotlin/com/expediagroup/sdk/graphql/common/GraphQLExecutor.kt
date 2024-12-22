@@ -84,6 +84,9 @@ abstract class GraphQLExecutor(
      */
     abstract fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>>
 
+    /**
+     * Closes the underlying [RequestExecutor] and [ApolloClient]
+     */
     override fun dispose() {
         requestExecutor.dispose()
         apolloClient.close()
