@@ -18,13 +18,13 @@ package com.expediagroup.sdk.lodgingconnectivity.payment
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
-import com.expediagroup.sdk.graphql.common.GraphQLClient
+import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.DefaultRequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.LodgingConnectivityLogMasking
-import com.expediagroup.sdk.lodgingconnectivity.configuration.PaymentApiEndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.GetPaymentInstrumentResponse
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.PaymentInstrumentQuery
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInstrumentOperation
@@ -42,8 +42,7 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
     init {
         LodgingConnectivityLogMasking.enable()
     }
-
-    override val apiEndpoint = PaymentApiEndpointProvider.forEnvironment(config.environment ?: ClientEnvironment.PROD)
+    override val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
 
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         requestExecutor = DefaultRequestExecutor(config, apiEndpoint),
