@@ -54,7 +54,7 @@ enum class AuthEndpoint(val url: String) {
  * If an unsupported environment is passed, an `IllegalArgumentException` is thrown.
  */
 internal object EndpointProvider {
-    fun getSupplyApiEndpoint(environment: ClientEnvironment?): ApiEndpoint {
+    fun getSupplyApiEndpoint(environment: ClientEnvironment? = null): ApiEndpoint {
         val env = environment ?: ClientEnvironment.PROD
 
         return try {
@@ -72,7 +72,7 @@ internal object EndpointProvider {
         }
     }
 
-    fun getPaymentApiEndpoint(environment: ClientEnvironment?): ApiEndpoint {
+    fun getPaymentApiEndpoint(environment: ClientEnvironment? = null): ApiEndpoint {
         val env = environment ?: ClientEnvironment.PROD
 
         return try {
@@ -90,7 +90,7 @@ internal object EndpointProvider {
         }
     }
 
-    fun getSandboxApiEndpoint(environment: ClientEnvironment?): ApiEndpoint {
+    fun getSandboxApiEndpoint(environment: ClientEnvironment? = null): ApiEndpoint {
         val env = environment ?: ClientEnvironment.SANDBOX_PROD
 
         return try {
@@ -108,7 +108,7 @@ internal object EndpointProvider {
         }
     }
 
-    private fun getAuthEndpoint(environment: ClientEnvironment?): String {
+    private fun getAuthEndpoint(environment: ClientEnvironment? = null): String {
         val env = environment ?: ClientEnvironment.PROD
 
         return try {
