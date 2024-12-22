@@ -48,12 +48,8 @@ class BearerAuthenticationManagerTest {
     }
 
 
-    /**
-     * Test successful authentication flow.
-     */
     @Test
-    fun `authenticate should store token on successful response`() {
-        // Arrange
+    fun `should authenticate and store access token on successful response`() {
         val expiresIn: Long = 3600L
         var available: Int? = null
         val response = Response.builder()
@@ -74,19 +70,14 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returns response
 
-        // Act
         authenticationManager.authenticate()
 
-        // Assert
         assertEquals("Bearer first_token", authenticationManager.getAuthorizationHeaderValue())
         verify(exactly = 1) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test authentication failure due to server error.
-     */
     @Test
-    fun `authenticate should throw ExpediaGroupAuthException on failure response`() {
+    fun `should throw ExpediaGroupAuthException on failure response`() {
         // Arrange
         val request = Request.builder().url("http://localhost").method(Method.POST).build()
         val response = Response.builder()
@@ -97,7 +88,6 @@ class BearerAuthenticationManagerTest {
             .build()
         every { requestExecutor.execute(any()) } returns response
 
-        // Act & Assert
         val exception = assertThrows<ExpediaGroupAuthException> {
             authenticationManager.authenticate()
         }
@@ -105,15 +95,11 @@ class BearerAuthenticationManagerTest {
         verify(exactly = 1) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test authentication failure due to network issues.
-     */
     @Test
     fun `authenticate should throw ExpediaGroupNetworkException on network failure`() {
         // Arrange
         every { requestExecutor.execute(any()) } throws ExpediaGroupNetworkException("Network error")
 
-        // Act & Assert
         val exception = assertThrows<ExpediaGroupNetworkException> {
             authenticationManager.authenticate()
         }
@@ -121,12 +107,8 @@ class BearerAuthenticationManagerTest {
         verify(exactly = 1) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test authentication failure due to response parsing issues.
-     */
     @Test
     fun `authenticate should throw ExpediaGroupResponseParsingException on parsing failure`() {
-        // Arrange
         var available: Int? = null
         val response = Response.builder()
             .body(
@@ -146,7 +128,6 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returns response
 
-        // Act & Assert
         val exception = assertThrows<ExpediaGroupResponseParsingException> {
             authenticationManager.authenticate()
         }
@@ -154,11 +135,8 @@ class BearerAuthenticationManagerTest {
         verify(exactly = 1) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test isTokenAboutToExpire when token is not about to expire.
-     */
     @Test
-    fun `isTokenAboutToExpire should return false when token is valid`() {
+    fun `should treat the stored token as a valid token when not expired`() {
         // Arrange
         val expiresIn: Long = 3600L
         var available: Int? = null
@@ -180,20 +158,14 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returns response
 
-        // Act
         authenticationManager.authenticate()
         val isAboutToExpire = authenticationManager.isTokenAboutToExpire()
 
-        // Assert
         assertFalse(isAboutToExpire)
     }
 
-    /**
-     * Test isTokenAboutToExpire when token is about to expire.
-     */
     @Test
-    fun `isTokenAboutToExpire should return true when token is about to expire`() {
-        // Arrange
+    fun `should treat the stored token as a invalid token if expired`() {
         val expiresIn: Long = 1L
         var available: Int? = null
         val response = Response.builder()
@@ -220,23 +192,16 @@ class BearerAuthenticationManagerTest {
         // Create a spy of the authentication manager to manipulate isTokenAboutToExpire
         val spyManager = spyk(authenticationManager)
 
-        // Mock isTokenAboutToExpire to return true
         every { spyManager.isTokenAboutToExpire() } returns true
 
-        // Act
         val isAboutToExpire = spyManager.isTokenAboutToExpire()
 
-        // Assert
         assertTrue(isAboutToExpire)
         verify(exactly = 1) { spyManager.isTokenAboutToExpire() }
     }
 
-    /**
-     * Test clearing authentication.
-     */
     @Test
-    fun `clearAuthentication should reset the token`() {
-        // Arrange
+    fun `should handle token clearance`() {
         val expiresIn: Long = 3600L
         var available: Int? = null
         val response = Response.builder()
@@ -257,37 +222,26 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returns response
 
-        // Act
         authenticationManager.authenticate()
         assertEquals("Bearer first_token", authenticationManager.getAuthorizationHeaderValue())
 
         authenticationManager.clearAuthentication()
 
-        // Assert
         assertEquals("Bearer ", authenticationManager.getAuthorizationHeaderValue())
     }
 
-    /**
-     * Test getAuthorizationHeaderValue when no token is present.
-     */
     @Test
     fun `getAuthorizationHeaderValue should return empty bearer when no token is present`() {
         // Arrange
         authenticationManager.clearAuthentication()
 
-        // Act
         val authHeader = authenticationManager.getAuthorizationHeaderValue()
 
-        // Assert
         assertEquals("Bearer ", authHeader)
     }
 
-    /**
-     * Test authenticate multiple times sequentially.
-     */
     @Test
     fun `authenticate multiple times should update the token each time`() {
-        // Arrange
         val expiresIn: Long = 3600L
         var available: Int? = null
         val response1 = Response.builder()
@@ -325,25 +279,19 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returnsMany listOf(response1, response2)
 
-        // Act
         authenticationManager.authenticate()
         val firstAuthHeader = authenticationManager.getAuthorizationHeaderValue()
 
         authenticationManager.authenticate()
         val secondAuthHeader = authenticationManager.getAuthorizationHeaderValue()
 
-        // Assert
         assertEquals("Bearer first_token", firstAuthHeader)
         assertEquals("Bearer second_token", secondAuthHeader)
         verify(exactly = 2) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test authentication failure due to invalid credentials.
-     */
     @Test
     fun `authenticate should throw ExpediaGroupAuthException on invalid credentials`() {
-        // Arrange
         // Assuming server returns 401 Unauthorized for invalid credentials
         val request = Request.builder().url("http://localhost").method(Method.POST).build()
         val response = Response.builder()
@@ -354,7 +302,6 @@ class BearerAuthenticationManagerTest {
             .build()
         every { requestExecutor.execute(any()) } returns response
 
-        // Act & Assert
         val exception = assertThrows<ExpediaGroupAuthException> {
             authenticationManager.authenticate()
         }
@@ -362,12 +309,8 @@ class BearerAuthenticationManagerTest {
         verify(exactly = 1) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test authentication failure when response body is null.
-     */
     @Test
     fun `authenticate should throw ExpediaGroupResponseParsingException when response body is null`() {
-        // Arrange
 
         val response = Response.builder()
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
@@ -378,7 +321,6 @@ class BearerAuthenticationManagerTest {
             .build()
         every { requestExecutor.execute(any()) } returns response
 
-        // Act & Assert
         assertThrows<ExpediaGroupResponseParsingException> {
             authenticationManager.authenticate()
         }
@@ -386,12 +328,8 @@ class BearerAuthenticationManagerTest {
         verify(exactly = 1) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test multiple sequential clear and authenticate operations.
-     */
     @Test
     fun `sequential clear and authenticate operations should maintain consistent state`() {
-        // Arrange
         val expiresIn: Long = 3600L
         var available: Int? = null
         val response1 = Response.builder()
@@ -429,7 +367,6 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returnsMany listOf(response1, response2)
 
-        // Act
         authenticationManager.authenticate()
         assertEquals("Bearer first_token", authenticationManager.getAuthorizationHeaderValue())
 
@@ -439,13 +376,9 @@ class BearerAuthenticationManagerTest {
         authenticationManager.authenticate()
         assertEquals("Bearer second_token", authenticationManager.getAuthorizationHeaderValue())
 
-        // Assert
         verify(exactly = 2) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test isTokenAboutToExpire at the exact expiration threshold.
-    //     */
     @Test
     fun `isTokenAboutToExpire should return true at expiration threshold`() {
         val expiresIn: Long = 0L
@@ -468,20 +401,14 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returns response
 
-        // Act
         authenticationManager.authenticate()
         val isAboutToExpire = authenticationManager.isTokenAboutToExpire()
 
-        // Assert
         assertTrue(isAboutToExpire)
     }
 
-    /**
-     * Test authentication when the response body is empty.
-     */
     @Test
     fun `authenticate should throw ExpediaGroupResponseParsingException when response body is empty`() {
-        // Arrange
         var available: Int? = null
         val response = Response.builder()
             .body(
@@ -501,7 +428,6 @@ class BearerAuthenticationManagerTest {
 
         every { requestExecutor.execute(any()) } returns response
 
-        // Act & Assert
         val exception = assertThrows<ExpediaGroupResponseParsingException> {
             authenticationManager.authenticate()
         }
@@ -509,9 +435,6 @@ class BearerAuthenticationManagerTest {
         verify(exactly = 1) { requestExecutor.execute(any()) }
     }
 
-    /**
-     * Test handling of delayed responses (timeout simulation).
-     */
     @Test
     fun `authenticate should handle delayed responses gracefully`() {
         val expiresIn: Long = 3600L
@@ -537,12 +460,10 @@ class BearerAuthenticationManagerTest {
             response
         }
 
-        // Act
         val future = Executors.newSingleThreadExecutor().submit {
             authenticationManager.authenticate()
         }
 
-        // Assert
         assertDoesNotThrow {
             future.get(1, TimeUnit.SECONDS)
         }

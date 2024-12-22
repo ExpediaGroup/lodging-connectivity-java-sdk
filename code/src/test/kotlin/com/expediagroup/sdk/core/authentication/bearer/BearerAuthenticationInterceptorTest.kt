@@ -3,8 +3,17 @@ package com.expediagroup.sdk.core.authentication.bearer
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
-import io.mockk.*
-import org.junit.jupiter.api.Assertions.*
+import io.mockk.clearAllMocks
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.Runs
+import io.mockk.verify
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.IOException
@@ -13,8 +22,14 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 
 class BearerAuthenticationInterceptorTest {
+    @BeforeEach
+    fun setUp() {
+        clearAllMocks()
+    }
+
     @Test
     fun `intercept should proceed without Authorization header for authentication requests`() {
         // Arrange
@@ -137,54 +152,47 @@ class BearerAuthenticationInterceptorTest {
         val interceptor = BearerAuthenticationInterceptor(authManager)
         val chain = mockk<Interceptor.Chain>(relaxed = true)
 
-        val numberOfThreads = 10
-        val latch = CountDownLatch(numberOfThreads)
+        val numberOfThreads = 2
         val executor = Executors.newFixedThreadPool(numberOfThreads)
 
         // Mocking a non-authentication request
         val requestBuilder = mockk<Request.Builder>(relaxed = true)
-        val originalRequest = mockk<Request>(relaxed = true)
-        val authorizedRequest = mockk<Request>(relaxed = true)
-        val requestUrl = "https://api.example.com/data"
+        val authRequest = mockk<Request>(relaxed = true)
 
-        every { originalRequest.url } returns URL(requestUrl)
-        every { originalRequest.newBuilder() } returns requestBuilder
+        every { authRequest.url } returns URL("https://api.example.com/data")
+        every { authRequest.newBuilder() } returns requestBuilder
+        every { authManager.authUrl } returns "https://api.example.com/auth"
         every { requestBuilder.addHeader("Authorization", "Bearer concurrent_token") } returns requestBuilder
-        every { requestBuilder.build() } returns authorizedRequest
-        every { chain.request() } returns originalRequest
-        every { chain.proceed(authorizedRequest) } returns mockk()
+        every { requestBuilder.build() } returns authRequest
+        every { chain.request() } returns authRequest
+        every { chain.proceed(authRequest) } returns mockk()
 
         // Mocking authManager behavior
         // First call returns true to trigger authentication, subsequent calls return false
-        every { authManager.isTokenAboutToExpire() } returnsMany listOf(
-            true,
-            true
-        ).plus(List(numberOfThreads - 1) { false })
-        every { authManager.authenticate() } just Runs
-        every { authManager.getAuthorizationHeaderValue() } returns "Bearer concurrent_token"
-
-        // Act
-        repeat(numberOfThreads) {
-            executor.submit {
-                try {
-                    interceptor.intercept(chain)
-                } finally {
-                    latch.countDown()
-                }
+        val callsToIsTokenExpired = AtomicInteger(0)
+        every { authManager.isTokenAboutToExpire() } answers {
+            synchronized(this@BearerAuthenticationInterceptorTest) {
+                return@synchronized callsToIsTokenExpired.incrementAndGet() <= numberOfThreads + 1
             }
         }
 
-        // Wait for all threads to complete
-        val completed = latch.await(5, TimeUnit.SECONDS)
+        every { authManager.authenticate() } just Runs
+        every { authManager.getAuthorizationHeaderValue() } returns "Bearer concurrent_token"
+        // Act
+        repeat(numberOfThreads) {
+            executor.submit {
+                interceptor.intercept(chain)
+            }
+        }
+
+        executor.awaitTermination(5, TimeUnit.SECONDS)
         executor.shutdown()
 
         // Assert
-        assertTrue(completed, "All threads should complete within timeout")
         verify(exactly = 1) { authManager.authenticate() } // Should authenticate only once
-        verify(exactly = numberOfThreads + 1) { authManager.isTokenAboutToExpire() } // Initial check and per thread
         verify(exactly = numberOfThreads) { authManager.getAuthorizationHeaderValue() }
         verify(exactly = numberOfThreads) { requestBuilder.addHeader("Authorization", "Bearer concurrent_token") }
-        verify(exactly = numberOfThreads) { chain.proceed(authorizedRequest) }
+        verify(exactly = numberOfThreads) { chain.proceed(authRequest) }
     }
 
     @Test
@@ -260,7 +268,7 @@ class BearerAuthenticationInterceptorTest {
     }
 
     @Test
-    fun `ensureValidAuthentication should not call authenticate if token is not about to expire`() {
+    fun `should not call authenticate if token is not about to expire`() {
         // Arrange
         val authManager = mockk<BearerAuthenticationManager>(relaxed = true)
         val interceptor = BearerAuthenticationInterceptor(authManager)

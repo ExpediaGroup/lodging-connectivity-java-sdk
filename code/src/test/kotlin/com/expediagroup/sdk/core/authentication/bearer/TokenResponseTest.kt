@@ -15,14 +15,16 @@ import org.junit.jupiter.api.assertThrows
 
 class TokenResponseTest {
     @Test
-    fun `parsed instances accessToken value should map to api response`() {
+    fun `should map to the expected api response`() {
         val accessToken: String = "token"
+        val expiresIn: Long = 3600L
+
         var available: Int? = null
         val tokenResponse = TokenResponse.parse(
             Response.builder()
                 .body(
                     ResponseBody.create(
-                        """{ "access_token": "$accessToken", "expires_in": 3600 }""".toByteArray().inputStream().also {
+                        """{ "access_token": "$accessToken", "expires_in": $expiresIn }""".toByteArray().inputStream().also {
                             available = it.available()
                         },
                         CommonMediaTypes.APPLICATION_FORM_URLENCODED,
@@ -37,30 +39,6 @@ class TokenResponseTest {
         )
 
         assertEquals(tokenResponse.accessToken, accessToken)
-    }
-
-    @Test
-    fun `parse results instances expiresIn value should map to api response`() {
-        val expiresIn: Long = 3600L
-        var available: Int? = null
-        val tokenResponse = TokenResponse.parse(
-            Response.builder()
-                .body(
-                    ResponseBody.create(
-                        """{ "access_token": "accessToken", "expires_in": $expiresIn }""".toByteArray().inputStream().also {
-                            available = it.available()
-                        },
-                        CommonMediaTypes.APPLICATION_FORM_URLENCODED,
-                        available!!.toLong()
-                    )
-                )
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .message("Accepted")
-                .request(Request.builder().url("http://localhost").method(Method.POST).build())
-                .build()
-        )
-
         assertEquals(tokenResponse.expiresIn, expiresIn)
     }
 
