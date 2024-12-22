@@ -10,6 +10,7 @@ import com.expediagroup.sdk.core.client.RequestExecutor
 import com.expediagroup.sdk.core.http.Protocol
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.http.ResponseBody
 import com.expediagroup.sdk.core.http.Status
 import io.mockk.every
 import io.mockk.mockk
@@ -82,6 +83,28 @@ class ApolloHttpEngineTest {
         verify { requestExecutor.execute(match { it.match(sdkRequest) }) }
         verify { callback.onResponse(match { it.statusCode == 200 }) }
         verify(exactly = 0) { callback.onFailure(any()) }
+    }
+
+    @Test
+    fun `should close the original SDK response after mapping to Apollo response`() {
+        // Given
+        val apolloRequest = HttpRequest.Builder(method = HttpMethod.Post, url = "https://example.com").build()
+
+        val sdkResponse = mockk<Response>(relaxed = true)
+
+        every { sdkResponse.status } returns Status.OK
+        every { sdkResponse.protocol } returns Protocol.HTTP_1_1
+        every { sdkResponse.request } returns mockk<Request>(relaxed = true)
+        every { sdkResponse.body } returns mockk<ResponseBody>(relaxed = true)
+
+        every { requestExecutor.execute(any()) } returns sdkResponse
+
+        // When
+        httpEngine.execute(apolloRequest, callback, disposable)
+
+        // Expect
+        verify { callback.onResponse(match { it.statusCode == 200 }) }
+        verify { sdkResponse.close() }
     }
 
     @Test

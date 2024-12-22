@@ -10,8 +10,12 @@ import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.http.ResponseBody
 import com.expediagroup.sdk.core.http.Status
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import okio.Buffer
 import okio.BufferedSink
+import okio.BufferedSource
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -144,9 +148,8 @@ class ApolloHttpMappingExtensionTest {
 
         // Expect
         assertEquals(sdkResponse.status.code, apolloResponse.statusCode)
-        assertEquals("application/json", sdkResponse.headers.get("Content-Type"))
-        assertEquals("test-sdk", sdkResponse.headers.get("User-Agent"))
-        assertEquals(responseString, sdkResponse.body?.source()?.readUtf8())
+        assertEquals("application/json", apolloResponse.headers.find { it.name == "content-type" }?.value)
+        assertEquals("test-sdk", apolloResponse.headers.find { it.name == "user-agent" }?.value)
     }
 
     @Test
@@ -170,7 +173,25 @@ class ApolloHttpMappingExtensionTest {
 
         // Expect
         assertEquals(sdkResponse.status.code, apolloResponse.statusCode)
-        assertEquals("application/json", sdkResponse.headers.get("Content-Type"))
-        assertEquals("test-sdk", sdkResponse.headers.get("User-Agent"))
+        assertEquals("application/json", apolloResponse.headers.find { it.name == "content-type" }?.value)
+        assertEquals("test-sdk", apolloResponse.headers.find { it.name == "user-agent" }?.value)
+    }
+
+    @Test
+    fun `toApolloResponse should close the original SDK response resource`() {
+        // Given
+        val mockResponse = mockk<Response>(relaxed = true)
+        val mockResponseBody = mockk<ResponseBody>(relaxed = true)
+        val mockSource = mockk<BufferedSource>(relaxed = true)
+
+        every { mockResponse.body } returns mockResponseBody
+        every { mockResponseBody.source() } returns mockSource
+
+        // When
+        mockResponse.toApolloResponse()
+
+        // Expect
+        verify { mockResponse.close() }
+        verify { mockSource.close() }
     }
 }
