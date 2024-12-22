@@ -20,7 +20,13 @@ import com.apollographql.apollo.api.http.HttpBody
 import com.apollographql.apollo.api.http.HttpHeader
 import com.apollographql.apollo.api.http.HttpRequest
 import com.apollographql.apollo.api.http.HttpResponse
-import com.expediagroup.sdk.core.http.*
+import com.expediagroup.sdk.core.http.Headers
+import com.expediagroup.sdk.core.http.MediaType
+import com.expediagroup.sdk.core.http.Method
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.RequestBody
+import com.expediagroup.sdk.core.http.Response
+import okio.Buffer
 import okio.BufferedSink
 
 fun HttpRequest.toSDKRequest(): Request {
@@ -56,9 +62,16 @@ fun HttpBody.toSDKRequestBody(): RequestBody {
     }
 }
 
-fun Response.toApolloResponse(): HttpResponse {
-    return HttpResponse.Builder(status.code)
-        .apply { body?.let { body(it.source()) } }
+fun Response.toApolloResponse(): HttpResponse = use {
+    HttpResponse.Builder(status.code)
+        .apply {
+            body?.let {
+                val clonedBody = Buffer().apply {
+                    it.source().use { source -> source.readAll(this) }
+                }
+                body(clonedBody)
+            }
+        }
         .headers(headers.toApolloHeaders())
         .build()
 }
