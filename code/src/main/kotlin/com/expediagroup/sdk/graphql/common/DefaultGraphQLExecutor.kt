@@ -29,7 +29,6 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ExecutionException
 
-
 /**
  * A streamlined implementation of [GraphQLExecutor] that handles GraphQL operations with
  * error handling and response processing. This executor processes both queries and mutations
@@ -44,7 +43,10 @@ import java.util.concurrent.ExecutionException
  * @param requestExecutor used for HTTP request execution within the SDK
  * @param serverUrl GraphQL server URL
  */
-internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUrl: String) : GraphQLExecutor() {
+internal class DefaultGraphQLExecutor(
+    requestExecutor: RequestExecutor,
+    serverUrl: String
+) : GraphQLExecutor(requestExecutor) {
 
     /**
      * The Apollo Client used to execute GraphQL requests, configured with a custom HTTP client.
@@ -53,7 +55,6 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
         .serverUrl(serverUrl)
         .httpEngine(ApolloHttpEngine(requestExecutor))
         .build()
-
 
     /**
      * Asynchronously executes a GraphQL query and returns a [CompletableFuture] containing the complete
@@ -108,7 +109,6 @@ internal class DefaultGraphQLExecutor(requestExecutor: RequestExecutor, serverUr
     override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> {
         return executeAsync(mutation).getOrThrowDomainException()
     }
-
 
     /**
      * Handles the response from a GraphQL operation, determining whether to complete the provided CompletableFuture

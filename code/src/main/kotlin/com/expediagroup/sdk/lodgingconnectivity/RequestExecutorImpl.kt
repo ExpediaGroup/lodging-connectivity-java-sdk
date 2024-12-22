@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.lodgingconnectivity.common
+package com.expediagroup.sdk.lodgingconnectivity
 
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManager
@@ -6,10 +6,7 @@ import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.RequestExecutor
 import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
-import com.expediagroup.sdk.core.http.Request
-import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
-import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
 import com.expediagroup.sdk.core.logging.LoggingInterceptor
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport
@@ -23,7 +20,7 @@ internal fun getHttpTransport(configuration: ClientConfiguration): Transport = w
     is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getInstance(configuration.buildOkHttpConfiguration()))
 }
 
-class DefaultRequestExecutor(
+class RequestExecutorImpl(
     configuration: ClientConfiguration,
     apiEndpoint: ApiEndpoint
 ) : RequestExecutor(getHttpTransport(configuration)) {
@@ -39,15 +36,5 @@ class DefaultRequestExecutor(
             )
         )
     )
-
-    override fun execute(request: Request): Response {
-        val chainExecutor = InterceptorsChainExecutor(
-            interceptors = interceptors,
-            request = request,
-            transport = this.transport
-        )
-
-        return chainExecutor.proceed(request)
-    }
 }
 

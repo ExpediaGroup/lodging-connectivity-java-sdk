@@ -41,10 +41,10 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  * }
  * ```
  *
- * @see Request SDK request model that wraps HTTP request details
- * @see Response SDK response model that wraps HTTP response details
+ * @see [Request]
+ * @see [Response]
  */
-interface Transport {
+interface Transport : Disposable {
     /**
      * Executes an HTTP request synchronously.
      *

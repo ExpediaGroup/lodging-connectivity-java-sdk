@@ -48,4 +48,9 @@ class OkHttpTransport(
     override fun execute(request: Request): Response {
         return request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
     }
+
+    override fun dispose() {
+        okHttpClient.dispatcher.executorService.shutdown()
+        okHttpClient.connectionPool.evictAll()
+    }
 }
