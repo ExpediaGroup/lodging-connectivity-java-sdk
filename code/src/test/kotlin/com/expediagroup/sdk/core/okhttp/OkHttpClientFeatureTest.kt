@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-class OkHttpClientConfigurationTest {
+class OkHttpClientFeatureTest {
 
     @Nested
-    inner class OkHttpClientConfigurationBuilderTest {
+    inner class OkHttpClientFeatureBuilderTest {
         @Test
         fun `builder should build configuration with all properties set`() {
             // Given
