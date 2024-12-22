@@ -16,13 +16,14 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
-import com.expediagroup.sdk.graphql.common.GraphQLClient
+import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.DefaultRequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
-import com.expediagroup.sdk.lodgingconnectivity.configuration.SupplyApiEndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelVrboReservationInput
@@ -60,7 +61,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.Reserv
  */
 class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
 
-    override val apiEndpoint = SupplyApiEndpointProvider.forEnvironment(config.environment ?: ClientEnvironment.PROD)
+    override val apiEndpoint = EndpointProvider.getSupplyApiEndpoint(config.environment)
 
     override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
         requestExecutor = DefaultRequestExecutor(config, apiEndpoint),
@@ -82,7 +83,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
         initialCursor: String? = null
-    ) = run {
+    ): ReservationsPaginator = run {
         ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = PropertyReservationsInput(propertyId),
@@ -105,7 +106,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         propertyId: String,
         pageSize: Int,
         initialCursor: String? = null
-    ) = run {
+    ): ReservationsPaginator = run {
         ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = PropertyReservationsInput(propertyId),
@@ -129,7 +130,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
         initialCursor: String? = null
-    ) = run {
+    ): ReservationsPaginator = run {
         ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = input,
@@ -152,7 +153,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: PropertyReservationsInput,
         pageSize: Int,
         initialCursor: String? = null
-    ) = run {
+    ): ReservationsPaginator = run {
         ReservationsPaginator(
             graphQLExecutor = graphQLExecutor,
             input = input,
@@ -167,7 +168,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param propertyId The unique identifier of the property.
      * @return A [ReservationsStream] to stream through reservations one at a time.
      */
-    fun getReservationsStream(propertyId: String) = run {
+    fun getReservationsStream(propertyId: String): ReservationsStream = run {
         ReservationsStream(getReservationsPaginator(propertyId))
     }
 
@@ -177,7 +178,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [PropertyReservationsInput] specifying the property and filter criteria.
      * @return A [ReservationsStream] to stream through reservations one at a time.
      */
-    fun getReservationsStream(input: PropertyReservationsInput) = run {
+    fun getReservationsStream(input: PropertyReservationsInput): ReservationsStream = run {
         ReservationsStream(getReservationsPaginator(input))
     }
 
@@ -187,13 +188,13 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [CancelReservationInput] containing the details of the reservation to be canceled.
      * @param selections An optional [ReservationSelections] specifying additional fields to include in the response.
      * @return A [CancelReservationResponse] containing the canceled reservation data (if available) and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
     @JvmOverloads
     fun cancelReservation(
         input: CancelReservationInput,
         selections: ReservationSelections? = null
-    ) = run {
+    ): CancelReservationResponse = run {
         cancelReservationOperation(graphQLExecutor, input, selections)
     }
 
@@ -203,13 +204,13 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [CancelReservationReconciliationInput] containing the details of the reservation reconciliation to be canceled.
      * @param selections An optional [ReservationSelections] specifying additional fields to include in the response.
      * @return A [CancelReservationReconciliationResponse] containing the canceled reconciliation data (if available) and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
     @JvmOverloads
     fun cancelReservationReconciliation(
         input: CancelReservationReconciliationInput,
         selections: ReservationSelections? = null
-    ) = run {
+    ): CancelReservationReconciliationResponse = run {
         cancelReservationReconciliationOperation(graphQLExecutor, input, selections)
     }
 
@@ -219,13 +220,13 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [CancelVrboReservationInput] containing the details of the VRBO reservation to be canceled.
      * @param selections An optional [ReservationSelections] specifying additional fields to include in the response.
      * @return A [CancelVrboReservationResponse] containing the canceled reservation data (if available) and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
     @JvmOverloads
     fun cancelVrboReservation(
         input: CancelVrboReservationInput,
         selections: ReservationSelections? = null
-    ) = run {
+    ): CancelVrboReservationResponse = run {
         cancelVrboReservationOperation(graphQLExecutor, input, selections)
     }
 
@@ -235,13 +236,13 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [ChangeReservationReconciliationInput] containing the new reconciliation details for the reservation.
      * @param selections An optional [ReservationSelections] specifying additional fields to include in the response.
      * @return A [ChangeReservationReconciliationResponse] containing the updated reconciliation data (if available) and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
     @JvmOverloads
     fun changeReservationReconciliation(
         input: ChangeReservationReconciliationInput,
         selections: ReservationSelections? = null
-    ) = run {
+    ): ChangeReservationReconciliationResponse = run {
         changeReservationReconciliationOperation(graphQLExecutor, input, selections)
     }
 
@@ -251,13 +252,13 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [ConfirmReservationNotificationInput] containing the details of the reservation notification to confirm.
      * @param selections An optional [ReservationSelections] specifying additional fields to include in the response.
      * @return A [ConfirmReservationNotificationResponse] containing the confirmed reservation data (if available) and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
     @JvmOverloads
     fun confirmReservationNotification(
         input: ConfirmReservationNotificationInput,
         selections: ReservationSelections? = null
-    ) = run {
+    ): ConfirmReservationNotificationResponse = run {
         confirmReservationNotificationOperation(graphQLExecutor, input, selections)
     }
 
@@ -267,13 +268,13 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [RefundReservationInput] containing the details of the reservation to be refunded.
      * @param selections An optional [ReservationSelections] specifying additional fields to include in the response.
      * @return A [RefundReservationResponse] containing the refunded reservation data (if available) and the full raw response.
-     * @throws ExpediaGroupServiceException If an error occurs during the operation execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
     @JvmOverloads
     fun refundReservation(
         input: RefundReservationInput,
         selections: ReservationSelections? = null
-    ) = run {
+    ): RefundReservationResponse = run {
         refundReservationOperation(graphQLExecutor, input, selections)
     }
 }

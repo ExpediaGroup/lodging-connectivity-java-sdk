@@ -8,6 +8,7 @@ apollo {
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
+        generateDataBuilders.set(true)
         generateMethods.set(List.of("equalsHashCode", "toString"))
 
         /**** Custom Scalars Mappings ****/
@@ -40,6 +41,7 @@ apollo {
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
+        generateDataBuilders.set(true)
         generateMethods.set(List.of("equalsHashCode", "toString"))
 
         /**** Custom Scalars Mappings ****/
@@ -57,11 +59,18 @@ apollo {
 
         /* Generated models configurations */
         generateInputBuilders.set(true)
+        generateDataBuilders.set(true)
         generateMethods.set(List.of("equalsHashCode", "toString"))
 
         /**** Custom Scalars Mappings ****/
         mapScalar("Date", "java.time.LocalDate", "com.apollographql.adapter.core.JavaLocalDateAdapter")
 
         plugin(project(":apollo-compiler-plugin"))
+    }
+    service("testservice") {
+        srcDir("src/test/graphql")
+        packageName.set("testservice")
+        outputDir.set(file("src/test/graphql/generated"))
+        generateDataBuilders.set(true)
     }
 }

@@ -47,7 +47,6 @@ class BearerAuthenticationInterceptor(
      * @return The [Response] resulting from the executed request.
      * @throws ExpediaGroupAuthException If authentication fails due to invalid credentials or server errors
      */
-    @Throws(ExpediaGroupAuthException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
@@ -75,7 +74,6 @@ class BearerAuthenticationInterceptor(
      *
      * @throws ExpediaGroupAuthException If authentication fails
      */
-    @Throws(ExpediaGroupAuthException::class)
     private fun ensureValidAuthentication() {
         try {
             if (authManager.isTokenAboutToExpire()) {

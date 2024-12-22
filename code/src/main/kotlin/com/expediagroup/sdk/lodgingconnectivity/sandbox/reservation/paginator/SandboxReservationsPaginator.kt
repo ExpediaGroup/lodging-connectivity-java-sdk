@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
@@ -88,7 +89,7 @@ class SandboxReservationsPaginator @JvmOverloads constructor(
      *
      * @return A [SandboxReservationsPaginatedResponse] containing the sandbox reservations, raw response, and pagination details.
      * @throws NoSuchElementException If no more pages are available to fetch.
-     * @throws ExpediaGroupServiceException If an error occurs during the query execution.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
      */
     override fun next(): SandboxReservationsPaginatedResponse {
         if (!hasNext()) {

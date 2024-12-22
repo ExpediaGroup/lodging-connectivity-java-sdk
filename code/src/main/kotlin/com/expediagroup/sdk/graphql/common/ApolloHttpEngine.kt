@@ -1,47 +1,65 @@
+/*
+ * Copyright (C) 2024 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.expediagroup.sdk.graphql.common
 
-import com.apollographql.apollo.api.http.HttpHeader
-import com.apollographql.apollo.api.http.HttpMethod
+import com.apollographql.apollo.api.http.HttpRequest
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.java.client.ApolloDisposable
 import com.apollographql.java.client.network.http.HttpCallback
 import com.apollographql.java.client.network.http.HttpEngine
 import com.expediagroup.sdk.core.client.RequestExecutor
-import com.expediagroup.sdk.core.http.MediaType
-import com.expediagroup.sdk.core.http.Method
-import com.expediagroup.sdk.core.http.Request
-import com.expediagroup.sdk.core.http.RequestBody
-import com.expediagroup.sdk.core.http.Response
-import java.io.IOException
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
-import okio.BufferedSink
 
+/**
+ * An implementation of Apollo's [HttpEngine] that delegates HTTP execution to a provided [RequestExecutor].
+ *
+ * @param requestExecutor The [RequestExecutor] used to execute HTTP requests. It is expected that the provided
+ * executor takes a request from the Apollo SDK request object model and produces a suitable HTTP response.
+ */
 class ApolloHttpEngine(
     private val requestExecutor: RequestExecutor
 ) : HttpEngine {
     private val activeRequests = ConcurrentHashMap<String, ApolloDisposable>()
     private val isDisposed = AtomicBoolean(false)
 
-    override fun execute(request: ApolloHttpRequest, callback: HttpCallback, disposable: ApolloDisposable) {
+    /**
+     * Executes the given [request] using the [requestExecutor]. If the engine has already been disposed,
+     * the callback will receive an [ApolloNetworkException] indicating that the engine is no longer available.
+     */
+    override fun execute(request: HttpRequest, callback: HttpCallback, disposable: ApolloDisposable) {
         if (isDisposed.get()) {
             callback.onFailure(ApolloNetworkException("HTTP engine has been disposed"))
             return
         }
 
-        val requestId = UUID.randomUUID().toString()
-        activeRequests[requestId] = disposable
+        val requestId = UUID.randomUUID().toString().also { activeRequests[it] = disposable }
 
         try {
-            validateRequest(request)
-            val sdkResponse = requestExecutor.execute(buildSdkRequestFromApolloRequest(request))
-
-            if (!isDisposed.get()) {
-                callback.onResponse(buildApolloResponseFromSdkResponse(sdkResponse))
+            runCatching {
+                requestExecutor.execute(request.toSDKRequest())
+            }.onSuccess { response ->
+                if (!isDisposed.get()) {
+                    callback.onResponse(response.toApolloResponse())
+                }
+            }.onFailure { exception ->
+                callback.onFailure(ApolloNetworkException("Unexpected error occurred", exception))
             }
-        } catch (e: Exception) {
-            callback.onFailure(ApolloNetworkException("Unexpected error occurred", e))
         } finally {
             activeRequests.remove(requestId)
         }
@@ -52,77 +70,5 @@ class ApolloHttpEngine(
             activeRequests.values.forEach { it.dispose() }
             activeRequests.clear()
         }
-    }
-
-    private fun buildSdkRequestFromApolloRequest(apolloRequest: ApolloHttpRequest): Request {
-        return Request.Builder()
-            .url(apolloRequest.url)
-            .apply {
-                addSdkRequestHeadersFromApolloRequest(apolloRequest, this)
-                addSdkRequestBodyFromApolloRequest(apolloRequest, this)
-            }
-            .build()
-    }
-
-    private fun buildApolloResponseFromSdkResponse(sdkHttpResponse: Response): ApolloHttpResponse {
-        return ApolloHttpResponseBuilder(sdkHttpResponse.status.code).apply {
-            addApolloResponseHeadersFromSdkResponse(sdkHttpResponse, this)
-            addApolloResponseBodyFromSdkResponse(sdkHttpResponse, this)
-        }.build()
-    }
-
-    private fun addSdkRequestHeadersFromApolloRequest(
-        request: ApolloHttpRequest,
-        sdkRequestBuilder: Request.Builder
-    ) {
-        request.headers.forEach { apolloHeader ->
-            sdkRequestBuilder.addHeader(apolloHeader.name, apolloHeader.value)
-        }
-        sdkRequestBuilder.addHeader("Content-Type", "application/json")
-    }
-
-    private fun addSdkRequestBodyFromApolloRequest(request: ApolloHttpRequest, sdkRequestBuilder: Request.Builder) {
-        if (request.method != HttpMethod.Post) {
-            throw UnsupportedOperationException("Only POST requests are supported for GraphQL")
-        }
-
-        request.body?.let { requestBody ->
-            sdkRequestBuilder
-                .method(Method.POST)
-                .body(object : RequestBody() {
-                    override fun mediaType(): MediaType? = MediaType.parse(requestBody.contentType)
-                    override fun contentLength(): Long = requestBody.contentLength
-
-                    @Throws(IOException::class)
-                    override fun writeTo(sink: BufferedSink) = requestBody.writeTo(sink)
-                })
-        }
-    }
-
-    private fun addApolloResponseHeadersFromSdkResponse(
-        sdkHttpResponse: Response,
-        apolloHttpResponseBuilder: ApolloHttpResponseBuilder
-    ) {
-        sdkHttpResponse.headers.names().mapNotNull { headerName ->
-            sdkHttpResponse.headers.get(headerName)?.let { headerValue ->
-                HttpHeader(name = headerName, value = headerValue)
-            }
-        }.let {
-            apolloHttpResponseBuilder.headers(it)
-        }
-    }
-
-    private fun addApolloResponseBodyFromSdkResponse(
-        sdkHttpResponse: Response,
-        apolloHttpResponseBuilder: ApolloHttpResponseBuilder
-    ) {
-        sdkHttpResponse.body?.let {
-            apolloHttpResponseBuilder.body(it.source())
-        }
-    }
-
-    private fun validateRequest(request: ApolloHttpRequest) {
-        require(request.url.isNotBlank()) { "Request URL cannot be blank" }
-        require(request.method == HttpMethod.Post) { "Only POST requests are supported for GraphQL" }
     }
 }

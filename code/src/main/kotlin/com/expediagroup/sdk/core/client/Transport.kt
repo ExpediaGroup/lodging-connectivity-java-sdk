@@ -58,6 +58,5 @@ interface Transport {
      * @return The response from the server wrapped in the SDK response model
      * @throws ExpediaGroupNetworkException If any network-related error occurs during execution
      */
-    @Throws(ExpediaGroupNetworkException::class)
     fun execute(request: Request): Response
 }
