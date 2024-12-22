@@ -3,7 +3,7 @@ package com.expediagroup.sdk.lodgingconnectivity.common
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
 import com.expediagroup.sdk.core.interceptor.Interceptor
@@ -20,10 +20,10 @@ internal fun getHttpTransport(configuration: ClientConfiguration): Transport = w
     is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getInstance(configuration.buildOkHttpConfiguration()))
 }
 
-class RequestExecutorImpl(
+class RequestExecutor(
     configuration: ClientConfiguration,
     apiEndpoint: ApiEndpoint
-) : RequestExecutor(getHttpTransport(configuration)) {
+) : AbstractRequestExecutor(getHttpTransport(configuration)) {
 
     override val interceptors: List<Interceptor> = listOf(
         RequestHeadersInterceptor(),

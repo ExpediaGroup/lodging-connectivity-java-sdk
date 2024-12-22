@@ -42,7 +42,7 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  *
  * ### Usage Example:
  * ```
- * class RequestExecutorImpl(transport: Transport) : RequestExecutor(transport) {
+ * class RequestExecutor(transport: Transport) : AbstractRequestExecutor(transport) {
  *     override val interceptors = listOf(
  *         AuthenticationInterceptor(),
  *         LoggingInterceptor(),
@@ -55,7 +55,7 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class RequestExecutor(protected val transport: Transport) : Disposable {
+abstract class AbstractRequestExecutor(protected val transport: Transport) : Disposable {
     /**
      * List of interceptors to be applied to requests in order.
      *

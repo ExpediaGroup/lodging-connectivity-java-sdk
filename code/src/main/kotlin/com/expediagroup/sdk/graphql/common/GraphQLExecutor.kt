@@ -20,7 +20,7 @@ import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
 import com.apollographql.java.client.ApolloClient
 import com.expediagroup.sdk.core.client.Disposable
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -35,7 +35,7 @@ import java.util.concurrent.CompletableFuture
  * requests are sent and processed.
  */
 abstract class GraphQLExecutor(
-    private val requestExecutor: RequestExecutor
+    private val requestExecutor: AbstractRequestExecutor
 ) : Disposable {
 
     /**
@@ -85,7 +85,7 @@ abstract class GraphQLExecutor(
     abstract fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>>
 
     /**
-     * Closes the underlying [RequestExecutor] and [ApolloClient]
+     * Closes the underlying [AbstractRequestExecutor] and [ApolloClient]
      */
     override fun dispose() {
         requestExecutor.dispose()

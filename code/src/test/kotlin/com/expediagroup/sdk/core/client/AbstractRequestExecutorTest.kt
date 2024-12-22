@@ -10,12 +10,12 @@ import io.mockk.mockkConstructor
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-class RequestExecutorTest {
+class AbstractRequestExecutorTest {
     private val mockTransport = mockk<Transport>(relaxed = true)
     private val mockInterceptor1 = mockk<Interceptor>(relaxed = true)
     private val mockInterceptor2 = mockk<Interceptor>(relaxed = true)
 
-    private val testRequestExecutor = object : RequestExecutor(mockTransport) {
+    private val testRequestExecutor = object : AbstractRequestExecutor(mockTransport) {
         override val interceptors: List<Interceptor> = listOf(mockInterceptor1, mockInterceptor2)
     }
 
