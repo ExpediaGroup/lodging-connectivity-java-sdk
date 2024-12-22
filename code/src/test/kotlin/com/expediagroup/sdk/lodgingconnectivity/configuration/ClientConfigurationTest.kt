@@ -61,7 +61,6 @@ class ClientConfigurationTest {
 
         @Test
         fun `should build OkHttp configurations from the passed parameters`() {
-            // Given
             val interceptors = listOf<Interceptor>(mockk(relaxed = true))
             val networkInterceptors = listOf<Interceptor>(mockk(relaxed = true))
             val connectionPool = mockk<ConnectionPool>(relaxed = true)
