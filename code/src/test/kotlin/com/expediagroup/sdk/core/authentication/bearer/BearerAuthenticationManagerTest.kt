@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.core.authentication.bearer
 
 import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.http.CommonMediaTypes
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Protocol
@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BearerAuthenticationManagerTest {
 
-    private lateinit var requestExecutor: RequestExecutor
+    private lateinit var requestExecutor: AbstractRequestExecutor
     private lateinit var credentials: Credentials
     private lateinit var authenticationManager: BearerAuthenticationManager
     private val authUrl = "http://auth.example.com/token"
