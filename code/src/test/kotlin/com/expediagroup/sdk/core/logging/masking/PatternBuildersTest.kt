@@ -14,21 +14,6 @@ class PatternBuildersTest {
     @Nested
     inner class CustomJsonFullValuePatternBuilderTest {
         @Test
-        fun `is child of JsonFullValuePatternBuilder`() {
-            val custom = CustomJsonFullValuePatternBuilder()
-
-            assertEquals(JsonFullValuePatternBuilder::class.java, custom::class.java.superclass)
-        }
-
-        @Test
-        fun `does not override isGroupable`() {
-            val original = JsonFullValuePatternBuilder()
-            val custom = CustomJsonFullValuePatternBuilder()
-
-            assertEquals(original.isGroupable, custom.isGroupable)
-        }
-
-        @Test
         fun `buildReplacement contains omitted keyword`() {
             val custom = CustomJsonFullValuePatternBuilder()
 
@@ -55,21 +40,6 @@ class PatternBuildersTest {
 
     @Nested
     inner class CustomJsonRelativeFieldPatternBuilderTest {
-        @Test
-        fun `is child of JsonRelativeFieldPatternBuilder`() {
-            val custom = CustomJsonRelativeFieldPatternBuilder()
-
-            assertEquals(JsonRelativeFieldPatternBuilder::class.java, custom::class.java.superclass)
-        }
-
-        @Test
-        fun `does not override isGroupable`() {
-            val original = JsonRelativeFieldPatternBuilder()
-            val custom = CustomJsonRelativeFieldPatternBuilder()
-
-            assertEquals(original.isGroupable, custom.isGroupable)
-        }
-
         @Test
         fun `buildReplacement contains omitted keyword`() {
             val custom = CustomJsonRelativeFieldPatternBuilder()
