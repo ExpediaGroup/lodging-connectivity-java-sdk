@@ -39,6 +39,9 @@ internal class MaskingPatternBuilder {
      * Adds path-specific fields to be masked.
      * This method updates the `globalFields` set by adding the provided field names.
      *
+     * Takes the last two elements of each list to be used as the path and ignores the rest. Temporary solution
+     *  until ejmask add support for unlimited-fields path-based masking.
+     *
      * @param paths Vararg of lists of field names to be masked by path.
      * @return The current instance of MaskingPatternBuilder.
      */
