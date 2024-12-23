@@ -19,13 +19,16 @@ package com.expediagroup.sdk.core.client
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
+import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.
  *
- * This class serves as the main entry point for executing HTTP requests through the SDK.
- * It enhances the basic [Transport] functionality by:
+ * This class serves as the main entry point for executing HTTP requests through the SDK core. **Each product-SDK is
+ * expected to have its own implementation of this abstract class.**
+ *
+ * It wraps and enhances the injected [Transport] functionality by:
  *
  * 1. Applying request/response interceptors
  * 2. Enforcing SDK-specific policies and rules (e.g. authentication)
@@ -37,9 +40,9 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  * - Implement any SDK-specific error handling or retry logic
  * - Handle request/response transformation and validation
  *
- * Example implementation:
+ * ### Usage Example:
  * ```
- * class SdkRequestProcessor(transport: Transport) : RequestProcessor(transport) {
+ * class RequestExecutor(transport: Transport) : AbstractRequestExecutor(transport) {
  *     override val interceptors = listOf(
  *         AuthenticationInterceptor(),
  *         LoggingInterceptor(),
@@ -52,7 +55,7 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class RequestExecutor(protected val transport: Transport) {
+abstract class AbstractRequestExecutor(protected val transport: Transport) : Disposable {
     /**
      * List of interceptors to be applied to requests in order.
      *
@@ -73,5 +76,18 @@ abstract class RequestExecutor(protected val transport: Transport) {
      * @return The response from the server after passing through interceptors
      * @throws ExpediaGroupNetworkException If any network-related error occurs
      */
-    abstract fun execute(request: Request): Response
+    open fun execute(request: Request): Response {
+        val chainExecutor = InterceptorsChainExecutor(
+            interceptors = interceptors,
+            request = request,
+            transport = this.transport
+        )
+
+        return chainExecutor.proceed(request)
+    }
+
+    /**
+     * Closes the underlying [Transport].
+     */
+    override fun dispose() = transport.dispose()
 }

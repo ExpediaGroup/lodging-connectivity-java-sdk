@@ -28,6 +28,10 @@ public class ClientConfigurationJavaTest {
             public Response execute(@NotNull Request request) {
                 return Response.builder().build();
             }
+
+            @Override
+            public void dispose() {
+            }
         };
 
         ClientConfiguration.builder(transport)

@@ -21,19 +21,19 @@ import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.java.client.ApolloDisposable
 import com.apollographql.java.client.network.http.HttpCallback
 import com.apollographql.java.client.network.http.HttpEngine
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * An implementation of Apollo's [HttpEngine] that delegates HTTP execution to a provided [RequestExecutor].
+ * An implementation of Apollo's [HttpEngine] that delegates HTTP execution to a provided [AbstractRequestExecutor].
  *
- * @param requestExecutor The [RequestExecutor] used to execute HTTP requests. It is expected that the provided
+ * @param requestExecutor The [AbstractRequestExecutor] used to execute HTTP requests. It is expected that the provided
  * executor takes a request from the Apollo SDK request object model and produces a suitable HTTP response.
  */
 class ApolloHttpEngine(
-    private val requestExecutor: RequestExecutor
+    private val requestExecutor: AbstractRequestExecutor
 ) : HttpEngine {
     private val activeRequests = ConcurrentHashMap<String, ApolloDisposable>()
     private val isDisposed = AtomicBoolean(false)

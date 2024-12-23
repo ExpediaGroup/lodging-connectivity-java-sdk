@@ -56,4 +56,18 @@ class OkHttpTransportTest {
 
         verify { mockCall.execute() }
     }
+
+    @Test
+    fun `should close the underlying resources on dispose call`() {
+        // Given
+        val mockOkHttpClient = mockk<OkHttpClient>(relaxed = true)
+        val transport = OkHttpTransport(mockOkHttpClient)
+
+        // When
+        transport.dispose()
+
+        // Expect
+        verify { mockOkHttpClient.dispatcher.executorService.shutdown() }
+        verify { mockOkHttpClient.connectionPool.evictAll() }
+    }
 }
