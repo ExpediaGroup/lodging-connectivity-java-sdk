@@ -31,7 +31,6 @@ class MaskingPatternBuilderTest {
 
             assertEquals(1, patterns.size)
 
-            println(patterns.first().pattern.pattern())
             assertFalse(patterns.first().pattern.pattern().contains("first"))
             assertFalse(patterns.first().pattern.pattern().contains("second"))
 
