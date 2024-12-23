@@ -18,7 +18,7 @@ package com.expediagroup.sdk.core.authentication.bearer
 
 import com.expediagroup.sdk.core.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.http.CommonMediaTypes
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
@@ -34,13 +34,13 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthExcepti
  * and validation. It interacts with an authentication server to fetch tokens using client credentials,
  * ensures tokens are refreshed when necessary, and provides them in the required format for authorization headers.
  *
- * @param requestExecutor The [RequestExecutor] used to execute authentication requests.
+ * @param requestExecutor The [AbstractRequestExecutor] used to execute authentication requests.
  * @param authUrl The URL of the authentication server's endpoint to obtain bearer tokens.
  * @param credentials The [Credentials] containing the client key and secret used for authentication.
  */
 class BearerAuthenticationManager(
     val authUrl: String,
-    private val requestExecutor: RequestExecutor,
+    private val requestExecutor: AbstractRequestExecutor,
     private val credentials: Credentials,
 ) : AuthenticationManager {
 

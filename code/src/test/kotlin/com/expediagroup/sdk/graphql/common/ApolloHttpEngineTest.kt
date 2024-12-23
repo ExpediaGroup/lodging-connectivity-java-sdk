@@ -6,7 +6,7 @@ import com.apollographql.apollo.api.http.HttpRequest
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.java.client.ApolloDisposable
 import com.apollographql.java.client.network.http.HttpCallback
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.http.Protocol
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ApolloHttpEngineTest {
-    private lateinit var requestExecutor: RequestExecutor
+    private lateinit var requestExecutor: AbstractRequestExecutor
     private lateinit var callback: HttpCallback
     private lateinit var disposable: ApolloDisposable
     private lateinit var httpEngine: ApolloHttpEngine

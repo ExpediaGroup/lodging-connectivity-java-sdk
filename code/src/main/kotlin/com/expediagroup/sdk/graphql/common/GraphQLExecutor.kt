@@ -19,6 +19,8 @@ package com.expediagroup.sdk.graphql.common
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
 import com.apollographql.java.client.ApolloClient
+import com.expediagroup.sdk.core.client.Disposable
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -32,7 +34,9 @@ import java.util.concurrent.CompletableFuture
  * the complete, unprocessed data and error details. Subclasses should implement specific behaviors for how
  * requests are sent and processed.
  */
-abstract class GraphQLExecutor {
+abstract class GraphQLExecutor(
+    private val requestExecutor: AbstractRequestExecutor
+) : Disposable {
 
     /**
      * The Apollo Client instance used to perform GraphQL requests.
@@ -79,4 +83,12 @@ abstract class GraphQLExecutor {
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
     abstract fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>>
+
+    /**
+     * Closes the underlying [AbstractRequestExecutor] and [ApolloClient]
+     */
+    override fun dispose() {
+        requestExecutor.dispose()
+        apolloClient.close()
+    }
 }
