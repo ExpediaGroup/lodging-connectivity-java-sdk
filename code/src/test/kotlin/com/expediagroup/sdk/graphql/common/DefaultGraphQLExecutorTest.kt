@@ -1,7 +1,7 @@
 package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.toResponseJson
-import com.expediagroup.sdk.core.client.RequestExecutor
+import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
@@ -41,7 +41,7 @@ class DefaultGraphQLExecutorTest {
         mockWebServer.start()
         val serverUrl = mockWebServer.url("/graphql").toString()
 
-        val requestExecutor = object : RequestExecutor(OkHttpTransport(BaseOkHttpClient.getInstance())) {
+        val requestExecutor = object : AbstractRequestExecutor(OkHttpTransport(BaseOkHttpClient.getInstance())) {
             override val interceptors: List<Interceptor> = emptyList()
             override fun execute(request: Request): Response = transport.execute(request)
         }

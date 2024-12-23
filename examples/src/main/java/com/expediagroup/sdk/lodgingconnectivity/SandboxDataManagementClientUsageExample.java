@@ -142,7 +142,8 @@ public class SandboxDataManagementClientUsageExample {
         client.deleteProperty(propertyId);
         logger.info("Property Was Deleted: [{}]", propertyId);
 
-        System.exit(0);
+        logger.info("Completed, disposing the client...");
+        client.dispose();
     }
 
     private static void deletePropertyIfExists() {
