@@ -14,6 +14,7 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.DefaultClientConfiguration
+import com.expediagroup.sdk.lodgingconnectivity.configuration.LogMasking
 
 internal fun getHttpTransport(configuration: ClientConfiguration): Transport = when (configuration) {
     is CustomClientConfiguration -> configuration.transport
@@ -24,6 +25,10 @@ class RequestExecutor(
     configuration: ClientConfiguration,
     apiEndpoint: ApiEndpoint
 ) : AbstractRequestExecutor(getHttpTransport(configuration)) {
+
+    init {
+        LogMasking.enable()
+    }
 
     override val interceptors: List<Interceptor> = listOf(
         RequestHeadersInterceptor(),

@@ -14,7 +14,7 @@ class LogMaskerTest {
     }
 
     @Nested
-    inner class FieldLogMaskingFeatureTest {
+    inner class FieldAbstractLogMaskingFeatureTest {
         @Test
         fun `adding global fields to the masking pattern builder`() {
             val globalFields = setOf("globalField1", "globalField2")
@@ -44,6 +44,7 @@ class LogMaskerTest {
                 .pathFields(*pathFields.toTypedArray())
                 .build()
 
+            // 1 global field pattern + 2 path field patterns
             assertEquals(pathFields.size + 1, maskingPatterns.size)
         }
 

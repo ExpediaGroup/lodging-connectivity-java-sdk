@@ -1,7 +1,10 @@
 package com.expediagroup.sdk.core.logging.masking
 
 import com.expediagroup.sdk.core.logging.common.Constant.OMITTED
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 

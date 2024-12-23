@@ -23,7 +23,6 @@ import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
-import com.expediagroup.sdk.lodgingconnectivity.configuration.LodgingConnectivityLogMasking
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationReconciliationInput
@@ -61,10 +60,6 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.Reserv
  * timeouts
  */
 class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
-
-    init {
-        LodgingConnectivityLogMasking.enable()
-    }
 
     override val apiEndpoint = EndpointProvider.getSupplyApiEndpoint(config.environment)
 
