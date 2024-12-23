@@ -1,7 +1,5 @@
 package com.expediagroup.sdk.core.logging.masking
 
-import com.ebay.ejmask.extenstion.builder.json.JsonFullValuePatternBuilder
-import com.ebay.ejmask.extenstion.builder.json.JsonRelativeFieldPatternBuilder
 import com.expediagroup.sdk.core.logging.common.Constant.OMITTED
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
