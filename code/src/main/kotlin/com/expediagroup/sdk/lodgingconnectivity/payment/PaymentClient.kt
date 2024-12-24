@@ -17,9 +17,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.payment
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
@@ -40,7 +40,7 @@ import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInst
 class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
 
-    override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
+    override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
         requestExecutor = RequestExecutor(config, apiEndpoint),
         serverUrl = apiEndpoint.endpoint
     )
@@ -49,7 +49,7 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
      * Retrieves the payment instrument details associated with the specified token.
      *
      * This function executes a [PaymentInstrumentQuery] GraphQL operation using the client’s configured
-     * [GraphQLExecutor]. It returns a [GetPaymentInstrumentResponse] containing both the targeted payment
+     * [AbstractGraphQLExecutor]. It returns a [GetPaymentInstrumentResponse] containing both the targeted payment
      * instrument data and the full raw response.
      *
      * @param token The token identifying the payment instrument to be retrieved.

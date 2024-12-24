@@ -18,7 +18,7 @@ package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -43,10 +43,10 @@ data class GetSandboxReservationsResponse(
 /**
  * Executes [SandboxPropertyReservationsQuery] GraphQL query to retrieve a paginated list of reservations for a specific property.
  *
- * This function uses the provided [GraphQLExecutor] to execute the query, with optional parameters for cursor and page size.
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the query, with optional parameters for cursor and page size.
  * It returns a [GetSandboxReservationsResponse] containing the reservation data, pagination information, and the full raw response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL query.
  * @param propertyId The unique identifier of the property for which reservations are being retrieved.
  * @param cursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @param pageSize The number of reservations to retrieve per page; defaults to `null` to use the server's default page size.
@@ -55,7 +55,7 @@ data class GetSandboxReservationsResponse(
  */
 @JvmOverloads
 fun getSandboxReservationsOperation(
-    graphQLExecutor: GraphQLExecutor,
+    graphQLExecutor: AbstractGraphQLExecutor,
     propertyId: String,
     cursor: String? = null,
     pageSize: Int? = null

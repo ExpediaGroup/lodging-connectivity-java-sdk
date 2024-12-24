@@ -18,7 +18,7 @@ package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
 import com.expediagroup.sdk.core.extension.orFalseIfNull
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.RefundReservationMutation
@@ -42,11 +42,11 @@ data class RefundReservationResponse(
 /**
  * Executes [RefundReservationMutation] GraphQL mutation to initiate a refund on an existing reservation.
  *
- * This function uses the provided [GraphQLExecutor] to execute the mutation and returns a [RefundReservationResponse]
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the mutation and returns a [RefundReservationResponse]
  * containing both the refunded reservation data (if available) and the full raw response. Optional selection parameters
  * allow the inclusion of additional reservation details in the response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [RefundReservationInput] containing the details of the reservation to be refunded.
  * @param selections An optional [ReservationSelections] specifying additional fields to include in the response, such as
  * supplier amount and payment instrument token; defaults to `null`.
@@ -55,7 +55,7 @@ data class RefundReservationResponse(
  */
 @JvmOverloads
 fun refundReservationOperation(
-    graphQLExecutor: GraphQLExecutor,
+    graphQLExecutor: AbstractGraphQLExecutor,
     input: RefundReservationInput,
     selections: ReservationSelections? = null
 ): RefundReservationResponse {

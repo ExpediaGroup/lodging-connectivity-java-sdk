@@ -18,7 +18,7 @@ package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -44,11 +44,11 @@ data class GetSandboxPropertiesResponse(
 /**
  * Executes a [SandboxPropertiesQuery] GraphQL query to retrieve a paginated list of sandbox properties.
  *
- * This function uses the provided [GraphQLExecutor] to execute the query, with optional parameters for cursor and page size.
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the query, with optional parameters for cursor and page size.
  * It returns a [GetSandboxPropertiesResponse] containing the sandbox properties data, pagination information,
  * and the full raw response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL query.
  * @param cursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @param pageSize The number of properties to retrieve per page; defaults to `null` to use the server's default page size.
  * @return A [GetSandboxPropertiesResponse] containing the sandbox properties data, pagination information, and the full raw response.
@@ -56,7 +56,7 @@ data class GetSandboxPropertiesResponse(
  */
 @JvmOverloads
 fun getSandboxPropertiesOperation(
-    graphQLExecutor: GraphQLExecutor,
+    graphQLExecutor: AbstractGraphQLExecutor,
     cursor: String? = null,
     pageSize: Int? = null
 ): GetSandboxPropertiesResponse {

@@ -17,12 +17,12 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
 import com.expediagroup.sdk.core.client.Disposable
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 
 /**
  * Abstract base class for GraphQL clients that defines the core structure for executing GraphQL operations.
- * Classes extending `GraphQLClient` are expected to provide an implementation of the [GraphQLExecutor].
+ * Classes extending `GraphQLClient` are expected to provide an implementation of the [AbstractGraphQLExecutor].
  *
  * This design allows subclasses to define custom logic for executing GraphQL queries and mutations
  * while relying on the `graphQLExecutor` to perform the actual request handling.
@@ -40,10 +40,10 @@ abstract class GraphQLClient : Disposable {
      * Subclasses must provide a concrete implementation of this executor to define
      * how queries and mutations are processed.
      */
-    protected abstract val graphQLExecutor: GraphQLExecutor
+    protected abstract val graphQLExecutor: AbstractGraphQLExecutor
 
     /**
-     * Closes the underlying [GraphQLExecutor] by calling [GraphQLExecutor.dispose]
+     * Closes the underlying [AbstractGraphQLExecutor] by calling [AbstractGraphQLExecutor.dispose]
      */
     override fun dispose() {
         graphQLExecutor.dispose()

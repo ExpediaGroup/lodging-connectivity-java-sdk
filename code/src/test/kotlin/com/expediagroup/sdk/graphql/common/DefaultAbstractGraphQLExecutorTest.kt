@@ -31,9 +31,9 @@ import testservice.TestMutation
 import testservice.TestQuery
 import testservice.type.buildTestData
 
-class DefaultGraphQLExecutorTest {
+class DefaultAbstractGraphQLExecutorTest {
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var executor: DefaultGraphQLExecutor
+    private lateinit var executor: GraphQLExecutor
 
     @BeforeEach
     fun setUp() {
@@ -46,7 +46,7 @@ class DefaultGraphQLExecutorTest {
             override fun execute(request: Request): Response = transport.execute(request)
         }
 
-        executor = DefaultGraphQLExecutor(requestExecutor, serverUrl)
+        executor = GraphQLExecutor(requestExecutor, serverUrl)
     }
 
     @AfterEach
@@ -240,9 +240,9 @@ class DefaultGraphQLExecutorTest {
             val underlyingCause = RuntimeException("something went wrong")
             future.completeExceptionally(ExecutionException(underlyingCause))
 
-            val mockExecutor = DefaultGraphQLExecutor(mockk(), "https://example.com/graphql")
+            val mockExecutor = GraphQLExecutor(mockk(), "https://example.com/graphql")
 
-            val extensionFunction = DefaultGraphQLExecutor::class.declaredFunctions
+            val extensionFunction = GraphQLExecutor::class.declaredFunctions
                 .first { it.name == "getOrThrowDomainException" }
                 .apply { isAccessible = true }
 
@@ -259,9 +259,9 @@ class DefaultGraphQLExecutorTest {
         @Test
         fun `getOrThrowDomainException wraps InterruptedException with ExpediaGroupServiceException when thread interruption occurs`() {
             val future = CompletableFuture<String>()
-            val mockExecutor = DefaultGraphQLExecutor(mockk(), "https://example.com/graphql")
+            val mockExecutor = GraphQLExecutor(mockk(), "https://example.com/graphql")
 
-            val extensionFunction = DefaultGraphQLExecutor::class.declaredFunctions
+            val extensionFunction = GraphQLExecutor::class.declaredFunctions
                 .first { it.name == "getOrThrowDomainException" }
                 .apply { isAccessible = true }
 
