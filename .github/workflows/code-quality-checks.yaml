@@ -1,4 +1,4 @@
-name: PR Checks
+name: Code Quality Checks
 on: pull_request
 
 jobs:
@@ -15,9 +15,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
       - name: Build Project & Run Unit-Tests
+        id: build
+        continue-on-error: true
         run: gradle clean build
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: code/build/reports/kover
+      - name: Fail on Low Coverage
+        if: steps.build.conclusion == 'failure'
+        run: echo "Coverage is too low. Please add more tests." && exit 1
