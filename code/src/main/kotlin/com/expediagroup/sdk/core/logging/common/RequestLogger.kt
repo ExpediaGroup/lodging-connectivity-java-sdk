@@ -56,7 +56,7 @@ internal object RequestLogger {
             }
         }
 
-        val buffer = Buffer().apply { writeTo(this) }
+        val buffer = Buffer().apply { use { writeTo(this) } }
         val bytesToRead = minOf(maxBodyLogSize, buffer.size)
 
         return buffer.readString(bytesToRead, charset ?: Charsets.UTF_8)
