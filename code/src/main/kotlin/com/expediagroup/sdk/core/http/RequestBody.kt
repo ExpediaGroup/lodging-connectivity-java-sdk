@@ -21,6 +21,7 @@ import java.io.InputStream
 import java.net.URLEncoder
 import java.nio.charset.Charset
 import okio.BufferedSink
+import okio.ByteString
 import okio.Source
 import okio.source
 
@@ -106,6 +107,36 @@ abstract class RequestBody {
                 }
             }
         }
+
+        /**
+         * Creates a new request body that reads from the given [byteString].
+         *
+         * RequestBody from [byteString] is reusable.
+         *
+         * @param byteString the byteString object to read from.
+         * @param mediaType the media type, or null if unknown.
+         * @param contentLength the length of the content, or -1 if unknown.
+         * @return a new [RequestBody] instance.
+         */
+        @JvmStatic
+        @JvmOverloads
+        fun create(
+            byteString: ByteString,
+            mediaType: MediaType? = null,
+            contentLength: Long = -1
+        ): RequestBody {
+            return object : RequestBody() {
+                override fun mediaType(): MediaType? = mediaType
+
+                override fun contentLength(): Long = contentLength
+
+                @Throws(IOException::class)
+                override fun writeTo(sink: BufferedSink) {
+                    sink.write(byteString)
+                }
+            }
+        }
+
 
         /**
          * Creates a new request body for form data with content type "application/x-www-form-urlencoded".
