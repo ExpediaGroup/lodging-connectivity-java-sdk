@@ -17,7 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyQuery
@@ -40,15 +40,15 @@ data class GetSandboxPropertyResponse(
 /**
  * Executes a [SandboxPropertyQuery] GraphQL query to retrieve details about a specific sandbox property.
  *
- * This function uses the provided [GraphQLExecutor] to execute the query and returns a [GetSandboxPropertyResponse]
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the query and returns a [GetSandboxPropertyResponse]
  * containing both the targeted sandbox property data and the full raw response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL query.
  * @param propertyId The unique identifier of the sandbox property to retrieve.
  * @return A [GetSandboxPropertyResponse] containing the requested sandbox property data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
-fun getSandboxPropertyOperation(graphQLExecutor: GraphQLExecutor, propertyId: String): GetSandboxPropertyResponse {
+fun getSandboxPropertyOperation(graphQLExecutor: AbstractGraphQLExecutor, propertyId: String): GetSandboxPropertyResponse {
     val operation = SandboxPropertyQuery(propertyId)
     val response = graphQLExecutor.execute(operation)
 

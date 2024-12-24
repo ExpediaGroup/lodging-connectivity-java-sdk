@@ -18,7 +18,7 @@ package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator
 
 import com.expediagroup.sdk.core.extension.getOrThrow
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -50,10 +50,10 @@ data class ReservationsPaginatedResponse(
  * Provides an iterator to retrieve property reservations in a paginated manner using [PropertyReservationsQuery]
  * GraphQL operation, allowing seamless iteration over pages of reservations for a specified property.
  *
- * This paginator uses the specified [GraphQLExecutor] to fetch pages based on cursor, page size, and optional reservation
+ * This paginator uses the specified [AbstractGraphQLExecutor] to fetch pages based on cursor, page size, and optional reservation
  * field selections, managing the pagination state automatically.
  *
- * @param graphQLExecutor The [GraphQLExecutor] used to execute GraphQL queries.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] used to execute GraphQL queries.
  * @param input The [PropertyReservationsInput] specifying the property ID and filter criteria for retrieving reservations.
  * @param selections An optional [ReservationSelections] specifying additional fields to include in the response, such as
  * supplier amount and payment instrument token; defaults to `null`.
@@ -62,7 +62,7 @@ data class ReservationsPaginatedResponse(
  * @constructor Creates a [ReservationsPaginator] with the specified executor, input parameters, and initial cursor.
  */
 class ReservationsPaginator @JvmOverloads constructor(
-    private val graphQLExecutor: GraphQLExecutor,
+    private val graphQLExecutor: AbstractGraphQLExecutor,
     private val input: PropertyReservationsInput,
     private val selections: ReservationSelections? = null,
     private val pageSize: Int? = null,
