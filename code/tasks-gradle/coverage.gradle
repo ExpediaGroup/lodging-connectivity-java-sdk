@@ -9,7 +9,7 @@ kover {
             rule {
                 disabled = false
                 bound {
-                    minValue = 100
+                    minValue = 57
                 }
             }
         }

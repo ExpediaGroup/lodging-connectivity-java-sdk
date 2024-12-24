@@ -12,8 +12,6 @@ jobs:
           java-version: 21
       - name: Pull GraphQL Submodule
         run: ./scripts/graphql/init.sh
-      - name: Build with Gradle
+      - name: Build Project & Run Unit-Tests
         uses: gradle/actions/setup-gradle@v4
       - run: gradle clean build
-      - working-directory: code
-        run: gradle clean build
