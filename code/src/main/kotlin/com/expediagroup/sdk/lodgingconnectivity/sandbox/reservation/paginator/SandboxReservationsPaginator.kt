@@ -17,7 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -45,17 +45,17 @@ data class SandboxReservationsPaginatedResponse(
  * Provides an iterator to retrieve sandbox reservations in a paginated manner using the [SandboxPropertyReservationsQuery]
  * GraphQL operation, allowing seamless iteration over pages of reservations for a specified property.
  *
- * This paginator uses the specified [GraphQLExecutor] to fetch pages based on a cursor and optional page size,
+ * This paginator uses the specified [AbstractGraphQLExecutor] to fetch pages based on a cursor and optional page size,
  * managing the pagination state automatically.
  *
- * @param graphQLExecutor The [GraphQLExecutor] used to execute GraphQL queries.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] used to execute GraphQL queries.
  * @param propertyId The unique identifier of the property for which reservations are being retrieved.
  * @param pageSize The number of reservations to retrieve per page; defaults to `null` to use the server's default page size.
  * @param initialCursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @constructor Creates a [SandboxReservationsPaginator] with the specified executor, property ID, page size, and initial cursor.
  */
 class SandboxReservationsPaginator @JvmOverloads constructor(
-    private val graphQLExecutor: GraphQLExecutor,
+    private val graphQLExecutor: AbstractGraphQLExecutor,
     private val propertyId: String,
     private val pageSize: Int? = null,
     initialCursor: String? = null

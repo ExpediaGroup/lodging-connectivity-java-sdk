@@ -17,7 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxReservationQuery
@@ -38,15 +38,15 @@ data class GetSandboxReservationResponse(
 /**
  * Executes [SandboxReservationQuery] GraphQL query to retrieve details about a specific sandbox reservation.
  *
- * This function uses the provided [GraphQLExecutor] to execute the query and returns a [GetSandboxReservationResponse]
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the query and returns a [GetSandboxReservationResponse]
  * containing both the targeted reservation data and the full raw response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL query.
  * @param reservationId The unique identifier of the sandbox reservation to retrieve.
  * @return A [GetSandboxReservationResponse] containing the requested reservation data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
-fun getSandboxReservationOperation(graphQLExecutor: GraphQLExecutor, reservationId: String): GetSandboxReservationResponse {
+fun getSandboxReservationOperation(graphQLExecutor: AbstractGraphQLExecutor, reservationId: String): GetSandboxReservationResponse {
     val operation = SandboxReservationQuery(reservationId)
     val response = graphQLExecutor.execute(operation)
 

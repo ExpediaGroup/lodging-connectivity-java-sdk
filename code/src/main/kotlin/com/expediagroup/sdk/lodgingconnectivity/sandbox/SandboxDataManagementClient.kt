@@ -17,9 +17,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.DefaultGraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
@@ -77,7 +77,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.Sa
 class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
 
-    override val graphQLExecutor: GraphQLExecutor = DefaultGraphQLExecutor(
+    override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
         requestExecutor = RequestExecutor(config, apiEndpoint),
         serverUrl = apiEndpoint.endpoint
     )

@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.paginator
 
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -44,16 +44,16 @@ data class SandboxPropertiesPaginatedResponse(
  * Provides an iterator to retrieve sandbox properties in a paginated manner using the [SandboxPropertiesQuery]
  * GraphQL operation, allowing seamless iteration over pages of properties.
  *
- * This paginator uses the specified [GraphQLExecutor] to fetch pages based on a cursor and optional page size,
+ * This paginator uses the specified [AbstractGraphQLExecutor] to fetch pages based on a cursor and optional page size,
  * providing automatic handling of pagination state.
  *
- * @param graphQLExecutor The [GraphQLExecutor] used to execute GraphQL queries.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] used to execute GraphQL queries.
  * @param pageSize The number of properties to retrieve per page; defaults to `null` to use the server's default page size.
  * @param initialCursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @constructor Creates a [SandboxPropertiesPaginator] with the specified executor, page size, and initial cursor.
  */
 class SandboxPropertiesPaginator @JvmOverloads constructor(
-    private val graphQLExecutor: GraphQLExecutor,
+    private val graphQLExecutor: AbstractGraphQLExecutor,
     private val pageSize: Int? = null,
     initialCursor: String? = null
 ) : Iterator<SandboxPropertiesPaginatedResponse> {
