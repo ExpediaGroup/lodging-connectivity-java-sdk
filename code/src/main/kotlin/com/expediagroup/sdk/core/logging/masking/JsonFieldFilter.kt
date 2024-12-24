@@ -13,7 +13,9 @@ import com.ebay.ejmask.core.BaseFilter
  *
  * @param maskedFields An array of strings representing the names of the fields to be masked.
  */
-internal class JsonFieldFilter(maskedFields: Array<String>) : BaseFilter(
-    JsonFieldPatternBuilder::class.java,
-    *maskedFields
-)
+internal class JsonFieldFilter(
+    maskedFields: Array<String>,
+) : BaseFilter(
+        JsonFieldPatternBuilder::class.java,
+        *maskedFields,
+    )

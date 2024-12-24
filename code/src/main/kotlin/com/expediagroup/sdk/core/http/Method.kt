@@ -1,6 +1,8 @@
 package com.expediagroup.sdk.core.http
 
-enum class Method(val method: String) {
+enum class Method(
+    val method: String,
+) {
     GET("GET"),
     POST("POST"),
     PUT("PUT"),
@@ -9,7 +11,8 @@ enum class Method(val method: String) {
     HEAD("HEAD"),
     OPTIONS("OPTIONS"),
     TRACE("TRACE"),
-    CONNECT("CONNECT");
+    CONNECT("CONNECT"),
+    ;
 
     override fun toString(): String = method
 }

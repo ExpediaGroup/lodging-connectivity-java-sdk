@@ -1,0 +1,32 @@
+ktlint {
+    debug = true
+    version = "1.5.0"
+    verbose = true
+
+    additionalEditorconfig = [
+            "max_line_length": "200",
+            "indent_style": "space",
+            "indent_size": "4",
+            "insert_final_newline": "true",
+            "end_of_line": "lf",
+    ]
+
+    filter {
+        include("**/*.kt")
+
+        exclude(
+                "**/generated/**",
+                "**/com/expediagroup/sdk/lodgingconnectivity/**/adapter/**",
+                "**/com/expediagroup/sdk/lodgingconnectivity/**/fragment/**",
+                "**/com/expediagroup/sdk/lodgingconnectivity/**/operation/**",
+        )
+
+        exclude {
+            element -> element.file.path.contains("generated/")
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn("ktlintFormat")
+}

@@ -59,9 +59,7 @@ sealed class ClientConfiguration(
     open val secret: String,
     open val environment: ClientEnvironment? = null,
 ) {
-
     companion object {
-
         /**
          * Returns a builder for the default client configurations.
          */
@@ -74,8 +72,7 @@ sealed class ClientConfiguration(
          * @param transport The transport implementation to be used in the custom configuration.
          */
         @JvmStatic
-        fun builder(transport: Transport): CustomClientConfiguration.Builder =
-            CustomClientConfiguration.Builder(transport)
+        fun builder(transport: Transport): CustomClientConfiguration.Builder = CustomClientConfiguration.Builder(transport)
     }
 }
 
@@ -90,19 +87,19 @@ data class DefaultClientConfiguration(
     val callTimeout: Int? = null,
     val connectTimeout: Int? = null,
     val readTimeout: Int? = null,
-    val writeTimeout: Int? = null
+    val writeTimeout: Int? = null,
 ) : ClientConfiguration(key, secret, environment) {
-
-    fun buildOkHttpConfiguration() = OkHttpClientConfiguration(
-        interceptors = interceptors,
-        networkInterceptors = networkInterceptors,
-        connectionPool = connectionPool,
-        retryOnConnectionFailure = retryOnConnectionFailure,
-        callTimeout = callTimeout,
-        connectTimeout = connectTimeout,
-        readTimeout = readTimeout,
-        writeTimeout = writeTimeout
-    )
+    fun buildOkHttpConfiguration() =
+        OkHttpClientConfiguration(
+            interceptors = interceptors,
+            networkInterceptors = networkInterceptors,
+            connectionPool = connectionPool,
+            retryOnConnectionFailure = retryOnConnectionFailure,
+            callTimeout = callTimeout,
+            connectTimeout = connectTimeout,
+            readTimeout = readTimeout,
+            writeTimeout = writeTimeout,
+        )
 
     class Builder {
         private var key: String? = null
@@ -123,9 +120,10 @@ data class DefaultClientConfiguration(
          * @param key API key.
          * @return The builder instance.
          */
-        fun key(key: String?) = apply {
-            this.key = key
-        }
+        fun key(key: String?) =
+            apply {
+                this.key = key
+            }
 
         /**
          * Sets the API secret used to authenticate.
@@ -133,9 +131,10 @@ data class DefaultClientConfiguration(
          * @param secret API secret.
          * @return The builder instance.
          */
-        fun secret(secret: String?) = apply {
-            this.secret = secret
-        }
+        fun secret(secret: String?) =
+            apply {
+                this.secret = secret
+            }
 
         /**
          * Sets the API environment (e.g [ClientEnvironment.PROD], [ClientEnvironment.TEST])
@@ -143,9 +142,10 @@ data class DefaultClientConfiguration(
          * @param environment environment to be used.
          * @return The builder instance.
          */
-        fun environment(environment: ClientEnvironment) = apply {
-            this.environment = environment
-        }
+        fun environment(environment: ClientEnvironment) =
+            apply {
+                this.environment = environment
+            }
 
         /**
          * Sets interceptors on the default OkHttpClient.
@@ -153,9 +153,10 @@ data class DefaultClientConfiguration(
          * @param interceptors A list of interceptors to apply.
          * @return The builder instance.
          */
-        fun interceptors(interceptors: List<Interceptor>) = apply {
-            this.interceptors = interceptors
-        }
+        fun interceptors(interceptors: List<Interceptor>) =
+            apply {
+                this.interceptors = interceptors
+            }
 
         /**
          * Sets the network-level interceptors on the default OkHttpClient.
@@ -163,9 +164,10 @@ data class DefaultClientConfiguration(
          * @param networkInterceptors A list of interceptors to apply.
          * @return The builder instance.
          */
-        fun networkInterceptors(networkInterceptors: List<Interceptor>) = apply {
-            this.networkInterceptors = networkInterceptors
-        }
+        fun networkInterceptors(networkInterceptors: List<Interceptor>) =
+            apply {
+                this.networkInterceptors = networkInterceptors
+            }
 
         /**
          * Sets the connection pool configuration.
@@ -173,9 +175,10 @@ data class DefaultClientConfiguration(
          * @param connectionPool The connection pool to use.
          * @return The builder instance.
          */
-        fun connectionPool(connectionPool: ConnectionPool) = apply {
-            this.connectionPool = connectionPool
-        }
+        fun connectionPool(connectionPool: ConnectionPool) =
+            apply {
+                this.connectionPool = connectionPool
+            }
 
         /**
          * Whether to retry on connection failure.
@@ -183,9 +186,10 @@ data class DefaultClientConfiguration(
          * @param retryOnConnectionFailure `true` to retry on failure, `false` otherwise.
          * @return The builder instance.
          */
-        fun retryOnConnectionFailure(retryOnConnectionFailure: Boolean) = apply {
-            this.retryOnConnectionFailure = retryOnConnectionFailure
-        }
+        fun retryOnConnectionFailure(retryOnConnectionFailure: Boolean) =
+            apply {
+                this.retryOnConnectionFailure = retryOnConnectionFailure
+            }
 
         /**
          * Sets the call timeout.
@@ -193,9 +197,10 @@ data class DefaultClientConfiguration(
          * @param callTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun callTimeout(callTimeout: Int) = apply {
-            this.callTimeout = callTimeout
-        }
+        fun callTimeout(callTimeout: Int) =
+            apply {
+                this.callTimeout = callTimeout
+            }
 
         /**
          * Sets the connection timeout.
@@ -203,9 +208,10 @@ data class DefaultClientConfiguration(
          * @param connectTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun connectTimeout(connectTimeout: Int) = apply {
-            this.connectTimeout = connectTimeout
-        }
+        fun connectTimeout(connectTimeout: Int) =
+            apply {
+                this.connectTimeout = connectTimeout
+            }
 
         /**
          * Sets the read timeout.
@@ -213,18 +219,20 @@ data class DefaultClientConfiguration(
          * @param readTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun readTimeout(readTimeout: Int) = apply {
-            this.readTimeout = readTimeout
-        }
+        fun readTimeout(readTimeout: Int) =
+            apply {
+                this.readTimeout = readTimeout
+            }
 
         /**
          * Sets the write timeout.
          * @param writeTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun writeTimeout(writeTimeout: Int) = apply {
-            this.writeTimeout = writeTimeout
-        }
+        fun writeTimeout(writeTimeout: Int) =
+            apply {
+                this.writeTimeout = writeTimeout
+            }
 
         fun build(): DefaultClientConfiguration {
             require(key != null) {
@@ -246,7 +254,7 @@ data class DefaultClientConfiguration(
                 callTimeout = callTimeout,
                 connectTimeout = connectTimeout,
                 readTimeout = readTimeout,
-                writeTimeout = writeTimeout
+                writeTimeout = writeTimeout,
             )
         }
     }
@@ -256,10 +264,11 @@ data class CustomClientConfiguration(
     override val key: String,
     override val secret: String,
     override val environment: ClientEnvironment? = null,
-    val transport: Transport
+    val transport: Transport,
 ) : ClientConfiguration(key, secret, environment) {
-
-    class Builder(private var transport: Transport) {
+    class Builder(
+        private var transport: Transport,
+    ) {
         private var key: String? = null
         private var secret: String? = null
         private var environment: ClientEnvironment? = null
@@ -270,9 +279,10 @@ data class CustomClientConfiguration(
          * @param key API key.
          * @return The builder instance.
          */
-        fun key(key: String) = apply {
-            this.key = key
-        }
+        fun key(key: String) =
+            apply {
+                this.key = key
+            }
 
         /**
          * Sets the API secret used to authenticate.
@@ -280,9 +290,10 @@ data class CustomClientConfiguration(
          * @param secret API secret.
          * @return The builder instance.
          */
-        fun secret(secret: String) = apply {
-            this.secret = secret
-        }
+        fun secret(secret: String) =
+            apply {
+                this.secret = secret
+            }
 
         /**
          * Sets the API environment (e.g [ClientEnvironment.PROD], [ClientEnvironment.TEST])
@@ -290,9 +301,10 @@ data class CustomClientConfiguration(
          * @param environment environment to be used.
          * @return The builder instance.
          */
-        fun environment(environment: ClientEnvironment) = apply {
-            this.environment = environment
-        }
+        fun environment(environment: ClientEnvironment) =
+            apply {
+                this.environment = environment
+            }
 
         fun build(): CustomClientConfiguration {
             require(key != null) {
@@ -307,7 +319,7 @@ data class CustomClientConfiguration(
                 key = key!!,
                 secret = secret!!,
                 environment = environment,
-                transport = transport
+                transport = transport,
             )
         }
     }

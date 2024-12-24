@@ -1,17 +1,16 @@
 package com.expediagroup.sdk.core.common
 
-import java.io.InputStream
-import java.util.concurrent.Callable
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test
+import java.io.InputStream
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class MetadataLoaderTest {
-
     @AfterEach
     fun tearDown() {
         MetadataLoader.clear()
@@ -37,11 +36,10 @@ class MetadataLoaderTest {
         val originalClassLoader = Thread.currentThread().contextClassLoader
 
         try {
-            Thread.currentThread().contextClassLoader = object : ClassLoader(originalClassLoader) {
-                override fun getResourceAsStream(name: String?): InputStream? {
-                    return if (name == "sdk.properties") null else super.getResourceAsStream(name)
+            Thread.currentThread().contextClassLoader =
+                object : ClassLoader(originalClassLoader) {
+                    override fun getResourceAsStream(name: String?): InputStream? = if (name == "sdk.properties") null else super.getResourceAsStream(name)
                 }
-            }
 
             val metadata = MetadataLoader.load()
 

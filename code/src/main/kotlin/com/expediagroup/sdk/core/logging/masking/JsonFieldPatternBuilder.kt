@@ -13,5 +13,8 @@ import com.expediagroup.sdk.core.logging.common.Constant.OMITTED
  * data while keeping a specified number of characters visible.
  */
 internal class JsonFieldPatternBuilder : JsonFieldPatternBuilder() {
-    override fun buildReplacement(visibleCharacters: Int, vararg fieldNames: String?): String = "\"$1$2$OMITTED\""
+    override fun buildReplacement(
+        visibleCharacters: Int,
+        vararg fieldNames: String?,
+    ): String = "\"$1$2$OMITTED\""
 }

@@ -15,12 +15,12 @@ import com.expediagroup.sdk.core.http.Status
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import java.util.concurrent.ConcurrentHashMap
 import okio.Buffer
 import okio.BufferedSink
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.util.concurrent.ConcurrentHashMap
 
 class ApolloHttpEngineTest {
     private lateinit var requestExecutor: AbstractRequestExecutor
@@ -41,12 +41,12 @@ class ApolloHttpEngineTest {
         val otherBuffer = Buffer().also { other.body?.writeTo(it) }
 
         return this.method == other.method &&
-                url.toString() == other.url.toString() &&
-                headers.names() == other.headers.names() &&
-                method == other.method &&
-                body?.contentLength() == other.body?.contentLength() &&
-                body?.mediaType().toString() == other.body?.mediaType().toString() &&
-                buffer.readUtf8() == otherBuffer.readUtf8()
+            url.toString() == other.url.toString() &&
+            headers.names() == other.headers.names() &&
+            method == other.method &&
+            body?.contentLength() == other.body?.contentLength() &&
+            body?.mediaType().toString() == other.body?.mediaType().toString() &&
+            buffer.readUtf8() == otherBuffer.readUtf8()
     }
 
     @Test
@@ -54,25 +54,31 @@ class ApolloHttpEngineTest {
         // Given
         val bodyString = "Hello World!"
 
-        val apolloRequestBody = object : HttpBody {
-            override val contentLength = bodyString.length.toLong()
-            override val contentType = "text/plain"
-            override fun writeTo(bufferedSink: BufferedSink) {
-                bufferedSink.writeUtf8(bodyString)
-            }
-        }
+        val apolloRequestBody =
+            object : HttpBody {
+                override val contentLength = bodyString.length.toLong()
+                override val contentType = "text/plain"
 
-        val apolloRequest = HttpRequest.Builder(method = HttpMethod.Post, url = "https://example.com")
-            .body(apolloRequestBody)
-            .build()
+                override fun writeTo(bufferedSink: BufferedSink) {
+                    bufferedSink.writeUtf8(bodyString)
+                }
+            }
+
+        val apolloRequest =
+            HttpRequest
+                .Builder(method = HttpMethod.Post, url = "https://example.com")
+                .body(apolloRequestBody)
+                .build()
 
         val sdkRequest = apolloRequest.toSDKRequest()
 
-        val sdkResponse = Response.builder()
-            .status(Status.OK)
-            .request(sdkRequest)
-            .protocol(Protocol.HTTP_1_1)
-            .build()
+        val sdkResponse =
+            Response
+                .builder()
+                .status(Status.OK)
+                .request(sdkRequest)
+                .protocol(Protocol.HTTP_1_1)
+                .build()
 
         every { requestExecutor.execute(match { it.match(sdkRequest) }) } returns sdkResponse
 
@@ -133,9 +139,11 @@ class ApolloHttpEngineTest {
 
         // Then
         verify {
-            callback.onFailure(withArg { exception ->
-                assertTrue(exception.message!!.contains("HTTP engine has been disposed"))
-            })
+            callback.onFailure(
+                withArg { exception ->
+                    assertTrue(exception.message!!.contains("HTTP engine has been disposed"))
+                },
+            )
         }
     }
 
@@ -144,10 +152,11 @@ class ApolloHttpEngineTest {
         // Given
         val disposable1 = mockk<ApolloDisposable>(relaxed = true)
         val disposable2 = mockk<ApolloDisposable>(relaxed = true)
-        val activeRequests = ConcurrentHashMap<String, ApolloDisposable>().apply {
-            this["request1"] = disposable1
-            this["request2"] = disposable2
-        }
+        val activeRequests =
+            ConcurrentHashMap<String, ApolloDisposable>().apply {
+                this["request1"] = disposable1
+                this["request2"] = disposable2
+            }
 
         val activeRequestsField = ApolloHttpEngine::class.java.getDeclaredField("activeRequests")
         activeRequestsField.isAccessible = true
@@ -173,9 +182,11 @@ class ApolloHttpEngineTest {
 
         // Then
         verify {
-            callback.onFailure(withArg { exception ->
-                assertTrue(exception.message!!.contains("HTTP engine has been disposed"))
-            })
+            callback.onFailure(
+                withArg { exception ->
+                    assertTrue(exception.message!!.contains("HTTP engine has been disposed"))
+                },
+            )
         }
     }
 
@@ -184,11 +195,13 @@ class ApolloHttpEngineTest {
         // Given
         val apolloRequest = HttpRequest.Builder(method = HttpMethod.Post, url = "https://example.com").build()
         val sdkRequest = apolloRequest.toSDKRequest()
-        val sdkResponse = Response.builder()
-            .status(Status.OK)
-            .request(sdkRequest)
-            .protocol(Protocol.HTTP_1_1)
-            .build()
+        val sdkResponse =
+            Response
+                .builder()
+                .status(Status.OK)
+                .request(sdkRequest)
+                .protocol(Protocol.HTTP_1_1)
+                .build()
 
         every { requestExecutor.execute(match { it.match(sdkRequest) }) } answers {
             // Simulate disposing the engine during execution
@@ -209,10 +222,11 @@ class ApolloHttpEngineTest {
         // Given
         val disposable1 = mockk<ApolloDisposable>(relaxed = true)
         val disposable2 = mockk<ApolloDisposable>(relaxed = true)
-        val activeRequests = ConcurrentHashMap<String, ApolloDisposable>().apply {
-            this["request1"] = disposable1
-            this["request2"] = disposable2
-        }
+        val activeRequests =
+            ConcurrentHashMap<String, ApolloDisposable>().apply {
+                this["request1"] = disposable1
+                this["request2"] = disposable2
+            }
 
         val activeRequestsField = ApolloHttpEngine::class.java.getDeclaredField("activeRequests")
         activeRequestsField.isAccessible = true

@@ -16,19 +16,18 @@
 
 package com.expediagroup.sdk.core.http
 
+import okio.BufferedSink
+import okio.Source
+import okio.source
 import java.io.IOException
 import java.io.InputStream
 import java.net.URLEncoder
 import java.nio.charset.Charset
-import okio.BufferedSink
-import okio.Source
-import okio.source
 
 /**
  * Represents an HTTP request body.
  */
 abstract class RequestBody {
-
     /**
      * Returns the media type of the request body.
      */
@@ -62,9 +61,9 @@ abstract class RequestBody {
         fun create(
             inputStream: InputStream,
             mediaType: MediaType? = null,
-            contentLength: Long = -1
-        ): RequestBody {
-            return object : RequestBody() {
+            contentLength: Long = -1,
+        ): RequestBody =
+            object : RequestBody() {
                 override fun mediaType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
@@ -76,7 +75,6 @@ abstract class RequestBody {
                     }
                 }
             }
-        }
 
         /**
          * Creates a new request body that reads from the given [source].
@@ -91,9 +89,9 @@ abstract class RequestBody {
         fun create(
             source: Source,
             mediaType: MediaType? = null,
-            contentLength: Long = -1
-        ): RequestBody {
-            return object : RequestBody() {
+            contentLength: Long = -1,
+        ): RequestBody =
+            object : RequestBody() {
                 override fun mediaType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
@@ -105,7 +103,6 @@ abstract class RequestBody {
                     }
                 }
             }
-        }
 
         /**
          * Creates a new request body for form data with content type "application/x-www-form-urlencoded".
@@ -119,23 +116,27 @@ abstract class RequestBody {
         @JvmOverloads
         fun create(
             formData: Map<String, String>,
-            charset: Charset = Charsets.UTF_8
+            charset: Charset = Charsets.UTF_8,
         ): RequestBody {
-
-            val encodedForm = formData.map { (key, value) ->
-                "${encode(key, charset)}=${encode(value, charset)}"
-            }.joinToString("&")
+            val encodedForm =
+                formData
+                    .map { (key, value) ->
+                        "${encode(key, charset)}=${encode(value, charset)}"
+                    }.joinToString("&")
 
             val contentBytes = encodedForm.toByteArray(charset)
 
             return create(contentBytes.inputStream(), CommonMediaTypes.APPLICATION_FORM_URLENCODED)
         }
 
-        private fun encode(value: String, charset: Charset): String {
-            return URLEncoder.encode(value, charset.name())
+        private fun encode(
+            value: String,
+            charset: Charset,
+        ): String =
+            URLEncoder
+                .encode(value, charset.name())
                 .replace("+", "%20")
                 .replace("*", "%2A")
                 .replace("%7E", "~")
-        }
     }
 }

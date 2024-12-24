@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-
 class TokenResponseTest {
     @Test
     fun `should map to the expected api response`() {
@@ -20,23 +19,29 @@ class TokenResponseTest {
         val expiresIn: Long = 3600L
 
         var available: Int? = null
-        val tokenResponse = TokenResponse.parse(
-            Response.builder()
-                .body(
-                    ResponseBody.create(
-                        """{ "access_token": "$accessToken", "expires_in": $expiresIn }""".toByteArray().inputStream().also {
-                            available = it.available()
-                        },
-                        CommonMediaTypes.APPLICATION_FORM_URLENCODED,
-                        available!!.toLong()
-                    )
-                )
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .message("Accepted")
-                .request(Request.builder().url("http://localhost").method(Method.POST).build())
-                .build()
-        )
+        val tokenResponse =
+            TokenResponse.parse(
+                Response
+                    .builder()
+                    .body(
+                        ResponseBody.create(
+                            """{ "access_token": "$accessToken", "expires_in": $expiresIn }""".toByteArray().inputStream().also {
+                                available = it.available()
+                            },
+                            CommonMediaTypes.APPLICATION_FORM_URLENCODED,
+                            available!!.toLong(),
+                        ),
+                    ).status(Status.ACCEPTED)
+                    .protocol(Protocol.HTTP_1_1)
+                    .message("Accepted")
+                    .request(
+                        Request
+                            .builder()
+                            .url("http://localhost")
+                            .method(Method.POST)
+                            .build(),
+                    ).build(),
+            )
 
         assertEquals(tokenResponse.accessToken, accessToken)
         assertEquals(tokenResponse.expiresIn, expiresIn)
@@ -46,12 +51,18 @@ class TokenResponseTest {
     fun `parse should throw ExpediaGroupResponseParsingException in case of unsuccessful response`() {
         assertThrows<ExpediaGroupResponseParsingException> {
             TokenResponse.parse(
-                Response.builder()
+                Response
+                    .builder()
                     .status(Status.INTERNAL_SERVER_ERROR)
                     .protocol(Protocol.HTTP_1_1)
                     .message(Status.INTERNAL_SERVER_ERROR.name)
-                    .request(Request.builder().url("http://localhost").method(Method.POST).build())
-                    .build()
+                    .request(
+                        Request
+                            .builder()
+                            .url("http://localhost")
+                            .method(Method.POST)
+                            .build(),
+                    ).build(),
             )
         }
     }
@@ -61,19 +72,24 @@ class TokenResponseTest {
         var available: Int? = null
         assertThrows<ExpediaGroupResponseParsingException> {
             TokenResponse.parse(
-                Response.builder()
+                Response
+                    .builder()
                     .body(
                         ResponseBody.create(
                             """{ "expires_in": 3600 }""".toByteArray().inputStream().also { available = it.available() },
                             CommonMediaTypes.APPLICATION_FORM_URLENCODED,
-                            available!!.toLong()
-                        )
-                    )
-                    .status(Status.ACCEPTED)
+                            available!!.toLong(),
+                        ),
+                    ).status(Status.ACCEPTED)
                     .protocol(Protocol.HTTP_1_1)
                     .message("Accepted")
-                    .request(Request.builder().url("http://localhost").method(Method.POST).build())
-                    .build()
+                    .request(
+                        Request
+                            .builder()
+                            .url("http://localhost")
+                            .method(Method.POST)
+                            .build(),
+                    ).build(),
             )
         }
     }
@@ -83,23 +99,29 @@ class TokenResponseTest {
         val accessToken: String = "token"
         val expiresIn: Long = 3600L
         var available: Int? = null
-        val tokenResponse = TokenResponse.parse(
-            Response.builder()
-                .body(
-                    ResponseBody.create(
-                        """{ "access_token": "$accessToken", "expires_in": $expiresIn, "extra": "random" }""".toByteArray().inputStream().also {
-                            available = it.available()
-                        },
-                        CommonMediaTypes.APPLICATION_FORM_URLENCODED,
-                        available!!.toLong()
-                    )
-                )
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .message("Accepted")
-                .request(Request.builder().url("http://localhost").method(Method.POST).build())
-                .build()
-        )
+        val tokenResponse =
+            TokenResponse.parse(
+                Response
+                    .builder()
+                    .body(
+                        ResponseBody.create(
+                            """{ "access_token": "$accessToken", "expires_in": $expiresIn, "extra": "random" }""".toByteArray().inputStream().also {
+                                available = it.available()
+                            },
+                            CommonMediaTypes.APPLICATION_FORM_URLENCODED,
+                            available!!.toLong(),
+                        ),
+                    ).status(Status.ACCEPTED)
+                    .protocol(Protocol.HTTP_1_1)
+                    .message("Accepted")
+                    .request(
+                        Request
+                            .builder()
+                            .url("http://localhost")
+                            .method(Method.POST)
+                            .build(),
+                    ).build(),
+            )
 
         assertEquals(tokenResponse.accessToken, accessToken)
         assertEquals(tokenResponse.expiresIn, expiresIn)

@@ -34,7 +34,8 @@ fun HttpRequest.toSDKRequest(): Request {
     val body = body?.toSDKRequestBody()
     val method = Method.valueOf(method.name.uppercase())
 
-    return Request.builder()
+    return Request
+        .builder()
         .url(url)
         .method(method)
         .headers(headers)
@@ -42,17 +43,16 @@ fun HttpRequest.toSDKRequest(): Request {
         .build()
 }
 
-fun List<HttpHeader>.toSDKHeaders(): Headers {
-    return Headers.builder().apply { forEach { add(it.name, it.value) } }.build()
-}
+fun List<HttpHeader>.toSDKHeaders(): Headers = Headers.builder().apply { forEach { add(it.name, it.value) } }.build()
 
-fun HttpBody.toSDKRequestBody(): RequestBody {
-    return object : RequestBody() {
-        override fun mediaType(): MediaType? = try {
-            MediaType.parse(contentType)
-        } catch (e: IllegalArgumentException) {
-            null
-        }
+fun HttpBody.toSDKRequestBody(): RequestBody =
+    object : RequestBody() {
+        override fun mediaType(): MediaType? =
+            try {
+                MediaType.parse(contentType)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
 
         override fun contentLength(): Long = contentLength
 
@@ -60,23 +60,21 @@ fun HttpBody.toSDKRequestBody(): RequestBody {
             this@toSDKRequestBody.writeTo(sink)
         }
     }
-}
 
-fun Response.toApolloResponse(): HttpResponse = use {
-    HttpResponse.Builder(status.code)
-        .apply {
-            body?.let {
-                val clonedBody = Buffer().apply {
-                    it.source().use { source -> source.readAll(this) }
+fun Response.toApolloResponse(): HttpResponse =
+    use {
+        HttpResponse
+            .Builder(status.code)
+            .apply {
+                body?.let {
+                    val clonedBody =
+                        Buffer().apply {
+                            it.source().use { source -> source.readAll(this) }
+                        }
+                    body(clonedBody)
                 }
-                body(clonedBody)
-            }
-        }
-        .headers(headers.toApolloHeaders())
-        .build()
-}
+            }.headers(headers.toApolloHeaders())
+            .build()
+    }
 
-fun Headers.toApolloHeaders(): List<HttpHeader> {
-    return entries().map { entry -> HttpHeader(entry.key, entry.value.first()) }
-}
-
+fun Headers.toApolloHeaders(): List<HttpHeader> = entries().map { entry -> HttpHeader(entry.key, entry.value.first()) }

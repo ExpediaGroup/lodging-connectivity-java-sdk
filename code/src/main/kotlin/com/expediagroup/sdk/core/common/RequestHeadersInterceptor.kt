@@ -23,13 +23,15 @@ import com.expediagroup.sdk.core.interceptor.Interceptor
  * Interceptor for setting required headers before executing the request
  */
 class RequestHeadersInterceptor : Interceptor {
-
     override fun intercept(chain: Interceptor.Chain): Response {
         val metadata = MetadataLoader.load()
 
-        val request = chain.request().newBuilder()
-            .setHeader("User-Agent", metadata.asUserAgentString())
-            .build()
+        val request =
+            chain
+                .request()
+                .newBuilder()
+                .setHeader("User-Agent", metadata.asUserAgentString())
+                .build()
 
         return chain.proceed(request)
     }

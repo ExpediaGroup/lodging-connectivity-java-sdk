@@ -11,10 +11,11 @@ class HeadersTest {
     @Test
     fun `should return header value when header exists with single value`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("content-type", "application/json")
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("content-type", "application/json")
+                .build()
 
         // When
         val headerValue = headers.get("content-type")
@@ -26,10 +27,11 @@ class HeadersTest {
     @Test
     fun `should return first header value when header exists with multiple values`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("accept", listOf("application/json", "text/plain"))
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("accept", listOf("application/json", "text/plain"))
+                .build()
 
         // When
         val headerValue = headers.get("accept")
@@ -41,10 +43,11 @@ class HeadersTest {
     @Test
     fun `should return null value when header does not exist`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("content-Type", "application/json")
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("content-Type", "application/json")
+                .build()
 
         // When
         val headerValue = headers.get("accept")
@@ -56,10 +59,11 @@ class HeadersTest {
     @Test
     fun `should return the value for the matched header name case-insensitive`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("content-type", "application/json")
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("content-type", "application/json")
+                .build()
 
         // When
         val value1 = headers.get("content-type")
@@ -73,10 +77,11 @@ class HeadersTest {
     @Test
     fun `should return all values when header exists with multiple values`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("accept", listOf("application/json", "text/plain"))
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("accept", listOf("application/json", "text/plain"))
+                .build()
 
         // When
         val headersValues = headers.values("accept")
@@ -88,10 +93,11 @@ class HeadersTest {
     @Test
     fun `should return empty list if the header does not exist`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("accept", listOf("application/json", "text/plain"))
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("accept", listOf("application/json", "text/plain"))
+                .build()
 
         // When
         val headersValues = headers.values("content-type")
@@ -103,9 +109,11 @@ class HeadersTest {
     @Test
     fun `should return all values for the matched header name case-insensitive`() {
         // Given
-        val headers = Headers.Builder()
-            .add("accept", listOf("application/json", "text/plain"))
-            .build()
+        val headers =
+            Headers
+                .Builder()
+                .add("accept", listOf("application/json", "text/plain"))
+                .build()
 
         // When
         val headersNames = headers.values("accept")
@@ -117,11 +125,12 @@ class HeadersTest {
     @Test
     fun `should return all headers names`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("accept", listOf("application/json", "text/plain"))
-            .add("content-type", "application/json")
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("accept", listOf("application/json", "text/plain"))
+                .add("content-type", "application/json")
+                .build()
 
         // When
         val headersNames = headers.names()
@@ -145,20 +154,22 @@ class HeadersTest {
     @Test
     fun `should return all headers entries`() {
         // Given
-        val headers = Headers
-            .builder()
-            .add("accept", listOf("application/json", "text/plain"))
-            .add("content-type", "application/json")
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("accept", listOf("application/json", "text/plain"))
+                .add("content-type", "application/json")
+                .build()
 
         // When
         val headersEntries = headers.entries()
 
         // Expect
-        val expectedEntries = mapOf(
-            "accept" to listOf("application/json", "text/plain"),
-            "content-type" to listOf("application/json")
-        ).entries
+        val expectedEntries =
+            mapOf(
+                "accept" to listOf("application/json", "text/plain"),
+                "content-type" to listOf("application/json"),
+            ).entries
 
         assertEquals(expectedEntries, headersEntries)
     }
@@ -178,18 +189,20 @@ class HeadersTest {
     @Test
     fun `should create a builder with existing headers`() {
         // Given
-        val originalHeaders = Headers
-            .builder()
-            .add("accept", "application/json")
-            .add("content-type", "application/xml")
-            .build()
+        val originalHeaders =
+            Headers
+                .builder()
+                .add("accept", "application/json")
+                .add("content-type", "application/xml")
+                .build()
 
         // When
-        val newHeaders = originalHeaders
-            .newBuilder()
-            .add("accept", "text/plain")
-            .remove("content-type")
-            .build()
+        val newHeaders =
+            originalHeaders
+                .newBuilder()
+                .add("accept", "text/plain")
+                .remove("content-type")
+                .build()
 
         // Expect
         assertEquals("application/json", newHeaders.get("accept"))
@@ -201,11 +214,12 @@ class HeadersTest {
     @Test
     fun `should return the correct string representation`() {
         //  Given
-        val headers = Headers
-            .builder()
-            .add("accept", "application/json")
-            .add("content-type", "application/xml")
-            .build()
+        val headers =
+            Headers
+                .builder()
+                .add("accept", "application/json")
+                .add("content-type", "application/xml")
+                .build()
 
         // When
         val headersString = headers.toString()
@@ -228,13 +242,14 @@ class HeadersTest {
 
     @Nested
     inner class BuilderTests {
-
         @Test
         fun `should add single header with valid name and value as expected`() {
             // Given
-            val headers = Headers.builder()
-                .add("content-type", "application/json")
-                .build()
+            val headers =
+                Headers
+                    .builder()
+                    .add("content-type", "application/json")
+                    .build()
 
             // When
             val value1 = headers.get("Content-Type")
@@ -252,16 +267,16 @@ class HeadersTest {
         @Test
         fun `should add multiple values for one header name`() {
             // Given
-            val headers = Headers
-                .builder()
-                .add("accept", "application/json")
-                .add("accept", "text/plain")
-                .build()
+            val headers =
+                Headers
+                    .builder()
+                    .add("accept", "application/json")
+                    .add("accept", "text/plain")
+                    .build()
 
             // When
             val value = headers.get("accept")
             val values = headers.values("accept")
-
 
             // Expect
             assertEquals("application/json", value)
@@ -276,10 +291,11 @@ class HeadersTest {
             val headerValues = listOf("application/json", "text/plain")
 
             // When
-            val headers = Headers
-                .builder()
-                .add(headerName, headerValues)
-                .build()
+            val headers =
+                Headers
+                    .builder()
+                    .add(headerName, headerValues)
+                    .build()
 
             // Expect
             assertEquals("application/json", headers.get("accept"))
@@ -294,17 +310,17 @@ class HeadersTest {
             val headerValue2 = "text/plain"
 
             // When
-            val headers = Headers
-                .builder()
-                .add(headerName, headerValue1)
-                .set(headerName, headerValue2)
-                .build()
+            val headers =
+                Headers
+                    .builder()
+                    .add(headerName, headerValue1)
+                    .set(headerName, headerValue2)
+                    .build()
 
             // Expect
             assertEquals(headerValue2, headers.get(headerName))
             assertEquals(listOf(headerValue2), headers.values(headerName))
         }
-
 
         @Test
         fun `should set multiple values with valid name and values`() {
@@ -314,17 +330,17 @@ class HeadersTest {
             val newHeaderValues = listOf("application/xml", "text/html")
 
             // When
-            val headers = Headers
-                .builder()
-                .add(headerName, initialHeaderValues)
-                .set(headerName, newHeaderValues)
-                .build()
+            val headers =
+                Headers
+                    .builder()
+                    .add(headerName, initialHeaderValues)
+                    .set(headerName, newHeaderValues)
+                    .build()
 
             // Expect
             assertEquals("application/xml", headers.get("accept"))
             assertEquals(newHeaderValues, headers.values("accept"))
         }
-
 
         @Test
         fun `should remove existing header as expected`() {
@@ -333,11 +349,12 @@ class HeadersTest {
             val headerValue = "application/json"
 
             // When
-            val headers = Headers
-                .builder()
-                .add(headerName, headerValue)
-                .remove(headerName)
-                .build()
+            val headers =
+                Headers
+                    .builder()
+                    .add(headerName, headerValue)
+                    .remove(headerName)
+                    .build()
 
             // Expect
             assertNull(headers.get(headerName))
@@ -352,11 +369,12 @@ class HeadersTest {
             val headerValue = "application/json"
 
             // When
-            val headers = Headers
-                .builder()
-                .add(headerName, headerValue)
-                .remove("content-type")
-                .build()
+            val headers =
+                Headers
+                    .builder()
+                    .add(headerName, headerValue)
+                    .remove("content-type")
+                    .build()
 
             // Expect
             assertEquals("application/json", headers.get("accept"))
@@ -380,18 +398,20 @@ class HeadersTest {
         @Test
         fun `should initialize the Builder with existing Headers`() {
             // Given
-            val originalHeaders = Headers
-                .builder()
-                .add("Accept", "application/json")
-                .add("Content-Type", "application/xml")
-                .build()
+            val originalHeaders =
+                Headers
+                    .builder()
+                    .add("Accept", "application/json")
+                    .add("Content-Type", "application/xml")
+                    .build()
 
             // When
-            val newHeaders = Headers
-                .builder(originalHeaders)
-                .add("Accept", "text/plain")
-                .remove("Content-Type")
-                .build()
+            val newHeaders =
+                Headers
+                    .builder(originalHeaders)
+                    .add("Accept", "text/plain")
+                    .remove("Content-Type")
+                    .build()
 
             // Expect
             assertEquals("application/json", newHeaders.get("Accept"))

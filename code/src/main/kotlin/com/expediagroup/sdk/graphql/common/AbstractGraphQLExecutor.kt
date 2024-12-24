@@ -19,8 +19,8 @@ package com.expediagroup.sdk.graphql.common
 import com.apollographql.apollo.api.Mutation
 import com.apollographql.apollo.api.Query
 import com.apollographql.java.client.ApolloClient
-import com.expediagroup.sdk.core.client.Disposable
 import com.expediagroup.sdk.core.client.AbstractRequestExecutor
+import com.expediagroup.sdk.core.client.Disposable
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -35,9 +35,8 @@ import java.util.concurrent.CompletableFuture
  * requests are sent and processed.
  */
 abstract class AbstractGraphQLExecutor(
-    private val requestExecutor: AbstractRequestExecutor
+    private val requestExecutor: AbstractRequestExecutor,
 ) : Disposable {
-
     /**
      * The Apollo Client instance used to perform GraphQL requests.
      * Subclasses must initialize this property with a configured [ApolloClient] instance.

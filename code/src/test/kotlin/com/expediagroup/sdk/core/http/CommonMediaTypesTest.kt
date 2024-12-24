@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class CommonMediaTypesTest {
-
     @Test
     fun `TEXT_PLAIN should have correct type and subtype`() {
         val mediaType = CommonMediaTypes.TEXT_PLAIN

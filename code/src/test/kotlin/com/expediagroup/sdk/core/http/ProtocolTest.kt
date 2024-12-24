@@ -26,9 +26,10 @@ class ProtocolTest {
 
     @Test
     fun `should throw IllegalArgumentException for invalid protocol strings`() {
-        val exception = assertThrows<IllegalArgumentException> {
-            Protocol.get("INVALID_PROTOCOL")
-        }
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                Protocol.get("INVALID_PROTOCOL")
+            }
         assertEquals("Unexpected protocol: INVALID_PROTOCOL", exception.message)
     }
 

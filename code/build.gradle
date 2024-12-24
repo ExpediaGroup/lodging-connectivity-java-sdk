@@ -9,6 +9,9 @@ plugins {
 
     /* Test Reporting */
     id 'org.jetbrains.kotlinx.kover' version "0.9.0"
+
+    /* Linting */
+    id "org.jlleitschuh.gradle.ktlint" version "12.1.2"
 }
 
 kotlin {
@@ -48,4 +51,4 @@ apply from: "tasks-gradle/sdk-properties.gradle"
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"
 apply from: "tasks-gradle/dokka.gradle"
-apply from: "tasks-gradle/coverage.gradle"
+apply from: "tasks-gradle/lint.gradle"

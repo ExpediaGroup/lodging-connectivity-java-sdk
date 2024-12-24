@@ -1,9 +1,6 @@
 package com.expediagroup.sdk.core.okhttp
 
 import io.mockk.mockk
-import java.util.concurrent.Callable
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -12,6 +9,9 @@ import org.junit.jupiter.api.Assertions.assertNotSame
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class BaseOkHttpClientTest {
     @Test
@@ -24,12 +24,13 @@ class BaseOkHttpClientTest {
     @Test
     fun `should return configured instance with timeouts correctly`() {
         // Given
-        val configuration = OkHttpClientConfiguration(
-            callTimeout = 1000,
-            connectTimeout = 2000,
-            readTimeout = 3000,
-            writeTimeout = 4000
-        )
+        val configuration =
+            OkHttpClientConfiguration(
+                callTimeout = 1000,
+                connectTimeout = 2000,
+                readTimeout = 3000,
+                writeTimeout = 4000,
+            )
 
         // When
         val client = BaseOkHttpClient.getInstance(configuration)
@@ -96,12 +97,14 @@ class BaseOkHttpClientTest {
     fun `should assign a new connection pool to the new instance if passed through the configurations`() {
         // Given
         val baseInstance = BaseOkHttpClient.getInstance()
-        val instanceWithCustomCallTimeout = BaseOkHttpClient.getInstance(
-            configuration = OkHttpClientConfiguration(callTimeout = 1000)
-        )
-        val newConnectionPoolConfiguration = OkHttpClientConfiguration(
-            connectionPool = ConnectionPool(5, 10, TimeUnit.MINUTES)
-        )
+        val instanceWithCustomCallTimeout =
+            BaseOkHttpClient.getInstance(
+                configuration = OkHttpClientConfiguration(callTimeout = 1000),
+            )
+        val newConnectionPoolConfiguration =
+            OkHttpClientConfiguration(
+                connectionPool = ConnectionPool(5, 10, TimeUnit.MINUTES),
+            )
 
         // When
         val instanceWithCustomConnectionPool = BaseOkHttpClient.getInstance(newConnectionPoolConfiguration)

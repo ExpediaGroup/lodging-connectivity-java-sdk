@@ -10,24 +10,23 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-
 class ClientConfigurationTest {
-
     @Nested
     inner class DefaultClientConfigurationTest {
-
         @Test
         fun `should build and store configuration options correctly`() {
-            val config = ClientConfiguration.builder()
-                .key("test-key")
-                .secret("test-secret")
-                .environment(ClientEnvironment.TEST)
-                .callTimeout(5000)
-                .connectTimeout(3000)
-                .readTimeout(3000)
-                .writeTimeout(3000)
-                .retryOnConnectionFailure(true)
-                .build()
+            val config =
+                ClientConfiguration
+                    .builder()
+                    .key("test-key")
+                    .secret("test-secret")
+                    .environment(ClientEnvironment.TEST)
+                    .callTimeout(5000)
+                    .connectTimeout(3000)
+                    .readTimeout(3000)
+                    .writeTimeout(3000)
+                    .retryOnConnectionFailure(true)
+                    .build()
 
             assertEquals("test-key", config.key)
             assertEquals("test-secret", config.secret)
@@ -39,22 +38,26 @@ class ClientConfigurationTest {
 
         @Test
         fun `should throw an exception when key is missing`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                ClientConfiguration.builder()
-                    .secret("test-secret")
-                    .build()
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    ClientConfiguration
+                        .builder()
+                        .secret("test-secret")
+                        .build()
+                }
 
             assertEquals("key is required", exception.message)
         }
 
         @Test
         fun `should throw an exception when secret is missing`() {
-            val exception = assertThrows<IllegalArgumentException> {
-                ClientConfiguration.builder()
-                    .key("test-key")
-                    .build()
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    ClientConfiguration
+                        .builder()
+                        .key("test-key")
+                        .build()
+                }
 
             assertEquals("secret is required", exception.message)
         }
@@ -65,13 +68,15 @@ class ClientConfigurationTest {
             val networkInterceptors = listOf<Interceptor>(mockk(relaxed = true))
             val connectionPool = mockk<ConnectionPool>(relaxed = true)
 
-            val config = DefaultClientConfiguration.Builder()
-                .key("test-key")
-                .secret("test-secret")
-                .interceptors(interceptors)
-                .networkInterceptors(networkInterceptors)
-                .connectionPool(connectionPool)
-                .build()
+            val config =
+                DefaultClientConfiguration
+                    .Builder()
+                    .key("test-key")
+                    .secret("test-secret")
+                    .interceptors(interceptors)
+                    .networkInterceptors(networkInterceptors)
+                    .connectionPool(connectionPool)
+                    .build()
 
             val okHttpConfig = config.buildOkHttpConfiguration()
 
@@ -79,7 +84,6 @@ class ClientConfigurationTest {
             assertSame(networkInterceptors, okHttpConfig.networkInterceptors)
             assertSame(connectionPool, okHttpConfig.connectionPool)
         }
-
     }
 
     @Nested
@@ -88,11 +92,13 @@ class ClientConfigurationTest {
         fun `should build and store configuration options correctly`() {
             val transport = mockk<Transport>(relaxed = true)
 
-            val config = ClientConfiguration.builder(transport)
-                .key("test-key")
-                .secret("test-secret")
-                .environment(ClientEnvironment.TEST)
-                .build()
+            val config =
+                ClientConfiguration
+                    .builder(transport)
+                    .key("test-key")
+                    .secret("test-secret")
+                    .environment(ClientEnvironment.TEST)
+                    .build()
 
             assertEquals("test-key", config.key)
             assertEquals("test-secret", config.secret)
@@ -104,12 +110,14 @@ class ClientConfigurationTest {
         fun `should throw an exception when key is missing`() {
             val transport = mockk<Transport>(relaxed = true)
 
-            val exception = assertThrows<IllegalArgumentException> {
-                ClientConfiguration.builder(transport)
-                    .secret("test-secret")
-                    .environment(ClientEnvironment.TEST)
-                    .build()
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    ClientConfiguration
+                        .builder(transport)
+                        .secret("test-secret")
+                        .environment(ClientEnvironment.TEST)
+                        .build()
+                }
 
             assertEquals("key is required", exception.message)
         }
@@ -118,12 +126,14 @@ class ClientConfigurationTest {
         fun `should throw an exception when secret is missing`() {
             val transport = mockk<Transport>(relaxed = true)
 
-            val exception = assertThrows<IllegalArgumentException> {
-                ClientConfiguration.builder(transport)
-                    .key("test-key")
-                    .environment(ClientEnvironment.TEST)
-                    .build()
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    ClientConfiguration
+                        .builder(transport)
+                        .key("test-key")
+                        .environment(ClientEnvironment.TEST)
+                        .build()
+                }
 
             assertEquals("secret is required", exception.message)
         }

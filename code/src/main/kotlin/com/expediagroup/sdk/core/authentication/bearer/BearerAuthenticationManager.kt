@@ -43,7 +43,6 @@ class BearerAuthenticationManager(
     private val requestExecutor: AbstractRequestExecutor,
     private val credentials: Credentials,
 ) : AuthenticationManager {
-
     @Volatile
     private var bearerTokenStorage = BearerTokenStorage.empty
 
@@ -74,42 +73,47 @@ class BearerAuthenticationManager(
      *
      * @return `true` if the token is near expiration, `false` otherwise.
      */
-    fun isTokenAboutToExpire(): Boolean = run {
-        bearerTokenStorage.isAboutToExpire()
-    }
+    fun isTokenAboutToExpire(): Boolean =
+        run {
+            bearerTokenStorage.isAboutToExpire()
+        }
 
     /**
      * Clears the stored authentication token.
      *
      * This method resets the internal token storage, effectively invalidating the current session.
      */
-    override fun clearAuthentication() = run {
-        bearerTokenStorage = BearerTokenStorage.empty
-    }
+    override fun clearAuthentication() =
+        run {
+            bearerTokenStorage = BearerTokenStorage.empty
+        }
 
     /**
      * Retrieves the stored token formatted as an `Authorization` header value.
      *
      * @return The token in the format `Bearer <token>` for use in HTTP headers.
      */
-    fun getAuthorizationHeaderValue(): String = run {
-        bearerTokenStorage.getAuthorizationHeaderValue()
-    }
+    fun getAuthorizationHeaderValue(): String =
+        run {
+            bearerTokenStorage.getAuthorizationHeaderValue()
+        }
 
     /**
      * Creates an HTTP request to fetch a new bearer token from the authentication server.
      *
      * @return A [Request] object configured with the necessary headers and parameters.
      */
-    private fun buildAuthenticationRequest(): Request = run {
-        Request.Builder()
-            .url(authUrl)
-            .method(Method.POST)
-            .body( RequestBody.create(mapOf("grant_type" to "client_credentials")))
-            .setHeader("Authorization", credentials.encodeBasic())
-            .setHeader("Content-Type", CommonMediaTypes.APPLICATION_FORM_URLENCODED.toString())
-            .build()
-    }
+    private fun buildAuthenticationRequest(): Request =
+        run {
+            Request
+                .Builder()
+                .url(authUrl)
+                .method(Method.POST)
+                .body(RequestBody.create(mapOf("grant_type" to "client_credentials")))
+                .setHeader("Authorization", credentials.encodeBasic())
+                .setHeader("Content-Type", CommonMediaTypes.APPLICATION_FORM_URLENCODED.toString())
+                .build()
+        }
 
     /**
      * Executes the authentication request and validates the response.
@@ -118,23 +122,26 @@ class BearerAuthenticationManager(
      * @return The [Response] received from the server.
      * @throws ExpediaGroupAuthException If the server responds with an error.
      */
-    private fun executeAuthenticationRequest(request: Request): Response = run {
-        requestExecutor.execute(request).apply {
-            if (!this.isSuccessful) {
-                throw ExpediaGroupAuthException(this.status, "Authentication failed")
+    private fun executeAuthenticationRequest(request: Request): Response =
+        run {
+            requestExecutor.execute(request).apply {
+                if (!this.isSuccessful) {
+                    throw ExpediaGroupAuthException(this.status, "Authentication failed")
+                }
             }
         }
-    }
 
     /**
      * Stores the retrieved token in internal storage for subsequent use.
      *
      * @param tokenResponse The [TokenResponse] containing the token and its expiration time.
      */
-    private fun storeToken(tokenResponse: TokenResponse) = run {
-        bearerTokenStorage = BearerTokenStorage.create(
-            accessToken = tokenResponse.accessToken,
-            expiresIn = tokenResponse.expiresIn
-        )
-    }
+    private fun storeToken(tokenResponse: TokenResponse) =
+        run {
+            bearerTokenStorage =
+                BearerTokenStorage.create(
+                    accessToken = tokenResponse.accessToken,
+                    expiresIn = tokenResponse.expiresIn,
+                )
+        }
 }

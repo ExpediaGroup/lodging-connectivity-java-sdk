@@ -18,7 +18,9 @@ package com.expediagroup.sdk.core.http
 
 import com.expediagroup.sdk.core.http.Status.entries
 
-enum class Status(val code: Int) {
+enum class Status(
+    val code: Int,
+) {
     // Informational responses (100–199)
     CONTINUE(100),
     SWITCHING_PROTOCOLS(101),
@@ -92,10 +94,10 @@ enum class Status(val code: Int) {
     NETWORK_AUTHENTICATION_REQUIRED(511),
 
     // Non-standard status codes (e.g., Apache)
-    THIS_IS_FINE(218); // Non-standard code, used by some Apache modules
+    THIS_IS_FINE(218), // Non-standard code, used by some Apache modules
+    ;
 
     companion object {
-
         @JvmStatic
         @Throws(IllegalArgumentException::class)
         fun fromCode(code: Int): Status {

@@ -45,16 +45,17 @@ import java.util.concurrent.ExecutionException
  */
 internal class GraphQLExecutor(
     requestExecutor: AbstractRequestExecutor,
-    serverUrl: String
+    serverUrl: String,
 ) : AbstractGraphQLExecutor(requestExecutor) {
-
     /**
      * The Apollo Client used to execute GraphQL requests, configured with a custom HTTP client.
      */
-    override val apolloClient: ApolloClient = ApolloClient.Builder()
-        .serverUrl(serverUrl)
-        .httpEngine(ApolloHttpEngine(requestExecutor))
-        .build()
+    override val apolloClient: ApolloClient =
+        ApolloClient
+            .Builder()
+            .serverUrl(serverUrl)
+            .httpEngine(ApolloHttpEngine(requestExecutor))
+            .build()
 
     /**
      * Asynchronously executes a GraphQL query and returns a [CompletableFuture] containing the complete
@@ -65,11 +66,10 @@ internal class GraphQLExecutor(
      * @throws [ExpediaGroupServiceException] If an exception occurs during query execution.
      * @throws [NoDataException] If the query completes without data but includes errors.
      */
-    override fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>> {
-        return CompletableFuture<RawResponse<T>>().also {
+    override fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>> =
+        CompletableFuture<RawResponse<T>>().also {
             apolloClient.query(query).enqueue { response -> processOperationResponse(response, it) }
         }
-    }
 
     /**
      * Executes a GraphQL query and returns a [RawResponse] containing the complete data and any errors.
@@ -79,9 +79,7 @@ internal class GraphQLExecutor(
      * @throws [ExpediaGroupServiceException] If an exception occurs during query execution.
      * @throws [NoDataException] If the query completes without data but includes errors.
      */
-    override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> {
-        return executeAsync(query).getOrThrowDomainException()
-    }
+    override fun <T : Query.Data> execute(query: Query<T>): RawResponse<T> = executeAsync(query).getOrThrowDomainException()
 
     /**
      * Asynchronously executes a GraphQL mutation and returns a [CompletableFuture] containing the complete
@@ -92,11 +90,10 @@ internal class GraphQLExecutor(
      * @throws [ExpediaGroupServiceException] If an exception occurs during mutation execution.
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
-    override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>> {
-        return CompletableFuture<RawResponse<T>>().also {
+    override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>> =
+        CompletableFuture<RawResponse<T>>().also {
             apolloClient.mutation(mutation).enqueue { response -> processOperationResponse(response, it) }
         }
-    }
 
     /**
      * Executes a GraphQL mutation and returns a [RawResponse] containing the complete data and any errors.
@@ -106,9 +103,7 @@ internal class GraphQLExecutor(
      * @throws [ExpediaGroupServiceException] If an exception occurs during mutation execution.
      * @throws [NoDataException] If the mutation completes without data but includes errors.
      */
-    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> {
-        return executeAsync(mutation).getOrThrowDomainException()
-    }
+    override fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T> = executeAsync(mutation).getOrThrowDomainException()
 
     /**
      * Handles the response from a GraphQL operation, determining whether to complete the provided CompletableFuture
@@ -119,42 +114,45 @@ internal class GraphQLExecutor(
      */
     private fun <T : Operation.Data> processOperationResponse(
         response: ApolloResponse<T>,
-        future: CompletableFuture<RawResponse<T>>
+        future: CompletableFuture<RawResponse<T>>,
     ) {
         try {
             when {
-                response.exception != null -> future.completeExceptionally(
-                    ExpediaGroupServiceException(
-                        cause = response.exception
+                response.exception != null ->
+                    future.completeExceptionally(
+                        ExpediaGroupServiceException(
+                            cause = response.exception,
+                        ),
                     )
-                )
 
-                response.data == null && response.hasErrors() -> future.completeExceptionally(
-                    NoDataException(
-                        message = "No data received from the server",
-                        errors = response.errors!!.map { Error.fromApolloError(it) }
+                response.data == null && response.hasErrors() ->
+                    future.completeExceptionally(
+                        NoDataException(
+                            message = "No data received from the server",
+                            errors = response.errors!!.map { Error.fromApolloError(it) },
+                        ),
                     )
-                )
 
-                else -> future.complete(
-                    RawResponse(
-                        data = response.data!!,
-                        errors = response.errors?.map { Error.fromApolloError(it) }
+                else ->
+                    future.complete(
+                        RawResponse(
+                            data = response.data!!,
+                            errors = response.errors?.map { Error.fromApolloError(it) },
+                        ),
                     )
-                )
             }
         } catch (e: Exception) {
             future.completeExceptionally(
                 ExpediaGroupServiceException(
                     message = e.message,
-                    cause = e
-                )
+                    cause = e,
+                ),
             )
         }
     }
 
-    private fun <T> CompletableFuture<T>.getOrThrowDomainException(): T {
-        return try {
+    private fun <T> CompletableFuture<T>.getOrThrowDomainException(): T =
+        try {
             this.get()
         } catch (e: ExecutionException) {
             when (e.cause) {
@@ -166,5 +164,4 @@ internal class GraphQLExecutor(
             Thread.currentThread().interrupt()
             throw ExpediaGroupServiceException("Interrupted while waiting for response", e)
         }
-    }
 }

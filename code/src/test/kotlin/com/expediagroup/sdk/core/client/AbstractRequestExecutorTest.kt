@@ -15,9 +15,10 @@ class AbstractRequestExecutorTest {
     private val mockInterceptor1 = mockk<Interceptor>(relaxed = true)
     private val mockInterceptor2 = mockk<Interceptor>(relaxed = true)
 
-    private val testRequestExecutor = object : AbstractRequestExecutor(mockTransport) {
-        override val interceptors: List<Interceptor> = listOf(mockInterceptor1, mockInterceptor2)
-    }
+    private val testRequestExecutor =
+        object : AbstractRequestExecutor(mockTransport) {
+            override val interceptors: List<Interceptor> = listOf(mockInterceptor1, mockInterceptor2)
+        }
 
     @Test
     fun `should call the applied interceptors in the default execute implementation`() {
