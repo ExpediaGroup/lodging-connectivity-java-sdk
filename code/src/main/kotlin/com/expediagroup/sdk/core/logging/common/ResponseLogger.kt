@@ -14,7 +14,7 @@ object ResponseLogger {
         maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
     ) {
         try {
-            val responseBodyString = response.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
+            val responseBodyString = response.body?.let { it.readLoggableBody(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
                 append("[URL=${response.request.url}, Code=${response.status.code}, Headers=[${response.headers}], Body=[${responseBodyString}]")
@@ -23,11 +23,11 @@ object ResponseLogger {
             }
 
         } catch (e: Exception) {
-            logger.warn("Failed to log response: ${e.message}", e)
+            logger.warn("Failed to log response")
         }
     }
 
-    private fun ResponseBody.peekContent(maxSize: Long, charset: Charset?): String {
+    private fun ResponseBody.readLoggableBody(maxSize: Long, charset: Charset?): String {
         this.mediaType().also {
             if (it === null) {
                 return "Response body of unknown media type cannot be logged"

@@ -15,7 +15,7 @@ object RequestLogger {
         maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
     ) {
         try {
-            val requestBodyString = request.body?.let { it.peekContent(maxBodyLogSize, it.mediaType()?.charset) }
+            val requestBodyString = request.body?.let { it.readLoggableBody(maxBodyLogSize, it.mediaType()?.charset) }
 
             buildString {
                 append("[URL=${request.url}, Method=${request.method}, Headers=[${request.headers}], Body=[${requestBodyString}]")
@@ -24,12 +24,12 @@ object RequestLogger {
             }
 
         } catch (e: Exception) {
-            logger.warn("Failed to log request: ${e.message}", e)
+            logger.warn("Failed to log request")
         }
     }
 
     @Throws(IOException::class)
-    private fun RequestBody.peekContent(maxSize: Long, charset: Charset?): String {
+    private fun RequestBody.readLoggableBody(maxBodyLogSize: Long, charset: Charset?): String {
         this.mediaType().also {
             if (it === null) {
                 return "Request body of unknown media type cannot be logged"
@@ -40,9 +40,9 @@ object RequestLogger {
             }
         }
 
-        val buffer = Buffer()
-        writeTo(buffer)
-        val bytesToRead = minOf(maxSize, buffer.size)
+        val buffer = Buffer().apply { writeTo(this) }
+        val bytesToRead = minOf(maxBodyLogSize, buffer.size)
+
         return buffer.readString(bytesToRead, charset ?: Charsets.UTF_8)
     }
 }

@@ -28,4 +28,9 @@ class OkHttpAsyncTransport(private val okHttpClient: OkHttpClient) : AsyncTransp
 
         return future
     }
+
+    override fun dispose() {
+        okHttpClient.dispatcher.executorService.shutdown()
+        okHttpClient.connectionPool.evictAll()
+    }
 }

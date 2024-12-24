@@ -27,14 +27,14 @@ class RequestExecutor(
 
     override val interceptors: List<Interceptor> = listOf(
         RequestHeadersInterceptor(),
-        LoggingInterceptor(),
         BearerAuthenticationInterceptor(
             BearerAuthenticationManager(
                 requestExecutor = this,
                 authUrl = apiEndpoint.authEndpoint,
                 credentials = Credentials(configuration.key, configuration.secret),
             )
-        )
+        ),
+        LoggingInterceptor()
     )
 }
 

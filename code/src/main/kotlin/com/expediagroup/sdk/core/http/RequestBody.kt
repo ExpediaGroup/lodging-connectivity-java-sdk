@@ -20,7 +20,9 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.URLEncoder
 import java.nio.charset.Charset
+import kotlin.math.sin
 import okio.BufferedSink
+import okio.ByteString
 import okio.Source
 import okio.source
 
@@ -103,6 +105,25 @@ abstract class RequestBody {
                     source.use { src ->
                         sink.writeAll(src)
                     }
+                }
+            }
+        }
+
+        @JvmStatic
+        @JvmOverloads
+        fun create(
+            byteString: ByteString,
+            mediaType: MediaType? = null,
+            contentLength: Long = -1
+        ): RequestBody {
+            return object : RequestBody() {
+                override fun mediaType(): MediaType? = mediaType
+
+                override fun contentLength(): Long = contentLength
+
+                @Throws(IOException::class)
+                override fun writeTo(sink: BufferedSink) {
+                    sink.write(byteString)
                 }
             }
         }

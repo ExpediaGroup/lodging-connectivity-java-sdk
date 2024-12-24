@@ -46,7 +46,9 @@ class OkHttpTransport(
      */
     @Throws(IOException::class)
     override fun execute(request: Request): Response {
-        return request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
+        return request.toOkHttpRequest().let {
+            okHttpClient.newCall(it).execute()
+        }.toSDKResponse(request)
     }
 
     override fun dispose() {
