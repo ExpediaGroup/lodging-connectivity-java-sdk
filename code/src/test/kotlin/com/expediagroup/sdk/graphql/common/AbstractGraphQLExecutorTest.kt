@@ -11,14 +11,14 @@ import java.util.concurrent.CompletableFuture
 import org.junit.jupiter.api.Test
 
 
-class GraphQLExecutorTest {
+class AbstractGraphQLExecutorTest {
 
     @Test
     fun `should close the underlying resources on dispose call`() {
         val mockRequestExecutor = mockk<AbstractRequestExecutor>(relaxed = true)
         val mockApolloClient = mockk<ApolloClient>(relaxed = true)
 
-        val testGraphQLExecutor = object : GraphQLExecutor(mockRequestExecutor) {
+        val testGraphQLExecutor = object : AbstractGraphQLExecutor(mockRequestExecutor) {
             override val apolloClient = mockApolloClient
             override fun <T : Query.Data> execute(query: Query<T>) = mockk<RawResponse<T>>()
             override fun <T : Mutation.Data> execute(mutation: Mutation<T>) = mockk<RawResponse<T>>()

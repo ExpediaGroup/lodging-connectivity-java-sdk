@@ -18,7 +18,7 @@ package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
 import com.expediagroup.sdk.core.extension.orFalseIfNull
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.ChangeReservationReconciliationMutation
@@ -42,11 +42,11 @@ data class ChangeReservationReconciliationResponse(
 /**
  * Executes [ChangeReservationReconciliationMutation] GraphQL mutation to modify the reconciliation details of an existing reservation.
  *
- * This function uses the provided [GraphQLExecutor] to execute the mutation and returns a [ChangeReservationReconciliationResponse]
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the mutation and returns a [ChangeReservationReconciliationResponse]
  * containing both the updated reconciliation data (if available) and the full raw response. Optional selection parameters
  * allow the inclusion of additional reservation details in the response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [ChangeReservationReconciliationInput] containing the details of the reconciliation changes.
  * @param selections An optional [ReservationSelections] specifying additional fields to include in the response, such as
  * supplier amount and payment instrument token; defaults to `null`.
@@ -55,7 +55,7 @@ data class ChangeReservationReconciliationResponse(
  */
 @JvmOverloads
 fun changeReservationReconciliationOperation(
-    graphQLExecutor: GraphQLExecutor,
+    graphQLExecutor: AbstractGraphQLExecutor,
     input: ChangeReservationReconciliationInput,
     selections: ReservationSelections? = null
 ): ChangeReservationReconciliationResponse {

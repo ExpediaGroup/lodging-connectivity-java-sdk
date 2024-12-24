@@ -20,7 +20,7 @@ import com.expediagroup.sdk.core.extension.getOrThrow
 import com.expediagroup.sdk.core.extension.orFalseIfNull
 import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -48,11 +48,11 @@ data class PropertyReservationsResponse(
 /**
  * Executes [PropertyReservationsQuery] GraphQL query to retrieve a paginated list of reservations for a specific property.
  *
- * This function uses the provided [GraphQLExecutor] to execute the query, with optional parameters for cursor,
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the query, with optional parameters for cursor,
  * page size, and selection of additional reservation details. It returns a [PropertyReservationsResponse]
  * containing the reservation data, pagination information, and the full raw response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL query.
  * @param input The [PropertyReservationsInput] containing the property ID and filter criteria for the reservations.
  * @param cursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @param pageSize The number of reservations to retrieve per page; defaults to a predefined page size if not provided.
@@ -63,7 +63,7 @@ data class PropertyReservationsResponse(
  */
 @JvmOverloads
 fun getReservationsOperation(
-    graphQLExecutor: GraphQLExecutor,
+    graphQLExecutor: AbstractGraphQLExecutor,
     input: PropertyReservationsInput,
     cursor: String? = null,
     pageSize: Int? = null,

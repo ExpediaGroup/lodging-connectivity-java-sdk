@@ -1,6 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
-    id 'org.jetbrains.dokka' version '1.9.20'
+    id 'org.jetbrains.dokka' version '2.0.0'
     id 'com.apollographql.apollo' version '4.1.0'
 
     /* Publishing Plugins */
@@ -20,7 +20,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.0'
 
     /* Dokka */
-    dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:1.9.20'
+    dokkaHtmlPlugin 'org.jetbrains.dokka:versioning-plugin:2.0.0'
 
     /* Apollo */
     api 'com.apollographql.java:client:0.0.2'

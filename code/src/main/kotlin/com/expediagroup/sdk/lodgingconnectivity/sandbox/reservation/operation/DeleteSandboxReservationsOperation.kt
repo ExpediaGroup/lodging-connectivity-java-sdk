@@ -17,7 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxDeletePropertyReservationsMutation
@@ -39,16 +39,16 @@ data class DeleteSandboxReservationsResponse(
 /**
  * Executes [SandboxDeletePropertyReservationsMutation] GraphQL mutation to remove multiple reservations for a specified property.
  *
- * This function uses the provided [GraphQLExecutor] to execute the mutation and returns a [DeleteSandboxReservationsResponse]
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the mutation and returns a [DeleteSandboxReservationsResponse]
  * containing both the data for the deleted reservations and the full raw response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [DeletePropertyReservationsInput] containing the details of the reservations to be deleted.
  * @return A [DeleteSandboxReservationsResponse] containing data for the deleted reservations and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
 fun deleteSandboxReservationsOperation(
-    graphQLExecutor: GraphQLExecutor,
+    graphQLExecutor: AbstractGraphQLExecutor,
     input: DeletePropertyReservationsInput
 ): DeleteSandboxReservationsResponse {
     val operation = SandboxDeletePropertyReservationsMutation(input)

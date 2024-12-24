@@ -17,7 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxCancelReservationMutation
@@ -41,15 +41,15 @@ data class CancelSandboxReservationResponse(
 /**
  * Executes [SandboxCancelReservationMutation] GraphQL mutation to cancel an existing sandbox reservation.
  *
- * This function uses the provided [GraphQLExecutor] to execute the mutation and returns a [CancelSandboxReservationResponse]
+ * This function uses the provided [AbstractGraphQLExecutor] to execute the mutation and returns a [CancelSandboxReservationResponse]
  * containing both the updated reservation data and the full raw response.
  *
- * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
+ * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [CancelReservationInput] containing the details of the reservation to be canceled.
  * @return A [CancelSandboxReservationResponse] containing the canceled reservation data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
-fun cancelSandboxReservationOperation(graphQLExecutor: GraphQLExecutor, input: CancelReservationInput): CancelSandboxReservationResponse {
+fun cancelSandboxReservationOperation(graphQLExecutor: AbstractGraphQLExecutor, input: CancelReservationInput): CancelSandboxReservationResponse {
     val operation = SandboxCancelReservationMutation(input)
     val response = graphQLExecutor.execute(operation)
 
