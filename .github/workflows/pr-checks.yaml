@@ -10,7 +10,10 @@ jobs:
         with:
           distribution: 'corretto'
           java-version: 21
-      - uses: gradle/actions/setup-gradle@v4
+      - name: Pull GraphQL Submodule
+        run: ./scripts/graphql/init.sh
+      - name: Build with Gradle
+        uses: gradle/actions/setup-gradle@v4
       - run: gradle clean build
       - working-directory: code
         run: gradle clean build
