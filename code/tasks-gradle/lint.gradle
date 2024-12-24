@@ -26,7 +26,3 @@ ktlint {
         }
     }
 }
-
-tasks.named("check") {
-    dependsOn("ktlintFormat")
-}
