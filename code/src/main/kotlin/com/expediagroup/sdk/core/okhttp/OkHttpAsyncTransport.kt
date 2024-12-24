@@ -39,7 +39,7 @@ class OkHttpAsyncTransport(
                 }
 
                 override fun onResponse(call: Call, response: okhttp3.Response) {
-                    future.complete(response.toSDKResponse(request));
+                    future.complete(response.toSDKResponse(request))
                 }
             })
         }
