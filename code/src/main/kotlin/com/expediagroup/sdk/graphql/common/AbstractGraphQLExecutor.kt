@@ -16,18 +16,15 @@
 
 package com.expediagroup.sdk.graphql.common
 
-import com.apollographql.apollo.api.Mutation
-import com.apollographql.apollo.api.Query
-import com.apollographql.java.client.ApolloClient
-import com.expediagroup.sdk.core.client.Disposable
+import com.apollographql.apollo.api.Operation
 import com.expediagroup.sdk.core.client.AbstractRequestExecutor
+import com.expediagroup.sdk.core.client.Disposable
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
-import java.util.concurrent.CompletableFuture
 
 /**
- * Abstract base class for executing GraphQL operations, providing a structure for executing queries and mutations
+ * Abstract base class for executing GraphQL operations, providing a structure for executing operations
  * and returning the full response data along with any errors.
  *
  * This class is designed to handle the execution of GraphQL operations and return a [RawResponse] containing
@@ -35,60 +32,22 @@ import java.util.concurrent.CompletableFuture
  * requests are sent and processed.
  */
 abstract class AbstractGraphQLExecutor(
-    private val requestExecutor: AbstractRequestExecutor
+    protected val requestExecutor: AbstractRequestExecutor
 ) : Disposable {
-
     /**
-     * The Apollo Client instance used to perform GraphQL requests.
-     * Subclasses must initialize this property with a configured [ApolloClient] instance.
-     */
-    protected abstract val apolloClient: ApolloClient
-
-    /**
-     * Executes a GraphQL query and returns the complete raw response.
+     * Executes a GraphQL operation and returns the complete raw response.
      *
-     * @param query The GraphQL query to be executed.
-     * @return A [RawResponse] containing the full data and any errors from the query response.
-     * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the query.
-     * @throws [NoDataException] If the query completes without data but includes errors.
+     * @param operation The GraphQL operation to be executed.
+     * @return A [RawResponse] containing the full data and any errors from the operation response.
+     * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the operation.
+     * @throws [NoDataException] If the operation completes without data but includes errors.
      */
-    abstract fun <T : Query.Data> execute(query: Query<T>): RawResponse<T>
+    abstract fun <T : Operation.Data> execute(operation: Operation<T>): RawResponse<T>
 
     /**
-     * Executes a GraphQL mutation and returns the complete raw response.
-     *
-     * @param mutation The GraphQL mutation to be executed.
-     * @return A [RawResponse] containing the full data and any errors from the mutation response.
-     * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the mutation.
-     * @throws [NoDataException] If the mutation completes without data but includes errors.
-     */
-    abstract fun <T : Mutation.Data> execute(mutation: Mutation<T>): RawResponse<T>
-
-    /**
-     * Asynchronously executes a GraphQL query and returns the complete raw response in a [CompletableFuture].
-     *
-     * @param query The GraphQL query to be executed.
-     * @return A [CompletableFuture] containing the full data and any errors from the query response wrapped in [RawResponse].
-     * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the query.
-     * @throws [NoDataException] If the query completes without data but includes errors.
-     */
-    abstract fun <T : Query.Data> executeAsync(query: Query<T>): CompletableFuture<RawResponse<T>>
-
-    /**
-     * Asynchronously executes a GraphQL mutation and returns the complete raw response in a [CompletableFuture].
-     *
-     * @param mutation The GraphQL mutation to be executed.
-     * @return A [CompletableFuture] containing the full data and any errors from the mutation response wrapped in [RawResponse].
-     * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the mutation.
-     * @throws [NoDataException] If the mutation completes without data but includes errors.
-     */
-    abstract fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>): CompletableFuture<RawResponse<T>>
-
-    /**
-     * Closes the underlying [AbstractRequestExecutor] and [ApolloClient]
+     * Closes the underlying [AbstractRequestExecutor]
      */
     override fun dispose() {
         requestExecutor.dispose()
-        apolloClient.close()
     }
 }
