@@ -25,6 +25,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.ChangeReservati
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ChangeReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [ChangeReservationReconciliationMutation] GraphQL operation, containing both the processed
@@ -58,7 +59,7 @@ fun changeReservationReconciliationOperation(
     graphQLExecutor: AbstractGraphQLExecutor,
     input: ChangeReservationReconciliationInput,
     selections: ReservationSelections? = null
-): ChangeReservationReconciliationResponse {
+): CompletableFuture<ChangeReservationReconciliationResponse> {
     val operation = ChangeReservationReconciliationMutation
         .builder()
         .input(input)
@@ -66,10 +67,10 @@ fun changeReservationReconciliationOperation(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())
         .build()
 
-    val response = graphQLExecutor.execute(operation)
-
-    return ChangeReservationReconciliationResponse(
-        data = response.data.changeReservationReconciliation.reservation?.reservationData,
-        rawResponse = response
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        ChangeReservationReconciliationResponse(
+            data = it.data.changeReservationReconciliation.reservation?.reservationData,
+            rawResponse = it
+        )
+    }
 }

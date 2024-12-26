@@ -17,7 +17,6 @@
 package com.expediagroup.sdk.core.common
 
 import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.interceptor.AsyncInterceptor
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import java.util.concurrent.CompletableFuture
 
@@ -26,23 +25,7 @@ import java.util.concurrent.CompletableFuture
  */
 class RequestHeadersInterceptor : Interceptor {
 
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val metadata = MetadataLoader.load()
-
-        val request = chain.request().newBuilder()
-            .setHeader("User-Agent", metadata.asUserAgentString())
-            .build()
-
-        return chain.proceed(request)
-    }
-}
-
-/**
- * Interceptor for setting required headers before executing the async request
- */
-class RequestHeadersAsyncInterceptor : AsyncInterceptor {
-
-    override fun intercept(chain: AsyncInterceptor.Chain): CompletableFuture<Response> {
+    override fun intercept(chain: Interceptor.Chain): CompletableFuture<Response> {
         val metadata = MetadataLoader.load()
 
         val request = chain.request().newBuilder()

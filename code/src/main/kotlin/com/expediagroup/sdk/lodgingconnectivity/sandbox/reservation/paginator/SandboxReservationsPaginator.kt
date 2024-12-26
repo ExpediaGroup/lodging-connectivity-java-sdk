@@ -25,6 +25,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropert
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationsOperation
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents a paginated response for [SandboxPropertyReservationsQuery] GraphQL operation, containing a list
@@ -59,7 +60,7 @@ class SandboxReservationsPaginator @JvmOverloads constructor(
     private val propertyId: String,
     private val pageSize: Int? = null,
     initialCursor: String? = null
-) : Iterator<SandboxReservationsPaginatedResponse> {
+) : Iterator<CompletableFuture<SandboxReservationsPaginatedResponse>> {
     private var cursor = initialCursor
     private var hasNext: Boolean = true
     private var initialized: Boolean = false
@@ -91,32 +92,32 @@ class SandboxReservationsPaginator @JvmOverloads constructor(
      * @throws NoSuchElementException If no more pages are available to fetch.
      * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
      */
-    override fun next(): SandboxReservationsPaginatedResponse {
+    override fun next(): CompletableFuture<SandboxReservationsPaginatedResponse> {
         if (!hasNext()) {
             throw NoSuchElementException("No more pages to fetch")
         }
 
-        val response = getSandboxReservationsOperation(
+        return getSandboxReservationsOperation(
             graphQLExecutor = graphQLExecutor,
             propertyId = propertyId,
             cursor = cursor,
             pageSize = pageSize
-        )
+        ).thenApply {
+            cursor = it.pageInfo.nextPageCursor
+            hasNext = it.pageInfo.hasNext
 
-        cursor = response.pageInfo.nextPageCursor
-        hasNext = response.pageInfo.hasNext
-
-        return SandboxReservationsPaginatedResponse(
-            data = response.data,
-            pageInfo = response.pageInfo,
-            rawResponse = response.rawResponse
-        )
+            SandboxReservationsPaginatedResponse(
+                data = it.data,
+                pageInfo = it.pageInfo,
+                rawResponse = it.rawResponse
+            )
+        }
     }
 
     private fun hasReservationsToFetch(): Boolean = run {
         graphQLExecutor.execute(
             SandboxPropertyReservationsTotalCountQuery(propertyId)
-        ).let {
+        ).join().let {
             it.data.property.reservations.totalCount > 0
         }
     }

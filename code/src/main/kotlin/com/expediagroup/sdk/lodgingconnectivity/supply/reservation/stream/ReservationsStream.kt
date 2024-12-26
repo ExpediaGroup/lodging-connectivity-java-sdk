@@ -19,6 +19,7 @@ package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream
 import com.expediagroup.sdk.graphql.model.paging.PaginatedStream
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.ReservationsPaginator
+import java.util.concurrent.CompletableFuture
 
 /**
  * Provides a streaming interface for sequentially accessing reservations through a paginated stream.
@@ -30,7 +31,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.Res
  */
 class ReservationsStream(
     private val paginator: ReservationsPaginator
-) : PaginatedStream<ReservationData?>() {
+) : PaginatedStream<CompletableFuture<ReservationData?>>() {
 
     /**
      * Retrieves the next reservation item from the stream.
@@ -40,16 +41,18 @@ class ReservationsStream(
      *
      * @return The next [ReservationData] item in the stream, or `null` if no more items are available.
      */
-    override fun nextItem(): ReservationData? {
-        if (isCurrentPageEmpty()) {
-            if (!paginator.hasNext()) {
-                return null
-            }
-
-            fetchNextPage {
-                paginator.next().data
-            }
-        }
-        return pollCurrentPage()
+    override fun nextItem(): CompletableFuture<ReservationData?> {
+//        if (isCurrentPageEmpty()) {
+//            if (!paginator.hasNext()) {
+//                return CompletableFuture.completedFuture(null)
+//            }
+//
+//            fetchNextPage {
+//                paginator.next().thenApply { it.data }
+//            }
+//        }
+//
+//        return pollCurrentPage()
+        return CompletableFuture.completedFuture(null)
     }
 }

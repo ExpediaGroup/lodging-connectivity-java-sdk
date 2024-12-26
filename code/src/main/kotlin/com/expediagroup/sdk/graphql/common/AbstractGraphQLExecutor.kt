@@ -22,6 +22,7 @@ import com.expediagroup.sdk.core.client.Disposable
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
+import java.util.concurrent.CompletableFuture
 
 /**
  * Abstract base class for executing GraphQL operations, providing a structure for executing operations
@@ -42,7 +43,7 @@ abstract class AbstractGraphQLExecutor(
      * @throws [ExpediaGroupServiceException] If an exception occurs during the execution of the operation.
      * @throws [NoDataException] If the operation completes without data but includes errors.
      */
-    abstract fun <T : Operation.Data> execute(operation: Operation<T>): RawResponse<T>
+    abstract fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<RawResponse<T>>
 
     /**
      * Closes the underlying [AbstractRequestExecutor]

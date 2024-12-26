@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class OkHttpTransportTest {
+class OkHttpSyncTransportTest {
 
     @Test
     fun `execute should correctly execute the request and return a response`() {

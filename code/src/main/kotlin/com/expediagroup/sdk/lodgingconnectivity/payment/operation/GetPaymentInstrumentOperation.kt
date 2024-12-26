@@ -22,6 +22,7 @@ import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.fragment.PaymentInstrumentData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for a [PaymentInstrumentQuery] GraphQL operation, containing both
@@ -49,16 +50,20 @@ data class GetPaymentInstrumentResponse(
  * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
  * @throws [ExpediaGroupServiceException] If the payment instrument data is not found in the response.
  */
-fun getPaymentInstrumentOperation(graphQLExecutor: AbstractGraphQLExecutor, token: String): GetPaymentInstrumentResponse {
+fun getPaymentInstrumentOperation(
+    graphQLExecutor: AbstractGraphQLExecutor,
+    token: String
+): CompletableFuture<GetPaymentInstrumentResponse> {
     val operation = PaymentInstrumentQuery(token)
-    val response = graphQLExecutor.execute(operation)
 
-    val paymentInstrument = response.data.paymentInstrument.getOrThrow {
-        ExpediaGroupServiceException("Couldn't fetch payment instrument")
+    return graphQLExecutor.execute(operation).thenApply {
+        val paymentInstrument = it.data.paymentInstrument.getOrThrow {
+            ExpediaGroupServiceException("Couldn't fetch payment instrument")
+        }
+
+        GetPaymentInstrumentResponse(
+            data = paymentInstrument.paymentInstrumentData,
+            rawResponse = it
+        )
     }
-
-    return GetPaymentInstrumentResponse(
-        data = paymentInstrument.paymentInstrumentData,
-        rawResponse = response
-    )
 }

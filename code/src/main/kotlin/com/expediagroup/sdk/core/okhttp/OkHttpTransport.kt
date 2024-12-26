@@ -20,33 +20,31 @@ import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import java.io.IOException
+import java.util.concurrent.CompletableFuture
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.OkHttpClient
 
-/**
- * A transport implementation using OkHttp to execute HTTP requests.
- *
- * This class adapts the OkHttp client to the SDK [Transport] interface, allowing seamless integration
- * between OkHttp's request-response mechanism and the SDK transport layer.
- *
- * @property okHttpClient The OkHttp client used to execute HTTP requests.
- */
 class OkHttpTransport(
     private val okHttpClient: OkHttpClient
 ) : Transport {
-    /**
-     * Executes the given SDK request using OkHttp and returns the SDK response.
-     *
-     * This method converts the provided SDK [Request] into an OkHttp request,
-     * executes it using the underlying OkHttp client, and converts the OkHttp response
-     * back into an SDK [Response].
-     *
-     * @param request The SDK request to execute.
-     * @return The SDK response resulting from the HTTP request execution.
-     * @throws IOException If an error occurs during the request execution.
-     */
-    @Throws(IOException::class)
-    override fun execute(request: Request): Response {
-        return request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
+
+    override fun execute(request: Request): CompletableFuture<Response> {
+        val future = CompletableFuture<Response>()
+
+        request.toOkHttpRequest().let {
+            okHttpClient.newCall(it).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    future.completeExceptionally(e)
+                }
+
+                override fun onResponse(call: Call, response: okhttp3.Response) {
+                    future.complete(response.toSDKResponse(request))
+                }
+            })
+        }
+
+        return future
     }
 
     override fun dispose() {

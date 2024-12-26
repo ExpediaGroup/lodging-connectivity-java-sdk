@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.paginator
 
+import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
@@ -24,6 +25,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropert
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertiesTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.getSandboxPropertiesOperation
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents a paginated response for [SandboxPropertiesQuery] GraphQL operation, containing
@@ -56,7 +58,7 @@ class SandboxPropertiesPaginator @JvmOverloads constructor(
     private val graphQLExecutor: AbstractGraphQLExecutor,
     private val pageSize: Int? = null,
     initialCursor: String? = null
-) : Iterator<SandboxPropertiesPaginatedResponse> {
+) : Iterator<CompletableFuture<SandboxPropertiesPaginatedResponse>> {
     private var cursor: String? = initialCursor
     private var hasNext: Boolean = true
     private var initialized: Boolean = false
@@ -88,25 +90,25 @@ class SandboxPropertiesPaginator @JvmOverloads constructor(
      * @throws NoSuchElementException If no more pages are available to fetch.
      * @throws ExpediaGroupServiceException If an error occurs during the query execution.
      */
-    override fun next(): SandboxPropertiesPaginatedResponse {
+    override fun next(): CompletableFuture<SandboxPropertiesPaginatedResponse> {
         if (!hasNext()) {
             throw NoSuchElementException("No more pages to fetch")
         }
 
-        val response = getSandboxPropertiesOperation(
+        return getSandboxPropertiesOperation(
             graphQLExecutor = graphQLExecutor,
             cursor = cursor,
             pageSize = pageSize
-        )
+        ).thenApply {
+            cursor = it.pageInfo.nextPageCursor
+            hasNext = it.pageInfo.hasNext
 
-        cursor = response.pageInfo.nextPageCursor
-        hasNext = response.pageInfo.hasNext
-
-        return SandboxPropertiesPaginatedResponse(
-            data = response.data,
-            rawResponse = response.rawResponse,
-            pageInfo = response.pageInfo
-        )
+            SandboxPropertiesPaginatedResponse(
+                data = it.data,
+                rawResponse = it.rawResponse,
+                pageInfo = it.pageInfo
+            )
+        }
     }
 
     /**
@@ -117,7 +119,7 @@ class SandboxPropertiesPaginator @JvmOverloads constructor(
     private fun hasPropertiesToFetch(): Boolean = run {
         graphQLExecutor.execute(
             SandboxPropertiesTotalCountQuery()
-        ).let {
+        ).join().let {
             it.data.properties.totalCount > 0
         }
     }

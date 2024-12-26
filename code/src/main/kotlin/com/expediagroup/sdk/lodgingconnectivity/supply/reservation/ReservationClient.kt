@@ -195,7 +195,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelReservationInput,
         selections: ReservationSelections? = null
     ): CancelReservationResponse = run {
-        cancelReservationOperation(graphQLExecutor, input, selections)
+        cancelReservationOperation(graphQLExecutor, input, selections).join()
     }
 
     /**
@@ -211,7 +211,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelReservationReconciliationInput,
         selections: ReservationSelections? = null
     ): CancelReservationReconciliationResponse = run {
-        cancelReservationReconciliationOperation(graphQLExecutor, input, selections)
+        cancelReservationReconciliationOperation(graphQLExecutor, input, selections).join()
     }
 
     /**
@@ -227,7 +227,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: CancelVrboReservationInput,
         selections: ReservationSelections? = null
     ): CancelVrboReservationResponse = run {
-        cancelVrboReservationOperation(graphQLExecutor, input, selections)
+        cancelVrboReservationOperation(graphQLExecutor, input, selections).join()
     }
 
     /**
@@ -243,7 +243,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: ChangeReservationReconciliationInput,
         selections: ReservationSelections? = null
     ): ChangeReservationReconciliationResponse = run {
-        changeReservationReconciliationOperation(graphQLExecutor, input, selections)
+        changeReservationReconciliationOperation(graphQLExecutor, input, selections).join()
     }
 
     /**
@@ -259,7 +259,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: ConfirmReservationNotificationInput,
         selections: ReservationSelections? = null
     ): ConfirmReservationNotificationResponse = run {
-        confirmReservationNotificationOperation(graphQLExecutor, input, selections)
+        confirmReservationNotificationOperation(graphQLExecutor, input, selections).join()
     }
 
     /**
@@ -275,6 +275,6 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: RefundReservationInput,
         selections: ReservationSelections? = null
     ): RefundReservationResponse = run {
-        refundReservationOperation(graphQLExecutor, input, selections)
+        refundReservationOperation(graphQLExecutor, input, selections).join()
     }
 }

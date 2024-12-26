@@ -19,6 +19,7 @@ package com.expediagroup.sdk.core.interceptor
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import java.io.IOException
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents an interceptor for modifying or augmenting HTTP requests and responses within the SDK.
@@ -40,7 +41,7 @@ interface Interceptor {
      * @throws IOException If an I/O error occurs during request execution or interception.
      */
     @Throws(IOException::class)
-    fun intercept(chain: Chain): Response
+    fun intercept(chain: Chain): CompletableFuture<Response>
 
     /**
      * Represents a chain of interceptors and the ability to proceed with an HTTP request.
@@ -67,6 +68,6 @@ interface Interceptor {
          * @throws IOException If an I/O error occurs during request execution.
          */
         @Throws(IOException::class)
-        fun proceed(request: Request): Response
+        fun proceed(request: Request): CompletableFuture<Response>
     }
 }

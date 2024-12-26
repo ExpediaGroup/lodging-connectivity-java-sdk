@@ -29,6 +29,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.PropertyRe
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.constant.Constant
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.getReservationsOperation
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents a paginated response for [PropertyReservationsQuery] GraphQL operation, containing a list
@@ -67,7 +68,7 @@ class ReservationsPaginator @JvmOverloads constructor(
     private val selections: ReservationSelections? = null,
     private val pageSize: Int? = null,
     initialCursor: String? = null
-) : Iterator<ReservationsPaginatedResponse> {
+) : Iterator<CompletableFuture<ReservationsPaginatedResponse>> {
     private var cursor: String? = initialCursor
     private var hasNext: Boolean = true
     private var initialized: Boolean = false
@@ -99,27 +100,27 @@ class ReservationsPaginator @JvmOverloads constructor(
      * @throws NoSuchElementException If no more pages are available to fetch.
      * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
      */
-    override fun next(): ReservationsPaginatedResponse {
+    override fun next(): CompletableFuture<ReservationsPaginatedResponse> {
         if (!hasNext()) {
             throw NoSuchElementException("No more pages to fetch")
         }
 
-        val response = getReservationsOperation(
+        return getReservationsOperation(
             graphQLExecutor = graphQLExecutor,
             input = input,
             selections = selections,
             cursor = cursor,
             pageSize = pageSize
-        )
+        ).thenApply {
+            cursor = it.pageInfo.nextPageCursor
+            hasNext = it.pageInfo.hasNext
 
-        cursor = response.pageInfo.nextPageCursor
-        hasNext = response.pageInfo.hasNext
-
-        return ReservationsPaginatedResponse(
-            data = response.data,
-            pageInfo = response.pageInfo,
-            rawResponse = response.rawResponse,
-        )
+            ReservationsPaginatedResponse(
+                data = it.data,
+                pageInfo = it.pageInfo,
+                rawResponse = it.rawResponse,
+            )
+        }
     }
 
     /**
@@ -137,7 +138,7 @@ class ReservationsPaginator @JvmOverloads constructor(
                 .pageSize(pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE)
                 .cursor(cursor)
                 .build()
-        ).let {
+        ).join().let {
             it.data.property.getOrThrow {
                 ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
             }

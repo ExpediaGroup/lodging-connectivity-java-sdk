@@ -22,6 +22,7 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxReservationQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxReservationQuery] GraphQL operation, containing both the processed
@@ -46,12 +47,16 @@ data class GetSandboxReservationResponse(
  * @return A [GetSandboxReservationResponse] containing the requested reservation data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
-fun getSandboxReservationOperation(graphQLExecutor: AbstractGraphQLExecutor, reservationId: String): GetSandboxReservationResponse {
+fun getSandboxReservationOperation(
+    graphQLExecutor: AbstractGraphQLExecutor,
+    reservationId: String
+): CompletableFuture<GetSandboxReservationResponse> {
     val operation = SandboxReservationQuery(reservationId)
-    val response = graphQLExecutor.execute(operation)
 
-    return GetSandboxReservationResponse(
-        data = response.data.reservation.sandboxReservationData,
-        rawResponse = response
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        GetSandboxReservationResponse(
+            data = it.data.reservation.sandboxReservationData,
+            rawResponse = it
+        )
+    }
 }

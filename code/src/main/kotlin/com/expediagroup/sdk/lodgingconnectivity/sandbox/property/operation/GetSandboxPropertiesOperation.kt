@@ -24,6 +24,7 @@ import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertiesQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the paginated response for [SandboxPropertiesQuery] GraphQL operation, containing the list of sandbox
@@ -59,28 +60,28 @@ fun getSandboxPropertiesOperation(
     graphQLExecutor: AbstractGraphQLExecutor,
     cursor: String? = null,
     pageSize: Int? = null
-): GetSandboxPropertiesResponse {
+): CompletableFuture<GetSandboxPropertiesResponse> {
     val operation = SandboxPropertiesQuery
         .builder()
         .pageSize(pageSize)
         .cursor(cursor)
         .build()
 
-    val response = graphQLExecutor.execute(operation)
+    return graphQLExecutor.execute(operation).thenApply {
+        val nextPageCursor = it.data.properties.cursor.orNullIfBlank()
 
-    val nextPageCursor = response.data.properties.cursor.orNullIfBlank()
+        val currentPageInfo = PageInfo(
+            cursor = cursor,
+            nextPageCursor = nextPageCursor,
+            hasNext = nextPageCursor != null,
+            pageSize = it.data.properties.elements.size,
+            totalCount = it.data.properties.totalCount
+        )
 
-    val currentPageInfo = PageInfo(
-        cursor = cursor,
-        nextPageCursor = nextPageCursor,
-        hasNext = nextPageCursor != null,
-        pageSize = response.data.properties.elements.size,
-        totalCount = response.data.properties.totalCount
-    )
-
-    return GetSandboxPropertiesResponse(
-        data = response.data.properties.elements.map { it.sandboxPropertyData },
-        rawResponse = response,
-        pageInfo = currentPageInfo
-    )
+        GetSandboxPropertiesResponse(
+            data = it.data.properties.elements.map { property -> property.sandboxPropertyData },
+            rawResponse = it,
+            pageInfo = currentPageInfo
+        )
+    }
 }

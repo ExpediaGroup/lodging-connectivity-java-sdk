@@ -11,7 +11,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 
 class AbstractRequestExecutorTest {
-    private val mockTransport = mockk<Transport>(relaxed = true)
+    private val mockTransport = mockk<SyncTransport>(relaxed = true)
     private val mockInterceptor1 = mockk<Interceptor>(relaxed = true)
     private val mockInterceptor2 = mockk<Interceptor>(relaxed = true)
 

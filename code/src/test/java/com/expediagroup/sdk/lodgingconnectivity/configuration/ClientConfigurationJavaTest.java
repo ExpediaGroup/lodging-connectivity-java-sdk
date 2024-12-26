@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.lodgingconnectivity.configuration;
 
-import com.expediagroup.sdk.core.client.Transport;
+import com.expediagroup.sdk.core.client.SyncTransport;
 import com.expediagroup.sdk.core.http.Request;
 import com.expediagroup.sdk.core.http.Response;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,7 @@ public class ClientConfigurationJavaTest {
     @Test
     @DisplayName("should be able to access builder static method with custom transport")
     public void builderWithTransportIsAccessibleFromJava() {
-        Transport transport = new Transport() {
+        SyncTransport transport = new SyncTransport() {
             @NotNull
             @Override
             public Response execute(@NotNull Request request) {

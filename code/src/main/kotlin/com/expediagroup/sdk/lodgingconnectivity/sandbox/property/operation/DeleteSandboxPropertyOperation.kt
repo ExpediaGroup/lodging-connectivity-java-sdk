@@ -22,6 +22,7 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxDeletePropertyMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.DeletePropertyInput
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxDeletePropertyMutation] GraphQL operation, containing both the processed
@@ -50,12 +51,13 @@ data class DeleteSandboxPropertyResponse(
 fun deleteSandboxPropertyOperation(
     graphQLExecutor: AbstractGraphQLExecutor,
     input: DeletePropertyInput
-): DeleteSandboxPropertyResponse {
+): CompletableFuture<DeleteSandboxPropertyResponse> {
     val operation = SandboxDeletePropertyMutation(input)
-    val response = graphQLExecutor.execute(operation)
 
-    return DeleteSandboxPropertyResponse(
-        data = response.data.deleteProperty,
-        rawResponse = response
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        DeleteSandboxPropertyResponse(
+            data = it.data.deleteProperty,
+            rawResponse = it
+        )
+    }
 }

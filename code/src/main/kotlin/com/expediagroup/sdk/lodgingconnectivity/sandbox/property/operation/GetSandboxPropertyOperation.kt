@@ -22,6 +22,7 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxPropertyQuery] GraphQL operation, containing both the processed
@@ -48,12 +49,16 @@ data class GetSandboxPropertyResponse(
  * @return A [GetSandboxPropertyResponse] containing the requested sandbox property data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
-fun getSandboxPropertyOperation(graphQLExecutor: AbstractGraphQLExecutor, propertyId: String): GetSandboxPropertyResponse {
+fun getSandboxPropertyOperation(
+    graphQLExecutor: AbstractGraphQLExecutor,
+    propertyId: String
+): CompletableFuture<GetSandboxPropertyResponse> {
     val operation = SandboxPropertyQuery(propertyId)
-    val response = graphQLExecutor.execute(operation)
 
-    return GetSandboxPropertyResponse(
-        data = response.data.property.sandboxPropertyData,
-        rawResponse = response,
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        GetSandboxPropertyResponse(
+            data = it.data.property.sandboxPropertyData,
+            rawResponse = it,
+        )
+    }
 }

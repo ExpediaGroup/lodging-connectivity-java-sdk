@@ -29,6 +29,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.Reserv
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.PropertyReservationsInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.constant.Constant
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the paginated response for [PropertyReservationsQuery] GraphQL operation, containing a list
@@ -68,7 +69,7 @@ fun getReservationsOperation(
     cursor: String? = null,
     pageSize: Int? = null,
     selections: ReservationSelections? = null
-): PropertyReservationsResponse {
+): CompletableFuture<PropertyReservationsResponse> {
     val operation = PropertyReservationsQuery
         .builder()
         .propertyId(input.propertyId)
@@ -81,27 +82,27 @@ fun getReservationsOperation(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())
         .build()
 
-    val response = graphQLExecutor.execute(operation)
+    return graphQLExecutor.execute(operation).thenApply {
+        val property = it.data.property.getOrThrow {
+            ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
+        }
 
-    val property = response.data.property.getOrThrow {
-        ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
+        val reservationsPage = property.reservations
+
+        val nextPageInfo = reservationsPage.pageInfo
+
+        val currentPageInfo = PageInfo(
+            cursor = cursor,
+            nextPageCursor = nextPageInfo?.endCursor?.orNullIfBlank(),
+            hasNext = nextPageInfo?.hasNextPage ?: false,
+            pageSize = reservationsPage.edges.size,
+            totalCount = reservationsPage.totalCount
+        )
+
+        PropertyReservationsResponse(
+            data = reservationsPage.edges.map { edgeOptional -> edgeOptional?.node?.reservationData },
+            rawResponse = it,
+            pageInfo = currentPageInfo
+        )
     }
-
-    val reservationsPage = property.reservations
-
-    val nextPageInfo = reservationsPage.pageInfo
-
-    val currentPageInfo = PageInfo(
-        cursor = cursor,
-        nextPageCursor = nextPageInfo?.endCursor?.orNullIfBlank(),
-        hasNext = nextPageInfo?.hasNextPage ?: false,
-        pageSize = reservationsPage.edges.size,
-        totalCount = reservationsPage.totalCount
-    )
-
-    return PropertyReservationsResponse(
-        data = reservationsPage.edges.map { edgeOptional -> edgeOptional?.node?.reservationData },
-        rawResponse = response,
-        pageInfo = currentPageInfo
-    )
 }

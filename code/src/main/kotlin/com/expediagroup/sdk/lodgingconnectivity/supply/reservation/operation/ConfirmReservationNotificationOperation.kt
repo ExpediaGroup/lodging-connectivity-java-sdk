@@ -25,6 +25,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.ConfirmReservat
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ConfirmReservationNotificationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [ConfirmReservationNotificationMutation] GraphQL operation, containing both the processed
@@ -58,7 +59,7 @@ fun confirmReservationNotificationOperation(
     graphQLExecutor: AbstractGraphQLExecutor,
     input: ConfirmReservationNotificationInput,
     selections: ReservationSelections? = null
-): ConfirmReservationNotificationResponse {
+): CompletableFuture<ConfirmReservationNotificationResponse> {
     val operation = ConfirmReservationNotificationMutation
         .builder()
         .input(input)
@@ -66,10 +67,10 @@ fun confirmReservationNotificationOperation(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())
         .build()
 
-    val response = graphQLExecutor.execute(operation)
-
-    return ConfirmReservationNotificationResponse(
-        data = response.data.confirmReservationNotification.reservation?.reservationData,
-        rawResponse = response
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        ConfirmReservationNotificationResponse(
+            data = it.data.confirmReservationNotification.reservation?.reservationData,
+            rawResponse = it
+        )
+    }
 }

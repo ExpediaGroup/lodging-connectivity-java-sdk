@@ -23,6 +23,7 @@ import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxUpdateReservationMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdateReservationInput
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxUpdateReservationMutation] GraphQL operation, containing both the processed
@@ -51,12 +52,13 @@ data class UpdateSandboxReservationResponse(
 fun updateSandboxReservationOperation(
     graphQLExecutor: AbstractGraphQLExecutor,
     input: UpdateReservationInput
-): UpdateSandboxReservationResponse {
+): CompletableFuture<UpdateSandboxReservationResponse> {
     val operation = SandboxUpdateReservationMutation(input)
-    val response = graphQLExecutor.execute(operation)
 
-    return UpdateSandboxReservationResponse(
-        data = response.data.updateReservation.reservation.sandboxReservationData,
-        rawResponse = response
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        UpdateSandboxReservationResponse(
+            data = it.data.updateReservation.reservation.sandboxReservationData,
+            rawResponse = it
+        )
+    }
 }

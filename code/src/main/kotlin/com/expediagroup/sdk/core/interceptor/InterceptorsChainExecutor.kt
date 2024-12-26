@@ -16,16 +16,18 @@
 
 package com.expediagroup.sdk.core.interceptor
 
+import com.expediagroup.sdk.core.client.SyncTransport
 import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import java.io.IOException
+import java.util.concurrent.CompletableFuture
 
 /**
  * Executes a chain of [Interceptor] instances, ensuring sequential processing of HTTP requests and responses.
  *
  * The `InterceptorChainExecutor` is responsible for managing the flow of a request through a list of
- * interceptors, ultimately delegating to the [Transport] for request execution when all interceptors
+ * interceptors, ultimately delegating to the [SyncTransport] for request execution when all interceptors
  * have been processed.
  *
  * This class implements the [Interceptor.Chain] interface, providing methods for accessing the current
@@ -34,7 +36,7 @@ import java.io.IOException
  * @param interceptors The list of [Interceptor] instances to process.
  * @param index The current position in the interceptor chain. Defaults to `0` for the first interceptor.
  * @param request The [Request] being processed.
- * @param transport The [Transport] responsible for executing the final HTTP request after all interceptors.
+ * @param transport The [SyncTransport] responsible for executing the final HTTP request after all interceptors.
  */
 class InterceptorsChainExecutor(
     private val transport: Transport,
@@ -52,17 +54,17 @@ class InterceptorsChainExecutor(
 
     /**
      * Proceeds with the HTTP request by invoking the next [Interceptor] in the chain or
-     * executing the final request through the [Transport] if all interceptors have been processed.
+     * executing the final request through the [SyncTransport] if all interceptors have been processed.
      *
      * Each interceptor in the chain can modify the request or response as needed. If this is the last
-     * interceptor, the request is passed to the [Transport] for actual execution.
+     * interceptor, the request is passed to the [SyncTransport] for actual execution.
      *
      * @param request The [Request] to proceed with.
      * @return The [Response] resulting from the next interceptor or the final HTTP client execution.
      * @throws IOException If an I/O error occurs during request execution.
      */
     @Throws(IOException::class)
-    override fun proceed(request: Request): Response {
+    override fun proceed(request: Request): CompletableFuture<Response> {
         this.request = request
 
         if (index >= interceptors.size) {

@@ -57,6 +57,6 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
      * @throws ExpediaGroupServiceException If the payment instrument data is not found in the response.
      */
     fun getPaymentInstrument(token: String): GetPaymentInstrumentResponse = run {
-        getPaymentInstrumentOperation(graphQLExecutor, token)
+        getPaymentInstrumentOperation(graphQLExecutor, token).join()
     }
 }

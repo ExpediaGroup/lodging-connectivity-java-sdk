@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
-import com.expediagroup.sdk.core.client.Transport
+import com.expediagroup.sdk.core.client.SyncTransport
 import io.mockk.mockk
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
@@ -83,10 +83,10 @@ class ClientConfigurationTest {
     }
 
     @Nested
-    inner class CustomClientConfigurationTest {
+    inner class CustomClientSyncTransportConfigurationTest {
         @Test
         fun `should build and store configuration options correctly`() {
-            val transport = mockk<Transport>(relaxed = true)
+            val transport = mockk<SyncTransport>(relaxed = true)
 
             val config = ClientConfiguration.builder(transport)
                 .key("test-key")
@@ -97,12 +97,12 @@ class ClientConfigurationTest {
             assertEquals("test-key", config.key)
             assertEquals("test-secret", config.secret)
             assertEquals(ClientEnvironment.TEST, config.environment)
-            assertEquals(transport, config.transport)
+            assertEquals(transport, config.syncTransport)
         }
 
         @Test
         fun `should throw an exception when key is missing`() {
-            val transport = mockk<Transport>(relaxed = true)
+            val transport = mockk<SyncTransport>(relaxed = true)
 
             val exception = assertThrows<IllegalArgumentException> {
                 ClientConfiguration.builder(transport)
@@ -116,7 +116,7 @@ class ClientConfigurationTest {
 
         @Test
         fun `should throw an exception when secret is missing`() {
-            val transport = mockk<Transport>(relaxed = true)
+            val transport = mockk<SyncTransport>(relaxed = true)
 
             val exception = assertThrows<IllegalArgumentException> {
                 ClientConfiguration.builder(transport)

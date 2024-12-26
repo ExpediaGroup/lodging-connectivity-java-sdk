@@ -25,6 +25,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.operation.RefundReservati
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.RefundReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [RefundReservationMutation] GraphQL operation, containing both the processed
@@ -58,7 +59,7 @@ fun refundReservationOperation(
     graphQLExecutor: AbstractGraphQLExecutor,
     input: RefundReservationInput,
     selections: ReservationSelections? = null
-): RefundReservationResponse {
+): CompletableFuture<RefundReservationResponse> {
     val operation = RefundReservationMutation
         .builder()
         .input(input)
@@ -66,10 +67,10 @@ fun refundReservationOperation(
         .includePaymentInstrumentToken(selections?.includePaymentInstrumentToken.orFalseIfNull())
         .build()
 
-    val response = graphQLExecutor.execute(operation)
-
-    return RefundReservationResponse(
-        data = response.data.refundReservation.reservation?.reservationData,
-        rawResponse = response
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        RefundReservationResponse(
+            data = it.data.refundReservation.reservation?.reservationData,
+            rawResponse = it
+        )
+    }
 }

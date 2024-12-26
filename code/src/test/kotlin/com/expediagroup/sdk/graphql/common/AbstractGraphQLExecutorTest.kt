@@ -7,7 +7,6 @@ import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
-import com.expediagroup.sdk.core.okhttp.OkHttpTransport
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

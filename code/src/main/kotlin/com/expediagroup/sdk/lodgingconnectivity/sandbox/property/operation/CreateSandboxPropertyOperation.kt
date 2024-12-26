@@ -23,6 +23,7 @@ import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxCreatePropertyMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxCreatePropertyMutation] GraphQL operation, containing both the processed
@@ -50,12 +51,13 @@ data class CreateSandboxPropertyResponse(
 fun createSandboxPropertyOperation(
     graphQLExecutor: AbstractGraphQLExecutor,
     input: CreatePropertyInput
-): CreateSandboxPropertyResponse {
+): CompletableFuture<CreateSandboxPropertyResponse> {
     val operation = SandboxCreatePropertyMutation(input)
-    val response = graphQLExecutor.execute(operation)
 
-    return CreateSandboxPropertyResponse(
-        data = response.data.createProperty.property.sandboxPropertyData,
-        rawResponse = response
-    )
+    return graphQLExecutor.execute(operation).thenApply {
+        CreateSandboxPropertyResponse(
+            data = it.data.createProperty.property.sandboxPropertyData,
+            rawResponse = it
+        )
+    }
 }

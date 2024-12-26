@@ -21,6 +21,7 @@ import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
+import java.util.concurrent.CompletableFuture
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.
@@ -28,7 +29,7 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  * This class serves as the main entry point for executing HTTP requests through the SDK core. **Each product-SDK is
  * expected to have its own implementation of this abstract class.**
  *
- * It wraps and enhances the injected [Transport] functionality by:
+ * It wraps and enhances the injected [SyncTransport] functionality by:
  *
  * 1. Applying request/response interceptors
  * 2. Enforcing SDK-specific policies and rules (e.g. authentication)
@@ -55,7 +56,7 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class AbstractRequestExecutor(protected val transport: Transport) : Disposable {
+abstract class AbstractRequestExecutor(protected val transport: Transport) : Transport by transport, Disposable {
     /**
      * List of interceptors to be applied to requests in order.
      *
@@ -76,7 +77,7 @@ abstract class AbstractRequestExecutor(protected val transport: Transport) : Dis
      * @return The response from the server after passing through interceptors
      * @throws ExpediaGroupNetworkException If any network-related error occurs
      */
-    open fun execute(request: Request): Response {
+    override fun execute(request: Request): CompletableFuture<Response> {
         val chainExecutor = InterceptorsChainExecutor(
             interceptors = interceptors,
             request = request,
@@ -85,9 +86,4 @@ abstract class AbstractRequestExecutor(protected val transport: Transport) : Dis
 
         return chainExecutor.proceed(request)
     }
-
-    /**
-     * Closes the underlying [Transport].
-     */
-    override fun dispose() = transport.dispose()
 }

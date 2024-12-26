@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
+import com.expediagroup.sdk.core.client.SyncTransport
 import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.okhttp.OkHttpClientConfiguration
 import okhttp3.ConnectionPool
@@ -37,7 +38,7 @@ import okhttp3.Interceptor
  * - **Reusability**: Can be shared across multiple lodging connectivity clients.
  *
  * ### Custom Transport Capability
- * If you wish to use custom HTTP client other than the default `OkHttpClient`, you can implement the [Transport] interface
+ * If you wish to use custom HTTP client other than the default `OkHttpClient`, you can implement the [SyncTransport] interface
  * with your HTTP client of choice, then you can pass it via `ClientConfiguration.builder(transport)` method.
  *
  * ### Default Configuration
@@ -52,7 +53,7 @@ import okhttp3.Interceptor
  *     .build()
  * ```
  *
- * @see [Transport]
+ * @see [SyncTransport]
  */
 sealed class ClientConfiguration(
     open val key: String,
@@ -71,11 +72,20 @@ sealed class ClientConfiguration(
         /**
          * Returns a builder for the configurations that can be used with the custom transport implementation.
          *
+         * @param syncTransport The sync transport implementation to be used in the custom configuration.
+         */
+        @JvmStatic
+        fun builder(syncTransport: SyncTransport): CustomClientSyncTransportConfiguration.Builder =
+            CustomClientSyncTransportConfiguration.Builder(syncTransport)
+
+        /**
+         * Returns a builder for the configurations that can be used with the custom transport implementation.
+         *
          * @param transport The transport implementation to be used in the custom configuration.
          */
         @JvmStatic
-        fun builder(transport: Transport): CustomClientConfiguration.Builder =
-            CustomClientConfiguration.Builder(transport)
+        fun builder(transport: Transport): CustomClientTransportConfiguration.Builder =
+            CustomClientTransportConfiguration.Builder(transport)
     }
 }
 
@@ -252,7 +262,68 @@ data class DefaultClientConfiguration(
     }
 }
 
-data class CustomClientConfiguration(
+data class CustomClientSyncTransportConfiguration(
+    override val key: String,
+    override val secret: String,
+    override val environment: ClientEnvironment? = null,
+    val syncTransport: SyncTransport
+) : ClientConfiguration(key, secret, environment) {
+
+    class Builder(private var syncTransport: SyncTransport) {
+        private var key: String? = null
+        private var secret: String? = null
+        private var environment: ClientEnvironment? = null
+
+        /**
+         * Sets the API key used to connect with the API.
+         *
+         * @param key API key.
+         * @return The builder instance.
+         */
+        fun key(key: String) = apply {
+            this.key = key
+        }
+
+        /**
+         * Sets the API secret used to authenticate.
+         *
+         * @param secret API secret.
+         * @return The builder instance.
+         */
+        fun secret(secret: String) = apply {
+            this.secret = secret
+        }
+
+        /**
+         * Sets the API environment (e.g [ClientEnvironment.PROD], [ClientEnvironment.TEST])
+         *
+         * @param environment environment to be used.
+         * @return The builder instance.
+         */
+        fun environment(environment: ClientEnvironment) = apply {
+            this.environment = environment
+        }
+
+        fun build(): CustomClientSyncTransportConfiguration {
+            require(key != null) {
+                "key is required"
+            }
+
+            require(secret != null) {
+                "secret is required"
+            }
+
+            return CustomClientSyncTransportConfiguration(
+                key = key!!,
+                secret = secret!!,
+                environment = environment,
+                syncTransport = syncTransport
+            )
+        }
+    }
+}
+
+data class CustomClientTransportConfiguration(
     override val key: String,
     override val secret: String,
     override val environment: ClientEnvironment? = null,
@@ -294,7 +365,7 @@ data class CustomClientConfiguration(
             this.environment = environment
         }
 
-        fun build(): CustomClientConfiguration {
+        fun build(): CustomClientTransportConfiguration {
             require(key != null) {
                 "key is required"
             }
@@ -303,7 +374,7 @@ data class CustomClientConfiguration(
                 "secret is required"
             }
 
-            return CustomClientConfiguration(
+            return CustomClientTransportConfiguration(
                 key = key!!,
                 secret = secret!!,
                 environment = environment,
