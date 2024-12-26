@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
+import com.expediagroup.sdk.core.client.AsyncTransport
 import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.okhttp.OkHttpClientConfiguration
 import okhttp3.ConnectionPool
@@ -312,3 +313,65 @@ data class CustomClientConfiguration(
         }
     }
 }
+
+data class CustomAsyncClientConfiguration(
+    override val key: String,
+    override val secret: String,
+    override val environment: ClientEnvironment? = null,
+    val asyncTransport: AsyncTransport
+) : ClientConfiguration(key, secret, environment) {
+
+    class Builder(private var asyncTransport: AsyncTransport) {
+        private var key: String? = null
+        private var secret: String? = null
+        private var environment: ClientEnvironment? = null
+
+        /**
+         * Sets the API key used to connect with the API.
+         *
+         * @param key API key.
+         * @return The builder instance.
+         */
+        fun key(key: String) = apply {
+            this.key = key
+        }
+
+        /**
+         * Sets the API secret used to authenticate.
+         *
+         * @param secret API secret.
+         * @return The builder instance.
+         */
+        fun secret(secret: String) = apply {
+            this.secret = secret
+        }
+
+        /**
+         * Sets the API environment (e.g [ClientEnvironment.PROD], [ClientEnvironment.TEST])
+         *
+         * @param environment environment to be used.
+         * @return The builder instance.
+         */
+        fun environment(environment: ClientEnvironment) = apply {
+            this.environment = environment
+        }
+
+        fun build(): CustomAsyncClientConfiguration {
+            require(key != null) {
+                "key is required"
+            }
+
+            require(secret != null) {
+                "secret is required"
+            }
+
+            return CustomAsyncClientConfiguration(
+                key = key!!,
+                secret = secret!!,
+                environment = environment,
+                asyncTransport = asyncTransport
+            )
+        }
+    }
+}
+
