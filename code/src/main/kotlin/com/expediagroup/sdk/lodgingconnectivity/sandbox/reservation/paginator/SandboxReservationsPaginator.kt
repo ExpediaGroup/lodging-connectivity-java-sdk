@@ -17,6 +17,7 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
@@ -25,6 +26,8 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropert
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationsOperation
+import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationsOperationAsync
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents a paginated response for [SandboxPropertyReservationsQuery] GraphQL operation, containing a list
@@ -117,6 +120,74 @@ class SandboxReservationsPaginator @JvmOverloads constructor(
         graphQLExecutor.execute(
             SandboxPropertyReservationsTotalCountQuery(propertyId)
         ).let {
+            it.data.property.reservations.totalCount > 0
+        }
+    }
+}
+
+class SandboxReservationsAsyncPaginator @JvmOverloads constructor(
+    private val graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    private val propertyId: String,
+    private val pageSize: Int? = null,
+    initialCursor: String? = null
+) : Iterator<CompletableFuture<SandboxReservationsPaginatedResponse>> {
+    private var cursor = initialCursor
+    private var hasNext: Boolean = true
+    private var initialized: Boolean = false
+
+    /**
+     * Checks if there are more pages to fetch.
+     *
+     * This method returns `true` if additional pages are available; otherwise, it returns `false`.
+     * It initializes the paginator by checking if there are reservations to fetch when called for the first time.
+     *
+     * @return `true` if there are more pages to fetch, `false` otherwise.
+     */
+    override fun hasNext(): Boolean {
+        if (!initialized) {
+            initialized = true
+            return hasReservationsToFetch()
+        }
+
+        return hasNext
+    }
+
+    /**
+     * Retrieves the next page of sandbox reservations.
+     *
+     * This method executes a "Get Sandbox Reservations" query to fetch the next page of reservations,
+     * updating the pagination state and cursor for subsequent requests.
+     *
+     * @return A [SandboxReservationsPaginatedResponse] containing the sandbox reservations, raw response, and pagination details.
+     * @throws NoSuchElementException If no more pages are available to fetch.
+     * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
+     */
+    override fun next(): CompletableFuture<SandboxReservationsPaginatedResponse> {
+        if (!hasNext()) {
+            throw NoSuchElementException("No more pages to fetch")
+        }
+
+        return getSandboxReservationsOperationAsync(
+            graphQLExecutor = graphQLExecutor,
+            propertyId = propertyId,
+            cursor = cursor,
+            pageSize = pageSize
+        ).thenApply {
+            cursor = it.pageInfo.nextPageCursor
+            hasNext = it.pageInfo.hasNext
+
+            SandboxReservationsPaginatedResponse(
+                data = it.data,
+                pageInfo = it.pageInfo,
+                rawResponse = it.rawResponse
+            )
+        }
+    }
+
+    private fun hasReservationsToFetch(): Boolean = run {
+        graphQLExecutor.execute(
+            SandboxPropertyReservationsTotalCountQuery(propertyId)
+        ).join().let {
             it.data.property.reservations.totalCount > 0
         }
     }

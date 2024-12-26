@@ -17,12 +17,14 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxCreatePropertyMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxCreatePropertyMutation] GraphQL operation, containing both the processed
@@ -58,4 +60,17 @@ fun createSandboxPropertyOperation(
         data = response.data.createProperty.property.sandboxPropertyData,
         rawResponse = response
     )
+}
+
+fun createSandboxPropertyOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    input: CreatePropertyInput
+): CompletableFuture<CreateSandboxPropertyResponse> {
+    val operation = SandboxCreatePropertyMutation(input)
+    return graphQLExecutor.execute(operation).thenApply {
+        CreateSandboxPropertyResponse(
+            data = it.data.createProperty.property.sandboxPropertyData,
+            rawResponse = it
+        )
+    }
 }

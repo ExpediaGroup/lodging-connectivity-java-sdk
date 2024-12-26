@@ -18,12 +18,14 @@ package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertiesQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the paginated response for [SandboxPropertiesQuery] GraphQL operation, containing the list of sandbox
@@ -83,4 +85,35 @@ fun getSandboxPropertiesOperation(
         rawResponse = response,
         pageInfo = currentPageInfo
     )
+}
+
+@JvmOverloads
+fun getSandboxPropertiesOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    cursor: String? = null,
+    pageSize: Int? = null
+): CompletableFuture<GetSandboxPropertiesResponse> {
+    val operation = SandboxPropertiesQuery
+        .builder()
+        .pageSize(pageSize)
+        .cursor(cursor)
+        .build()
+
+    return graphQLExecutor.execute(operation).thenApply {
+        val nextPageCursor = it.data.properties.cursor.orNullIfBlank()
+
+        val currentPageInfo = PageInfo(
+            cursor = cursor,
+            nextPageCursor = nextPageCursor,
+            hasNext = nextPageCursor != null,
+            pageSize = it.data.properties.elements.size,
+            totalCount = it.data.properties.totalCount
+        )
+
+        GetSandboxPropertiesResponse(
+            data = it.data.properties.elements.map { property -> property.sandboxPropertyData },
+            rawResponse = it,
+            pageInfo = currentPageInfo
+        )
+    }
 }

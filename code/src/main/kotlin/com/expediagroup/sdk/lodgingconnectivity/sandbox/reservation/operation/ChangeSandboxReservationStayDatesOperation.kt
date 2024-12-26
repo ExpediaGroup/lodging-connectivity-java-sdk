@@ -17,12 +17,14 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxChangeReservationStayDatesMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxChangeReservationStayDatesMutation] GraphQL operation, containing both the processed
@@ -60,4 +62,18 @@ fun changeSandboxReservationStayDatesOperation(
         data = response.data.changeReservationStayDates.reservation.sandboxReservationData,
         rawResponse = response
     )
+}
+
+fun changeSandboxReservationStayDatesOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    input: ChangeReservationStayDatesInput
+): CompletableFuture<ChangeSandboxReservationStayDatesResponse> {
+    val operation = SandboxChangeReservationStayDatesMutation(input)
+
+    return graphQLExecutor.execute(operation).thenApply {
+        ChangeSandboxReservationStayDatesResponse(
+            data = it.data.changeReservationStayDates.reservation.sandboxReservationData,
+            rawResponse = it
+        )
+    }
 }

@@ -17,12 +17,14 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxUpdateReservationMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.UpdateReservationInput
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxUpdateReservationMutation] GraphQL operation, containing both the processed
@@ -59,4 +61,18 @@ fun updateSandboxReservationOperation(
         data = response.data.updateReservation.reservation.sandboxReservationData,
         rawResponse = response
     )
+}
+
+fun updateSandboxReservationOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    input: UpdateReservationInput
+): CompletableFuture<UpdateSandboxReservationResponse> {
+    val operation = SandboxUpdateReservationMutation(input)
+
+    return graphQLExecutor.execute(operation).thenApply {
+        UpdateSandboxReservationResponse(
+            data = it.data.updateReservation.reservation.sandboxReservationData,
+            rawResponse = it
+        )
+    }
 }

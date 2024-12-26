@@ -18,12 +18,14 @@ package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.extension.orNullIfBlank
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the paginated response for [SandboxPropertyReservationsQuery] GraphQL operation, containing a list
@@ -84,4 +86,37 @@ fun getSandboxReservationsOperation(
         rawResponse = response,
         pageInfo = currentPageInfo
     )
+}
+
+@JvmOverloads
+fun getSandboxReservationsOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    propertyId: String,
+    cursor: String? = null,
+    pageSize: Int? = null
+): CompletableFuture<GetSandboxReservationsResponse> {
+    val operation = SandboxPropertyReservationsQuery
+        .builder()
+        .propertyId(propertyId)
+        .cursor(cursor)
+        .pageSize(pageSize)
+        .build()
+
+    return graphQLExecutor.execute(operation).thenApply {
+        val nextPageCursor = it.data.property.reservations.cursor.orNullIfBlank()
+
+        val currentPageInfo = PageInfo(
+            cursor = cursor,
+            nextPageCursor = nextPageCursor,
+            hasNext = nextPageCursor != null,
+            pageSize = it.data.property.reservations.elements.size,
+            totalCount = it.data.property.reservations.totalCount
+        )
+
+        GetSandboxReservationsResponse(
+            data = it.data.property.reservations.elements.map { reservation -> reservation.sandboxReservationData },
+            rawResponse = it,
+            pageInfo = currentPageInfo
+        )
+    }
 }

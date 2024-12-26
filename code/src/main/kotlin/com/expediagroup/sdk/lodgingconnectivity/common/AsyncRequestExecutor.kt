@@ -6,6 +6,7 @@ import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.core.client.AsyncTransport
 import com.expediagroup.sdk.core.common.RequestHeadersAsyncInterceptor
+import com.expediagroup.sdk.core.logging.LoggingAsyncInterceptor
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpAsyncTransport
@@ -36,6 +37,7 @@ class AsyncRequestExecutor(
                 credentials = Credentials(configuration.key, configuration.secret),
                 asyncRequestExecutor = this
             )
-        )
+        ),
+        LoggingAsyncInterceptor()
     )
 }

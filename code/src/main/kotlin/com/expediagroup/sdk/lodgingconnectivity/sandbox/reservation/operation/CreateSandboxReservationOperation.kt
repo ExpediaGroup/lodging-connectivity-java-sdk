@@ -17,12 +17,14 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxCreateReservationMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreateReservationInput
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxCreateReservationMutation] GraphQL operation, containing both the processed
@@ -47,7 +49,10 @@ data class CreateSandboxReservationResponse(
  * @return A [CreateSandboxReservationResponse] containing the created reservation data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
-fun createSandboxReservationOperation(graphQLExecutor: AbstractGraphQLExecutor, input: CreateReservationInput): CreateSandboxReservationResponse {
+fun createSandboxReservationOperation(
+    graphQLExecutor: AbstractGraphQLExecutor,
+    input: CreateReservationInput
+): CreateSandboxReservationResponse {
     val operation = SandboxCreateReservationMutation(input)
     val response = graphQLExecutor.execute(operation)
 
@@ -55,4 +60,18 @@ fun createSandboxReservationOperation(graphQLExecutor: AbstractGraphQLExecutor, 
         data = response.data.createReservation.reservation.sandboxReservationData,
         rawResponse = response
     )
+}
+
+fun createSandboxReservationOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    input: CreateReservationInput
+): CompletableFuture<CreateSandboxReservationResponse> {
+    val operation = SandboxCreateReservationMutation(input)
+
+    return graphQLExecutor.execute(operation).thenApply {
+        CreateSandboxReservationResponse(
+            data = it.data.createReservation.reservation.sandboxReservationData,
+            rawResponse = it
+        )
+    }
 }

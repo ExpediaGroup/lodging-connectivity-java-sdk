@@ -17,11 +17,13 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxPropertyQuery] GraphQL operation, containing both the processed
@@ -48,7 +50,10 @@ data class GetSandboxPropertyResponse(
  * @return A [GetSandboxPropertyResponse] containing the requested sandbox property data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
-fun getSandboxPropertyOperation(graphQLExecutor: AbstractGraphQLExecutor, propertyId: String): GetSandboxPropertyResponse {
+fun getSandboxPropertyOperation(
+    graphQLExecutor: AbstractGraphQLExecutor,
+    propertyId: String
+): GetSandboxPropertyResponse {
     val operation = SandboxPropertyQuery(propertyId)
     val response = graphQLExecutor.execute(operation)
 
@@ -56,4 +61,18 @@ fun getSandboxPropertyOperation(graphQLExecutor: AbstractGraphQLExecutor, proper
         data = response.data.property.sandboxPropertyData,
         rawResponse = response,
     )
+}
+
+fun getSandboxPropertyOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    propertyId: String
+): CompletableFuture<GetSandboxPropertyResponse> {
+    val operation = SandboxPropertyQuery(propertyId)
+
+    return graphQLExecutor.execute(operation).thenApply {
+        GetSandboxPropertyResponse(
+            data = it.data.property.sandboxPropertyData,
+            rawResponse = it,
+        )
+    }
 }

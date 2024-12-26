@@ -17,11 +17,13 @@
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxReservationQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
+import java.util.concurrent.CompletableFuture
 
 /**
  * Represents the response for [SandboxReservationQuery] GraphQL operation, containing both the processed
@@ -46,7 +48,10 @@ data class GetSandboxReservationResponse(
  * @return A [GetSandboxReservationResponse] containing the requested reservation data and the full raw response.
  * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
  */
-fun getSandboxReservationOperation(graphQLExecutor: AbstractGraphQLExecutor, reservationId: String): GetSandboxReservationResponse {
+fun getSandboxReservationOperation(
+    graphQLExecutor: AbstractGraphQLExecutor,
+    reservationId: String
+): GetSandboxReservationResponse {
     val operation = SandboxReservationQuery(reservationId)
     val response = graphQLExecutor.execute(operation)
 
@@ -54,4 +59,18 @@ fun getSandboxReservationOperation(graphQLExecutor: AbstractGraphQLExecutor, res
         data = response.data.reservation.sandboxReservationData,
         rawResponse = response
     )
+}
+
+fun getSandboxReservationOperationAsync(
+    graphQLExecutor: AbstractAsyncGraphQLExecutor,
+    reservationId: String
+): CompletableFuture<GetSandboxReservationResponse> {
+    val operation = SandboxReservationQuery(reservationId)
+
+    return graphQLExecutor.execute(operation).thenApply {
+        GetSandboxReservationResponse(
+            data = it.data.reservation.sandboxReservationData,
+            rawResponse = it
+        )
+    }
 }
