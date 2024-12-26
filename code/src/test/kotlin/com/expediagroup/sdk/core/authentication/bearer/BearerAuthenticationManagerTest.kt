@@ -35,13 +35,13 @@ class BearerAuthenticationManagerTest {
     private lateinit var requestExecutor: AbstractRequestExecutor
     private lateinit var credentials: Credentials
     private lateinit var authenticationManager: BearerAuthenticationManager
-    private val authUrl = "http://auth.example.com/token"
+    private val authUrl = "https://auth.example.com/token"
 
     @BeforeAll
     fun setup() {
         requestExecutor = mockk()
         credentials = Credentials("client_key", "client_secret")
-        authenticationManager = BearerAuthenticationManager(authUrl, requestExecutor, credentials)
+        authenticationManager = BearerAuthenticationManager(authUrl, credentials, requestExecutor)
     }
 
     @AfterEach
@@ -53,8 +53,8 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `should authenticate and store access token on successful response`() {
-        val expiresIn: Long = 3600L
-        var available: Int? = null
+        val expiresIn = 3600L
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(
@@ -112,7 +112,7 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `authenticate should throw ExpediaGroupResponseParsingException on parsing failure`() {
-        var available: Int? = null
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(
@@ -141,8 +141,8 @@ class BearerAuthenticationManagerTest {
     @Test
     fun `should treat the stored token as a valid token when not expired`() {
         // Arrange
-        val expiresIn: Long = 3600L
-        var available: Int? = null
+        val expiresIn = 3600L
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(
@@ -169,8 +169,8 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `should treat the stored token as a invalid token if expired`() {
-        val expiresIn: Long = 1L
-        var available: Int? = null
+        val expiresIn = 1L
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(
@@ -205,8 +205,8 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `should handle token clearance`() {
-        val expiresIn: Long = 3600L
-        var available: Int? = null
+        val expiresIn = 3600L
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(
@@ -245,8 +245,8 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `authenticate multiple times should update the token each time`() {
-        val expiresIn: Long = 3600L
-        var available: Int? = null
+        val expiresIn = 3600L
+        var available: Int?
         val response1 = Response.builder()
             .body(
                 ResponseBody.create(
@@ -333,8 +333,8 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `sequential clear and authenticate operations should maintain consistent state`() {
-        val expiresIn: Long = 3600L
-        var available: Int? = null
+        val expiresIn = 3600L
+        var available: Int?
         val response1 = Response.builder()
             .body(
                 ResponseBody.create(
@@ -384,8 +384,8 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `isTokenAboutToExpire should return true at expiration threshold`() {
-        val expiresIn: Long = 0L
-        var available: Int? = null
+        val expiresIn = 0L
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(
@@ -412,7 +412,7 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `authenticate should throw ExpediaGroupResponseParsingException when response body is empty`() {
-        var available: Int? = null
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(
@@ -440,8 +440,8 @@ class BearerAuthenticationManagerTest {
 
     @Test
     fun `authenticate should handle delayed responses gracefully`() {
-        val expiresIn: Long = 3600L
-        var available: Int? = null
+        val expiresIn = 3600L
+        var available: Int?
         val response = Response.builder()
             .body(
                 ResponseBody.create(

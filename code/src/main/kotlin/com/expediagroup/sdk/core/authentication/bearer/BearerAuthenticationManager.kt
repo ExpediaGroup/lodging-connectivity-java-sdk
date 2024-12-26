@@ -16,13 +16,9 @@
 
 package com.expediagroup.sdk.core.authentication.bearer
 
-import com.expediagroup.sdk.core.authentication.common.AuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.AbstractRequestExecutor
-import com.expediagroup.sdk.core.http.CommonMediaTypes
-import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
-import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
@@ -39,14 +35,10 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthExcepti
  * @param credentials The [Credentials] containing the client key and secret used for authentication.
  */
 class BearerAuthenticationManager(
-    val authUrl: String,
-    private val requestExecutor: AbstractRequestExecutor,
-    private val credentials: Credentials,
-) : AuthenticationManager {
-
-    @Volatile
-    private var bearerTokenStorage = BearerTokenStorage.empty
-
+    authUrl: String,
+    credentials: Credentials,
+    private val requestExecutor: AbstractRequestExecutor
+) : AbstractBearerAuthenticationManager(authUrl, credentials) {
     /**
      * Initiates authentication to obtain a new bearer token.
      *
@@ -70,48 +62,6 @@ class BearerAuthenticationManager(
     }
 
     /**
-     * Checks if the current bearer token is about to expire and needs renewal.
-     *
-     * @return `true` if the token is near expiration, `false` otherwise.
-     */
-    fun isTokenAboutToExpire(): Boolean = run {
-        bearerTokenStorage.isAboutToExpire()
-    }
-
-    /**
-     * Clears the stored authentication token.
-     *
-     * This method resets the internal token storage, effectively invalidating the current session.
-     */
-    override fun clearAuthentication() = run {
-        bearerTokenStorage = BearerTokenStorage.empty
-    }
-
-    /**
-     * Retrieves the stored token formatted as an `Authorization` header value.
-     *
-     * @return The token in the format `Bearer <token>` for use in HTTP headers.
-     */
-    fun getAuthorizationHeaderValue(): String = run {
-        bearerTokenStorage.getAuthorizationHeaderValue()
-    }
-
-    /**
-     * Creates an HTTP request to fetch a new bearer token from the authentication server.
-     *
-     * @return A [Request] object configured with the necessary headers and parameters.
-     */
-    private fun buildAuthenticationRequest(): Request = run {
-        Request.Builder()
-            .url(authUrl)
-            .method(Method.POST)
-            .body( RequestBody.create(mapOf("grant_type" to "client_credentials")))
-            .setHeader("Authorization", credentials.encodeBasic())
-            .setHeader("Content-Type", CommonMediaTypes.APPLICATION_FORM_URLENCODED.toString())
-            .build()
-    }
-
-    /**
      * Executes the authentication request and validates the response.
      *
      * @param request The [Request] object to be executed.
@@ -124,17 +74,5 @@ class BearerAuthenticationManager(
                 throw ExpediaGroupAuthException(this.status, "Authentication failed")
             }
         }
-    }
-
-    /**
-     * Stores the retrieved token in internal storage for subsequent use.
-     *
-     * @param tokenResponse The [TokenResponse] containing the token and its expiration time.
-     */
-    private fun storeToken(tokenResponse: TokenResponse) = run {
-        bearerTokenStorage = BearerTokenStorage.create(
-            accessToken = tokenResponse.accessToken,
-            expiresIn = tokenResponse.expiresIn
-        )
     }
 }
