@@ -16,8 +16,6 @@
 
 package com.expediagroup.sdk.http
 
-import com.expediagroup.sdk.http.Status.entries
-
 enum class Status(val code: Int) {
     // Informational responses (100–199)
     CONTINUE(100),

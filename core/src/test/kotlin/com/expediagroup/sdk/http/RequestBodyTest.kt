@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.http
+package com.expediagroup.sdk.http
 
 import java.io.ByteArrayInputStream
 import java.nio.charset.StandardCharsets
@@ -87,7 +87,7 @@ class RequestBodyTest {
         val requestBody = object : RequestBody() {
             val source = Buffer()
 
-            override fun mediaType(): MediaType? = CommonMediaTypes.TEXT_PLAIN
+            override fun mediaType(): MediaType = CommonMediaTypes.TEXT_PLAIN
 
             override fun writeTo(sink: BufferedSink) {
                 source.use { src ->

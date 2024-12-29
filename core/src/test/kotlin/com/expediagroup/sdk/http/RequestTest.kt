@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.http
+package com.expediagroup.sdk.http
 
 import java.net.MalformedURLException
 import java.net.URL

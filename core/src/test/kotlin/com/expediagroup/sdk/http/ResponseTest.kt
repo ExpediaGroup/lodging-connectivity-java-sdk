@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.http
+package com.expediagroup.sdk.http
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
