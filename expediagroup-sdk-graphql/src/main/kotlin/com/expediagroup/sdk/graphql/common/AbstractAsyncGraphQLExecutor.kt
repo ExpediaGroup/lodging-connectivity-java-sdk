@@ -17,13 +17,13 @@
 package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.client.AbstractAsyncRequestExecutor
-import com.expediagroup.sdk.client.Disposable
+import com.expediagroup.sdk.transport.AbstractAsyncTransportPipeline
+import com.expediagroup.sdk.transport.Disposable
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import java.util.concurrent.CompletableFuture
 
 abstract class AbstractAsyncGraphQLExecutor(
-    protected val asyncRequestExecutor: AbstractAsyncRequestExecutor
+    protected val asyncRequestExecutor: AbstractAsyncTransportPipeline
 ): Disposable {
 
     abstract fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<RawResponse<T>>

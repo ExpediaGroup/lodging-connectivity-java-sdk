@@ -17,8 +17,8 @@
 package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.client.AbstractRequestExecutor
-import com.expediagroup.sdk.client.Disposable
+import com.expediagroup.sdk.transport.AbstractTransportPipeline
+import com.expediagroup.sdk.transport.Disposable
 import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
@@ -32,7 +32,7 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
  * requests are sent and processed.
  */
 abstract class AbstractGraphQLExecutor(
-    protected val requestExecutor: AbstractRequestExecutor
+    protected val transportPipeline: AbstractTransportPipeline
 ) : Disposable {
     /**
      * Executes a GraphQL operation and returns the complete raw response.
@@ -45,9 +45,9 @@ abstract class AbstractGraphQLExecutor(
     abstract fun <T : Operation.Data> execute(operation: Operation<T>): RawResponse<T>
 
     /**
-     * Closes the underlying [AbstractRequestExecutor]
+     * Closes the underlying [AbstractTransportPipeline]
      */
     override fun dispose() {
-        requestExecutor.dispose()
+        transportPipeline.dispose()
     }
 }

@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
-import com.expediagroup.sdk.client.Transport
+import com.expediagroup.sdk.transport.Transport
 
 /**
  * Configuration class used to define configuration options for lodging connectivity clients.

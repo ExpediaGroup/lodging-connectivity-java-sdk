@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.okhttp
 
-import com.expediagroup.sdk.client.AsyncTransport
+import com.expediagroup.sdk.transport.AsyncTransport
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
 import java.io.IOException

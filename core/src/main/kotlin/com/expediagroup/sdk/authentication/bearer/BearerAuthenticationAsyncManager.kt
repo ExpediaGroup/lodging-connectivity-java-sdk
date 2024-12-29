@@ -1,17 +1,36 @@
 package com.expediagroup.sdk.authentication.bearer
 
 import com.expediagroup.sdk.authentication.common.Credentials
-import com.expediagroup.sdk.client.AbstractAsyncRequestExecutor
+import com.expediagroup.sdk.common.RequestHeadersStep
+import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
+import com.expediagroup.sdk.logging.RequestLoggingStep
+import com.expediagroup.sdk.logging.ResponseLoggingStep
+import com.expediagroup.sdk.logging.common.LoggerDecorator
+import com.expediagroup.sdk.transport.AbstractAsyncTransportPipeline
+import com.expediagroup.sdk.transport.AsyncTransport
+import com.expediagroup.sdk.transport.ExecutionPipeline
 import java.util.concurrent.CompletableFuture
+import org.slf4j.LoggerFactory
 
 class BearerAuthenticationAsyncManager(
     authUrl: String,
     credentials: Credentials,
-    private val asyncRequestExecutor: AbstractAsyncRequestExecutor
+    private val asyncTransport: AsyncTransport
 ) : AbstractBearerAuthenticationManager(authUrl, credentials) {
+
+    private val requestExecutor = object : AbstractAsyncTransportPipeline(asyncTransport) {
+        override val executionPipeline: ExecutionPipeline = ExecutionPipeline(
+            requestPipeline = listOf(
+                RequestHeadersStep(),
+                RequestLoggingStep(logger)
+            ),
+            responsePipeline = listOf(
+                ResponseLoggingStep(logger)
+            )
+        )
+    }
 
     override fun authenticate() {
         clearAuthentication()
@@ -34,11 +53,15 @@ class BearerAuthenticationAsyncManager(
      * @throws ExpediaGroupAuthException If the server responds with an error.
      */
     private fun executeAuthenticationRequest(request: Request): CompletableFuture<Response> = run {
-        return asyncRequestExecutor.execute(request).thenApply {
+        return requestExecutor.execute(request).thenApply {
             if (!it.isSuccessful) {
                 throw ExpediaGroupAuthException(it.status, "Authentication failed")
             }
             it
         }
+    }
+
+    companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }

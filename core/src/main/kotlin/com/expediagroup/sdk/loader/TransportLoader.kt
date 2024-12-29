@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.loader
 
-import com.expediagroup.sdk.client.Transport
+import com.expediagroup.sdk.transport.Transport
 import java.util.ServiceLoader
 
 object TransportLoader {

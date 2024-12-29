@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.client
+package com.expediagroup.sdk.transport
 
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.interceptor.Interceptor
-import com.expediagroup.sdk.interceptor.InterceptorsChainExecutor
-import com.expediagroup.sdk.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.loader.TransportLoader
 
 /**
@@ -56,39 +53,15 @@ import com.expediagroup.sdk.loader.TransportLoader
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class AbstractRequestExecutor(transport: Transport? = null) : Disposable {
+abstract class AbstractTransportPipeline(transport: Transport? = null) : Disposable {
+    protected val transport: Transport = transport ?: TransportLoader.load()
 
-    private val transport: Transport = transport ?: TransportLoader.load()
+    abstract val executionPipeline: ExecutionPipeline
 
-    /**
-     * List of interceptors to be applied to requests in order.
-     *
-     * Interceptors can modify requests before they are sent and responses
-     * before they are returned to the caller. Common use cases include:
-     * - Adding authentication headers
-     * - Logging
-     * - Retry logic
-     * - Request/response validation
-     * - Error handling
-     */
-    protected abstract val interceptors: List<Interceptor>
-
-    /**
-     * Executes an HTTP request synchronously, applying all configured interceptors.
-     *
-     * @param request The request to execute
-     * @return The response from the server after passing through interceptors
-     * @throws ExpediaGroupNetworkException If any network-related error occurs
-     */
-    open fun execute(request: Request): Response {
-        val chainExecutor = InterceptorsChainExecutor(
-            interceptors = interceptors,
-            request = request,
-            transport = this.transport
-        )
-
-        return chainExecutor.proceed(request)
-    }
+    fun execute(request: Request): Response = executionPipeline
+        .startRequestPipeline(request).let {
+            executionPipeline.startResponsePipeline(transport.execute(it))
+        }
 
     /**
      * Closes the underlying [Transport].

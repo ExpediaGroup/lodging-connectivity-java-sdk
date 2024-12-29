@@ -17,11 +17,19 @@
 package com.expediagroup.sdk.authentication.bearer
 
 import com.expediagroup.sdk.authentication.common.Credentials
-import com.expediagroup.sdk.client.AbstractRequestExecutor
-import com.expediagroup.sdk.http.Request
-import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.common.RequestHeadersStep
 import com.expediagroup.sdk.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
+import com.expediagroup.sdk.http.Request
+import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.logging.RequestLoggingStep
+import com.expediagroup.sdk.logging.ResponseLoggingStep
+import com.expediagroup.sdk.logging.common.LoggerDecorator
+import com.expediagroup.sdk.transport.AbstractTransportPipeline
+import com.expediagroup.sdk.transport.ExecutionPipeline
+import com.expediagroup.sdk.transport.Transport
+import org.slf4j.LoggerFactory
+
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -30,15 +38,27 @@ import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
  * and validation. It interacts with an authentication server to fetch tokens using client credentials,
  * ensures tokens are refreshed when necessary, and provides them in the required format for authorization headers.
  *
- * @param requestExecutor The [AbstractRequestExecutor] used to execute authentication requests.
  * @param authUrl The URL of the authentication server's endpoint to obtain bearer tokens.
  * @param credentials The [Credentials] containing the client key and secret used for authentication.
  */
 class BearerAuthenticationManager(
     authUrl: String,
     credentials: Credentials,
-    private val requestExecutor: AbstractRequestExecutor
+    private val transport: Transport
 ) : AbstractBearerAuthenticationManager(authUrl, credentials) {
+
+    private val requestExecutor = object : AbstractTransportPipeline(transport) {
+        override val executionPipeline: ExecutionPipeline = ExecutionPipeline(
+            requestPipeline = listOf(
+                RequestHeadersStep(),
+                RequestLoggingStep(logger)
+            ),
+            responsePipeline = listOf(
+                ResponseLoggingStep(logger)
+            )
+        )
+    }
+
     /**
      * Initiates authentication to obtain a new bearer token.
      *
@@ -74,5 +94,9 @@ class BearerAuthenticationManager(
                 throw ExpediaGroupAuthException(this.status, "Authentication failed")
             }
         }
+    }
+
+    companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }

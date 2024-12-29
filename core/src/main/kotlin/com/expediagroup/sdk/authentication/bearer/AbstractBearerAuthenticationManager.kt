@@ -8,7 +8,7 @@ import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.RequestBody
 
 abstract class AbstractBearerAuthenticationManager(
-    val authUrl: String,
+    private val authUrl: String,
     protected val credentials: Credentials
 ) : AuthenticationManager {
 

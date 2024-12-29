@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.client
+package com.expediagroup.sdk.transport
 
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response

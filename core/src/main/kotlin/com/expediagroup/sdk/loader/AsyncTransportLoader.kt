@@ -1,6 +1,6 @@
 package com.expediagroup.sdk.loader
 
-import com.expediagroup.sdk.client.AsyncTransport
+import com.expediagroup.sdk.transport.AsyncTransport
 import java.util.ServiceLoader
 
 object AsyncTransportLoader {

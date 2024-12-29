@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.client
+package com.expediagroup.sdk.transport
 
 /**
  * Represents a resource or operation that can be explicitly disposed of to release its resources.

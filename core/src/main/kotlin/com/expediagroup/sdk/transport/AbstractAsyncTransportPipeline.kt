@@ -14,29 +14,22 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.client
+package com.expediagroup.sdk.transport
 
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.interceptor.AsyncInterceptor
-import com.expediagroup.sdk.interceptor.AsyncInterceptorsChainExecutor
 import com.expediagroup.sdk.loader.AsyncTransportLoader
 import java.util.concurrent.CompletableFuture
 
-abstract class AbstractAsyncRequestExecutor(asyncTransport: AsyncTransport? = null) : Disposable {
-    private val asyncTransport: AsyncTransport = asyncTransport ?: AsyncTransportLoader.load()
+abstract class AbstractAsyncTransportPipeline(asyncTransport: AsyncTransport? = null) : Disposable {
+    protected val asyncTransport: AsyncTransport = asyncTransport ?: AsyncTransportLoader.load()
 
-    protected abstract val interceptors: List<AsyncInterceptor>
+    abstract val executionPipeline: ExecutionPipeline
 
-    open fun execute(request: Request): CompletableFuture<Response> {
-        val chainExecutor = AsyncInterceptorsChainExecutor(
-            interceptors = interceptors,
-            request = request,
-            asyncTransport = this.asyncTransport
-        )
-
-        return chainExecutor.proceed(request)
-    }
+    fun execute(request: Request): CompletableFuture<Response> = executionPipeline
+        .startRequestPipeline(request).let {
+            asyncTransport.execute(it).thenApply { request -> executionPipeline.startResponsePipeline(request) }
+        }
 
     override fun dispose() = asyncTransport.dispose()
 }
