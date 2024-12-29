@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.common
+package com.expediagroup.sdk.common
 
 import java.io.InputStream
 import java.util.concurrent.Callable
