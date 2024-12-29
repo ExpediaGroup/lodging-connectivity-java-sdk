@@ -1,13 +1,13 @@
 package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.toResponseJson
-import com.expediagroup.sdk.core.client.AbstractRequestExecutor
-import com.expediagroup.sdk.core.http.Request
-import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.interceptor.Interceptor
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
-import com.expediagroup.sdk.core.okhttp.OkHttpTransport
+import com.expediagroup.sdk.transport.AbstractRequestExecutor
+import com.expediagroup.sdk.http.Request
+import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.interceptor.Interceptor
+import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.okhttp.BaseOkHttpClient
+import com.expediagroup.sdk.okhttp.OkHttpTransport
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

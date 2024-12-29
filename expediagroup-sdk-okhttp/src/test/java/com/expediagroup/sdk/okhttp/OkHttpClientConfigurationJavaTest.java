@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.okhttp;
+package com.expediagroup.sdk.okhttp;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

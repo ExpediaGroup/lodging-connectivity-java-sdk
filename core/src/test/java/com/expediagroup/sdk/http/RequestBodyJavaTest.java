@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.http;
+package com.expediagroup.sdk.http;
 
 import okio.Buffer;
 import org.junit.jupiter.api.DisplayName;
