@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity;
 
-import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration;
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.SandboxDataManagementClient;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput;
@@ -52,13 +52,11 @@ import java.util.Arrays;
 public class SandboxDataManagementClientUsageExample {
     private static final Logger logger = LoggerFactory.getLogger(SandboxDataManagementClientUsageExample.class);
 
-    private static final SandboxDataManagementClient client = new SandboxDataManagementClient(
-            ClientConfiguration
-                    .builder()
-                    .key("KEY")
-                    .secret("SECRET")
-                    .build()
-    );
+    private static final SandboxDataManagementClient client = SandboxDataManagementClient.builder()
+            .key("")
+            .secret("")
+            .environment(ClientEnvironment.SANDBOX_TEST)
+            .build();
 
     private static final String PROPERTY_NAME = "Lodging SDK Test Property";
     private static final String UPDATED_PROPERTY_NAME = "New Lodging SDK Test Property";

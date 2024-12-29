@@ -17,10 +17,11 @@
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation
 
 import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientBuilder
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
@@ -59,7 +60,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.Reserv
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment and
  * timeouts
  */
-class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
+class ReservationClient private constructor(config: ClientConfiguration) : GraphQLClient() {
 
     override val apiEndpoint = EndpointProvider.getSupplyApiEndpoint(config.environment)
 
@@ -276,5 +277,14 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         selections: ReservationSelections? = null
     ): RefundReservationResponse = run {
         refundReservationOperation(graphQLExecutor, input, selections)
+    }
+
+    companion object {
+        class Builder : ClientBuilder<ReservationClient>() {
+            override fun build(): ReservationClient = ReservationClient(buildConfig())
+        }
+
+        @JvmStatic
+        fun builder(): Builder = Builder()
     }
 }

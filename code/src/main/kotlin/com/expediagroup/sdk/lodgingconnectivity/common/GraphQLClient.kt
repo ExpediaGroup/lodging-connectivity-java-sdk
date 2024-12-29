@@ -16,9 +16,9 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.common
 
-import com.expediagroup.sdk.transport.Disposable
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
+import com.expediagroup.sdk.transport.Disposable
 
 /**
  * Abstract base class for GraphQL clients that defines the core structure for executing GraphQL operations.

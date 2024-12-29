@@ -17,10 +17,11 @@
 package com.expediagroup.sdk.lodgingconnectivity.payment
 
 import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientBuilder
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
@@ -37,7 +38,7 @@ import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInst
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
  * or timeouts.
  */
-class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
+class PaymentClient private constructor(config: ClientConfiguration) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
 
     override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
@@ -58,5 +59,14 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
      */
     fun getPaymentInstrument(token: String): GetPaymentInstrumentResponse = run {
         getPaymentInstrumentOperation(graphQLExecutor, token)
+    }
+
+    companion object {
+        class Builder : ClientBuilder<PaymentClient>() {
+            override fun build(): PaymentClient = PaymentClient(buildConfig())
+        }
+
+        @JvmStatic
+        fun builder(): Builder = Builder()
     }
 }

@@ -29,7 +29,7 @@ abstract class AbstractAsyncRequestExecutor(asyncTransport: AsyncTransport? = nu
 
     fun execute(request: Request): CompletableFuture<Response> = executionPipeline
         .startRequestPipeline(request).let {
-            asyncTransport.execute(it).thenApply { request -> executionPipeline.startResponsePipeline(request) }
+            asyncTransport.execute(it).thenApply { response -> executionPipeline.startResponsePipeline(response) }
         }
 
     override fun dispose() = asyncTransport.dispose()

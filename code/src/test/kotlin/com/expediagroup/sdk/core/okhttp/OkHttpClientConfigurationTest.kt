@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 class OkHttpClientConfigurationTest {
 
     @Nested
-    inner class OkHttpClientConfigurationBuilderTest {
+    inner class OkHttpClientBuilderTest {
         @Test
         fun `builder should build configuration with all properties set`() {
             // Given

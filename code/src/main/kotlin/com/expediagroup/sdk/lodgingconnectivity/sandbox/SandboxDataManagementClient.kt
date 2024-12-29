@@ -21,6 +21,7 @@ import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientBuilder
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
@@ -74,7 +75,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.Sa
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
  * or timeouts.
  */
-class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
+class SandboxDataManagementClient private constructor(config: ClientConfiguration) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
 
     override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
@@ -310,5 +311,14 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      */
     fun deleteReservations(input: DeletePropertyReservationsInput): DeleteSandboxReservationsResponse = run {
         deleteSandboxReservationsOperation(graphQLExecutor, input)
+    }
+
+    companion object {
+        class Builder : ClientBuilder<SandboxDataManagementClient>() {
+            override fun build(): SandboxDataManagementClient = SandboxDataManagementClient(buildConfig())
+        }
+
+        @JvmStatic
+        fun builder(): Builder = Builder()
     }
 }

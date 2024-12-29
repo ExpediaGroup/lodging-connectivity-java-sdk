@@ -42,7 +42,7 @@ class ClientConfigurationTest {
             val exception = assertThrows<IllegalArgumentException> {
                 ClientConfiguration.builder()
                     .secret("test-secret")
-                    .build()
+                    .buildConfig()
             }
 
             assertEquals("key is required", exception.message)
@@ -53,7 +53,7 @@ class ClientConfigurationTest {
             val exception = assertThrows<IllegalArgumentException> {
                 ClientConfiguration.builder()
                     .key("test-key")
-                    .build()
+                    .buildConfig()
             }
 
             assertEquals("secret is required", exception.message)
@@ -92,7 +92,7 @@ class ClientConfigurationTest {
                 .key("test-key")
                 .secret("test-secret")
                 .environment(ClientEnvironment.TEST)
-                .build()
+                .buildConfig()
 
             assertEquals("test-key", config.key)
             assertEquals("test-secret", config.secret)
@@ -108,7 +108,7 @@ class ClientConfigurationTest {
                 ClientConfiguration.builder(transport)
                     .secret("test-secret")
                     .environment(ClientEnvironment.TEST)
-                    .build()
+                    .buildConfig()
             }
 
             assertEquals("key is required", exception.message)
@@ -122,7 +122,7 @@ class ClientConfigurationTest {
                 ClientConfiguration.builder(transport)
                     .key("test-key")
                     .environment(ClientEnvironment.TEST)
-                    .build()
+                    .buildConfig()
             }
 
             assertEquals("secret is required", exception.message)

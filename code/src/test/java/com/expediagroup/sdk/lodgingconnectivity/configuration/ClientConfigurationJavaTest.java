@@ -37,6 +37,6 @@ public class ClientConfigurationJavaTest {
         ClientConfiguration.builder(transport)
                 .key("test-key")
                 .secret("test-secret")
-                .build();
+                .buildConfig();
     }
 }
