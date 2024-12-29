@@ -1,8 +1,9 @@
-package com.expediagroup.sdk.authentication.bearer
+package com.expediagroup.sdk.pipeline.step
 
+import com.expediagroup.sdk.authentication.bearer.AbstractBearerAuthenticationManager
 import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.http.Request
-import com.expediagroup.sdk.transport.RequestPipelineStep
+import com.expediagroup.sdk.pipeline.RequestPipelineStep
 import java.io.IOException
 
 class BearerAuthenticationStep(

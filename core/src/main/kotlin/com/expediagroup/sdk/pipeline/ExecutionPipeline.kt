@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.transport
+package com.expediagroup.sdk.pipeline
 
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response

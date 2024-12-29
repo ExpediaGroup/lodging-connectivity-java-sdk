@@ -19,6 +19,7 @@ package com.expediagroup.sdk.transport
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
 import com.expediagroup.sdk.loader.AsyncTransportLoader
+import com.expediagroup.sdk.pipeline.ExecutionPipeline
 import java.util.concurrent.CompletableFuture
 
 abstract class AbstractAsyncRequestExecutor(asyncTransport: AsyncTransport? = null) : Disposable {

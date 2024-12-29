@@ -19,6 +19,7 @@ package com.expediagroup.sdk.transport
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
 import com.expediagroup.sdk.loader.TransportLoader
+import com.expediagroup.sdk.pipeline.ExecutionPipeline
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.

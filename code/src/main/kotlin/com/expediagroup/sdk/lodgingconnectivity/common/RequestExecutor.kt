@@ -1,16 +1,16 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
 import com.expediagroup.sdk.authentication.bearer.BearerAuthenticationManager
-import com.expediagroup.sdk.authentication.bearer.BearerAuthenticationStep
+import com.expediagroup.sdk.pipeline.step.BearerAuthenticationStep
 import com.expediagroup.sdk.authentication.common.Credentials
-import com.expediagroup.sdk.common.RequestHeadersStep
+import com.expediagroup.sdk.pipeline.step.RequestHeadersStep
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
-import com.expediagroup.sdk.logging.RequestLoggingStep
-import com.expediagroup.sdk.logging.ResponseLoggingStep
+import com.expediagroup.sdk.pipeline.step.RequestLoggingStep
+import com.expediagroup.sdk.pipeline.step.ResponseLoggingStep
 import com.expediagroup.sdk.logging.common.LoggerDecorator
 import com.expediagroup.sdk.transport.AbstractRequestExecutor
-import com.expediagroup.sdk.transport.ExecutionPipeline
+import com.expediagroup.sdk.pipeline.ExecutionPipeline
 import org.slf4j.LoggerFactory
 
 class RequestExecutor(

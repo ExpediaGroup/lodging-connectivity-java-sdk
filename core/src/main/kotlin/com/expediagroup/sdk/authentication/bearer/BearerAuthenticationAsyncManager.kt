@@ -1,16 +1,16 @@
 package com.expediagroup.sdk.authentication.bearer
 
 import com.expediagroup.sdk.authentication.common.Credentials
-import com.expediagroup.sdk.common.RequestHeadersStep
+import com.expediagroup.sdk.pipeline.step.RequestHeadersStep
 import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.logging.RequestLoggingStep
-import com.expediagroup.sdk.logging.ResponseLoggingStep
+import com.expediagroup.sdk.pipeline.step.RequestLoggingStep
+import com.expediagroup.sdk.pipeline.step.ResponseLoggingStep
 import com.expediagroup.sdk.logging.common.LoggerDecorator
 import com.expediagroup.sdk.transport.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.transport.AsyncTransport
-import com.expediagroup.sdk.transport.ExecutionPipeline
+import com.expediagroup.sdk.pipeline.ExecutionPipeline
 import java.util.concurrent.CompletableFuture
 import org.slf4j.LoggerFactory
 
