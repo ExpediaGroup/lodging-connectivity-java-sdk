@@ -2,8 +2,6 @@ package com.expediagroup.sdk.core.client
 
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.interceptor.Interceptor
-import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkConstructor

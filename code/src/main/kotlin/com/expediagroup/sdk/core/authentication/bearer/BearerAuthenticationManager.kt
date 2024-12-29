@@ -18,10 +18,17 @@ package com.expediagroup.sdk.core.authentication.bearer
 
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.AbstractRequestExecutor
+import com.expediagroup.sdk.core.client.ExecutionPipeline
+import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
+import com.expediagroup.sdk.core.util.pipeline.RequestHeadersStep
+import com.expediagroup.sdk.core.util.pipeline.RequestLoggingStep
+import com.expediagroup.sdk.core.util.pipeline.ResponseLoggingStep
+import org.slf4j.LoggerFactory
 
 /**
  * Manages bearer token authentication for HTTP requests.
@@ -37,8 +44,21 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthExcepti
 class BearerAuthenticationManager(
     authUrl: String,
     credentials: Credentials,
-    private val requestExecutor: AbstractRequestExecutor
+    private val transport: Transport
 ) : AbstractBearerAuthenticationManager(authUrl, credentials) {
+
+    private val requestExecutor = object : AbstractRequestExecutor(transport) {
+        override val executionPipeline: ExecutionPipeline = ExecutionPipeline(
+            requestPipeline = listOf(
+                RequestHeadersStep(),
+                RequestLoggingStep(logger)
+            ),
+            responsePipeline = listOf(
+                ResponseLoggingStep(logger)
+            )
+        )
+    }
+
     /**
      * Initiates authentication to obtain a new bearer token.
      *
@@ -74,5 +94,9 @@ class BearerAuthenticationManager(
                 throw ExpediaGroupAuthException(this.status, "Authentication failed")
             }
         }
+    }
+
+    companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }

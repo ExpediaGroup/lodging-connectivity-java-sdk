@@ -5,7 +5,6 @@ import com.expediagroup.sdk.core.http.Protocol
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.http.Status
-import com.expediagroup.sdk.core.interceptor.Interceptor
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 

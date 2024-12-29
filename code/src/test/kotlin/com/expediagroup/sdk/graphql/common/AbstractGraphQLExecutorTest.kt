@@ -4,7 +4,6 @@ import com.apollographql.apollo.api.toResponseJson
 import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport

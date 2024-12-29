@@ -1,21 +1,24 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
-import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
 import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManager
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.client.AbstractRequestExecutor
+import com.expediagroup.sdk.core.client.ExecutionPipeline
 import com.expediagroup.sdk.core.client.Transport
-import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
-import com.expediagroup.sdk.core.interceptor.Interceptor
-import com.expediagroup.sdk.core.logging.LoggingInterceptor
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport
+import com.expediagroup.sdk.core.util.pipeline.BearerAuthenticationStep
+import com.expediagroup.sdk.core.util.pipeline.RequestHeadersStep
+import com.expediagroup.sdk.core.util.pipeline.RequestLoggingStep
+import com.expediagroup.sdk.core.util.pipeline.ResponseLoggingStep
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomAsyncClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.DefaultClientConfiguration
+import org.slf4j.LoggerFactory
 
 internal fun getTransport(configuration: ClientConfiguration): Transport = when (configuration) {
     is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getInstance(configuration.buildOkHttpConfiguration()))
@@ -30,15 +33,24 @@ class RequestExecutor(
     apiEndpoint: ApiEndpoint
 ) : AbstractRequestExecutor(getTransport(configuration)) {
 
-    override val interceptors: List<Interceptor> = listOf(
-        RequestHeadersInterceptor(),
-        BearerAuthenticationInterceptor(
-            BearerAuthenticationManager(
-                requestExecutor = this,
-                authUrl = apiEndpoint.authEndpoint,
-                credentials = Credentials(configuration.key, configuration.secret),
-            )
-        ),
-        LoggingInterceptor()
+    private val authManager = BearerAuthenticationManager(
+        authUrl = apiEndpoint.authEndpoint,
+        credentials = Credentials(configuration.key, configuration.secret),
+        transport = transport
     )
+
+    override val executionPipeline = ExecutionPipeline(
+        requestPipeline = listOf(
+            RequestHeadersStep(),
+            BearerAuthenticationStep(authManager),
+            RequestLoggingStep(logger)
+        ),
+        responsePipeline = listOf(
+            ResponseLoggingStep(logger)
+        )
+    )
+
+    companion object {
+        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
+    }
 }

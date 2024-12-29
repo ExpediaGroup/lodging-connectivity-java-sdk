@@ -18,9 +18,6 @@ package com.expediagroup.sdk.core.client
 
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.interceptor.Interceptor
-import com.expediagroup.sdk.core.interceptor.InterceptorsChainExecutor
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.
@@ -56,35 +53,12 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  * @param transport The transport implementation to use for executing requests
  */
 abstract class AbstractRequestExecutor(protected val transport: Transport) : Disposable {
-    /**
-     * List of interceptors to be applied to requests in order.
-     *
-     * Interceptors can modify requests before they are sent and responses
-     * before they are returned to the caller. Common use cases include:
-     * - Adding authentication headers
-     * - Logging
-     * - Retry logic
-     * - Request/response validation
-     * - Error handling
-     */
-    protected abstract val interceptors: List<Interceptor>
+    abstract val executionPipeline: ExecutionPipeline
 
-    /**
-     * Executes an HTTP request synchronously, applying all configured interceptors.
-     *
-     * @param request The request to execute
-     * @return The response from the server after passing through interceptors
-     * @throws ExpediaGroupNetworkException If any network-related error occurs
-     */
-    open fun execute(request: Request): Response {
-        val chainExecutor = InterceptorsChainExecutor(
-            interceptors = interceptors,
-            request = request,
-            transport = this.transport
-        )
-
-        return chainExecutor.proceed(request)
-    }
+    fun execute(request: Request): Response = executionPipeline
+        .startRequestPipeline(request).let {
+            executionPipeline.startResponsePipeline(transport.execute(it))
+        }
 
     /**
      * Closes the underlying [Transport].
