@@ -1,14 +1,10 @@
 package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.toResponseJson
-import com.expediagroup.sdk.transport.AbstractRequestExecutor
-import com.expediagroup.sdk.http.Request
-import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.interceptor.Interceptor
 import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.okhttp.BaseOkHttpClient
-import com.expediagroup.sdk.okhttp.OkHttpTransport
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
+import com.expediagroup.sdk.pipeline.ExecutionPipeline
+import com.expediagroup.sdk.transport.AbstractRequestExecutor
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
@@ -32,9 +28,9 @@ class AbstractGraphQLExecutorTest {
         mockWebServer.start()
         val serverUrl = mockWebServer.url("/graphql").toString()
 
-        val requestExecutor = object : AbstractRequestExecutor(OkHttpTransport(BaseOkHttpClient.getInstance())) {
-            override val interceptors: List<Interceptor> = emptyList()
-            override fun execute(request: Request): Response = transport.execute(request)
+        val requestExecutor = object : AbstractRequestExecutor() {
+            override val executionPipeline: ExecutionPipeline = ExecutionPipeline(emptyList(), emptyList())
+
         }
 
         executor = GraphQLExecutor(requestExecutor, serverUrl)

@@ -67,10 +67,4 @@ apollo {
 
         plugin(project(":apollo-compiler-plugin"))
     }
-    service("testservice") {
-        srcDir("src/test/graphql")
-        packageName.set("testservice")
-        outputDir.set(file("src/test/graphql/generated"))
-        generateDataBuilders.set(true)
-    }
 }

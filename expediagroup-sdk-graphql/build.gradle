@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
+    id 'com.apollographql.apollo' version '4.1.0'
 
     /* Test Reporting */
     id 'org.jetbrains.kotlinx.kover' version "0.9.0"
@@ -25,4 +26,27 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
     testImplementation 'io.mockk:mockk:1.13.14'
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.12.0"
+
+    testImplementation(project(':expediagroup-sdk-okhttp'))
+}
+
+apollo {
+    service("testservice") {
+        srcDir("src/test/graphql")
+        packageName.set("testservice")
+        outputDir.set(file("src/test/graphql/generated"))
+        generateDataBuilders.set(true)
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.named("check") {
+    finalizedBy("koverHtmlReport")
 }
