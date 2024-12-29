@@ -20,9 +20,12 @@ import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
 import com.expediagroup.sdk.interceptor.AsyncInterceptor
 import com.expediagroup.sdk.interceptor.AsyncInterceptorsChainExecutor
+import com.expediagroup.sdk.loader.AsyncTransportLoader
 import java.util.concurrent.CompletableFuture
 
-abstract class AbstractAsyncRequestExecutor(protected val asyncTransport: AsyncTransport) : Disposable {
+abstract class AbstractAsyncRequestExecutor(asyncTransport: AsyncTransport? = null) : Disposable {
+    private val asyncTransport: AsyncTransport = asyncTransport ?: AsyncTransportLoader.load()
+
     protected abstract val interceptors: List<AsyncInterceptor>
 
     open fun execute(request: Request): CompletableFuture<Response> {
