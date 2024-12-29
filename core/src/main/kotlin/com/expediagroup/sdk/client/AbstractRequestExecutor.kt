@@ -21,6 +21,7 @@ import com.expediagroup.sdk.http.Response
 import com.expediagroup.sdk.interceptor.Interceptor
 import com.expediagroup.sdk.interceptor.InterceptorsChainExecutor
 import com.expediagroup.sdk.exception.service.ExpediaGroupNetworkException
+import com.expediagroup.sdk.loader.TransportLoader
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.
@@ -55,7 +56,10 @@ import com.expediagroup.sdk.exception.service.ExpediaGroupNetworkException
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class AbstractRequestExecutor(protected val transport: Transport) : Disposable {
+abstract class AbstractRequestExecutor(transport: Transport? = null) : Disposable {
+
+    private val transport: Transport = transport ?: TransportLoader.load()
+
     /**
      * List of interceptors to be applied to requests in order.
      *

@@ -32,55 +32,32 @@ import okhttp3.OkHttpClient
  *   with specific settings provided via the `OkHttpClientConfiguration` object.
  */
 object BaseOkHttpClient {
+    private val configuration: OkHttpClientConfiguration = OkHttpTransportConfigurator.get()
 
-    private val instance: OkHttpClient = OkHttpClient()
-
-    /**
-     * Retrieves the singleton instance of `OkHttpClient`.
-     *
-     * This method ensures that the instance is initialized lazily and safely for concurrent access.
-     * If the instance is not yet initialized, it will create a new instance.
-     *
-     * @return The singleton instance of `OkHttpClient`.
-     */
-    fun getInstance(): OkHttpClient = instance
-
-    /**
-     * Applies the given configuration to a base OkHttpClient and returns a new instance.
-     * NOTE: The returned instance is not a completely new instance of the OKHttpClient, it shares the same connection pool
-     * and other shared resources with the base instance. Except for some cases where a custom connection pool is passed
-     * through the configuration.
-     *
-     * @param configuration The configuration to apply.
-     * @return A new OkHttpClient instance that shares resources with the base instance but
-     * configured with the provided configurations.
-     */
-    fun getInstance(configuration: OkHttpClientConfiguration): OkHttpClient {
-        return instance.newBuilder().apply {
-            configuration.callTimeout?.let {
-                callTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.connectTimeout?.let {
-                connectTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.readTimeout?.let {
-                readTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.writeTimeout?.let {
-                writeTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.connectionPool?.let {
-                connectionPool(it)
-            }
-            configuration.retryOnConnectionFailure?.let {
-                retryOnConnectionFailure(it)
-            }
-            configuration.interceptors?.forEach {
-                addInterceptor(it)
-            }
-            configuration.networkInterceptors?.forEach {
-                addNetworkInterceptor(it)
-            }
-        }.build()
-    }
+    val instance: OkHttpClient = OkHttpClient.Builder().apply {
+        configuration.callTimeout?.let {
+            callTimeout(Duration.ofMillis(it.toLong()))
+        }
+        configuration.connectTimeout?.let {
+            connectTimeout(Duration.ofMillis(it.toLong()))
+        }
+        configuration.readTimeout?.let {
+            readTimeout(Duration.ofMillis(it.toLong()))
+        }
+        configuration.writeTimeout?.let {
+            writeTimeout(Duration.ofMillis(it.toLong()))
+        }
+        configuration.connectionPool?.let {
+            connectionPool(it)
+        }
+        configuration.retryOnConnectionFailure?.let {
+            retryOnConnectionFailure(it)
+        }
+        configuration.interceptors?.forEach {
+            addInterceptor(it)
+        }
+        configuration.networkInterceptors?.forEach {
+            addNetworkInterceptor(it)
+        }
+    }.build()
 }

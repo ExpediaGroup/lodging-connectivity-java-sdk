@@ -30,7 +30,6 @@ dependencies {
     /* EG SDK Core */
     api(project(":core"))
     api(project(":expediagroup-sdk-graphql"))
-    compileOnly(project(":expediagroup-sdk-okhttp"))
 
     /* Testing */
     testImplementation platform('org.junit:junit-bom:5.11.4')
