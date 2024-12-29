@@ -1,15 +1,15 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
-import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationInterceptor
-import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationManager
-import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.AbstractRequestExecutor
-import com.expediagroup.sdk.core.client.Transport
-import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
-import com.expediagroup.sdk.core.interceptor.Interceptor
-import com.expediagroup.sdk.core.logging.LoggingInterceptor
-import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
-import com.expediagroup.sdk.core.okhttp.OkHttpTransport
+import com.expediagroup.sdk.authentication.bearer.BearerAuthenticationInterceptor
+import com.expediagroup.sdk.authentication.bearer.BearerAuthenticationManager
+import com.expediagroup.sdk.authentication.common.Credentials
+import com.expediagroup.sdk.client.AbstractRequestExecutor
+import com.expediagroup.sdk.client.Transport
+import com.expediagroup.sdk.common.RequestHeadersInterceptor
+import com.expediagroup.sdk.interceptor.Interceptor
+import com.expediagroup.sdk.logging.LoggingInterceptor
+import com.expediagroup.sdk.okhttp.BaseOkHttpClient
+import com.expediagroup.sdk.okhttp.OkHttpTransport
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration

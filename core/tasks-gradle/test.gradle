@@ -1,0 +1,10 @@
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.named("check") {
+    finalizedBy("koverHtmlReport")
+}

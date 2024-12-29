@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.payment
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor

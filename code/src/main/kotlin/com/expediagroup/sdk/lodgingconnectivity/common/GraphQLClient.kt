@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.common
 
-import com.expediagroup.sdk.core.client.Disposable
+import com.expediagroup.sdk.client.Disposable
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 

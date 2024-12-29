@@ -16,11 +16,11 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
-import com.expediagroup.sdk.core.extension.orFalseIfNull
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
+import com.expediagroup.sdk.lodgingconnectivity.common.orFalseIfNull
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.CancelVrboReservationMutation
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelVrboReservationInput

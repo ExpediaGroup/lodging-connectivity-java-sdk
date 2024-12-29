@@ -16,12 +16,12 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
-import com.expediagroup.sdk.core.extension.orNullIfBlank
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
 import com.expediagroup.sdk.graphql.model.response.RawResponse
+import com.expediagroup.sdk.lodgingconnectivity.common.orNullIfBlank
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertiesQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
 
