@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.authentication.bearer
+package com.expediagroup.sdk.authentication.bearer
 
 import io.mockk.every
 import io.mockk.mockk

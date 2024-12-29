@@ -1,52 +1,52 @@
-package com.expediagroup.sdk.core.authentication.bearer
+package com.expediagroup.sdk.authentication.bearer
 
-import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.client.AbstractRequestExecutor
-import com.expediagroup.sdk.core.http.CommonMediaTypes
-import com.expediagroup.sdk.core.http.Method
-import com.expediagroup.sdk.core.http.Protocol
-import com.expediagroup.sdk.core.http.Request
-import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.http.ResponseBody
-import com.expediagroup.sdk.core.http.Status
-import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkException
+import com.expediagroup.sdk.authentication.common.Credentials
+import com.expediagroup.sdk.exception.client.ExpediaGroupResponseParsingException
+import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
+import com.expediagroup.sdk.exception.service.ExpediaGroupNetworkException
+import com.expediagroup.sdk.http.CommonMediaTypes
+import com.expediagroup.sdk.http.Method
+import com.expediagroup.sdk.http.Protocol
+import com.expediagroup.sdk.http.Request
+import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.http.ResponseBody
+import com.expediagroup.sdk.http.Status
+import com.expediagroup.sdk.transport.Transport
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BearerAuthenticationManagerTest {
 
-    private lateinit var requestExecutor: AbstractRequestExecutor
+    private lateinit var transport: Transport
     private lateinit var credentials: Credentials
     private lateinit var authenticationManager: BearerAuthenticationManager
     private val authUrl = "https://auth.example.com/token"
 
     @BeforeAll
     fun setup() {
-        requestExecutor = mockk()
+        transport = mockk()
         credentials = Credentials("client_key", "client_secret")
-        authenticationManager = BearerAuthenticationManager(authUrl, credentials, requestExecutor)
+        authenticationManager = BearerAuthenticationManager(authUrl, credentials, transport)
     }
 
     @AfterEach
     fun tearDown() {
-        clearMocks(requestExecutor)
+        clearMocks(transport)
         authenticationManager.clearAuthentication()
     }
 
@@ -71,12 +71,12 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         authenticationManager.authenticate()
 
         assertEquals("Bearer first_token", authenticationManager.getAuthorizationHeaderValue())
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 
     @Test
@@ -89,25 +89,25 @@ class BearerAuthenticationManagerTest {
             .protocol(Protocol.HTTP_1_1)
             .message(Status.INTERNAL_SERVER_ERROR.name)
             .build()
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         val exception = assertThrows<ExpediaGroupAuthException> {
             authenticationManager.authenticate()
         }
         assertEquals("[${Status.INTERNAL_SERVER_ERROR.code}] Authentication failed", exception.message)
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 
     @Test
     fun `authenticate should throw ExpediaGroupNetworkException on network failure`() {
         // Arrange
-        every { requestExecutor.execute(any()) } throws ExpediaGroupNetworkException("Network error")
+        every { transport.execute(any()) } throws ExpediaGroupNetworkException("Network error")
 
         val exception = assertThrows<ExpediaGroupNetworkException> {
             authenticationManager.authenticate()
         }
         assertEquals("Network error", exception.message)
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 
     @Test
@@ -129,13 +129,13 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         val exception = assertThrows<ExpediaGroupResponseParsingException> {
             authenticationManager.authenticate()
         }
         assertTrue(exception.message!!.contains("Failed to parse"))
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 
     @Test
@@ -159,7 +159,7 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         authenticationManager.authenticate()
         val isAboutToExpire = authenticationManager.isTokenAboutToExpire()
@@ -187,7 +187,7 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         // Authenticate to store the token
         authenticationManager.authenticate()
@@ -223,7 +223,7 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         authenticationManager.authenticate()
         assertEquals("Bearer first_token", authenticationManager.getAuthorizationHeaderValue())
@@ -280,7 +280,7 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returnsMany listOf(response1, response2)
+        every { transport.execute(any()) } returnsMany listOf(response1, response2)
 
         authenticationManager.authenticate()
         val firstAuthHeader = authenticationManager.getAuthorizationHeaderValue()
@@ -290,7 +290,7 @@ class BearerAuthenticationManagerTest {
 
         assertEquals("Bearer first_token", firstAuthHeader)
         assertEquals("Bearer second_token", secondAuthHeader)
-        verify(exactly = 2) { requestExecutor.execute(any()) }
+        verify(exactly = 2) { transport.execute(any()) }
     }
 
     @Test
@@ -303,13 +303,13 @@ class BearerAuthenticationManagerTest {
             .protocol(Protocol.HTTP_1_1)
             .message(Status.UNAUTHORIZED.name)
             .build()
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         val exception = assertThrows<ExpediaGroupAuthException> {
             authenticationManager.authenticate()
         }
         assertEquals("[${Status.UNAUTHORIZED.code}] Authentication failed", exception.message)
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 
     @Test
@@ -322,13 +322,13 @@ class BearerAuthenticationManagerTest {
             .message(Status.INTERNAL_SERVER_ERROR.name)
             .body(null)
             .build()
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         assertThrows<ExpediaGroupResponseParsingException> {
             authenticationManager.authenticate()
         }
 
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 
     @Test
@@ -368,7 +368,7 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returnsMany listOf(response1, response2)
+        every { transport.execute(any()) } returnsMany listOf(response1, response2)
 
         authenticationManager.authenticate()
         assertEquals("Bearer first_token", authenticationManager.getAuthorizationHeaderValue())
@@ -379,7 +379,7 @@ class BearerAuthenticationManagerTest {
         authenticationManager.authenticate()
         assertEquals("Bearer second_token", authenticationManager.getAuthorizationHeaderValue())
 
-        verify(exactly = 2) { requestExecutor.execute(any()) }
+        verify(exactly = 2) { transport.execute(any()) }
     }
 
     @Test
@@ -402,7 +402,7 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build() // Token expires immediately
 
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         authenticationManager.authenticate()
         val isAboutToExpire = authenticationManager.isTokenAboutToExpire()
@@ -429,13 +429,13 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build()
 
-        every { requestExecutor.execute(any()) } returns response
+        every { transport.execute(any()) } returns response
 
         val exception = assertThrows<ExpediaGroupResponseParsingException> {
             authenticationManager.authenticate()
         }
         assertTrue(exception.message!!.contains("Failed to parse"))
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 
     @Test
@@ -458,7 +458,7 @@ class BearerAuthenticationManagerTest {
             .request(Request.builder().url("http://localhost").method(Method.POST).build())
             .build() // Token expires immediately
 
-        every { requestExecutor.execute(any()) } answers {
+        every { transport.execute(any()) } answers {
             Thread.sleep(500) // Simulate delay
             response
         }
@@ -471,6 +471,6 @@ class BearerAuthenticationManagerTest {
             future.get(1, TimeUnit.SECONDS)
         }
         assertEquals("Bearer first_token", authenticationManager.getAuthorizationHeaderValue())
-        verify(exactly = 1) { requestExecutor.execute(any()) }
+        verify(exactly = 1) { transport.execute(any()) }
     }
 }

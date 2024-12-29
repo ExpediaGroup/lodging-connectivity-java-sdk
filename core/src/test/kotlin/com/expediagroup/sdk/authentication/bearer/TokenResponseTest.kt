@@ -1,13 +1,13 @@
-package com.expediagroup.sdk.core.authentication.bearer
+package com.expediagroup.sdk.authentication.bearer
 
-import com.expediagroup.sdk.core.http.CommonMediaTypes
-import com.expediagroup.sdk.core.http.Method
-import com.expediagroup.sdk.core.http.Protocol
-import com.expediagroup.sdk.core.http.Request
-import com.expediagroup.sdk.core.http.Response
-import com.expediagroup.sdk.core.http.ResponseBody
-import com.expediagroup.sdk.core.http.Status
-import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupResponseParsingException
+import com.expediagroup.sdk.exception.client.ExpediaGroupResponseParsingException
+import com.expediagroup.sdk.http.CommonMediaTypes
+import com.expediagroup.sdk.http.Method
+import com.expediagroup.sdk.http.Protocol
+import com.expediagroup.sdk.http.Request
+import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.http.ResponseBody
+import com.expediagroup.sdk.http.Status
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -16,17 +16,18 @@ import org.junit.jupiter.api.assertThrows
 class TokenResponseTest {
     @Test
     fun `should map to the expected api response`() {
-        val accessToken: String = "token"
-        val expiresIn: Long = 3600L
+        val accessToken = "token"
+        val expiresIn = 3600L
 
-        var available: Int? = null
+        var available: Int?
         val tokenResponse = TokenResponse.parse(
             Response.builder()
                 .body(
                     ResponseBody.create(
-                        """{ "access_token": "$accessToken", "expires_in": $expiresIn }""".toByteArray().inputStream().also {
-                            available = it.available()
-                        },
+                        """{ "access_token": "$accessToken", "expires_in": $expiresIn }""".toByteArray().inputStream()
+                            .also {
+                                available = it.available()
+                            },
                         CommonMediaTypes.APPLICATION_FORM_URLENCODED,
                         available!!.toLong()
                     )
@@ -58,13 +59,14 @@ class TokenResponseTest {
 
     @Test
     fun `parse should throw ExpediaGroupResponseParsingException if access_token or expiresIn are missing`() {
-        var available: Int? = null
+        var available: Int?
         assertThrows<ExpediaGroupResponseParsingException> {
             TokenResponse.parse(
                 Response.builder()
                     .body(
                         ResponseBody.create(
-                            """{ "expires_in": 3600 }""".toByteArray().inputStream().also { available = it.available() },
+                            """{ "expires_in": 3600 }""".toByteArray().inputStream()
+                                .also { available = it.available() },
                             CommonMediaTypes.APPLICATION_FORM_URLENCODED,
                             available!!.toLong()
                         )
@@ -80,16 +82,17 @@ class TokenResponseTest {
 
     @Test
     fun `parse should ignore extra fields as long as access_token and expires_in are present`() {
-        val accessToken: String = "token"
-        val expiresIn: Long = 3600L
-        var available: Int? = null
+        val accessToken = "token"
+        val expiresIn = 3600L
+        var available: Int?
         val tokenResponse = TokenResponse.parse(
             Response.builder()
                 .body(
                     ResponseBody.create(
-                        """{ "access_token": "$accessToken", "expires_in": $expiresIn, "extra": "random" }""".toByteArray().inputStream().also {
-                            available = it.available()
-                        },
+                        """{ "access_token": "$accessToken", "expires_in": $expiresIn, "extra": "random" }""".toByteArray()
+                            .inputStream().also {
+                                available = it.available()
+                            },
                         CommonMediaTypes.APPLICATION_FORM_URLENCODED,
                         available!!.toLong()
                     )
