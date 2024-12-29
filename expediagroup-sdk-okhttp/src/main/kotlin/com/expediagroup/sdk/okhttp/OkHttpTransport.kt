@@ -30,8 +30,8 @@ import okhttp3.OkHttpClient
  *
  * @property okHttpClient The OkHttp client used to execute HTTP requests.
  */
-class OkHttpTransport : Transport {
-    private val okHttpClient: OkHttpClient = BaseOkHttpClient.instance
+class OkHttpTransport(okHttpClient: OkHttpClient? = null) : Transport {
+    private val okHttpClient: OkHttpClient = okHttpClient ?: BaseOkHttpClient.instance
 
     /**
      * Executes the given SDK request using OkHttp and returns the SDK response.

@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.core.okhttp
+package com.expediagroup.sdk.okhttp
 
 import java.util.concurrent.TimeUnit
 import okhttp3.ConnectionPool
