@@ -21,7 +21,7 @@ import com.expediagroup.sdk.http.Response
 import com.expediagroup.sdk.loader.AsyncTransportLoader
 import java.util.concurrent.CompletableFuture
 
-abstract class AbstractAsyncTransportPipeline(asyncTransport: AsyncTransport? = null) : Disposable {
+abstract class AbstractAsyncRequestExecutor(asyncTransport: AsyncTransport? = null) : Disposable {
     protected val asyncTransport: AsyncTransport = asyncTransport ?: AsyncTransportLoader.load()
 
     abstract val executionPipeline: ExecutionPipeline

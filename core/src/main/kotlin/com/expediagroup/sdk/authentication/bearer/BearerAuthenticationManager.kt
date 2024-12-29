@@ -25,7 +25,7 @@ import com.expediagroup.sdk.http.Response
 import com.expediagroup.sdk.logging.RequestLoggingStep
 import com.expediagroup.sdk.logging.ResponseLoggingStep
 import com.expediagroup.sdk.logging.common.LoggerDecorator
-import com.expediagroup.sdk.transport.AbstractTransportPipeline
+import com.expediagroup.sdk.transport.AbstractRequestExecutor
 import com.expediagroup.sdk.transport.ExecutionPipeline
 import com.expediagroup.sdk.transport.Transport
 import org.slf4j.LoggerFactory
@@ -47,7 +47,7 @@ class BearerAuthenticationManager(
     private val transport: Transport
 ) : AbstractBearerAuthenticationManager(authUrl, credentials) {
 
-    private val requestExecutor = object : AbstractTransportPipeline(transport) {
+    private val requestExecutor = object : AbstractRequestExecutor(transport) {
         override val executionPipeline: ExecutionPipeline = ExecutionPipeline(
             requestPipeline = listOf(
                 RequestHeadersStep(),

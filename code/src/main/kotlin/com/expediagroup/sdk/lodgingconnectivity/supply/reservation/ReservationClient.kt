@@ -20,7 +20,7 @@ import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.common.TransportPipeline
+import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
@@ -64,7 +64,7 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getSupplyApiEndpoint(config.environment)
 
     override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
-        transportPipeline = TransportPipeline(config, apiEndpoint),
+        requestExecutor = RequestExecutor(config, apiEndpoint),
         serverUrl = apiEndpoint.endpoint
     )
 

@@ -10,7 +10,7 @@ import io.mockk.mockkConstructor
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-class AbstractTransportPipelineTest {
+class AbstractRequestExecutorTest {
     private val mockTransport = mockk<Transport>(relaxed = true)
     private val mockInterceptor1 = mockk<Interceptor>(relaxed = true)
     private val mockInterceptor2 = mockk<Interceptor>(relaxed = true)

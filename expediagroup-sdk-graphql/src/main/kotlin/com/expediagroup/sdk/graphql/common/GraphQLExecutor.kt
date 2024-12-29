@@ -18,7 +18,7 @@ package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.transport.AbstractTransportPipeline
+import com.expediagroup.sdk.transport.AbstractRequestExecutor
 import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.Error
@@ -31,13 +31,13 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
  *
  * By default - this implementation is used internally in all higher-level clients
  *
- * @param transportPipeline used for HTTP request execution within the SDK
+ * @param requestExecutor used for HTTP request execution within the SDK
  * @param serverUrl GraphQL server URL
  */
 class GraphQLExecutor(
-    transportPipeline: AbstractTransportPipeline,
+    requestExecutor: AbstractRequestExecutor,
     private val serverUrl: String
-) : AbstractGraphQLExecutor(transportPipeline) {
+) : AbstractGraphQLExecutor(requestExecutor) {
 
     /**
      * Executes a GraphQL operation and returns a [RawResponse] containing the complete data and any errors.

@@ -8,7 +8,7 @@ import com.expediagroup.sdk.http.Response
 import com.expediagroup.sdk.logging.RequestLoggingStep
 import com.expediagroup.sdk.logging.ResponseLoggingStep
 import com.expediagroup.sdk.logging.common.LoggerDecorator
-import com.expediagroup.sdk.transport.AbstractAsyncTransportPipeline
+import com.expediagroup.sdk.transport.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.transport.AsyncTransport
 import com.expediagroup.sdk.transport.ExecutionPipeline
 import java.util.concurrent.CompletableFuture
@@ -20,7 +20,7 @@ class BearerAuthenticationAsyncManager(
     private val asyncTransport: AsyncTransport
 ) : AbstractBearerAuthenticationManager(authUrl, credentials) {
 
-    private val requestExecutor = object : AbstractAsyncTransportPipeline(asyncTransport) {
+    private val requestExecutor = object : AbstractAsyncRequestExecutor(asyncTransport) {
         override val executionPipeline: ExecutionPipeline = ExecutionPipeline(
             requestPipeline = listOf(
                 RequestHeadersStep(),

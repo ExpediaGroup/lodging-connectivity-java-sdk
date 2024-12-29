@@ -18,7 +18,7 @@ package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.transport.AbstractAsyncTransportPipeline
+import com.expediagroup.sdk.transport.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.Error
@@ -26,7 +26,7 @@ import com.expediagroup.sdk.graphql.model.response.RawResponse
 import java.util.concurrent.CompletableFuture
 
 class AsyncGraphQLExecutor(
-    asyncRequestExecutor: AbstractAsyncTransportPipeline,
+    asyncRequestExecutor: AbstractAsyncRequestExecutor,
     private val serverUrl: String
 ) : AbstractAsyncGraphQLExecutor(asyncRequestExecutor) {
 

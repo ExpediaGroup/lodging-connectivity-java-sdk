@@ -9,14 +9,14 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguratio
 import com.expediagroup.sdk.logging.RequestLoggingStep
 import com.expediagroup.sdk.logging.ResponseLoggingStep
 import com.expediagroup.sdk.logging.common.LoggerDecorator
-import com.expediagroup.sdk.transport.AbstractTransportPipeline
+import com.expediagroup.sdk.transport.AbstractRequestExecutor
 import com.expediagroup.sdk.transport.ExecutionPipeline
 import org.slf4j.LoggerFactory
 
-class TransportPipeline(
+class RequestExecutor(
     configuration: ClientConfiguration,
     apiEndpoint: ApiEndpoint
-) : AbstractTransportPipeline(configuration.transport) {
+) : AbstractRequestExecutor(configuration.transport) {
 
     private val authManager = BearerAuthenticationManager(
         authUrl = apiEndpoint.authEndpoint,

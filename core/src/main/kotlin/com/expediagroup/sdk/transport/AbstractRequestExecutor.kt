@@ -53,7 +53,7 @@ import com.expediagroup.sdk.loader.TransportLoader
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class AbstractTransportPipeline(transport: Transport? = null) : Disposable {
+abstract class AbstractRequestExecutor(transport: Transport? = null) : Disposable {
     protected val transport: Transport = transport ?: TransportLoader.load()
 
     abstract val executionPipeline: ExecutionPipeline
