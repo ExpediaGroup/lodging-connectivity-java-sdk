@@ -17,16 +17,15 @@
 package com.expediagroup.sdk.authentication.bearer
 
 import com.expediagroup.sdk.authentication.common.Credentials
-import com.expediagroup.sdk.pipeline.step.RequestHeadersStep
-import com.expediagroup.sdk.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.logging.common.LoggerDecorator
+import com.expediagroup.sdk.pipeline.ExecutionPipeline
+import com.expediagroup.sdk.pipeline.step.RequestHeadersStep
 import com.expediagroup.sdk.pipeline.step.RequestLoggingStep
 import com.expediagroup.sdk.pipeline.step.ResponseLoggingStep
-import com.expediagroup.sdk.logging.common.LoggerDecorator
 import com.expediagroup.sdk.transport.AbstractRequestExecutor
-import com.expediagroup.sdk.pipeline.ExecutionPipeline
 import com.expediagroup.sdk.transport.Transport
 import org.slf4j.LoggerFactory
 
@@ -66,19 +65,22 @@ class BearerAuthenticationManager(
      * stores the token for future use.
      *
      * @throws ExpediaGroupAuthException If the authentication request fails.
-     * @throws ExpediaGroupResponseParsingException If the response cannot be parsed.
      */
     override fun authenticate() {
-        clearAuthentication()
-            .let {
-                buildAuthenticationRequest()
-            }.let {
-                executeAuthenticationRequest(it)
-            }.let {
-                TokenResponse.parse(it)
-            }.also {
-                storeToken(it)
-            }
+        try {
+            clearAuthentication()
+                .let {
+                    buildAuthenticationRequest()
+                }.let {
+                    executeAuthenticationRequest(it)
+                }.let {
+                    TokenResponse.parse(it)
+                }.also {
+                    storeToken(it)
+                }
+        } catch (e: Exception) {
+            throw ExpediaGroupAuthException(message = "Authentication Failed", cause = e)
+        }
     }
 
     /**
@@ -91,7 +93,7 @@ class BearerAuthenticationManager(
     private fun executeAuthenticationRequest(request: Request): Response = run {
         requestExecutor.execute(request).apply {
             if (!this.isSuccessful) {
-                throw ExpediaGroupAuthException(this.status, "Authentication failed")
+                throw throw ExpediaGroupAuthException("Received unsuccessful authentication response: [${this.status}]")
             }
         }
     }
