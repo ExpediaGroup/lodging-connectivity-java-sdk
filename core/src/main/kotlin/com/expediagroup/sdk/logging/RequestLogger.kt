@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.logging.common
+package com.expediagroup.sdk.logging
 
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.RequestBody
-import com.expediagroup.sdk.logging.common.Constant.DEFAULT_MAX_BODY_SIZE
+import com.expediagroup.sdk.logging.Constant.DEFAULT_MAX_BODY_SIZE
 import java.io.IOException
 import java.nio.charset.Charset
 import okio.Buffer

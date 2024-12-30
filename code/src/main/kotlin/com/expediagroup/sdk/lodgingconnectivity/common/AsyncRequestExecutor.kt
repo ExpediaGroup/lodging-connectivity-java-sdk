@@ -4,7 +4,7 @@ import com.expediagroup.sdk.authentication.bearer.BearerAuthenticationAsyncManag
 import com.expediagroup.sdk.authentication.common.Credentials
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.AsyncClientConfiguration
-import com.expediagroup.sdk.logging.common.LoggerDecorator
+import com.expediagroup.sdk.logging.LoggerDecorator
 import com.expediagroup.sdk.pipeline.ExecutionPipeline
 import com.expediagroup.sdk.pipeline.step.BearerAuthenticationStep
 import com.expediagroup.sdk.pipeline.step.RequestHeadersStep

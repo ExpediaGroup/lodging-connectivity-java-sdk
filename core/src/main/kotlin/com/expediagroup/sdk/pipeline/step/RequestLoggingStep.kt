@@ -2,8 +2,8 @@ package com.expediagroup.sdk.pipeline.step
 
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.RequestBody
-import com.expediagroup.sdk.logging.common.LoggerDecorator
-import com.expediagroup.sdk.logging.common.RequestLogger
+import com.expediagroup.sdk.logging.LoggerDecorator
+import com.expediagroup.sdk.logging.RequestLogger
 import com.expediagroup.sdk.pipeline.RequestPipelineStep
 import okio.Buffer
 

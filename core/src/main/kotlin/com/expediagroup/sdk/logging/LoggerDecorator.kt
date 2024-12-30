@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.logging.common
+package com.expediagroup.sdk.logging
 
 import org.slf4j.Logger
 

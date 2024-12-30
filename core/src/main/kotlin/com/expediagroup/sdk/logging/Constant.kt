@@ -1,4 +1,4 @@
-package com.expediagroup.sdk.logging.common
+package com.expediagroup.sdk.logging
 
 object Constant {
     const val NEWLINE = "\n"
