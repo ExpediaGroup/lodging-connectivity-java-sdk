@@ -31,33 +31,36 @@ import okhttp3.OkHttpClient
  * - Use `getInstance(configuration)` to create a configured `OkHttpClient` instance
  *   with specific settings provided via the `OkHttpClientConfiguration` object.
  */
-object BaseOkHttpClient {
-    private val configuration: OkHttpClientConfiguration = OkHttpTransportConfigurator.get()
+internal object BaseOkHttpClient {
 
-    val instance: OkHttpClient = OkHttpClient.Builder().apply {
-        configuration.callTimeout?.let {
-            callTimeout(Duration.ofMillis(it.toLong()))
-        }
-        configuration.connectTimeout?.let {
-            connectTimeout(Duration.ofMillis(it.toLong()))
-        }
-        configuration.readTimeout?.let {
-            readTimeout(Duration.ofMillis(it.toLong()))
-        }
-        configuration.writeTimeout?.let {
-            writeTimeout(Duration.ofMillis(it.toLong()))
-        }
-        configuration.connectionPool?.let {
-            connectionPool(it)
-        }
-        configuration.retryOnConnectionFailure?.let {
-            retryOnConnectionFailure(it)
-        }
-        configuration.interceptors?.forEach {
-            addInterceptor(it)
-        }
-        configuration.networkInterceptors?.forEach {
-            addNetworkInterceptor(it)
-        }
-    }.build()
+    val instance by lazy {
+        val configuration: OkHttpClientConfiguration = OkHttpTransportConfigurator.get()
+
+        OkHttpClient.Builder().apply {
+            configuration.callTimeout?.let {
+                callTimeout(Duration.ofMillis(it.toLong()))
+            }
+            configuration.connectTimeout?.let {
+                connectTimeout(Duration.ofMillis(it.toLong()))
+            }
+            configuration.readTimeout?.let {
+                readTimeout(Duration.ofMillis(it.toLong()))
+            }
+            configuration.writeTimeout?.let {
+                writeTimeout(Duration.ofMillis(it.toLong()))
+            }
+            configuration.connectionPool?.let {
+                connectionPool(it)
+            }
+            configuration.retryOnConnectionFailure?.let {
+                retryOnConnectionFailure(it)
+            }
+            configuration.interceptors?.forEach {
+                addInterceptor(it)
+            }
+            configuration.networkInterceptors?.forEach {
+                addNetworkInterceptor(it)
+            }
+        }.build()
+    }
 }
