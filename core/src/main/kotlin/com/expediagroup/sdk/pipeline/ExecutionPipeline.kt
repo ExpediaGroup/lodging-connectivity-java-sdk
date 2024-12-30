@@ -11,24 +11,11 @@ class ExecutionPipeline(
     private val requestPipeline: List<RequestPipelineStep>,
     private val responsePipeline: List<ResponsePipelineStep>
 ) {
-
     fun startRequestPipeline(request: Request): Request {
-        var req = request
-
-        requestPipeline.forEach {
-            req = it.invoke(req)
-        }
-
-        return req
+        return requestPipeline.fold(request) { req, step -> step(req) }
     }
 
     fun startResponsePipeline(response: Response): Response {
-        var res = response
-
-        responsePipeline.forEach {
-            res = it.invoke(res)
-        }
-
-        return res
+        return responsePipeline.fold(response) { res, step -> step(res) }
     }
 }
