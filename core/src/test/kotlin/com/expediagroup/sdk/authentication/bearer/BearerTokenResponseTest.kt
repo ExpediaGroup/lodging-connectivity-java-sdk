@@ -2,6 +2,7 @@ package com.expediagroup.sdk.authentication.bearer
 
 import com.expediagroup.sdk.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.http.CommonMediaTypes
+import com.expediagroup.sdk.http.MediaType
 import com.expediagroup.sdk.http.Method
 import com.expediagroup.sdk.http.Protocol
 import com.expediagroup.sdk.http.Request
@@ -41,6 +42,49 @@ class BearerTokenResponseTest {
 
         assertEquals(bearerTokenResponse.accessToken, accessToken)
         assertEquals(bearerTokenResponse.expiresIn, expiresIn)
+    }
+
+    @Test
+    fun `should map to the expected api response with the response media type charset`() {
+        // Given
+        val accessToken = "token"
+        val responseString = """{ "access_token": "$accessToken", "expires_in": 3600 }"""
+
+        val bearerTokenResponse = BearerTokenResponse.parse(
+            Response.builder()
+                .body(
+                    ResponseBody.create(
+                        responseString.toByteArray().inputStream(),
+                        mediaType = MediaType.parse("application/json; charset=utf-8")
+                    )
+                )
+                .status(Status.ACCEPTED)
+                .protocol(Protocol.HTTP_1_1)
+                .request(Request.builder().url("http://localhost").method(Method.POST).build())
+                .build()
+        )
+
+        assertEquals(bearerTokenResponse.accessToken, accessToken)
+        assertEquals(bearerTokenResponse.expiresIn, 3600L)
+    }
+
+    @Test
+    fun `should map to the expected api response without media type and default to utf8`() {
+        // Given
+        val accessToken = "token"
+        val responseString = """{ "access_token": "$accessToken", "expires_in": 3600 }"""
+
+        val bearerTokenResponse = BearerTokenResponse.parse(
+            Response.builder()
+                .body(ResponseBody.create(responseString.toByteArray().inputStream(), mediaType = null))
+                .status(Status.ACCEPTED)
+                .protocol(Protocol.HTTP_1_1)
+                .request(Request.builder().url("http://localhost").method(Method.POST).build())
+                .build()
+        )
+
+        assertEquals(bearerTokenResponse.accessToken, accessToken)
+        assertEquals(bearerTokenResponse.expiresIn, 3600L)
     }
 
     @Test
