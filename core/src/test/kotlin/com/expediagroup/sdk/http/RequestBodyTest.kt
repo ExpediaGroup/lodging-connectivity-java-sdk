@@ -83,6 +83,42 @@ class RequestBodyTest {
     }
 
     @Test
+    fun `should create RequestBody from ByteString with valid data`() {
+        // Given
+        val content = "Hello World"
+        val source = Buffer().writeUtf8(content)
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
+        val contentLength = content.toByteArray().size.toLong()
+        val requestBody = RequestBody.create(source.snapshot(), mediaType, contentLength)
+
+        // When
+        val buffer = Buffer()
+        requestBody.writeTo(buffer)
+
+        // Expect
+        assertEquals(mediaType, requestBody.mediaType())
+        assertEquals(contentLength, requestBody.contentLength())
+        assertEquals(content, buffer.readUtf8())
+    }
+
+    @Test
+    fun `should create RequestBody from ByteString with empty data`() {
+        // Given
+        val source = Buffer()
+        val mediaType = CommonMediaTypes.TEXT_PLAIN
+        val requestBody = RequestBody.create(source.snapshot(), mediaType, 0L)
+
+        // When
+        val buffer = Buffer()
+        requestBody.writeTo(buffer)
+
+        // Expect
+        assertEquals(mediaType, requestBody.mediaType())
+        assertEquals(0L, requestBody.contentLength())
+        assertTrue(buffer.size == 0L)
+    }
+
+    @Test
     fun `should be extendable for custom usages`() {
         val requestBody = object : RequestBody() {
             val source = Buffer()

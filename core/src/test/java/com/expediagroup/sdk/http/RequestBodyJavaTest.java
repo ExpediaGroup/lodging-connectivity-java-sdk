@@ -47,6 +47,25 @@ public class RequestBodyJavaTest {
     }
 
     @Test
+    @DisplayName("should access RequestBody.create as static method with ByteString only")
+    public void shouldCreateRequestBodyFromByteStringOnly() {
+        String content = "Hello World";
+
+        try (Buffer source = new Buffer().writeUtf8(content)) {
+            RequestBody.create(source.snapshot());
+        }
+    }
+
+    @Test
+    @DisplayName("should access RequestBody.create as static method with ByteString, media type, content length")
+    public void shouldCreateRequestBodyFromByteStringAndMediaTypeAndContentLength() {
+        String content = "Hello World";
+        try (Buffer source = new Buffer().writeUtf8(content)) {
+            RequestBody.create(source.snapshot(), CommonMediaTypes.TEXT_PLAIN, content.getBytes().length);
+        }
+    }
+
+    @Test
     @DisplayName("should access RequestBody.create as static method with map data as form")
     public void shouldCreateRequestBodyFromMapDataAsFormData() {
         HashMap<String, String> map = new HashMap<String, String>() {{
