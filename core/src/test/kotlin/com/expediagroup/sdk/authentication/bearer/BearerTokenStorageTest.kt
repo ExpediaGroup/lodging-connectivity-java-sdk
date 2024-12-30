@@ -2,13 +2,6 @@ package com.expediagroup.sdk.authentication.bearer
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
@@ -16,8 +9,38 @@ import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertSame
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 
 class BearerTokenStorageTest {
+
+    @Test
+    fun `toString should not expose sensitive data`() {
+        // Given
+        val mockClock = mockk<Clock> {
+            every { instant() } returns Instant.parse("2024-01-01T12:00:00Z")
+            every { zone } returns ZoneOffset.UTC
+        }
+        val tokenStorage = BearerTokenStorage.create("standard_token", 3600, clock = mockClock)
+
+        // When
+        val stringToken = tokenStorage.toString()
+
+        // Expect
+        val expected = "BearerTokenStorage(expiresIn=3600, expirationBufferSeconds=60, expiryInstant=${
+            Instant.now(mockClock).plusSeconds(3600)
+        })"
+        assertEquals(expected, stringToken)
+    }
 
     @Nested
     inner class TokenCreationTests {
