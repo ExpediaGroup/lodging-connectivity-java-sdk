@@ -64,7 +64,7 @@ class BearerAuthenticationAsyncManager(
         try {
             clearAuthentication()
             executeAuthenticationRequest(buildAuthenticationRequest())
-                .thenApply { TokenResponse.parse(it) }
+                .thenApply { BearerTokenResponse.parse(it) }
                 .thenAccept { storeToken(it) }
                 .join()
         } catch (e: Exception) {

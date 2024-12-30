@@ -13,14 +13,14 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 
-class TokenResponseTest {
+class BearerTokenResponseTest {
     @Test
     fun `should map to the expected api response`() {
         val accessToken = "token"
         val expiresIn = 3600L
 
         var available: Int?
-        val tokenResponse = TokenResponse.parse(
+        val bearerTokenResponse = BearerTokenResponse.parse(
             Response.builder()
                 .body(
                     ResponseBody.create(
@@ -39,14 +39,14 @@ class TokenResponseTest {
                 .build()
         )
 
-        assertEquals(tokenResponse.accessToken, accessToken)
-        assertEquals(tokenResponse.expiresIn, expiresIn)
+        assertEquals(bearerTokenResponse.accessToken, accessToken)
+        assertEquals(bearerTokenResponse.expiresIn, expiresIn)
     }
 
     @Test
     fun `parse should throw ExpediaGroupResponseParsingException in case of unsuccessful response`() {
         assertThrows<ExpediaGroupResponseParsingException> {
-            TokenResponse.parse(
+            BearerTokenResponse.parse(
                 Response.builder()
                     .status(Status.INTERNAL_SERVER_ERROR)
                     .protocol(Protocol.HTTP_1_1)
@@ -61,7 +61,7 @@ class TokenResponseTest {
     fun `parse should throw ExpediaGroupResponseParsingException if access_token or expiresIn are missing`() {
         var available: Int?
         assertThrows<ExpediaGroupResponseParsingException> {
-            TokenResponse.parse(
+            BearerTokenResponse.parse(
                 Response.builder()
                     .body(
                         ResponseBody.create(
@@ -85,7 +85,7 @@ class TokenResponseTest {
         val accessToken = "token"
         val expiresIn = 3600L
         var available: Int?
-        val tokenResponse = TokenResponse.parse(
+        val bearerTokenResponse = BearerTokenResponse.parse(
             Response.builder()
                 .body(
                     ResponseBody.create(
@@ -104,7 +104,7 @@ class TokenResponseTest {
                 .build()
         )
 
-        assertEquals(tokenResponse.accessToken, accessToken)
-        assertEquals(tokenResponse.expiresIn, expiresIn)
+        assertEquals(bearerTokenResponse.accessToken, accessToken)
+        assertEquals(bearerTokenResponse.expiresIn, expiresIn)
     }
 }

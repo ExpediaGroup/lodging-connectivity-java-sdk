@@ -74,7 +74,7 @@ class BearerAuthenticationManager(
                 }.let {
                     executeAuthenticationRequest(it)
                 }.let {
-                    TokenResponse.parse(it)
+                    BearerTokenResponse.parse(it)
                 }.also {
                     storeToken(it)
                 }

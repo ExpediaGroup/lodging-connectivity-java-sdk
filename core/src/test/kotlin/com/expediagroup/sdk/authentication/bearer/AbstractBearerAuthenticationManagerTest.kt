@@ -29,8 +29,8 @@ class AbstractBearerAuthenticationManagerTest {
     @Test
     fun `should store and retrieve token correctly`() {
         // Given
-        val tokenResponse = TokenResponse("dummyToken", 3600)
-        authManager.storeToken(tokenResponse)
+        val bearerTokenResponse = BearerTokenResponse("dummyToken", 3600)
+        authManager.storeToken(bearerTokenResponse)
 
         // When
         val header = authManager.getAuthorizationHeaderValue()
@@ -43,8 +43,8 @@ class AbstractBearerAuthenticationManagerTest {
     fun `should detect token about to expire`() {
         // Given
         authManager = TestBearerAuthenticationManager(authUrl, credentials)
-        val tokenResponse = TokenResponse("dummyToken", 10)
-        authManager.storeToken(tokenResponse)
+        val bearerTokenResponse = BearerTokenResponse("dummyToken", 10)
+        authManager.storeToken(bearerTokenResponse)
 
         // When
         val isAboutToExpire = authManager.isTokenAboutToExpire()
@@ -55,8 +55,8 @@ class AbstractBearerAuthenticationManagerTest {
 
     @Test
     fun `should clear authentication`() {
-        val tokenResponse = TokenResponse("dummyToken", 3600)
-        authManager.storeToken(tokenResponse)
+        val bearerTokenResponse = BearerTokenResponse("dummyToken", 3600)
+        authManager.storeToken(bearerTokenResponse)
 
         // When
         authManager.clearAuthentication()

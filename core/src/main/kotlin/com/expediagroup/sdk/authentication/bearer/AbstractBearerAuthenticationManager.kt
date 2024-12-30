@@ -81,12 +81,12 @@ abstract class AbstractBearerAuthenticationManager(
     /**
      * Stores the retrieved token in internal storage for subsequent use.
      *
-     * @param tokenResponse The [TokenResponse] containing the token and its expiration time.
+     * @param bearerTokenResponse The [BearerTokenResponse] containing the token and its expiration time.
      */
-    fun storeToken(tokenResponse: TokenResponse) = run {
+    fun storeToken(bearerTokenResponse: BearerTokenResponse) = run {
         bearerTokenStorage = BearerTokenStorage.create(
-            accessToken = tokenResponse.accessToken,
-            expiresIn = tokenResponse.expiresIn
+            accessToken = bearerTokenResponse.accessToken,
+            expiresIn = bearerTokenResponse.expiresIn
         )
     }
 }

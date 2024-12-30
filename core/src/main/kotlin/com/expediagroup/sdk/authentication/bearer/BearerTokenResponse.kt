@@ -35,7 +35,7 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  * @param expiresIn The time in seconds until the token expires, starting from when it was issued.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class TokenResponse(
+data class BearerTokenResponse(
     @JsonProperty("access_token") val accessToken: String,
     @JsonProperty("expires_in") val expiresIn: Long
 ) {
@@ -48,10 +48,10 @@ data class TokenResponse(
          * Parses the response from the authentication server to extract token details.
          *
          * @param response The [Response] from the authentication server.
-         * @return A [TokenResponse] object containing the token and its metadata.
+         * @return A [BearerTokenResponse] object containing the token and its metadata.
          * @throws ExpediaGroupResponseParsingException If the response cannot be parsed.
          */
-        fun parse(response: Response): TokenResponse {
+        fun parse(response: Response): BearerTokenResponse {
             val responseBody = response.body.getOrThrow {
                 ExpediaGroupResponseParsingException("Authenticate response body is empty or cannot be parsed")
             }
@@ -61,7 +61,7 @@ data class TokenResponse(
             }
 
             return try {
-                objectMapper.readValue(responseString, TokenResponse::class.java)
+                objectMapper.readValue(responseString, BearerTokenResponse::class.java)
             } catch (e: Exception) {
                 throw ExpediaGroupResponseParsingException("Failed to parse authentication response", e)
             }
