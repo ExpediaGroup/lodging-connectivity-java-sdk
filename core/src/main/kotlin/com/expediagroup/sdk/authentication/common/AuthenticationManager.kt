@@ -16,9 +16,7 @@
 
 package com.expediagroup.sdk.authentication.common
 
-import com.expediagroup.sdk.exception.client.ExpediaGroupResponseParsingException
 import com.expediagroup.sdk.exception.service.ExpediaGroupAuthException
-import com.expediagroup.sdk.exception.service.ExpediaGroupNetworkException
 
 /**
  * Defines the contract for managing authentication within the SDK.
@@ -35,8 +33,6 @@ interface AuthenticationManager {
      * authentication server, handling the response, and storing the retrieved credentials or tokens for future use.
      *
      * @throws ExpediaGroupAuthException If authentication fails due to invalid credentials or server errors
-     * @throws ExpediaGroupResponseParsingException If the authentication response cannot be parsed
-     * @throws ExpediaGroupNetworkException If a network error occurs during authentication
      */
     fun authenticate()
 

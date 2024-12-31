@@ -29,7 +29,6 @@ import com.expediagroup.sdk.transport.AbstractRequestExecutor
 import com.expediagroup.sdk.transport.Transport
 import org.slf4j.LoggerFactory
 
-
 /**
  * Manages bearer token authentication for HTTP requests.
  *
