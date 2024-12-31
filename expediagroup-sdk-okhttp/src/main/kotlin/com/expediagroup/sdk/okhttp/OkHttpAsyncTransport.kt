@@ -29,6 +29,10 @@ class OkHttpAsyncTransport(
     private val okHttpClient: OkHttpClient
 ) : AsyncTransport {
 
+    constructor() : this(BaseOkHttpClient.getInstance())
+
+    constructor(configuration: OkHttpClientConfiguration) : this(BaseOkHttpClient.getConfiguredInstance(configuration))
+
     override fun execute(request: Request): CompletableFuture<Response> {
         val future = CompletableFuture<Response>()
 
