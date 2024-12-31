@@ -16,10 +16,12 @@
 
 package com.expediagroup.sdk.transport
 
+import com.expediagroup.sdk.common.getOrThrow
+import com.expediagroup.sdk.exception.client.ExpediaGroupConfigurationException
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.loader.TransportLoader
 import com.expediagroup.sdk.pipeline.ExecutionPipeline
+import java.util.ServiceLoader
 
 /**
  * Abstract base class for processing HTTP requests within the SDK.
@@ -27,38 +29,50 @@ import com.expediagroup.sdk.pipeline.ExecutionPipeline
  * This class serves as the main entry point for executing HTTP requests through the SDK core. **Each product-SDK is
  * expected to have its own implementation of this abstract class.**
  *
- * It wraps and enhances the injected [Transport] functionality by:
+ * It wraps and enhances the request and response processing by:
  *
- * 1. Applying request/response interceptors
- * 2. Enforcing SDK-specific policies and rules (e.g. authentication)
+ * 1. Applying request/response pipeline steps
+ * 2. Enforcing SDK-specific policies and rules (e.g., authentication)
  * 3. Providing common error handling and retry logic (if needed)
  * 4. Managing request/response lifecycle and transformation
  *
- * Implementations should:
- * - Define the order and types of interceptors to be applied
- * - Implement any SDK-specific error handling or retry logic
- * - Handle request/response transformation and validation
+ * Implementations should define the order and types of steps to be applied in the request and response pipelines. The
+ * execution logic is already handled.
+ *
+ * ### Execution Pipeline Integration:
+ * The [ExecutionPipeline] manages the request and response processing pipelines, allowing flexible and extensible
+ * handling of request and response transformations. The pipeline is composed of ordered steps that are applied
+ * sequentially.
  *
  * ### Usage Example:
  * ```
- * class RequestExecutor(transport: Transport) : AbstractRequestExecutor(transport) {
- *     override val interceptors = listOf(
- *         AuthenticationInterceptor(),
- *         LoggingInterceptor(),
- *         RetryInterceptor()
+ * class RequestExecutor : AbstractRequestExecutor() {
+ *     override val executionPipeline = ExecutionPipeline(
+ *         requestPipeline = listOf(
+ *             AuthenticationStep(),
+ *             RequestLoggingStep()
+ *         ),
+ *         responsePipeline = listOf(
+ *             ResponseLoggingStep()
+ *         )
  *     )
- *
- *     override fun execute(request: Request) = executeWithInterceptors(request)
  * }
  * ```
- *
- * @param transport The transport implementation to use for executing requests
  */
 abstract class AbstractRequestExecutor(transport: Transport? = null) : Disposable {
-    protected val transport: Transport = transport ?: TransportLoader.load()
+    protected val transport: Transport = transport ?: loadTransport()
 
     abstract val executionPipeline: ExecutionPipeline
 
+    /**
+     * Executes a request through the request pipeline and processes the response through the response pipeline.
+     *
+     * The method applies all configured request pipeline steps to the incoming request, executes the request,
+     * and then applies all configured response pipeline steps to the resulting response.
+     *
+     * @param request The request to be processed through the pipelines.
+     * @return The fully processed response after all pipeline steps are applied.
+     */
     fun execute(request: Request): Response = executionPipeline
         .startRequestPipeline(request).let {
             executionPipeline.startResponsePipeline(transport.execute(it))
@@ -68,4 +82,12 @@ abstract class AbstractRequestExecutor(transport: Transport? = null) : Disposabl
      * Closes the underlying [Transport].
      */
     override fun dispose() = transport.dispose()
+
+    companion object {
+        private fun loadTransport(): Transport {
+            return ServiceLoader.load(Transport::class.java).firstOrNull().getOrThrow {
+                ExpediaGroupConfigurationException("No Transport implementation found. Please include a valid client dependency.")
+            }
+        }
+    }
 }

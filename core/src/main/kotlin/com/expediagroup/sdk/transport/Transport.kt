@@ -18,7 +18,6 @@ package com.expediagroup.sdk.transport
 
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.exception.service.ExpediaGroupNetworkException
 
 /**
  * A transport layer interface that adapts different HTTP client libraries to work with the SDK.
@@ -52,11 +51,9 @@ interface Transport : Disposable {
      * - Convert the SDK request to the HTTP client's request format
      * - Execute the request using the underlying HTTP client
      * - Convert the HTTP client's response to the SDK response format
-     * - Handle errors appropriately by throwing [ExpediaGroupNetworkException]
      *
      * @param request The SDK request to execute
      * @return The response from the server wrapped in the SDK response model
-     * @throws ExpediaGroupNetworkException If any network-related error occurs during execution
      */
     fun execute(request: Request): Response
 }
