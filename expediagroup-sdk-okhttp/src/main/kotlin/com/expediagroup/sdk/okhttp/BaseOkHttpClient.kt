@@ -33,10 +33,39 @@ import okhttp3.OkHttpClient
  */
 internal object BaseOkHttpClient {
 
-    val instance by lazy {
-        val configuration: OkHttpClientConfiguration = OkHttpTransportConfigurator.get()
+    /**
+     * Volatile storage for the singleton `OkHttpClient` instance.
+     * Ensures visibility and prevents duplicate initialization in a multithreaded environment.
+     */
+    @Volatile
+    private var instance: OkHttpClient? = null
 
-        OkHttpClient.Builder().apply {
+    /**
+     * Retrieves the singleton instance of `OkHttpClient`.
+     *
+     * This method ensures that the instance is initialized lazily and safely for concurrent access.
+     * If the instance is not yet initialized, it will create a new instance.
+     *
+     * @return The singleton instance of `OkHttpClient`.
+     */
+    fun getInstance(): OkHttpClient {
+        return instance ?: synchronized(this) {
+            instance ?: OkHttpClient().also { instance = it }
+        }
+    }
+
+    /**
+     * Creates a new `OkHttpClient` instance configured with the provided settings.
+     *
+     * This method uses the singleton instance as a base and applies the settings specified
+     * in the `OkHttpClientConfiguration` object to create a customized `OkHttpClient`.
+     *
+     * @param configuration The `OkHttpClientConfiguration` containing settings for the client.
+     * @return A new `OkHttpClient` instance configured with the specified settings.
+     */
+    fun getConfiguredInstance(configuration: OkHttpClientConfiguration): OkHttpClient = getInstance()
+        .newBuilder()
+        .apply {
             configuration.callTimeout?.let {
                 callTimeout(Duration.ofMillis(it.toLong()))
             }
@@ -62,5 +91,4 @@ internal object BaseOkHttpClient {
                 addNetworkInterceptor(it)
             }
         }.build()
-    }
 }

@@ -16,9 +16,9 @@
 
 package com.expediagroup.sdk.okhttp
 
-import com.expediagroup.sdk.transport.Transport
 import com.expediagroup.sdk.http.Request
 import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.transport.Transport
 import java.io.IOException
 import okhttp3.OkHttpClient
 
@@ -30,8 +30,11 @@ import okhttp3.OkHttpClient
  *
  * @property okHttpClient The OkHttp client used to execute HTTP requests.
  */
-class OkHttpTransport(okHttpClient: OkHttpClient? = null) : Transport {
-    private val okHttpClient: OkHttpClient = okHttpClient ?: BaseOkHttpClient.instance
+class OkHttpTransport(private val okHttpClient: OkHttpClient) : Transport {
+
+    constructor() : this(BaseOkHttpClient.getInstance())
+
+    constructor(configuration: OkHttpClientConfiguration) : this(BaseOkHttpClient.getConfiguredInstance(configuration))
 
     /**
      * Executes the given SDK request using OkHttp and returns the SDK response.

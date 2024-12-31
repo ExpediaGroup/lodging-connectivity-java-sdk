@@ -52,7 +52,8 @@ import okhttp3.Interceptor
  * @property readTimeout The timeout for reading data from a connection, in milliseconds.
  * @property writeTimeout The timeout for writing data to a connection, in milliseconds.
  */
-data class OkHttpClientConfiguration(
+@ConsistentCopyVisibility
+data class OkHttpClientConfiguration private constructor(
     val interceptors: List<Interceptor>? = null,
     val networkInterceptors: List<Interceptor>? = null,
     val connectionPool: ConnectionPool? = null,
@@ -191,5 +192,8 @@ data class OkHttpClientConfiguration(
          */
         @JvmStatic
         fun builder() = Builder()
+
+        @JvmStatic
+        fun default() = OkHttpClientConfiguration()
     }
 }
