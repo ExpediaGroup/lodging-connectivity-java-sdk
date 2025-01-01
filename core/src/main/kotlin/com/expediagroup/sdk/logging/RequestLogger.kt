@@ -28,24 +28,31 @@ internal object RequestLogger {
         logger: LoggerDecorator,
         request: Request,
         vararg tags: String,
-        maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
+        maxBodyLogSize: Long? = null
     ) {
         try {
-            val requestBodyString = request.body?.let { it.readLoggableBody(maxBodyLogSize, it.mediaType()?.charset) }
+            var logString = buildString {
+                append("URL=${request.url}, Method=${request.method}, Headers=[${request.headers}]")
+            }
 
-            buildString {
-                append("[URL=${request.url}, Method=${request.method}, Headers=[${request.headers}], Body=[${requestBodyString}]")
-            }.also {
-                logger.info(it, "Outgoing", *tags)
+            if (logger.isDebugEnabled) {
+                val requestBodyString = request.body?.let {
+                    it.readLoggableBody(maxBodyLogSize, it.mediaType()?.charset)
+                }
+
+                logString += ", Body=${requestBodyString}"
+                logger.debug(logString, "Outgoing", *tags)
+            } else {
+                logger.info(logString, "Outgoing", *tags)
             }
 
         } catch (e: Exception) {
-            logger.warn("Failed to log request")
+            logger.error("Failed to log request")
         }
     }
 
     @Throws(IOException::class)
-    private fun RequestBody.readLoggableBody(maxBodyLogSize: Long, charset: Charset?): String {
+    private fun RequestBody.readLoggableBody(maxBodyLogSize: Long?, charset: Charset?): String {
         this.mediaType().also {
             if (it === null) {
                 return "Request body of unknown media type cannot be logged"
@@ -57,7 +64,7 @@ internal object RequestLogger {
         }
 
         val buffer = Buffer().apply { use { writeTo(this) } }
-        val bytesToRead = minOf(maxBodyLogSize, buffer.size)
+        val bytesToRead = minOf(maxBodyLogSize ?: DEFAULT_MAX_BODY_SIZE, buffer.size)
 
         return buffer.readString(bytesToRead, charset ?: Charsets.UTF_8)
     }
