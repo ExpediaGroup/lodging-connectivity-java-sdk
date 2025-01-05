@@ -2,7 +2,7 @@ name: Code Quality Checks
 on: pull_request
 
 jobs:
-  unit-test-coverage:
+  quality-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
