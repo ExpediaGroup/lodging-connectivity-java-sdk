@@ -6,6 +6,7 @@ import com.expediagroup.sdk.core.logging.common.Constant.DEFAULT_MAX_BODY_SIZE
 import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.logging.common.RequestLogger
 import com.expediagroup.sdk.core.logging.common.ResponseLogger
+import org.slf4j.Logger
 import java.io.IOException
 import org.slf4j.LoggerFactory
 
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory
  * @param maxBodyLogSize The maximum size of the request/response body to log. Defaults to 1MB.
  */
 class LoggingInterceptor(
+    private val logger: LoggerDecorator,
     private val maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
 ) : Interceptor {
 
@@ -29,9 +31,5 @@ class LoggingInterceptor(
         ResponseLogger.log(logger, response, maxBodyLogSize = maxBodyLogSize)
 
         return response
-    }
-
-    companion object {
-        private val logger = LoggerDecorator(LoggerFactory.getLogger(this::class.java.enclosingClass))
     }
 }

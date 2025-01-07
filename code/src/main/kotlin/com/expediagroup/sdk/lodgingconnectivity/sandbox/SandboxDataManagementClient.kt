@@ -16,6 +16,8 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox
 
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
+import com.expediagroup.sdk.core.logging.masking.LogMasker
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
@@ -24,6 +26,7 @@ import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.payment.PaymentClient
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
@@ -61,6 +64,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.ge
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.getSandboxReservationsOperation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.updateSandboxReservationOperation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.SandboxReservationsPaginator
+import org.slf4j.LoggerFactory
 
 /**
  * A client for interacting with EG Lodging Connectivity Sandbox GraphQL API.
@@ -79,7 +83,7 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
     override val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
 
     override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
-        requestExecutor = RequestExecutor(config, apiEndpoint),
+        requestExecutor = RequestExecutor(config, apiEndpoint, logger),
         serverUrl = apiEndpoint.endpoint
     )
 
@@ -311,5 +315,15 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      */
     fun deleteReservations(input: DeletePropertyReservationsInput): DeleteSandboxReservationsResponse = run {
         deleteSandboxReservationsOperation(graphQLExecutor, input)
+    }
+
+    companion object {
+        @JvmStatic
+        private val logger = LoggerDecorator(
+            logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
+            masker = LogMasker(
+                globalMaskedFields = setOf("cvv", "cvv2"),
+            )
+        )
     }
 }

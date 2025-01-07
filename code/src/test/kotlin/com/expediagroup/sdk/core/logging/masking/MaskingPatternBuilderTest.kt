@@ -19,7 +19,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `generated masking patterns size is one when only global fields are passed regardless of their count`() {
             val globalFields = setOf("globalField1", "globalField2")
-            val patterns = MaskingPatternBuilder().globalFields(*globalFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().globalFields(globalFields).build()
 
             assertEquals(1, patterns.size)
         }
@@ -27,7 +27,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `passed path fields are truncated to the last two elements`() {
             val pathFields = setOf(listOf("first", "second", "third", "fourth"))
-            val patterns = MaskingPatternBuilder().pathFields(*pathFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().pathFields(pathFields).build()
 
             assertEquals(1, patterns.size)
 
@@ -41,7 +41,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `generated masking patterns size is not affected by pattern duplication caused by truncated patterns`() {
             val pathFields = setOf(listOf("second", "third"), listOf("first", "second", "third"))
-            val patterns = MaskingPatternBuilder().pathFields(*pathFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().pathFields(pathFields).build()
 
             assertEquals(1, patterns.size)
         }
@@ -49,7 +49,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `generated masking patterns size grows linearly when only path-based fields are passed`() {
             val pathFields = setOf(listOf("first", "second"), listOf("first", "second", "third"))
-            val patterns = MaskingPatternBuilder().pathFields(*pathFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().pathFields(pathFields).build()
 
             assertEquals(pathFields.size, patterns.size)
         }
@@ -60,8 +60,8 @@ class MaskingPatternBuilderTest {
             val pathFields = setOf(listOf("first", "second"), listOf("first", "second", "third"))
 
             val maskingPatterns = MaskingPatternBuilder()
-                .globalFields(*globalFields.toTypedArray())
-                .pathFields(*pathFields.toTypedArray())
+                .globalFields(globalFields)
+                .pathFields(pathFields)
                 .build()
 
             assertEquals(pathFields.size + 1, maskingPatterns.size)
@@ -70,7 +70,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `global path fields are passed to builder and consumed in masking patterns generation`() {
             val globalFields = setOf("globalField1", "globalField2")
-            val patterns = MaskingPatternBuilder().globalFields(*globalFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().globalFields(globalFields).build()
 
             assertEquals(1, patterns.size)
 
@@ -81,7 +81,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `path fields are passed to builder and consumed in masking patterns generation`() {
             val pathFields = setOf(listOf("first", "second"), listOf("first1", "second1", "third1", "as"))
-            val patterns = MaskingPatternBuilder().pathFields(*pathFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().pathFields(pathFields).build()
 
 
             assertEquals(pathFields.size, patterns.size)
@@ -101,7 +101,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `masks a field globally when a global field is passed`() {
             val globalFields = setOf("globalField1", "globalField2")
-            val patterns = MaskingPatternBuilder().globalFields(*globalFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().globalFields(globalFields).build()
 
             assertEquals(1, patterns.size)
 
@@ -130,7 +130,7 @@ class MaskingPatternBuilderTest {
         @Test
         fun `masks a field in a path when a path field is passed`() {
             val pathFields = setOf(listOf("first", "second"), listOf("first1", "second1", "third1", "as"))
-            val patterns = MaskingPatternBuilder().pathFields(*pathFields.toTypedArray()).build()
+            val patterns = MaskingPatternBuilder().pathFields(pathFields).build()
 
             assertEquals(pathFields.size, patterns.size)
 
@@ -175,8 +175,8 @@ class MaskingPatternBuilderTest {
             val pathFields = setOf(listOf("first", "second"), listOf("first1", "second1", "third1", "as"))
 
             val maskingPatterns = MaskingPatternBuilder()
-                .globalFields(*globalFields.toTypedArray())
-                .pathFields(*pathFields.toTypedArray())
+                .globalFields(globalFields)
+                .pathFields(pathFields)
                 .build()
 
             assertEquals(pathFields.size + 1, maskingPatterns.size)

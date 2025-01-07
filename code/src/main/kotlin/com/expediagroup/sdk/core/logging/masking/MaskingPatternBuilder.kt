@@ -28,11 +28,11 @@ internal class MaskingPatternBuilder {
     /**
      * Adds global fields to be masked.
      *
-     * @param name Vararg of field names to be masked globally.
+     * @param fields Vararg of field names to be masked globally.
      * @return The current instance of MaskingPatternBuilder.
      */
-    fun globalFields(vararg name: String): MaskingPatternBuilder = apply {
-        globalFields += name.toSortedSet()
+    fun globalFields(fields: Set<String>): MaskingPatternBuilder = apply {
+        globalFields += fields.toSortedSet()
     }
 
     /**
@@ -45,7 +45,7 @@ internal class MaskingPatternBuilder {
      * @param paths Vararg of lists of field names to be masked by path.
      * @return The current instance of MaskingPatternBuilder.
      */
-    fun pathFields(vararg paths: List<String>) = apply {
+    fun pathFields(paths: Set<List<String>>) = apply {
         pathFields += paths.map { it.takeLast(2) }
     }
 

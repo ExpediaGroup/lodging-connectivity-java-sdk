@@ -8,13 +8,13 @@ import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.logging.LoggingInterceptor
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.DefaultClientConfiguration
-import com.expediagroup.sdk.lodgingconnectivity.configuration.LogMasking
 
 internal fun getHttpTransport(configuration: ClientConfiguration): Transport = when (configuration) {
     is CustomClientConfiguration -> configuration.transport
@@ -23,16 +23,13 @@ internal fun getHttpTransport(configuration: ClientConfiguration): Transport = w
 
 class RequestExecutor(
     configuration: ClientConfiguration,
-    apiEndpoint: ApiEndpoint
+    apiEndpoint: ApiEndpoint,
+    logger: LoggerDecorator
 ) : AbstractRequestExecutor(getHttpTransport(configuration)) {
-
-    init {
-        LogMasking.enable()
-    }
 
     override val interceptors: List<Interceptor> = listOf(
         RequestHeadersInterceptor(),
-        LoggingInterceptor(),
+        LoggingInterceptor(logger),
         BearerAuthenticationInterceptor(
             BearerAuthenticationManager(
                 requestExecutor = this,

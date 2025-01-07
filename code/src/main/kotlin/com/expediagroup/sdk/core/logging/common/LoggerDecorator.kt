@@ -2,7 +2,10 @@ package com.expediagroup.sdk.core.logging.common
 
 import org.slf4j.Logger
 
-class LoggerDecorator(private val logger: Logger) : Logger by logger {
+class LoggerDecorator(
+    private val logger: Logger,
+    private val masker: (String) -> String = { it }
+) : Logger by logger {
     override fun info(msg: String) = logger.info(decorate(msg))
 
     override fun warn(msg: String) = logger.warn(decorate(msg))
