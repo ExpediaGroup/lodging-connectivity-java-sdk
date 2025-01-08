@@ -29,7 +29,7 @@ data class Request private constructor(
     val method: Method,
     val url: URL,
     val headers: Headers,
-    val body: RequestBody?
+    val body: RequestBody?,
 ) {
     /**
      * Returns a new [Builder] initialized with this request's data.
@@ -70,9 +70,10 @@ data class Request private constructor(
          * @param method HTTP method, e.g., GET, POST.
          * @return This builder.
          */
-        fun method(method: Method) = apply {
-            this.method = method
-        }
+        fun method(method: Method) =
+            apply {
+                this.method = method
+            }
 
         /**
          * Sets the request body.
@@ -80,9 +81,10 @@ data class Request private constructor(
          * @param body The request body.
          * @return This builder.
          */
-        fun body(body: RequestBody) = apply {
-            this.body = body
-        }
+        fun body(body: RequestBody) =
+            apply {
+                this.body = body
+            }
 
         /**
          * Sets the URL.
@@ -92,10 +94,11 @@ data class Request private constructor(
          * @throws MalformedURLException If [url] is invalid.
          */
         @Throws(MalformedURLException::class)
-        fun url(url: String) = apply {
-            val parsedUrl = URL(url)
-            this.url = parsedUrl
-        }
+        fun url(url: String) =
+            apply {
+                val parsedUrl = URL(url)
+                this.url = parsedUrl
+            }
 
         /**
          * Sets the URL.
@@ -103,9 +106,10 @@ data class Request private constructor(
          * @param url The URL as an [URL] object.
          * @return This builder.
          */
-        fun url(url: URL) = apply {
-            this.url = url
-        }
+        fun url(url: URL) =
+            apply {
+                this.url = url
+            }
 
         /**
          * Adds a header with the specified name and value.
@@ -115,7 +119,10 @@ data class Request private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
-        fun addHeader(name: String, value: String) = apply {
+        fun addHeader(
+            name: String,
+            value: String,
+        ) = apply {
             headersBuilder.add(name, value)
         }
 
@@ -127,7 +134,10 @@ data class Request private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
-        fun addHeader(name: String, values: List<String>) = apply {
+        fun addHeader(
+            name: String,
+            values: List<String>,
+        ) = apply {
             headersBuilder.add(name, values)
         }
 
@@ -139,7 +149,10 @@ data class Request private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
-        fun setHeader(name: String, value: String) = apply {
+        fun setHeader(
+            name: String,
+            value: String,
+        ) = apply {
             headersBuilder.set(name, value)
         }
 
@@ -151,7 +164,10 @@ data class Request private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
-        fun setHeader(name: String, values: List<String>) = apply {
+        fun setHeader(
+            name: String,
+            values: List<String>,
+        ) = apply {
             headersBuilder.set(name, values)
         }
 
@@ -161,9 +177,10 @@ data class Request private constructor(
          * @param headers The [Headers] instance
          * @return This builder.
          */
-        fun headers(headers: Headers) = apply {
-            this.headersBuilder = headers.newBuilder()
-        }
+        fun headers(headers: Headers) =
+            apply {
+                this.headersBuilder = headers.newBuilder()
+            }
 
         /**
          * Removes all headers with the specified name.
@@ -172,9 +189,10 @@ data class Request private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] is null.
          */
-        fun removeHeader(name: String) = apply {
-            headersBuilder.remove(name)
-        }
+        fun removeHeader(name: String) =
+            apply {
+                headersBuilder.remove(name)
+            }
 
         /**
          * Builds the [Request].
@@ -190,7 +208,7 @@ data class Request private constructor(
                 method = method,
                 url = url,
                 headers = headersBuilder.build(),
-                body = body
+                body = body,
             )
         }
     }

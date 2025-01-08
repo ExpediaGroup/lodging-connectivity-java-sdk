@@ -30,5 +30,5 @@ data class PageInfo(
     val hasNext: Boolean,
     val cursor: String? = null,
     val nextPageCursor: String? = null,
-    val totalCount: Int? = null
+    val totalCount: Int? = null,
 )

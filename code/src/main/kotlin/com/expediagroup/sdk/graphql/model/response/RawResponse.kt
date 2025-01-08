@@ -32,5 +32,5 @@ import com.apollographql.apollo.api.Operation
  */
 open class RawResponse<T : Operation.Data>(
     val data: T,
-    val errors: List<Error>?
+    val errors: List<Error>?,
 )

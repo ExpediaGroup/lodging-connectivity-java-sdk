@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class StatusTest {
-
     @Test
     fun `should return correct Status for valid codes`() {
 // Informational responses
@@ -47,9 +46,10 @@ class StatusTest {
 
     @Test
     fun `should throw IllegalArgumentException for invalid codes`() {
-        val exception = assertThrows<IllegalArgumentException> {
-            Status.fromCode(999)
-        }
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                Status.fromCode(999)
+            }
         assertEquals("Invalid status code: 999", exception.message)
     }
 

@@ -11,9 +11,7 @@ import com.ebay.ejmask.core.util.LoggerUtil
  * @param logs The log string that may contain sensitive information requiring masking.
  * @return A new log string with sensitive information masked.
  */
-fun maskLogs(logs: String): String {
-    return MaskLogs.execute(logs)
-}
+fun maskLogs(logs: String): String = MaskLogs.execute(logs)
 
 /**
  * Configures log masking by adding specified fields to the mask list.
@@ -34,9 +32,7 @@ fun configureLogMasking(fields: Set<String>) {
  * @param field The name of the field to check.
  * @return `true` if the field should be masked, `false` otherwise.
  */
-fun isMaskedField(field: String): Boolean {
-    return MaskLogs.maskedFields.contains(field)
-}
+fun isMaskedField(field: String): Boolean = MaskLogs.maskedFields.contains(field)
 
 /**
  * A utility class for masking sensitive information in log strings.
@@ -85,7 +81,9 @@ private class MaskLogs : (String) -> String {
     }
 
     init {
-        LoggerUtil.register { _, _, _ -> /* disable logging */ }
+        LoggerUtil.register { _, _, _ ->
+            // disable logging
+        }
     }
 
     /**
@@ -94,7 +92,5 @@ private class MaskLogs : (String) -> String {
      * @param text The input text that needs to be masked.
      * @return The masked version of the input text.
      */
-    override fun invoke(text: String): String {
-        return EJMask.mask(text)
-    }
+    override fun invoke(text: String): String = EJMask.mask(text)
 }

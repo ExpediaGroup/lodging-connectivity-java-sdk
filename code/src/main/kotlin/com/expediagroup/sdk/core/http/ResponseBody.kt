@@ -16,18 +16,17 @@
 
 package com.expediagroup.sdk.core.http
 
-import java.io.Closeable
-import java.io.InputStream
 import okio.BufferedSource
 import okio.IOException
 import okio.buffer
 import okio.source
+import java.io.Closeable
+import java.io.InputStream
 
 /**
  * Represents the body of an HTTP response.
  */
 abstract class ResponseBody : Closeable {
-
     /**
      * Returns the media type of the response body, or null if unknown.
      */
@@ -71,9 +70,9 @@ abstract class ResponseBody : Closeable {
         fun create(
             inputStream: InputStream,
             mediaType: MediaType? = null,
-            contentLength: Long = -1L
-        ): ResponseBody {
-            return object : ResponseBody() {
+            contentLength: Long = -1L,
+        ): ResponseBody =
+            object : ResponseBody() {
                 private val source = inputStream.source().buffer()
 
                 override fun mediaType(): MediaType? = mediaType
@@ -82,7 +81,6 @@ abstract class ResponseBody : Closeable {
 
                 override fun source(): BufferedSource = source
             }
-        }
 
         /**
          * Creates a new response body from a [BufferedSource] and [mediaType].
@@ -94,14 +92,17 @@ abstract class ResponseBody : Closeable {
          */
         @JvmStatic
         @JvmOverloads
-        fun create(source: BufferedSource, mediaType: MediaType? = null, contentLength: Long = -1L): ResponseBody {
-            return object : ResponseBody() {
+        fun create(
+            source: BufferedSource,
+            mediaType: MediaType? = null,
+            contentLength: Long = -1L,
+        ): ResponseBody =
+            object : ResponseBody() {
                 override fun mediaType(): MediaType? = mediaType
 
                 override fun contentLength(): Long = contentLength
 
                 override fun source(): BufferedSource = source
             }
-        }
     }
 }

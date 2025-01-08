@@ -29,21 +29,24 @@ class ApolloHttpMappingExtensionTest {
         val userAgentHeader = Pair("User-Agent", "test-sdk")
         val bodyString = "Hello, world!"
 
-        val body = object : HttpBody {
-            override val contentLength = -1L
+        val body =
+            object : HttpBody {
+                override val contentLength = -1L
 
-            override val contentType = CommonMediaTypes.APPLICATION_JSON_GRAPHQL.toString()
+                override val contentType = CommonMediaTypes.APPLICATION_JSON_GRAPHQL.toString()
 
-            override fun writeTo(bufferedSink: BufferedSink) {
-                bufferedSink.writeUtf8(bodyString)
+                override fun writeTo(bufferedSink: BufferedSink) {
+                    bufferedSink.writeUtf8(bodyString)
+                }
             }
-        }
 
-        val apolloRequest = HttpRequest.Builder(method, url)
-            .body(body)
-            .addHeader(contentTypeHeader.first, contentTypeHeader.second)
-            .addHeader(userAgentHeader.first, userAgentHeader.second)
-            .build()
+        val apolloRequest =
+            HttpRequest
+                .Builder(method, url)
+                .body(body)
+                .addHeader(contentTypeHeader.first, contentTypeHeader.second)
+                .addHeader(userAgentHeader.first, userAgentHeader.second)
+                .build()
 
         // When
         val sdkRequest = apolloRequest.toSDKRequest()
@@ -77,20 +80,20 @@ class ApolloHttpMappingExtensionTest {
     fun `toSDKRequestBody should map Apollo request to SDK request body`() {
         // Given
         val bodyString = "Hello, world!"
-        val body = object : HttpBody {
-            override val contentLength = -1L
+        val body =
+            object : HttpBody {
+                override val contentLength = -1L
 
-            override val contentType = CommonMediaTypes.APPLICATION_JSON_GRAPHQL.toString()
+                override val contentType = CommonMediaTypes.APPLICATION_JSON_GRAPHQL.toString()
 
-            override fun writeTo(bufferedSink: BufferedSink) {
-                bufferedSink.writeUtf8(bodyString)
+                override fun writeTo(bufferedSink: BufferedSink) {
+                    bufferedSink.writeUtf8(bodyString)
+                }
             }
-        }
 
         // When
         val sdkRequestBody = body.toSDKRequestBody()
         val buffer = Buffer().also { sdkRequestBody.writeTo(it) }
-
 
         // Expect
         assertEquals(bodyString, buffer.readUtf8())
@@ -102,15 +105,16 @@ class ApolloHttpMappingExtensionTest {
     fun `toSDKRequestBody should map Apollo request to SDK request body with invalid media type`() {
         // Given
         val bodyString = "Hello, world!"
-        val body = object : HttpBody {
-            override val contentLength = -1L
+        val body =
+            object : HttpBody {
+                override val contentLength = -1L
 
-            override val contentType = "invalid"
+                override val contentType = "invalid"
 
-            override fun writeTo(bufferedSink: BufferedSink) {
-                bufferedSink.writeUtf8(bodyString)
+                override fun writeTo(bufferedSink: BufferedSink) {
+                    bufferedSink.writeUtf8(bodyString)
+                }
             }
-        }
 
         // When
         val sdkRequestBody = body.toSDKRequestBody()
@@ -125,23 +129,27 @@ class ApolloHttpMappingExtensionTest {
     @Test
     fun `toApolloResponse should map SDK response to Apollo response`() {
         // Given
-        val sdkRequest = Request.builder()
-            .url("https://www.example.com")
-            .method(Method.GET)
-            .build()
+        val sdkRequest =
+            Request
+                .builder()
+                .url("https://www.example.com")
+                .method(Method.GET)
+                .build()
 
         val responseString = "Hello, world!"
 
         val responseBody = ResponseBody.create(responseString.byteInputStream())
 
-        val sdkResponse = Response.builder()
-            .request(sdkRequest)
-            .status(Status.OK)
-            .protocol(Protocol.HTTP_1_1)
-            .body(responseBody)
-            .addHeader("Content-Type", "application/json")
-            .addHeader("User-Agent", "test-sdk")
-            .build()
+        val sdkResponse =
+            Response
+                .builder()
+                .request(sdkRequest)
+                .status(Status.OK)
+                .protocol(Protocol.HTTP_1_1)
+                .body(responseBody)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("User-Agent", "test-sdk")
+                .build()
 
         // When
         val apolloResponse = sdkResponse.toApolloResponse()
@@ -155,18 +163,22 @@ class ApolloHttpMappingExtensionTest {
     @Test
     fun `toApolloResponse should map SDK response to Apollo response without body`() {
         // Given
-        val sdkRequest = Request.builder()
-            .url("https://www.example.com")
-            .method(Method.GET)
-            .build()
+        val sdkRequest =
+            Request
+                .builder()
+                .url("https://www.example.com")
+                .method(Method.GET)
+                .build()
 
-        val sdkResponse = Response.builder()
-            .request(sdkRequest)
-            .status(Status.OK)
-            .protocol(Protocol.HTTP_1_1)
-            .addHeader("Content-Type", "application/json")
-            .addHeader("User-Agent", "test-sdk")
-            .build()
+        val sdkResponse =
+            Response
+                .builder()
+                .request(sdkRequest)
+                .status(Status.OK)
+                .protocol(Protocol.HTTP_1_1)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("User-Agent", "test-sdk")
+                .build()
 
         // When
         val apolloResponse = sdkResponse.toApolloResponse()

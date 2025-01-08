@@ -17,9 +17,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
@@ -59,14 +59,16 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.Reserv
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment and
  * timeouts
  */
-class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
-
+class ReservationClient(
+    config: ClientConfiguration,
+) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getSupplyApiEndpoint(config.environment)
 
-    override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
-        requestExecutor = RequestExecutor(config, apiEndpoint),
-        serverUrl = apiEndpoint.endpoint
-    )
+    override val graphQLExecutor: AbstractGraphQLExecutor =
+        GraphQLExecutor(
+            requestExecutor = RequestExecutor(config, apiEndpoint),
+            serverUrl = apiEndpoint.endpoint,
+        )
 
     /**
      * Creates a paginator for retrieving paginated reservation data for a specified property.
@@ -82,16 +84,17 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         propertyId: String,
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
-        initialCursor: String? = null
-    ): ReservationsPaginator = run {
-        ReservationsPaginator(
-            graphQLExecutor = graphQLExecutor,
-            input = PropertyReservationsInput(propertyId),
-            selections = selections,
-            pageSize = pageSize,
-            initialCursor = initialCursor
-        )
-    }
+        initialCursor: String? = null,
+    ): ReservationsPaginator =
+        run {
+            ReservationsPaginator(
+                graphQLExecutor = graphQLExecutor,
+                input = PropertyReservationsInput(propertyId),
+                selections = selections,
+                pageSize = pageSize,
+                initialCursor = initialCursor,
+            )
+        }
 
     /**
      * Creates a paginator for retrieving paginated reservation data for a specified property.
@@ -105,15 +108,16 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     fun getReservationsPaginator(
         propertyId: String,
         pageSize: Int,
-        initialCursor: String? = null
-    ): ReservationsPaginator = run {
-        ReservationsPaginator(
-            graphQLExecutor = graphQLExecutor,
-            input = PropertyReservationsInput(propertyId),
-            pageSize = pageSize,
-            initialCursor = initialCursor
-        )
-    }
+        initialCursor: String? = null,
+    ): ReservationsPaginator =
+        run {
+            ReservationsPaginator(
+                graphQLExecutor = graphQLExecutor,
+                input = PropertyReservationsInput(propertyId),
+                pageSize = pageSize,
+                initialCursor = initialCursor,
+            )
+        }
 
     /**
      * Creates a paginator for retrieving paginated reservation data for a specified property.
@@ -129,16 +133,17 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
         input: PropertyReservationsInput,
         selections: ReservationSelections? = null,
         pageSize: Int? = null,
-        initialCursor: String? = null
-    ): ReservationsPaginator = run {
-        ReservationsPaginator(
-            graphQLExecutor = graphQLExecutor,
-            input = input,
-            selections = selections,
-            pageSize = pageSize,
-            initialCursor = initialCursor
-        )
-    }
+        initialCursor: String? = null,
+    ): ReservationsPaginator =
+        run {
+            ReservationsPaginator(
+                graphQLExecutor = graphQLExecutor,
+                input = input,
+                selections = selections,
+                pageSize = pageSize,
+                initialCursor = initialCursor,
+            )
+        }
 
     /**
      * Creates a paginator for retrieving paginated reservation data for a specified property.
@@ -152,15 +157,16 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     fun getReservationsPaginator(
         input: PropertyReservationsInput,
         pageSize: Int,
-        initialCursor: String? = null
-    ): ReservationsPaginator = run {
-        ReservationsPaginator(
-            graphQLExecutor = graphQLExecutor,
-            input = input,
-            pageSize = pageSize,
-            initialCursor = initialCursor
-        )
-    }
+        initialCursor: String? = null,
+    ): ReservationsPaginator =
+        run {
+            ReservationsPaginator(
+                graphQLExecutor = graphQLExecutor,
+                input = input,
+                pageSize = pageSize,
+                initialCursor = initialCursor,
+            )
+        }
 
     /**
      * Provides a streaming interface for sequentially accessing reservations for a specific property.
@@ -168,9 +174,10 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param propertyId The unique identifier of the property.
      * @return A [ReservationsStream] to stream through reservations one at a time.
      */
-    fun getReservationsStream(propertyId: String): ReservationsStream = run {
-        ReservationsStream(getReservationsPaginator(propertyId))
-    }
+    fun getReservationsStream(propertyId: String): ReservationsStream =
+        run {
+            ReservationsStream(getReservationsPaginator(propertyId))
+        }
 
     /**
      * Provides a streaming interface for sequentially accessing reservations for a specific property.
@@ -178,9 +185,10 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
      * @param input The [PropertyReservationsInput] specifying the property and filter criteria.
      * @return A [ReservationsStream] to stream through reservations one at a time.
      */
-    fun getReservationsStream(input: PropertyReservationsInput): ReservationsStream = run {
-        ReservationsStream(getReservationsPaginator(input))
-    }
+    fun getReservationsStream(input: PropertyReservationsInput): ReservationsStream =
+        run {
+            ReservationsStream(getReservationsPaginator(input))
+        }
 
     /**
      * Cancels a reservation.
@@ -193,10 +201,11 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     @JvmOverloads
     fun cancelReservation(
         input: CancelReservationInput,
-        selections: ReservationSelections? = null
-    ): CancelReservationResponse = run {
-        cancelReservationOperation(graphQLExecutor, input, selections)
-    }
+        selections: ReservationSelections? = null,
+    ): CancelReservationResponse =
+        run {
+            cancelReservationOperation(graphQLExecutor, input, selections)
+        }
 
     /**
      * Cancels the reconciliation of a reservation.
@@ -209,10 +218,11 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     @JvmOverloads
     fun cancelReservationReconciliation(
         input: CancelReservationReconciliationInput,
-        selections: ReservationSelections? = null
-    ): CancelReservationReconciliationResponse = run {
-        cancelReservationReconciliationOperation(graphQLExecutor, input, selections)
-    }
+        selections: ReservationSelections? = null,
+    ): CancelReservationReconciliationResponse =
+        run {
+            cancelReservationReconciliationOperation(graphQLExecutor, input, selections)
+        }
 
     /**
      * Cancels a VRBO reservation.
@@ -225,10 +235,11 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     @JvmOverloads
     fun cancelVrboReservation(
         input: CancelVrboReservationInput,
-        selections: ReservationSelections? = null
-    ): CancelVrboReservationResponse = run {
-        cancelVrboReservationOperation(graphQLExecutor, input, selections)
-    }
+        selections: ReservationSelections? = null,
+    ): CancelVrboReservationResponse =
+        run {
+            cancelVrboReservationOperation(graphQLExecutor, input, selections)
+        }
 
     /**
      * Updates the reconciliation details for a reservation.
@@ -241,10 +252,11 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     @JvmOverloads
     fun changeReservationReconciliation(
         input: ChangeReservationReconciliationInput,
-        selections: ReservationSelections? = null
-    ): ChangeReservationReconciliationResponse = run {
-        changeReservationReconciliationOperation(graphQLExecutor, input, selections)
-    }
+        selections: ReservationSelections? = null,
+    ): ChangeReservationReconciliationResponse =
+        run {
+            changeReservationReconciliationOperation(graphQLExecutor, input, selections)
+        }
 
     /**
      * Confirms a reservation notification.
@@ -257,10 +269,11 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     @JvmOverloads
     fun confirmReservationNotification(
         input: ConfirmReservationNotificationInput,
-        selections: ReservationSelections? = null
-    ): ConfirmReservationNotificationResponse = run {
-        confirmReservationNotificationOperation(graphQLExecutor, input, selections)
-    }
+        selections: ReservationSelections? = null,
+    ): ConfirmReservationNotificationResponse =
+        run {
+            confirmReservationNotificationOperation(graphQLExecutor, input, selections)
+        }
 
     /**
      * Initiates a refund for a reservation.
@@ -273,8 +286,9 @@ class ReservationClient(config: ClientConfiguration) : GraphQLClient() {
     @JvmOverloads
     fun refundReservation(
         input: RefundReservationInput,
-        selections: ReservationSelections? = null
-    ): RefundReservationResponse = run {
-        refundReservationOperation(graphQLExecutor, input, selections)
-    }
+        selections: ReservationSelections? = null,
+    ): RefundReservationResponse =
+        run {
+            refundReservationOperation(graphQLExecutor, input, selections)
+        }
 }

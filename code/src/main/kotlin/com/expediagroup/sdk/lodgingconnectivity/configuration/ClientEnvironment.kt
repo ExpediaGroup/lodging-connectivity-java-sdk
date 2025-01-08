@@ -24,7 +24,6 @@ package com.expediagroup.sdk.lodgingconnectivity.configuration
  * which endpoints and settings to apply based on the environment selected.
  */
 enum class ClientEnvironment {
-
     /**
      * Represents the production environment.
      * Clients in this environment interact with the live, production-grade API.
@@ -49,5 +48,5 @@ enum class ClientEnvironment {
      *
      * This environment is only available for `ReservationClient`
      */
-    SANDBOX_TEST
+    SANDBOX_TEST,
 }

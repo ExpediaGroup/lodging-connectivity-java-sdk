@@ -29,5 +29,5 @@ package com.expediagroup.sdk.core.model.exception.service
 class ExpediaGroupNetworkException(
     message: String? = null,
     cause: Throwable? = null,
-    transactionId: String? = null
+    transactionId: String? = null,
 ) : ExpediaGroupServiceException(message, cause, transactionId)

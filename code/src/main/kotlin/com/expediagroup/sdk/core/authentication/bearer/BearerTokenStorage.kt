@@ -36,9 +36,8 @@ class BearerTokenStorage private constructor(
     val expiresIn: Long,
     private val expirationBufferSeconds: Long,
     private val clock: Clock,
-    private val expiryInstant: Instant
+    private val expiryInstant: Instant,
 ) {
-
     /**
      * Checks if the bearer token is about to expire.
      *
@@ -47,9 +46,10 @@ class BearerTokenStorage private constructor(
      *
      * @return `true` if the token is about to expire; `false` otherwise.
      */
-    fun isAboutToExpire(): Boolean = run {
-        Instant.now(clock).isAfter(expiryInstant.minusSeconds(expirationBufferSeconds))
-    }
+    fun isAboutToExpire(): Boolean =
+        run {
+            Instant.now(clock).isAfter(expiryInstant.minusSeconds(expirationBufferSeconds))
+        }
 
     /**
      * Formats the bearer token as an `Authorization` header value.
@@ -80,25 +80,24 @@ class BearerTokenStorage private constructor(
             accessToken: String,
             expiresIn: Long,
             expirationBufferSeconds: Long = DEFAULT_EXPIRATION_BUFFER_SECONDS,
-            clock: Clock = Clock.systemUTC()
+            clock: Clock = Clock.systemUTC(),
         ): BearerTokenStorage {
-            val expiryInstant = if (expiresIn >= 0) {
-                Instant.now(clock).plusSeconds(expiresIn)
-            } else {
-                Instant.EPOCH
-            }
+            val expiryInstant =
+                if (expiresIn >= 0) {
+                    Instant.now(clock).plusSeconds(expiresIn)
+                } else {
+                    Instant.EPOCH
+                }
 
             return BearerTokenStorage(
                 accessToken = accessToken,
                 expiresIn = expiresIn,
                 expirationBufferSeconds = expirationBufferSeconds,
                 clock = clock,
-                expiryInstant = expiryInstant
+                expiryInstant = expiryInstant,
             )
         }
     }
 
-    override fun toString(): String {
-        return "BearerTokenStorage(expiresIn=$expiresIn, expirationBufferSeconds=$expirationBufferSeconds, expiryInstant=$expiryInstant)"
-    }
+    override fun toString(): String = "BearerTokenStorage(expiresIn=$expiresIn, expirationBufferSeconds=$expirationBufferSeconds, expiryInstant=$expiryInstant)"
 }

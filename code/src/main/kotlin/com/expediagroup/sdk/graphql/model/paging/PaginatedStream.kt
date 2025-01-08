@@ -28,7 +28,6 @@ import kotlin.streams.asStream
  * @param T The type of items contained in the paginated stream.
  */
 abstract class PaginatedStream<T> {
-
     // Holds the current page of items fetched from the data source.
     private var currentPage: ArrayDeque<T?> = ArrayDeque()
 
@@ -61,11 +60,12 @@ abstract class PaginatedStream<T> {
      *
      * @return The next item from the current page, or `null` if there are no more items.
      */
-    protected fun pollCurrentPage(): T? = try {
-        currentPage.removeFirst()
-    } catch (e: NoSuchElementException) {
-        null
-    }
+    protected fun pollCurrentPage(): T? =
+        try {
+            currentPage.removeFirst()
+        } catch (e: NoSuchElementException) {
+            null
+        }
 
     /**
      * Checks if the current page is empty.
@@ -74,4 +74,3 @@ abstract class PaginatedStream<T> {
      */
     protected fun isCurrentPageEmpty(): Boolean = currentPage.isEmpty()
 }
-

@@ -10,11 +10,6 @@ import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import io.mockk.mockk
-import java.lang.reflect.InvocationTargetException
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ExecutionException
-import kotlin.reflect.full.declaredFunctions
-import kotlin.reflect.jvm.isAccessible
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
@@ -30,6 +25,11 @@ import org.junit.jupiter.api.assertThrows
 import testservice.TestMutation
 import testservice.TestQuery
 import testservice.type.buildTestData
+import java.lang.reflect.InvocationTargetException
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
+import kotlin.reflect.full.declaredFunctions
+import kotlin.reflect.jvm.isAccessible
 
 class DefaultAbstractGraphQLExecutorTest {
     private lateinit var mockWebServer: MockWebServer
@@ -41,10 +41,12 @@ class DefaultAbstractGraphQLExecutorTest {
         mockWebServer.start()
         val serverUrl = mockWebServer.url("/graphql").toString()
 
-        val requestExecutor = object : AbstractRequestExecutor(OkHttpTransport(BaseOkHttpClient.getInstance())) {
-            override val interceptors: List<Interceptor> = emptyList()
-            override fun execute(request: Request): Response = transport.execute(request)
-        }
+        val requestExecutor =
+            object : AbstractRequestExecutor(OkHttpTransport(BaseOkHttpClient.getInstance())) {
+                override val interceptors: List<Interceptor> = emptyList()
+
+                override fun execute(request: Request): Response = transport.execute(request)
+            }
 
         executor = GraphQLExecutor(requestExecutor, serverUrl)
     }
@@ -59,11 +61,13 @@ class DefaultAbstractGraphQLExecutorTest {
         @Test
         fun `should execute graphql query successfully`() {
             // Given
-            val testQueryData = TestQuery.Data {
-                testQuery = buildTestData {
-                    id = "Hello, world!"
+            val testQueryData =
+                TestQuery.Data {
+                    testQuery =
+                        buildTestData {
+                            id = "Hello, world!"
+                        }
                 }
-            }
 
             mockWebServer.enqueue(MockResponse().setBody(testQueryData.toResponseJson()).setResponseCode(200))
 
@@ -78,11 +82,13 @@ class DefaultAbstractGraphQLExecutorTest {
         @Test
         fun `should execute graphql mutation successfully`() {
             // Given
-            val testMutationData = TestMutation.Data {
-                testMutation = buildTestData {
-                    id = "Hello, world!"
+            val testMutationData =
+                TestMutation.Data {
+                    testMutation =
+                        buildTestData {
+                            id = "Hello, world!"
+                        }
                 }
-            }
 
             mockWebServer.enqueue(MockResponse().setBody(testMutationData.toResponseJson()).setResponseCode(200))
 
@@ -113,9 +119,10 @@ class DefaultAbstractGraphQLExecutorTest {
             mockWebServer.enqueue(MockResponse().setBody(errorResponse).setResponseCode(200))
 
             // When
-            val exception = assertThrows<NoDataException> {
-                executor.execute(TestQuery())
-            }
+            val exception =
+                assertThrows<NoDataException> {
+                    executor.execute(TestQuery())
+                }
 
             // Expect
             assertEquals("No data received from the server", exception.message)
@@ -125,12 +132,13 @@ class DefaultAbstractGraphQLExecutorTest {
         @Test
         fun `should return partial data along with errors`() {
             // Given
-            val partialDataResponse = """
+            val partialDataResponse =
+                """
                 {
                   "data": { "testQuery": { "id": "id-1" } },
                   "errors": [{ "message": "Some error occurred" }]
                 }
-            """.trimIndent()
+                """.trimIndent()
 
             mockWebServer.enqueue(MockResponse().setBody(partialDataResponse).setResponseCode(200))
 
@@ -145,12 +153,13 @@ class DefaultAbstractGraphQLExecutorTest {
         @Test // Impossible case
         fun `should throw ExpediaGroupServiceException if no data received from the server and errors list is empty`() {
             // Given
-            val partialDataResponse = """
+            val partialDataResponse =
+                """
                 {
                   "data": null,
                   "errors": []
                 }
-            """.trimIndent()
+                """.trimIndent()
 
             mockWebServer.enqueue(MockResponse().setBody(partialDataResponse).setResponseCode(200))
 
@@ -166,11 +175,13 @@ class DefaultAbstractGraphQLExecutorTest {
         @Test
         fun `should execute graphql query successfully`() {
             // Given
-            val testQueryData = TestQuery.Data {
-                testQuery = buildTestData {
-                    id = "Hello, world!"
+            val testQueryData =
+                TestQuery.Data {
+                    testQuery =
+                        buildTestData {
+                            id = "Hello, world!"
+                        }
                 }
-            }
 
             mockWebServer.enqueue(MockResponse().setBody(testQueryData.toResponseJson()).setResponseCode(200))
 
@@ -179,16 +190,23 @@ class DefaultAbstractGraphQLExecutorTest {
 
             // Expect
             assertFalse(future.isDone) // Asserts that the execution isn't blocking
-            assertEquals("Hello, world!", future.get().data.testQuery.id)
+            assertEquals(
+                "Hello, world!",
+                future
+                    .get()
+                    .data.testQuery.id,
+            )
         }
 
         @Test
         fun `should execute graphql mutation successfully`() {
-            val testMutationData = TestMutation.Data {
-                testMutation = buildTestData {
-                    id = "Hello, world!"
+            val testMutationData =
+                TestMutation.Data {
+                    testMutation =
+                        buildTestData {
+                            id = "Hello, world!"
+                        }
                 }
-            }
 
             mockWebServer.enqueue(MockResponse().setBody(testMutationData.toResponseJson()).setResponseCode(200))
 
@@ -197,7 +215,12 @@ class DefaultAbstractGraphQLExecutorTest {
 
             // Expect
             assertFalse(future.isDone) // Asserts that the execution isn't blocking
-            assertEquals("Hello, world!", future.get().data.testMutation.id)
+            assertEquals(
+                "Hello, world!",
+                future
+                    .get()
+                    .data.testMutation.id,
+            )
         }
 
         @Test
@@ -206,9 +229,10 @@ class DefaultAbstractGraphQLExecutorTest {
             mockWebServer.enqueue(MockResponse().setResponseCode(500))
 
             // When & Expect
-            val exception = assertThrows<ExecutionException> {
-                executor.executeAsync(TestQuery()).get()
-            }
+            val exception =
+                assertThrows<ExecutionException> {
+                    executor.executeAsync(TestQuery()).get()
+                }
 
             assertInstanceOf(ExpediaGroupServiceException::class.java, exception.cause)
             assertEquals(ExpediaGroupServiceException::class.java, exception.cause!!::class.java)
@@ -222,9 +246,10 @@ class DefaultAbstractGraphQLExecutorTest {
             mockWebServer.enqueue(MockResponse().setBody(errorResponse).setResponseCode(200))
 
             // When & Expect
-            val exception = assertThrows<ExecutionException> {
-                executor.executeAsync(TestQuery()).get()
-            }
+            val exception =
+                assertThrows<ExecutionException> {
+                    executor.executeAsync(TestQuery()).get()
+                }
 
             assertInstanceOf(NoDataException::class.java, exception.cause)
             assertEquals(NoDataException::class.java, exception.cause!!::class.java)
@@ -242,9 +267,11 @@ class DefaultAbstractGraphQLExecutorTest {
 
             val mockExecutor = GraphQLExecutor(mockk(), "https://example.com/graphql")
 
-            val extensionFunction = GraphQLExecutor::class.declaredFunctions
-                .first { it.name == "getOrThrowDomainException" }
-                .apply { isAccessible = true }
+            val extensionFunction =
+                GraphQLExecutor::class
+                    .declaredFunctions
+                    .first { it.name == "getOrThrowDomainException" }
+                    .apply { isAccessible = true }
 
             // When & Expect
             assertThrows<ExecutionException> {
@@ -261,20 +288,23 @@ class DefaultAbstractGraphQLExecutorTest {
             val future = CompletableFuture<String>()
             val mockExecutor = GraphQLExecutor(mockk(), "https://example.com/graphql")
 
-            val extensionFunction = GraphQLExecutor::class.declaredFunctions
-                .first { it.name == "getOrThrowDomainException" }
-                .apply { isAccessible = true }
+            val extensionFunction =
+                GraphQLExecutor::class
+                    .declaredFunctions
+                    .first { it.name == "getOrThrowDomainException" }
+                    .apply { isAccessible = true }
 
             // When
             Thread.currentThread().interrupt()
 
-            val thrown = assertThrows<ExpediaGroupServiceException> {
-                try {
-                    extensionFunction.call(mockExecutor, future)
-                } catch (e: InvocationTargetException) {
-                    throw e.targetException
+            val thrown =
+                assertThrows<ExpediaGroupServiceException> {
+                    try {
+                        extensionFunction.call(mockExecutor, future)
+                    } catch (e: InvocationTargetException) {
+                        throw e.targetException
+                    }
                 }
-            }
 
             assertEquals("Interrupted while waiting for response", thrown.message)
             assertTrue(thrown.cause is InterruptedException)

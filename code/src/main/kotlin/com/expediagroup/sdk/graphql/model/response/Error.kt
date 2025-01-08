@@ -25,14 +25,13 @@ package com.expediagroup.sdk.graphql.model.response
  */
 data class Error(
     val message: String,
-    val path: List<String>?
+    val path: List<String>?,
 ) {
     companion object {
-        fun fromApolloError(apolloError: com.apollographql.apollo.api.Error): Error {
-            return Error(
+        fun fromApolloError(apolloError: com.apollographql.apollo.api.Error): Error =
+            Error(
                 message = apolloError.message,
-                path = apolloError.path?.map { it.toString() }
+                path = apolloError.path?.map { it.toString() },
             )
-        }
     }
 }

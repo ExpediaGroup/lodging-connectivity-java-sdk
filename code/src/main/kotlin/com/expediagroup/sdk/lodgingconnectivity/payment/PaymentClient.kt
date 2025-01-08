@@ -17,9 +17,9 @@
 package com.expediagroup.sdk.lodgingconnectivity.payment
 
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
@@ -37,13 +37,16 @@ import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInst
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
  * or timeouts.
  */
-class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
+class PaymentClient(
+    config: ClientConfiguration,
+) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
 
-    override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
-        requestExecutor = RequestExecutor(config, apiEndpoint),
-        serverUrl = apiEndpoint.endpoint
-    )
+    override val graphQLExecutor: AbstractGraphQLExecutor =
+        GraphQLExecutor(
+            requestExecutor = RequestExecutor(config, apiEndpoint),
+            serverUrl = apiEndpoint.endpoint,
+        )
 
     /**
      * Retrieves the payment instrument details associated with the specified token.
@@ -56,7 +59,8 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
      * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
      * @throws ExpediaGroupServiceException If the payment instrument data is not found in the response.
      */
-    fun getPaymentInstrument(token: String): GetPaymentInstrumentResponse = run {
-        getPaymentInstrumentOperation(graphQLExecutor, token)
-    }
+    fun getPaymentInstrument(token: String): GetPaymentInstrumentResponse =
+        run {
+            getPaymentInstrumentOperation(graphQLExecutor, token)
+        }
 }

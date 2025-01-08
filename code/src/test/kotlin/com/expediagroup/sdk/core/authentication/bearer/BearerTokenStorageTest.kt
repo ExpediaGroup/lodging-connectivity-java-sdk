@@ -2,8 +2,12 @@ package com.expediagroup.sdk.core.authentication.bearer
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertSame
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -18,47 +22,49 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class BearerTokenStorageTest {
-
     @Nested
     inner class TokenCreationTests {
         @Test
         fun `create token with standard parameters`() {
-            val mockClock = mockk<Clock> {
-                every { instant() } returns Instant.parse("2024-01-01T12:00:00Z")
-                every { zone } returns ZoneOffset.UTC
-            }
+            val mockClock =
+                mockk<Clock> {
+                    every { instant() } returns Instant.parse("2024-01-01T12:00:00Z")
+                    every { zone } returns ZoneOffset.UTC
+                }
 
-            val tokenStorage = BearerTokenStorage.create(
-                accessToken = "standard_token",
-                expiresIn = 3600,
-                clock = mockClock
-            )
+            val tokenStorage =
+                BearerTokenStorage.create(
+                    accessToken = "standard_token",
+                    expiresIn = 3600,
+                    clock = mockClock,
+                )
 
             assertAll(
                 "Token creation assertions",
                 { assertEquals("standard_token", tokenStorage.accessToken) },
                 { assertFalse(tokenStorage.isAboutToExpire()) },
-                { assertEquals("Bearer standard_token", tokenStorage.getAuthorizationHeaderValue()) }
+                { assertEquals("Bearer standard_token", tokenStorage.getAuthorizationHeaderValue()) },
             )
         }
 
         @ParameterizedTest
         @ValueSource(longs = [0, 1, 59, 60, 61, 3600, 3600 * 24 * 365]) // Use a more reasonable large value
         fun `create token with varied expiration times`(expiresIn: Long) {
-            val tokenStorage = try {
-                BearerTokenStorage.create(
-                    accessToken = "test_token",
-                    expiresIn = expiresIn.coerceAtMost(3600 * 24 * 365) // Limit to max 1 year
-                )
-            } catch (e: Exception) {
-                // If creation fails, the token should be considered expired
-                null
-            }
+            val tokenStorage =
+                try {
+                    BearerTokenStorage.create(
+                        accessToken = "test_token",
+                        expiresIn = expiresIn.coerceAtMost(3600 * 24 * 365), // Limit to max 1 year
+                    )
+                } catch (e: Exception) {
+                    // If creation fails, the token should be considered expired
+                    null
+                }
 
             if (expiresIn < 0) {
                 assertTrue(
                     tokenStorage == null || tokenStorage.isAboutToExpire(),
-                    "Token with negative expiration should be null or expired"
+                    "Token with negative expiration should be null or expired",
                 )
             } else {
                 assertNotNull(tokenStorage, "Token storage should not be null for non-negative expiration")
@@ -70,10 +76,11 @@ class BearerTokenStorageTest {
     inner class ExpirationTests {
         @Test
         fun `token with negative expiration time`() {
-            val tokenStorage = BearerTokenStorage.create(
-                accessToken = "expired_token",
-                expiresIn = -1
-            )
+            val tokenStorage =
+                BearerTokenStorage.create(
+                    accessToken = "expired_token",
+                    expiresIn = -1,
+                )
 
             assertTrue(tokenStorage.isAboutToExpire(), "Negative expiration should always be considered expired")
         }
@@ -86,22 +93,27 @@ class BearerTokenStorageTest {
                 "Empty token assertions",
                 { assertTrue(emptyTokenStorage.isAboutToExpire()) },
                 { assertEquals("Bearer ", emptyTokenStorage.getAuthorizationHeaderValue()) },
-                { assertEquals("", emptyTokenStorage.accessToken) }
+                { assertEquals("", emptyTokenStorage.accessToken) },
             )
         }
 
         @ParameterizedTest
         @CsvSource(
-            "3, 1, false",   // Not yet expired
-            "3, 2, true",     // About to expire
+            "3, 1, false", // Not yet expired
+            "3, 2, true", // About to expire
         )
-        fun `token expiration with custom buffer`(expiresIn: Long, bufferSeconds: Long, expectedExpired: Boolean) {
-            val tokenStorage = BearerTokenStorage.create(
-                accessToken = "buffer_test_token",
-                expiresIn = expiresIn,
-                expirationBufferSeconds = bufferSeconds,
-                clock = Clock.systemUTC()
-            )
+        fun `token expiration with custom buffer`(
+            expiresIn: Long,
+            bufferSeconds: Long,
+            expectedExpired: Boolean,
+        ) {
+            val tokenStorage =
+                BearerTokenStorage.create(
+                    accessToken = "buffer_test_token",
+                    expiresIn = expiresIn,
+                    expirationBufferSeconds = bufferSeconds,
+                    clock = Clock.systemUTC(),
+                )
 
             Thread.sleep(1000 * bufferSeconds)
 
@@ -114,10 +126,11 @@ class BearerTokenStorageTest {
         @Test
         fun `authorization header with special characters`() {
             val tokenWithSpecialChars = "token!@#$%^&*()_+"
-            val tokenStorage = BearerTokenStorage.create(
-                accessToken = tokenWithSpecialChars,
-                expiresIn = 3600
-            )
+            val tokenStorage =
+                BearerTokenStorage.create(
+                    accessToken = tokenWithSpecialChars,
+                    expiresIn = 3600,
+                )
 
             assertEquals("Bearer token!@#\$%^&*()_+", tokenStorage.getAuthorizationHeaderValue())
         }
@@ -125,10 +138,11 @@ class BearerTokenStorageTest {
         @Test
         fun `authorization header with unicode characters`() {
             val tokenWithUnicode = "token_🚀_special@chars_😊"
-            val tokenStorage = BearerTokenStorage.create(
-                accessToken = tokenWithUnicode,
-                expiresIn = 3600
-            )
+            val tokenStorage =
+                BearerTokenStorage.create(
+                    accessToken = tokenWithUnicode,
+                    expiresIn = 3600,
+                )
 
             assertEquals("Bearer token_🚀_special@chars_😊", tokenStorage.getAuthorizationHeaderValue())
         }
@@ -145,10 +159,11 @@ class BearerTokenStorageTest {
             repeat(100) {
                 executor.submit {
                     try {
-                        val token = BearerTokenStorage.create(
-                            accessToken = "concurrent_token_$it",
-                            expiresIn = 3600
-                        )
+                        val token =
+                            BearerTokenStorage.create(
+                                accessToken = "concurrent_token_$it",
+                                expiresIn = 3600,
+                            )
                         tokens.add(token)
                     } finally {
                         latch.countDown()
@@ -169,45 +184,51 @@ class BearerTokenStorageTest {
         @Test
         fun `extreme expiration buffer scenarios`() {
             // Very small buffer
-            val smallBufferToken = BearerTokenStorage.create(
-                accessToken = "small_buffer_token",
-                expiresIn = 10,
-                expirationBufferSeconds = 1
-            )
+            val smallBufferToken =
+                BearerTokenStorage.create(
+                    accessToken = "small_buffer_token",
+                    expiresIn = 10,
+                    expirationBufferSeconds = 1,
+                )
 
             // Extremely large buffer
-            val largeBufferToken = BearerTokenStorage.create(
-                accessToken = "large_buffer_token",
-                expiresIn = 3600,
-                expirationBufferSeconds = 3599
-            )
+            val largeBufferToken =
+                BearerTokenStorage.create(
+                    accessToken = "large_buffer_token",
+                    expiresIn = 3600,
+                    expirationBufferSeconds = 3599,
+                )
 
             assertAll(
                 "Extreme buffer assertions",
                 { assertNotNull(smallBufferToken) },
-                { assertNotNull(largeBufferToken) }
+                { assertNotNull(largeBufferToken) },
             )
         }
 
         @Test
         fun `clock precision edge cases`() {
-            val precisionTestClock = mockk<Clock> {
-                every { instant() } returns Instant.now()
-                    .plusSeconds(30)
-                    .plusNanos(999_999_999)
-                every { zone } returns ZoneOffset.UTC
-            }
+            val precisionTestClock =
+                mockk<Clock> {
+                    every { instant() } returns
+                        Instant
+                            .now()
+                            .plusSeconds(30)
+                            .plusNanos(999_999_999)
+                    every { zone } returns ZoneOffset.UTC
+                }
 
-            val tokenStorage = BearerTokenStorage.create(
-                accessToken = "precision_test_token",
-                expiresIn = 30,
-                expirationBufferSeconds = 31,
-                clock = precisionTestClock
-            )
+            val tokenStorage =
+                BearerTokenStorage.create(
+                    accessToken = "precision_test_token",
+                    expiresIn = 30,
+                    expirationBufferSeconds = 31,
+                    clock = precisionTestClock,
+                )
 
             assertTrue(
                 tokenStorage.isAboutToExpire(),
-                "Token should be considered about to expire near precision boundaries"
+                "Token should be considered about to expire near precision boundaries",
             )
         }
     }
@@ -224,17 +245,18 @@ class BearerTokenStorageTest {
 
         @Test
         fun `multiple token creations consistency`() {
-            val tokens = (1..100).map {
-                BearerTokenStorage.create("token_$it", 3600)
-            }
+            val tokens =
+                (1..100).map {
+                    BearerTokenStorage.create("token_$it", 3600)
+                }
 
             assertTrue(
                 tokens.all { !it.isAboutToExpire() },
-                "None of the created tokens should be expired"
+                "None of the created tokens should be expired",
             )
             assertTrue(
                 tokens.all { it.getAuthorizationHeaderValue().startsWith("Bearer token_") },
-                "All tokens should have correct authorization header"
+                "All tokens should have correct authorization header",
             )
         }
     }

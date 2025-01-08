@@ -62,7 +62,6 @@ data class OkHttpClientConfiguration(
     val readTimeout: Int? = null,
     val writeTimeout: Int? = null,
 ) {
-
     /**
      * A builder class for constructing `OkHttpClientConfiguration` instances.
      *
@@ -93,18 +92,20 @@ data class OkHttpClientConfiguration(
          * @param interceptors A list of interceptors to apply.
          * @return The builder instance.
          */
-        fun interceptors(interceptors: List<Interceptor>) = apply {
-            this.interceptors = interceptors
-        }
+        fun interceptors(interceptors: List<Interceptor>) =
+            apply {
+                this.interceptors = interceptors
+            }
 
         /**
          * Sets the network-level interceptors.
          * @param networkInterceptors A list of interceptors to apply.
          * @return The builder instance.
          */
-        fun networkInterceptors(networkInterceptors: List<Interceptor>) = apply {
-            this.networkInterceptors = networkInterceptors
-        }
+        fun networkInterceptors(networkInterceptors: List<Interceptor>) =
+            apply {
+                this.networkInterceptors = networkInterceptors
+            }
 
         /**
          * Sets the connection pool configuration.
@@ -115,62 +116,68 @@ data class OkHttpClientConfiguration(
          * @param connectionPool The connection pool to use.
          * @return The builder instance.
          */
-        fun connectionPool(connectionPool: ConnectionPool) = apply {
-            this.connectionPool = connectionPool
-        }
+        fun connectionPool(connectionPool: ConnectionPool) =
+            apply {
+                this.connectionPool = connectionPool
+            }
 
         /**
          * Sets whether to retry on connection failure.
          * @param retryOnConnectionFailure `true` to retry on failure, `false` otherwise.
          * @return The builder instance.
          */
-        fun retryOnConnectionFailure(retryOnConnectionFailure: Boolean) = apply {
-            this.retryOnConnectionFailure = retryOnConnectionFailure
-        }
+        fun retryOnConnectionFailure(retryOnConnectionFailure: Boolean) =
+            apply {
+                this.retryOnConnectionFailure = retryOnConnectionFailure
+            }
 
         /**
          * Sets the call timeout.
          * @param callTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun callTimeout(callTimeout: Int) = apply {
-            this.callTimeout = callTimeout
-        }
+        fun callTimeout(callTimeout: Int) =
+            apply {
+                this.callTimeout = callTimeout
+            }
 
         /**
          * Sets the connection timeout.
          * @param connectTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun connectTimeout(connectTimeout: Int) = apply {
-            this.connectTimeout = connectTimeout
-        }
+        fun connectTimeout(connectTimeout: Int) =
+            apply {
+                this.connectTimeout = connectTimeout
+            }
 
         /**
          * Sets the read timeout.
          * @param readTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun readTimeout(readTimeout: Int) = apply {
-            this.readTimeout = readTimeout
-        }
+        fun readTimeout(readTimeout: Int) =
+            apply {
+                this.readTimeout = readTimeout
+            }
 
         /**
          * Sets the write timeout.
          * @param writeTimeout The timeout duration in milliseconds.
          * @return The builder instance.
          */
-        fun writeTimeout(writeTimeout: Int) = apply {
-            this.writeTimeout = writeTimeout
-        }
+        fun writeTimeout(writeTimeout: Int) =
+            apply {
+                this.writeTimeout = writeTimeout
+            }
 
         /**
          * Builds and returns an `OkHttpClientConfiguration` instance.
          *
          * @return A configured instance of `OkHttpClientConfiguration`.
          */
-        fun build(): OkHttpClientConfiguration {
-            return OkHttpClientConfiguration(
+        fun build(): OkHttpClientConfiguration =
+            OkHttpClientConfiguration(
                 interceptors,
                 networkInterceptors,
                 connectionPool,
@@ -178,9 +185,8 @@ data class OkHttpClientConfiguration(
                 callTimeout,
                 connectTimeout,
                 readTimeout,
-                writeTimeout
+                writeTimeout,
             )
-        }
     }
 
     companion object {

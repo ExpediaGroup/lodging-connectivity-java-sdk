@@ -15,26 +15,26 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguratio
 import com.expediagroup.sdk.lodgingconnectivity.configuration.CustomClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.DefaultClientConfiguration
 
-internal fun getHttpTransport(configuration: ClientConfiguration): Transport = when (configuration) {
-    is CustomClientConfiguration -> configuration.transport
-    is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getInstance(configuration.buildOkHttpConfiguration()))
-}
+internal fun getHttpTransport(configuration: ClientConfiguration): Transport =
+    when (configuration) {
+        is CustomClientConfiguration -> configuration.transport
+        is DefaultClientConfiguration -> OkHttpTransport(BaseOkHttpClient.getInstance(configuration.buildOkHttpConfiguration()))
+    }
 
 class RequestExecutor(
     configuration: ClientConfiguration,
-    apiEndpoint: ApiEndpoint
+    apiEndpoint: ApiEndpoint,
 ) : AbstractRequestExecutor(getHttpTransport(configuration)) {
-
-    override val interceptors: List<Interceptor> = listOf(
-        RequestHeadersInterceptor(),
-        LoggingInterceptor(),
-        BearerAuthenticationInterceptor(
-            BearerAuthenticationManager(
-                requestExecutor = this,
-                authUrl = apiEndpoint.authEndpoint,
-                credentials = Credentials(configuration.key, configuration.secret),
-            )
+    override val interceptors: List<Interceptor> =
+        listOf(
+            RequestHeadersInterceptor(),
+            LoggingInterceptor(),
+            BearerAuthenticationInterceptor(
+                BearerAuthenticationManager(
+                    requestExecutor = this,
+                    authUrl = apiEndpoint.authEndpoint,
+                    credentials = Credentials(configuration.key, configuration.secret),
+                ),
+            ),
         )
-    )
 }
-

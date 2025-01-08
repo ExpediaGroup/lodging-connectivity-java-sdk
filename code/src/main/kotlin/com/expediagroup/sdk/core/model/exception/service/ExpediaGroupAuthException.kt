@@ -27,7 +27,7 @@ import com.expediagroup.sdk.core.http.Status
 class ExpediaGroupAuthException(
     message: String? = null,
     cause: Throwable? = null,
-    transactionId: String? = null
+    transactionId: String? = null,
 ) : ExpediaGroupServiceException(message, cause, transactionId) {
     /**
      * An exception that is thrown when an authentication error occurs.

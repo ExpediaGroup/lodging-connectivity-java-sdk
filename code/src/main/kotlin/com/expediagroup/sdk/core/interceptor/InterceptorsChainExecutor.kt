@@ -40,9 +40,8 @@ class InterceptorsChainExecutor(
     private val transport: Transport,
     private val interceptors: List<Interceptor>,
     private var index: Int = 0,
-    private var request: Request
+    private var request: Request,
 ) : Interceptor.Chain {
-
     /**
      * Retrieves the current [Request] being processed by the chain.
      *

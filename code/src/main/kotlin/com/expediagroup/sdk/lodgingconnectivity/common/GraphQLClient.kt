@@ -28,7 +28,6 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
  * while relying on the `graphQLExecutor` to perform the actual request handling.
  */
 abstract class GraphQLClient : Disposable {
-
     /**
      * The API endpoint that the client is configured to communicate with. Includes the primary API endpoint
      * and the authentication endpoint.

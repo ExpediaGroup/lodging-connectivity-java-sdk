@@ -1,14 +1,13 @@
 package com.expediagroup.sdk.core.http
 
-import java.net.MalformedURLException
-import java.net.URL
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.net.MalformedURLException
+import java.net.URL
 
 class RequestTest {
-
     @Test
     fun `should build request instance with all properties`() {
         // Given
@@ -18,13 +17,14 @@ class RequestTest {
         val body = RequestBody.create("Sample body".byteInputStream())
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .headers(headers)
-            .body(body)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .headers(headers)
+                .body(body)
+                .build()
 
         // Expect
         assertEquals(method, request.method)
@@ -36,18 +36,20 @@ class RequestTest {
     @Test
     fun `should build a new request based on previous instance`() {
         // Given
-        val originalRequest = Request
-            .builder()
-            .method(Method.GET)
-            .url("https://example.com")
-            .addHeader("Content-Type", "application/json")
-            .build()
+        val originalRequest =
+            Request
+                .builder()
+                .method(Method.GET)
+                .url("https://example.com")
+                .addHeader("Content-Type", "application/json")
+                .build()
 
         // When
-        val newRequest = originalRequest
-            .newBuilder()
-            .addHeader("Accept", "text/plain")
-            .build()
+        val newRequest =
+            originalRequest
+                .newBuilder()
+                .addHeader("Accept", "text/plain")
+                .build()
 
         // Expect
         assertEquals(Method.GET, newRequest.method)
@@ -66,11 +68,12 @@ class RequestTest {
         val urlString = "https://example.com"
 
         // When
-        val request = Request
-            .builder()
-            .method(Method.GET)
-            .url(urlString)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(Method.GET)
+                .url(urlString)
+                .build()
 
         // Expect
         assertEquals(URL(urlString), request.url)
@@ -85,12 +88,13 @@ class RequestTest {
         val headerValue = "application/json"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .addHeader(headerName, headerValue)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .addHeader(headerName, headerValue)
+                .build()
 
         // Expect
         assertEquals(headerValue, request.headers.get(headerName))
@@ -106,13 +110,14 @@ class RequestTest {
         val headerValue2 = "text/plain"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .addHeader(headerName, headerValue1)
-            .addHeader(headerName, headerValue2)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .addHeader(headerName, headerValue1)
+                .addHeader(headerName, headerValue2)
+                .build()
 
         // Expect
         assertEquals(listOf(headerValue1, headerValue2), request.headers.values(headerName))
@@ -127,12 +132,13 @@ class RequestTest {
         val headerValue = "application/json"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .setHeader(headerName, headerValue)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .setHeader(headerName, headerValue)
+                .build()
 
         // Expect
         assertEquals(headerValue, request.headers.get(headerName))
@@ -148,13 +154,14 @@ class RequestTest {
         val headerValue2 = "text/plain"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .setHeader(headerName, headerValue1)
-            .setHeader(headerName, headerValue2)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .setHeader(headerName, headerValue1)
+                .setHeader(headerName, headerValue2)
+                .build()
 
         // Expect
         assertEquals(listOf(headerValue2), request.headers.values(headerName))
@@ -170,12 +177,13 @@ class RequestTest {
         val headerValue2 = "text/plain"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .addHeader(headerName, listOf(headerValue1, headerValue2))
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .addHeader(headerName, listOf(headerValue1, headerValue2))
+                .build()
 
         // Expect
         assertEquals(listOf(headerValue1, headerValue2), request.headers.values(headerName))
@@ -191,13 +199,14 @@ class RequestTest {
         val headerValue2 = "text/plain"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .setHeader(headerName, listOf(headerValue1, headerValue2))
-            .setHeader(headerName, listOf(headerValue2))
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .setHeader(headerName, listOf(headerValue1, headerValue2))
+                .setHeader(headerName, listOf(headerValue2))
+                .build()
 
         // Expect
         assertEquals(listOf(headerValue2), request.headers.values(headerName))
@@ -216,15 +225,16 @@ class RequestTest {
         val headerValue3 = "Value3"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .addHeader(headerName1, headerValue1)
-            .setHeader(headerName2, headerValue2)
-            .setHeader(headerName1, headerValue3)
-            .addHeader(headerName3, listOf(headerValue1, headerValue2))
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .addHeader(headerName1, headerValue1)
+                .setHeader(headerName2, headerValue2)
+                .setHeader(headerName1, headerValue3)
+                .addHeader(headerName3, listOf(headerValue1, headerValue2))
+                .build()
 
         // Expect
         assertEquals(headerValue3, request.headers.get(headerName1))
@@ -243,14 +253,15 @@ class RequestTest {
         val headerValue2 = "Value2"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .addHeader(headerName1, headerValue1)
-            .addHeader(headerName2, headerValue2)
-            .removeHeader(headerName1)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .addHeader(headerName1, headerValue1)
+                .addHeader(headerName2, headerValue2)
+                .removeHeader(headerName1)
+                .build()
 
         // Expect
         assertNull(request.headers.get(headerName1))
@@ -264,11 +275,12 @@ class RequestTest {
         val url = "https://example.com"
 
         // When
-        val request = Request
-            .builder()
-            .method(method)
-            .url(url)
-            .build()
+        val request =
+            Request
+                .builder()
+                .method(method)
+                .url(url)
+                .build()
 
         // Expect
         assertNull(request.body)
@@ -280,9 +292,14 @@ class RequestTest {
         val invalidUrl = "invalid_url"
 
         // When
-        val exception = assertThrows<MalformedURLException> {
-            Request.builder().method(Method.GET).url(invalidUrl).build()
-        }
+        val exception =
+            assertThrows<MalformedURLException> {
+                Request
+                    .builder()
+                    .method(Method.GET)
+                    .url(invalidUrl)
+                    .build()
+            }
 
         // Expect
         assertEquals("no protocol: invalid_url", exception.message)
@@ -290,18 +307,20 @@ class RequestTest {
 
     @Test
     fun `should throw an exception if the method is missing`() {
-        val exception = assertThrows<IllegalStateException> {
-            Request.builder().url("https://example.com").build()
-        }
+        val exception =
+            assertThrows<IllegalStateException> {
+                Request.builder().url("https://example.com").build()
+            }
 
         assertEquals("Method is required.", exception.message)
     }
 
     @Test
     fun `should throw an exception if the URL is missing`() {
-        val exception = assertThrows<IllegalStateException> {
-            Request.builder().method(Method.GET).build()
-        }
+        val exception =
+            assertThrows<IllegalStateException> {
+                Request.builder().method(Method.GET).build()
+            }
 
         assertEquals("URL is required.", exception.message)
     }

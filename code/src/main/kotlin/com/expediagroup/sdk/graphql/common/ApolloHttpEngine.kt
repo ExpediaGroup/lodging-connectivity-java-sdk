@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * executor takes a request from the Apollo SDK request object model and produces a suitable HTTP response.
  */
 class ApolloHttpEngine(
-    private val requestExecutor: AbstractRequestExecutor
+    private val requestExecutor: AbstractRequestExecutor,
 ) : HttpEngine {
     private val activeRequests = ConcurrentHashMap<String, ApolloDisposable>()
     private val isDisposed = AtomicBoolean(false)
@@ -42,7 +42,11 @@ class ApolloHttpEngine(
      * Executes the given [request] using the [requestExecutor]. If the engine has already been disposed,
      * the callback will receive an [ApolloNetworkException] indicating that the engine is no longer available.
      */
-    override fun execute(request: HttpRequest, callback: HttpCallback, disposable: ApolloDisposable) {
+    override fun execute(
+        request: HttpRequest,
+        callback: HttpCallback,
+        disposable: ApolloDisposable,
+    ) {
         if (isDisposed.get()) {
             callback.onFailure(ApolloNetworkException("HTTP engine has been disposed"))
             return

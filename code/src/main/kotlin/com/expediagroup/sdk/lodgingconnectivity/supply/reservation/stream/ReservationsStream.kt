@@ -29,9 +29,8 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.Res
  * @param paginator The [ReservationsPaginator] responsible for retrieving reservations in a paginated format.
  */
 class ReservationsStream(
-    private val paginator: ReservationsPaginator
+    private val paginator: ReservationsPaginator,
 ) : PaginatedStream<ReservationData?>() {
-
     /**
      * Retrieves the next reservation item from the stream.
      *

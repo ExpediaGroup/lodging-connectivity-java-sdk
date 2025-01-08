@@ -22,8 +22,9 @@ import java.util.Locale
  * Represents a collection of HTTP headers.
  */
 @ConsistentCopyVisibility
-data class Headers private constructor(private val headersMap: Map<String, List<String>>) {
-
+data class Headers private constructor(
+    private val headersMap: Map<String, List<String>>,
+) {
     /**
      * Returns the first header value for the given name, or null if none.
      *
@@ -69,7 +70,6 @@ data class Headers private constructor(private val headersMap: Map<String, List<
      * Builder for constructing [Headers] instances.
      */
     class Builder {
-
         private val headersMap: MutableMap<String, MutableList<String>> = LinkedHashMap()
 
         /**
@@ -97,7 +97,10 @@ data class Headers private constructor(private val headersMap: Map<String, List<
          * @return this builder
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
-        fun add(name: String, value: String): Builder = apply { add(sanitizeName(name), listOf(value)) }
+        fun add(
+            name: String,
+            value: String,
+        ): Builder = apply { add(sanitizeName(name), listOf(value)) }
 
         /**
          * Adds all header values for the specified name.
@@ -107,9 +110,13 @@ data class Headers private constructor(private val headersMap: Map<String, List<
          * @return this builder
          * @throws IllegalArgumentException if [name] or any [values] are invalid
          */
-        fun add(name: String, values: List<String>): Builder = apply {
-            headersMap.computeIfAbsent(sanitizeName(name)) { mutableListOf() }.addAll(values)
-        }
+        fun add(
+            name: String,
+            values: List<String>,
+        ): Builder =
+            apply {
+                headersMap.computeIfAbsent(sanitizeName(name)) { mutableListOf() }.addAll(values)
+            }
 
         /**
          * Sets the header with the specified name to the single value provided.
@@ -120,7 +127,10 @@ data class Headers private constructor(private val headersMap: Map<String, List<
          * @return this builder
          * @throws IllegalArgumentException if [name] or [value] is invalid
          */
-        fun set(name: String, value: String): Builder = apply { set(sanitizeName(name), listOf(value)) }
+        fun set(
+            name: String,
+            value: String,
+        ): Builder = apply { set(sanitizeName(name), listOf(value)) }
 
         /**
          * Sets the header with the specified name to the values list provided.
@@ -131,10 +141,14 @@ data class Headers private constructor(private val headersMap: Map<String, List<
          * @return this builder
          * @throws IllegalArgumentException if [name] or [values] are invalid
          */
-        fun set(name: String, values: List<String>): Builder = apply {
-            remove(sanitizeName(name))
-            add(sanitizeName(name), values)
-        }
+        fun set(
+            name: String,
+            values: List<String>,
+        ): Builder =
+            apply {
+                remove(sanitizeName(name))
+                add(sanitizeName(name), values)
+            }
 
         /**
          * Removes any header with the specified name.
@@ -142,30 +156,26 @@ data class Headers private constructor(private val headersMap: Map<String, List<
          * @param name the header name
          * @return this builder
          */
-        fun remove(name: String): Builder = apply {
-            headersMap.remove(sanitizeName(name))
-        }
+        fun remove(name: String): Builder =
+            apply {
+                headersMap.remove(sanitizeName(name))
+            }
 
         /**
          * Builds an immutable [Headers] instance.
          *
          * @return the built [Headers]
          */
-        fun build(): Headers {
-            return Headers(LinkedHashMap(headersMap))
-        }
+        fun build(): Headers = Headers(LinkedHashMap(headersMap))
     }
 
     companion object {
         @JvmStatic
         fun builder(headers: Headers): Builder = Builder(headers)
 
-
         @JvmStatic
         fun builder(): Builder = Builder()
 
-        private fun sanitizeName(value: String): String {
-            return value.lowercase(Locale.US).trim()
-        }
+        private fun sanitizeName(value: String): String = value.lowercase(Locale.US).trim()
     }
 }

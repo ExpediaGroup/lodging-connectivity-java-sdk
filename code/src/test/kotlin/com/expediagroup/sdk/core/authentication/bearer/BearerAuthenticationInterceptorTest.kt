@@ -3,12 +3,12 @@ package com.expediagroup.sdk.core.authentication.bearer
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupAuthException
+import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.Runs
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -69,7 +69,6 @@ class BearerAuthenticationInterceptorTest {
         // Ensure the response is not null
         assertNotNull(response)
     }
-
 
     @Test
     fun `intercept should add Authorization header and not authenticate when token is valid`() {
@@ -217,9 +216,10 @@ class BearerAuthenticationInterceptorTest {
         every { authManager.authenticate() } throws IOException("Network error")
 
         // Act & Assert
-        val exception = assertThrows<ExpediaGroupAuthException> {
-            interceptor.intercept(chain)
-        }
+        val exception =
+            assertThrows<ExpediaGroupAuthException> {
+                interceptor.intercept(chain)
+            }
 
         assertEquals("Failed to authenticate", exception.message)
         assertTrue(exception.cause is IOException)
@@ -303,7 +303,6 @@ class BearerAuthenticationInterceptorTest {
         assertNotNull(response)
     }
 
-
     @Test
     fun `ensureValidAuthentication should call authenticate only once when multiple threads detect token expiration`() {
         // Arrange
@@ -365,5 +364,4 @@ class BearerAuthenticationInterceptorTest {
         verify(exactly = numberOfThreads) { requestBuilder.addHeader("Authorization", "Bearer refreshed_token") }
         verify(exactly = numberOfThreads) { chain.proceed(authorizedRequest) }
     }
-
 }

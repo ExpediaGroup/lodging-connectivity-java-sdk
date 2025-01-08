@@ -30,7 +30,7 @@ import java.util.Locale
 data class MediaType private constructor(
     val type: String,
     val subtype: String,
-    val parameters: Map<String, String> = emptyMap()
+    val parameters: Map<String, String> = emptyMap(),
 ) {
     /**
      * The full representation of a standard media type consisting of type/subtype
@@ -69,9 +69,10 @@ data class MediaType private constructor(
      * Returns the full representation of a standard media type consisting of type/subtype followed by all parameters, if any
      * */
     override fun toString(): String {
-        val formattedParams = parameters.entries.joinToString(separator = ";") { (key, value) ->
-            "$key=$value"
-        }
+        val formattedParams =
+            parameters.entries.joinToString(separator = ";") { (key, value) ->
+                "$key=$value"
+            }
         return if (formattedParams.isNotEmpty()) "$type/$subtype;$formattedParams" else "$type/$subtype"
     }
 
@@ -81,7 +82,11 @@ data class MediaType private constructor(
          */
         @JvmStatic
         @JvmOverloads
-        fun of(type: String, subtype: String, parameters: Map<String, String> = emptyMap()): MediaType {
+        fun of(
+            type: String,
+            subtype: String,
+            parameters: Map<String, String> = emptyMap(),
+        ): MediaType {
             require(type.isNotBlank()) { "Type must not be blank" }
             require(subtype.isNotBlank()) { "Subtype must not be blank" }
 
@@ -92,7 +97,7 @@ data class MediaType private constructor(
             return MediaType(
                 type = type.lowercase(Locale.getDefault()),
                 subtype = subtype.lowercase(Locale.getDefault()),
-                parameters = parameters.mapKeys { it.key.lowercase(Locale.getDefault()) }
+                parameters = parameters.mapKeys { it.key.lowercase(Locale.getDefault()) },
             )
         }
 
@@ -124,22 +129,23 @@ data class MediaType private constructor(
                 throw IllegalArgumentException("Invalid media type format: $mediaType")
             }
 
-            val parametersMap = parametersList
-                .filter(String::isNotBlank)
-                .associate { parameter ->
-                    // Split the parameter into key-value parts
-                    val parts = parameter.split("=").map(String::trim)
-                    val isValid = parts.size == 2 && parts.none { it.isBlank() }
+            val parametersMap =
+                parametersList
+                    .filter(String::isNotBlank)
+                    .associate { parameter ->
+                        // Split the parameter into key-value parts
+                        val parts = parameter.split("=").map(String::trim)
+                        val isValid = parts.size == 2 && parts.none { it.isBlank() }
 
-                    if (!isValid) {
-                        throw IllegalArgumentException("Invalid parameter format: $parameter")
+                        if (!isValid) {
+                            throw IllegalArgumentException("Invalid parameter format: $parameter")
+                        }
+
+                        val key = parts[0].lowercase(Locale.getDefault())
+                        val value = parts[1].lowercase(Locale.getDefault())
+
+                        key to value
                     }
-
-                    val key = parts[0].lowercase(Locale.getDefault())
-                    val value = parts[1].lowercase(Locale.getDefault())
-
-                    key to value
-                }
 
             return MediaType(type, subtype, parametersMap)
         }
