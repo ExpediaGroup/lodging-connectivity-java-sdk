@@ -16,9 +16,9 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
+import com.expediagroup.sdk.core.transport.AsyncTransport
+import com.expediagroup.sdk.core.transport.Transport
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.transport.AsyncTransport
-import com.expediagroup.sdk.transport.Transport
 
 data class ClientConfiguration(
     val key: String,

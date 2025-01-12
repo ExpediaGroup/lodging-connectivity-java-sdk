@@ -1,10 +1,10 @@
 package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.toResponseJson
-import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
-import com.expediagroup.sdk.pipeline.ExecutionPipeline
-import com.expediagroup.sdk.transport.AbstractRequestExecutor
+import com.expediagroup.sdk.core.pipeline.ExecutionPipeline
+import com.expediagroup.sdk.core.transport.AbstractRequestExecutor
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach

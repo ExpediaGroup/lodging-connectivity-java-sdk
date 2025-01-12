@@ -16,8 +16,8 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator
 
-import com.expediagroup.sdk.common.getOrThrow
-import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.core.common.getOrThrow
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.paging.PageInfo
 import com.expediagroup.sdk.graphql.model.response.PaginatedResponse

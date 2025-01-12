@@ -16,8 +16,8 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.payment.operation
 
-import com.expediagroup.sdk.common.getOrThrow
-import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.core.common.getOrThrow
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import com.expediagroup.sdk.graphql.model.response.Response
@@ -49,7 +49,10 @@ data class GetPaymentInstrumentResponse(
  * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
  * @throws [ExpediaGroupServiceException] If the payment instrument data is not found in the response.
  */
-fun getPaymentInstrumentOperation(graphQLExecutor: AbstractGraphQLExecutor, token: String): GetPaymentInstrumentResponse {
+fun getPaymentInstrumentOperation(
+    graphQLExecutor: AbstractGraphQLExecutor,
+    token: String
+): GetPaymentInstrumentResponse {
     val operation = PaymentInstrumentQuery(token)
     val response = graphQLExecutor.execute(operation)
 

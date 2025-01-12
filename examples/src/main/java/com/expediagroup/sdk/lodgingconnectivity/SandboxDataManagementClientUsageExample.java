@@ -31,11 +31,13 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.Ca
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.ChangeSandboxReservationStayDatesResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.CreateSandboxReservationResponse;
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation.UpdateSandboxReservationResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.expediagroup.sdk.okhttp.OkHttpClientConfiguration;
+import com.expediagroup.sdk.okhttp.OkHttpTransport;
 import java.time.LocalDate;
 import java.util.Arrays;
+import okhttp3.ConnectionPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Example class to demonstrate different operations supported by the SandboxDataManagementClient
@@ -50,7 +52,16 @@ import java.util.Arrays;
  * 8. Delete the Property
  **/
 public class SandboxDataManagementClientUsageExample {
+    static {
+        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace");
+    }
     private static final Logger logger = LoggerFactory.getLogger(SandboxDataManagementClientUsageExample.class);
+
+    private static final OkHttpClientConfiguration okHttpConfiguration = OkHttpClientConfiguration.builder()
+            .callTimeout(300)
+            .readTimeout(4000)
+            .connectionPool(new ConnectionPool())
+            .build();
 
     private static final SandboxDataManagementClient client = SandboxDataManagementClient.builder()
             .key("")
@@ -62,6 +73,7 @@ public class SandboxDataManagementClientUsageExample {
     private static final String UPDATED_PROPERTY_NAME = "New Lodging SDK Test Property";
 
     public static void main(String[] args) {
+
         // ******* Delete any old property if it has the same name used in the test run *******
         deletePropertyIfExists();
 

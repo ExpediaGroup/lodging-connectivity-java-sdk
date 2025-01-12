@@ -1,15 +1,15 @@
 package com.expediagroup.sdk.okhttp
 
-import com.expediagroup.sdk.http.CommonMediaTypes
-import com.expediagroup.sdk.http.Headers
-import com.expediagroup.sdk.http.MediaType
-import com.expediagroup.sdk.http.Method
-import com.expediagroup.sdk.http.Protocol
-import com.expediagroup.sdk.http.Request
-import com.expediagroup.sdk.http.RequestBody
-import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.http.ResponseBody
-import com.expediagroup.sdk.http.Status
+import com.expediagroup.sdk.core.http.CommonMediaTypes
+import com.expediagroup.sdk.core.http.Headers
+import com.expediagroup.sdk.core.http.MediaType
+import com.expediagroup.sdk.core.http.Method
+import com.expediagroup.sdk.core.http.Protocol
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.RequestBody
+import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.http.ResponseBody
+import com.expediagroup.sdk.core.http.Status
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

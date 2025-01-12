@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox
 
-import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient

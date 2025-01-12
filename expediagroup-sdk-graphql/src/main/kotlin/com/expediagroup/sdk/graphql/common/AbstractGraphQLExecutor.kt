@@ -17,9 +17,9 @@
 package com.expediagroup.sdk.graphql.common
 
 import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.transport.AbstractRequestExecutor
-import com.expediagroup.sdk.transport.Disposable
-import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.core.transport.AbstractRequestExecutor
+import com.expediagroup.sdk.core.transport.Disposable
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 

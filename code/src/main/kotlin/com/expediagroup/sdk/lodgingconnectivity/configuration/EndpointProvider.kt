@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.configuration
 
-import com.expediagroup.sdk.exception.client.ExpediaGroupConfigurationException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupConfigurationException
 
 enum class SupplyApiEndpoint(val url: String) {
     PROD("https://api.expediagroup.com/supply/lodging/graphql"),

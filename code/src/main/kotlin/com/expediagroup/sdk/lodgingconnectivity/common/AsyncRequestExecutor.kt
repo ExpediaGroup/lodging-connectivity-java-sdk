@@ -1,16 +1,15 @@
 package com.expediagroup.sdk.lodgingconnectivity.common
 
-import com.expediagroup.sdk.authentication.bearer.BearerAuthenticationAsyncManager
-import com.expediagroup.sdk.authentication.common.Credentials
+import com.expediagroup.sdk.core.authentication.bearer.BearerAuthenticationAsyncManager
+import com.expediagroup.sdk.core.authentication.common.Credentials
+import com.expediagroup.sdk.core.logging.LoggerDecorator
+import com.expediagroup.sdk.core.pipeline.ExecutionPipeline
+import com.expediagroup.sdk.core.pipeline.step.RequestHeadersStep
+import com.expediagroup.sdk.core.pipeline.step.RequestLoggingStep
+import com.expediagroup.sdk.core.pipeline.step.ResponseLoggingStep
+import com.expediagroup.sdk.core.transport.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
 import com.expediagroup.sdk.lodgingconnectivity.configuration.AsyncClientConfiguration
-import com.expediagroup.sdk.logging.LoggerDecorator
-import com.expediagroup.sdk.pipeline.ExecutionPipeline
-import com.expediagroup.sdk.pipeline.step.BearerAuthenticationStep
-import com.expediagroup.sdk.pipeline.step.RequestHeadersStep
-import com.expediagroup.sdk.pipeline.step.RequestLoggingStep
-import com.expediagroup.sdk.pipeline.step.ResponseLoggingStep
-import com.expediagroup.sdk.transport.AbstractAsyncRequestExecutor
 import org.slf4j.LoggerFactory
 
 class AsyncRequestExecutor(
@@ -27,7 +26,7 @@ class AsyncRequestExecutor(
     override val executionPipeline = ExecutionPipeline(
         requestPipeline = listOf(
             RequestHeadersStep(),
-            BearerAuthenticationStep(authManager),
+            com.expediagroup.sdk.core.pipeline.step.BearerAuthenticationStep(authManager),
             RequestLoggingStep(logger)
         ),
         responsePipeline = listOf(

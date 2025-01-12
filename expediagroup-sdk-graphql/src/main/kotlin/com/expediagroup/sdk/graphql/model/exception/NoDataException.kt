@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.graphql.model.exception
 
-import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.model.response.Error
 
 /**

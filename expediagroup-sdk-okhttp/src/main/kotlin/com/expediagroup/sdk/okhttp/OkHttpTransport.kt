@@ -16,9 +16,9 @@
 
 package com.expediagroup.sdk.okhttp
 
-import com.expediagroup.sdk.http.Request
-import com.expediagroup.sdk.http.Response
-import com.expediagroup.sdk.transport.Transport
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.transport.Transport
 import java.io.IOException
 import okhttp3.OkHttpClient
 

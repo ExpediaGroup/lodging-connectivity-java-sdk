@@ -2,7 +2,7 @@ package com.expediagroup.sdk.lodgingconnectivity.common
 
 import com.expediagroup.sdk.graphql.common.AbstractAsyncGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
-import com.expediagroup.sdk.transport.Disposable
+import com.expediagroup.sdk.core.transport.Disposable
 
 abstract class AsyncGraphQLClient : Disposable {
 

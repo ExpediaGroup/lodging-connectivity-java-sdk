@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.payment
 
-import com.expediagroup.sdk.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
@@ -62,6 +62,7 @@ class PaymentClient private constructor(config: ClientConfiguration) : GraphQLCl
     }
 
     companion object {
+
         class Builder : ClientBuilder<PaymentClient>() {
             override fun build(): PaymentClient = PaymentClient(buildConfig())
         }

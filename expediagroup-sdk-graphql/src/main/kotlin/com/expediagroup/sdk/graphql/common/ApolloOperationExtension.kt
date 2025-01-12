@@ -23,11 +23,11 @@ import com.apollographql.apollo.api.composeJsonRequest
 import com.apollographql.apollo.api.json.buildJsonString
 import com.apollographql.apollo.api.json.jsonReader
 import com.apollographql.apollo.api.parseResponse
-import com.expediagroup.sdk.http.CommonMediaTypes
-import com.expediagroup.sdk.http.Method
-import com.expediagroup.sdk.http.Request
-import com.expediagroup.sdk.http.RequestBody
-import com.expediagroup.sdk.http.Response
+import com.expediagroup.sdk.core.http.CommonMediaTypes
+import com.expediagroup.sdk.core.http.Method
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.RequestBody
+import com.expediagroup.sdk.core.http.Response
 import java.util.UUID
 import okio.Buffer
 
