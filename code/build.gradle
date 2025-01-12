@@ -50,11 +50,6 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
-
-    classpath = classpath.filter {
-        // exclude original sdk.properties file during testing
-        !it.absolutePath.contains("build/resources/main/sdk.properties")
-    }
 }
 
 tasks.named("check") {
