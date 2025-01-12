@@ -17,9 +17,3 @@ jobs:
       - name: Run Checks
         id: build
         run: gradle clean build
-      - name: Upload Coverage Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: code/build/reports/kover
