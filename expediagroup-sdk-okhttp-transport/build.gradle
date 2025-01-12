@@ -1,0 +1,38 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
+
+    /* Test Reporting */
+    id 'org.jetbrains.kotlinx.kover' version "0.9.0"
+}
+
+kotlin {
+    jvmToolchain(8)
+}
+
+dependencies {
+    /* Kotlin */
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.0'
+
+    /* EG SDK Core */
+    api 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation(project(":core"))
+
+    /* Testing */
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'io.mockk:mockk:1.13.14'
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.12.0"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.named("check") {
+    finalizedBy("koverHtmlReport")
+}
