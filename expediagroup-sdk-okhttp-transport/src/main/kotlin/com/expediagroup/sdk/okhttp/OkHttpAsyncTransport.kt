@@ -16,15 +16,22 @@
 
 package com.expediagroup.sdk.okhttp
 
-import com.expediagroup.sdk.core.transport.AsyncTransport
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
+import com.expediagroup.sdk.core.transport.AsyncTransport
 import java.io.IOException
 import java.util.concurrent.CompletableFuture
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
 
+/**
+ * Async transport implementation using OkHttp to execute HTTP requests.
+ *
+ * This class adapts the OkHttp client to the SDK [AsyncTransport] interface, allowing seamless integration
+ * between OkHttp's request-response mechanism and the SDK transport layer.
+ *
+ */
 class OkHttpAsyncTransport(
     private val okHttpClient: OkHttpClient
 ) : AsyncTransport {
