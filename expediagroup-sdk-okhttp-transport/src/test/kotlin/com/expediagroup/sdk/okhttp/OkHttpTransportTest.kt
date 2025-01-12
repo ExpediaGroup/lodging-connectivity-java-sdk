@@ -7,6 +7,8 @@ import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.http.Status
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import io.mockk.verify
 import okhttp3.Call
 import okhttp3.OkHttpClient
@@ -55,6 +57,40 @@ class OkHttpTransportTest {
         assertEquals(sdkResponse.body, result.body)
 
         verify { mockCall.execute() }
+    }
+
+    @Test
+    fun `default constructor uses the base OkHttp instance`() {
+        // Given
+        val mockOkHttpClient = mockk<OkHttpClient>()
+        mockkObject(BaseOkHttpClient)
+        every { BaseOkHttpClient.getInstance() } returns mockOkHttpClient
+
+        // When
+        OkHttpTransport()
+
+        // Expect
+        verify(exactly = 1) { BaseOkHttpClient.getInstance() }
+
+        unmockkObject(BaseOkHttpClient)
+    }
+
+    @Test
+    fun `constructor with configuration parameter initializes a new configured OkHttp instance`() {
+        // Given
+        val mockOkHttpClient = mockk<OkHttpClient>()
+        val mockConfig = mockk<OkHttpClientConfiguration>()
+        mockkObject(BaseOkHttpClient)
+        every { BaseOkHttpClient.getConfiguredInstance(mockConfig) } returns mockOkHttpClient
+
+        // When
+        OkHttpTransport(mockConfig)
+
+        // Expect
+        verify(exactly = 1) { BaseOkHttpClient.getConfiguredInstance(mockConfig) }
+        verify(exactly = 0) { BaseOkHttpClient.getInstance() }
+
+        unmockkObject(BaseOkHttpClient)
     }
 
     @Test

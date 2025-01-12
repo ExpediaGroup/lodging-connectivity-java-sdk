@@ -192,8 +192,5 @@ data class OkHttpClientConfiguration private constructor(
          */
         @JvmStatic
         fun builder() = Builder()
-
-        @JvmStatic
-        fun default() = OkHttpClientConfiguration()
     }
 }

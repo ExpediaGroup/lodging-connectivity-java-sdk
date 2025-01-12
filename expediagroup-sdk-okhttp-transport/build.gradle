@@ -1,3 +1,6 @@
+import kotlinx.kover.gradle.plugin.dsl.AggregationType
+import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
 
@@ -35,4 +38,25 @@ test {
 
 tasks.named("check") {
     finalizedBy("koverHtmlReport")
+}
+
+kover {
+    reports {
+        total {
+            verify {
+                rule {
+                    bound {
+                        aggregationForGroup = AggregationType.COVERED_PERCENTAGE
+                        coverageUnits = CoverageUnit.LINE
+                        minValue = 100
+                    }
+                    bound {
+                        aggregationForGroup = AggregationType.COVERED_PERCENTAGE
+                        coverageUnits = CoverageUnit.BRANCH
+                        minValue = 97
+                    }
+                }
+            }
+        }
+    }
 }
