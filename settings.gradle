@@ -7,4 +7,5 @@ rootProject.name = "lodging-connectivity-sdk" // Used as published artifactId
 include 'code'
 include 'examples'
 include 'apollo-compiler-plugin'
+include 'core'
 

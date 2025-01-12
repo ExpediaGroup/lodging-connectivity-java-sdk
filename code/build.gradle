@@ -1,3 +1,6 @@
+import kotlinx.kover.gradle.plugin.dsl.AggregationType
+import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
     id 'org.jetbrains.dokka' version '2.0.0'
@@ -29,13 +32,8 @@ dependencies {
     api 'com.apollographql.java:client:0.0.2'
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
 
-
     /* EG SDK Core */
-    implementation 'com.ebay.ejmask:ejmask-api:1.3.0'
-    implementation 'com.ebay.ejmask:ejmask-extensions:1.3.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2'
-    implementation 'org.slf4j:slf4j-api:2.0.16'
+    api(project(':core'))
 
     /* Testing */
     testImplementation platform('org.junit:junit-bom:5.11.4')
@@ -46,7 +44,53 @@ dependencies {
     testImplementation "com.squareup.okhttp3:mockwebserver:4.12.0"
 }
 
-apply from: "tasks-gradle/test.gradle"
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+    classpath = classpath.filter {
+        // exclude original sdk.properties file during testing
+        !it.absolutePath.contains("build/resources/main/sdk.properties")
+    }
+}
+
+tasks.named("check") {
+    finalizedBy("koverHtmlReport")
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                packages(
+                        "com.expediagroup.sdk.lodgingconnectivity.supply.operation",
+                        "com.expediagroup.sdk.lodgingconnectivity.sandbox.operation",
+                        "com.expediagroup.sdk.lodgingconnectivity.payment.operation",
+                        "testservice"
+                )
+            }
+        }
+
+        verify {
+            rule {
+                bound {
+                    aggregationForGroup = AggregationType.COVERED_PERCENTAGE
+                    coverageUnits = CoverageUnit.LINE
+                    minValue = 24
+                }
+                bound {
+                    aggregationForGroup = AggregationType.COVERED_PERCENTAGE
+                    coverageUnits = CoverageUnit.BRANCH
+                    minValue = 28
+                }
+            }
+        }
+    }
+}
+
 apply from: "tasks-gradle/sdk-properties.gradle"
 apply from: "tasks-gradle/apollo.gradle"
 apply from: "tasks-gradle/publishing.gradle"

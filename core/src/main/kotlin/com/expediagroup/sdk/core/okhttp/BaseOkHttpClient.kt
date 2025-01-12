@@ -31,7 +31,7 @@ import java.time.Duration
  * - Use `getInstance(configuration)` to create a configured `OkHttpClient` instance
  *   with specific settings provided via the `OkHttpClientConfiguration` object.
  */
-internal object BaseOkHttpClient {
+object BaseOkHttpClient {
     private val instance: OkHttpClient = OkHttpClient()
 
     /**

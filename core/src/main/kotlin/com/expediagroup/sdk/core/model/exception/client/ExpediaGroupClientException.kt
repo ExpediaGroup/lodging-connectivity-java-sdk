@@ -26,4 +26,4 @@ import com.expediagroup.sdk.core.model.exception.ExpediaGroupException
 open class ExpediaGroupClientException(
     message: String? = null,
     cause: Throwable? = null,
-) : ExpediaGroupException(message, cause)
+) : com.expediagroup.sdk.core.model.exception.ExpediaGroupException(message, cause)
