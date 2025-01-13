@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.graphql.model.paging
+package com.expediagroup.sdk.graphql.paging
 
 import java.util.stream.Stream
 import kotlin.streams.asStream
@@ -74,4 +74,3 @@ abstract class PaginatedStream<T> {
      */
     protected fun isCurrentPageEmpty(): Boolean = currentPage.isEmpty()
 }
-

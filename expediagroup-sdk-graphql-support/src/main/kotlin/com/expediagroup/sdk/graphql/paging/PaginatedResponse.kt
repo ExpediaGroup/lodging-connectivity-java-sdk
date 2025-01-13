@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.graphql.model
+package com.expediagroup.sdk.graphql.paging
 
 import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.graphql.model.paging.PageInfo
+import com.expediagroup.sdk.graphql.model.Response
 
 /**
  * Represents a paginated response, extending a [Response] with pagination metadata.

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.graphql.model.paging
+package com.expediagroup.sdk.graphql.paging
 
 /**
  * Represents pagination information for a paginated response.

@@ -49,7 +49,7 @@ class GraphQLExecutor(
      */
     override fun <T : Operation.Data> execute(operation: Operation<T>): RawResponse<T> = operation
         .toSDKRequest(serverUrl).let {
-            transportPipeline.execute(it)
+            requestExecutor.execute(it)
         }.toApolloResponse(operation).let {
             processApolloResponse(it)
         }

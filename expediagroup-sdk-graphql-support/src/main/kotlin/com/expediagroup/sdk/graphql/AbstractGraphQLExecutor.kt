@@ -32,7 +32,7 @@ import com.expediagroup.sdk.graphql.model.RawResponse
  * requests are sent and processed.
  */
 abstract class AbstractGraphQLExecutor(
-    protected val transportPipeline: AbstractRequestExecutor
+    protected val requestExecutor: AbstractRequestExecutor
 ) : Disposable {
     /**
      * Executes a GraphQL operation and returns the complete raw response.
@@ -48,6 +48,6 @@ abstract class AbstractGraphQLExecutor(
      * Closes the underlying [AbstractRequestExecutor]
      */
     override fun dispose() {
-        transportPipeline.dispose()
+        requestExecutor.dispose()
     }
 }
