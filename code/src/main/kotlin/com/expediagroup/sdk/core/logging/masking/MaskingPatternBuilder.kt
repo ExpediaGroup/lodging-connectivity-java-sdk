@@ -31,9 +31,10 @@ internal class MaskingPatternBuilder {
      * @param fields Vararg of field names to be masked globally.
      * @return The current instance of MaskingPatternBuilder.
      */
-    fun globalFields(fields: Set<String>): MaskingPatternBuilder = apply {
-        globalFields += fields.toSortedSet()
-    }
+    fun globalFields(fields: Set<String>): MaskingPatternBuilder =
+        apply {
+            globalFields += fields.toSortedSet()
+        }
 
     /**
      * Adds path-specific fields to be masked.
@@ -45,55 +46,58 @@ internal class MaskingPatternBuilder {
      * @param paths Vararg of lists of field names to be masked by path.
      * @return The current instance of MaskingPatternBuilder.
      */
-    fun pathFields(paths: Set<List<String>>) = apply {
-        pathFields += paths.map { it.takeLast(2) }
-    }
+    fun pathFields(paths: Set<List<String>>) =
+        apply {
+            pathFields += paths.map { it.takeLast(2) }
+        }
 
     /**
      * Builds the list of MaskingPattern based on the added global and path fields.
      *
      * @return A list of MaskingPattern.
      */
-    fun build(): List<MaskingPattern> = buildList {
-        /**
-         * Builds masking patterns for global fields.
-         *
-         * @return A list of MaskingPattern for global fields.
-         */
-        fun buildGlobalFieldsMaskingPattern(): List<MaskingPattern> =
-            if (globalFields.isEmpty()) {
-                emptyList()
-            } else {
-                val patternGenerator = CustomJsonFullValuePatternBuilder()
-                listOf(
-                    MaskingPattern(
-                        0,
-                        patternGenerator.buildPattern(0, *globalFields.toTypedArray()),
-                        patternGenerator.buildReplacement(0, *globalFields.toTypedArray())
-                    )
-                )
-            }
-
-        /**
-         * Builds masking patterns for path-specific fields.
-         *
-         * @return A list of MaskingPattern for path-specific fields.
-         */
-        fun buildPathFieldsMaskingPattern(): List<MaskingPattern> = buildList {
-            pathFields.forEachIndexed { index, path ->
-                CustomJsonRelativeFieldPatternBuilder().also { patternGenerator ->
-                    add(
+    fun build(): List<MaskingPattern> =
+        buildList {
+            /**
+             * Builds masking patterns for global fields.
+             *
+             * @return A list of MaskingPattern for global fields.
+             */
+            fun buildGlobalFieldsMaskingPattern(): List<MaskingPattern> =
+                if (globalFields.isEmpty()) {
+                    emptyList()
+                } else {
+                    val patternGenerator = CustomJsonFullValuePatternBuilder()
+                    listOf(
                         MaskingPattern(
-                            index + 1,
-                            patternGenerator.buildPattern(1, *path.toTypedArray()),
-                            patternGenerator.buildReplacement(1, *path.toTypedArray())
-                        )
+                            0,
+                            patternGenerator.buildPattern(0, *globalFields.toTypedArray()),
+                            patternGenerator.buildReplacement(0, *globalFields.toTypedArray()),
+                        ),
                     )
                 }
-            }
-        }
 
-        addAll(buildGlobalFieldsMaskingPattern())
-        addAll(buildPathFieldsMaskingPattern())
-    }
+            /**
+             * Builds masking patterns for path-specific fields.
+             *
+             * @return A list of MaskingPattern for path-specific fields.
+             */
+            fun buildPathFieldsMaskingPattern(): List<MaskingPattern> =
+                buildList {
+                    pathFields.forEachIndexed { index, path ->
+                        CustomJsonRelativeFieldPatternBuilder().also { patternGenerator ->
+                            add(
+                                MaskingPattern(
+                                    index + 1,
+                                    patternGenerator.buildPattern(1, *path.toTypedArray()),
+                                    patternGenerator.buildReplacement(1, *path.toTypedArray()),
+                                ),
+                            )
+                        }
+                    }
+                }
+
+            addAll(buildGlobalFieldsMaskingPattern())
+            addAll(buildPathFieldsMaskingPattern())
+        }
 }

@@ -16,7 +16,7 @@ import java.io.IOException
  */
 class LoggingInterceptor(
     private val logger: LoggerDecorator,
-    private val maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE
+    private val maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE,
 ) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

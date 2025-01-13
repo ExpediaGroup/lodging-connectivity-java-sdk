@@ -1,12 +1,12 @@
 package com.expediagroup.sdk.core.logging.masking
 
 import com.expediagroup.sdk.core.logging.common.Constant.OMITTED
-import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class MaskingPatternBuilderTest {
     @Nested
@@ -31,11 +31,35 @@ class MaskingPatternBuilderTest {
 
             assertEquals(1, patterns.size)
 
-            assertFalse(patterns.first().pattern.pattern().contains("first"))
-            assertFalse(patterns.first().pattern.pattern().contains("second"))
+            assertFalse(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("first"),
+            )
+            assertFalse(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("second"),
+            )
 
-            assertTrue(patterns.first().pattern.pattern().contains("third"))
-            assertTrue(patterns.first().pattern.pattern().contains("fourth"))
+            assertTrue(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("third"),
+            )
+            assertTrue(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("fourth"),
+            )
         }
 
         @Test
@@ -59,10 +83,11 @@ class MaskingPatternBuilderTest {
             val globalFields = setOf("globalField1", "globalField2")
             val pathFields = setOf(listOf("first", "second"), listOf("first", "second", "third"))
 
-            val maskingPatterns = MaskingPatternBuilder()
-                .globalFields(globalFields)
-                .pathFields(pathFields)
-                .build()
+            val maskingPatterns =
+                MaskingPatternBuilder()
+                    .globalFields(globalFields)
+                    .pathFields(pathFields)
+                    .build()
 
             assertEquals(pathFields.size + 1, maskingPatterns.size)
         }
@@ -74,8 +99,20 @@ class MaskingPatternBuilderTest {
 
             assertEquals(1, patterns.size)
 
-            assertTrue(patterns.first().pattern.pattern().contains("globalField1"))
-            assertTrue(patterns.first().pattern.pattern().contains("globalField2"))
+            assertTrue(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("globalField1"),
+            )
+            assertTrue(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("globalField2"),
+            )
         }
 
         @Test
@@ -83,15 +120,13 @@ class MaskingPatternBuilderTest {
             val pathFields = setOf(listOf("first", "second"), listOf("first1", "second1", "third1", "as"))
             val patterns = MaskingPatternBuilder().pathFields(pathFields).build()
 
-
             assertEquals(pathFields.size, patterns.size)
-
 
             assertAll(
                 { assertTrue(patterns[0].pattern.pattern().contains("first")) },
                 { assertTrue(patterns[0].pattern.pattern().contains("second")) },
                 { assertTrue(patterns[1].pattern.pattern().contains("third1")) },
-                { assertTrue(patterns[1].pattern.pattern().contains("as")) }
+                { assertTrue(patterns[1].pattern.pattern().contains("as")) },
             )
         }
     }
@@ -105,24 +140,26 @@ class MaskingPatternBuilderTest {
 
             assertEquals(1, patterns.size)
 
-            val actual = patterns.first().replaceAll(
+            val actual =
+                patterns.first().replaceAll(
+                    """
+                    {
+                        "globalField1": "value1",
+                        "globalField2": {
+                            "globalField1": "value2"
+                        }
+                    }
+                    """.trimIndent(),
+                )
+            val expected =
                 """
-            {
-                "globalField1": "value1",
-                "globalField2": {
-                    "globalField1": "value2"
+                {
+                    "globalField1": "$OMITTED",
+                    "globalField2": {
+                        "globalField1": "$OMITTED"
+                    }
                 }
-            }
-            """.trimIndent()
-            )
-            val expected = """
-            {
-                "globalField1": "$OMITTED",
-                "globalField2": {
-                    "globalField1": "$OMITTED"
-                }
-            }
-            """.trimIndent()
+                """.trimIndent()
 
             assertEquals(expected, actual)
         }
@@ -134,37 +171,39 @@ class MaskingPatternBuilderTest {
 
             assertEquals(pathFields.size, patterns.size)
 
-            var actual = """
-            {
-                "first": {
-                    "second": "value1"
-                },
-                "first1": {
-                    "second1": {
-                        "third1": {
-                            "as": "value2"
+            var actual =
+                """
+                {
+                    "first": {
+                        "second": "value1"
+                    },
+                    "first1": {
+                        "second1": {
+                            "third1": {
+                                "as": "value2"
+                            }
                         }
                     }
                 }
-            }
-            """.trimIndent()
+                """.trimIndent()
 
             patterns.forEach { actual = it.replaceAll(actual) }
 
-            val expected = """
-            {
-                "first": {
-                    "second": "$OMITTED"
-                },
-                "first1": {
-                    "second1": {
-                        "third1": {
-                            "as": "$OMITTED"
+            val expected =
+                """
+                {
+                    "first": {
+                        "second": "$OMITTED"
+                    },
+                    "first1": {
+                        "second1": {
+                            "third1": {
+                                "as": "$OMITTED"
+                            }
                         }
                     }
                 }
-            }
-            """.trimIndent()
+                """.trimIndent()
 
             assertEquals(expected, actual)
         }
@@ -174,52 +213,55 @@ class MaskingPatternBuilderTest {
             val globalFields = setOf("globalField1", "globalField2")
             val pathFields = setOf(listOf("first", "second"), listOf("first1", "second1", "third1", "as"))
 
-            val maskingPatterns = MaskingPatternBuilder()
-                .globalFields(globalFields)
-                .pathFields(pathFields)
-                .build()
+            val maskingPatterns =
+                MaskingPatternBuilder()
+                    .globalFields(globalFields)
+                    .pathFields(pathFields)
+                    .build()
 
             assertEquals(pathFields.size + 1, maskingPatterns.size)
 
-            var actual = """
-            {
-                "globalField1": "value1",
-                "globalField2": {
-                    "globalField1": "value2"
-                },
-                "first": {
-                    "second": "value3"
-                },
-                "first1": {
-                    "second1": {
-                        "third1": {
-                            "as": "value4"
+            var actual =
+                """
+                {
+                    "globalField1": "value1",
+                    "globalField2": {
+                        "globalField1": "value2"
+                    },
+                    "first": {
+                        "second": "value3"
+                    },
+                    "first1": {
+                        "second1": {
+                            "third1": {
+                                "as": "value4"
+                            }
                         }
                     }
                 }
-            }
-            """.trimIndent()
+                """.trimIndent()
 
             maskingPatterns.forEach { actual = it.replaceAll(actual) }
 
-            val expected = """
-            {
-                "globalField1": "$OMITTED",
-                "globalField2": {
-                    "globalField1": "$OMITTED"
-                },
-                "first": {
-                    "second": "$OMITTED"
-                },
-                "first1": {
-                    "second1": {
-                        "third1": {
-                            "as": "$OMITTED"
+            val expected =
+                """
+                {
+                    "globalField1": "$OMITTED",
+                    "globalField2": {
+                        "globalField1": "$OMITTED"
+                    },
+                    "first": {
+                        "second": "$OMITTED"
+                    },
+                    "first1": {
+                        "second1": {
+                            "third1": {
+                                "as": "$OMITTED"
+                            }
                         }
                     }
                 }
-            }
-            """.trimIndent()
+                """.trimIndent()
 
             assertEquals(expected, actual)
         }

@@ -83,10 +83,11 @@ class SandboxDataManagementClient(
 ) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
 
-    override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
-        requestExecutor = RequestExecutor(config, apiEndpoint, logger),
-        serverUrl = apiEndpoint.endpoint
-    )
+    override val graphQLExecutor: AbstractGraphQLExecutor =
+        GraphQLExecutor(
+            requestExecutor = RequestExecutor(config, apiEndpoint, logger),
+            serverUrl = apiEndpoint.endpoint,
+        )
 
     /**
      * Retrieves all sandbox properties in one page.
@@ -341,11 +342,13 @@ class SandboxDataManagementClient(
 
     companion object {
         @JvmStatic
-        private val logger = LoggerDecorator(
-            logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
-            masker = LogMasker(
-                globalMaskedFields = setOf("cvv", "cvv2"),
+        private val logger =
+            LoggerDecorator(
+                logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
+                masker =
+                    LogMasker(
+                        globalMaskedFields = setOf("cvv", "cvv2"),
+                    ),
             )
-        )
     }
 }

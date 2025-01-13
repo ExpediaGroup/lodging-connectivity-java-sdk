@@ -19,9 +19,9 @@ package com.expediagroup.sdk.lodgingconnectivity.payment
 import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.logging.masking.LogMasker
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
@@ -29,6 +29,7 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.GetPaymentInstrumentResponse
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.PaymentInstrumentQuery
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInstrumentOperation
+import org.slf4j.LoggerFactory
 
 /**
  * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
@@ -44,14 +45,16 @@ class PaymentClient(
 ) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
 
-    override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
-        requestExecutor = RequestExecutor(
-            config,
-            apiEndpoint,
-            logger
-        ),
-        serverUrl = apiEndpoint.endpoint
-    )
+    override val graphQLExecutor: AbstractGraphQLExecutor =
+        GraphQLExecutor(
+            requestExecutor =
+                RequestExecutor(
+                    config,
+                    apiEndpoint,
+                    logger,
+                ),
+            serverUrl = apiEndpoint.endpoint,
+        )
 
     /**
      * Retrieves the payment instrument details associated with the specified token.
@@ -71,11 +74,13 @@ class PaymentClient(
 
     companion object {
         @JvmStatic
-        private val logger = LoggerDecorator(
-            logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
-            masker = LogMasker(
-                globalMaskedFields = setOf("cvv", "cvv2"),
+        private val logger =
+            LoggerDecorator(
+                logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
+                masker =
+                    LogMasker(
+                        globalMaskedFields = setOf("cvv", "cvv2"),
+                    ),
             )
-        )
     }
 }

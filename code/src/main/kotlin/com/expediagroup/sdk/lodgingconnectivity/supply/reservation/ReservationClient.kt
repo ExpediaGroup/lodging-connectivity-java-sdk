@@ -22,7 +22,6 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceExce
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
@@ -69,10 +68,11 @@ class ReservationClient(
 ) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getSupplyApiEndpoint(config.environment)
 
-    override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
-        requestExecutor = RequestExecutor(config, apiEndpoint, logger),
-        serverUrl = apiEndpoint.endpoint
-    )
+    override val graphQLExecutor: AbstractGraphQLExecutor =
+        GraphQLExecutor(
+            requestExecutor = RequestExecutor(config, apiEndpoint, logger),
+            serverUrl = apiEndpoint.endpoint,
+        )
 
     /**
      * Creates a paginator for retrieving paginated reservation data for a specified property.
@@ -290,7 +290,7 @@ class ReservationClient(
     @JvmOverloads
     fun refundReservation(
         input: RefundReservationInput,
-        selections: ReservationSelections? = null
+        selections: ReservationSelections? = null,
     ): RefundReservationResponse =
         run {
             refundReservationOperation(graphQLExecutor, input, selections)
@@ -298,11 +298,13 @@ class ReservationClient(
 
     companion object {
         @JvmStatic
-        private val logger = LoggerDecorator(
-            logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
-            masker = LogMasker(
-                globalMaskedFields = setOf("cvv", "cvv2"),
+        private val logger =
+            LoggerDecorator(
+                logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
+                masker =
+                    LogMasker(
+                        globalMaskedFields = setOf("cvv", "cvv2"),
+                    ),
             )
-        )
     }
 }

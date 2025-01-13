@@ -1,7 +1,8 @@
 package com.expediagroup.sdk.core.logging.masking
 
 import com.expediagroup.sdk.core.logging.common.Constant.OMITTED
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -15,8 +16,20 @@ class LogMaskerTest {
 
             assertEquals(1, patterns.size)
 
-            assertTrue(patterns.first().pattern.pattern().contains("globalField1"))
-            assertTrue(patterns.first().pattern.pattern().contains("globalField2"))
+            assertTrue(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("globalField1"),
+            )
+            assertTrue(
+                patterns
+                    .first()
+                    .pattern
+                    .pattern()
+                    .contains("globalField2"),
+            )
         }
 
         @Test
@@ -32,10 +45,11 @@ class LogMaskerTest {
             val globalFields = setOf("globalField1", "globalField2")
             val pathFields = setOf(listOf("first", "second"), listOf("first1", "second1", "third1", "as"))
 
-            val maskingPatterns = MaskingPatternBuilder()
-                .globalFields(globalFields)
-                .pathFields(pathFields)
-                .build()
+            val maskingPatterns =
+                MaskingPatternBuilder()
+                    .globalFields(globalFields)
+                    .pathFields(pathFields)
+                    .build()
 
             // 1 global field pattern + 2 path field patterns
             assertEquals(pathFields.size + 1, maskingPatterns.size)
@@ -51,17 +65,19 @@ class LogMaskerTest {
 
             assertEquals(1, patterns.size)
 
-            val actual = patterns.first().replaceAll(
-                """
-                {
-                    "globalField1": "value1",
-                    "globalField2": {
-                        "globalField1": "value2"
+            val actual =
+                patterns.first().replaceAll(
+                    """
+                    {
+                        "globalField1": "value1",
+                        "globalField2": {
+                            "globalField1": "value2"
+                        }
                     }
-                }
-                """.trimIndent()
-            )
-            val expected = """
+                    """.trimIndent(),
+                )
+            val expected =
+                """
                 {
                     "globalField1": "$OMITTED",
                     "globalField2": {
@@ -80,7 +96,8 @@ class LogMaskerTest {
 
             assertEquals(pathFields.size, patterns.size)
 
-            var actual = """
+            var actual =
+                """
                 {
                     "first": {
                         "second": "value1"
@@ -96,7 +113,8 @@ class LogMaskerTest {
                 """.trimIndent()
             patterns.forEach { actual = it.replaceAll(actual) }
 
-            val expected = """
+            val expected =
+                """
                 {
                     "first": {
                         "second": "$OMITTED"
@@ -119,14 +137,16 @@ class LogMaskerTest {
             val globalFields = setOf("globalField1", "globalField2")
             val pathFields = setOf(listOf("first", "second"), listOf("first1", "second1", "third1", "as"))
 
-            val maskingPatterns = MaskingPatternBuilder()
-                .globalFields(globalFields)
-                .pathFields(pathFields)
-                .build()
+            val maskingPatterns =
+                MaskingPatternBuilder()
+                    .globalFields(globalFields)
+                    .pathFields(pathFields)
+                    .build()
 
             assertEquals(pathFields.size + 1, maskingPatterns.size)
 
-            var actual = """
+            var actual =
+                """
                 {
                     "globalField1": "value1",
                     "globalField2": {
@@ -146,7 +166,8 @@ class LogMaskerTest {
                 """.trimIndent()
             maskingPatterns.forEach { actual = it.replaceAll(actual) }
 
-            val expected = """
+            val expected =
+                """
                 {
                     "globalField1": "$OMITTED",
                     "globalField2": {

@@ -20,12 +20,14 @@ import com.ebay.ejmask.api.MaskingPattern
 
 internal class LogMasker(
     globalMaskedFields: Set<String> = emptySet(),
-    pathMaskedFields: Set<List<String>> = emptySet()
+    pathMaskedFields: Set<List<String>> = emptySet(),
 ) : (String) -> String {
-    private val patterns: List<MaskingPattern> = MaskingPatternBuilder().apply {
-        globalFields(globalMaskedFields)
-        pathFields(pathMaskedFields)
-    }.build()
+    private val patterns: List<MaskingPattern> =
+        MaskingPatternBuilder()
+            .apply {
+                globalFields(globalMaskedFields)
+                pathFields(pathMaskedFields)
+            }.build()
 
     /**
      * Applies all masking patterns to the input string.
