@@ -55,7 +55,9 @@ import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupNetworkExce
  *
  * @param transport The transport implementation to use for executing requests
  */
-abstract class AbstractRequestExecutor(protected val transport: Transport) : Disposable {
+abstract class AbstractRequestExecutor(
+    protected val transport: Transport,
+) : Disposable {
     /**
      * List of interceptors to be applied to requests in order.
      *
@@ -77,11 +79,12 @@ abstract class AbstractRequestExecutor(protected val transport: Transport) : Dis
      * @throws ExpediaGroupNetworkException If any network-related error occurs
      */
     open fun execute(request: Request): Response {
-        val chainExecutor = InterceptorsChainExecutor(
-            interceptors = interceptors,
-            request = request,
-            transport = this.transport
-        )
+        val chainExecutor =
+            InterceptorsChainExecutor(
+                interceptors = interceptors,
+                request = request,
+                transport = this.transport,
+            )
 
         return chainExecutor.proceed(request)
     }

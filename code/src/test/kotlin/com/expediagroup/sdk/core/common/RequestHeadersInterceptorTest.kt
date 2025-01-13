@@ -10,25 +10,28 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class RequestHeadersInterceptorTest {
-
     @Test
     fun `should add User-Agent header to the request`() {
         val interceptor = RequestHeadersInterceptor()
 
-        val chain = object : Interceptor.Chain {
-            override fun request(): Request = Request.builder()
-                .url("https://example.com")
-                .method(Method.GET)
-                .build()
+        val chain =
+            object : Interceptor.Chain {
+                override fun request(): Request =
+                    Request
+                        .builder()
+                        .url("https://example.com")
+                        .method(Method.GET)
+                        .build()
 
-            override fun proceed(request: Request): Response = Response
-                .builder()
-                .request(request)
-                .protocol(Protocol.HTTP_1_1)
-                .status(Status.OK)
-                .message("OK")
-                .build()
-        }
+                override fun proceed(request: Request): Response =
+                    Response
+                        .builder()
+                        .request(request)
+                        .protocol(Protocol.HTTP_1_1)
+                        .status(Status.OK)
+                        .message("OK")
+                        .build()
+            }
 
         // When
         val response = interceptor.intercept(chain)

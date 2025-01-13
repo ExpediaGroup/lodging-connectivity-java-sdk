@@ -32,9 +32,8 @@ import java.io.IOException
  * @param authManager The [BearerAuthenticationManager] used for making authentication requests execution and parsing.
  */
 class BearerAuthenticationInterceptor(
-    private val authManager: BearerAuthenticationManager
+    private val authManager: BearerAuthenticationManager,
 ) : Interceptor {
-
     private val lock = Any()
 
     /**
@@ -56,9 +55,11 @@ class BearerAuthenticationInterceptor(
 
         ensureValidAuthentication()
 
-        val authorizedRequest = request.newBuilder()
-            .addHeader("Authorization", authManager.getAuthorizationHeaderValue())
-            .build()
+        val authorizedRequest =
+            request
+                .newBuilder()
+                .addHeader("Authorization", authManager.getAuthorizationHeaderValue())
+                .build()
 
         return chain.proceed(authorizedRequest)
     }

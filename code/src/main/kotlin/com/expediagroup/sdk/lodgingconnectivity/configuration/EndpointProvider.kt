@@ -18,30 +18,38 @@ package com.expediagroup.sdk.lodgingconnectivity.configuration
 
 import com.expediagroup.sdk.core.model.exception.client.ExpediaGroupConfigurationException
 
-enum class SupplyApiEndpoint(val url: String) {
+enum class SupplyApiEndpoint(
+    val url: String,
+) {
     PROD("https://api.expediagroup.com/supply/lodging/graphql"),
     TEST("https://test-api.expediagroup.com/supply/lodging/graphql"),
     SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/lodging/graphql"),
-    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging/graphql")
+    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging/graphql"),
 }
 
-enum class PaymentApiEndpoint(val url: String) {
+enum class PaymentApiEndpoint(
+    val url: String,
+) {
     PROD("https://api.expediagroup.com/supply/payments/graphql"),
     TEST("https://test-api.expediagroup.com/supply/payments/graphql"),
     SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/payments/graphql"),
-    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/payments/graphql")
+    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/payments/graphql"),
 }
 
-enum class SandboxApiEndpoint(val url: String) {
+enum class SandboxApiEndpoint(
+    val url: String,
+) {
     SANDBOX_PROD("https://api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql"),
-    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql")
+    SANDBOX_TEST("https://test-api.sandbox.expediagroup.com/supply/lodging-sandbox/graphql"),
 }
 
-enum class AuthEndpoint(val url: String) {
+enum class AuthEndpoint(
+    val url: String,
+) {
     PROD("https://api.expediagroup.com/identity/oauth2/v3/token"),
     TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token"),
     SANDBOX_PROD("https://api.expediagroup.com/identity/oauth2/v3/token"),
-    SANDBOX_TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token")
+    SANDBOX_TEST("https://test-api.expediagroup.com/identity/oauth2/v3/token"),
 }
 
 /**
@@ -60,14 +68,14 @@ internal object EndpointProvider {
         return try {
             ApiEndpoint(
                 endpoint = SupplyApiEndpoint.valueOf(env.name).url,
-                authEndpoint = getAuthEndpoint(env)
+                authEndpoint = getAuthEndpoint(env),
             )
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for Supply API. 
                 Supported environments are [${SupplyApiEndpoint.entries.joinToString(", ")}]
-                """
+                """,
             )
         }
     }
@@ -78,14 +86,14 @@ internal object EndpointProvider {
         return try {
             ApiEndpoint(
                 endpoint = PaymentApiEndpoint.valueOf(env.name).url,
-                authEndpoint = getAuthEndpoint(env)
+                authEndpoint = getAuthEndpoint(env),
             )
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for Payment API. 
                 Supported environments are [${PaymentApiEndpoint.entries.joinToString(", ")}]
-                """
+                """,
             )
         }
     }
@@ -96,14 +104,14 @@ internal object EndpointProvider {
         return try {
             ApiEndpoint(
                 endpoint = SandboxApiEndpoint.valueOf(env.name).url,
-                authEndpoint = getAuthEndpoint(env)
+                authEndpoint = getAuthEndpoint(env),
             )
         } catch (e: IllegalArgumentException) {
             throw ExpediaGroupConfigurationException(
                 """
                 Unsupported environment [$environment] for Sandbox API. 
                 Supported environments are [${SandboxApiEndpoint.entries.joinToString(", ")}]
-                """
+                """,
             )
         }
     }
@@ -118,7 +126,7 @@ internal object EndpointProvider {
                 """
                 Unsupported environment [$environment] for Authentication API. 
                 Supported environments are [${AuthEndpoint.entries.joinToString(", ")}]
-                """
+                """,
             )
         }
     }

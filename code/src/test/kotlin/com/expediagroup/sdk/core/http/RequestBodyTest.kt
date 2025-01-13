@@ -1,15 +1,14 @@
 package com.expediagroup.sdk.core.http
 
-import java.io.ByteArrayInputStream
-import java.nio.charset.StandardCharsets
 import okio.Buffer
 import okio.BufferedSink
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import java.io.ByteArrayInputStream
+import java.nio.charset.StandardCharsets
 
 class RequestBodyTest {
-
     @Test
     fun `should create a request body from InputStream with valid data`() {
         // Given
@@ -84,17 +83,18 @@ class RequestBodyTest {
 
     @Test
     fun `should be extendable for custom usages`() {
-        val requestBody = object : RequestBody() {
-            val source = Buffer()
+        val requestBody =
+            object : RequestBody() {
+                val source = Buffer()
 
-            override fun mediaType(): MediaType? = CommonMediaTypes.TEXT_PLAIN
+                override fun mediaType(): MediaType? = CommonMediaTypes.TEXT_PLAIN
 
-            override fun writeTo(sink: BufferedSink) {
-                source.use { src ->
-                    sink.writeAll(src)
+                override fun writeTo(sink: BufferedSink) {
+                    source.use { src ->
+                        sink.writeAll(src)
+                    }
                 }
             }
-        }
 
         assertEquals(requestBody.contentLength(), -1)
         assertEquals(requestBody.mediaType(), CommonMediaTypes.TEXT_PLAIN)

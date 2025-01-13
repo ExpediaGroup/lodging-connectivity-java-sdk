@@ -19,9 +19,9 @@ package com.expediagroup.sdk.lodgingconnectivity.sandbox
 import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.logging.masking.LogMasker
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
@@ -78,8 +78,9 @@ import org.slf4j.LoggerFactory
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
  * or timeouts.
  */
-class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient() {
-
+class SandboxDataManagementClient(
+    config: ClientConfiguration,
+) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
 
     override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
@@ -93,9 +94,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [GetSandboxPropertiesResponse] containing the sandbox properties data, pagination information, and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getProperties(): GetSandboxPropertiesResponse = run {
-        getSandboxPropertiesOperation(graphQLExecutor)
-    }
+    fun getProperties(): GetSandboxPropertiesResponse =
+        run {
+            getSandboxPropertiesOperation(graphQLExecutor)
+        }
 
     /**
      * Creates a paginator for fetching sandbox properties page-by-page.
@@ -105,9 +107,13 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [SandboxPropertiesPaginator] for iterating through properties.
      */
     @JvmOverloads
-    fun getPropertiesPaginator(pageSize: Int, initialCursor: String? = null): SandboxPropertiesPaginator = run {
-        SandboxPropertiesPaginator(graphQLExecutor, pageSize, initialCursor)
-    }
+    fun getPropertiesPaginator(
+        pageSize: Int,
+        initialCursor: String? = null,
+    ): SandboxPropertiesPaginator =
+        run {
+            SandboxPropertiesPaginator(graphQLExecutor, pageSize, initialCursor)
+        }
 
     /**
      * Retrieves all reservations for a specific sandbox property.
@@ -116,9 +122,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [GetSandboxReservationsResponse] containing the sandbox reservations data, pagination information, and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getReservations(propertyId: String): GetSandboxReservationsResponse = run {
-        getSandboxReservationsOperation(graphQLExecutor, propertyId)
-    }
+    fun getReservations(propertyId: String): GetSandboxReservationsResponse =
+        run {
+            getSandboxReservationsOperation(graphQLExecutor, propertyId)
+        }
 
     /**
      * Creates a paginator for fetching reservations page-by-page for a specific sandbox property.
@@ -132,10 +139,11 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
     fun getReservationsPaginator(
         propertyId: String,
         pageSize: Int,
-        initialCursor: String? = null
-    ): SandboxReservationsPaginator = run {
-        SandboxReservationsPaginator(graphQLExecutor, propertyId, pageSize, initialCursor)
-    }
+        initialCursor: String? = null,
+    ): SandboxReservationsPaginator =
+        run {
+            SandboxReservationsPaginator(graphQLExecutor, propertyId, pageSize, initialCursor)
+        }
 
     /**
      * Retrieves details of a specific sandbox property.
@@ -144,9 +152,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [GetSandboxPropertyResponse] containing the requested sandbox property data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getProperty(propertyId: String): GetSandboxPropertyResponse = run {
-        getSandboxPropertyOperation(graphQLExecutor, propertyId)
-    }
+    fun getProperty(propertyId: String): GetSandboxPropertyResponse =
+        run {
+            getSandboxPropertyOperation(graphQLExecutor, propertyId)
+        }
 
     /**
      * Retrieves details of a specific sandbox reservation.
@@ -155,9 +164,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [GetSandboxReservationResponse] containing the requested reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun getReservation(reservationId: String): GetSandboxReservationResponse = run {
-        getSandboxReservationOperation(graphQLExecutor, reservationId)
-    }
+    fun getReservation(reservationId: String): GetSandboxReservationResponse =
+        run {
+            getSandboxReservationOperation(graphQLExecutor, reservationId)
+        }
 
     /**
      * Creates a new sandbox property with default name.
@@ -165,9 +175,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [CreateSandboxPropertyResponse] containing the created sandbox property data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createProperty(): CreateSandboxPropertyResponse = run {
-        createSandboxPropertyOperation(graphQLExecutor, CreatePropertyInput())
-    }
+    fun createProperty(): CreateSandboxPropertyResponse =
+        run {
+            createSandboxPropertyOperation(graphQLExecutor, CreatePropertyInput())
+        }
 
     /**
      * Creates a new sandbox property with the specified input.
@@ -176,9 +187,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [CreateSandboxPropertyResponse] containing the created sandbox property data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createProperty(input: CreatePropertyInput): CreateSandboxPropertyResponse = run {
-        createSandboxPropertyOperation(graphQLExecutor, input)
-    }
+    fun createProperty(input: CreatePropertyInput): CreateSandboxPropertyResponse =
+        run {
+            createSandboxPropertyOperation(graphQLExecutor, input)
+        }
 
     /**
      * Updates an existing sandbox property.
@@ -187,9 +199,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return An [UpdateSandboxPropertyResponse] containing the updated sandbox property data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun updateProperty(input: UpdatePropertyInput): UpdateSandboxPropertyResponse = run {
-        updateSandboxPropertyOperation(graphQLExecutor, input)
-    }
+    fun updateProperty(input: UpdatePropertyInput): UpdateSandboxPropertyResponse =
+        run {
+            updateSandboxPropertyOperation(graphQLExecutor, input)
+        }
 
     /**
      * Deletes a specified sandbox property.
@@ -198,9 +211,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [DeleteSandboxPropertyResponse] containing the deleted property data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteProperty(propertyId: String): DeleteSandboxPropertyResponse = run {
-        deleteSandboxPropertyOperation(graphQLExecutor, DeletePropertyInput(id = propertyId))
-    }
+    fun deleteProperty(propertyId: String): DeleteSandboxPropertyResponse =
+        run {
+            deleteSandboxPropertyOperation(graphQLExecutor, DeletePropertyInput(id = propertyId))
+        }
 
     /**
      * Creates a new sandbox reservation for a specific property.
@@ -209,9 +223,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [CreateSandboxReservationResponse] containing the created reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createReservation(propertyId: String): CreateSandboxReservationResponse = run {
-        createSandboxReservationOperation(graphQLExecutor, CreateReservationInput(propertyId = propertyId))
-    }
+    fun createReservation(propertyId: String): CreateSandboxReservationResponse =
+        run {
+            createSandboxReservationOperation(graphQLExecutor, CreateReservationInput(propertyId = propertyId))
+        }
 
     /**
      * Creates a new sandbox reservation with the specified input.
@@ -220,9 +235,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [CreateSandboxReservationResponse] containing the created reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun createReservation(input: CreateReservationInput): CreateSandboxReservationResponse = run {
-        createSandboxReservationOperation(graphQLExecutor, input)
-    }
+    fun createReservation(input: CreateReservationInput): CreateSandboxReservationResponse =
+        run {
+            createSandboxReservationOperation(graphQLExecutor, input)
+        }
 
     /**
      * Updates an existing sandbox reservation.
@@ -231,9 +247,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return An [UpdateSandboxReservationResponse] containing the updated reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun updateReservation(input: UpdateReservationInput): UpdateSandboxReservationResponse = run {
-        updateSandboxReservationOperation(graphQLExecutor, input)
-    }
+    fun updateReservation(input: UpdateReservationInput): UpdateSandboxReservationResponse =
+        run {
+            updateSandboxReservationOperation(graphQLExecutor, input)
+        }
 
     /**
      * Changes the stay dates for an existing sandbox reservation.
@@ -242,11 +259,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [ChangeSandboxReservationStayDatesResponse] containing the updated reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun changeReservationStayDates(
-        input: ChangeReservationStayDatesInput
-    ): ChangeSandboxReservationStayDatesResponse = run {
-        changeSandboxReservationStayDatesOperation(graphQLExecutor, input)
-    }
+    fun changeReservationStayDates(input: ChangeReservationStayDatesInput): ChangeSandboxReservationStayDatesResponse =
+        run {
+            changeSandboxReservationStayDatesOperation(graphQLExecutor, input)
+        }
 
     /**
      * Cancels a specific sandbox reservation.
@@ -255,9 +271,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [CancelSandboxReservationResponse] containing the canceled reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun cancelReservation(reservationId: String): CancelSandboxReservationResponse = run {
-        cancelSandboxReservationOperation(graphQLExecutor, CancelReservationInput(id = reservationId))
-    }
+    fun cancelReservation(reservationId: String): CancelSandboxReservationResponse =
+        run {
+            cancelSandboxReservationOperation(graphQLExecutor, CancelReservationInput(id = reservationId))
+        }
 
     /**
      * Cancels a sandbox reservation with the specified input.
@@ -266,9 +283,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [CancelSandboxReservationResponse] containing the canceled reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun cancelReservation(input: CancelReservationInput): CancelSandboxReservationResponse = run {
-        cancelSandboxReservationOperation(graphQLExecutor, input)
-    }
+    fun cancelReservation(input: CancelReservationInput): CancelSandboxReservationResponse =
+        run {
+            cancelSandboxReservationOperation(graphQLExecutor, input)
+        }
 
     /**
      * Deletes a specific sandbox reservation.
@@ -277,9 +295,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [DeleteSandboxReservationResponse] containing the deleted reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservation(reservationId: String): DeleteSandboxReservationResponse = run {
-        deleteSandboxReservationOperation(graphQLExecutor, DeleteReservationInput(id = reservationId))
-    }
+    fun deleteReservation(reservationId: String): DeleteSandboxReservationResponse =
+        run {
+            deleteSandboxReservationOperation(graphQLExecutor, DeleteReservationInput(id = reservationId))
+        }
 
     /**
      * Deletes a sandbox reservation with the specified input.
@@ -288,9 +307,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [DeleteSandboxReservationResponse] containing the deleted reservation data and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservation(input: DeleteReservationInput): DeleteSandboxReservationResponse = run {
-        deleteSandboxReservationOperation(graphQLExecutor, input)
-    }
+    fun deleteReservation(input: DeleteReservationInput): DeleteSandboxReservationResponse =
+        run {
+            deleteSandboxReservationOperation(graphQLExecutor, input)
+        }
 
     /**
      * Deletes all reservations for a specified property.
@@ -299,12 +319,13 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [DeleteSandboxReservationsResponse] containing data for the deleted reservations and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservations(propertyId: String): DeleteSandboxReservationsResponse = run {
-        deleteSandboxReservationsOperation(
-            graphQLExecutor,
-            DeletePropertyReservationsInput(propertyId = propertyId)
-        )
-    }
+    fun deleteReservations(propertyId: String): DeleteSandboxReservationsResponse =
+        run {
+            deleteSandboxReservationsOperation(
+                graphQLExecutor,
+                DeletePropertyReservationsInput(propertyId = propertyId),
+            )
+        }
 
     /**
      * Deletes all reservations for a specified property.
@@ -313,9 +334,10 @@ class SandboxDataManagementClient(config: ClientConfiguration) : GraphQLClient()
      * @return A [DeleteSandboxReservationsResponse] containing data for the deleted reservations and the full raw response.
      * @throws [ExpediaGroupServiceException] If an error occurs during the operation execution.
      */
-    fun deleteReservations(input: DeletePropertyReservationsInput): DeleteSandboxReservationsResponse = run {
-        deleteSandboxReservationsOperation(graphQLExecutor, input)
-    }
+    fun deleteReservations(input: DeletePropertyReservationsInput): DeleteSandboxReservationsResponse =
+        run {
+            deleteSandboxReservationsOperation(graphQLExecutor, input)
+        }
 
     companion object {
         @JvmStatic

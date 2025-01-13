@@ -1,6 +1,5 @@
 package com.expediagroup.sdk.core.http
 
-import java.nio.charset.Charset
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
@@ -8,9 +7,9 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.nio.charset.Charset
 
 class MediaTypeTest {
-
     @Test
     fun `should create MediaType without parameters`() {
         // Given
@@ -58,16 +57,16 @@ class MediaTypeTest {
         assertEquals(mapOf("charset" to "UTF-8"), parameters)
     }
 
-
     @Test
     fun `should throw an exception for blank type`() {
         // Given
         val blankType = ""
 
         // When
-        val exception = assertThrows<IllegalArgumentException> {
-            MediaType.of(blankType, "json")
-        }
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                MediaType.of(blankType, "json")
+            }
 
         // Expect
         assertEquals("Type must not be blank", exception.message)
@@ -79,9 +78,10 @@ class MediaTypeTest {
         val blankSubType = ""
 
         // When
-        val exception = assertThrows<IllegalArgumentException> {
-            MediaType.of("application", blankSubType)
-        }
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                MediaType.of("application", blankSubType)
+            }
 
         // Expect
         assertEquals("Subtype must not be blank", exception.message)
@@ -257,9 +257,10 @@ class MediaTypeTest {
         val subtype = "html"
 
         // When
-        val exception = assertThrows<IllegalArgumentException> {
-            MediaType.of(type, subtype)
-        }
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                MediaType.of(type, subtype)
+            }
 
         // Expect
         assertEquals("Invalid media type format: type=*, subtype=html", exception.message)
@@ -351,9 +352,9 @@ class MediaTypeTest {
             assertEquals(
                 mapOf(
                     "boundary" to "abc123",
-                    "charset" to "utf-8"
+                    "charset" to "utf-8",
                 ),
-                result.parameters
+                result.parameters,
             )
         }
 
@@ -371,9 +372,9 @@ class MediaTypeTest {
             assertEquals(
                 mapOf(
                     "charset" to "utf-8",
-                    "boundary" to "my-boundary"
+                    "boundary" to "my-boundary",
                 ),
-                result.parameters
+                result.parameters,
             )
         }
 
@@ -433,9 +434,9 @@ class MediaTypeTest {
             assertEquals(
                 mapOf(
                     "charset" to "utf-8",
-                    "boundary" to "abc123"
+                    "boundary" to "abc123",
                 ),
-                result.parameters
+                result.parameters,
             )
         }
 
@@ -453,9 +454,9 @@ class MediaTypeTest {
             assertEquals(
                 mapOf(
                     "charset" to "utf-8",
-                    "boundary" to "abc"
+                    "boundary" to "abc",
                 ),
-                result.parameters
+                result.parameters,
             )
         }
 
@@ -465,9 +466,10 @@ class MediaTypeTest {
             val mediaType = "application/"
 
             // When
-            val exception = assertThrows<IllegalArgumentException> {
-                MediaType.parse(mediaType)
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    MediaType.parse(mediaType)
+                }
 
             // Expect
             assertEquals("Invalid media type format: application/", exception.message)
@@ -479,9 +481,10 @@ class MediaTypeTest {
             val mediaType = "/json"
 
             // When
-            val exception = assertThrows<IllegalArgumentException> {
-                MediaType.parse(mediaType)
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    MediaType.parse(mediaType)
+                }
 
             // Expect
             assertEquals("Invalid media type format: /json", exception.message)
@@ -493,9 +496,10 @@ class MediaTypeTest {
             val mediaType = "   "
 
             // When
-            val exception = assertThrows<IllegalArgumentException> {
-                MediaType.parse(mediaType)
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    MediaType.parse(mediaType)
+                }
 
             // Expect
             assertEquals("Media type must not be blank", exception.message)
@@ -507,14 +511,14 @@ class MediaTypeTest {
             val mediaType = "invalidMediaType"
 
             // When
-            val exception = assertThrows<IllegalArgumentException> {
-                MediaType.parse(mediaType)
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    MediaType.parse(mediaType)
+                }
 
             // Expect
             assertEquals("Invalid media type format: invalidMediaType", exception.message)
         }
-
 
         @Test
         fun `should throw exception for malformed parameters`() {
@@ -522,9 +526,10 @@ class MediaTypeTest {
             val mediaType = "text/html; charset; boundary=abc123"
 
             // When
-            val exception = assertThrows<IllegalArgumentException> {
-                MediaType.parse(mediaType)
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    MediaType.parse(mediaType)
+                }
 
             // Expect
             assertEquals("Invalid parameter format: charset", exception.message)
@@ -536,9 +541,10 @@ class MediaTypeTest {
             val mediaType = "text/html; charset="
 
             // When
-            val exception = assertThrows<IllegalArgumentException> {
-                MediaType.parse(mediaType)
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    MediaType.parse(mediaType)
+                }
 
             // Expect
             assertEquals("Invalid parameter format: charset=", exception.message)
@@ -550,9 +556,10 @@ class MediaTypeTest {
             val mediaType = "*/html"
 
             // When
-            val exception = assertThrows<IllegalArgumentException> {
-                MediaType.parse(mediaType)
-            }
+            val exception =
+                assertThrows<IllegalArgumentException> {
+                    MediaType.parse(mediaType)
+                }
 
             // Expect
             assertEquals("Invalid media type format: */html", exception.message)

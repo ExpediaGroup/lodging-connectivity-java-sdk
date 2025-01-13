@@ -1,11 +1,11 @@
 package com.expediagroup.sdk.core.http
 
-import java.io.ByteArrayInputStream
 import okio.Buffer
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
+import java.io.ByteArrayInputStream
 
 class ResponseBodyTest {
     @Test
@@ -41,9 +41,11 @@ class ResponseBodyTest {
     fun `should return correct content length when using input stream`() {
         // Given
         val content = "content"
-        val responseBody = ResponseBody.create(
-            ByteArrayInputStream(content.toByteArray()), contentLength = content.length.toLong()
-        )
+        val responseBody =
+            ResponseBody.create(
+                ByteArrayInputStream(content.toByteArray()),
+                contentLength = content.length.toLong(),
+            )
 
         // When & Expect
         assertEquals(content.length.toLong(), responseBody.contentLength())
@@ -53,9 +55,11 @@ class ResponseBodyTest {
     fun `should return correct content length when using buffered source`() {
         // Given
         val content = "content"
-        val responseBody = ResponseBody.create(
-            Buffer().writeUtf8("content"), contentLength = content.length.toLong()
-        )
+        val responseBody =
+            ResponseBody.create(
+                Buffer().writeUtf8("content"),
+                contentLength = content.length.toLong(),
+            )
 
         // When & Expect
         assertEquals(content.length.toLong(), responseBody.contentLength())

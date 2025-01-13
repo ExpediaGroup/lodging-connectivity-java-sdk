@@ -42,9 +42,8 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.get
 data class ReservationsPaginatedResponse(
     override val data: List<ReservationData?>,
     override val rawResponse: RawResponse<PropertyReservationsQuery.Data>,
-    override val pageInfo: PageInfo
+    override val pageInfo: PageInfo,
 ) : PaginatedResponse<List<ReservationData?>, PropertyReservationsQuery.Data>
-
 
 /**
  * Provides an iterator to retrieve property reservations in a paginated manner using [PropertyReservationsQuery]
@@ -61,89 +60,94 @@ data class ReservationsPaginatedResponse(
  * @param initialCursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @constructor Creates a [ReservationsPaginator] with the specified executor, input parameters, and initial cursor.
  */
-class ReservationsPaginator @JvmOverloads constructor(
-    private val graphQLExecutor: AbstractGraphQLExecutor,
-    private val input: PropertyReservationsInput,
-    private val selections: ReservationSelections? = null,
-    private val pageSize: Int? = null,
-    initialCursor: String? = null
-) : Iterator<ReservationsPaginatedResponse> {
-    private var cursor: String? = initialCursor
-    private var hasNext: Boolean = true
-    private var initialized: Boolean = false
+class ReservationsPaginator
+    @JvmOverloads
+    constructor(
+        private val graphQLExecutor: AbstractGraphQLExecutor,
+        private val input: PropertyReservationsInput,
+        private val selections: ReservationSelections? = null,
+        private val pageSize: Int? = null,
+        initialCursor: String? = null,
+    ) : Iterator<ReservationsPaginatedResponse> {
+        private var cursor: String? = initialCursor
+        private var hasNext: Boolean = true
+        private var initialized: Boolean = false
 
-    /**
-     * Checks if there are more pages to fetch.
-     *
-     * This method returns `true` if additional pages are available; otherwise, it returns `false`.
-     * It initializes the paginator by checking if there are reservations to fetch when called for the first time.
-     *
-     * @return `true` if there are more pages to fetch, `false` otherwise.
-     */
-    override fun hasNext(): Boolean {
-        if (!initialized) {
-            initialized = true
-            return hasReservationsToFetch()
-        }
-
-        return hasNext
-    }
-
-    /**
-     * Retrieves the next page of property reservations.
-     *
-     * This method executes [PropertyReservationsQuery] query to fetch the next page of reservations,
-     * updating the pagination state and cursor for subsequent requests.
-     *
-     * @return A [ReservationsPaginatedResponse] containing the property reservations, raw response, and pagination details.
-     * @throws NoSuchElementException If no more pages are available to fetch.
-     * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
-     */
-    override fun next(): ReservationsPaginatedResponse {
-        if (!hasNext()) {
-            throw NoSuchElementException("No more pages to fetch")
-        }
-
-        val response = getReservationsOperation(
-            graphQLExecutor = graphQLExecutor,
-            input = input,
-            selections = selections,
-            cursor = cursor,
-            pageSize = pageSize
-        )
-
-        cursor = response.pageInfo.nextPageCursor
-        hasNext = response.pageInfo.hasNext
-
-        return ReservationsPaginatedResponse(
-            data = response.data,
-            pageInfo = response.pageInfo,
-            rawResponse = response.rawResponse,
-        )
-    }
-
-    /**
-     * Checks if there are any reservations available to fetch, initializing the paginator if necessary.
-     *
-     * @return `true` if there are reservations available, `false` otherwise.
-     * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
-     */
-    private fun hasReservationsToFetch(): Boolean = run {
-        graphQLExecutor.execute(
-            PropertyReservationsTotalCountQuery
-                .builder()
-                .propertyId(input.propertyId)
-                .idSource(input.idSource.getOrNull())
-                .pageSize(pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE)
-                .cursor(cursor)
-                .build()
-        ).let {
-            it.data.property.getOrThrow {
-                ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
+        /**
+         * Checks if there are more pages to fetch.
+         *
+         * This method returns `true` if additional pages are available; otherwise, it returns `false`.
+         * It initializes the paginator by checking if there are reservations to fetch when called for the first time.
+         *
+         * @return `true` if there are more pages to fetch, `false` otherwise.
+         */
+        override fun hasNext(): Boolean {
+            if (!initialized) {
+                initialized = true
+                return hasReservationsToFetch()
             }
-        }.let {
-            val totalCount = it.reservations.totalCount ?: 0
-            totalCount > 0
+
+            return hasNext
         }
+
+        /**
+         * Retrieves the next page of property reservations.
+         *
+         * This method executes [PropertyReservationsQuery] query to fetch the next page of reservations,
+         * updating the pagination state and cursor for subsequent requests.
+         *
+         * @return A [ReservationsPaginatedResponse] containing the property reservations, raw response, and pagination details.
+         * @throws NoSuchElementException If no more pages are available to fetch.
+         * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
+         */
+        override fun next(): ReservationsPaginatedResponse {
+            if (!hasNext()) {
+                throw NoSuchElementException("No more pages to fetch")
+            }
+
+            val response =
+                getReservationsOperation(
+                    graphQLExecutor = graphQLExecutor,
+                    input = input,
+                    selections = selections,
+                    cursor = cursor,
+                    pageSize = pageSize,
+                )
+
+            cursor = response.pageInfo.nextPageCursor
+            hasNext = response.pageInfo.hasNext
+
+            return ReservationsPaginatedResponse(
+                data = response.data,
+                pageInfo = response.pageInfo,
+                rawResponse = response.rawResponse,
+            )
+        }
+
+        /**
+         * Checks if there are any reservations available to fetch, initializing the paginator if necessary.
+         *
+         * @return `true` if there are reservations available, `false` otherwise.
+         * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
+         */
+        private fun hasReservationsToFetch(): Boolean =
+            run {
+                graphQLExecutor
+                    .execute(
+                        PropertyReservationsTotalCountQuery
+                            .builder()
+                            .propertyId(input.propertyId)
+                            .idSource(input.idSource.getOrNull())
+                            .pageSize(pageSize ?: Constant.RESERVATIONS_DEFAULT_PAGE_SIZE)
+                            .cursor(cursor)
+                            .build(),
+                    ).let {
+                        it.data.property.getOrThrow {
+                            ExpediaGroupServiceException("Failed to fetch property ${input.propertyId}")
+                        }
+                    }.let {
+                        val totalCount = it.reservations.totalCount ?: 0
+                        totalCount > 0
+                    }
+            }
     }
-}

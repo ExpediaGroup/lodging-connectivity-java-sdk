@@ -31,7 +31,7 @@ import java.util.Base64
  */
 data class Credentials(
     private val key: String,
-    private val secret: String
+    private val secret: String,
 ) {
     /**
      * Encodes the credentials into a `Basic` authentication header value.

@@ -32,11 +32,10 @@ internal object MetadataLoader {
     /**
      * Loads the SDK metadata from sdk.properties file and caches the results for future calls.
      */
-    fun load(): Metadata {
-        return cachedMetadata ?: synchronized(this) {
+    fun load(): Metadata =
+        cachedMetadata ?: synchronized(this) {
             cachedMetadata ?: readPropertiesFile().also { cachedMetadata = it }
         }
-    }
 
     /**
      * Clears the cached metadata
@@ -62,7 +61,7 @@ internal object MetadataLoader {
             osName = System.getProperty("os.name", UNKNOWN),
             osVersion = System.getProperty("os.version", UNKNOWN),
             arch = System.getProperty("os.arch", UNKNOWN),
-            locale = Locale.getDefault().toString()
+            locale = Locale.getDefault().toString(),
         )
     }
 }
@@ -76,9 +75,7 @@ data class Metadata(
     val osName: String,
     val osVersion: String,
     val arch: String,
-    val locale: String
+    val locale: String,
 ) {
-    fun asUserAgentString(): String {
-        return "$artifactName/$version (Provider/$groupId; Java/$jdkVersion; Vendor/$jdkVendor; OS/$osName - $osVersion; Arch/$arch; Locale/$locale)"
-    }
+    fun asUserAgentString(): String = "$artifactName/$version (Provider/$groupId; Java/$jdkVersion; Vendor/$jdkVendor; OS/$osName - $osVersion; Arch/$arch; Locale/$locale)"
 }

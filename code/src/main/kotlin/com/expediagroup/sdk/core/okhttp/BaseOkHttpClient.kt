@@ -16,8 +16,8 @@
 
 package com.expediagroup.sdk.core.okhttp
 
-import java.time.Duration
 import okhttp3.OkHttpClient
+import java.time.Duration
 
 /**
  * A utility object for managing and configuring a singleton instance of an `OkHttpClient`.
@@ -32,7 +32,6 @@ import okhttp3.OkHttpClient
  *   with specific settings provided via the `OkHttpClientConfiguration` object.
  */
 internal object BaseOkHttpClient {
-
     private val instance: OkHttpClient = OkHttpClient()
 
     /**
@@ -55,32 +54,33 @@ internal object BaseOkHttpClient {
      * @return A new OkHttpClient instance that shares resources with the base instance but
      * configured with the provided configurations.
      */
-    fun getInstance(configuration: OkHttpClientConfiguration): OkHttpClient {
-        return instance.newBuilder().apply {
-            configuration.callTimeout?.let {
-                callTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.connectTimeout?.let {
-                connectTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.readTimeout?.let {
-                readTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.writeTimeout?.let {
-                writeTimeout(Duration.ofMillis(it.toLong()))
-            }
-            configuration.connectionPool?.let {
-                connectionPool(it)
-            }
-            configuration.retryOnConnectionFailure?.let {
-                retryOnConnectionFailure(it)
-            }
-            configuration.interceptors?.forEach {
-                addInterceptor(it)
-            }
-            configuration.networkInterceptors?.forEach {
-                addNetworkInterceptor(it)
-            }
-        }.build()
-    }
+    fun getInstance(configuration: OkHttpClientConfiguration): OkHttpClient =
+        instance
+            .newBuilder()
+            .apply {
+                configuration.callTimeout?.let {
+                    callTimeout(Duration.ofMillis(it.toLong()))
+                }
+                configuration.connectTimeout?.let {
+                    connectTimeout(Duration.ofMillis(it.toLong()))
+                }
+                configuration.readTimeout?.let {
+                    readTimeout(Duration.ofMillis(it.toLong()))
+                }
+                configuration.writeTimeout?.let {
+                    writeTimeout(Duration.ofMillis(it.toLong()))
+                }
+                configuration.connectionPool?.let {
+                    connectionPool(it)
+                }
+                configuration.retryOnConnectionFailure?.let {
+                    retryOnConnectionFailure(it)
+                }
+                configuration.interceptors?.forEach {
+                    addInterceptor(it)
+                }
+                configuration.networkInterceptors?.forEach {
+                    addNetworkInterceptor(it)
+                }
+            }.build()
 }

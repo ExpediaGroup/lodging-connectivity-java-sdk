@@ -29,7 +29,6 @@ import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.GetPaymentInstrumentResponse
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.PaymentInstrumentQuery
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInstrumentOperation
-import org.slf4j.LoggerFactory
 
 /**
  * A client for interacting with EG Lodging Connectivity Payment PCI GraphQL API.
@@ -40,8 +39,9 @@ import org.slf4j.LoggerFactory
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
  * or timeouts.
  */
-class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
-
+class PaymentClient(
+    config: ClientConfiguration,
+) : GraphQLClient() {
     override val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
 
     override val graphQLExecutor: AbstractGraphQLExecutor = GraphQLExecutor(
@@ -64,9 +64,10 @@ class PaymentClient(config: ClientConfiguration) : GraphQLClient() {
      * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
      * @throws ExpediaGroupServiceException If the payment instrument data is not found in the response.
      */
-    fun getPaymentInstrument(token: String): GetPaymentInstrumentResponse = run {
-        getPaymentInstrumentOperation(graphQLExecutor, token)
-    }
+    fun getPaymentInstrument(token: String): GetPaymentInstrumentResponse =
+        run {
+            getPaymentInstrumentOperation(graphQLExecutor, token)
+        }
 
     companion object {
         @JvmStatic

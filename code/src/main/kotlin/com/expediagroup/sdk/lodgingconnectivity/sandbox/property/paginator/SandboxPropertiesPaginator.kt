@@ -37,7 +37,7 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation.getSa
 data class SandboxPropertiesPaginatedResponse(
     override val data: List<SandboxPropertyData>,
     override val rawResponse: RawResponse<SandboxPropertiesQuery.Data>,
-    override val pageInfo: PageInfo
+    override val pageInfo: PageInfo,
 ) : PaginatedResponse<List<SandboxPropertyData>, SandboxPropertiesQuery.Data>
 
 /**
@@ -52,73 +52,78 @@ data class SandboxPropertiesPaginatedResponse(
  * @param initialCursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @constructor Creates a [SandboxPropertiesPaginator] with the specified executor, page size, and initial cursor.
  */
-class SandboxPropertiesPaginator @JvmOverloads constructor(
-    private val graphQLExecutor: AbstractGraphQLExecutor,
-    private val pageSize: Int? = null,
-    initialCursor: String? = null
-) : Iterator<SandboxPropertiesPaginatedResponse> {
-    private var cursor: String? = initialCursor
-    private var hasNext: Boolean = true
-    private var initialized: Boolean = false
+class SandboxPropertiesPaginator
+    @JvmOverloads
+    constructor(
+        private val graphQLExecutor: AbstractGraphQLExecutor,
+        private val pageSize: Int? = null,
+        initialCursor: String? = null,
+    ) : Iterator<SandboxPropertiesPaginatedResponse> {
+        private var cursor: String? = initialCursor
+        private var hasNext: Boolean = true
+        private var initialized: Boolean = false
 
-    /**
-     * Checks if there are more pages to fetch.
-     *
-     * This method returns `true` if additional pages are available; otherwise, it returns `false`.
-     * It initializes the paginator by checking if there are properties to fetch when called for the first time.
-     *
-     * @return `true` if there are more pages to fetch, `false` otherwise.
-     */
-    override fun hasNext(): Boolean {
-        if (!initialized) {
-            initialized = true
-            return hasPropertiesToFetch()
+        /**
+         * Checks if there are more pages to fetch.
+         *
+         * This method returns `true` if additional pages are available; otherwise, it returns `false`.
+         * It initializes the paginator by checking if there are properties to fetch when called for the first time.
+         *
+         * @return `true` if there are more pages to fetch, `false` otherwise.
+         */
+        override fun hasNext(): Boolean {
+            if (!initialized) {
+                initialized = true
+                return hasPropertiesToFetch()
+            }
+
+            return hasNext
         }
 
-        return hasNext
-    }
+        /**
+         * Retrieves the next page of sandbox properties.
+         *
+         * This method executes a [SandboxPropertiesQuery] query to fetch the next page of properties,
+         * updating the pagination state and cursor for subsequent requests.
+         *
+         * @return A [SandboxPropertiesPaginatedResponse] containing the sandbox properties, raw response, and pagination details.
+         * @throws NoSuchElementException If no more pages are available to fetch.
+         * @throws ExpediaGroupServiceException If an error occurs during the query execution.
+         */
+        override fun next(): SandboxPropertiesPaginatedResponse {
+            if (!hasNext()) {
+                throw NoSuchElementException("No more pages to fetch")
+            }
 
-    /**
-     * Retrieves the next page of sandbox properties.
-     *
-     * This method executes a [SandboxPropertiesQuery] query to fetch the next page of properties,
-     * updating the pagination state and cursor for subsequent requests.
-     *
-     * @return A [SandboxPropertiesPaginatedResponse] containing the sandbox properties, raw response, and pagination details.
-     * @throws NoSuchElementException If no more pages are available to fetch.
-     * @throws ExpediaGroupServiceException If an error occurs during the query execution.
-     */
-    override fun next(): SandboxPropertiesPaginatedResponse {
-        if (!hasNext()) {
-            throw NoSuchElementException("No more pages to fetch")
+            val response =
+                getSandboxPropertiesOperation(
+                    graphQLExecutor = graphQLExecutor,
+                    cursor = cursor,
+                    pageSize = pageSize,
+                )
+
+            cursor = response.pageInfo.nextPageCursor
+            hasNext = response.pageInfo.hasNext
+
+            return SandboxPropertiesPaginatedResponse(
+                data = response.data,
+                rawResponse = response.rawResponse,
+                pageInfo = response.pageInfo,
+            )
         }
 
-        val response = getSandboxPropertiesOperation(
-            graphQLExecutor = graphQLExecutor,
-            cursor = cursor,
-            pageSize = pageSize
-        )
-
-        cursor = response.pageInfo.nextPageCursor
-        hasNext = response.pageInfo.hasNext
-
-        return SandboxPropertiesPaginatedResponse(
-            data = response.data,
-            rawResponse = response.rawResponse,
-            pageInfo = response.pageInfo
-        )
+        /**
+         * Checks if there are any properties available to fetch, initializing the paginator if necessary.
+         *
+         * @return `true` if there are properties available, `false` otherwise.
+         */
+        private fun hasPropertiesToFetch(): Boolean =
+            run {
+                graphQLExecutor
+                    .execute(
+                        SandboxPropertiesTotalCountQuery(),
+                    ).let {
+                        it.data.properties.totalCount > 0
+                    }
+            }
     }
-
-    /**
-     * Checks if there are any properties available to fetch, initializing the paginator if necessary.
-     *
-     * @return `true` if there are properties available, `false` otherwise.
-     */
-    private fun hasPropertiesToFetch(): Boolean = run {
-        graphQLExecutor.execute(
-            SandboxPropertiesTotalCountQuery()
-        ).let {
-            it.data.properties.totalCount > 0
-        }
-    }
-}

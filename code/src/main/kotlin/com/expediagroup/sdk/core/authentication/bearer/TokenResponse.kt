@@ -37,12 +37,13 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class TokenResponse(
     @JsonProperty("access_token") val accessToken: String,
-    @JsonProperty("expires_in") val expiresIn: Long
+    @JsonProperty("expires_in") val expiresIn: Long,
 ) {
     companion object {
-        private val objectMapper = ObjectMapper()
-            .registerKotlinModule()
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        private val objectMapper =
+            ObjectMapper()
+                .registerKotlinModule()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
         /**
          * Parses the response from the authentication server to extract token details.
@@ -52,13 +53,15 @@ data class TokenResponse(
          * @throws ExpediaGroupResponseParsingException If the response cannot be parsed.
          */
         fun parse(response: Response): TokenResponse {
-            val responseBody = response.body.getOrThrow {
-                ExpediaGroupResponseParsingException("Authenticate response body is empty or cannot be parsed")
-            }
+            val responseBody =
+                response.body.getOrThrow {
+                    ExpediaGroupResponseParsingException("Authenticate response body is empty or cannot be parsed")
+                }
 
-            val responseString = responseBody.source().use {
-                it.readString(responseBody.mediaType()?.charset ?: Charsets.UTF_8)
-            }
+            val responseString =
+                responseBody.source().use {
+                    it.readString(responseBody.mediaType()?.charset ?: Charsets.UTF_8)
+                }
 
             return try {
                 objectMapper.readValue(responseString, TokenResponse::class.java)

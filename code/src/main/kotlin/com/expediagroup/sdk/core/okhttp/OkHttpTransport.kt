@@ -19,8 +19,8 @@ package com.expediagroup.sdk.core.okhttp
 import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
-import java.io.IOException
 import okhttp3.OkHttpClient
+import java.io.IOException
 
 /**
  * A transport implementation using OkHttp to execute HTTP requests.
@@ -31,7 +31,7 @@ import okhttp3.OkHttpClient
  * @property okHttpClient The OkHttp client used to execute HTTP requests.
  */
 class OkHttpTransport(
-    private val okHttpClient: OkHttpClient
+    private val okHttpClient: OkHttpClient,
 ) : Transport {
     /**
      * Executes the given SDK request using OkHttp and returns the SDK response.
@@ -45,9 +45,7 @@ class OkHttpTransport(
      * @throws IOException If an error occurs during the request execution.
      */
     @Throws(IOException::class)
-    override fun execute(request: Request): Response {
-        return request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
-    }
+    override fun execute(request: Request): Response = request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
 
     override fun dispose() {
         okHttpClient.dispatcher.executorService.shutdown()

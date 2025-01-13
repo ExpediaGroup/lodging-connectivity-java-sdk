@@ -7,25 +7,27 @@ import com.expediagroup.sdk.core.client.AbstractRequestExecutor
 import com.expediagroup.sdk.graphql.model.response.RawResponse
 import io.mockk.mockk
 import io.mockk.verify
-import java.util.concurrent.CompletableFuture
 import org.junit.jupiter.api.Test
-
+import java.util.concurrent.CompletableFuture
 
 class AbstractGraphQLExecutorTest {
-
     @Test
     fun `should close the underlying resources on dispose call`() {
         val mockRequestExecutor = mockk<AbstractRequestExecutor>(relaxed = true)
         val mockApolloClient = mockk<ApolloClient>(relaxed = true)
 
-        val testGraphQLExecutor = object : AbstractGraphQLExecutor(mockRequestExecutor) {
-            override val apolloClient = mockApolloClient
-            override fun <T : Query.Data> execute(query: Query<T>) = mockk<RawResponse<T>>()
-            override fun <T : Mutation.Data> execute(mutation: Mutation<T>) = mockk<RawResponse<T>>()
-            override fun <T : Query.Data> executeAsync(query: Query<T>) = mockk<CompletableFuture<RawResponse<T>>>()
-            override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>) =
-                mockk<CompletableFuture<RawResponse<T>>>()
-        }
+        val testGraphQLExecutor =
+            object : AbstractGraphQLExecutor(mockRequestExecutor) {
+                override val apolloClient = mockApolloClient
+
+                override fun <T : Query.Data> execute(query: Query<T>) = mockk<RawResponse<T>>()
+
+                override fun <T : Mutation.Data> execute(mutation: Mutation<T>) = mockk<RawResponse<T>>()
+
+                override fun <T : Query.Data> executeAsync(query: Query<T>) = mockk<CompletableFuture<RawResponse<T>>>()
+
+                override fun <T : Mutation.Data> executeAsync(mutation: Mutation<T>) = mockk<CompletableFuture<RawResponse<T>>>()
+            }
 
         testGraphQLExecutor.dispose()
 

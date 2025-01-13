@@ -31,7 +31,7 @@ data class Response private constructor(
     val status: Status,
     val message: String?,
     val headers: Headers,
-    val body: ResponseBody?
+    val body: ResponseBody?,
 ) : Closeable {
     /**
      * Returns true if the response code is in the 200-299 range.
@@ -94,9 +94,10 @@ data class Response private constructor(
          * @param request The originating request.
          * @return This builder.
          */
-        fun request(request: Request) = apply {
-            this.request = request
-        }
+        fun request(request: Request) =
+            apply {
+                this.request = request
+            }
 
         /**
          * Sets the protocol used for the response.
@@ -104,9 +105,10 @@ data class Response private constructor(
          * @param protocol The protocol (e.g., HTTP/1.1).
          * @return This builder.
          */
-        fun protocol(protocol: Protocol) = apply {
-            this.protocol = protocol
-        }
+        fun protocol(protocol: Protocol) =
+            apply {
+                this.protocol = protocol
+            }
 
         /**
          * Sets the HTTP status code.
@@ -115,9 +117,10 @@ data class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [status] is negative.
          */
-        fun status(status: Status) = apply {
-            this.status = status
-        }
+        fun status(status: Status) =
+            apply {
+                this.status = status
+            }
 
         /**
          * Sets the HTTP reason phrase.
@@ -125,9 +128,10 @@ data class Response private constructor(
          * @param message The reason phrase.
          * @return This builder.
          */
-        fun message(message: String) = apply {
-            this.message = message
-        }
+        fun message(message: String) =
+            apply {
+                this.message = message
+            }
 
         /**
          * Adds a header with the specified name and value.
@@ -137,7 +141,10 @@ data class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
-        fun addHeader(name: String, value: String) = apply {
+        fun addHeader(
+            name: String,
+            value: String,
+        ) = apply {
             headersBuilder.add(name, value)
         }
 
@@ -149,7 +156,10 @@ data class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
-        fun addHeader(name: String, values: List<String>) = apply {
+        fun addHeader(
+            name: String,
+            values: List<String>,
+        ) = apply {
             headersBuilder.add(name, values)
         }
 
@@ -161,7 +171,10 @@ data class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
-        fun setHeader(name: String, value: String) = apply {
+        fun setHeader(
+            name: String,
+            value: String,
+        ) = apply {
             headersBuilder.set(name, value)
         }
 
@@ -173,7 +186,10 @@ data class Response private constructor(
          * @return This builder.
          * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
-        fun setHeader(name: String, values: List<String>) = apply {
+        fun setHeader(
+            name: String,
+            values: List<String>,
+        ) = apply {
             headersBuilder.set(name, values)
         }
 
@@ -183,9 +199,10 @@ data class Response private constructor(
          * @param name The header name.
          * @return This builder.
          */
-        fun removeHeader(name: String) = apply {
-            headersBuilder.remove(name)
-        }
+        fun removeHeader(name: String) =
+            apply {
+                headersBuilder.remove(name)
+            }
 
         /**
          * Sets the response headers.
@@ -193,9 +210,10 @@ data class Response private constructor(
          * @param headers The response headers.
          * @return This builder.
          */
-        fun headers(headers: Headers) = apply {
-            headersBuilder = headers.newBuilder()
-        }
+        fun headers(headers: Headers) =
+            apply {
+                headersBuilder = headers.newBuilder()
+            }
 
         /**
          * Sets the response body.
@@ -203,9 +221,10 @@ data class Response private constructor(
          * @param body The response body, or null if none.
          * @return This builder.
          */
-        fun body(body: ResponseBody?) = apply {
-            this.body = body
-        }
+        fun body(body: ResponseBody?) =
+            apply {
+                this.body = body
+            }
 
         /**
          * Builds the [Response].
@@ -224,7 +243,7 @@ data class Response private constructor(
                 status = code,
                 message = message,
                 headers = headersBuilder.build(),
-                body = body
+                body = body,
             )
         }
     }
