@@ -150,22 +150,12 @@ abstract class RequestBody {
             val encodedForm =
                 formData
                     .map { (key, value) ->
-                        "${encode(key, charset)}=${encode(value, charset)}"
+                        "${URLEncoder.encode(key, charset.name())}=${URLEncoder.encode(value, charset.name())}"
                     }.joinToString("&")
 
             val contentBytes = encodedForm.toByteArray(charset)
 
             return create(contentBytes.inputStream(), CommonMediaTypes.APPLICATION_FORM_URLENCODED)
         }
-
-        private fun encode(
-            value: String,
-            charset: Charset,
-        ): String =
-            URLEncoder
-                .encode(value, charset.name())
-                .replace("+", "%20")
-                .replace("*", "%2A")
-                .replace("%7E", "~")
     }
 }

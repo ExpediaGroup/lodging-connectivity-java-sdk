@@ -27,12 +27,12 @@ internal object ResponseLogger {
         logger: LoggerDecorator,
         response: Response,
         vararg tags: String,
-        maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE,
+        maxBodyLogSize: Long? = null,
     ) {
         try {
             var logString =
                 buildString {
-                    append("[URL=${response.request.url}, Code=${response.status.code}, Headers=[${response.headers}]")
+                    append("URL=${response.request.url}, Code=${response.status.code}, Headers=[${response.headers}]")
                 }
 
             if (logger.isDebugEnabled) {
@@ -41,19 +41,19 @@ internal object ResponseLogger {
                         it.readLoggableBody(maxBodyLogSize, it.mediaType()?.charset)
                     }
 
-                logString += ", Body=$responseBodyString]"
+                logString += ", Body=$responseBodyString"
 
                 logger.debug(logString, "Incoming", *tags)
             } else {
                 logger.info(logString, "Incoming", *tags)
             }
         } catch (e: Exception) {
-            logger.warn("Failed to log response")
+            logger.error("Failed to log response")
         }
     }
 
     private fun ResponseBody.readLoggableBody(
-        maxSize: Long,
+        maxBodyLogSize: Long?,
         charset: Charset?,
     ): String {
         this.mediaType().also {
@@ -66,8 +66,12 @@ internal object ResponseLogger {
             }
         }
 
+        if (this.contentLength() == -1L) {
+            return "Response body with unknown content length cannot be logged"
+        }
+
         val buffer = Buffer()
-        val bytesToRead = minOf(maxSize, this.contentLength())
+        val bytesToRead = minOf(maxBodyLogSize ?: DEFAULT_MAX_BODY_SIZE, contentLength())
         this.source().peek().read(buffer, bytesToRead)
         return buffer.readString(charset ?: Charsets.UTF_8)
     }
