@@ -5,7 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
 
     /* Test Reporting */
-    id 'org.jetbrains.kotlinx.kover' version "0.9.0"
+    id 'org.jetbrains.kotlinx.kover' version "0.9.1"
 }
 
 kotlin {
@@ -18,7 +18,7 @@ dependencies {
 
     /* EG SDK Core */
     api 'com.squareup.okhttp3:okhttp:4.12.0'
-    implementation(project(":core"))
+    implementation(project(":expediagroup-sdk-core"))
 
     /* Testing */
     testImplementation platform('org.junit:junit-bom:5.11.4')
