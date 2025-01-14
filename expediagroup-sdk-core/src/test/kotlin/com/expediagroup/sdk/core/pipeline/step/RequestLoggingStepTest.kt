@@ -6,7 +6,6 @@ import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.core.logging.LoggerDecorator
 import com.expediagroup.sdk.core.logging.RequestLogger
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import okio.Buffer
@@ -18,16 +17,11 @@ import java.nio.charset.Charset
 
 class RequestLoggingStepTest {
     private lateinit var mockLogger: LoggerDecorator
-    private lateinit var mockRequest: Request
-    private lateinit var mockRequestBody: RequestBody
     private lateinit var loggingStep: RequestLoggingStep
 
     @BeforeEach
     fun setUp() {
         mockLogger = mockk(relaxed = true)
-        mockRequest = mockk(relaxed = true)
-        mockRequestBody = mockk(relaxed = true)
-
         loggingStep = RequestLoggingStep(logger = mockLogger, maxRequestBodySize = 1024L)
     }
 
@@ -69,8 +63,6 @@ class RequestLoggingStepTest {
                 .url("https://example.com")
                 .method(Method.POST)
                 .build()
-
-        every { mockRequest.body } returns null
 
         // Act
         val result = loggingStep.invoke(testRequest)
