@@ -19,10 +19,32 @@ package com.expediagroup.sdk.core.pipeline
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 
+/**
+ * A functional interface representing a single step in the request pipeline.
+ * Implementations of this interface define transformations or actions
+ * to be applied to a [Request] object.
+ */
 fun interface RequestPipelineStep : (Request) -> Request
 
+/**
+ * A functional interface representing a single step in the response pipeline.
+ * Implementations of this interface define transformations or actions
+ * to be applied to a [Response] object.
+ */
 fun interface ResponsePipelineStep : (Response) -> Response
 
+/**
+ * A class representing a processing pipeline for requests and responses.
+ *
+ * The `ExecutionPipeline` orchestrates the execution of a series of transformations
+ * (steps) on both HTTP requests and responses.
+ *
+ * @property requestPipeline A list of [RequestPipelineStep]s to be executed on the outgoing [Request].
+ * Each step is applied sequentially, with the output of one step becoming the input for the next.
+ *
+ * @property responsePipeline A list of [ResponsePipelineStep]s to be executed on the incoming [Response].
+ * Each step is applied sequentially, with the output of one step becoming the input for the next.
+ */
 class ExecutionPipeline(
     private val requestPipeline: List<RequestPipelineStep>,
     private val responsePipeline: List<ResponsePipelineStep>,
