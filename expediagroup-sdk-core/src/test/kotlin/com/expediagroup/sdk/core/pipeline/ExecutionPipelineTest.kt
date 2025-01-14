@@ -24,7 +24,7 @@ class ExecutionPipelineTest {
     }
 
     @Test
-    fun `startRequestPipeline should apply all request pipeline steps`() {
+    fun `should apply all request pipeline steps`() {
         // Arrange
         val initialRequest = mockk<Request>()
         val intermediateRequest = mockk<Request>()
@@ -51,7 +51,7 @@ class ExecutionPipelineTest {
     }
 
     @Test
-    fun `startRequestPipeline should return initial request if pipeline is empty`() {
+    fun `should return initial request if request pipeline is empty`() {
         // Arrange
         val initialRequest = mockk<Request>()
 
@@ -69,7 +69,7 @@ class ExecutionPipelineTest {
     }
 
     @Test
-    fun `startResponsePipeline should apply all response pipeline steps`() {
+    fun `should apply all response pipeline steps`() {
         // Arrange
         val initialResponse = mockk<Response>()
         val intermediateResponse = mockk<Response>()
@@ -96,7 +96,7 @@ class ExecutionPipelineTest {
     }
 
     @Test
-    fun `startResponsePipeline should return initial response if pipeline is empty`() {
+    fun `should return initial response if response pipeline is empty`() {
         // Arrange
         val initialResponse = mockk<Response>()
 
