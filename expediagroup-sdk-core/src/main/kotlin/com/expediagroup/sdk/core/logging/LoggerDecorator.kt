@@ -63,9 +63,11 @@ class LoggerDecorator(
         buildString {
             append("[${Constant.EXPEDIA_GROUP_SDK}] - ")
             tags?.let {
-                append("[")
-                append(it.joinToString(", "))
-                append("] - ")
+                if (tags.isNotEmpty()) {
+                    append("[")
+                    append(it.joinToString(", "))
+                    append("] - ")
+                }
             }
             append(msg.trim())
         }

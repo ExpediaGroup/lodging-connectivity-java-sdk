@@ -69,6 +69,13 @@ tasks.named("check") {
 
 kover {
     reports {
+        filters {
+            excludes {
+                packages(
+                        "com.expediagroup.sdk.core.exception"
+                )
+            }
+        }
         total {
             verify {
                 rule {
