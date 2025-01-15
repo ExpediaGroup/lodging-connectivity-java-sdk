@@ -16,19 +16,25 @@
 
 package com.expediagroup.sdk.graphql
 
-import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.core.transport.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.core.transport.Disposable
-import com.expediagroup.sdk.graphql.model.RawResponse
-import java.util.concurrent.CompletableFuture
 
-abstract class AbstractAsyncGraphQLExecutor(
-    protected val asyncRequestExecutor: AbstractAsyncRequestExecutor
-) : Disposable {
+/**
+ * Abstract base class for building high-level asynchronous GraphQL clients.
+ */
+abstract class AsyncGraphQLClient : Disposable {
 
-    abstract fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<RawResponse<T>>
+    /**
+     * The [AbstractAsyncGraphQLExecutor] used to execute GraphQL operations.
+     *
+     * This executor provides the core logic for converting operations into SDK requests,
+     * sending them to the server, and processing the responses.
+     */
+    protected abstract val asyncGraphQLExecutor: AbstractAsyncGraphQLExecutor
 
+    /**
+     * Releases any resources associated with the client.
+     */
     override fun dispose() {
-        asyncRequestExecutor.dispose()
+        asyncGraphQLExecutor.dispose()
     }
 }

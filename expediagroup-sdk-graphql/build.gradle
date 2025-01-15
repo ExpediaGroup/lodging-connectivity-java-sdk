@@ -1,6 +1,5 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
-    id 'com.apollographql.apollo' version '4.1.0'
 
     /* Test Reporting */
     id 'org.jetbrains.kotlinx.kover' version "0.9.0"
@@ -18,7 +17,7 @@ dependencies {
     api 'com.apollographql.apollo:apollo-api:4.1.0'
 
     /* EG SDK Core */
-    api(project(":core"))
+    api(project(":expediagroup-sdk-core"))
 
     /* Testing */
     testImplementation platform('org.junit:junit-bom:5.11.4')
@@ -27,17 +26,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
     testImplementation 'io.mockk:mockk:1.13.14'
     testImplementation "com.squareup.okhttp3:mockwebserver:4.12.0"
-
-//    testImplementation(project(':expediagroup-sdk-okhttp'))
-}
-
-apollo {
-    service("testservice") {
-        srcDir("src/test/graphql")
-        packageName.set("testservice")
-        outputDir.set(file("src/test/graphql/generated"))
-        generateDataBuilders.set(true)
-    }
 }
 
 test {

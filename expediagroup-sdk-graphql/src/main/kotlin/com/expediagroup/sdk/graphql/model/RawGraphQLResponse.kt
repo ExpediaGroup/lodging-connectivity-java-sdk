@@ -23,14 +23,14 @@ import com.apollographql.apollo.api.Operation
  * and any associated errors.
  *
  * This class serves as a wrapper for the raw response, providing access to both the complete data and error details.
- * Higher-level interfaces, such as [Response], can then extract and simplify access to specific data fragments
+ * Higher-level interfaces, such as [GraphQLResponse], can then extract and simplify access to specific data fragments
  * relevant to the user, while `RawResponse` retains the entire response as received.
  *
  * @param T The type of the full data structure returned by the GraphQL operation, constrained to types extending [Operation.Data].
  * @param data The complete data returned by the GraphQL operation, representing all available fields as per the operation.
  * @param errors A list of errors associated with the response, or `null` if no errors were encountered.
  */
-open class RawResponse<T : Operation.Data>(
+open class RawGraphQLResponse<T : Operation.Data>(
     val data: T,
-    val errors: List<Error>?
+    val errors: List<GraphQLError>?
 )

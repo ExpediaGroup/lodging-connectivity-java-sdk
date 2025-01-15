@@ -16,6 +16,8 @@
 
 package com.expediagroup.sdk.graphql.model
 
+import com.apollographql.apollo.api.Error
+
 /**
  * Represents an error returned from a GraphQL operation.
  *
@@ -23,13 +25,13 @@ package com.expediagroup.sdk.graphql.model
  * @param path The path in the GraphQL query where the error occurred, represented as a list of field names.
  * This may be `null` if the error is not tied to a specific query path.
  */
-data class Error(
+data class GraphQLError(
     val message: String,
     val path: List<String>?
 ) {
     companion object {
-        fun fromApolloError(apolloError: com.apollographql.apollo.api.Error): Error {
-            return Error(
+        fun fromApolloError(apolloError: Error): GraphQLError {
+            return GraphQLError(
                 message = apolloError.message,
                 path = apolloError.path?.map { it.toString() }
             )

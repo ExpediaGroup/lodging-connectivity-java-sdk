@@ -17,7 +17,7 @@
 package com.expediagroup.sdk.graphql.exception
 
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.model.Error
+import com.expediagroup.sdk.graphql.model.GraphQLError
 
 /**
  * Exception thrown when a GraphQL response completes without data but includes error details.
@@ -27,10 +27,10 @@ import com.expediagroup.sdk.graphql.model.Error
  *
  * @param message An optional message providing context about the exception.
  * @param cause The underlying cause of the exception, if available.
- * @param errors A list of [Error] objects describing issues from the GraphQL response, useful for precise error handling.
+ * @param errors A list of [GraphQLError] objects describing issues from the GraphQL response, useful for precise error handling.
  */
 class NoDataException(
     message: String? = null,
     cause: Throwable? = null,
-    val errors: List<Error>,
+    val errors: List<GraphQLError>,
 ) : ExpediaGroupServiceException(message, cause)
