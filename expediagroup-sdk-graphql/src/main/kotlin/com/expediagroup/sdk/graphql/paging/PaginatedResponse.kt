@@ -17,10 +17,10 @@
 package com.expediagroup.sdk.graphql.paging
 
 import com.apollographql.apollo.api.Operation
-import com.expediagroup.sdk.graphql.model.GraphQLResponse
+import com.expediagroup.sdk.graphql.model.Response
 
 /**
- * Represents a paginated response, extending a [GraphQLResponse] with pagination metadata.
+ * Represents a paginated response, extending a [Response] with pagination metadata.
  *
  * This interface is intended for paginated responses where data spans multiple pages, providing access to
  * a specific data fragment of interest, the full raw response, and pagination details.
@@ -29,7 +29,7 @@ import com.expediagroup.sdk.graphql.model.GraphQLResponse
  * @param R The type of the raw response data, constrained to types extending [Operation.Data], typically containing
  * the complete unprocessed data and error information from the GraphQL operation.
  */
-interface PaginatedResponse<T, R : Operation.Data> : GraphQLResponse<T, R> {
+interface PaginatedResponse<T, R : Operation.Data> : Response<T, R> {
 
     /**
      * Metadata about the pagination state, including page size, cursor position, and whether additional pages are available.

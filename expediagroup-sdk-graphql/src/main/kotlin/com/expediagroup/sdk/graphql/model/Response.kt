@@ -28,7 +28,7 @@ import com.apollographql.apollo.api.Operation
  * @param R The type of the raw response data, constrained to types extending [Operation.Data], typically containing
  * the complete unprocessed data and error information from the GraphQL operation.
  */
-interface GraphQLResponse<T, R : Operation.Data> {
+interface Response<T, R : Operation.Data> {
 
     /**
      * The specific data fragment of interest to the user, extracted from the full response.
@@ -40,6 +40,6 @@ interface GraphQLResponse<T, R : Operation.Data> {
      * The raw response received from the data source, containing the complete unprocessed data and any errors.
      * This provides access to the full response structure when needed.
      */
-    val rawResponse: GraphQLRawResponse<R>
+    val rawResponse: RawResponse<R>
 }
 

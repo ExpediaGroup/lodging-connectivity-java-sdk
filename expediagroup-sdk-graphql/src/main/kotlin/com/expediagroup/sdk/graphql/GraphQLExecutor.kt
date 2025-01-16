@@ -22,7 +22,7 @@ import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.core.transport.AbstractRequestExecutor
 import com.expediagroup.sdk.graphql.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.GraphQLError
-import com.expediagroup.sdk.graphql.model.GraphQLRawResponse
+import com.expediagroup.sdk.graphql.model.RawResponse
 
 /**
  * A streamlined implementation of [GraphQLExecutor] that handles GraphQL operations with
@@ -40,14 +40,14 @@ class GraphQLExecutor(
 ) : AbstractGraphQLExecutor(requestExecutor) {
 
     /**
-     * Executes a GraphQL operation and returns a [GraphQLRawResponse] containing the complete data and any errors.
+     * Executes a GraphQL operation and returns a [RawResponse] containing the complete data and any errors.
      *
      * @param operation The GraphQL operation to be executed.
-     * @return A [GraphQLRawResponse] with the full data structure and any errors from the server.
+     * @return A [RawResponse] with the full data structure and any errors from the server.
      * @throws [ExpediaGroupServiceException] If an exception occurs during operation execution.
      * @throws [NoDataException] If the operation completes without data but includes errors.
      */
-    override fun <T : Operation.Data> execute(operation: Operation<T>): GraphQLRawResponse<T> = operation
+    override fun <T : Operation.Data> execute(operation: Operation<T>): RawResponse<T> = operation
         .toSDKRequest(serverUrl).let {
             requestExecutor.execute(it)
         }.toApolloResponse(operation).let {
@@ -59,7 +59,7 @@ class GraphQLExecutor(
      *
      * @param response The ApolloResponse containing the data and errors from the GraphQL operation.
      */
-    private fun <T : Operation.Data> processApolloResponse(response: ApolloResponse<T>): GraphQLRawResponse<T> {
+    private fun <T : Operation.Data> processApolloResponse(response: ApolloResponse<T>): RawResponse<T> {
         return when {
             response.exception != null -> throw ExpediaGroupServiceException(cause = response.exception)
 
@@ -68,7 +68,7 @@ class GraphQLExecutor(
                 errors = response.errors!!.map { GraphQLError.fromApolloError(it) }
             )
 
-            else -> GraphQLRawResponse(
+            else -> RawResponse(
                 data = response.data!!,
                 errors = response.errors?.map { GraphQLError.fromApolloError(it) }
             )
