@@ -20,24 +20,24 @@ import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Operation
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.core.transport.AbstractRequestExecutor
+import com.expediagroup.sdk.core.transport.Disposable
 import com.expediagroup.sdk.graphql.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.GraphQLError
 import com.expediagroup.sdk.graphql.model.RawResponse
 
 /**
- * A streamlined implementation of [GraphQLExecutor] that handles GraphQL operations with
- * error handling and response processing. This executor processes both queries and mutations
- * while providing detailed error information when operations fail.
+ * A class for executing GraphQL operations. It provides a higher-level execute method that accepts [Operation]. This
+ * operation is converted to SDK request.
  *
- * By default - this implementation is used internally in all higher-level clients
+ * By default - this class should be used internally in all higher-level [GraphQLClient] implementations
  *
  * @param requestExecutor used for HTTP request execution within the SDK
  * @param serverUrl GraphQL server URL
  */
 class GraphQLExecutor(
-    requestExecutor: AbstractRequestExecutor,
+    private val requestExecutor: AbstractRequestExecutor,
     private val serverUrl: String
-) : AbstractGraphQLExecutor(requestExecutor) {
+) : Disposable by requestExecutor {
 
     /**
      * Executes a GraphQL operation and returns a [RawResponse] containing the complete data and any errors.
@@ -47,7 +47,7 @@ class GraphQLExecutor(
      * @throws [ExpediaGroupServiceException] If an exception occurs during operation execution.
      * @throws [NoDataException] If the operation completes without data but includes errors.
      */
-    override fun <T : Operation.Data> execute(operation: Operation<T>): RawResponse<T> = operation
+    fun <T : Operation.Data> execute(operation: Operation<T>): RawResponse<T> = operation
         .toSDKRequest(serverUrl).let {
             requestExecutor.execute(it)
         }.toApolloResponse(operation).let {

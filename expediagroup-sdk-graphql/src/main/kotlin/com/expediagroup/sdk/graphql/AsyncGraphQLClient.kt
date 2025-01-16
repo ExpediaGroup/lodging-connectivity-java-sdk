@@ -24,12 +24,12 @@ import com.expediagroup.sdk.core.transport.Disposable
 abstract class AsyncGraphQLClient : Disposable {
 
     /**
-     * The [AbstractAsyncGraphQLExecutor] used to execute GraphQL operations.
+     * The [AsyncGraphQLClient] used to execute GraphQL operations.
      *
      * This executor provides the core logic for converting operations into SDK requests,
      * sending them to the server, and processing the responses.
      */
-    protected abstract val asyncGraphQLExecutor: AbstractAsyncGraphQLExecutor
+    protected abstract val asyncGraphQLExecutor: AsyncGraphQLClient
 
     /**
      * Releases any resources associated with the client.

@@ -20,25 +20,25 @@ import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Operation
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.core.transport.AbstractAsyncRequestExecutor
+import com.expediagroup.sdk.core.transport.Disposable
 import com.expediagroup.sdk.graphql.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.GraphQLError
 import com.expediagroup.sdk.graphql.model.RawResponse
 import java.util.concurrent.CompletableFuture
 
 /**
- * A concrete implementation of [AbstractAsyncGraphQLExecutor] for executing asynchronous GraphQL operations.
+ * A class for executing GraphQL operations asynchronously. It provides a higher-level execute method that accepts [Operation]. This
+ * operation is converted to SDK request.
  *
- * This class leverages the underlying [AbstractAsyncRequestExecutor] to execute SDK requests and provides
- * additional logic to handle GraphQL-specific operations, including mapping Apollo [Operation] objects
- * to SDK requests and processing the resulting responses.
+ * By default - this class should be used internally in all higher-level [AsyncGraphQLClient] implementations
  *
- * @param asyncRequestExecutor The asynchronous request executor used to execute the underlying SDK requests.
- * @param serverUrl The server URL where GraphQL operations are executed.
+ * @param asyncRequestExecutor used for HTTP request execution within the SDK
+ * @param serverUrl GraphQL server URL
  */
 class AsyncGraphQLExecutor(
-    asyncRequestExecutor: AbstractAsyncRequestExecutor,
+    private val asyncRequestExecutor: AbstractAsyncRequestExecutor,
     private val serverUrl: String
-) : AbstractAsyncGraphQLExecutor(asyncRequestExecutor) {
+) : Disposable by asyncRequestExecutor {
 
     /**
      * Executes the given GraphQL operation asynchronously.
@@ -50,7 +50,7 @@ class AsyncGraphQLExecutor(
      * @param operation The Apollo [Operation] to be executed.
      * @return A [CompletableFuture] containing the raw response of the operation.
      */
-    override fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<RawResponse<T>> {
+    fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<RawResponse<T>> {
         val future = CompletableFuture<RawResponse<T>>()
 
         asyncRequestExecutor.execute(operation.toSDKRequest(serverUrl))
