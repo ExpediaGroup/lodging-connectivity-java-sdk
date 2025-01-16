@@ -22,7 +22,7 @@ import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.core.transport.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.graphql.exception.NoDataException
 import com.expediagroup.sdk.graphql.model.GraphQLError
-import com.expediagroup.sdk.graphql.model.RawGraphQLResponse
+import com.expediagroup.sdk.graphql.model.GraphQLRawResponse
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -44,14 +44,14 @@ class AsyncGraphQLExecutor(
      * Executes the given GraphQL operation asynchronously.
      *
      * This method converts the Apollo [Operation] into an SDK request, sends it to the [AbstractAsyncRequestExecutor],
-     * and processes the response to return a [RawGraphQLResponse] containing the data and any associated errors.
+     * and processes the response to return a [GraphQLRawResponse] containing the data and any associated errors.
      *
      * @param T The type of the data returned by the GraphQL operation. Must extend [Operation.Data].
      * @param operation The Apollo [Operation] to be executed.
      * @return A [CompletableFuture] containing the raw response of the operation.
      */
-    override fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<RawGraphQLResponse<T>> {
-        val future = CompletableFuture<RawGraphQLResponse<T>>()
+    override fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<GraphQLRawResponse<T>> {
+        val future = CompletableFuture<GraphQLRawResponse<T>>()
 
         asyncRequestExecutor.execute(operation.toSDKRequest(serverUrl))
             .thenApply { response ->
@@ -72,7 +72,7 @@ class AsyncGraphQLExecutor(
      */
     private fun <T : Operation.Data> processOperationResponse(
         response: ApolloResponse<T>,
-        future: CompletableFuture<RawGraphQLResponse<T>>
+        future: CompletableFuture<GraphQLRawResponse<T>>
     ) {
         try {
             when {
@@ -90,7 +90,7 @@ class AsyncGraphQLExecutor(
                 )
 
                 else -> future.complete(
-                    RawGraphQLResponse(
+                    GraphQLRawResponse(
                         data = response.data!!,
                         errors = response.errors?.map { GraphQLError.fromApolloError(it) }
                     )

@@ -19,7 +19,7 @@ package com.expediagroup.sdk.graphql
 import com.apollographql.apollo.api.Operation
 import com.expediagroup.sdk.core.transport.AbstractAsyncRequestExecutor
 import com.expediagroup.sdk.core.transport.Disposable
-import com.expediagroup.sdk.graphql.model.RawGraphQLResponse
+import com.expediagroup.sdk.graphql.model.GraphQLRawResponse
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -44,7 +44,7 @@ abstract class AbstractAsyncGraphQLExecutor(
      * @param operation The Apollo `Operation` to be executed.
      * @return A `CompletableFuture` containing the raw response of the operation.
      */
-    abstract fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<RawGraphQLResponse<T>>
+    abstract fun <T : Operation.Data> execute(operation: Operation<T>): CompletableFuture<GraphQLRawResponse<T>>
 
     /**
      * Disposes of resources associated with the executor.

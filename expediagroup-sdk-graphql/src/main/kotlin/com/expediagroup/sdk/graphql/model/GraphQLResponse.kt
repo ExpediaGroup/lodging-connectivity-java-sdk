@@ -40,6 +40,6 @@ interface GraphQLResponse<T, R : Operation.Data> {
      * The raw response received from the data source, containing the complete unprocessed data and any errors.
      * This provides access to the full response structure when needed.
      */
-    val rawGraphQLResponse: RawGraphQLResponse<R>
+    val rawResponse: GraphQLRawResponse<R>
 }
 

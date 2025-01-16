@@ -30,7 +30,7 @@ import com.apollographql.apollo.api.Operation
  * @param data The complete data returned by the GraphQL operation, representing all available fields as per the operation.
  * @param errors A list of errors associated with the response, or `null` if no errors were encountered.
  */
-open class RawGraphQLResponse<T : Operation.Data>(
+open class GraphQLRawResponse<T : Operation.Data>(
     val data: T,
     val errors: List<GraphQLError>?
 )

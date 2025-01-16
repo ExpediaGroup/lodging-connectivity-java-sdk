@@ -19,7 +19,7 @@ package com.expediagroup.sdk.graphql
 import com.apollographql.apollo.api.Operation
 import com.expediagroup.sdk.core.transport.AbstractRequestExecutor
 import com.expediagroup.sdk.core.transport.Disposable
-import com.expediagroup.sdk.graphql.model.RawGraphQLResponse
+import com.expediagroup.sdk.graphql.model.GraphQLRawResponse
 
 /**
  * Abstract base class for executing synchronous GraphQL operations.
@@ -43,7 +43,7 @@ abstract class AbstractGraphQLExecutor(
      * @param operation The Apollo `Operation` to be executed.
      * @return A `RawResponse` containing the response of the operation.
      */
-    abstract fun <T : Operation.Data> execute(operation: Operation<T>): RawGraphQLResponse<T>
+    abstract fun <T : Operation.Data> execute(operation: Operation<T>): GraphQLRawResponse<T>
 
     /**
      * Closes the underlying [AbstractRequestExecutor]
