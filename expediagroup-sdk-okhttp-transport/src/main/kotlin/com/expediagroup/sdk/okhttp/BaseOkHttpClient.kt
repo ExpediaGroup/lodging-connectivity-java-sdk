@@ -50,7 +50,7 @@ internal object BaseOkHttpClient {
      */
     fun getInstance(): OkHttpClient {
         return instance ?: synchronized(this) {
-            instance ?: OkHttpClient().also { instance = it }
+            OkHttpClient().also { instance = it }
         }
     }
 
