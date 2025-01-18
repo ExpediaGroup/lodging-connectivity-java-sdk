@@ -39,7 +39,6 @@ abstract class PaginatedStream<T> {
      */
     fun stream(): Stream<T> = generateSequence { nextItem() }.asStream()
 
-
     /**
      * Fetches the next page of items.
      */
