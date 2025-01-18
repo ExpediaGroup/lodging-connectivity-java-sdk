@@ -39,21 +39,29 @@ abstract class PaginatedStream<T> {
      */
     fun stream(): Stream<T> = generateSequence { nextItem() }.asStream()
 
+
     /**
-     * Retrieves the next item in the paginated sequence. Subclasses must provide an implementation
-     * to specify how items are fetched.
+     * Fetches the next page of items.
+     */
+    protected abstract fun fetchNextPage(): List<T>?
+
+    /**
+     * Retrieves the next item in the paginated sequence.
      *
      * @return The next item in the stream, or `null` if no more items are available.
      */
-    protected abstract fun nextItem(): T?
+    private fun nextItem(): T? {
+        if (isCurrentPageEmpty()) {
+            val nextPage = fetchNextPage() ?: return null
 
-    /**
-     * Fetches the next page of items and updates the current page.
-     *
-     * @param pageSupplier A function that supplies the next page of items as a list.
-     */
-    protected fun fetchNextPage(pageSupplier: () -> List<T?>) {
-        currentPage = ArrayDeque(pageSupplier())
+            if (nextPage.isEmpty()) {
+                return null
+            }
+
+            currentPage = ArrayDeque(nextPage.filterNotNull())
+        }
+
+        return pollCurrentPage()
     }
 
     /**
@@ -61,7 +69,7 @@ abstract class PaginatedStream<T> {
      *
      * @return The next item from the current page, or `null` if there are no more items.
      */
-    protected fun pollCurrentPage(): T? = try {
+    private fun pollCurrentPage(): T? = try {
         currentPage.removeFirst()
     } catch (e: NoSuchElementException) {
         null
@@ -72,5 +80,5 @@ abstract class PaginatedStream<T> {
      *
      * @return `true` if the current page has no more items, otherwise `false`.
      */
-    protected fun isCurrentPageEmpty(): Boolean = currentPage.isEmpty()
+    private fun isCurrentPageEmpty(): Boolean = currentPage.isEmpty()
 }
