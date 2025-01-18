@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.expediagroup.sdk.graphql.paging
+package com.expediagroup.sdk.graphql.paging.model
 
 import com.apollographql.apollo.api.Operation
 import com.expediagroup.sdk.graphql.model.Response

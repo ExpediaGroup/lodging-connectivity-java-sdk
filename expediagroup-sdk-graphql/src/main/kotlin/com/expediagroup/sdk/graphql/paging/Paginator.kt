@@ -1,5 +1,7 @@
 package com.expediagroup.sdk.graphql.paging
 
+import com.expediagroup.sdk.graphql.paging.model.PaginatedResponse
+
 abstract class Paginator<T : PaginatedResponse<*, *>> : Iterator<T> {
     protected var hasNext: Boolean = true
     private var initialized: Boolean = false
@@ -7,7 +9,7 @@ abstract class Paginator<T : PaginatedResponse<*, *>> : Iterator<T> {
     override fun hasNext(): Boolean {
         if (!initialized) {
             initialized = true
-            return hasPagesToFetch()
+            return hasPagesToFetch().also { hasNext = it }
         }
 
         return hasNext

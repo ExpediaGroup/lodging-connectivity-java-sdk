@@ -61,6 +61,7 @@ kover {
                         "testservice",
                         "com.expediagroup.sdk.graphql.model",
                         "com.expediagroup.sdk.graphql.exception",
+                        "com.expediagroup.sdk.graphql.paging.model",
                 )
             }
         }
