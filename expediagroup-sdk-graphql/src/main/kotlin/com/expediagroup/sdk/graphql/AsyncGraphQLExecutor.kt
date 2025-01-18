@@ -74,33 +74,24 @@ class AsyncGraphQLExecutor(
         response: ApolloResponse<T>,
         future: CompletableFuture<RawResponse<T>>
     ) {
-        try {
-            when {
-                response.exception != null -> future.completeExceptionally(
-                    ExpediaGroupServiceException(
-                        cause = response.exception
-                    )
-                )
-
-                response.data == null && response.hasErrors() -> future.completeExceptionally(
-                    NoDataException(
-                        message = "No data received from the server",
-                        errors = response.errors!!.map { GraphQLError.fromApolloError(it) }
-                    )
-                )
-
-                else -> future.complete(
-                    RawResponse(
-                        data = response.data!!,
-                        errors = response.errors?.map { GraphQLError.fromApolloError(it) }
-                    )
-                )
-            }
-        } catch (e: Exception) {
-            future.completeExceptionally(
+        when {
+            response.exception != null -> future.completeExceptionally(
                 ExpediaGroupServiceException(
-                    message = e.message,
-                    cause = e
+                    cause = response.exception
+                )
+            )
+
+            response.data == null && response.hasErrors() -> future.completeExceptionally(
+                NoDataException(
+                    message = "No data received from the server",
+                    errors = response.errors!!.map { GraphQLError.fromApolloError(it) }
+                )
+            )
+
+            else -> future.complete(
+                RawResponse(
+                    data = response.data!!,
+                    errors = response.errors?.map { GraphQLError.fromApolloError(it) }
                 )
             )
         }

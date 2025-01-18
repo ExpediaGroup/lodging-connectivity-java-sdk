@@ -21,20 +21,7 @@ import com.expediagroup.sdk.core.transport.Disposable
 /**
  * Abstract base class for building high-level asynchronous GraphQL clients.
  */
-abstract class AsyncGraphQLClient : Disposable {
-
-    /**
-     * The [AsyncGraphQLClient] used to execute GraphQL operations.
-     *
-     * This executor provides the core logic for converting operations into SDK requests,
-     * sending them to the server, and processing the responses.
-     */
-    protected abstract val asyncGraphQLExecutor: AsyncGraphQLClient
-
-    /**
-     * Releases any resources associated with the client.
-     */
-    override fun dispose() {
-        asyncGraphQLExecutor.dispose()
-    }
-}
+@Suppress("MemberVisibilityCanBePrivate")
+abstract class AsyncGraphQLClient(
+    protected val asyncGraphQLExecutor: AsyncGraphQLExecutor
+) : Disposable by asyncGraphQLExecutor
