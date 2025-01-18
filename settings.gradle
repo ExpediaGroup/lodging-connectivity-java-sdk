@@ -10,4 +10,3 @@ include 'apollo-compiler-plugin'
 include 'expediagroup-sdk-core'
 include 'expediagroup-sdk-okhttp-transport'
 include 'expediagroup-sdk-graphql'
-
