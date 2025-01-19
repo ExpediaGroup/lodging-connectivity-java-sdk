@@ -16,10 +16,9 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.operation
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.model.response.RawResponse
-import com.expediagroup.sdk.graphql.model.response.Response
+import com.expediagroup.sdk.graphql.GraphQLExecutor
+import com.expediagroup.sdk.graphql.model.RawResponse
+import com.expediagroup.sdk.graphql.model.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxCreatePropertyMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
@@ -39,16 +38,15 @@ data class CreateSandboxPropertyResponse(
 /**
  * Executes a [SandboxCreatePropertyMutation] GraphQL mutation to create a new sandbox property with the specified input data.
  *
- * This function uses the provided [AbstractGraphQLExecutor] to execute the mutation and returns a [CreateSandboxPropertyResponse]
+ * This function uses the provided [GraphQLExecutor] to execute the mutation and returns a [CreateSandboxPropertyResponse]
  * containing both the targeted sandbox property data and the full raw response.
  *
- * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL mutation.
+ * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [CreatePropertyInput] containing the details for the property to be created.
  * @return A [CreateSandboxPropertyResponse] containing the created sandbox property data and the full raw response.
- * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
 fun createSandboxPropertyOperation(
-    graphQLExecutor: AbstractGraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: CreatePropertyInput
 ): CreateSandboxPropertyResponse {
     val operation = SandboxCreatePropertyMutation(input)

@@ -16,10 +16,11 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.paginator
 
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.model.paging.PageInfo
-import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
-import com.expediagroup.sdk.graphql.model.response.RawResponse
+import com.expediagroup.sdk.graphql.GraphQLExecutor
+import com.expediagroup.sdk.graphql.model.RawResponse
+import com.expediagroup.sdk.graphql.paging.Paginator
+import com.expediagroup.sdk.graphql.paging.model.PageInfo
+import com.expediagroup.sdk.graphql.paging.model.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertiesQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertiesTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxPropertyData
@@ -44,10 +45,10 @@ data class SandboxPropertiesPaginatedResponse(
  * Provides an iterator to retrieve sandbox properties in a paginated manner using the [SandboxPropertiesQuery]
  * GraphQL operation, allowing seamless iteration over pages of properties.
  *
- * This paginator uses the specified [AbstractGraphQLExecutor] to fetch pages based on a cursor and optional page size,
+ * This paginator uses the specified [GraphQLExecutor] to fetch pages based on a cursor and optional page size,
  * providing automatic handling of pagination state.
  *
- * @param graphQLExecutor The [AbstractGraphQLExecutor] used to execute GraphQL queries.
+ * @param graphQLExecutor The [GraphQLExecutor] used to execute GraphQL queries.
  * @param pageSize The number of properties to retrieve per page; defaults to `null` to use the server's default page size.
  * @param initialCursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
  * @constructor Creates a [SandboxPropertiesPaginator] with the specified executor, page size, and initial cursor.
@@ -55,30 +56,11 @@ data class SandboxPropertiesPaginatedResponse(
 class SandboxPropertiesPaginator
     @JvmOverloads
     constructor(
-        private val graphQLExecutor: AbstractGraphQLExecutor,
+        private val graphQLExecutor: GraphQLExecutor,
         private val pageSize: Int? = null,
         initialCursor: String? = null,
-    ) : Iterator<SandboxPropertiesPaginatedResponse> {
+    ) : Paginator<SandboxPropertiesPaginatedResponse>() {
         private var cursor: String? = initialCursor
-        private var hasNext: Boolean = true
-        private var initialized: Boolean = false
-
-        /**
-         * Checks if there are more pages to fetch.
-         *
-         * This method returns `true` if additional pages are available; otherwise, it returns `false`.
-         * It initializes the paginator by checking if there are properties to fetch when called for the first time.
-         *
-         * @return `true` if there are more pages to fetch, `false` otherwise.
-         */
-        override fun hasNext(): Boolean {
-            if (!initialized) {
-                initialized = true
-                return hasPropertiesToFetch()
-            }
-
-            return hasNext
-        }
 
         /**
          * Retrieves the next page of sandbox properties.
@@ -88,7 +70,6 @@ class SandboxPropertiesPaginator
          *
          * @return A [SandboxPropertiesPaginatedResponse] containing the sandbox properties, raw response, and pagination details.
          * @throws NoSuchElementException If no more pages are available to fetch.
-         * @throws ExpediaGroupServiceException If an error occurs during the query execution.
          */
         override fun next(): SandboxPropertiesPaginatedResponse {
             if (!hasNext()) {
@@ -117,13 +98,11 @@ class SandboxPropertiesPaginator
          *
          * @return `true` if there are properties available, `false` otherwise.
          */
-        private fun hasPropertiesToFetch(): Boolean =
-            run {
-                graphQLExecutor
-                    .execute(
-                        SandboxPropertiesTotalCountQuery(),
-                    ).let {
-                        it.data.properties.totalCount > 0
-                    }
-            }
+        override fun hasPagesToFetch(): Boolean =
+            graphQLExecutor
+                .execute(
+                    SandboxPropertiesTotalCountQuery(),
+                ).let {
+                    it.data.properties.totalCount > 0
+                }
     }

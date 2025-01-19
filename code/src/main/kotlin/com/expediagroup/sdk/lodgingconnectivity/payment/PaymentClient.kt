@@ -16,14 +16,13 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.payment
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.GraphQLClient
+import com.expediagroup.sdk.graphql.GraphQLExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.core.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.GetPaymentInstrumentResponse
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.PaymentInstrumentQuery
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInstrumentOperation
@@ -40,9 +39,9 @@ import com.expediagroup.sdk.lodgingconnectivity.payment.operation.getPaymentInst
 class PaymentClient(
     config: ClientConfiguration,
 ) : GraphQLClient() {
-    override val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
+    private val apiEndpoint = EndpointProvider.getPaymentApiEndpoint(config.environment)
 
-    override val graphQLExecutor: AbstractGraphQLExecutor =
+    override val graphQLExecutor =
         GraphQLExecutor(
             requestExecutor = RequestExecutor(config, apiEndpoint),
             serverUrl = apiEndpoint.endpoint,
@@ -52,7 +51,7 @@ class PaymentClient(
      * Retrieves the payment instrument details associated with the specified token.
      *
      * This function executes a [PaymentInstrumentQuery] GraphQL operation using the client’s configured
-     * [AbstractGraphQLExecutor]. It returns a [GetPaymentInstrumentResponse] containing both the targeted payment
+     * [GraphQLExecutor]. It returns a [GetPaymentInstrumentResponse] containing both the targeted payment
      * instrument data and the full raw response.
      *
      * @param token The token identifying the payment instrument to be retrieved.

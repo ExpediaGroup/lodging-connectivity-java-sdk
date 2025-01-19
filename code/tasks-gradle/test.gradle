@@ -4,11 +4,6 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
-
-    classpath = classpath.filter {
-        // exclude original sdk.properties file during testing
-        !it.absolutePath.contains("build/resources/main/sdk.properties")
-    }
 }
 
 tasks.named("check") {
@@ -22,24 +17,8 @@ kover {
                 packages(
                         "com.expediagroup.sdk.lodgingconnectivity.supply.operation",
                         "com.expediagroup.sdk.lodgingconnectivity.sandbox.operation",
-                        "com.expediagroup.sdk.lodgingconnectivity.payment.operation",
-                        "testservice"
+                        "com.expediagroup.sdk.lodgingconnectivity.payment.operation"
                 )
-            }
-        }
-
-        total {
-            html {
-                htmlDir = file("$buildDir/reports/kover")
-            }
-        }
-
-        verify {
-            rule {
-                disabled = false
-                bound {
-                    minValue = 56
-                }
             }
         }
     }

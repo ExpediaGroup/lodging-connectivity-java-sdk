@@ -16,11 +16,11 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.payment.operation
 
-import com.expediagroup.sdk.core.extension.getOrThrow
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.model.response.RawResponse
-import com.expediagroup.sdk.graphql.model.response.Response
+import com.expediagroup.sdk.core.common.getOrThrow
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.GraphQLExecutor
+import com.expediagroup.sdk.graphql.model.RawResponse
+import com.expediagroup.sdk.graphql.model.Response
 import com.expediagroup.sdk.lodgingconnectivity.payment.operation.fragment.PaymentInstrumentData
 
 /**
@@ -40,16 +40,16 @@ data class GetPaymentInstrumentResponse(
 /**
  * Executes [PaymentInstrumentQuery] GraphQL operation to retrieve details about a specific payment instrument.
  *
- * This function uses the provided [AbstractGraphQLExecutor] to execute the operation and returns a [GetPaymentInstrumentResponse]
+ * This function uses the provided [GraphQLExecutor] to execute the operation and returns a [GetPaymentInstrumentResponse]
  * containing both the targeted payment instrument data and the full raw response. If the payment instrument
  * data is missing or null, an [ExpediaGroupServiceException] is thrown.
  *
- * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL query.
+ * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL query.
  * @param token The token identifying the payment instrument to be retrieved.
  * @return A [GetPaymentInstrumentResponse] containing the requested payment instrument data and the full raw response.
  * @throws [ExpediaGroupServiceException] If the payment instrument data is not found in the response.
  */
-fun getPaymentInstrumentOperation(graphQLExecutor: AbstractGraphQLExecutor, token: String): GetPaymentInstrumentResponse {
+fun getPaymentInstrumentOperation(graphQLExecutor: GraphQLExecutor, token: String): GetPaymentInstrumentResponse {
     val operation = PaymentInstrumentQuery(token)
     val response = graphQLExecutor.execute(operation)
 

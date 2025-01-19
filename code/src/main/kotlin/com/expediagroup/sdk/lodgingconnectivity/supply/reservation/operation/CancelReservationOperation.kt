@@ -16,15 +16,14 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation
 
-import com.expediagroup.sdk.core.extension.orFalseIfNull
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.model.response.RawResponse
-import com.expediagroup.sdk.graphql.model.response.Response
+import com.expediagroup.sdk.graphql.GraphQLExecutor
+import com.expediagroup.sdk.graphql.model.RawResponse
+import com.expediagroup.sdk.graphql.model.Response
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.CancelReservationMutation
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.ReservationSelections
+import com.expediagroup.sdk.lodgingconnectivity.util.orFalseIfNull
 
 /**
  * Represents the response for [CancelReservationMutation] GraphQL operation, containing both the processed
@@ -42,20 +41,19 @@ data class CancelReservationResponse(
 /**
  * Executes [CancelReservationMutation] GraphQL mutation to cancel an existing reservation.
  *
- * This function uses the provided [AbstractGraphQLExecutor] to execute the mutation and returns a [CancelReservationResponse]
+ * This function uses the provided [GraphQLExecutor] to execute the mutation and returns a [CancelReservationResponse]
  * containing both the canceled reservation data (if available) and the full raw response. Optional selection parameters
  * allow the inclusion of additional reservation details in the response.
  *
- * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL mutation.
+ * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [CancelReservationInput] containing the details of the reservation to be canceled.
  * @param selections An optional [ReservationSelections] specifying additional fields to include in the response, such as
  * supplier amount and payment instrument token; defaults to `null`.
  * @return A [CancelReservationResponse] containing the canceled reservation data (if available) and the full raw response.
- * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
 @JvmOverloads
 fun cancelReservationOperation(
-    graphQLExecutor: AbstractGraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: CancelReservationInput,
     selections: ReservationSelections? = null
 ): CancelReservationResponse {

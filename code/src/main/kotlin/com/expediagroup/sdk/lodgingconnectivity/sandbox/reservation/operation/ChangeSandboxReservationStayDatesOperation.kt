@@ -16,10 +16,9 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.operation
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.model.response.RawResponse
-import com.expediagroup.sdk.graphql.model.response.Response
+import com.expediagroup.sdk.graphql.GraphQLExecutor
+import com.expediagroup.sdk.graphql.model.RawResponse
+import com.expediagroup.sdk.graphql.model.Response
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxChangeReservationStayDatesMutation
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput
@@ -41,16 +40,15 @@ data class ChangeSandboxReservationStayDatesResponse(
 /**
  * Executes [SandboxChangeReservationStayDatesMutation] GraphQL mutation to modify the stay dates of an existing sandbox reservation.
  *
- * This function uses the provided [AbstractGraphQLExecutor] to execute the mutation and returns a [ChangeSandboxReservationStayDatesResponse]
+ * This function uses the provided [GraphQLExecutor] to execute the mutation and returns a [ChangeSandboxReservationStayDatesResponse]
  * containing both the updated reservation data and the full raw response.
  *
- * @param graphQLExecutor The [AbstractGraphQLExecutor] responsible for executing the GraphQL mutation.
+ * @param graphQLExecutor The [GraphQLExecutor] responsible for executing the GraphQL mutation.
  * @param input The [ChangeReservationStayDatesInput] containing the new stay dates for the reservation.
  * @return A [ChangeSandboxReservationStayDatesResponse] containing the updated reservation data and the full raw response.
- * @throws [ExpediaGroupServiceException] If an error occurs during the mutation execution.
  */
 fun changeSandboxReservationStayDatesOperation(
-    graphQLExecutor: AbstractGraphQLExecutor,
+    graphQLExecutor: GraphQLExecutor,
     input: ChangeReservationStayDatesInput
 ): ChangeSandboxReservationStayDatesResponse {
     val operation = SandboxChangeReservationStayDatesMutation(input)

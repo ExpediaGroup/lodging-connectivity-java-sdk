@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream
 
-import com.expediagroup.sdk.graphql.model.paging.PaginatedStream
+import com.expediagroup.sdk.graphql.paging.PaginatedStream
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.fragment.ReservationData
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.ReservationsPaginator
 
@@ -31,24 +31,5 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.Res
 class ReservationsStream(
     private val paginator: ReservationsPaginator,
 ) : PaginatedStream<ReservationData?>() {
-    /**
-     * Retrieves the next reservation item from the stream.
-     *
-     * This method fetches the next page of reservations from the paginator if the current page is exhausted.
-     * Returns `null` if there are no more items to retrieve.
-     *
-     * @return The next [ReservationData] item in the stream, or `null` if no more items are available.
-     */
-    override fun nextItem(): ReservationData? {
-        if (isCurrentPageEmpty()) {
-            if (!paginator.hasNext()) {
-                return null
-            }
-
-            fetchNextPage {
-                paginator.next().data
-            }
-        }
-        return pollCurrentPage()
-    }
+    override fun fetchNextPage(): List<ReservationData?> = paginator.next().data
 }
