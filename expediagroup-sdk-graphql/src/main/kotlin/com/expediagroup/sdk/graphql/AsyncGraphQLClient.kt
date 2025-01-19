@@ -21,7 +21,10 @@ import com.expediagroup.sdk.core.transport.Disposable
 /**
  * Abstract base class for building high-level asynchronous GraphQL clients.
  */
-@Suppress("MemberVisibilityCanBePrivate")
-abstract class AsyncGraphQLClient(
-    protected val asyncGraphQLExecutor: AsyncGraphQLExecutor
-) : Disposable by asyncGraphQLExecutor
+abstract class AsyncGraphQLClient : Disposable {
+    protected abstract val asyncGraphQLExecutor: AsyncGraphQLExecutor
+
+    override fun dispose() {
+        asyncGraphQLExecutor.dispose()
+    }
+}
