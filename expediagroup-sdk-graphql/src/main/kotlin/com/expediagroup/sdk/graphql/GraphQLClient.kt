@@ -5,7 +5,6 @@ import com.expediagroup.sdk.core.transport.Disposable
 /**
  * Abstract base class for building high-level synchronous GraphQL clients.
  */
-@Suppress("MemberVisibilityCanBePrivate")
 abstract class GraphQLClient : Disposable {
     protected abstract val graphQLExecutor: GraphQLExecutor
 
