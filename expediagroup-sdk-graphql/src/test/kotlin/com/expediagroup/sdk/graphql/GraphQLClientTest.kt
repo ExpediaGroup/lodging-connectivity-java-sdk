@@ -10,7 +10,10 @@ class GraphQLClientTest {
     fun `delegates the dispose call to the underlying graphql executor`() {
         // Given
         val mockGraphQLExecutor = mockk<GraphQLExecutor>(relaxed = true)
-        val testGraphQLClient = object : GraphQLClient(mockGraphQLExecutor) {}
+
+        val testGraphQLClient = object : GraphQLClient() {
+            override val graphQLExecutor = mockGraphQLExecutor
+        }
 
         // When
         testGraphQLClient.dispose()
