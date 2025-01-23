@@ -7,4 +7,6 @@ rootProject.name = "lodging-connectivity-sdk" // Used as published artifactId
 include 'code'
 include 'examples'
 include 'apollo-compiler-plugin'
-
+include 'expediagroup-sdk-core'
+include 'expediagroup-sdk-okhttp-transport'
+include 'expediagroup-sdk-graphql'
