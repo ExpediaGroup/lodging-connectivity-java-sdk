@@ -2,6 +2,12 @@ name: Deploy Reference Documentation
 
 on:
   workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch or tag to deploy reference docs from. Defaults to current branch.'
+        type: string
+        required: false
+        default: ''
 
 permissions:
   id-token: write
