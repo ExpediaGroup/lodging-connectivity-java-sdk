@@ -52,7 +52,7 @@ kover {
                     bound {
                         aggregationForGroup = AggregationType.COVERED_PERCENTAGE
                         coverageUnits = CoverageUnit.BRANCH
-                        minValue = 92
+                        minValue = 100
                     }
                 }
             }
