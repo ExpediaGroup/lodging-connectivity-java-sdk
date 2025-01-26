@@ -8,6 +8,7 @@ import com.expediagroup.sdk.core.client.Transport
 import com.expediagroup.sdk.core.common.RequestHeadersInterceptor
 import com.expediagroup.sdk.core.interceptor.Interceptor
 import com.expediagroup.sdk.core.logging.LoggingInterceptor
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
 import com.expediagroup.sdk.core.okhttp.BaseOkHttpClient
 import com.expediagroup.sdk.core.okhttp.OkHttpTransport
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ApiEndpoint
@@ -24,11 +25,12 @@ internal fun getHttpTransport(configuration: ClientConfiguration): Transport =
 class RequestExecutor(
     configuration: ClientConfiguration,
     apiEndpoint: ApiEndpoint,
+    logger: LoggerDecorator,
 ) : AbstractRequestExecutor(getHttpTransport(configuration)) {
     override val interceptors: List<Interceptor> =
         listOf(
             RequestHeadersInterceptor(),
-            LoggingInterceptor(),
+            LoggingInterceptor(logger),
             BearerAuthenticationInterceptor(
                 BearerAuthenticationManager(
                     requestExecutor = this,

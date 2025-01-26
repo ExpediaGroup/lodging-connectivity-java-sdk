@@ -15,6 +15,7 @@ import java.io.IOException
  * @param maxBodyLogSize The maximum size of the request/response body to log. Defaults to 1MB.
  */
 class LoggingInterceptor(
+    private val logger: LoggerDecorator,
     private val maxBodyLogSize: Long = DEFAULT_MAX_BODY_SIZE,
 ) : Interceptor {
     @Throws(IOException::class)

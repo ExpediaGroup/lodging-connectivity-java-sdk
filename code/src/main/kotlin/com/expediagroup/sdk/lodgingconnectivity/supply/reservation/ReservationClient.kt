@@ -16,6 +16,8 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.supply.reservation
 
+import com.expediagroup.sdk.core.logging.common.LoggerDecorator
+import com.expediagroup.sdk.core.logging.masking.LogMasker
 import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
 import com.expediagroup.sdk.graphql.common.GraphQLExecutor
@@ -24,6 +26,7 @@ import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.payment.PaymentClient
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelReservationReconciliationInput
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.type.CancelVrboReservationInput
@@ -46,6 +49,7 @@ import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.con
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.operation.refundReservationOperation
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.paginator.ReservationsPaginator
 import com.expediagroup.sdk.lodgingconnectivity.supply.reservation.stream.ReservationsStream
+import org.slf4j.LoggerFactory
 
 /**
  * A client for interacting with EG Lodging Connectivity Reservations GraphQL API
@@ -66,7 +70,7 @@ class ReservationClient(
 
     override val graphQLExecutor: AbstractGraphQLExecutor =
         GraphQLExecutor(
-            requestExecutor = RequestExecutor(config, apiEndpoint),
+            requestExecutor = RequestExecutor(config, apiEndpoint, logger),
             serverUrl = apiEndpoint.endpoint,
         )
 
@@ -291,4 +295,16 @@ class ReservationClient(
         run {
             refundReservationOperation(graphQLExecutor, input, selections)
         }
+
+    companion object {
+        @JvmStatic
+        private val logger =
+            LoggerDecorator(
+                logger = LoggerFactory.getLogger(PaymentClient::class.java.enclosingClass),
+                masker =
+                    LogMasker(
+                        globalMaskedFields = setOf("cvv", "cvv2"),
+                    ),
+            )
+    }
 }
