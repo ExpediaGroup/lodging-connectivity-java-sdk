@@ -21,14 +21,13 @@ import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.pipeline.RequestPipelineStep
 
 class BasicAuthenticationStep(
-    private val authenticationManager: BasicAuthenticationManager
+    private val authenticationManager: BasicAuthenticationManager,
 ) : RequestPipelineStep {
-
-    override fun invoke(request: Request): Request {
-        return authenticationManager.authenticate().let {
-            request.newBuilder()
+    override fun invoke(request: Request): Request =
+        authenticationManager.authenticate().let {
+            request
+                .newBuilder()
                 .setHeader("Authorization", authenticationManager.getAuthorizationHeaderValue())
                 .build()
         }
-    }
 }
