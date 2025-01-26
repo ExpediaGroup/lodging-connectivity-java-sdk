@@ -16,11 +16,11 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.model.paging.PageInfo
-import com.expediagroup.sdk.graphql.model.response.PaginatedResponse
-import com.expediagroup.sdk.graphql.model.response.RawResponse
+import com.expediagroup.sdk.graphql.GraphQLExecutor
+import com.expediagroup.sdk.graphql.model.RawResponse
+import com.expediagroup.sdk.graphql.paging.Paginator
+import com.expediagroup.sdk.graphql.paging.model.PageInfo
+import com.expediagroup.sdk.graphql.paging.model.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertyReservationsTotalCountQuery
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.fragment.SandboxReservationData
@@ -45,10 +45,10 @@ data class SandboxReservationsPaginatedResponse(
  * Provides an iterator to retrieve sandbox reservations in a paginated manner using the [SandboxPropertyReservationsQuery]
  * GraphQL operation, allowing seamless iteration over pages of reservations for a specified property.
  *
- * This paginator uses the specified [AbstractGraphQLExecutor] to fetch pages based on a cursor and optional page size,
+ * This paginator uses the specified [GraphQLExecutor] to fetch pages based on a cursor and optional page size,
  * managing the pagination state automatically.
  *
- * @param graphQLExecutor The [AbstractGraphQLExecutor] used to execute GraphQL queries.
+ * @param graphQLExecutor The [GraphQLExecutor] used to execute GraphQL queries.
  * @param propertyId The unique identifier of the property for which reservations are being retrieved.
  * @param pageSize The number of reservations to retrieve per page; defaults to `null` to use the server's default page size.
  * @param initialCursor An optional cursor to specify the starting point for pagination; defaults to `null` for the first page.
@@ -57,31 +57,12 @@ data class SandboxReservationsPaginatedResponse(
 class SandboxReservationsPaginator
     @JvmOverloads
     constructor(
-        private val graphQLExecutor: AbstractGraphQLExecutor,
+        private val graphQLExecutor: GraphQLExecutor,
         private val propertyId: String,
         private val pageSize: Int? = null,
         initialCursor: String? = null,
-    ) : Iterator<SandboxReservationsPaginatedResponse> {
+    ) : Paginator<SandboxReservationsPaginatedResponse>() {
         private var cursor = initialCursor
-        private var hasNext: Boolean = true
-        private var initialized: Boolean = false
-
-        /**
-         * Checks if there are more pages to fetch.
-         *
-         * This method returns `true` if additional pages are available; otherwise, it returns `false`.
-         * It initializes the paginator by checking if there are reservations to fetch when called for the first time.
-         *
-         * @return `true` if there are more pages to fetch, `false` otherwise.
-         */
-        override fun hasNext(): Boolean {
-            if (!initialized) {
-                initialized = true
-                return hasReservationsToFetch()
-            }
-
-            return hasNext
-        }
 
         /**
          * Retrieves the next page of sandbox reservations.
@@ -91,7 +72,6 @@ class SandboxReservationsPaginator
          *
          * @return A [SandboxReservationsPaginatedResponse] containing the sandbox reservations, raw response, and pagination details.
          * @throws NoSuchElementException If no more pages are available to fetch.
-         * @throws [ExpediaGroupServiceException] If an error occurs during the query execution.
          */
         override fun next(): SandboxReservationsPaginatedResponse {
             if (!hasNext()) {
@@ -116,13 +96,11 @@ class SandboxReservationsPaginator
             )
         }
 
-        private fun hasReservationsToFetch(): Boolean =
-            run {
-                graphQLExecutor
-                    .execute(
-                        SandboxPropertyReservationsTotalCountQuery(propertyId),
-                    ).let {
-                        it.data.property.reservations.totalCount > 0
-                    }
-            }
+        override fun hasPagesToFetch(): Boolean =
+            graphQLExecutor
+                .execute(
+                    SandboxPropertyReservationsTotalCountQuery(propertyId),
+                ).let {
+                    it.data.property.reservations.totalCount > 0
+                }
     }

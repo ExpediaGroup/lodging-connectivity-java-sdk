@@ -16,14 +16,14 @@
 
 package com.expediagroup.sdk.lodgingconnectivity.sandbox
 
-import com.expediagroup.sdk.core.model.exception.service.ExpediaGroupServiceException
-import com.expediagroup.sdk.graphql.common.AbstractGraphQLExecutor
-import com.expediagroup.sdk.graphql.common.GraphQLExecutor
-import com.expediagroup.sdk.lodgingconnectivity.common.GraphQLClient
-import com.expediagroup.sdk.lodgingconnectivity.common.RequestExecutor
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
+import com.expediagroup.sdk.graphql.GraphQLClient
+import com.expediagroup.sdk.graphql.GraphQLExecutor
+import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientBuilder
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientConfiguration
 import com.expediagroup.sdk.lodgingconnectivity.configuration.ClientEnvironment
 import com.expediagroup.sdk.lodgingconnectivity.configuration.EndpointProvider
+import com.expediagroup.sdk.lodgingconnectivity.core.RequestExecutor
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CancelReservationInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.ChangeReservationStayDatesInput
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.type.CreatePropertyInput
@@ -74,12 +74,12 @@ import com.expediagroup.sdk.lodgingconnectivity.sandbox.reservation.paginator.Sa
  * @param config The `ClientConfiguration` that includes API credentials and other optional parameters such as environment
  * or timeouts.
  */
-class SandboxDataManagementClient(
+class SandboxDataManagementClient private constructor(
     config: ClientConfiguration,
 ) : GraphQLClient() {
-    override val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
+    private val apiEndpoint = EndpointProvider.getSandboxApiEndpoint(config.environment)
 
-    override val graphQLExecutor: AbstractGraphQLExecutor =
+    override val graphQLExecutor =
         GraphQLExecutor(
             requestExecutor = RequestExecutor(config, apiEndpoint),
             serverUrl = apiEndpoint.endpoint,
@@ -335,4 +335,13 @@ class SandboxDataManagementClient(
         run {
             deleteSandboxReservationsOperation(graphQLExecutor, input)
         }
+
+    companion object {
+        class Builder : ClientBuilder<SandboxDataManagementClient>() {
+            override fun build(): SandboxDataManagementClient = SandboxDataManagementClient(buildConfig())
+        }
+
+        @JvmStatic
+        fun builder(): Builder = Builder()
+    }
 }

@@ -1,5 +1,0 @@
-query TestQuery {
-    testQuery {
-        id
-    }
-}
