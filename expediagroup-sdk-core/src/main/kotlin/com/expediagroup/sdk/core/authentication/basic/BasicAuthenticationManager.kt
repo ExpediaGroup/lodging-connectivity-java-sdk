@@ -26,9 +26,8 @@ import com.expediagroup.sdk.core.authentication.common.Credentials
  * @property credentials The user's credentials that will be encoded for authentication.
  */
 class BasicAuthenticationManager(
-    private val credentials: Credentials
+    private val credentials: Credentials,
 ) : AuthenticationManager {
-
     /**
      * A cached version of the encoded credentials, or `null` if not yet encoded.
      */
@@ -52,12 +51,9 @@ class BasicAuthenticationManager(
     }
 
     /**
-     * Retrieves the current Basic Authorization header value. If the credentials have not been
-     * encoded yet, this method will invoke [authenticate] to generate and store the encoded credentials.
+     * Retrieves the current Basic Authorization header value.
      *
      * @return The Basic Authorization header value if authentication is set, or an empty string otherwise.
      */
-    fun getAuthorizationHeaderValue(): String {
-        return authenticate().let { encodedCredentials ?: "" }
-    }
+    fun getAuthorizationHeaderValue(): String = encodedCredentials ?: ""
 }
