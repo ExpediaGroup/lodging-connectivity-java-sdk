@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class BasicAuthenticationStepTest {
-
     @Test
     fun `should call authenticate and set Authorization header`() {
         // Given

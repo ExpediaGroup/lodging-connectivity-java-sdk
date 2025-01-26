@@ -82,12 +82,12 @@ kover {
                     bound {
                         aggregationForGroup = AggregationType.COVERED_PERCENTAGE
                         coverageUnits = CoverageUnit.LINE
-                        minValue = 99
+                        minValue = 100
                     }
                     bound {
                         aggregationForGroup = AggregationType.COVERED_PERCENTAGE
                         coverageUnits = CoverageUnit.BRANCH
-                        minValue = 99
+                        minValue = 100
                     }
                 }
             }
