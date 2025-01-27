@@ -12,8 +12,8 @@ class SerializationTraitTest {
     fun `can implement serialize and deserialize traits without conflicts`() {
         assertDoesNotThrow {
             object : SerializeRequestBodyTrait, DeserializeResponseBodyTrait {
-                override fun <T> deserialize(inputStream: InputStream, instance: ResponseBodyTrait<T>): T {
-                    if (instance is JacksonModelResponseBodyTrait<T>) {
+                override fun <T> deserialize(inputStream: InputStream, instance: OperationResponseBodyTrait<T>): T {
+                    if (instance is JacksonModelOperationResponseBodyTrait<T>) {
                         return jacksonObjectMapper().readValue(inputStream, instance.getTypeIdentifier())
                     }
 

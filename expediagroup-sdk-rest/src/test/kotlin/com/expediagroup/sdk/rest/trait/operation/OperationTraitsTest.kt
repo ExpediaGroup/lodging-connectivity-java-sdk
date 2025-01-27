@@ -10,14 +10,14 @@ class OperationTraitsTest {
     @Test
     fun `an operation can implement all traits without conflicts`() {
         assertDoesNotThrow {
-            val operation = object : ResponseBodyJacksonTypeIdentifierTrait<String>,
+            val operation = object : OperationResponseBodyJacksonTypeIdentifierTrait<String>,
                 HttpMethodTrait,
                 UrlPathTrait,
                 HeadersTrait,
                 OperationRequestBodyTrait<String>,
                 UrlQueryParamsTrait,
                 ContentTypeTrait,
-                JacksonModelResponseBodyTrait<String> {
+                JacksonModelOperationResponseBodyTrait<String> {
 
                 override fun getHttpMethod(): String = "POST"
 
@@ -52,14 +52,14 @@ class OperationTraitsTest {
             "param2" to listOf("value2")
         )
 
-        val operation = object : ResponseBodyJacksonTypeIdentifierTrait<String>,
+        val operation = object : OperationResponseBodyJacksonTypeIdentifierTrait<String>,
             HttpMethodTrait,
             UrlPathTrait,
             HeadersTrait,
             OperationRequestBodyTrait<String>,
             UrlQueryParamsTrait,
             ContentTypeTrait,
-            JacksonModelResponseBodyTrait<String> {
+            JacksonModelOperationResponseBodyTrait<String> {
 
             override fun getHttpMethod(): String = httpOperation
 

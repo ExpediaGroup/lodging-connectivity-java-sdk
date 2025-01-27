@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.type.TypeReference
 
 interface OperationResponseTrait : OperationTrait
 
-interface NoResponseBodyTrait : OperationResponseTrait
+interface OperationNoResponseBodyTrait : OperationResponseTrait
 
-interface ResponseBodyTrait<BodyType> : OperationResponseTrait
+interface OperationResponseBodyTrait<BodyType> : OperationResponseTrait
 
-interface JacksonModelResponseBodyTrait<BodyType> : ResponseBodyTrait<BodyType> {
+interface JacksonModelOperationResponseBodyTrait<BodyType> : OperationResponseBodyTrait<BodyType> {
     fun getTypeIdentifier(): TypeReference<BodyType>
 }
 
-interface ResponseBodyJacksonTypeIdentifierTrait<BodyType>: ResponseBodyTrait<BodyType>
+interface OperationResponseBodyJacksonTypeIdentifierTrait<BodyType>: OperationResponseBodyTrait<BodyType>
