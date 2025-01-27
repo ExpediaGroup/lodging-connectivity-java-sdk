@@ -45,6 +45,13 @@ test {
 
 kover {
     reports {
+        filters {
+            excludes {
+                packages(
+                        "com.expediagroup.sdk.rest.trait",
+                )
+            }
+        }
         total {
             verify {
                 rule {
