@@ -11,5 +11,5 @@ interface SerializeRequestBodyTrait : SerializationTrait {
 }
 
 interface DeserializeResponseBodyTrait : SerializationTrait {
-    fun <T> deserialize(inputStream: InputStream, responseBody: OperationResponseBodyTrait<T>): T
+    fun <T> deserialize(inputStream: InputStream, operation: OperationResponseBodyTrait<T>): T
 }
