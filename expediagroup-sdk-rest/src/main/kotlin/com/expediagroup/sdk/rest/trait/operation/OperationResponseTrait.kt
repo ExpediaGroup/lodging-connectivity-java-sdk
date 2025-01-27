@@ -2,14 +2,33 @@ package com.expediagroup.sdk.rest.trait.operation
 
 import com.fasterxml.jackson.core.type.TypeReference
 
+/**
+ * Marker interface for operations that have a response.
+ */
 interface OperationResponseTrait : OperationTrait
 
+/**
+ * Marker interface for operations that do not have a response body.
+ */
 interface OperationNoResponseBodyTrait : OperationResponseTrait
 
+/**
+ * Marker interface for operations that have a response body.
+ *
+ * @param BodyType the type of the response body
+ */
 interface OperationResponseBodyTrait<BodyType> : OperationResponseTrait
 
+/**
+ * Interface for operations that have a response body and use Jackson for serialization.
+ *
+ * @param BodyType the type of the response body
+ */
 interface JacksonModelOperationResponseBodyTrait<BodyType> : OperationResponseBodyTrait<BodyType> {
+    /**
+     * Get the type identifier for the response body.
+     *
+     * @return the type identifier for the response body
+     */
     fun getTypeIdentifier(): TypeReference<BodyType>
 }
-
-interface OperationResponseBodyJacksonTypeIdentifierTrait<BodyType>: OperationResponseBodyTrait<BodyType>
