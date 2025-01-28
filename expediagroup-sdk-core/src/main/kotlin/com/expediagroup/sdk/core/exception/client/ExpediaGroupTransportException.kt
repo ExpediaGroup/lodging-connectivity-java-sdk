@@ -16,7 +16,7 @@
 
 package com.expediagroup.sdk.core.exception.client
 
-class ExpediaGroupExecutionException(
+class ExpediaGroupTransportException(
     message: String? = null,
     cause: Throwable? = null,
 ) : ExpediaGroupClientException(message, cause)

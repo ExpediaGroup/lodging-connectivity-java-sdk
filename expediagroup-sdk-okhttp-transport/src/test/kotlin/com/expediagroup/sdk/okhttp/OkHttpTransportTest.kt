@@ -1,5 +1,6 @@
 package com.expediagroup.sdk.okhttp
 
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Protocol
 import com.expediagroup.sdk.core.http.Request
@@ -14,6 +15,7 @@ import okhttp3.Call
 import okhttp3.OkHttpClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class OkHttpTransportTest {
 
@@ -57,6 +59,28 @@ class OkHttpTransportTest {
         assertEquals(sdkResponse.body, result.body)
 
         verify { mockCall.execute() }
+    }
+
+    @Test
+    fun `should throw ExpediaGroupNetworkException if the request execution fails`() {
+        // Given
+        val mockOkHttpClient = mockk<OkHttpClient>()
+        val mockCall = mockk<Call>()
+
+        val sdkRequest = Request.builder()
+            .url("https://example.com/")
+            .method(Method.GET)
+            .build()
+
+        every { mockOkHttpClient.newCall(any()) } returns mockCall
+        every { mockCall.execute() } throws RuntimeException()
+
+        val transport = OkHttpTransport(mockOkHttpClient)
+
+        // When & Expect
+        assertThrows<ExpediaGroupNetworkException> {
+            transport.execute(sdkRequest)
+        }
     }
 
     @Test

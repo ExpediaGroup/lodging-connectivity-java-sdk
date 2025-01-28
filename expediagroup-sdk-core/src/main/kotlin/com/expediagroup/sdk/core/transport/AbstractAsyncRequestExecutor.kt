@@ -18,6 +18,8 @@ package com.expediagroup.sdk.core.transport
 
 import com.expediagroup.sdk.core.common.getOrThrow
 import com.expediagroup.sdk.core.exception.client.ExpediaGroupConfigurationException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupPipelineExecutionException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupTransportException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.pipeline.ExecutionPipeline
@@ -76,12 +78,27 @@ abstract class AbstractAsyncRequestExecutor(
      * @param request The request to be processed through the pipelines.
      * @return [CompletableFuture] attached with a callback for response pipeline execution
      */
-    fun execute(request: Request): CompletableFuture<Response> =
-        executionPipeline
-            .startRequestPipeline(request)
-            .let {
-                asyncTransport.execute(it).thenApply { response -> executionPipeline.startResponsePipeline(response) }
+    fun execute(request: Request): CompletableFuture<Response> {
+        val pipelineRequest =
+            try {
+                executionPipeline.startRequestPipeline(request)
+            } catch (e: Exception) {
+                throw ExpediaGroupPipelineExecutionException("exception while executing the request pipeline", e)
             }
+
+        return asyncTransport
+            .execute(pipelineRequest)
+            .thenApply { response ->
+                try {
+                    executionPipeline.startResponsePipeline(response)
+                } catch (e: Exception) {
+                    throw ExpediaGroupPipelineExecutionException("exception while executing the response pipeline", e)
+                }
+            }.exceptionally { e ->
+                if (e.cause is ExpediaGroupPipelineExecutionException) throw e.cause as ExpediaGroupPipelineExecutionException
+                throw ExpediaGroupTransportException("Failed to execute the request", e)
+            }
+    }
 
     override fun dispose() = asyncTransport.dispose()
 

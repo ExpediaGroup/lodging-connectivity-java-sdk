@@ -17,9 +17,9 @@
 package com.expediagroup.sdk.core.transport
 
 import com.expediagroup.sdk.core.common.getOrThrow
-import com.expediagroup.sdk.core.common.runCatchingUncaught
 import com.expediagroup.sdk.core.exception.client.ExpediaGroupConfigurationException
-import com.expediagroup.sdk.core.exception.client.ExpediaGroupExecutionException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupPipelineExecutionException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupTransportException
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
@@ -77,20 +77,29 @@ abstract class AbstractRequestExecutor(
      *
      * @param request The request to be processed through the pipelines.
      * @return The fully processed response after all pipeline steps are applied.
+     *
+     * @throws ExpediaGroupPipelineExecutionException if the request or response pipelines fails
+     * @throws ExpediaGroupNetworkException if the request execution fails
      */
     fun execute(request: Request): Response {
         val pipelineRequest =
-            runCatchingUncaught({ executionPipeline.startRequestPipeline(request) }) {
-                throw ExpediaGroupExecutionException("exception while executing the request pipeline", it)
+            try {
+                executionPipeline.startRequestPipeline(request)
+            } catch (e: Exception) {
+                throw ExpediaGroupPipelineExecutionException("exception while executing the request pipeline", e)
             }
 
         val response =
-            runCatchingUncaught({ transport.execute(pipelineRequest) }) {
-                ExpediaGroupNetworkException("Failed to execute the request", it)
+            try {
+                transport.execute(pipelineRequest)
+            } catch (e: Exception) {
+                throw ExpediaGroupTransportException("Failed to execute the request", e)
             }
 
-        return runCatchingUncaught({ executionPipeline.startResponsePipeline(response) }) {
-            throw ExpediaGroupExecutionException("exception while executing the response pipeline", it)
+        return try {
+            executionPipeline.startResponsePipeline(response)
+        } catch (e: Exception) {
+            throw ExpediaGroupPipelineExecutionException("exception while executing the response pipeline", e)
         }
     }
 

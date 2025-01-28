@@ -1,5 +1,6 @@
 package com.expediagroup.sdk.okhttp
 
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Protocol
 import com.expediagroup.sdk.core.http.Request
@@ -100,7 +101,7 @@ class OkHttpAsyncTransportTest {
 
         // Expect
         val exception = assertThrows<ExecutionException> { future.get() }
-        assertInstanceOf(IOException::class.java, exception.cause)
+        assertInstanceOf(ExpediaGroupNetworkException::class.java, exception.cause)
     }
 
     @Test

@@ -17,7 +17,6 @@
 package com.expediagroup.sdk.core.authentication.bearer
 
 import com.expediagroup.sdk.core.authentication.common.Credentials
-import com.expediagroup.sdk.core.common.runCatchingUncaught
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
@@ -70,7 +69,7 @@ class BearerAuthenticationManager(
      * @throws ExpediaGroupAuthException If the authentication request fails.
      */
     override fun authenticate() {
-        runCatchingUncaught({
+        try {
             clearAuthentication()
                 .let {
                     buildAuthenticationRequest()
@@ -81,7 +80,9 @@ class BearerAuthenticationManager(
                 }.also {
                     storeToken(it)
                 }
-        }) { ExpediaGroupAuthException(message = "Authentication Failed", cause = it) }
+        } catch (e: Exception) {
+            throw ExpediaGroupAuthException(message = "Authentication Failed", cause = e)
+        }
     }
 
     /**

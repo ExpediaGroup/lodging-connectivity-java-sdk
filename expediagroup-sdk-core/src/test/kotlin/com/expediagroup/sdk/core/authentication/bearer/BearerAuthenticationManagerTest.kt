@@ -2,6 +2,7 @@ package com.expediagroup.sdk.core.authentication.bearer
 
 import com.expediagroup.sdk.core.authentication.common.Credentials
 import com.expediagroup.sdk.core.exception.client.ExpediaGroupResponseParsingException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupTransportException
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Method
@@ -120,7 +121,8 @@ class BearerAuthenticationManagerTest {
         // Expect
         assertEquals("Authentication Failed", exception.message)
         assertInstanceOf<ExpediaGroupAuthException>(exception)
-        assertInstanceOf<ExpediaGroupNetworkException>(exception.cause)
+        assertInstanceOf<ExpediaGroupTransportException>(exception.cause)
+        assertInstanceOf<ExpediaGroupNetworkException>(exception.cause?.cause)
         verify(exactly = 1) { transport.execute(any()) }
     }
 
