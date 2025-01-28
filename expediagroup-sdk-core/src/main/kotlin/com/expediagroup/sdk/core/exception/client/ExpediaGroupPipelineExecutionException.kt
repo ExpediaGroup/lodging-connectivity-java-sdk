@@ -16,6 +16,9 @@
 
 package com.expediagroup.sdk.core.exception.client
 
+/**
+ * Exception class to handle or wrap exceptions thrown by the ExecutionPipeline
+ */
 class ExpediaGroupPipelineExecutionException(
     message: String? = null,
     cause: Throwable? = null,
