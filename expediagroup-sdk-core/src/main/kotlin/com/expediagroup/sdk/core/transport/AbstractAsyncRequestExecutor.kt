@@ -77,6 +77,7 @@ abstract class AbstractAsyncRequestExecutor(
      *
      * @param request The request to be processed through the pipelines.
      * @return [CompletableFuture] attached with a callback for response pipeline execution
+     * @throws ExpediaGroupPipelineExecutionException if the request pipelines fails
      */
     fun execute(request: Request): CompletableFuture<Response> {
         val pipelineRequest =
