@@ -89,7 +89,7 @@ abstract class AbstractAsyncRequestExecutor(
         private fun loadTransport(): AsyncTransport =
             ServiceLoader.load(AsyncTransport::class.java).firstOrNull().getOrThrow {
                 ExpediaGroupConfigurationException(
-                    "No AsyncTransport implementation found. Please include valid HTTP client dependency",
+                    "No AsyncTransport implementation found. Please include valid SDK transport dependency",
                 )
             }
     }

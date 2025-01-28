@@ -117,7 +117,6 @@ data class Request private constructor(
          * @param name The header name.
          * @param value The header value.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
         fun addHeader(
             name: String,
@@ -132,7 +131,6 @@ data class Request private constructor(
          * @param name The header name.
          * @param values The header values list.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
         fun addHeader(
             name: String,
@@ -147,7 +145,6 @@ data class Request private constructor(
          * @param name The header name.
          * @param value The header value.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
         fun setHeader(
             name: String,
@@ -162,7 +159,6 @@ data class Request private constructor(
          * @param name The header name.
          * @param values The header values list.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
         fun setHeader(
             name: String,
@@ -187,7 +183,6 @@ data class Request private constructor(
          *
          * @param name The header name.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] is null.
          */
         fun removeHeader(name: String) =
             apply {

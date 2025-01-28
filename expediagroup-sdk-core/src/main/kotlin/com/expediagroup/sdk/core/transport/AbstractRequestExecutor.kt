@@ -17,7 +17,10 @@
 package com.expediagroup.sdk.core.transport
 
 import com.expediagroup.sdk.core.common.getOrThrow
+import com.expediagroup.sdk.core.common.runCatchingUncaught
 import com.expediagroup.sdk.core.exception.client.ExpediaGroupConfigurationException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupExecutionException
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.pipeline.ExecutionPipeline
@@ -75,12 +78,21 @@ abstract class AbstractRequestExecutor(
      * @param request The request to be processed through the pipelines.
      * @return The fully processed response after all pipeline steps are applied.
      */
-    fun execute(request: Request): Response =
-        executionPipeline
-            .startRequestPipeline(request)
-            .let {
-                executionPipeline.startResponsePipeline(transport.execute(it))
+    fun execute(request: Request): Response {
+        val pipelineRequest =
+            runCatchingUncaught({ executionPipeline.startRequestPipeline(request) }) {
+                throw ExpediaGroupExecutionException("exception while executing the request pipeline", it)
             }
+
+        val response =
+            runCatchingUncaught({ transport.execute(pipelineRequest) }) {
+                ExpediaGroupNetworkException("Failed to execute the request", it)
+            }
+
+        return runCatchingUncaught({ executionPipeline.startResponsePipeline(response) }) {
+            throw ExpediaGroupExecutionException("exception while executing the response pipeline", it)
+        }
+    }
 
     /**
      * Closes the underlying [Transport].
@@ -91,7 +103,7 @@ abstract class AbstractRequestExecutor(
         private fun loadTransport(): Transport =
             ServiceLoader.load(Transport::class.java).firstOrNull().getOrThrow {
                 ExpediaGroupConfigurationException(
-                    "No Transport implementation found. Please include valid HTTP client dependency",
+                    "No Transport implementation found. Please include valid SDK transport dependency",
                 )
             }
     }

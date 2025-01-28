@@ -139,7 +139,6 @@ abstract class RequestBody {
          * @param formData The form data as a map of parameter names and values.
          * @param charset The character set to use; defaults to UTF-8.
          * @return A new [RequestBody] instance.
-         * @throws IllegalArgumentException If [formData] is null.
          */
         @JvmStatic
         @JvmOverloads
