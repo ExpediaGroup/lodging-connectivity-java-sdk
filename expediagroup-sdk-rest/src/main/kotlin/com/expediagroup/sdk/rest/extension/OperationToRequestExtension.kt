@@ -150,6 +150,8 @@ fun HeadersTrait.parseHeaders(): Headers =
 fun OperationRequestBodyTrait<*>.parseRequestBody(
     serialize: (Any) -> InputStream
 ): RequestBody {
+    require(getRequestBody() != null) { "Request body is required" }
+
     val inputStream = serialize(getRequestBody()!!)
     return RequestBody.create(
         inputStream = inputStream,

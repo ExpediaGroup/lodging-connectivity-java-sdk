@@ -2,17 +2,25 @@ package com.expediagroup.sdk.rest.extension
 
 import com.expediagroup.sdk.core.http.MediaType
 import com.expediagroup.sdk.core.http.Method
+import com.expediagroup.sdk.core.http.RequestBody
 import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
 import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
+import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import okio.Buffer
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import java.io.InputStream
 import java.net.URL
+import java.util.UUID
 
 class OperationToRequestExtensionTest {
     @Nested
@@ -284,12 +292,9 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "Omar",
-                "Jordan",
-                "Nasser",
-                "Dwairi",
-                "Noor",
-                "Dana",
+                "application Omar",
+                "Jordan The Guy",
+                "JSML",
             ]
         )
         fun `throws exception for invalid media types`(mediaType: String) {
@@ -299,6 +304,67 @@ class OperationToRequestExtensionTest {
 
             assertThrows<IllegalArgumentException> {
                 operation.parseMediaType()
+            }
+        }
+    }
+
+    @Nested
+    inner class ParseRequestBodyTest {
+        private val serializer = object : SerializeRequestBodyTrait {
+            private val mapper = jacksonObjectMapper()
+            override fun <T> serialize(value: T): InputStream =
+                mapper.writeValueAsBytes(value).inputStream()
+        }
+
+        @Test
+        fun `parses request body`() {
+            val operation = object : OperationRequestBodyTrait<List<String>> {
+                override fun getRequestBody(): List<String> = listOf("test1", "test2")
+                override fun getContentType(): String = "application/json"
+            }
+
+            val actual = operation.parseRequestBody(serializer::serialize)
+            val expected = RequestBody.create(
+                inputStream = """["test1","test2"]""".byteInputStream(),
+                mediaType = MediaType.parse("application/json"),
+                contentLength = """["test1","test2"]""".byteInputStream().available().toLong()
+            )
+
+            val actualStream = Buffer().apply {
+                actual.writeTo(this)
+            }.readUtf8()
+            val expectedStream = Buffer().apply {
+                expected.writeTo(this)
+            }.readUtf8()
+
+            assertAll(
+                { assertEquals(expected.contentLength(), actual.contentLength()) },
+                { assertEquals(expected.mediaType(), actual.mediaType()) },
+                { assertEquals(expectedStream, actualStream) }
+            )
+        }
+
+        @Test
+        fun `throws exception for invalid media type`() {
+            val operation = object : OperationRequestBodyTrait<List<String>> {
+                override fun getRequestBody(): List<String> = listOf("test1", "test2")
+                override fun getContentType(): String = "hi ;)"
+            }
+
+            assertThrows<IllegalArgumentException> {
+                operation.parseRequestBody(serializer::serialize)
+            }
+        }
+
+        @Test
+        fun `throws exception for null request body`() {
+            val operation = object : OperationRequestBodyTrait<String?> {
+                override fun getRequestBody(): String? = null
+                override fun getContentType(): String = "application/json"
+            }
+
+            assertThrows<IllegalArgumentException> {
+                operation.parseRequestBody(serializer::serialize)
             }
         }
     }
