@@ -1,0 +1,159 @@
+package com.expediagroup.sdk.rest.extension
+
+import com.expediagroup.sdk.core.http.Headers
+import com.expediagroup.sdk.core.http.MediaType
+import com.expediagroup.sdk.core.http.Method
+import com.expediagroup.sdk.core.http.Request
+import com.expediagroup.sdk.core.http.RequestBody
+import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
+import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
+import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationTrait
+import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
+import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
+import java.io.IOException
+import java.io.InputStream
+import java.net.MalformedURLException
+import java.net.URL
+
+/**
+ * Extension function to parse an operation request into an HTTP request.
+ *
+ * This function takes an operation request and converts it into an HTTP request
+ * by setting the HTTP method, headers, body, and URL based on the traits of the operation.
+ *
+ * @param serverUrl the base server URL
+ * @param serialize a function to serialize the request body to an InputStream
+ * @return the constructed HTTP request
+ * @throws IllegalArgumentException if the request body is invalid
+ * @throws IllegalStateException if the HTTP method or URL is not set
+ * @throws IOException if an I/O error occurs
+ */
+@Throws(
+    IllegalArgumentException::class,
+    IllegalStateException::class,
+    IOException::class
+)
+fun OperationTrait.parseRequest(
+    serverUrl: URL,
+    serialize: (Any) -> InputStream
+): Request {
+    val builder = Request.builder()
+
+    if (this is HttpMethodTrait) {
+        builder.method(this.parseMethod())
+    }
+
+    if (this is HeadersTrait) {
+        builder.headers(this.parseHeaders())
+    }
+
+    if (this is OperationRequestBodyTrait<*> && getRequestBody() != null) {
+        builder.body(this.parseRequestBody(serialize))
+    }
+
+    if (this is UrlPathTrait) {
+        builder.url(this.parseURL(serverUrl))
+    }
+
+    return builder.build()
+}
+
+/**
+ * Extension function to parse the URL of an operation request.
+ *
+ * This function constructs the full URL by combining the base URL with the path and query parameters
+ * from the operation request.
+ *
+ * @param base the base URL
+ * @return the constructed URL
+ * @throws MalformedURLException if the constructed URL is invalid
+ */
+@Throws(MalformedURLException::class)
+internal fun UrlPathTrait.parseURL(base: URL): URL =
+    URL(
+        StringBuilder().apply {
+            append(base.toString().trim('/'))
+
+            if (this@parseURL.getUrlPath().isNotBlank()) {
+                append(this@parseURL.getUrlPath())
+            }
+
+            if (this@parseURL is UrlQueryParamsTrait && this@parseURL.getUrlQueryParams().isNotEmpty()) {
+                append("?")
+                this@parseURL.getUrlQueryParams().forEach { (key, values) ->
+                    if (key.isBlank()) {
+                        return@forEach
+                    }
+                    values.forEach { value -> append("$key=$value&") }
+                }
+                deleteCharAt(length - 1)
+            }
+        }.toString()
+    )
+
+/**
+ * Extension function to parse the HTTP method of an operation request.
+ *
+ * This function converts the HTTP method from the operation request into the Method enum.
+ *
+ * @return the HTTP method
+ * @throws IllegalArgumentException if the HTTP method is invalid
+ */
+@Throws(IllegalArgumentException::class)
+fun HttpMethodTrait.parseMethod(): Method =
+    Method.valueOf(getHttpMethod().uppercase())
+
+/**
+ * Extension function to parse the media type of operation request.
+ *
+ * This function converts the content type from the operation request into the MediaType object.
+ *
+ * @return the media type
+ * @throws IllegalArgumentException if the content type is invalid
+ */
+@Throws(IllegalArgumentException::class)
+fun ContentTypeTrait.parseMediaType(): MediaType =
+    MediaType.parse(getContentType())
+
+/**
+ * Extension function to parse the headers of an operation request.
+ *
+ * This function constructs the Headers object by adding all headers from the operation request.
+ *
+ * @return the constructed headers
+ * @throws IllegalArgumentException if the headers are invalid
+ */
+@Throws(IllegalArgumentException::class)
+fun HeadersTrait.parseHeaders(): Headers =
+    Headers.Builder().apply {
+        getHeaders().forEach { (key, value) ->
+            add(key, value)
+        }
+    }.build()
+
+/**
+ * Extension function to parse the request body of an operation request.
+ *
+ * This function serializes the request body and constructs the RequestBody object.
+ *
+ * @param serialize a function to serialize the request body to an InputStream
+ * @return the constructed request body
+ * @throws IllegalStateException if the request body cannot be serialized
+ * @throws IOException if an I/O error occurs
+ */
+@Throws(
+    IllegalStateException::class,
+    IOException::class
+)
+fun OperationRequestBodyTrait<*>.parseRequestBody(
+    serialize: (Any) -> InputStream
+): RequestBody {
+    val inputStream = serialize(getRequestBody()!!)
+    return RequestBody.create(
+        inputStream = inputStream,
+        mediaType = parseMediaType(),
+        contentLength = inputStream.available().toLong()
+    )
+}

@@ -24,6 +24,9 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2'
 
+    /* IO */
+    implementation 'com.squareup.okio:okio:3.10.2'
+
     /* EG SDK Core */
     api(project(":expediagroup-sdk-core"))
 

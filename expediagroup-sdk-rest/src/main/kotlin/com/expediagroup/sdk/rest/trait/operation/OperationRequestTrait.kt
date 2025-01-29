@@ -70,7 +70,7 @@ interface HeadersTrait : OperationRequestTrait {
  *
  * @param T the type of the request body
  */
-interface OperationRequestBodyTrait<T> : OperationRequestTrait {
+interface OperationRequestBodyTrait<T> : OperationRequestTrait, ContentTypeTrait {
     /**
      * Get the request body.
      *
