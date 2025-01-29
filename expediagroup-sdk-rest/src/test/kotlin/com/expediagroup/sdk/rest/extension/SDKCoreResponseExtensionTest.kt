@@ -12,15 +12,12 @@ import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
 import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
 import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
-import com.expediagroup.sdk.rest.trait.operation.OperationResponseBodyTrait
-import com.expediagroup.sdk.rest.trait.serialization.DeserializeResponseBodyTrait
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import java.io.InputStream
 
 class SDKCoreResponseExtensionTest {
     private val mapper = jacksonObjectMapper()
