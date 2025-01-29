@@ -30,7 +30,7 @@ class OperationToRequestExtensionTest {
 
             assertThrows<IllegalArgumentException> {
                 operation.parseRequest(
-                    serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                    serializer = DefaultJacksonBasedOperationDataMapper(),
                     serverUrl = URL("http://example.com")
                 )
             }
@@ -44,7 +44,7 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serializer = DefaultJacksonBasedOperationDataMapper(),
                 serverUrl = URL("http://example.com")
             )
 
@@ -65,7 +65,7 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serializer = DefaultJacksonBasedOperationDataMapper(),
                 serverUrl = URL("http://example.com")
             )
 
@@ -88,7 +88,7 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serializer = DefaultJacksonBasedOperationDataMapper(),
                 serverUrl = URL("http://example.com")
             )
 
@@ -118,7 +118,7 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serializer = DefaultJacksonBasedOperationDataMapper(),
                 serverUrl = URL("http://example.com")
             )
 
@@ -454,7 +454,7 @@ class OperationToRequestExtensionTest {
                 override fun getContentType(): String = "application/json"
             }
 
-            val actual = operation.parseRequestBody(serializer::serialize)
+            val actual = operation.parseRequestBody(serializer)
             val expected = RequestBody.create(
                 inputStream = """["test1","test2"]""".byteInputStream(),
                 mediaType = MediaType.parse("application/json"),
@@ -483,7 +483,7 @@ class OperationToRequestExtensionTest {
             }
 
             assertThrows<IllegalArgumentException> {
-                operation.parseRequestBody(serializer::serialize)
+                operation.parseRequestBody(serializer)
             }
         }
 
@@ -495,7 +495,7 @@ class OperationToRequestExtensionTest {
             }
 
             assertThrows<IllegalArgumentException> {
-                operation.parseRequestBody(serializer::serialize)
+                operation.parseRequestBody(serializer)
             }
         }
     }

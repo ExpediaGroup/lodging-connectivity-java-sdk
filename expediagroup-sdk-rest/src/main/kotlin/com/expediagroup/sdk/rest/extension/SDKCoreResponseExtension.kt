@@ -1,6 +1,7 @@
 package com.expediagroup.sdk.rest.extension
 
 import com.expediagroup.sdk.rest.model.Response
+import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
 import com.expediagroup.sdk.core.http.Response as SDKCoreResponse
 import com.expediagroup.sdk.rest.trait.operation.OperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.serialization.DeserializeResponseBodyTrait
@@ -34,7 +35,7 @@ fun <T> SDKCoreResponse.toRestResponse(
 ): Response<T> {
     return Response(
         data = parseBodyAs(operation, deserializer),
-        headers = headers.entries().associate { it.key to it.value }
+        headers = headers
     )
 }
 
@@ -43,9 +44,9 @@ fun <T> SDKCoreResponse.toRestResponse(
  *
  * @return a Response object containing null data and headers
  */
-fun SDKCoreResponse.toRestResponse(): Response<Nothing?> {
+fun SDKCoreResponse.toRestResponse(operation: OperationNoResponseBodyTrait): Response<Nothing?> {
     return Response(
         data = null,
-        headers = headers.entries().associate { it.key to it.value }
+        headers = headers
     )
 }

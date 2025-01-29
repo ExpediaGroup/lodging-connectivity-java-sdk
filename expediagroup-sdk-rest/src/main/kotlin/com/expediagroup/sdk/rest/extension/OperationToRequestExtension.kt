@@ -12,6 +12,7 @@ import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
+import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
 import java.io.IOException
 import java.io.InputStream
 import java.net.MalformedURLException
@@ -37,7 +38,7 @@ import java.net.URL
 )
 fun OperationTrait.parseRequest(
     serverUrl: URL,
-    serialize: (Any) -> InputStream
+    serializer: SerializeRequestBodyTrait
 ): Request {
     require(this is HttpMethodTrait) { "Operation must implement HttpMethodTrait trait!" }
 
@@ -48,7 +49,7 @@ fun OperationTrait.parseRequest(
     }
 
     if (this is OperationRequestBodyTrait<*> && getRequestBody() != null) {
-        builder.body(this.parseRequestBody(serialize))
+        builder.body(this.parseRequestBody(serializer))
     }
 
     builder.url(
@@ -134,11 +135,11 @@ fun ContentTypeTrait.parseMediaType(): MediaType =
     IOException::class
 )
 fun OperationRequestBodyTrait<*>.parseRequestBody(
-    serialize: (Any) -> InputStream
+    serializer: SerializeRequestBodyTrait
 ): RequestBody {
     require(getRequestBody() != null) { "Request body is required" }
 
-    val inputStream = serialize(getRequestBody()!!)
+    val inputStream = serializer.serialize(getRequestBody()!!)
 
     return RequestBody.create(
         inputStream = inputStream,

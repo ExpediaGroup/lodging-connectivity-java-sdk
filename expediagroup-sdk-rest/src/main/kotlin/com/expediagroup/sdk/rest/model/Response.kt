@@ -1,5 +1,7 @@
 package com.expediagroup.sdk.rest.model
 
+import com.expediagroup.sdk.core.http.Headers
+
 /**
  * A generic response model that contains the data and headers of an HTTP response.
  *
@@ -9,5 +11,5 @@ package com.expediagroup.sdk.rest.model
  */
 data class Response<T>(
     val data: T,
-    val headers: Map<String, List<String>>
+    val headers: Headers
 )
