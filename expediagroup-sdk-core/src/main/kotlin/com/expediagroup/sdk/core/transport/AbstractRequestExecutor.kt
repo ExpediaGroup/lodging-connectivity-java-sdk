@@ -18,6 +18,9 @@ package com.expediagroup.sdk.core.transport
 
 import com.expediagroup.sdk.core.common.getOrThrow
 import com.expediagroup.sdk.core.exception.client.ExpediaGroupConfigurationException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupPipelineExecutionException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupTransportException
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.pipeline.ExecutionPipeline
@@ -74,13 +77,31 @@ abstract class AbstractRequestExecutor(
      *
      * @param request The request to be processed through the pipelines.
      * @return The fully processed response after all pipeline steps are applied.
+     *
+     * @throws ExpediaGroupPipelineExecutionException if the request or response pipelines fails
+     * @throws ExpediaGroupNetworkException if the request execution fails
      */
-    fun execute(request: Request): Response =
-        executionPipeline
-            .startRequestPipeline(request)
-            .let {
-                executionPipeline.startResponsePipeline(transport.execute(it))
+    fun execute(request: Request): Response {
+        val pipelineRequest =
+            try {
+                executionPipeline.startRequestPipeline(request)
+            } catch (e: Exception) {
+                throw ExpediaGroupPipelineExecutionException("exception while executing the request pipeline", e)
             }
+
+        val response =
+            try {
+                transport.execute(pipelineRequest)
+            } catch (e: Exception) {
+                throw ExpediaGroupTransportException("Failed to execute the request", e)
+            }
+
+        return try {
+            executionPipeline.startResponsePipeline(response)
+        } catch (e: Exception) {
+            throw ExpediaGroupPipelineExecutionException("exception while executing the response pipeline", e)
+        }
+    }
 
     /**
      * Closes the underlying [Transport].
@@ -91,7 +112,7 @@ abstract class AbstractRequestExecutor(
         private fun loadTransport(): Transport =
             ServiceLoader.load(Transport::class.java).firstOrNull().getOrThrow {
                 ExpediaGroupConfigurationException(
-                    "No Transport implementation found. Please include valid HTTP client dependency",
+                    "No Transport implementation found. Please include valid SDK transport dependency",
                 )
             }
     }

@@ -16,10 +16,10 @@
 
 package com.expediagroup.sdk.okhttp
 
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.transport.Transport
-import java.io.IOException
 import okhttp3.OkHttpClient
 
 /**
@@ -45,11 +45,12 @@ class OkHttpTransport(private val okHttpClient: OkHttpClient) : Transport {
      *
      * @param request The SDK request to execute.
      * @return The SDK response resulting from the HTTP request execution.
-     * @throws IOException If an error occurs during the request execution.
+     * @throws ExpediaGroupNetworkException If an error occurs during the request execution.
      */
-    @Throws(IOException::class)
-    override fun execute(request: Request): Response {
-        return request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
+    override fun execute(request: Request): Response = try {
+        request.toOkHttpRequest().let { okHttpClient.newCall(it).execute() }.toSDKResponse(request)
+    } catch (e: Exception) {
+        throw ExpediaGroupNetworkException("Failed to execute the request", e)
     }
 
     override fun dispose() {

@@ -20,7 +20,6 @@ import com.expediagroup.sdk.core.authentication.bearer.AbstractBearerAuthenticat
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupAuthException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.pipeline.RequestPipelineStep
-import java.io.IOException
 
 class BearerAuthenticationStep(
     private val authenticationManager: AbstractBearerAuthenticationManager,
@@ -41,7 +40,7 @@ class BearerAuthenticationStep(
                     }
                 }
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             throw ExpediaGroupAuthException("Failed to authenticate", e)
         }
     }
