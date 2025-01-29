@@ -39,11 +39,9 @@ fun OperationTrait.parseRequest(
     serverUrl: URL,
     serialize: (Any) -> InputStream
 ): Request {
-    val builder = Request.builder()
+    require(this is HttpMethodTrait) { "Operation must implement HttpMethodTrait trait!" }
 
-    if (this is HttpMethodTrait) {
-        builder.method(this.parseMethod())
-    }
+    val builder = Request.builder().method(this.parseMethod())
 
     if (this is HeadersTrait) {
         builder.headers(this.parseHeaders())
