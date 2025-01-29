@@ -153,6 +153,8 @@ fun OperationRequestBodyTrait<*>.parseRequestBody(
     require(getRequestBody() != null) { "Request body is required" }
 
     val inputStream = serialize(getRequestBody()!!)
+    require(inputStream.available() != 0) { "Request body is empty" }
+
     return RequestBody.create(
         inputStream = inputStream,
         mediaType = parseMediaType(),

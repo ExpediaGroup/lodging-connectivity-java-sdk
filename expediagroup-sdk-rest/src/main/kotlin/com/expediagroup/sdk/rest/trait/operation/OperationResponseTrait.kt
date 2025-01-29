@@ -15,12 +15,16 @@ interface OperationNoResponseBodyTrait : OperationResponseTrait
 /**
  * Marker interface for operations that have a response body.
  *
+ * Note: This interface is not intended to be implemented directly. Instead, use one of the sub-interfaces.
+ *
  * @param BodyType the type of the response body
  */
 interface OperationResponseBodyTrait<BodyType> : OperationResponseTrait
 
 /**
  * Interface for operations that have a response body and use Jackson for serialization.
+ *
+ * Note: Use this interface only when the response body type deserializable by Jackson.
  *
  * @param BodyType the type of the response body
  */

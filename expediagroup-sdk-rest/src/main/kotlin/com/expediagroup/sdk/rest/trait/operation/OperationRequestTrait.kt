@@ -1,5 +1,7 @@
 package com.expediagroup.sdk.rest.trait.operation
 
+import java.io.InputStream
+
 /**
  * Marker interface for operation requests.
  */
