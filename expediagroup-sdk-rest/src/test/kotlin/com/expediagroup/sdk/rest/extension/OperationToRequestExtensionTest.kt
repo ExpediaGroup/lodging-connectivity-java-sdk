@@ -1,13 +1,11 @@
 package com.expediagroup.sdk.rest.extension
 
+import com.expediagroup.sdk.core.http.Headers
 import com.expediagroup.sdk.core.http.MediaType
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.RequestBody
-import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
-import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
-import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
-import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
-import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
+import com.expediagroup.sdk.rest.serialization.DefaultJacksonBasedOperationDataMapper
+import com.expediagroup.sdk.rest.trait.operation.*
 import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import okio.Buffer
@@ -22,6 +20,115 @@ import java.io.InputStream
 import java.net.URL
 
 class OperationToRequestExtensionTest {
+    @Nested
+    inner class ParseRequestTest {
+        @Test
+        fun `throws exception when HttpMethodTrait is not implemented`() {
+            val operation = object : UrlPathTrait {
+                override fun getUrlPath(): String = "/test"
+            }
+
+            assertThrows<IllegalArgumentException> {
+                operation.parseRequest(
+                    serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                    serverUrl = URL("http://example.com")
+                )
+            }
+        }
+
+        @Test
+        fun `parses url path when UrlPathTrait is implemented`() {
+            val operation = object : UrlPathTrait, HttpMethodTrait {
+                override fun getUrlPath(): String = "/test"
+                override fun getHttpMethod(): String = "GET"
+            }
+
+            val request = operation.parseRequest(
+                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serverUrl = URL("http://example.com")
+            )
+
+            val actual = request.url.toString()
+            val expected = "http://example.com/test"
+
+            assertEquals(expected, actual)
+        }
+
+        @Test
+        fun `parses headers when HeadersTrait is implemented`() {
+            val operation = object :HttpMethodTrait, HeadersTrait {
+                override fun getHttpMethod(): String = "POST"
+                override fun getHeaders(): Headers = Headers.builder()
+                    .add("key1", "value1")
+                    .add("key2", "value2")
+                    .build()
+            }
+
+            val request = operation.parseRequest(
+                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serverUrl = URL("http://example.com")
+            )
+
+            val actual = request.headers
+            val expected = Headers.builder()
+                .add("key1", "value1")
+                .add("key2", "value2")
+                .build()
+
+            assertEquals(expected, actual)
+            assertEquals(request.url, URL("http://example.com"))
+        }
+
+        @Test
+        fun `parses request body when RequestBodyTrait is implemented`() {
+            val operation = object : HttpMethodTrait, OperationRequestBodyTrait<List<String>> {
+                override fun getHttpMethod(): String = "POST"
+                override fun getRequestBody(): List<String> = listOf("test1", "test2")
+                override fun getContentType(): String = "application/json"
+            }
+
+            val request = operation.parseRequest(
+                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serverUrl = URL("http://example.com")
+            )
+
+            val actual = Buffer().apply {
+                request.body!!.writeTo(this)
+            }.readUtf8()
+
+            val expected = Buffer().apply {
+                RequestBody.create(
+                    inputStream = """["test1","test2"]""".byteInputStream(),
+                    mediaType = MediaType.parse("application/json"),
+                    contentLength = """["test1","test2"]""".byteInputStream().available().toLong()
+                ).writeTo(this)
+            }.readUtf8()
+
+            assertEquals(expected, actual)
+            assertEquals(MediaType.parse("application/json"), request.body!!.mediaType())
+            assertEquals(request.url, URL("http://example.com"))
+        }
+
+        @Test
+        fun `ignores request body when it is null`() {
+            val operation = object : HttpMethodTrait, OperationRequestBodyTrait<String?> {
+                override fun getHttpMethod(): String = "POST"
+                override fun getRequestBody(): String? = null
+                override fun getContentType(): String = "application/json"
+            }
+
+            val request = operation.parseRequest(
+                serialize = DefaultJacksonBasedOperationDataMapper()::serialize,
+                serverUrl = URL("http://example.com")
+            )
+
+            val actual = request.body
+            val expected = null
+
+            assertEquals(expected, actual)
+        }
+    }
+
     @Nested
     inner class ParseUrlTest {
         @ParameterizedTest
@@ -95,6 +202,31 @@ class OperationToRequestExtensionTest {
 
             assertEquals(expected, actual)
         }
+
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "http://example.com/v1/api",
+                "http://127.0.0.1:8080/v1/api",
+                "https://example.com/v1/api",
+                "ftp://ftp.example.com/v1/api",
+                "file:///home/v1/api",
+                "file://servername/v1/api",
+            ]
+        )
+        fun `ignores empty query parameters when UrlPathTrait is implemented`(base: String) {
+            val baseUrl = URL(base)
+            val operation = object : UrlPathTrait, UrlQueryParamsTrait {
+                override fun getUrlPath(): String = "/test"
+                override fun getUrlQueryParams(): Map<String, List<String>> = emptyMap()
+            }
+
+            val actual = operation.parseURL(baseUrl)
+            val expected = URL("$base/test")
+
+            assertEquals(expected, actual)
+        }
+
 
         @ParameterizedTest
         @ValueSource(

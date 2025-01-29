@@ -44,16 +44,20 @@ fun OperationTrait.parseRequest(
     val builder = Request.builder().method(this.parseMethod())
 
     if (this is HeadersTrait) {
-        builder.headers(this.parseHeaders())
+        builder.headers(this.getHeaders())
     }
 
     if (this is OperationRequestBodyTrait<*> && getRequestBody() != null) {
         builder.body(this.parseRequestBody(serialize))
     }
 
-    if (this is UrlPathTrait) {
-        builder.url(this.parseURL(serverUrl))
-    }
+    builder.url(
+        if (this is UrlPathTrait) {
+            this.parseURL(serverUrl)
+        } else {
+            serverUrl
+        }
+    )
 
     return builder.build()
 }
@@ -116,22 +120,6 @@ fun ContentTypeTrait.parseMediaType(): MediaType =
     MediaType.parse(getContentType())
 
 /**
- * Extension function to parse the headers of an operation request.
- *
- * This function constructs the Headers object by adding all headers from the operation request.
- *
- * @return the constructed headers
- * @throws IllegalArgumentException if the headers are invalid
- */
-@Throws(IllegalArgumentException::class)
-fun HeadersTrait.parseHeaders(): Headers =
-    Headers.Builder().apply {
-        getHeaders().forEach { (key, value) ->
-            add(key, value)
-        }
-    }.build()
-
-/**
  * Extension function to parse the request body of an operation request.
  *
  * This function serializes the request body and constructs the RequestBody object.
@@ -151,7 +139,6 @@ fun OperationRequestBodyTrait<*>.parseRequestBody(
     require(getRequestBody() != null) { "Request body is required" }
 
     val inputStream = serialize(getRequestBody()!!)
-    require(inputStream.available() != 0) { "Request body is empty" }
 
     return RequestBody.create(
         inputStream = inputStream,

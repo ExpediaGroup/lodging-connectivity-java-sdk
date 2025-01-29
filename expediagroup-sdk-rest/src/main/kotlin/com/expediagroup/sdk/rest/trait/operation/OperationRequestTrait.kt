@@ -1,5 +1,6 @@
 package com.expediagroup.sdk.rest.trait.operation
 
+import com.expediagroup.sdk.core.http.Headers
 import java.io.InputStream
 
 /**
@@ -64,7 +65,7 @@ interface HeadersTrait : OperationRequestTrait {
      *
      * @return a map of headers where the key is the header name and the value is a list of header values
      */
-    fun getHeaders(): Map<String, List<String>>
+    fun getHeaders(): Headers 
 }
 
 /**
