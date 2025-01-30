@@ -1,23 +1,33 @@
 package com.expediagroup.sdk.rest.extension
 
-import com.expediagroup.sdk.core.http.Headers
-import com.expediagroup.sdk.core.http.MediaType
-import com.expediagroup.sdk.core.http.Method
-import com.expediagroup.sdk.core.http.RequestBody
-import com.expediagroup.sdk.rest.serialization.DefaultJacksonBasedOperationDataMapper
-import com.expediagroup.sdk.rest.trait.operation.*
-import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
+import java.io.InputStream
+import java.net.URL
+
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+
 import okio.Buffer
+
 import org.junit.jupiter.api.Assertions.assertAll
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.io.InputStream
-import java.net.URL
+
+import com.expediagroup.sdk.core.http.Headers
+import com.expediagroup.sdk.core.http.MediaType
+import com.expediagroup.sdk.core.http.Method
+import com.expediagroup.sdk.core.http.RequestBody
+
+import com.expediagroup.sdk.rest.serialization.DefaultJacksonBasedOperationDataMapper
+import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
+import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
+import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
+import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
+import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
+import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
 
 class OperationToRequestExtensionTest {
     @Nested
@@ -74,7 +84,7 @@ class OperationToRequestExtensionTest {
 
         @Test
         fun `parses headers when HeadersTrait is implemented`() {
-            val operation = object :HttpMethodTrait, HeadersTrait {
+            val operation = object : HttpMethodTrait, HeadersTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getHeaders(): Headers = Headers.builder()
                     .add("key1", "value1")
@@ -99,7 +109,7 @@ class OperationToRequestExtensionTest {
 
         @Test
         fun `headers are empty when operation headers are empty`() {
-            val operation = object :HttpMethodTrait, HeadersTrait {
+            val operation = object : HttpMethodTrait, HeadersTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getHeaders(): Headers = Headers.builder().build()
             }

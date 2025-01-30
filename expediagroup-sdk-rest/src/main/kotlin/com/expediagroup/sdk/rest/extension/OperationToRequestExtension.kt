@@ -1,9 +1,14 @@
 package com.expediagroup.sdk.rest.extension
 
+import java.io.IOException
+import java.net.MalformedURLException
+import java.net.URL
+
 import com.expediagroup.sdk.core.http.MediaType
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
+
 import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
 import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
 import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
@@ -12,9 +17,6 @@ import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
 import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
-import java.io.IOException
-import java.net.MalformedURLException
-import java.net.URL
 
 /**
  * Extension function to parse an operation request into an HTTP request.

@@ -1,16 +1,19 @@
 package com.expediagroup.sdk.rest.serialization
 
-import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
-import com.expediagroup.sdk.rest.trait.operation.OperationResponseBodyTrait
+import java.io.ByteArrayInputStream
+import java.io.InputStream
+
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import java.io.ByteArrayInputStream
-import java.io.InputStream
+
+import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationResponseBodyTrait
 
 class DefaultJacksonBasedOperationDataMapperTest {
 

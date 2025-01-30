@@ -1,13 +1,15 @@
 package com.expediagroup.sdk.rest.serialization
 
+import java.io.IOException
+import java.io.InputStream
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+
 import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.serialization.DeserializeResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import java.io.IOException
-import java.io.InputStream
 
 /**
  * Default implementation of data mapper using Jackson for serialization and deserialization.
