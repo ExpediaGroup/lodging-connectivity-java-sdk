@@ -1,6 +1,5 @@
 package com.expediagroup.sdk.rest.extension
 
-import com.expediagroup.sdk.core.http.Headers
 import com.expediagroup.sdk.core.http.MediaType
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
@@ -14,7 +13,6 @@ import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
 import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
 import java.io.IOException
-import java.io.InputStream
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -25,7 +23,7 @@ import java.net.URL
  * by setting the HTTP method, headers, body, and URL based on the traits of the operation.
  *
  * @param serverUrl the base server URL
- * @param serialize a function to serialize the request body to an InputStream
+ * @param serializer instance used to serialize the request body to an InputStream
  * @return the constructed HTTP request
  * @throws IllegalArgumentException if the request body is invalid
  * @throws IllegalStateException if the HTTP method or URL is not set
@@ -125,7 +123,7 @@ fun ContentTypeTrait.parseMediaType(): MediaType =
  *
  * This function serializes the request body and constructs the RequestBody object.
  *
- * @param serialize a function to serialize the request body to an InputStream
+ * @param serializer instance used to serialize the request body to an InputStream
  * @return the constructed request body
  * @throws IllegalStateException if the request body cannot be serialized
  * @throws IOException if an I/O error occurs
