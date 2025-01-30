@@ -15,6 +15,7 @@ import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import okio.Buffer
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -102,7 +103,6 @@ class SDKCoreResponseExtensionTest {
     inner class ParseBodyAsTypeTest {
         @Test
         fun `parses response body as specific type`() {
-            // given
             val inputStream = """["first", "second"]""".byteInputStream()
             val responseBody = ResponseBody.create(
                 inputStream = inputStream,
@@ -123,7 +123,6 @@ class SDKCoreResponseExtensionTest {
                 .body(responseBody)
                 .build()
 
-            // when
             val operation = object :
                 HttpMethodTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
@@ -135,13 +134,12 @@ class SDKCoreResponseExtensionTest {
 
             val parsedBody = response.parseBodyAs(operation, deserializer)
 
-            // then
             assertNotNull(parsedBody)
             assertEquals(listOf("first", "second"), parsedBody)
         }
 
         @Test
-        fun `throws exception when response body input stream is empty`() {
+        fun `throws exception when response content length is 0`() {
             val inputStream = ByteArrayInputStream(ByteArray(0))
             val responseBody = ResponseBody.create(
                 inputStream = inputStream,
@@ -176,6 +174,86 @@ class SDKCoreResponseExtensionTest {
                 response.parseBodyAs(operation, deserializer)
             }
             assertEquals(exception.message, "Response body is empty!")
+        }
+
+        @Test
+        fun `throws exception when response body is closed`() {
+            val inputStream = ByteArrayInputStream(ByteArray(0))
+            val responseBody = ResponseBody.create(
+                inputStream = inputStream,
+                mediaType = CommonMediaTypes.APPLICATION_JSON,
+                contentLength = inputStream.available().toLong()
+            )
+
+            val request = Request.builder()
+                .url("http://localhost:8080")
+                .method(Method.POST)
+                .build()
+
+            val response = Response.builder()
+                .addHeader("header", "value")
+                .status(Status.ACCEPTED)
+                .protocol(Protocol.HTTP_1_1)
+                .request(request)
+                .body(responseBody)
+                .build().also {
+                    it.close()
+                }
+
+            // when
+            val operation = object :
+                HttpMethodTrait,
+                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+                ContentTypeTrait {
+                override fun getHttpMethod(): String = "POST"
+                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
+            }
+
+            val exception = assertThrows<IllegalArgumentException> {
+                response.parseBodyAs(operation, deserializer)
+            }
+            assertEquals(exception.message, "Response body is closed!")
+        }
+
+        @Test
+        fun `throws exception when response body input stream is exhausted`() {
+            val inputStream = """["first", "second"]""".byteInputStream()
+            val responseBody = ResponseBody.create(
+                inputStream = inputStream,
+                mediaType = CommonMediaTypes.APPLICATION_JSON,
+                contentLength = inputStream.available().toLong()
+            )
+
+            val request = Request.builder()
+                .url("http://localhost:8080")
+                .method(Method.POST)
+                .build()
+
+            val response = Response.builder()
+                .addHeader("header", "value")
+                .status(Status.ACCEPTED)
+                .protocol(Protocol.HTTP_1_1)
+                .request(request)
+                .body(responseBody)
+                .build().also {
+                    it.body!!.source().readAll(Buffer())
+                }
+
+            // when
+            val operation = object :
+                HttpMethodTrait,
+                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+                ContentTypeTrait {
+                override fun getHttpMethod(): String = "POST"
+                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
+            }
+
+            val exception = assertThrows<IllegalArgumentException> {
+                response.parseBodyAs(operation, deserializer)
+            }
+            assertEquals(exception.message, "Response body is exhausted!")
         }
 
         @Test

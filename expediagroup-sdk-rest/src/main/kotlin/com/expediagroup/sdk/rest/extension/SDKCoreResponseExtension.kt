@@ -21,7 +21,9 @@ internal fun <T> SDKCoreResponse.parseBodyAs(
     deserializer: DeserializeResponseBodyTrait
 ): T {
     require(body != null) { "Response body is null!" }
-    require(body!!.source().inputStream().available() != 0) { "Response body is empty!" }
+    require(body!!.source().isOpen ) { "Response body is closed!" }
+    require(body!!.contentLength() != 0L) { "Response body is empty!" }
+    require(body!!.source().exhausted().not()) { "Response body is exhausted!" }
 
     return deserializer.deserialize(body!!.source().inputStream(), operation)
 }
