@@ -8,6 +8,7 @@ import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
 import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
 import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
@@ -34,15 +35,17 @@ import java.net.URL
     IllegalStateException::class,
     IOException::class
 )
-fun OperationTrait.parseRequest(
+internal fun OperationRequestTrait.parseRequest(
     serverUrl: URL,
     serializer: SerializeRequestBodyTrait
 ): Request {
-    require(this is HttpMethodTrait) { "Operation must implement HttpMethodTrait trait!" }
+    require(this is HttpMethodTrait && this.getHttpMethod().isNotBlank()) {
+        "Operation must implement HttpMethodTrait trait!"
+    }
 
     val builder = Request.builder().method(this.parseMethod())
 
-    if (this is HeadersTrait) {
+    if (this is HeadersTrait && this.getHeaders().entries().isNotEmpty()) {
         builder.headers(this.getHeaders())
     }
 
@@ -51,7 +54,7 @@ fun OperationTrait.parseRequest(
     }
 
     builder.url(
-        if (this is UrlPathTrait) {
+        if (this is UrlPathTrait && this.getUrlPath().isNotBlank()) {
             this.parseURL(serverUrl)
         } else {
             serverUrl
@@ -103,7 +106,7 @@ internal fun UrlPathTrait.parseURL(base: URL): URL =
  * @throws IllegalArgumentException if the HTTP method is invalid
  */
 @Throws(IllegalArgumentException::class)
-fun HttpMethodTrait.parseMethod(): Method =
+internal fun HttpMethodTrait.parseMethod(): Method =
     Method.valueOf(getHttpMethod().uppercase())
 
 /**
@@ -115,7 +118,7 @@ fun HttpMethodTrait.parseMethod(): Method =
  * @throws IllegalArgumentException if the content type is invalid
  */
 @Throws(IllegalArgumentException::class)
-fun ContentTypeTrait.parseMediaType(): MediaType =
+internal fun ContentTypeTrait.parseMediaType(): MediaType =
     MediaType.parse(getContentType())
 
 /**
@@ -132,10 +135,10 @@ fun ContentTypeTrait.parseMediaType(): MediaType =
     IllegalStateException::class,
     IOException::class
 )
-fun OperationRequestBodyTrait<*>.parseRequestBody(
+internal fun OperationRequestBodyTrait<*>.parseRequestBody(
     serializer: SerializeRequestBodyTrait
 ): RequestBody {
-    require(getRequestBody() != null) { "Request body is required" }
+    require(getRequestBody() != null) { "Request body is required!" }
 
     val inputStream = serializer.serialize(getRequestBody()!!)
 

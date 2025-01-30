@@ -1,10 +1,11 @@
 package com.expediagroup.sdk.rest.extension
 
 import com.expediagroup.sdk.rest.model.Response
-import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
 import com.expediagroup.sdk.core.http.Response as SDKCoreResponse
+import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.serialization.DeserializeResponseBodyTrait
+import java.io.IOException
 
 /**
  * Extension function to parse the body of an SDKCoreResponse as a specific type.
@@ -14,6 +15,7 @@ import com.expediagroup.sdk.rest.trait.serialization.DeserializeResponseBodyTrai
  * @param deserializer the deserializer to use for parsing the response body
  * @return the parsed response body of type T
  */
+@Throws(IOException::class)
 fun <T> SDKCoreResponse.parseBodyAs(
     operation: OperationResponseBodyTrait<T>,
     deserializer: DeserializeResponseBodyTrait

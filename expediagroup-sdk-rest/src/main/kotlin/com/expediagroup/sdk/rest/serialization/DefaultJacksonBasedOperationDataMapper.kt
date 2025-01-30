@@ -49,7 +49,10 @@ class DefaultJacksonBasedOperationDataMapper(
         IllegalArgumentException::class,
         IOException::class
     )
-    override fun <T> deserialize(inputStream: InputStream, operation: OperationResponseBodyTrait<T>): T {
+    override fun <T> deserialize(
+        inputStream: InputStream,
+        operation: OperationResponseBodyTrait<T>
+    ): T {
         require(operation is JacksonModelOperationResponseBodyTrait<T>) {
             "Operation must implement OperationResponseBodyTrait"
         }
