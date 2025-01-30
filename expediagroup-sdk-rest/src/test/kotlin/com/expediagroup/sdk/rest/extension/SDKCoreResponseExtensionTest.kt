@@ -30,7 +30,6 @@ class SDKCoreResponseExtensionTest {
     inner class ToRestResponseOperationResponseBodyTraitTest {
         @Test
         fun `parses response body and headers when OperationResponseBodyTrait is implemented`() {
-            // given
             val inputStream = """["first", "second"]""".byteInputStream()
             val responseBody = ResponseBody.create(
                 inputStream = inputStream,
@@ -51,7 +50,6 @@ class SDKCoreResponseExtensionTest {
                 .body(responseBody)
                 .build()
 
-            // when
             val operation = object :
                 HttpMethodTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
@@ -63,7 +61,6 @@ class SDKCoreResponseExtensionTest {
 
             val restResponse = response.toRestResponse(operation, deserializer)
 
-            // then
             assertNotNull(restResponse.data)
             assertNotNull(restResponse.headers)
             assertEquals(restResponse.data, listOf("first", "second"))
@@ -76,7 +73,6 @@ class SDKCoreResponseExtensionTest {
     inner class ToRestResponseOperationNoResponseBodyTraitTest {
         @Test
         fun `parses response headers and ignores body values when OperationNoResponseBodyTrait is implemented`() {
-            // given
             val response = Response.builder()
                 .addHeader("header", "value")
                 .status(Status.ACCEPTED)
@@ -88,10 +84,8 @@ class SDKCoreResponseExtensionTest {
                         .build()
                 ).build()
 
-            // when
             val restResponse = response.toRestResponse(object : OperationNoResponseBodyTrait {})
 
-            // then
             assertNull(restResponse.data)
             assertNotNull(restResponse.headers)
             assertEquals(1, restResponse.headers.entries().size)
@@ -240,7 +234,6 @@ class SDKCoreResponseExtensionTest {
                     it.body!!.source().readAll(Buffer())
                 }
 
-            // when
             val operation = object :
                 HttpMethodTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
@@ -270,7 +263,6 @@ class SDKCoreResponseExtensionTest {
                 .request(request)
                 .build()
 
-            // when
             val operation = object :
                 HttpMethodTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,

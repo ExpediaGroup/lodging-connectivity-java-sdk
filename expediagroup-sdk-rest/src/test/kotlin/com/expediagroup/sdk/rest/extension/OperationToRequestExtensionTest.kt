@@ -55,6 +55,24 @@ class OperationToRequestExtensionTest {
         }
 
         @Test
+        fun `ignores url path and returns base url when path is blank`() {
+            val operation = object : HttpMethodTrait, UrlPathTrait {
+                override fun getHttpMethod(): String = "GET"
+                override fun getUrlPath(): String = ""
+            }
+
+            val request = operation.parseRequest(
+                serializer = DefaultJacksonBasedOperationDataMapper(),
+                serverUrl = URL("http://example.com")
+            )
+
+            val actual = request.url.toString()
+            val expected = "http://example.com"
+
+            assertEquals(expected, actual)
+        }
+
+        @Test
         fun `parses headers when HeadersTrait is implemented`() {
             val operation = object :HttpMethodTrait, HeadersTrait {
                 override fun getHttpMethod(): String = "POST"
@@ -73,6 +91,26 @@ class OperationToRequestExtensionTest {
             val expected = Headers.builder()
                 .add("key1", "value1")
                 .add("key2", "value2")
+                .build()
+
+            assertEquals(expected, actual)
+            assertEquals(request.url, URL("http://example.com"))
+        }
+
+        @Test
+        fun `headers are empty when operation headers are empty`() {
+            val operation = object :HttpMethodTrait, HeadersTrait {
+                override fun getHttpMethod(): String = "POST"
+                override fun getHeaders(): Headers = Headers.builder().build()
+            }
+
+            val request = operation.parseRequest(
+                serializer = DefaultJacksonBasedOperationDataMapper(),
+                serverUrl = URL("http://example.com")
+            )
+
+            val actual = request.headers
+            val expected = Headers.builder()
                 .build()
 
             assertEquals(expected, actual)
