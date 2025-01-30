@@ -9,7 +9,6 @@ import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
 import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
-import com.expediagroup.sdk.rest.trait.operation.OperationTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
 import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
