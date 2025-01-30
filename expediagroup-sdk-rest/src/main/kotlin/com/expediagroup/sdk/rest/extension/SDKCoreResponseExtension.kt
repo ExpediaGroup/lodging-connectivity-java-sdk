@@ -49,6 +49,7 @@ internal fun <T> SDKCoreResponse.toRestResponse(
  *
  * @return a Response object containing null data and headers
  */
+@Suppress("UNUSED_PARAMETER")
 internal fun SDKCoreResponse.toRestResponse(operation: OperationNoResponseBodyTrait): Response<Nothing?> {
     return Response(
         data = null,
