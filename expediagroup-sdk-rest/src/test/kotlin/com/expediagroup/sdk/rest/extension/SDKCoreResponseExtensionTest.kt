@@ -18,6 +18,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.io.ByteArrayInputStream
 
 class SDKCoreResponseExtensionTest {
     private val mapper = jacksonObjectMapper()
@@ -136,6 +138,74 @@ class SDKCoreResponseExtensionTest {
             // then
             assertNotNull(parsedBody)
             assertEquals(listOf("first", "second"), parsedBody)
+        }
+
+        @Test
+        fun `throws exception when response body input stream is empty`() {
+            val inputStream = ByteArrayInputStream(ByteArray(0))
+            val responseBody = ResponseBody.create(
+                inputStream = inputStream,
+                mediaType = CommonMediaTypes.APPLICATION_JSON,
+                contentLength = inputStream.available().toLong()
+            )
+
+            val request = Request.builder()
+                .url("http://localhost:8080")
+                .method(Method.POST)
+                .build()
+
+            val response = Response.builder()
+                .addHeader("header", "value")
+                .status(Status.ACCEPTED)
+                .protocol(Protocol.HTTP_1_1)
+                .request(request)
+                .body(responseBody)
+                .build()
+
+            // when
+            val operation = object :
+                HttpMethodTrait,
+                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+                ContentTypeTrait {
+                override fun getHttpMethod(): String = "POST"
+                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
+            }
+
+            val exception = assertThrows<IllegalArgumentException> {
+                response.parseBodyAs(operation, deserializer)
+            }
+            assertEquals(exception.message, "Response body is empty!")
+        }
+
+        @Test
+        fun `throws exception when response body is null`() {
+            val request = Request.builder()
+                .url("http://localhost:8080")
+                .method(Method.POST)
+                .build()
+
+            val response = Response.builder()
+                .addHeader("header", "value")
+                .status(Status.ACCEPTED)
+                .protocol(Protocol.HTTP_1_1)
+                .request(request)
+                .build()
+
+            // when
+            val operation = object :
+                HttpMethodTrait,
+                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+                ContentTypeTrait {
+                override fun getHttpMethod(): String = "POST"
+                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
+            }
+
+            val exception = assertThrows<IllegalArgumentException> {
+                response.parseBodyAs(operation, deserializer)
+            }
+            assertEquals(exception.message, "Response body is null!")
         }
     }
 }

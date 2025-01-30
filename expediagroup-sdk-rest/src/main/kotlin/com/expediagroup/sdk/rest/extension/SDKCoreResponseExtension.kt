@@ -16,10 +16,13 @@ import java.io.IOException
  * @return the parsed response body of type T
  */
 @Throws(IOException::class)
-fun <T> SDKCoreResponse.parseBodyAs(
+internal fun <T> SDKCoreResponse.parseBodyAs(
     operation: OperationResponseBodyTrait<T>,
     deserializer: DeserializeResponseBodyTrait
 ): T {
+    require(body != null) { "Response body is null!" }
+    require(body!!.source().inputStream().available() != 0) { "Response body is empty!" }
+
     return deserializer.deserialize(body!!.source().inputStream(), operation)
 }
 
@@ -31,7 +34,7 @@ fun <T> SDKCoreResponse.parseBodyAs(
  * @param deserializer the deserializer to use for parsing the response body
  * @return a Response object containing the parsed response body and headers
  */
-fun <T> SDKCoreResponse.toRestResponse(
+internal fun <T> SDKCoreResponse.toRestResponse(
     operation: OperationResponseBodyTrait<T>,
     deserializer: DeserializeResponseBodyTrait
 ): Response<T> {
@@ -46,7 +49,7 @@ fun <T> SDKCoreResponse.toRestResponse(
  *
  * @return a Response object containing null data and headers
  */
-fun SDKCoreResponse.toRestResponse(operation: OperationNoResponseBodyTrait): Response<Nothing?> {
+internal fun SDKCoreResponse.toRestResponse(operation: OperationNoResponseBodyTrait): Response<Nothing?> {
     return Response(
         data = null,
         headers = headers
