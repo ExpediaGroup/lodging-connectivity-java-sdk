@@ -115,7 +115,6 @@ data class Response private constructor(
          *
          * @param status The HTTP status code.
          * @return This builder.
-         * @throws IllegalArgumentException If [status] is negative.
          */
         fun status(status: Status) =
             apply {
@@ -139,7 +138,6 @@ data class Response private constructor(
          * @param name The header name.
          * @param value The header value.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
         fun addHeader(
             name: String,
@@ -154,7 +152,6 @@ data class Response private constructor(
          * @param name The header name.
          * @param values The header value.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
         fun addHeader(
             name: String,
@@ -169,7 +166,6 @@ data class Response private constructor(
          * @param name The header name.
          * @param value The header value.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [value] is invalid.
          */
         fun setHeader(
             name: String,
@@ -184,7 +180,6 @@ data class Response private constructor(
          * @param name The header name.
          * @param values The header values list.
          * @return This builder.
-         * @throws IllegalArgumentException If [name] or [values] are invalid.
          */
         fun setHeader(
             name: String,

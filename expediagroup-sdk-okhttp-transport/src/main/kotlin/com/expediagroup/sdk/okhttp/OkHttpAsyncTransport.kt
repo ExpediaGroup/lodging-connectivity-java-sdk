@@ -16,6 +16,7 @@
 
 package com.expediagroup.sdk.okhttp
 
+import com.expediagroup.sdk.core.exception.service.ExpediaGroupNetworkException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.transport.AsyncTransport
@@ -46,7 +47,7 @@ class OkHttpAsyncTransport(
         request.toOkHttpRequest().let {
             okHttpClient.newCall(it).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    future.completeExceptionally(e)
+                    future.completeExceptionally(ExpediaGroupNetworkException("Failed to execute the request", e))
                 }
 
                 override fun onResponse(call: Call, response: okhttp3.Response) {

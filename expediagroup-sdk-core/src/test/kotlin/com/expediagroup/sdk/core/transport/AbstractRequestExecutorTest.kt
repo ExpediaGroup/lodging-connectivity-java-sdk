@@ -1,6 +1,8 @@
 package com.expediagroup.sdk.core.transport
 
 import com.expediagroup.sdk.core.exception.client.ExpediaGroupConfigurationException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupPipelineExecutionException
+import com.expediagroup.sdk.core.exception.client.ExpediaGroupTransportException
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.pipeline.ExecutionPipeline
@@ -11,6 +13,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verify
+import io.mockk.verifyOrder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
@@ -101,6 +104,12 @@ class AbstractRequestExecutorTest {
         verify(exactly = 1) { mockExecutionPipeline.startRequestPipeline(any<Request>()) }
         verify(exactly = 1) { mockExecutionPipeline.startResponsePipeline(any<Response>()) }
         verify(exactly = 1) { mockTransport.execute(any<Request>()) }
+
+        verifyOrder {
+            mockExecutionPipeline.startRequestPipeline(any())
+            mockTransport.execute(any())
+            mockExecutionPipeline.startResponsePipeline(any())
+        }
     }
 
     @Test
@@ -119,5 +128,65 @@ class AbstractRequestExecutorTest {
 
         // Expect
         verify(exactly = 1) { mockTransport.dispose() }
+    }
+
+    @Test
+    fun `should throw ExpediaGroupPipelineExecutionException if the request pipeline fails`() {
+        // Given
+        val mockTransport = mockk<Transport>()
+        val mockExecutionPipeline = mockk<ExecutionPipeline>()
+        val executor =
+            object : AbstractRequestExecutor(mockTransport) {
+                override val executionPipeline = mockExecutionPipeline
+            }
+
+        every { mockTransport.execute(any()) } returns mockk<Response>()
+        every { mockExecutionPipeline.startRequestPipeline(any<Request>()) } throws RuntimeException()
+        every { mockExecutionPipeline.startResponsePipeline(any<Response>()) } returns mockk<Response>()
+
+        // When & Expect
+        assertThrows<ExpediaGroupPipelineExecutionException> {
+            executor.execute(mockk<Request>())
+        }
+    }
+
+    @Test
+    fun `should throw ExpediaGroupPipelineExecutionException if the response pipeline fails`() {
+        // Given
+        val mockTransport = mockk<Transport>()
+        val mockExecutionPipeline = mockk<ExecutionPipeline>()
+        val executor =
+            object : AbstractRequestExecutor(mockTransport) {
+                override val executionPipeline = mockExecutionPipeline
+            }
+
+        every { mockTransport.execute(any()) } returns mockk<Response>()
+        every { mockExecutionPipeline.startRequestPipeline(any<Request>()) } returns mockk<Request>()
+        every { mockExecutionPipeline.startResponsePipeline(any<Response>()) } throws RuntimeException()
+
+        // When & Expect
+        assertThrows<ExpediaGroupPipelineExecutionException> {
+            executor.execute(mockk<Request>())
+        }
+    }
+
+    @Test
+    fun `should throw ExpediaGroupTransportException if the request execution fails`() {
+        // Given
+        val mockTransport = mockk<Transport>()
+        val mockExecutionPipeline = mockk<ExecutionPipeline>()
+        val executor =
+            object : AbstractRequestExecutor(mockTransport) {
+                override val executionPipeline = mockExecutionPipeline
+            }
+
+        every { mockTransport.execute(any()) } throws RuntimeException()
+        every { mockExecutionPipeline.startRequestPipeline(any<Request>()) } returns mockk<Request>()
+        every { mockExecutionPipeline.startResponsePipeline(any<Response>()) } returns mockk<Response>()
+
+        // When & Expect
+        assertThrows<ExpediaGroupTransportException> {
+            executor.execute(mockk<Request>())
+        }
     }
 }

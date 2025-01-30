@@ -93,11 +93,9 @@ class BearerAuthenticationManager(
      * @throws ExpediaGroupAuthException If the server responds with an error.
      */
     private fun executeAuthenticationRequest(request: Request): Response =
-        run {
-            requestExecutor.execute(request).apply {
-                if (!this.isSuccessful) {
-                    throw throw ExpediaGroupAuthException("Received unsuccessful authentication response: [${this.status}]")
-                }
+        requestExecutor.execute(request).apply {
+            if (!this.isSuccessful) {
+                throw throw ExpediaGroupAuthException("Received unsuccessful authentication response: [${this.status}]")
             }
         }
 

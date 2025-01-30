@@ -30,7 +30,6 @@ data class Headers private constructor(
      *
      * @param name the header name (case-insensitive)
      * @return the first header value, or null if not found
-     * @throws IllegalArgumentException if [name] is null
      */
     fun get(name: String): String? = headersMap[sanitizeName(name)]?.firstOrNull()
 
@@ -39,7 +38,6 @@ data class Headers private constructor(
      *
      * @param name the header name (case-insensitive)
      * @return an unmodifiable list of header values, or an empty list if none
-     * @throws IllegalArgumentException if [name] is null
      */
     fun values(name: String): List<String> = headersMap[sanitizeName(name)] ?: emptyList()
 
@@ -95,7 +93,6 @@ data class Headers private constructor(
          * @param name the header name
          * @param value the header value
          * @return this builder
-         * @throws IllegalArgumentException if [name] or [value] is invalid
          */
         fun add(
             name: String,
@@ -108,7 +105,6 @@ data class Headers private constructor(
          * @param name the header name
          * @param values the list of header values
          * @return this builder
-         * @throws IllegalArgumentException if [name] or any [values] are invalid
          */
         fun add(
             name: String,
@@ -125,7 +121,6 @@ data class Headers private constructor(
          * @param name the header name
          * @param value the header value
          * @return this builder
-         * @throws IllegalArgumentException if [name] or [value] is invalid
          */
         fun set(
             name: String,
@@ -139,7 +134,6 @@ data class Headers private constructor(
          * @param name the header name
          * @param values the header value
          * @return this builder
-         * @throws IllegalArgumentException if [name] or [values] are invalid
          */
         fun set(
             name: String,
