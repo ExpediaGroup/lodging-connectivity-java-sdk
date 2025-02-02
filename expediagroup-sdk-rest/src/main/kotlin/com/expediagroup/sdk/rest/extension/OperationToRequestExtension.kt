@@ -23,7 +23,7 @@ import java.net.URL
  *
  * @param serverUrl the base server URL
  * @param mapper Jackson object mapper used to serialize the request body
- * @return the constructed HTTP request
+ * @return the constructed SDK request
  * @throws IllegalArgumentException if the request body is invalid
  * @throws IllegalStateException if the HTTP method or URL is not set
  * @throws IOException if an I/O error occurs
