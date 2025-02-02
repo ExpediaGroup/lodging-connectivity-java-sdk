@@ -18,7 +18,7 @@ import java.net.URL
 /**
  * Extension function to parse an operation request into an SDK request.
  *
- * This function takes an operation request and converts it into an HTTP request
+ * This function takes an operation request and converts it into an SDK request
  * by setting the HTTP method, headers, body, and URL based on the traits of the operation.
  *
  * @param serverUrl the base server URL
