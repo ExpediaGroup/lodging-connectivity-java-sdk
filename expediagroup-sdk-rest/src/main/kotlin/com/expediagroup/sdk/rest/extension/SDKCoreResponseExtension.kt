@@ -14,7 +14,7 @@ import com.expediagroup.sdk.rest.trait.serialization.DeserializeResponseBodyTrai
  * @param deserializer the deserializer to use for parsing the response body
  * @return the parsed response body of type T
  */
-internal fun <T> SDKCoreResponse.parseBodyAs(
+internal fun <T : Any> SDKCoreResponse.parseBodyAs(
     operation: OperationResponseBodyTrait<T>,
     deserializer: DeserializeResponseBodyTrait
 ): T {
@@ -34,7 +34,7 @@ internal fun <T> SDKCoreResponse.parseBodyAs(
  * @param deserializer the deserializer to use for parsing the response body
  * @return a Response object containing the parsed response body and headers
  */
-internal fun <T> SDKCoreResponse.toRestResponse(
+internal fun <T : Any> SDKCoreResponse.toRestResponse(
     operation: OperationResponseBodyTrait<T>,
     deserializer: DeserializeResponseBodyTrait
 ): Response<T> {

@@ -20,7 +20,7 @@ interface SerializeRequestBodyTrait : SerializationTrait {
      * @param value the value to serialize
      * @return the serialized value as an InputStream
      */
-    fun <T> serialize(value: T): InputStream
+    fun <T : Any> serialize(value: T): InputStream
 }
 
 /**
@@ -35,5 +35,5 @@ interface DeserializeResponseBodyTrait : SerializationTrait {
      * @param operation the operation response body trait
      * @return the deserialized object of type T
      */
-    fun <T> deserialize(inputStream: InputStream, operation: OperationResponseBodyTrait<T>): T
+    fun <T : Any> deserialize(inputStream: InputStream, operation: OperationResponseBodyTrait<T>): T
 }

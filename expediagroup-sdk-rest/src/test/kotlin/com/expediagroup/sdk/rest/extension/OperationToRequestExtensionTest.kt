@@ -484,7 +484,7 @@ class OperationToRequestExtensionTest {
     inner class ParseRequestBodyTest {
         private val serializer = object : SerializeRequestBodyTrait {
             private val mapper = jacksonObjectMapper()
-            override fun <T> serialize(value: T): InputStream =
+            override fun <T : Any> serialize(value: T): InputStream =
                 mapper.writeValueAsBytes(value).inputStream()
         }
 

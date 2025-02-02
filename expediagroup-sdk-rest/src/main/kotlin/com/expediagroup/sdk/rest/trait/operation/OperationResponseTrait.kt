@@ -19,7 +19,7 @@ interface OperationNoResponseBodyTrait : OperationResponseTrait
  *
  * @param BodyType the type of the response body
  */
-interface OperationResponseBodyTrait<BodyType> : OperationResponseTrait
+interface OperationResponseBodyTrait<BodyType : Any> : OperationResponseTrait
 
 /**
  * Interface for operations that have a response body and use Jackson for serialization.
@@ -28,7 +28,7 @@ interface OperationResponseBodyTrait<BodyType> : OperationResponseTrait
  *
  * @param BodyType the type of the response body
  */
-interface JacksonModelOperationResponseBodyTrait<BodyType> : OperationResponseBodyTrait<BodyType> {
+interface JacksonModelOperationResponseBodyTrait<BodyType : Any> : OperationResponseBodyTrait<BodyType> {
     /**
      * Get the type identifier for the response body.
      *

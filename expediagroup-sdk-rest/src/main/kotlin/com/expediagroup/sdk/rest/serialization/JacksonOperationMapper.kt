@@ -29,7 +29,7 @@ class JacksonOperationMapper(
      * @return the serialized value as an InputStream
      * @throws IOException if an I/O error occurs during serialization
      */
-    override fun <T> serialize(value: T): InputStream {
+    override fun <T : Any> serialize(value: T): InputStream {
         if (value is InputStream) {
             return value
         }
@@ -46,7 +46,7 @@ class JacksonOperationMapper(
      * @throws IllegalArgumentException if the operation does not implement JacksonModelOperationResponseBodyTrait
      * @throws IOException if an I/O error occurs during deserialization
      */
-    override fun <T> deserialize(
+    override fun <T : Any> deserialize(
         inputStream: InputStream,
         operation: OperationResponseBodyTrait<T>
     ): T {
