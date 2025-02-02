@@ -1,20 +1,5 @@
 package com.expediagroup.sdk.rest.extension
 
-import java.io.ByteArrayInputStream
-
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-
-import okio.Buffer
-
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-
 import com.expediagroup.sdk.core.http.CommonMediaTypes
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Protocol
@@ -22,16 +7,24 @@ import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.http.ResponseBody
 import com.expediagroup.sdk.core.http.Status
-
-import com.expediagroup.sdk.rest.serialization.JacksonOperationMapper
 import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
-import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
 import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import java.io.ByteArrayInputStream
+import okio.Buffer
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class SDKCoreResponseExtensionTest {
     private val mapper = jacksonObjectMapper()
-    private val deserializer = JacksonOperationMapper(mapper)
 
     @Nested
     inner class ToRestResponseOperationResponseBodyTraitTest {
@@ -44,29 +37,20 @@ class SDKCoreResponseExtensionTest {
                 contentLength = inputStream.available().toLong()
             )
 
-            val request = Request.builder()
-                .url("http://localhost:8080")
-                .method(Method.POST)
-                .build()
+            val request = Request.builder().url("http://localhost:8080").method(Method.POST).build()
 
-            val response = Response.builder()
-                .addHeader("header", "value")
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .request(request)
-                .body(responseBody)
-                .build()
+            val response =
+                Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
+                    .request(request).body(responseBody).build()
 
-            val operation = object :
-                OperationRequestTrait,
-                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
-            val restResponse = response.toRestResponse(operation, deserializer)
+            val restResponse = response.toRestResponse(operation, mapper)
 
             assertNotNull(restResponse.data)
             assertNotNull(restResponse.headers)
@@ -80,16 +64,11 @@ class SDKCoreResponseExtensionTest {
     inner class ToRestResponseOperationNoResponseBodyTraitTest {
         @Test
         fun `parses response headers and ignores body values when OperationNoResponseBodyTrait is implemented`() {
-            val response = Response.builder()
-                .addHeader("header", "value")
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .request(
-                    Request.builder()
-                        .url("http://localhost:8080")
-                        .method(Method.POST)
-                        .build()
-                ).build()
+            val response =
+                Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
+                    .request(
+                        Request.builder().url("http://localhost:8080").method(Method.POST).build()
+                    ).build()
 
             val restResponse = response.toRestResponse(object : OperationNoResponseBodyTrait {})
 
@@ -111,29 +90,20 @@ class SDKCoreResponseExtensionTest {
                 contentLength = inputStream.available().toLong()
             )
 
-            val request = Request.builder()
-                .url("http://localhost:8080")
-                .method(Method.POST)
-                .build()
+            val request = Request.builder().url("http://localhost:8080").method(Method.POST).build()
 
-            val response = Response.builder()
-                .addHeader("header", "value")
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .request(request)
-                .body(responseBody)
-                .build()
+            val response =
+                Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
+                    .request(request).body(responseBody).build()
 
-            val operation = object :
-                OperationRequestTrait,
-                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
-            val parsedBody = response.parseBodyAs(operation, deserializer)
+            val parsedBody = response.parseBodyAs(operation, mapper)
 
             assertNotNull(parsedBody)
             assertEquals(listOf("first", "second"), parsedBody)
@@ -148,23 +118,14 @@ class SDKCoreResponseExtensionTest {
                 contentLength = inputStream.available().toLong()
             )
 
-            val request = Request.builder()
-                .url("http://localhost:8080")
-                .method(Method.POST)
-                .build()
+            val request = Request.builder().url("http://localhost:8080").method(Method.POST).build()
 
-            val response = Response.builder()
-                .addHeader("header", "value")
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .request(request)
-                .body(responseBody)
-                .build()
+            val response =
+                Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
+                    .request(request).body(responseBody).build()
 
             // when
-            val operation = object :
-                OperationRequestTrait,
-                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
@@ -172,7 +133,7 @@ class SDKCoreResponseExtensionTest {
             }
 
             val exception = assertThrows<IllegalArgumentException> {
-                response.parseBodyAs(operation, deserializer)
+                response.parseBodyAs(operation, mapper)
             }
             assertEquals(exception.message, "Response body is empty!")
         }
@@ -186,25 +147,16 @@ class SDKCoreResponseExtensionTest {
                 contentLength = inputStream.available().toLong()
             )
 
-            val request = Request.builder()
-                .url("http://localhost:8080")
-                .method(Method.POST)
-                .build()
+            val request = Request.builder().url("http://localhost:8080").method(Method.POST).build()
 
-            val response = Response.builder()
-                .addHeader("header", "value")
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .request(request)
-                .body(responseBody)
-                .build().also {
-                    it.close()
-                }
+            val response =
+                Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
+                    .request(request).body(responseBody).build().also {
+                        it.close()
+                    }
 
             // when
-            val operation = object :
-                OperationRequestTrait,
-                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
@@ -212,7 +164,7 @@ class SDKCoreResponseExtensionTest {
             }
 
             val exception = assertThrows<IllegalArgumentException> {
-                response.parseBodyAs(operation, deserializer)
+                response.parseBodyAs(operation, mapper)
             }
             assertEquals(exception.message, "Response body is closed!")
         }
@@ -226,24 +178,15 @@ class SDKCoreResponseExtensionTest {
                 contentLength = inputStream.available().toLong()
             )
 
-            val request = Request.builder()
-                .url("http://localhost:8080")
-                .method(Method.POST)
-                .build()
+            val request = Request.builder().url("http://localhost:8080").method(Method.POST).build()
 
-            val response = Response.builder()
-                .addHeader("header", "value")
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .request(request)
-                .body(responseBody)
-                .build().also {
-                    it.body!!.source().readAll(Buffer())
-                }
+            val response =
+                Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
+                    .request(request).body(responseBody).build().also {
+                        it.body!!.source().readAll(Buffer())
+                    }
 
-            val operation = object :
-                OperationRequestTrait,
-                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
@@ -251,28 +194,20 @@ class SDKCoreResponseExtensionTest {
             }
 
             val exception = assertThrows<IllegalArgumentException> {
-                response.parseBodyAs(operation, deserializer)
+                response.parseBodyAs(operation, mapper)
             }
             assertEquals(exception.message, "Response body is exhausted!")
         }
 
         @Test
         fun `throws exception when response body is null`() {
-            val request = Request.builder()
-                .url("http://localhost:8080")
-                .method(Method.POST)
-                .build()
+            val request = Request.builder().url("http://localhost:8080").method(Method.POST).build()
 
-            val response = Response.builder()
-                .addHeader("header", "value")
-                .status(Status.ACCEPTED)
-                .protocol(Protocol.HTTP_1_1)
-                .request(request)
-                .build()
+            val response =
+                Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
+                    .request(request).build()
 
-            val operation = object :
-                OperationRequestTrait,
-                JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
+            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
@@ -280,7 +215,7 @@ class SDKCoreResponseExtensionTest {
             }
 
             val exception = assertThrows<IllegalArgumentException> {
-                response.parseBodyAs(operation, deserializer)
+                response.parseBodyAs(operation, mapper)
             }
             assertEquals(exception.message, "Response body is null!")
         }

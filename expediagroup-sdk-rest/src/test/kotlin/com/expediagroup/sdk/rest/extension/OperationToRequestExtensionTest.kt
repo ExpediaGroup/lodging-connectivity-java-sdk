@@ -1,12 +1,18 @@
 package com.expediagroup.sdk.rest.extension
 
-import java.io.InputStream
-import java.net.URL
-
+import com.expediagroup.sdk.core.http.Headers
+import com.expediagroup.sdk.core.http.MediaType
+import com.expediagroup.sdk.core.http.Method
+import com.expediagroup.sdk.core.http.RequestBody
+import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
+import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
+import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
+import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-
+import java.net.URL
 import okio.Buffer
-
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
@@ -14,20 +20,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-
-import com.expediagroup.sdk.core.http.Headers
-import com.expediagroup.sdk.core.http.MediaType
-import com.expediagroup.sdk.core.http.Method
-import com.expediagroup.sdk.core.http.RequestBody
-
-import com.expediagroup.sdk.rest.serialization.JacksonOperationMapper
-import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
-import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
-import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
-import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
-import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
-import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
-import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
 
 class OperationToRequestExtensionTest {
     @Nested
@@ -41,8 +33,8 @@ class OperationToRequestExtensionTest {
 
             assertThrows<IllegalArgumentException> {
                 operation.parseRequest(
-                    serializer = JacksonOperationMapper(),
-                    serverUrl = URL("http://example.com")
+                    mapper = jacksonObjectMapper(),
+                    serverUrl = URL("https://example.com")
                 )
             }
         }
@@ -55,12 +47,12 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serializer = JacksonOperationMapper(),
-                serverUrl = URL("http://example.com")
+                mapper = jacksonObjectMapper(),
+                serverUrl = URL("https://example.com")
             )
 
             val actual = request.url.toString()
-            val expected = "http://example.com/test"
+            val expected = "https://example.com/test"
 
             assertEquals(expected, actual)
         }
@@ -73,12 +65,12 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serializer = JacksonOperationMapper(),
-                serverUrl = URL("http://example.com")
+                mapper = jacksonObjectMapper(),
+                serverUrl = URL("https://example.com")
             )
 
             val actual = request.url.toString()
-            val expected = "http://example.com"
+            val expected = "https://example.com"
 
             assertEquals(expected, actual)
         }
@@ -94,8 +86,8 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serializer = JacksonOperationMapper(),
-                serverUrl = URL("http://example.com")
+                mapper = jacksonObjectMapper(),
+                serverUrl = URL("https://example.com")
             )
 
             val actual = request.headers
@@ -105,7 +97,7 @@ class OperationToRequestExtensionTest {
                 .build()
 
             assertEquals(expected, actual)
-            assertEquals(request.url, URL("http://example.com"))
+            assertEquals(request.url, URL("https://example.com"))
         }
 
         @Test
@@ -116,8 +108,8 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serializer = JacksonOperationMapper(),
-                serverUrl = URL("http://example.com")
+                mapper = jacksonObjectMapper(),
+                serverUrl = URL("https://example.com")
             )
 
             val actual = request.headers
@@ -125,7 +117,7 @@ class OperationToRequestExtensionTest {
                 .build()
 
             assertEquals(expected, actual)
-            assertEquals(request.url, URL("http://example.com"))
+            assertEquals(request.url, URL("https://example.com"))
         }
 
         @Test
@@ -137,8 +129,8 @@ class OperationToRequestExtensionTest {
             }
 
             val request = operation.parseRequest(
-                serializer = JacksonOperationMapper(),
-                serverUrl = URL("http://example.com")
+                mapper = jacksonObjectMapper(),
+                serverUrl = URL("https://example.com")
             )
 
             val actual = Buffer().apply {
@@ -155,7 +147,7 @@ class OperationToRequestExtensionTest {
 
             assertEquals(expected, actual)
             assertEquals(MediaType.parse("application/json"), request.body!!.mediaType())
-            assertEquals(request.url, URL("http://example.com"))
+            assertEquals(request.url, URL("https://example.com"))
         }
     }
 
@@ -164,7 +156,7 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "http://example.com:1234/v2/htmx",
+                "https://example.com:1234/v2/htmx",
                 "http://127.0.0.1:8080/v1/api",
                 "https://example.com:443/anime",
                 "ftp://ftp.example.com:21",
@@ -187,7 +179,7 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "http://example.com/v1/api",
+                "https://example.com/v1/api",
                 "http://127.0.0.1:8080/v1/api",
                 "https://example.com/v1/api",
                 "ftp://ftp.example.com/v1/api",
@@ -211,7 +203,7 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "http://example.com/v1/api",
+                "https://example.com/v1/api",
                 "http://127.0.0.1:8080/v1/api",
                 "https://example.com/v1/api",
                 "ftp://ftp.example.com/v1/api",
@@ -239,7 +231,7 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "http://example.com/v1/api",
+                "https://example.com/v1/api",
                 "http://127.0.0.1:8080/v1/api",
                 "https://example.com/v1/api",
                 "ftp://ftp.example.com/v1/api",
@@ -265,7 +257,7 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "http://example.com/v1/api",
+                "https://example.com/v1/api",
                 "http://127.0.0.1:8080/v1/api",
                 "https://example.com/v1/api",
                 "ftp://ftp.example.com/v1/api",
@@ -293,7 +285,7 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "http://example.com/v1/api",
+                "https://example.com/v1/api",
                 "http://127.0.0.1:8080/v1/api",
                 "https://example.com/v1/api",
                 "ftp://ftp.example.com/v1/api",
@@ -321,7 +313,7 @@ class OperationToRequestExtensionTest {
         @ParameterizedTest
         @ValueSource(
             strings = [
-                "http://example.com/v1/api",
+                "https://example.com/v1/api",
                 "http://127.0.0.1:8080/v1/api",
                 "https://example.com/v1/api",
                 "ftp://ftp.example.com/v1/api",
@@ -348,21 +340,21 @@ class OperationToRequestExtensionTest {
 
         @Test
         fun `ignores empty operation path`() {
-            val baseUrl = URL("http://example.com/v1/api")
+            val baseUrl = URL("https://example.com/v1/api")
             val operation = object : UrlPathTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getUrlPath(): String = ""
             }
 
             val actual = operation.parseURL(baseUrl)
-            val expected = URL("http://example.com/v1/api")
+            val expected = URL("https://example.com/v1/api")
 
             assertEquals(expected, actual)
         }
 
         @Test
         fun `adds query parameters with empty path`() {
-            val baseUrl = URL("http://example.com")
+            val baseUrl = URL("https://example.com")
             val operation = object : UrlPathTrait, UrlQueryParamsTrait {
                 override fun getHttpMethod(): String = "POST"
                 override fun getUrlPath(): String = ""
@@ -373,7 +365,7 @@ class OperationToRequestExtensionTest {
             }
 
             val actual = operation.parseURL(baseUrl)
-            val expected = URL("http://example.com?key1=value1&key2=value2&key2=value3")
+            val expected = URL("https://example.com?key1=value1&key2=value2&key2=value3")
 
             assertEquals(expected, actual)
         }
@@ -482,11 +474,7 @@ class OperationToRequestExtensionTest {
 
     @Nested
     inner class ParseRequestBodyTest {
-        private val serializer = object : SerializeRequestBodyTrait {
-            private val mapper = jacksonObjectMapper()
-            override fun <T : Any> serialize(value: T): InputStream =
-                mapper.writeValueAsBytes(value).inputStream()
-        }
+        private val mapper = jacksonObjectMapper()
 
         @Test
         fun `parses request body`() {
@@ -496,7 +484,7 @@ class OperationToRequestExtensionTest {
                 override fun getContentType(): String = "application/json"
             }
 
-            val actual = operation.parseRequestBody(serializer)
+            val actual = operation.parseRequestBody(mapper)
             val expected = RequestBody.create(
                 inputStream = """["test1","test2"]""".byteInputStream(),
                 mediaType = MediaType.parse("application/json"),
@@ -526,7 +514,7 @@ class OperationToRequestExtensionTest {
             }
 
             assertThrows<IllegalArgumentException> {
-                operation.parseRequestBody(serializer)
+                operation.parseRequestBody(mapper)
             }
         }
     }

@@ -1,21 +1,19 @@
 package com.expediagroup.sdk.rest.extension
 
-import java.io.IOException
-import java.net.MalformedURLException
-import java.net.URL
-
 import com.expediagroup.sdk.core.http.MediaType
 import com.expediagroup.sdk.core.http.Method
 import com.expediagroup.sdk.core.http.Request
 import com.expediagroup.sdk.core.http.RequestBody
-
 import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
 import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlQueryParamsTrait
-import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
+import com.fasterxml.jackson.databind.ObjectMapper
+import java.io.IOException
+import java.net.MalformedURLException
+import java.net.URL
 
 /**
  * Extension function to parse an operation request into an HTTP request.
@@ -24,7 +22,7 @@ import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
  * by setting the HTTP method, headers, body, and URL based on the traits of the operation.
  *
  * @param serverUrl the base server URL
- * @param serializer instance used to serialize the request body to an InputStream
+ * @param mapper Jackson object mapper used to serialize the request body
  * @return the constructed HTTP request
  * @throws IllegalArgumentException if the request body is invalid
  * @throws IllegalStateException if the HTTP method or URL is not set
@@ -32,7 +30,7 @@ import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
  */
 internal fun OperationRequestTrait.parseRequest(
     serverUrl: URL,
-    serializer: SerializeRequestBodyTrait
+    mapper: ObjectMapper
 ): Request {
     require(this.getHttpMethod().isNotBlank()) {
         "Operation HTTP method must not be empty!"
@@ -45,7 +43,7 @@ internal fun OperationRequestTrait.parseRequest(
     }
 
     if (this is OperationRequestBodyTrait<*>) {
-        builder.body(this.parseRequestBody(serializer))
+        builder.body(this.parseRequestBody(mapper))
     }
 
     builder.url(
@@ -118,15 +116,15 @@ internal fun ContentTypeTrait.parseMediaType(): MediaType =
  *
  * This function serializes the request body and constructs the RequestBody object.
  *
- * @param serializer instance used to serialize the request body to an InputStream
+ * @param mapper Jackson object mapper used to serialize the request body
  * @return the constructed request body
  * @throws IllegalStateException if the request body cannot be serialized
  * @throws IOException if an I/O error occurs
  */
 internal fun OperationRequestBodyTrait<*>.parseRequestBody(
-    serializer: SerializeRequestBodyTrait
+    mapper: ObjectMapper
 ): RequestBody {
-    val inputStream = serializer.serialize(getRequestBody())
+    val inputStream = mapper.writeValueAsBytes(this.getRequestBody()).inputStream()
 
     return RequestBody.create(
         inputStream = inputStream,

@@ -1,9 +1,8 @@
 package com.expediagroup.sdk.rest.model
 
+import com.expediagroup.sdk.core.http.Headers
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import com.expediagroup.sdk.core.http.Headers
 
 class ResponseTest {
     @Test
