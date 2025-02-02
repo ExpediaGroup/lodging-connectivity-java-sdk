@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test
 import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationResponseBodyTrait
 
-class DefaultJacksonBasedOperationDataMapperTest {
+class JacksonOperationMapperTest {
 
     private val mapper: ObjectMapper = jacksonObjectMapper()
-    private val dataMapper = DefaultJacksonBasedOperationDataMapper(mapper)
+    private val dataMapper = JacksonOperationMapper(mapper)
 
     @Test
     fun `serialize returns input stream for input stream value`() {

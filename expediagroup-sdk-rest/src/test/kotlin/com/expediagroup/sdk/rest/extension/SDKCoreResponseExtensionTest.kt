@@ -23,15 +23,15 @@ import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.http.ResponseBody
 import com.expediagroup.sdk.core.http.Status
 
-import com.expediagroup.sdk.rest.serialization.DefaultJacksonBasedOperationDataMapper
+import com.expediagroup.sdk.rest.serialization.JacksonOperationMapper
 import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
-import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
 import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
 
 class SDKCoreResponseExtensionTest {
     private val mapper = jacksonObjectMapper()
-    private val deserializer = DefaultJacksonBasedOperationDataMapper(mapper)
+    private val deserializer = JacksonOperationMapper(mapper)
 
     @Nested
     inner class ToRestResponseOperationResponseBodyTraitTest {
@@ -58,7 +58,7 @@ class SDKCoreResponseExtensionTest {
                 .build()
 
             val operation = object :
-                HttpMethodTrait,
+                OperationRequestTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
@@ -125,7 +125,7 @@ class SDKCoreResponseExtensionTest {
                 .build()
 
             val operation = object :
-                HttpMethodTrait,
+                OperationRequestTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
@@ -163,7 +163,7 @@ class SDKCoreResponseExtensionTest {
 
             // when
             val operation = object :
-                HttpMethodTrait,
+                OperationRequestTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
@@ -203,7 +203,7 @@ class SDKCoreResponseExtensionTest {
 
             // when
             val operation = object :
-                HttpMethodTrait,
+                OperationRequestTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
@@ -242,7 +242,7 @@ class SDKCoreResponseExtensionTest {
                 }
 
             val operation = object :
-                HttpMethodTrait,
+                OperationRequestTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"
@@ -271,7 +271,7 @@ class SDKCoreResponseExtensionTest {
                 .build()
 
             val operation = object :
-                HttpMethodTrait,
+                OperationRequestTrait,
                 JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
                 ContentTypeTrait {
                 override fun getHttpMethod(): String = "POST"

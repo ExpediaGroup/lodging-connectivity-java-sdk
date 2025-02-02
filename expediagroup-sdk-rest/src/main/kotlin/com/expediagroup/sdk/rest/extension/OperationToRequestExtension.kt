@@ -11,7 +11,6 @@ import com.expediagroup.sdk.core.http.RequestBody
 
 import com.expediagroup.sdk.rest.trait.operation.ContentTypeTrait
 import com.expediagroup.sdk.rest.trait.operation.HeadersTrait
-import com.expediagroup.sdk.rest.trait.operation.HttpMethodTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationRequestBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
 import com.expediagroup.sdk.rest.trait.operation.UrlPathTrait
@@ -35,8 +34,8 @@ internal fun OperationRequestTrait.parseRequest(
     serverUrl: URL,
     serializer: SerializeRequestBodyTrait
 ): Request {
-    require(this is HttpMethodTrait && this.getHttpMethod().isNotBlank()) {
-        "Operation must implement HttpMethodTrait trait!"
+    require(this.getHttpMethod().isNotBlank()) {
+        "Operation HTTP method must not be empty!"
     }
 
     val builder = Request.builder().method(this.parseMethod())
@@ -45,7 +44,7 @@ internal fun OperationRequestTrait.parseRequest(
         builder.headers(this.getHeaders())
     }
 
-    if (this is OperationRequestBodyTrait<*> && getRequestBody() != null) {
+    if (this is OperationRequestBodyTrait<*>) {
         builder.body(this.parseRequestBody(serializer))
     }
 
@@ -100,7 +99,7 @@ internal fun UrlPathTrait.parseURL(base: URL): URL =
  * @return the HTTP method
  * @throws IllegalArgumentException if the HTTP method is invalid
  */
-internal fun HttpMethodTrait.parseMethod(): Method =
+internal fun OperationRequestTrait.parseMethod(): Method =
     Method.valueOf(getHttpMethod().uppercase())
 
 /**
@@ -127,9 +126,7 @@ internal fun ContentTypeTrait.parseMediaType(): MediaType =
 internal fun OperationRequestBodyTrait<*>.parseRequestBody(
     serializer: SerializeRequestBodyTrait
 ): RequestBody {
-    require(getRequestBody() != null) { "Request body is required!" }
-
-    val inputStream = serializer.serialize(getRequestBody()!!)
+    val inputStream = serializer.serialize(getRequestBody())
 
     return RequestBody.create(
         inputStream = inputStream,

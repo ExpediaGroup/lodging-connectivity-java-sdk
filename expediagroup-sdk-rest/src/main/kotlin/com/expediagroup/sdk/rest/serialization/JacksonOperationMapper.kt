@@ -18,7 +18,7 @@ import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
  *
  * @property mapper the ObjectMapper instance used for JSON processing
  */
-class DefaultJacksonBasedOperationDataMapper(
+class JacksonOperationMapper(
     private val mapper: ObjectMapper = jacksonObjectMapper()
 ): SerializeRequestBodyTrait, DeserializeResponseBodyTrait {
 

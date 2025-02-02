@@ -1,12 +1,18 @@
 package com.expediagroup.sdk.rest.trait.operation
 
 import com.expediagroup.sdk.core.http.Headers
-import java.io.InputStream
 
 /**
  * Marker interface for operation requests.
  */
-interface OperationRequestTrait : OperationTrait
+interface OperationRequestTrait : OperationTrait {
+    /**
+     * Get the HTTP method of the request.
+     *
+     * @return the HTTP method as a String
+     */
+    fun getHttpMethod(): String
+}
 
 /**
  * Interface for operations that have a content type.
@@ -18,18 +24,6 @@ interface ContentTypeTrait : OperationRequestTrait {
      * @return the content type as a String
      */
     fun getContentType(): String
-}
-
-/**
- * Interface for operations that have an HTTP method.
- */
-interface HttpMethodTrait : OperationRequestTrait {
-    /**
-     * Get the HTTP method of the request.
-     *
-     * @return the HTTP method as a String
-     */
-    fun getHttpMethod(): String
 }
 
 /**
@@ -63,9 +57,9 @@ interface HeadersTrait : OperationRequestTrait {
     /**
      * Get the headers of the request.
      *
-     * @return a map of headers where the key is the header name and the value is a list of header values
+     * @return a wrapper object around HTTP headers.
      */
-    fun getHeaders(): Headers 
+    fun getHeaders(): Headers
 }
 
 /**
@@ -73,7 +67,7 @@ interface HeadersTrait : OperationRequestTrait {
  *
  * @param T the type of the request body
  */
-interface OperationRequestBodyTrait<T> : OperationRequestTrait, ContentTypeTrait {
+interface OperationRequestBodyTrait<T : Any> : OperationRequestTrait, ContentTypeTrait {
     /**
      * Get the request body.
      *
