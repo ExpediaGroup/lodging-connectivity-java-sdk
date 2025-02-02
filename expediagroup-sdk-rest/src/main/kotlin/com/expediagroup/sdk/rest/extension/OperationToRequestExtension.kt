@@ -29,7 +29,7 @@ import java.net.URL
  * @throws IOException if an I/O error occurs
  */
 internal fun OperationRequestTrait.parseRequest(
-    serverUrl: URL,
+    url: URL,
     mapper: ObjectMapper
 ): Request {
     require(this.getHttpMethod().isNotBlank()) {
