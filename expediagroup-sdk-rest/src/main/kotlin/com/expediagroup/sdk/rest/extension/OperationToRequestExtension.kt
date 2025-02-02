@@ -31,11 +31,6 @@ import com.expediagroup.sdk.rest.trait.serialization.SerializeRequestBodyTrait
  * @throws IllegalStateException if the HTTP method or URL is not set
  * @throws IOException if an I/O error occurs
  */
-@Throws(
-    IllegalArgumentException::class,
-    IllegalStateException::class,
-    IOException::class
-)
 internal fun OperationRequestTrait.parseRequest(
     serverUrl: URL,
     serializer: SerializeRequestBodyTrait
@@ -75,7 +70,6 @@ internal fun OperationRequestTrait.parseRequest(
  * @return the constructed URL
  * @throws MalformedURLException if the constructed URL is invalid
  */
-@Throws(MalformedURLException::class)
 internal fun UrlPathTrait.parseURL(base: URL): URL =
     URL(
         StringBuilder().apply {
@@ -106,7 +100,6 @@ internal fun UrlPathTrait.parseURL(base: URL): URL =
  * @return the HTTP method
  * @throws IllegalArgumentException if the HTTP method is invalid
  */
-@Throws(IllegalArgumentException::class)
 internal fun HttpMethodTrait.parseMethod(): Method =
     Method.valueOf(getHttpMethod().uppercase())
 
@@ -118,7 +111,6 @@ internal fun HttpMethodTrait.parseMethod(): Method =
  * @return the media type
  * @throws IllegalArgumentException if the content type is invalid
  */
-@Throws(IllegalArgumentException::class)
 internal fun ContentTypeTrait.parseMediaType(): MediaType =
     MediaType.parse(getContentType())
 
@@ -132,10 +124,6 @@ internal fun ContentTypeTrait.parseMediaType(): MediaType =
  * @throws IllegalStateException if the request body cannot be serialized
  * @throws IOException if an I/O error occurs
  */
-@Throws(
-    IllegalStateException::class,
-    IOException::class
-)
 internal fun OperationRequestBodyTrait<*>.parseRequestBody(
     serializer: SerializeRequestBodyTrait
 ): RequestBody {

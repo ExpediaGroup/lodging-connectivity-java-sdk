@@ -29,7 +29,6 @@ class DefaultJacksonBasedOperationDataMapper(
      * @return the serialized value as an InputStream
      * @throws IOException if an I/O error occurs during serialization
      */
-    @Throws(IOException::class)
     override fun <T> serialize(value: T): InputStream {
         if (value is InputStream) {
             return value
@@ -47,10 +46,6 @@ class DefaultJacksonBasedOperationDataMapper(
      * @throws IllegalArgumentException if the operation does not implement JacksonModelOperationResponseBodyTrait
      * @throws IOException if an I/O error occurs during deserialization
      */
-    @Throws(
-        IllegalArgumentException::class,
-        IOException::class
-    )
     override fun <T> deserialize(
         inputStream: InputStream,
         operation: OperationResponseBodyTrait<T>
