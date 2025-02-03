@@ -2,8 +2,7 @@ import kotlinx.kover.gradle.plugin.dsl.AggregationType
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.1.10'
-
+    id 'org.jetbrains.kotlin.jvm'
     id 'com.apollographql.apollo' version '4.1.1'
 
     /* Test Reporting */
@@ -16,7 +15,7 @@ kotlin {
 
 dependencies {
     /* Kotlin */
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
 
     /* Apollo */
     api 'com.apollographql.apollo:apollo-api:4.1.0'
