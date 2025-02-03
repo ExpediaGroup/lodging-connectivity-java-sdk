@@ -2,9 +2,7 @@ import kotlinx.kover.gradle.plugin.dsl.AggregationType
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.1.10'
-
-    /* Test Reporting */
+    id 'org.jetbrains.kotlin.jvm'
     id 'org.jetbrains.kotlinx.kover' version "0.9.1"
 }
 
@@ -18,7 +16,7 @@ repositories {
 
 dependencies {
     /* Kotlin */
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
 
     /* Serialization */
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
