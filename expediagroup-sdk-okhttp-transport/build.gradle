@@ -2,9 +2,7 @@ import kotlinx.kover.gradle.plugin.dsl.AggregationType
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.1.10'
-
-    /* Test Reporting */
+    id 'org.jetbrains.kotlin.jvm'
     id 'org.jetbrains.kotlinx.kover' version "0.9.1"
 }
 
@@ -14,7 +12,7 @@ kotlin {
 
 dependencies {
     /* Kotlin */
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
 
     /* EG SDK Core */
     api 'com.squareup.okhttp3:okhttp:4.12.0'
@@ -27,7 +25,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
     testImplementation 'io.mockk:mockk:1.13.16'
     testImplementation "com.squareup.okhttp3:mockwebserver:4.12.0"
-    testImplementation(project':expediagroup-sdk-core')
+    testImplementation(project(":expediagroup-sdk-core"))
 }
 
 test {
