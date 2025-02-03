@@ -21,7 +21,7 @@ import java.net.URL
  * This function takes an operation request and converts it into an SDK request
  * by setting the HTTP method, headers, body, and URL based on the traits of the operation.
  *
- * @param serverUrl the base server URL
+ * @param url the base server URL
  * @param mapper Jackson object mapper used to serialize the request body
  * @return the constructed SDK request
  * @throws IllegalArgumentException if the request body is invalid
@@ -48,9 +48,9 @@ internal fun OperationRequestTrait.parseRequest(
 
     builder.url(
         if (this is UrlPathTrait && this.getUrlPath().isNotBlank()) {
-            this.parseURL(serverUrl)
+            this.parseURL(url)
         } else {
-            serverUrl
+            url
         }
     )
 

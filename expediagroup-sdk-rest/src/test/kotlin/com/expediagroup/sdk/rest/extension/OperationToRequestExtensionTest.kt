@@ -34,7 +34,7 @@ class OperationToRequestExtensionTest {
             assertThrows<IllegalArgumentException> {
                 operation.parseRequest(
                     mapper = jacksonObjectMapper(),
-                    serverUrl = URL("https://example.com")
+                    url = URL("https://example.com")
                 )
             }
         }
@@ -48,7 +48,7 @@ class OperationToRequestExtensionTest {
 
             val request = operation.parseRequest(
                 mapper = jacksonObjectMapper(),
-                serverUrl = URL("https://example.com")
+                url = URL("https://example.com")
             )
 
             val actual = request.url.toString()
@@ -66,7 +66,7 @@ class OperationToRequestExtensionTest {
 
             val request = operation.parseRequest(
                 mapper = jacksonObjectMapper(),
-                serverUrl = URL("https://example.com")
+                url = URL("https://example.com")
             )
 
             val actual = request.url.toString()
@@ -87,7 +87,7 @@ class OperationToRequestExtensionTest {
 
             val request = operation.parseRequest(
                 mapper = jacksonObjectMapper(),
-                serverUrl = URL("https://example.com")
+                url = URL("https://example.com")
             )
 
             val actual = request.headers
@@ -109,7 +109,7 @@ class OperationToRequestExtensionTest {
 
             val request = operation.parseRequest(
                 mapper = jacksonObjectMapper(),
-                serverUrl = URL("https://example.com")
+                url = URL("https://example.com")
             )
 
             val actual = request.headers
@@ -130,7 +130,7 @@ class OperationToRequestExtensionTest {
 
             val request = operation.parseRequest(
                 mapper = jacksonObjectMapper(),
-                serverUrl = URL("https://example.com")
+                url = URL("https://example.com")
             )
 
             val actual = Buffer().apply {
