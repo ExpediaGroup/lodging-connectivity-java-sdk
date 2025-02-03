@@ -1,10 +1,12 @@
 plugins {
     id 'java'
+    id 'com.apollographql.apollo' version '4.1.1' apply false
 }
 
 subprojects {
     /* Shared plugins between all modules */
     apply plugin: 'java'
+    apply plugin: 'com.apollographql.apollo'
 
     /* Shared repositories between all modules */
     repositories {
