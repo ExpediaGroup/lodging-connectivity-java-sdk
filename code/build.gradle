@@ -1,7 +1,7 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.1.10'
+    id 'org.jetbrains.kotlin.jvm'
     id 'org.jetbrains.dokka' version '2.0.0'
-    id 'com.apollographql.apollo' version '4.1.0'
+    id 'com.apollographql.apollo' version '4.1.1'
 
     /* Publishing Plugins */
     id 'maven-publish'
