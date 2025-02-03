@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     /* Kotlin */
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
 
     /* Serialization */
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
