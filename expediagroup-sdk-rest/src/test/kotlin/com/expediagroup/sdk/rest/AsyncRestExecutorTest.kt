@@ -17,10 +17,12 @@ import io.mockk.just
 import io.mockk.Runs
 import java.io.InputStream
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class AsyncRestExecutorTest {
     private lateinit var mockMapper: ObjectMapper
@@ -92,6 +94,35 @@ class AsyncRestExecutorTest {
 
         assertNotNull(response.data)
         assertEquals(mockResponse.headers, response.headers)
+    }
+
+    @Test
+    fun `throws ExecutionExceptions of abstract executor when operation is executed`() {
+        // Given
+        val testOperationWithNoBody = object : OperationNoResponseBodyTrait {
+            override fun getHttpMethod(): String = "POST"
+        }
+        val testOperationWithBody = object : JacksonModelOperationResponseBodyTrait<List<String>> {
+            override fun getHttpMethod(): String = "POST"
+            override fun getTypeIdentifier(): TypeReference<List<String>> = jacksonTypeRef()
+        }
+
+        val requestExecutor = mockk<AbstractAsyncRequestExecutor>(relaxed = true) {
+            every { execute(any()) } returns CompletableFuture<com.expediagroup.sdk.core.http.Response>().apply {
+                completeExceptionally(Exception("test"))
+            }
+        }
+
+        val executor = AsyncRestExecutor(mockMapper, requestExecutor, serverUrl)
+
+        assertThrows<ExecutionException>("test") { executor.execute(testOperationWithNoBody).get() }.also { ex->
+            assertNotNull(ex.cause)
+            assertEquals(ex.cause!!.message, "test")
+        }
+        assertThrows<ExecutionException>("test") { executor.execute(testOperationWithBody).get() }.also {
+            assertNotNull(it.cause)
+            assertEquals(it.cause!!.message, "test")
+        }
     }
 
     @Test

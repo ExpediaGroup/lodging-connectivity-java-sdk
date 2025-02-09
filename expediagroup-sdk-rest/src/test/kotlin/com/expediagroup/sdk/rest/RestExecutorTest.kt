@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class RestExecutorTest {
     private lateinit var mockMapper: ObjectMapper
@@ -53,6 +54,26 @@ class RestExecutorTest {
         verify(exactly = 1) { requestExecutor.execute(any()) }
         verify(exactly = 1) { mockResponse.close() }
         assertEquals(Response(data = null, headers = mockResponse.headers), response)
+    }
+
+    @Test
+    fun `throws exceptions of abstract executor when operation is executed`() {
+        // Given
+        val testOperationWithNoBody = object : OperationNoResponseBodyTrait {
+            override fun getHttpMethod(): String = "POST"
+        }
+        val testOperationWithBody = object : JacksonModelOperationResponseBodyTrait<List<String>> {
+            override fun getHttpMethod(): String = "POST"
+            override fun getTypeIdentifier(): TypeReference<List<String>> = jacksonTypeRef()
+        }
+
+        val requestExecutor = mockk<AbstractRequestExecutor>(relaxed = true) {
+            every { execute(any()) } throws Exception("test")
+        }
+        val executor = RestExecutor(mockMapper, requestExecutor, serverUrl)
+
+        assertThrows<Exception>("test") { executor.execute(testOperationWithNoBody) }
+        assertThrows<Exception>("test") { executor.execute(testOperationWithBody) }
     }
 
     @Test
