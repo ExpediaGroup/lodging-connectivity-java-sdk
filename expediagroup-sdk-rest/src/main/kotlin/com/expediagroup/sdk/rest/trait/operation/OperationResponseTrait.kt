@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 /**
  * Marker interface for operations that have a response.
  */
-interface OperationResponseTrait : OperationTrait
+interface OperationResponseTrait : OperationRequestTrait
 
 /**
  * Marker interface for operations that do not have a response body.

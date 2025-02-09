@@ -32,10 +32,6 @@ internal fun OperationRequestTrait.parseRequest(
     url: URL,
     mapper: ObjectMapper
 ): Request {
-    require(this.getHttpMethod().isNotBlank()) {
-        "Operation HTTP method must not be empty!"
-    }
-
     val builder = Request.builder().method(this.parseMethod())
 
     if (this is HeadersTrait && this.getHeaders().entries().isNotEmpty()) {

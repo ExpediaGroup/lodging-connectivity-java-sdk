@@ -70,7 +70,9 @@ class SDKCoreResponseExtensionTest {
                         Request.builder().url("http://localhost:8080").method(Method.POST).build()
                     ).build()
 
-            val restResponse = response.toRestResponse(object : OperationNoResponseBodyTrait {})
+            val restResponse = response.toRestResponse(object : OperationNoResponseBodyTrait {
+                override fun getHttpMethod(): String = "POST"
+            })
 
             assertNull(restResponse.data)
             assertNotNull(restResponse.headers)
