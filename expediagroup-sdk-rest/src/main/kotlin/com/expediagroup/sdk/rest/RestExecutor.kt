@@ -17,12 +17,12 @@ class RestExecutor(
 ) : Disposable by requestExecutor {
 
     fun execute(operation: OperationNoResponseBodyTrait): Response<Nothing?> =
-        operation.parseRequest(URL(serverUrl), mapper).let(
+        operation.getRequestInfo().parseRequest(URL(serverUrl), mapper).let(
             requestExecutor::execute
         ).toRestResponse(operation)
 
     fun <T : Any> execute(operation: JacksonModelOperationResponseBodyTrait<T>): Response<T> =
-        operation.parseRequest(URL(serverUrl), mapper).let(
+        operation.getRequestInfo().parseRequest(URL(serverUrl), mapper).let(
             requestExecutor::execute
         ).toRestResponse(operation, mapper)
 }

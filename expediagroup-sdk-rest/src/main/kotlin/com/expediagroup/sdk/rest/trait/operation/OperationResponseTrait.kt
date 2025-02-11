@@ -5,7 +5,9 @@ import com.fasterxml.jackson.core.type.TypeReference
 /**
  * Marker interface for operations that have a response.
  */
-interface OperationResponseTrait : OperationRequestTrait
+interface OperationResponseTrait : OperationTrait {
+    fun getRequestInfo(): OperationRequestTrait
+}
 
 /**
  * Marker interface for operations that do not have a response body.

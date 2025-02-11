@@ -7,6 +7,7 @@ import com.expediagroup.sdk.core.transport.AbstractRequestExecutor
 import com.expediagroup.sdk.rest.model.Response
 import com.expediagroup.sdk.rest.trait.operation.JacksonModelOperationResponseBodyTrait
 import com.expediagroup.sdk.rest.trait.operation.OperationNoResponseBodyTrait
+import com.expediagroup.sdk.rest.trait.operation.OperationRequestTrait
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
@@ -39,7 +40,9 @@ class RestExecutorTest {
     fun `execute no response body operation delegates to abstract executor and closes response`() {
         // Given
         val testOperation = object : OperationNoResponseBodyTrait {
-            override fun getHttpMethod(): String = "POST"
+            override fun getRequestInfo(): OperationRequestTrait = object : OperationRequestTrait {
+                override fun getHttpMethod(): String = "POST"
+            }
         }
         val mockResponse = mockk<SDKCoreResponse>(relaxed = true)
         val requestExecutor = mockk<AbstractRequestExecutor>(relaxed = true) {
@@ -60,10 +63,14 @@ class RestExecutorTest {
     fun `throws exceptions of abstract executor when operation is executed`() {
         // Given
         val testOperationWithNoBody = object : OperationNoResponseBodyTrait {
-            override fun getHttpMethod(): String = "POST"
+            override fun getRequestInfo(): OperationRequestTrait = object : OperationRequestTrait {
+                override fun getHttpMethod(): String = "POST"
+            }
         }
         val testOperationWithBody = object : JacksonModelOperationResponseBodyTrait<List<String>> {
-            override fun getHttpMethod(): String = "POST"
+            override fun getRequestInfo(): OperationRequestTrait = object : OperationRequestTrait {
+                override fun getHttpMethod(): String = "POST"
+            }
             override fun getTypeIdentifier(): TypeReference<List<String>> = jacksonTypeRef()
         }
 
@@ -80,8 +87,10 @@ class RestExecutorTest {
     fun `execute response body operation delegates to abstract executor and deserializes and closes response`() {
         // Given
         val testOperation = object : JacksonModelOperationResponseBodyTrait<List<String>> {
-            override fun getHttpMethod(): String = "POST"
             override fun getTypeIdentifier(): TypeReference<List<String>> = jacksonTypeRef()
+            override fun getRequestInfo(): OperationRequestTrait = object : OperationRequestTrait {
+                override fun getHttpMethod(): String = "POST"
+            }
         }
         val mockResponse = mockk<SDKCoreResponse>(relaxed = true) {
             every { body } returns ResponseBody.create(

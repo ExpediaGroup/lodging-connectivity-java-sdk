@@ -20,7 +20,7 @@ class AsyncRestExecutor(
     fun execute(operation: OperationNoResponseBodyTrait): CompletableFuture<Response<Nothing?>> {
         val future = CompletableFuture<Response<Nothing?>>()
 
-        operation.parseRequest(URL(serverUrl), mapper).let(
+        operation.getRequestInfo().parseRequest(URL(serverUrl), mapper).let(
             requestExecutor::execute
         ).thenApply { response ->
             future.complete(response.toRestResponse(operation))
@@ -35,7 +35,7 @@ class AsyncRestExecutor(
     fun <T : Any> execute(operation: JacksonModelOperationResponseBodyTrait<T>): CompletableFuture<Response<T>> {
         val future = CompletableFuture<Response<T>>()
 
-        operation.parseRequest(URL(serverUrl), mapper).let(
+        operation.getRequestInfo().parseRequest(URL(serverUrl), mapper).let(
             requestExecutor::execute
         ).thenApply { response ->
             future.complete(response.toRestResponse(operation, mapper))
