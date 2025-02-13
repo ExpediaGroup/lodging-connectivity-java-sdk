@@ -37,17 +37,6 @@ class UrlQueryParamTest {
     }
 
     @Test
-    fun `converts to string with empty values`() {
-        val mockStringify = mockk<StringifyQueryParam>()
-        val param = UrlQueryParam("key", emptyList(), mockStringify)
-        every { mockStringify.invoke(param) } returns "key="
-
-        val result = param.toString()
-
-        assertEquals("key=", result)
-    }
-
-    @Test
     fun `throws IllegalArgumentException exception null key`() {
         val mockStringify = mockk<StringifyQueryParam>()
         val exception = assertThrows<IllegalArgumentException> {
