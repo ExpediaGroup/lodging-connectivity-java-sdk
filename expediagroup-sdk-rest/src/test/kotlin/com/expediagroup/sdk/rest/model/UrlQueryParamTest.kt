@@ -5,6 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class UrlQueryParamTest {
     @Test
@@ -47,24 +48,12 @@ class UrlQueryParamTest {
     }
 
     @Test
-    fun `converts to string with special characters`() {
+    fun `throws IllegalArgumentException exception null key`() {
         val mockStringify = mockk<StringifyQueryParam>()
-        val param = UrlQueryParam("key", listOf("value1", "value&2"), mockStringify)
-        every { mockStringify.invoke(param) } returns "key=value1,value%262"
+        val exception = assertThrows<IllegalArgumentException> {
+            UrlQueryParam("", listOf("value1", "value2"), mockStringify)
+        }
 
-        val result = param.toString()
-
-        assertEquals("key=value1,value%262", result)
-    }
-
-    @Test
-    fun `converts to string with null key`() {
-        val mockStringify = mockk<StringifyQueryParam>()
-        val param = UrlQueryParam("", listOf("value1", "value2"), mockStringify)
-        every { mockStringify.invoke(param) } returns "=value1,value2"
-
-        val result = param.toString()
-
-        assertEquals("=value1,value2", result)
+        assertEquals("Query parameter key cannot be blank!", exception.message)
     }
 }

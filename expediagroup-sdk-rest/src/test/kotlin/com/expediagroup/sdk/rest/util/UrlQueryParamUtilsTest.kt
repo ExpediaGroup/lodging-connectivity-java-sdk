@@ -4,7 +4,7 @@ import com.expediagroup.sdk.rest.model.UrlQueryParam
 import io.mockk.mockk
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertEquals // Import JUnit Jupiter Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 
 class UrlQueryParamUtilsTest {
     companion object {
@@ -45,13 +45,6 @@ class UrlQueryParamUtilsTest {
         fun `should return form-encoded string for values with special characters`() {
             val param = UrlQueryParam("key1", listOf("value with,comma", "value with&ampersand", "value with=equals"), stringifyQueryParam)
             val expected = "key1=value with,comma,value with&ampersand,value with=equals"
-            assertEquals(expected, stringifyForm(param))
-        }
-
-        @Test
-        fun `should return form-encoded string for empty key`() {
-            val param = UrlQueryParam("", listOf("value1", "value2"), stringifyQueryParam)
-            val expected = "=value1,value2"
             assertEquals(expected, stringifyForm(param))
         }
 
@@ -132,13 +125,6 @@ class UrlQueryParamUtilsTest {
         }
 
         @Test
-        fun `should return exploded form-encoded string for empty key`() {
-            val param = UrlQueryParam("", listOf("value1", "value2"), stringifyQueryParam)
-            val expected = "=value1&=value2"
-            assertEquals(expected, stringifyExplode(param))
-        }
-
-        @Test
         fun `should return exploded form-encoded string for values with plus sign`() {
             val param = UrlQueryParam("key1", listOf("value+with+plus"), stringifyQueryParam)
             val expected = "key1=value+with+plus"
@@ -211,13 +197,6 @@ class UrlQueryParamUtilsTest {
         fun `should return space-delimited string for values with special characters`() {
             val param = UrlQueryParam("key1", listOf("value with space", "value2"), stringifyQueryParam)
             val expected = "key1=value with space%20value2"
-            assertEquals(expected, stringifySpaceDelimited(param))
-        }
-
-        @Test
-        fun `should return space-delimited string for empty key`() {
-            val param = UrlQueryParam("", listOf("value1", "value2"), stringifyQueryParam)
-            val expected = "=value1%20value2"
             assertEquals(expected, stringifySpaceDelimited(param))
         }
 
@@ -298,13 +277,6 @@ class UrlQueryParamUtilsTest {
         }
 
         @Test
-        fun `should return pipe-delimited string for empty key`() {
-            val param = UrlQueryParam("", listOf("value1", "value2"), stringifyQueryParam)
-            val expected = "=value1|value2"
-            assertEquals(expected, stringifyPipeDelimited(param))
-        }
-
-        @Test
         fun `should return pipe-delimited string for values with plus sign`() {
             val param = UrlQueryParam("key1", listOf("value+with+plus"), stringifyQueryParam)
             val expected = "key1=value+with+plus"
@@ -365,19 +337,6 @@ class UrlQueryParamUtilsTest {
             }
             val param = UrlQueryParam("myKey", emptyList(), stringifyQueryParam)
             val expectedString = "myKey:"
-
-            val actualString = customStringify(param)
-
-            assertEquals(expectedString, actualString)
-        }
-
-        @Test
-        fun `invoke should handle empty key`() {
-            val customStringify = StringifyQueryParam { param ->
-                "${param.key}:${param.value.joinToString("-")}"
-            }
-            val param = UrlQueryParam("", listOf("v1", "v2"), stringifyQueryParam)
-            val expectedString = ":v1-v2"
 
             val actualString = customStringify(param)
 
