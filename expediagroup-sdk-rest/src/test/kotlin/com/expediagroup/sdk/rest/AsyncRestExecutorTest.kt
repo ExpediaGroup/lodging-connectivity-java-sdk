@@ -48,7 +48,7 @@ class AsyncRestExecutorTest {
         }
         val mockResponse = mockk<SDKCoreResponse>(relaxed = true)
         val requestExecutor = mockk<AbstractAsyncRequestExecutor>(relaxed = true) {
-            every { execute(any()) } returns CompletableFuture<com.expediagroup.sdk.core.http.Response>().apply {
+            every { execute(any()) } returns CompletableFuture<SDKCoreResponse>().apply {
                 complete(mockResponse)
             }
         }
@@ -82,7 +82,7 @@ class AsyncRestExecutorTest {
         }
 
         val requestExecutor = mockk<AbstractAsyncRequestExecutor>(relaxed = true) {
-            every { execute(any()) } returns CompletableFuture<com.expediagroup.sdk.core.http.Response>().apply {
+            every { execute(any()) } returns CompletableFuture<SDKCoreResponse>().apply {
                 complete(mockResponse)
             }
         }
@@ -117,7 +117,7 @@ class AsyncRestExecutorTest {
         }
 
         val requestExecutor = mockk<AbstractAsyncRequestExecutor>(relaxed = true) {
-            every { execute(any()) } returns CompletableFuture<com.expediagroup.sdk.core.http.Response>().apply {
+            every { execute(any()) } returns CompletableFuture<SDKCoreResponse>().apply {
                 completeExceptionally(Exception("test"))
             }
         }

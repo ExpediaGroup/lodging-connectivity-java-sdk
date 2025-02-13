@@ -113,6 +113,7 @@ class RestExecutorTest {
         verify(exactly = 1) { mockMapper.readValue(any<InputStream>(), any<TypeReference<*>>()) }
 
         assertNotNull(response.data)
+        println(response.data)
         assertEquals(mockResponse.headers, response.headers)
     }
 
