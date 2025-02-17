@@ -1,0 +1,6 @@
+mutation TestMutation {
+    testMutation {
+        id
+        content
+    }
+}

@@ -22,6 +22,8 @@ import com.expediagroup.sdk.core.http.Response
 import com.expediagroup.sdk.core.transport.AsyncTransport
 import java.io.IOException
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -41,6 +43,8 @@ class OkHttpAsyncTransport(
 
     constructor(configuration: OkHttpClientConfiguration) : this(BaseOkHttpClient.getConfiguredInstance(configuration))
 
+    private val futureExecutor: ExecutorService = Executors.newFixedThreadPool(120) // Executor for async completion
+
     override fun execute(request: Request): CompletableFuture<Response> {
         val future = CompletableFuture<Response>()
 
@@ -51,7 +55,9 @@ class OkHttpAsyncTransport(
                 }
 
                 override fun onResponse(call: Call, response: okhttp3.Response) {
-                    future.complete(response.toSDKResponse(request))
+                    futureExecutor.execute {
+                        future.complete(response.toSDKResponse(request))
+                    }
                 }
             })
         }

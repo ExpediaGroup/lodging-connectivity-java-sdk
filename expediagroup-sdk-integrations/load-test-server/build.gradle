@@ -1,0 +1,24 @@
+plugins {
+	id 'org.springframework.boot' version '3.4.2'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+dependencies {
+	implementation "com.expediagroup:expediagroup-sdk-graphql:1.0.0-SNAPSHOT"
+	implementation(project(":exemplar-sdk-graphql"))
+
+	implementation 'com.expediagroup:rapid-sdk:5.3.2'
+
+
+	implementation 'org.springframework.boot:spring-boot-starter-graphql'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+}

@@ -1,9 +1,11 @@
 import kotlinx.kover.gradle.plugin.dsl.AggregationType
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
+import org.gradle.api.publish.maven.MavenPublication
 
 plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'com.apollographql.apollo'
+    id 'maven-publish'
 
     /* Test Reporting */
     id 'org.jetbrains.kotlinx.kover' version "0.9.1"
@@ -80,5 +82,20 @@ kover {
                 }
             }
         }
+    }
+}
+
+publishing {
+    publications {
+        mavenLocal(MavenPublication) {
+            artifactId = 'expediagroup-sdk-graphql'
+            version = '1.0.0-SNAPSHOT'
+            groupId = project.property('groupId')
+
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
     }
 }

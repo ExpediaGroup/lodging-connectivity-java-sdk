@@ -2,6 +2,7 @@ import kotlinx.kover.gradle.plugin.dsl.AggregationType
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 
 plugins {
+    id 'maven-publish'
     id 'org.jetbrains.kotlin.jvm'
     id 'org.jetbrains.kotlinx.kover' version "0.9.1"
 }
@@ -57,5 +58,20 @@ kover {
                 }
             }
         }
+    }
+}
+
+publishing {
+    publications {
+        mavenLocal(MavenPublication) {
+            artifactId = 'expediagroup-sdk-okhttp-transport'
+            version = '1.0.1-SNAPSHOT'
+            groupId = project.property('groupId')
+
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
     }
 }

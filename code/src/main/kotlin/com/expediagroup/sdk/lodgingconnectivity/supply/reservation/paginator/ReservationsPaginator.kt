@@ -20,7 +20,7 @@ import com.expediagroup.sdk.core.common.getOrThrow
 import com.expediagroup.sdk.core.exception.service.ExpediaGroupServiceException
 import com.expediagroup.sdk.graphql.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.RawResponse
-import com.expediagroup.sdk.graphql.paging.Paginator
+import com.expediagroup.sdk.exemplar.paging.Paginator
 import com.expediagroup.sdk.graphql.paging.model.PageInfo
 import com.expediagroup.sdk.graphql.paging.model.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.supply.operation.PropertyReservationsQuery
@@ -69,7 +69,7 @@ class ReservationsPaginator
         private val selections: ReservationSelections? = null,
         private val pageSize: Int? = null,
         initialCursor: String? = null,
-    ) : Paginator<ReservationsPaginatedResponse>() {
+    ) : com.expediagroup.sdk.exemplar.paging.Paginator<ReservationsPaginatedResponse>() {
         private var cursor: String? = initialCursor
 
         /**

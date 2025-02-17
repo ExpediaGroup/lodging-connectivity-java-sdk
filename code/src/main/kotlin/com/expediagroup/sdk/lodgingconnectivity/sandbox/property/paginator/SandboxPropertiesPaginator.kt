@@ -18,7 +18,7 @@ package com.expediagroup.sdk.lodgingconnectivity.sandbox.property.paginator
 
 import com.expediagroup.sdk.graphql.GraphQLExecutor
 import com.expediagroup.sdk.graphql.model.RawResponse
-import com.expediagroup.sdk.graphql.paging.Paginator
+import com.expediagroup.sdk.exemplar.paging.Paginator
 import com.expediagroup.sdk.graphql.paging.model.PageInfo
 import com.expediagroup.sdk.graphql.paging.model.PaginatedResponse
 import com.expediagroup.sdk.lodgingconnectivity.sandbox.operation.SandboxPropertiesQuery
@@ -59,7 +59,7 @@ class SandboxPropertiesPaginator
         private val graphQLExecutor: GraphQLExecutor,
         private val pageSize: Int? = null,
         initialCursor: String? = null,
-    ) : Paginator<SandboxPropertiesPaginatedResponse>() {
+    ) : com.expediagroup.sdk.exemplar.paging.Paginator<SandboxPropertiesPaginatedResponse>() {
         private var cursor: String? = initialCursor
 
         /**

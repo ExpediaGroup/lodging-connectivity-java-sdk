@@ -1,0 +1,19 @@
+plugins {
+    id 'com.apollographql.apollo' version '4.1.1'
+}
+
+dependencies {
+    implementation 'com.expediagroup:expediagroup-sdk-graphql:1.0.0-SNAPSHOT'
+    implementation 'com.expediagroup:expediagroup-sdk-okhttp-transport:1.0.0-SNAPSHOT'
+    implementation 'org.slf4j:slf4j-simple:2.0.16'
+
+}
+
+apollo {
+    service("testservice") {
+        srcDir("src/main/resources/graphql")
+        packageName.set("testservice")
+        outputDir.set(file("src/main/graphql/generated"))
+        generateDataBuilders.set(true)
+    }
+}

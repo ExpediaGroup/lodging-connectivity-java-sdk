@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/graphql/small/500ms-delay"
+  },
+  "response": {
+    "status": 200,
+    "fixedDelayMilliseconds": 500,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\"data\": {\"testQuery\": {\"id\": \"1\", \"content\": \"Hello World!\"}}}"
+  }
+}

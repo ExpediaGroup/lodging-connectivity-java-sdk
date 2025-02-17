@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+subprojects {
+    /* Shared plugins between all modules */
+    apply plugin: 'java'
+
+    /* Shared repositories between all modules */
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
