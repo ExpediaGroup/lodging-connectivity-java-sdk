@@ -43,10 +43,13 @@ class SDKCoreResponseExtensionTest {
                 Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
                     .request(request).body(responseBody).build()
 
-            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
-                ContentTypeTrait {
-                override fun getHttpMethod(): String = "POST"
-                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+            val operation = object : JacksonModelOperationResponseBodyTrait<ArrayList<String>> {
+                override fun getRequestInfo(): OperationRequestTrait =
+                    object : OperationRequestTrait, ContentTypeTrait {
+                        override fun getHttpMethod(): String = "POST"
+                        override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                    }
+
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
@@ -70,7 +73,12 @@ class SDKCoreResponseExtensionTest {
                         Request.builder().url("http://localhost:8080").method(Method.POST).build()
                     ).build()
 
-            val restResponse = response.toRestResponse(object : OperationNoResponseBodyTrait {})
+            val restResponse = response.toRestResponse(object : OperationNoResponseBodyTrait {
+                override fun getRequestInfo(): OperationRequestTrait =
+                    object : OperationRequestTrait {
+                        override fun getHttpMethod(): String = "POST"
+                    }
+            })
 
             assertNull(restResponse.data)
             assertNotNull(restResponse.headers)
@@ -96,10 +104,13 @@ class SDKCoreResponseExtensionTest {
                 Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
                     .request(request).body(responseBody).build()
 
-            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
-                ContentTypeTrait {
-                override fun getHttpMethod(): String = "POST"
-                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+            val operation = object : JacksonModelOperationResponseBodyTrait<ArrayList<String>> {
+                override fun getRequestInfo(): OperationRequestTrait =
+                    object : OperationRequestTrait, ContentTypeTrait {
+                        override fun getHttpMethod(): String = "POST"
+                        override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                    }
+
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
@@ -125,10 +136,13 @@ class SDKCoreResponseExtensionTest {
                     .request(request).body(responseBody).build()
 
             // when
-            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
-                ContentTypeTrait {
-                override fun getHttpMethod(): String = "POST"
-                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+            val operation = object : JacksonModelOperationResponseBodyTrait<ArrayList<String>> {
+                override fun getRequestInfo(): OperationRequestTrait =
+                    object : OperationRequestTrait, ContentTypeTrait {
+                        override fun getHttpMethod(): String = "POST"
+                        override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                    }
+
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
@@ -156,10 +170,13 @@ class SDKCoreResponseExtensionTest {
                     }
 
             // when
-            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
-                ContentTypeTrait {
-                override fun getHttpMethod(): String = "POST"
-                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+            val operation = object : JacksonModelOperationResponseBodyTrait<ArrayList<String>> {
+                override fun getRequestInfo(): OperationRequestTrait =
+                    object : OperationRequestTrait, ContentTypeTrait {
+                        override fun getHttpMethod(): String = "POST"
+                        override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                    }
+
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
@@ -186,10 +203,12 @@ class SDKCoreResponseExtensionTest {
                         it.body!!.source().readAll(Buffer())
                     }
 
-            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
-                ContentTypeTrait {
-                override fun getHttpMethod(): String = "POST"
-                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+            val operation = object : JacksonModelOperationResponseBodyTrait<ArrayList<String>> {
+                override fun getRequestInfo(): OperationRequestTrait =
+                    object : OperationRequestTrait, ContentTypeTrait {
+                        override fun getHttpMethod(): String = "POST"
+                        override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                    }
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
@@ -207,10 +226,12 @@ class SDKCoreResponseExtensionTest {
                 Response.builder().addHeader("header", "value").status(Status.ACCEPTED).protocol(Protocol.HTTP_1_1)
                     .request(request).build()
 
-            val operation = object : OperationRequestTrait, JacksonModelOperationResponseBodyTrait<ArrayList<String>>,
-                ContentTypeTrait {
-                override fun getHttpMethod(): String = "POST"
-                override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+            val operation = object : JacksonModelOperationResponseBodyTrait<ArrayList<String>> {
+                override fun getRequestInfo(): OperationRequestTrait =
+                    object : OperationRequestTrait, ContentTypeTrait {
+                        override fun getHttpMethod(): String = "POST"
+                        override fun getContentType(): String = CommonMediaTypes.APPLICATION_JSON.toString()
+                    }
                 override fun getTypeIdentifier(): TypeReference<ArrayList<String>> = jacksonTypeRef()
             }
 
