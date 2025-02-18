@@ -1,0 +1,29 @@
+override fun getHttpMethod(): String = "{{httpMethod}}"
+
+override fun getRequestInfo(): OperationRequestTrait = this
+
+override fun getUrlPath(): String {
+    var url = {{{path}}}
+
+    {{#hasPathParms}}{{#pathParams}}
+        url = url.replace(
+            oldValue = "{{baseName}}",
+            newValue = {{paramName}}{{#isEnum}}.value{{/isEnum}},
+            ignoreCase = true
+        )
+    {{/pathParams}}{{/hasPathParms}}
+
+    return url
+}
+
+{{#hasBodyParam}}{{#bodyParam}}
+override fun getRequestBody(): {{{dataType}}} = requestBody
+{{/bodyParam}}{{/hasBodyParam}}
+
+{{#customReturnType}}
+override fun getTypeIdentifier(): TypeReference<{{{datatype}}}> = jacksonTypeRef()
+{{/customReturnType}}
+
+{{#hasHeaderParams}}
+override fun getHeaders(): Headers = this.params.getHeaders()
+{{/hasHeaderParams}}
