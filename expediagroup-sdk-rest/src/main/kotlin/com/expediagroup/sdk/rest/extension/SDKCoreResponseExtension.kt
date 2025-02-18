@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2025 Expedia, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.expediagroup.sdk.rest.extension
 
 import com.expediagroup.sdk.rest.model.Response
@@ -19,7 +35,7 @@ internal fun <T : Any> SDKCoreResponse.parseBodyAs(
     mapper: ObjectMapper
 ): T {
     require(body != null) { "Response body is null!" }
-    require(body!!.source().isOpen ) { "Response body is closed!" }
+    require(body!!.source().isOpen) { "Response body is closed!" }
     require(body!!.contentLength() != 0L) { "Response body is empty!" }
     require(body!!.source().exhausted().not()) { "Response body is exhausted!" }
 
@@ -37,8 +53,8 @@ internal fun <T : Any> SDKCoreResponse.parseBodyAs(
 internal fun <T : Any> SDKCoreResponse.toRestResponse(
     operation: JacksonModelOperationResponseBodyTrait<T>,
     mapper: ObjectMapper
-): Response<T> {
-    return Response(
+): Response<T> = use {
+    Response(
         data = parseBodyAs(operation, mapper),
         headers = headers
     )
@@ -50,8 +66,8 @@ internal fun <T : Any> SDKCoreResponse.toRestResponse(
  * @return a Response object containing null data and headers
  */
 @Suppress("UNUSED_PARAMETER")
-internal fun SDKCoreResponse.toRestResponse(operation: OperationNoResponseBodyTrait): Response<Nothing?> {
-    return Response(
+internal fun SDKCoreResponse.toRestResponse(operation: OperationNoResponseBodyTrait): Response<Nothing?> = use {
+    Response(
         data = null,
         headers = headers
     )
