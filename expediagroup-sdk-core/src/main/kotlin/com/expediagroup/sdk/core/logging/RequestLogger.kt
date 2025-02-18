@@ -29,6 +29,7 @@ internal object RequestLogger {
         request: Request,
         vararg tags: String,
         maxBodyLogSize: Long? = null,
+        mask: (String) -> String = { it },
     ) {
         try {
             var logString =
@@ -39,7 +40,7 @@ internal object RequestLogger {
             if (logger.isDebugEnabled) {
                 val requestBodyString =
                     request.body?.let {
-                        it.readLoggableBody(maxBodyLogSize, it.mediaType()?.charset)
+                        mask(it.readLoggableBody(maxBodyLogSize, it.mediaType()?.charset))
                     }
 
                 logString += ", Body=$requestBodyString"
