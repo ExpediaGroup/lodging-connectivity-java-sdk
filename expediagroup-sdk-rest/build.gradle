@@ -19,8 +19,8 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.1.10'
 
     /* Serialization */
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.3'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.18.3'
 
     /* EG SDK Core */
     api(project(":expediagroup-sdk-core"))
