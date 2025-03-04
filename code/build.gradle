@@ -29,8 +29,9 @@ dependencies {
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
 
     /* EG SDK Core */
-    api(project(":expediagroup-sdk-graphql"))
-    implementation 'org.slf4j:slf4j-api:2.0.17'
+    api 'com.expediagroup:expediagroup-sdk-graphql:0.0.2-SNAPSHOT'
+
+    implementation 'org.slf4j:slf4j-api:2.0.16'
 
     /* Testing */
     testImplementation platform('org.junit:junit-bom:5.11.4')
