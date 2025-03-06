@@ -31,7 +31,7 @@ dependencies {
     /* EG SDK Core */
     api 'com.expediagroup:expediagroup-sdk-graphql:0.0.2-SNAPSHOT'
 
-    implementation 'org.slf4j:slf4j-api:2.0.16'
+    implementation 'org.slf4j:slf4j-api:2.0.17'
 
     /* Testing */
     testImplementation platform('org.junit:junit-bom:5.12.0')
