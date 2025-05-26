@@ -8,5 +8,5 @@ kotlin {
 }
 
 dependencies {
-    implementation 'com.apollographql.apollo:apollo-compiler:4.1.1'
+    implementation 'com.apollographql.apollo:apollo-compiler:4.2.0'
 }
