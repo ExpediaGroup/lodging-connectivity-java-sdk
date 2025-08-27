@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.apollographql.adapters:apollo-adapters-core:0.0.4'
 
     /* EG SDK Core */
-    api 'com.expediagroup:expediagroup-sdk-graphql:0.0.2-SNAPSHOT'
+    api 'com.expediagroup:expediagroup-sdk-graphql:1.0.0'
 
     implementation 'org.slf4j:slf4j-api:2.0.17'
 
