@@ -1,4 +1,9 @@
-# Expedia Group Lodging Connectivity Java SDK
+ # Expedia Group Lodging Connectivity Java SDK
+ 
+> [!CAUTION]
+> #### ⚠️ Deprecated – No Longer Maintained
+> This repository is **deprecated** and will not receive any further updates or bug fixes.  
+> We **do not recommend** using it in production or new projects. 
 
 Designed to simplify Lodging Connectivity API integration, handles the technical complexities, empowering partners to
 focus on their core business needs.
